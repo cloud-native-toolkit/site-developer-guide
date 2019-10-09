@@ -1,62 +1,33 @@
 ---
-title: Getting started
+title: Overview
 ---
 
 <PageDescription>
-
-This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
-
+Use this developer guide to get familar with using the IBM Garage for Cloud Developer tools
 </PageDescription>
 
-## First steps
+<AnchorLinks>
+  <AnchorLink>Project setup</AnchorLink>
+  <AnchorLink>Development</AnchorLink>
+  <AnchorLink>Work in a branch</AnchorLink>
+  <AnchorLink>Sass and CSS Modules</AnchorLink>
+  <AnchorLink>VS Code</AnchorLink>
+</AnchorLinks>
 
-1. **Create your site** – use the gatsby CLI to bootstrap your site with the starter
+### Developing with IKS and OpenShift
 
-   ```sh
-   npx gatsby new my-carbon-site https://github.com/carbon-design-system/gatsby-starter-carbon-theme
-   ```
+The following topics explain how to create and deploy applications using Continuous Integration with Jenkins. They help explain how to integrate code analysis into your applications with SonarQube. They explain how to move applications into test, staging and production using Continous Deployment techniques with Artifactory and Argo CD and much more.
 
-2. **Start developing** – navigate into your directory with `cd my-carbon-site`.
 
-   Start it up using one of the following snippets. You can tell which command to use based on the lock file at the root of your project (`yarn.lock` for yarn and `package-lock.json` for npm). For yarn, type `yarn develop` for npm, you'll use `npm run develop`.
+| Topic                     | Tool           |Description | Link                               |
+| -----------------------   |:-------------- |------------| ----------------------------------:|
+| Cluster configuration     | Kube/OpenShift | Explaination on how the tools are integrated using Secrets and ConfigMaps | [Readme](./docs/CLUSTER_CONFIG.md) |
+| Continuous Integration    | Jenkins        | Explain how you can use Jenkins to delivery Continious Integration           | [Readme](./docs/JENKINS.md)        |
+| Code Analysis             | SonarQube      | Explain how code scanning and analysis can help you manage a quality gate | [Readme](./docs/SONAR.md)          |
+| Artifact and Helm Storage | Artifactory    | Seperation of Helm Chart content into a artifact storage system helps with Continous Delivery | [Readme](./docs/ARTIFACTORY.md)    |
+| Continuous Deployment     | ArgoCD         | Evolving a project to Continous Delivery is easy with Argo CD this explains how this can be done           | [Readme](./docs/ARGOCD.md)         |
+| Contract API Testing      | Pact           | Managing API contracts is key for decoupled software  | [Readme](./docs/PACT.md)           |
+| Logging                   | LogDNA         | How to manage your software logging with LogDNA           | [Readme](./docs/LOGDNA.md)         |
+| Monitoring                | SysDig         | Validating performance and throughput with SysDig     | [Readme](./docs/SYSDIG.md)         |
+| Cloud Service Integration | IBM Cloud      | Extending software with integration with Database, AI and other high value cloud services | [Readme](./docs/IBMCLOUD.md)       |
 
-3. **Make some changes!** – open [localhost:8000](//localhost:8000) in your browser to see your site running.
-
-   Each of the Items in your side bar correlates to a MDX file in your `src/pages/` directory. Navigate to a site and try editing the corresponding markdown file. You'll be able to see it update live!
-
-## 🔍 What's in here?
-
-Lets check out the structure of our project
-
-    .
-    ├── LICENSE
-    ├── README.md
-    ├── gatsby-config.js
-    ├── node_modules
-    ├── package.json
-    ├── public
-    ├── src
-    │   ├── data
-    │   ├── gatsby-theme-carbon
-    │   ├── images
-    │   └── pages
-    └── yarn.lock
-
-1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
-
-1.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site.
-
-    - **data** this is where you'll update your sidebar order and contents
-    - **images** you can colocate your images here or store them next to your pages, whichver you chose
-    - **gatsby-theme-carbon** this is where you'll override (known as shadowing) the default `gatsby-theme-carbon` components
-    - **pages** This is where most of your content will live. You'll represent each page with an MDX file.
-
-1.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
-
-1.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description. You'll notice that all of the configuration for the site is coming from `gatsby-theme-carbon`
-
-1.  **`LICENSE`**: Gatsby is licensed under the Apache 2.0 license.
-
-1.  **`yarn.lock`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
-
-1.  **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.

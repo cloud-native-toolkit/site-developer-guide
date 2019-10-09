@@ -2,14 +2,24 @@ import React from 'react';
 import ResourceLinks from 'gatsby-theme-carbon/src/components/LeftNav/ResourceLinks';
 
 const links = [
+
+  {
+    title: 'Garage Method',
+    href: 'https://www.ibm.com/garage/method',
+  },
+  {
+    title: 'Iteration Zero',
+    href: 'https://github.ibm.com/garage-catalyst/iteration-zero-ibmcloud',
+  },
+  {
+    title: 'IBM Cloud',
+    href: 'https://www.ibm.com/cloud',
+  },
   {
     title: 'Github',
-    href: 'https://github.com/carbon-design-system/gatsby-theme-carbon',
+    href: 'https://github.com/ibm-garage-cloud',
   },
-  {
-    title: 'Carbon Design System',
-    href: 'https://react.carbondesignsystem.com',
-  },
+
 ];
 
 // shouldOpenNewTabs: true if outbound links should open in a new tab
