@@ -4,5 +4,6 @@ module.exports = {
     description: 'Developer Tools ',
     keywords: 'gatsby,theme,carbon',
   },
-  plugins: ['gatsby-theme-carbon']
+  plugins: ['gatsby-theme-carbon'],
+  pathPrefix: "/garage-developer-guide",
 };
