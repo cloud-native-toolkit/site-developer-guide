@@ -22,7 +22,7 @@
     - title: Artifact Management
       path: /guides/artifact-management
     - title: Continuous Deployment
-      path: /guides/continous-deployment
+      path: /guides/continuous-deployment
     - title: Contract Testing
       path: /guides/contract-testing
     - title: Log Management
