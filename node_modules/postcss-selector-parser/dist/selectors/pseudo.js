@@ -30,7 +30,7 @@ var Pseudo = function (_Container) {
 
     Pseudo.prototype.toString = function toString() {
         var params = this.length ? '(' + this.map(String).join(',') + ')' : '';
-        return [this.spaces.before, String(this.value), params, this.spaces.after].join('');
+        return [this.rawSpaceBefore, this.stringifyProperty("value"), params, this.rawSpaceAfter].join('');
     };
 
     return Pseudo;

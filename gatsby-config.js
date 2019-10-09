@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Theme Carbon',
-    description: 'A Gatsby theme for the carbon design system',
+    title: 'IBM Garage for Cloud',
+    description: 'Developer Tools ',
     keywords: 'gatsby,theme,carbon',
   },
   plugins: ['gatsby-theme-carbon'],

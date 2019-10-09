@@ -3,7 +3,7 @@ import { HomepageBanner, HomepageCallout } from 'gatsby-theme-carbon';
 import HomepageTemplate from 'gatsby-theme-carbon/src/templates/Homepage';
 import { calloutLink } from './Homepage.module.scss';
 
-import Carbon from '../../images/carbon.jpg';
+import Carbon from '../../images/catalyst.svg';
 
 const FirstLeftText = () => <p>Callout component</p>;
 
@@ -36,7 +36,7 @@ const SecondRightText = () => (
   </p>
 );
 
-const BannerText = () => <h1>Banner component</h1>;
+const BannerText = () => <h1>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,
