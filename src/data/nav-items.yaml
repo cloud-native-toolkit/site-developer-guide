@@ -5,22 +5,22 @@
 - title: Getting Started
   pages:
     - title: Installation
-      path: /installation
+      path: /getting-started/installation
     - title: CLI
-      path: /cli
+      path: /getting-started/cli
     - title: Deploying First App
-      path: /deploy-app
+      path: /getting-started/deploy-app
 
 - title: Guides
   pages:
-    - title: Cluster configuration
+    - title: Cluster configuinstallationration
       path: /guides/cluster-configuration
     - title: Continuous Integration
       path: /guides/continous-integration
     - title: Code Analysis
       path: /guides/code-analysis
-    - title: Artifact Storage
-      path: /guides/artifact-storage
+    - title: Artifact Management
+      path: /guides/artifact-management
     - title: Continuous Deployment
       path: /guides/continous-deployment
     - title: Contract Testing
@@ -39,15 +39,15 @@
 - title: Application Architecture
   pages:
     - title: Overview
-      path: /architectures/overview
+      path: /architecture/overview
     - title: API Management
-      path: /architectures/apis
+      path: /architecture/apis
     - title: Microservices
-      path: /architectures/microservices
+      path: /architecture/microservices
     - title: Backend for Frontends
-      path: /architectures/bffs
+      path: /architecture/bffs
     - title: User Interfaces
-      path: /architectures/userinterfaces
+      path: /architecture/userinterfaces
 
 - title: Starter Kits
   pages:
@@ -71,6 +71,6 @@
     - title: Storage
       path: /services/storage
 
-- title: Contributions
+- title: Contributing
   pages:
-    - path: /contributions
+    - path: /contributing
