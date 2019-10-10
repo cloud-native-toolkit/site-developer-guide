@@ -1,6 +1,5 @@
-<h1 align="center">
-  IBM Garage for Cloud Developer Tools Developer Guide
-</h1>
+# IBM Garage for Cloud 
+## Developer Tools Developer Guide
 
 The developer guide has been written to help developers get familar with how to use to the tools to manage the full lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud. 
 
