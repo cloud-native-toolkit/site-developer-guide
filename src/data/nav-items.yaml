@@ -13,7 +13,7 @@
 
 - title: Guides
   pages:
-    - title: Cluster configuinstallationration
+    - title: Cluster configuration
       path: /guides/cluster-configuration
     - title: Continuous Integration
       path: /guides/continuous-integration
