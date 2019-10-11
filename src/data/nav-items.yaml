@@ -10,11 +10,15 @@
       path: /getting-started/cli
     - title: Deploying First App
       path: /getting-started/deploy-app
+    - title: Artifactory Setup
+      path: /getting-started/artifactory-setup
+    - title: ArgoCD Setup
+      path: /getting-started/argocd-setup
 
 - title: Guides
   pages:
-    - title: Cluster configuration
-      path: /guides/cluster-configuration
+    - title: Overview
+      path: /guides/overview
     - title: Continuous Integration
       path: /guides/continuous-integration
     - title: Code Analysis
@@ -35,22 +39,14 @@
       path: /guides/ux-testing
     - title: Infrastructure as Code
       path: /guides/iasc
+    - title: Cluster configuration
+      path: /guides/cluster-configuration
 
-- title: Application Architecture
-  pages:
-    - title: Overview
-      path: /architecture/overview
-    - title: API Management
-      path: /architecture/apis
-    - title: Microservices
-      path: /architecture/microservices
-    - title: Backend for Frontends
-      path: /architecture/bffs
-    - title: User Interfaces
-      path: /architecture/userinterfaces
 
 - title: Starter Kit Templates
   pages:
+    - title: Overview
+      path: /architecture/overview
     - title: React Node UI Patterns
       path: /starterkits/react-ui-patterns
     - title: Angular Node UI Patterns

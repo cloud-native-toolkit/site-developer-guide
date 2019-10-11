@@ -4,10 +4,12 @@ title: Installation
 
 <PageDescription>
 
-This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
+Use these installation steps to help install and setup the IBM Garage for Cloud Developer Tools into your IBM Cloud account.
 
 </PageDescription>
 
+
+Follow each step in turn:
 
 <Tabs>
 
@@ -25,7 +27,7 @@ The following pre-requisties are required before following the setup instruction
 </Tab>
 <Tab label="Step 1 : Clone">
 
-Clone this repository to your local filesystem
+Clone the `iteration-zero-ibmcloud` repository to your local filesystem
 
 ```bash
 $ git clone git@github.ibm.com:garage-catalyst/iteration-zero-ibmcloud.git
@@ -42,7 +44,199 @@ development cluster and supporting cloud services. Using the Cloud Console creat
 
 </Tab>
 
+<Tab label="Step 3 : Properties">
+
+Terraform requires two API Keys from the IBM Cloud platform to enable it to provision the necessary resources:
+- The first Key is for the Classic IaaS Infrastructure resources.
+- The second key is for the IBM Cloud resources
+
+In the steps that follow, you will generate the required keys and put them into a credentials.properties file.
+
+```properties
+classic.username=<CLASSIC_USERNAME>
+classic.api.key=<CLASSIC_API_KEY>
+ibmcloud.api.key=<IBMCLOUD_API_KEY>
+```
+
+### Step A. Create the credentials.properties file.
+Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`
+
+### Step B: Create a Classic Infrastructure API Key
+- Follow these instructions to generate a Classic Infrasture API Key:
+    - [Classic IaaS Infrastructure Username and API Key](https://cloud.ibm.com/docs/iam?topic=iam-classic_keys#classic_keys "Managing classic infrastructure API keys")
+
+    - Click on `Create a classic infrastructure API Key` close the dialog and then click on the `Details` menu for the classic key in the list. If this button does not appear then the key is already created for you account and just view the `Details` for this key.
+
+    <InlineNotification>
+    **Note:** To access or create the keys click on `Manage->Access(IAM>)`  Then select `IBM Cloud API keys` menu.
+    </InlineNotification>
+
+    ![API Keys](apikeys.png)
+
+    <InlineNotification>
+    **Note:** If you do not have the Classic API key configured you will have a button at the top asking you to add them.
+    </InlineNotification>
+
+    ![Classic Keys](classickeys.png)
+
+- Open the credentials.properties file and set the values for the "classic.username" and "classic.api.key" properties.
+
+
+### Step B: Create and Set the IBM Cloud Resources Key
+
+- Follow these instructions to generate a key:
+[IBM Cloud API Key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#creating-an-api-key "Creating an API key")
+
+- Open the credentials.properties file and set it as the value for the "ibmcloud.api.key" property.
+
+- Save the `credentials.properties` file, it is added to `.gitignore` so will not be added to your repository
+
+</Tab>
+
+<Tab label="Step 4 : VLAN">
+
+To enable Terraform to create a working development cluster we need to obtain the **VLAN** information from the Classic platform.
+
+You can access this information for the public and private VLANs information by accessing the `Classic Infrastructure` from the IBM Cloud console, and then selecting `Network > IP Management > VLANs`
+
+Another way is to install and use the Catalyst Tools CLI as shown in Step 1.
+
+Once obtained, the **VLAN** information will need to be written to a variables file as shown in Step 2.  After you have updated your VLAN values you can return to the README and continue with the installation instructions.
+
+### Step A. Install the Developer Tools CLI
+To make getting this information as simple as possible we have added a command to the helper CLI tool that will create this information in a format that is easy to cut/paste into the `terraform.tfvars` settings file.
+
+- Install the [IBM Garage Developer Tools CLI](https://github.ibm.com/garage-catalyst/ibmcloud-garage-cli):
+    ```bash
+    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    ````
+- Log into your IBM Cloud Account with the correct region and resource group:
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
+    ```
+- Run the CLI command to obtain the VLAN information:
+    ```bash
+    igc vlan
+    ```
+    You will now have a set of properties that can be directly copied into your `terraform.tfvars`.
+
+### Step B. Set the Terraform Variables
+- Open the file `terraform.tfvars` and paste the values from the above output into the file, and save.
+    ```bash
+    vi ./terraform/settings/terraform.tfvars
+    ```
+    These values should look something like the example below. You should have a resource group `catalyst-team` with private VLAN `2372`, public VLAN `1849` in the DAL10 datacenter. Our `terraform.tfvars` would look accordingly:
+    ```terraform
+    private_vlan_id="237288"
+    private_vlan_number="2372"
+    private_vlan_router_hostname="bcr01a.dal10"
+    public_vlan_id="1849487"
+    public_vlan_number="1849"
+    public_vlan_router_hostname="fcr01a.dal10"
+    vlan_datacenter="dal10"
+    vlan_region="us-south"
+    resource_group_name="catalyst-team"
+    cluster_name="catalyst-team-cluster"
+    ```
+
+    <InlineNotification>
+
+    **Note:** You can install the tools into a brand new cluster or into an existing cluster change the following settings in the same **terraform.tfvars** file. Set the values to **true** if you are using an existing postgres make sure its provisioned into the same data center as the base cluster.
+
+    </InlineNotification>
+
+    ```bash
+    # Flag indicating if we are using an existing cluster or creating a new one
+    cluster_exists="false"
+    # The type of cluster that will be created/used (kubernetes or openshift)
+    cluster_type="kubernetes"
+    # Flag indicating if we are using an existing postgres server or creating a new one
+    postgres_server_exists="false"
+    ```
+
+    <InlineNotification>
+
+    **Note:** If you would like to use an existing cluster, change the value of **cluster_name** in the **terraform.tfvars** to the name of that cluster.
+
+    </InlineNotification>
+
+</Tab>
+
+<Tab label="Step 5 : Terraform">
+
+### Run Terraform to provision Development Cluster and Tools
+
+- Run the following command to launch a IBM Garage [Developer Tools CLI Tools Docker container](https://github.ibm.com/garage-catalyst/client-tools-image).
+
+    ```bash
+    $ ./launch.sh
+    ```
+
+    <InlineNotification>
+
+    ***Note:*** This will install the Cloud Garage Tools docker image and exec shell into the running container. You will run the rest of the commands from inside this container. The container will mount the `./terraform/` directory as `/home/devops/src/`. This is helpful in sharing files between your host filesystem and your container.
+
+    </InlineNotification>
+
+
+- It will also allow you to continue to extend or modify the base Terraform IasC that has been supplied and tailor it for your specific project needs.
+
+- Once the Docker container has started and the script has exec shelled into it you will see an IBM Garage banner. This will help you
+identify you are running inside the Docker image that has just mounted your file system.
+
+- Next step is to run the following script:
+
+    ```bash
+    $ ./runTerraform.sh
+    ```
+
+    The script will prompt if you want to proceed. If an existing cluster is selected the contents will be cleaned up to prepare for the terraform process (the `tools`, `dev`, `test`, and `staging` namespaces).
+
+    After you select **Y* the Terraform Apply process will begin to create the infrastructure and services for your Development Environment.
+
+    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) and the rest of the process takes about 30 minutes. At the end, you should have your Iteration Zero resources fully provisioned and configured, enjoy!
+
+</Tab>
+
 </Tabs>
 
 
+### Development Cluster Dashboard
 
+Once the installation has completed you can use the Development Cluster Dashboard to navigate to the installed tools.
+
+
+To access the dashboard obtain the ingress endpoint using the developer CLI.
+
+
+```bash
+igc ingress -n tools
+```
+
+This will return the ingress URLs for each of the tools.
+
+```bash
+Host(s):
+[
+  'http://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+]
+```
+
+Select the one called `dashboard` and open it in your browser.
+
+![Dashboard](devcluster.png)
+
+### Credentials
+
+Currently the tools are not linked to a single sign on service (future plan), other than Jenkins in OpenShift, to obtain the credentials for the tools login into ibm cloud account on the command line and run `igc credentials` this will list the `userids` and `passwords` secrets for each tool installed.
+You can use these details to login.
+
+```bash
+igc credentials
+```

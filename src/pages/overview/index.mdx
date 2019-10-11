@@ -6,11 +6,6 @@ title: Overview
 Use this developer guide to get familar with using the IBM Garage for Cloud Developer tools
 </PageDescription>
 
-
-
-
-
-
 <AnchorLinks>
   <AnchorLink>Project setup</AnchorLink>
   <AnchorLink>Development</AnchorLink>
@@ -19,40 +14,33 @@ Use this developer guide to get familar with using the IBM Garage for Cloud Deve
   <AnchorLink>VS Code</AnchorLink>
 </AnchorLinks>
 
-
-<FeatureCard
-  subTitle="With subtitle"
-  title="Code"
-  actionIcon="arrowRight"
-  href="/"
->
-  ![demo image](images/code.jpg)
-</FeatureCard>
-
-
-## Iteration Zero for IBM Cloud
-
-This repository contains tools and Terraform infrastructure as code (IasC) to help setup an IBM Cloud Public development
-environment ready for cloud native application development with IBM Cloud Kubernetes Service or Red Hat OpenShift for IBM Kubernetes Service.
+# IBM Garage for Cloud
+## Developer Tools
 
 ### Overview
 
-Iteration Zero has been designed to help a team configure a set of popular open source tools that can enable cloud native development. Typically a squad lead or lead developer would use this Terraform package after the initial inception workshop has completed and the development team is ready to write code. The objective and goal of this is to reduce the amount of time a team needs to configure and prepare their Kubernetes or OpenShift development environments. Some key benifits of Iteration Zero is that it makes the whole development lifecycle for IKS and OpenShift much smoother and easier than using the out of the box experience. Using Terraform enables it to be modular in configuration so tools can be easily disabled or new tools added. This combindation of tools are proven in the industry to deliver real value for modern cloud native development.
+The Developer Tools have been designed to help a team configure a set of popular open source tools that can enable
+cloud native development. Typically a squad lead or lead developer install and setup these tools after the
+initial inception workshop. The objective of this is to reduce the amount of time a team needs to configure and prepare their Kubernetes or OpenShift development environments.
+Some key benefits of this is that it makes the whole development lifecycle for Kubernetes and OpenShift
+consistent and simpler thank the out of the box experience.
+
+The installation is managed with Terraform and it enables it to be modular in configuration
+so tools can be easily disabled or new tools added. This combination of tools are proven in the
+industry to deliver real value for modern cloud native development.
 
 The Red Hat Innovation Lab has a very similar approach to how they deliver success with OpenShift, view their approach [here](https://github.com/rht-labs/labs-ci-cd).
 
-You can jump straight to the [Developers Guide](https://ibm-garage-cloud.github.io/garage-developer-guide/) if you want more detail on how Iteration Zero fits into the end to end developer story.
+This repo contains Terraform resources that will deploy the following development tools into a Kubernetes or OpenShift cluster.
 
-This repo contains Terraform resources that will deploy the following development tools into your IKS or OpenShift infrastructure.
-
-- IBM Container Service Cluster (3 nodes) for IKS or OpenShift
+- IBM Container Service Cluster (3 nodes) for Kubernetes or OpenShift
 - Create *dev*,*test*,*staging* and *tools* namespaces
 - Install the following tools:
     - [Jenkins CI](https://jenkins.io/)
     - [Argo CD](https://argoproj.github.io/argo-cd/)
     - [SonarQube](https://www.sonarqube.org/)
     - [Pack Broker](https://docs.pact.io/)
-    - [Artefactory](https://jfrog.com/open-source/)
+    - [Artifactory](https://jfrog.com/open-source/)
     - [Eclipse CHE](https://www.eclipse.org/che/)
 
 - Create and bind the following Cloud Services to your Cluster:
@@ -73,13 +61,13 @@ The following Guides explain how to create and deploy applications using Continu
 
 | Topic                     | Tool           |Description | Guide                               |
 | -----------------------   |:-------------- |------------| ----------------------------------:|
-| Cluster configuration     | Kube/OpenShift | Explaination on how the tools are integrated using Secrets and ConfigMaps | [Guide](/guides/cluster-configuration) |
-| Continuous Integration    | Jenkins        | Explain how you can use Jenkins to delivery Continious Integration           | [Readme](./docs/JENKINS.md)        |
-| Code Analysis             | SonarQube      | Explain how code scanning and analysis can help you manage a quality gate | [Readme](./docs/SONAR.md)          |
-| Artifact and Helm Storage | Artifactory    | Seperation of Helm Chart content into a artifact storage system helps with Continous Delivery | [Readme](./docs/ARTIFACTORY.md)    |
-| Continuous Deployment     | ArgoCD         | Evolving a project to Continous Delivery is easy with Argo CD this explains how this can be done           | [Readme](./docs/ARGOCD.md)         |
-| Contract API Testing      | Pact           | Managing API contracts is key for decoupled software  | [Readme](./docs/PACT.md)           |
-| Logging                   | LogDNA         | How to manage your software logging with LogDNA           | [Readme](./docs/LOGDNA.md)         |
-| Monitoring                | SysDig         | Validating performance and throughput with SysDig     | [Readme](./docs/SYSDIG.md)         |
-| Cloud Service Integration | IBM Cloud      | Extending software with integration with Database, AI and other high value cloud services | [Readme](./docs/IBMCLOUD.md)       |
+| Cluster configuration     | Kube/OpenShift | Explanation on how the tools are integrated using Secrets and ConfigMaps                                 | [Guide](/guides/cluster-configuration) |
+| Continuous Integration    | Jenkins        | Explain how you can use Jenkins to delivery Continuous Integration                                       | [Guide](./docs/JENKINS.md)        |
+| Code Analysis             | SonarQube      | Explain how code scanning and analysis can help you manage a quality gate                                | [Guide](./docs/SONAR.md)         |
+| Artifact and Helm Storage | Artifactory    | Separation of Helm Chart content into a artifact storage system helps with Continous Delivery            | [Guide](./docs/ARTIFACTORY.md)    |
+| Continuous Deployment     | ArgoCD         | Evolving a project to Continuous Delivery is easy with Argo CD this explains how this can be done        | [Guide](./docs/ARGOCD.md)         |
+| Contract API Testing      | Pact           | Managing API contracts is key for decoupled software                                                     | [Guide](./docs/PACT.md)                         |
+| Logging                   | LogDNA         | How to manage your software logging with LogDNA                                                          | [Guide](./docs/LOGDNA.md)               |
+| Monitoring                | SysDig         | Validating performance and throughput with SysDig                                                        | [Guide](./docs/SYSDIG.md)         |
+| Cloud Service Integration | IBM Cloud      | Extending software with integration with Database, AI and other high value cloud services                | [Guide](./docs/IBMCLOUD.md)       |
 

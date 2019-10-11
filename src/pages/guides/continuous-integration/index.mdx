@@ -5,8 +5,8 @@ title: Continuous Integration
 <PageDescription>
 
 This guide will explain how to use Jenkins to manage your Continuous Integration process
-</PageDescription>
 
+</PageDescription>
 
 ## What is Jenkins
 
@@ -78,29 +78,6 @@ You can see from either the vanilla Jenkins pipelines view of the Application Co
 The `Jenkinsfile` is consistent between registration with OpenShift or IKS. The `Dockerfile` has been optimized for `UBI` images, this means the docker images when deployed can run on both OpenShift and IKS.
 
 The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
-
-<Accordion>
-  <AccordionItem title="Setup">
-
-    Setup clones the code into the pipeline
-
-    <p>some other words</p>
-
-     checkout scm
-     stage('Setup') {
-       sh '''#!/bin/bash
-               set -x
-               # Export project name, version, and build number to ./env-config
-               npm run env | grep "^npm_package_name" | sed "s/npm_package_name/IMAGE_NAME/g"  > ./env-config
-               npm run env | grep "^npm_package_version" | sed "s/npm_package_version/IMAGE_VERSION/g" >> ./env-config
-               echo "BUILD_NUMBER=${BUILD_NUMBER}" >> ./env-config
-           '''
-       }
-
-  </AccordionItem>
-  <AccordionItem title="Title 2">Content Section</AccordionItem>
-  <AccordionItem title="Title 3">Content Section</AccordionItem>
-</Accordion>
 
 - **Setup** clones the code into the pipeline	
 - **Build** runs the build commands for the code
