@@ -1,12 +1,5 @@
----
-title: Continuous Integration
----
 
-<PageDescription>
-
-This guide will explain how to use Jenkins to manage your Continuous Integration process
-</PageDescription>
-
+# Continous Integration with Jenkins
 
 ## What is Jenkins
 
@@ -45,12 +38,7 @@ vi package.json ! rename the template
 git add .
 git commit -m "Rename project"
 git push
-```
-
-The following steps will help you create a pipeline with Jenkins using the `CLI`.
-
-```bash
-igc pipeline 
+igc register ! register pipeline with Jenkins
 ? Please provide the username for https://github.com/mjperrins/hello-world-bff.git: mperrins
 ? Please provide your password/personal access token: [hidden]
 ? Please provide the branch the pipeline should use: master
@@ -65,11 +53,11 @@ The pipeline will be created in the `dev` namespace in OpenShift and `tools` nam
 
 This is screen shot of a Jenkins pipeline, you can access this view from the Developer Dashboard.
 
-![Jenkins Pipelines View](images/pipelines.png)
+![Jenkins Pipelines View](./images/pipelines.png)
 
 This is a screen shot of the Build Pipeline in OpenShift. You can access this from the `Application Console` and selecting `Builds->Pipelines` from the menu.
 
-![OpenShift Pipelines View](images/ospipelines.png)
+![OpenShift Pipelines View](./images/ospipelines.png)
 
 ### Stages
 
@@ -78,29 +66,6 @@ You can see from either the vanilla Jenkins pipelines view of the Application Co
 The `Jenkinsfile` is consistent between registration with OpenShift or IKS. The `Dockerfile` has been optimized for `UBI` images, this means the docker images when deployed can run on both OpenShift and IKS.
 
 The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
-
-<Accordion>
-  <AccordionItem title="Setup">
-
-    Setup clones the code into the pipeline
-
-    <p>some other words</p>
-
-     checkout scm
-     stage('Setup') {
-       sh '''#!/bin/bash
-               set -x
-               # Export project name, version, and build number to ./env-config
-               npm run env | grep "^npm_package_name" | sed "s/npm_package_name/IMAGE_NAME/g"  > ./env-config
-               npm run env | grep "^npm_package_version" | sed "s/npm_package_version/IMAGE_VERSION/g" >> ./env-config
-               echo "BUILD_NUMBER=${BUILD_NUMBER}" >> ./env-config
-           '''
-       }
-
-  </AccordionItem>
-  <AccordionItem title="Title 2">Content Section</AccordionItem>
-  <AccordionItem title="Title 3">Content Section</AccordionItem>
-</Accordion>
 
 - **Setup** clones the code into the pipeline	
 - **Build** runs the build commands for the code

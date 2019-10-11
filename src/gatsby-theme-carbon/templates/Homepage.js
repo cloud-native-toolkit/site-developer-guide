@@ -5,33 +5,35 @@ import { calloutLink } from './Homepage.module.scss';
 
 import Carbon from '../../images/catalyst.svg';
 
-const FirstLeftText = () => <p>Callout component</p>;
+const FirstLeftText = () => <p>Project</p>;
 
 const FirstRightText = () => (
   <p>
-    This is a callout component. You can edit the contents by updating the
-    pre-shadowed homepage template. You can provide <code>color</code> and{' '}
-    <code>backgroundColor</code> props to suit your theme.
+      This is the developer guide for the IBM Garage for Cloud Developer Tools. This project was created to enable
+      IBM Garage teams to deliver business value quickly using the IBM Kubernetes Service, Red Hat OpenShift and IBM Cloud.
     <a
       className={calloutLink}
-      href="https://github.com/carbon-design-system/gatsby-theme-carbon/blob/master/packages/example/src/gatsby-theme-carbon/templates/Homepage.js"
+      href="https://www.ibm.com/cloud"
     >
-      Homepage source →
+      IBM Cloud →
     </a>
   </p>
 );
 
-const SecondLeftText = () => <p>Callout component</p>;
+const SecondLeftText = () => <p>Garage Method</p>;
 
 const SecondRightText = () => (
   <p>
-    You can also not use these components at all by not providing the callout
-    props to the template or writing your own template.
+      It is focused on enabling developer consistency across IBM Kubernetes Service and Red Hat OpenShift. Its foundation is
+      the IBM Garage Method principles and practices.
+      This establishes a consistent approach that reduces the time to value through higher
+      quality and proven best practices and techniques. Enabling the
+      increase of squad skills and reduction of repeat effort to build out client solutions.
     <a
       className={calloutLink}
-      href="https://github.com/carbon-design-system/gatsby-theme-carbon/blob/master/packages/example/src/gatsby-theme-carbon/templates/Homepage.js"
+      href="https://www.ibm.com/garage/method"
     >
-      Homepage source →
+      IBM Garage Method →
     </a>
   </p>
 );

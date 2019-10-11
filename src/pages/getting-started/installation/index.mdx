@@ -7,3 +7,42 @@ title: Installation
 This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
 
 </PageDescription>
+
+
+<Tabs>
+
+<Tab label="Pre-requisites">
+
+The following pre-requisties are required before following the setup instructions.
+
+- An IBM Cloud account with:
+    - the ability to provision resources to support Kubernetes and OpenShift environments
+    - a [Resource Group](https://cloud.ibm.com/account/resource-groups) for your development resources
+    - a Public and Private VLAN
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on your local machine
+- [Node](https://nodejs.org/en/) installed on your local machine
+
+</Tab>
+<Tab label="Step 1 : Clone">
+
+Clone this repository to your local filesystem
+
+```bash
+$ git clone git@github.ibm.com:garage-catalyst/iteration-zero-ibmcloud.git
+
+$ cd iteration-zero-iks
+```
+</Tab>
+
+<Tab label="Step 2 : Resource Group">
+
+The first step is to create a dedicated Resource Group for your development team. This Resource Group will contain your
+development cluster and supporting cloud services. Using the Cloud Console create a unique
+- [Create a Resource Group](https://cloud.ibm.com/account/resource-groups).
+
+</Tab>
+
+</Tabs>
+
+
+
