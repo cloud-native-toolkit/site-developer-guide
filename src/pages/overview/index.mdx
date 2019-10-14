@@ -1,20 +1,8 @@
 ---
 title: Overview
+description: Use this developer guide to get familiar with using the IBM Garage for Cloud Developer tools
 ---
 
-<PageDescription>
-Use this developer guide to get familar with using the IBM Garage for Cloud Developer tools
-</PageDescription>
-
-<AnchorLinks>
-  <AnchorLink>Project setup</AnchorLink>
-  <AnchorLink>Development</AnchorLink>
-  <AnchorLink>Work in a branch</AnchorLink>
-  <AnchorLink>Sass and CSS Modules</AnchorLink>
-  <AnchorLink>VS Code</AnchorLink>
-</AnchorLinks>
-
-# IBM Garage for Cloud
 ## Developer Tools
 
 ### Overview
@@ -31,11 +19,12 @@ industry to deliver real value for modern cloud native development.
 
 The Red Hat Innovation Lab has a very similar approach to how they deliver success with OpenShift, view their approach [here](https://github.com/rht-labs/labs-ci-cd).
 
-This repo contains Terraform resources that will deploy the following development tools into a Kubernetes or OpenShift cluster.
+After installation your environment will consist of the following development tools which have been installed into your IBM Kubernetes Service or Red Hat OpenShift cluster managed cluster.
 
 - IBM Container Service Cluster (3 nodes) for Kubernetes or OpenShift
 - Create *dev*,*test*,*staging* and *tools* namespaces
 - Install the following tools:
+
     - [Jenkins CI](https://jenkins.io/)
     - [Argo CD](https://argoproj.github.io/argo-cd/)
     - [SonarQube](https://www.sonarqube.org/)
@@ -43,7 +32,8 @@ This repo contains Terraform resources that will deploy the following developmen
     - [Artifactory](https://jfrog.com/open-source/)
     - [Eclipse CHE](https://www.eclipse.org/che/)
 
-- Create and bind the following Cloud Services to your Cluster:
+- The following IBM CLoud services will be created and bound to you your development cluster:
+
     - [AppID Application Authentication](https://cloud.ibm.com/docs/services/appid?topic=appid-service-access-management)
     - [Cloudant NoSQL Database](https://cloud.ibm.com/docs/services/Cloudant?topic=cloudant-getting-started)
     - [Cloud Object Storage Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started)
@@ -51,23 +41,14 @@ This repo contains Terraform resources that will deploy the following developmen
     - [SysDig Monitoring](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started)
     - [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube)
 
-## Development Tools
 
-![Provisioned environment](catalyst-provisioned-environment.png)
+## Getting Started
 
-### Guides
+To continue getting started work through the following links and guides
 
-The following Guides explain how to create and deploy applications using Continuous Integration with Jenkins. They help explain how to integrate code analysis into your applications with SonarQube. They explain how to move applications into test, staging and production using Continous Deployment techniques with Artifactory and Argo CD and much more.
-
-| Topic                     | Tool           |Description | Guide                               |
-| -----------------------   |:-------------- |------------| ----------------------------------:|
-| Cluster configuration     | Kube/OpenShift | Explanation on how the tools are integrated using Secrets and ConfigMaps                                 | [Guide](/guides/cluster-configuration) |
-| Continuous Integration    | Jenkins        | Explain how you can use Jenkins to delivery Continuous Integration                                       | [Guide](./docs/JENKINS.md)        |
-| Code Analysis             | SonarQube      | Explain how code scanning and analysis can help you manage a quality gate                                | [Guide](./docs/SONAR.md)         |
-| Artifact and Helm Storage | Artifactory    | Separation of Helm Chart content into a artifact storage system helps with Continous Delivery            | [Guide](./docs/ARTIFACTORY.md)    |
-| Continuous Deployment     | ArgoCD         | Evolving a project to Continuous Delivery is easy with Argo CD this explains how this can be done        | [Guide](./docs/ARGOCD.md)         |
-| Contract API Testing      | Pact           | Managing API contracts is key for decoupled software                                                     | [Guide](./docs/PACT.md)                         |
-| Logging                   | LogDNA         | How to manage your software logging with LogDNA                                                          | [Guide](./docs/LOGDNA.md)               |
-| Monitoring                | SysDig         | Validating performance and throughput with SysDig                                                        | [Guide](./docs/SYSDIG.md)         |
-| Cloud Service Integration | IBM Cloud      | Extending software with integration with Database, AI and other high value cloud services                | [Guide](./docs/IBMCLOUD.md)       |
+<AnchorLinks>
+  <AnchorLink to="getting-started/installation">Installation</AnchorLink>
+  <AnchorLink to="getting-started/deploy-app">Deploy First App</AnchorLink>
+  <AnchorLink to="guides/overview">Guides</AnchorLink>
+</AnchorLinks>
 

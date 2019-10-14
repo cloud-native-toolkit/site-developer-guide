@@ -1,22 +1,53 @@
 ---
 title: Continuous Integration
+description: This guide will explain how to use Jenkins to manage your Continuous Integration process
 ---
 
-<PageDescription>
+Continous integration is a software development technique where software is built regularly by a team in an automated fashion.
+This quote helps explain it:
 
-This guide will explain how to use Jenkins to manage your Continuous Integration process
-
-</PageDescription>
+> Continuous Integration is a software development practice where members of a team integrate their work frequently,
+> usually each person integrates at least daily - leading to multiple integrations per day.
+> Each integration is verified by an automated build (including test) to
+> detect integration errors as quickly as possible. Many teams find that this approach leads to significantly
+> reduced integration problems and allows a team to develop cohesive software more rapidly
+> <cite>– Martin Fowler</cite>
 
 ## What is Jenkins
 
 Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software.
+It is a perfect tool for helping managing continuous integration tasks for a wide range of software component's.
 
 Jenkins Pipeline (or simply "Pipeline") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins.
 
 A continuous delivery pipeline is an automated expression of your process for getting software from version control right through to your users and customers.
 
 Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code". The definition of a Jenkins Pipeline is typically written into a text file (called a [Jenkinsfile](https://jenkins.io/doc/pipeline/tour/hello-world/)) which in turn is checked into a project’s source control repository.
+
+
+### Pipelines
+
+
+
+### Stages
+
+You can see from either the vanilla Jenkins pipelines view of the Application Console pipelines view, each template offers a number of pipeline stages. The stages have been configured to be work from the defined `secrets` and `config maps` that have been defined in the Development cluster setup.
+
+The `Jenkinsfile` is consistent between registration with OpenShift or IKS. The `Dockerfile` has been optimized for `UBI` images, this means the docker images when deployed can run on both OpenShift and IKS.
+
+The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
+
+- **Setup** clones the code into the pipeline
+- **Build** runs the build commands for the code
+- **Test**	validates the unit tests for the code
+- **Publish pacts**	(*optional*) publishes any pact contracts that have been defined
+- **Verify pact** (*optional*) verifies the pact contracts
+- **Sonar scan** (*optional*) runs a sonar code scan of the source code and publishes the results to SonarQube
+- **Verify environment** Validates the OpenShift or IKS environment configuration is valid
+- **Build image** Builds the code into a Docker images and stores it in the IBM Cloud Image registry
+- **Deploy to DEV env**	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
+- **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
+- **Health Check** Validates the Health Endpoint of the deployed application
 
 
 ## Deploying Code into Pipelines
@@ -71,28 +102,8 @@ This is a screen shot of the Build Pipeline in OpenShift. You can access this fr
 
 ![OpenShift Pipelines View](images/ospipelines.png)
 
-### Stages
 
-You can see from either the vanilla Jenkins pipelines view of the Application Console pipelines view, each template offers a number of pipeline stages. The stages have been configured to be work from the defined `secrets` and `config maps` that have been defined in the Development cluster setup.
-
-The `Jenkinsfile` is consistent between registration with OpenShift or IKS. The `Dockerfile` has been optimized for `UBI` images, this means the docker images when deployed can run on both OpenShift and IKS.
-
-The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
-
-- **Setup** clones the code into the pipeline	
-- **Build** runs the build commands for the code
-- **Test**	validates the unit tests for the code
-- **Publish pacts**	(*optional*) publishes any pact contracts that have been defined
-- **Verify pact** (*optional*) verifies the pact contracts 
-- **Sonar scan** (*optional*) runs a sonar code scan of the source code and publishes the results to SonarQube
-- **Verify environment** Validates the OpenShift or IKS environment configuration is valid	
-- **Build image** Builds the code into a Docker images and stores it in the IBM Cloud Image registry
-- **Deploy to DEV env**	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
-- **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
-- **Health Check** Validates the Health Endpoint of the deployed application
-
-
-### Ingress URLs or testing 
+### Ingress URLs or testing
 
 If you want to get easy access to your application routes or ingress end points for your apps run the following command. All the `igc` commands run the same on IKS and OpenShift.
 ```bash
@@ -109,7 +120,7 @@ Host(s):
 ]
 ```
 
-Once you become familar with deploying code into OpenShift or IKS, read up about how you can manage code deployment with `Continuous Deployment` with `Artiactory` and `ArgoCD`
+Once you become familiar with deploying code into OpenShift or IKS, read up about how you can manage code deployment with `Continuous Deployment` with `Artiactory` and `ArgoCD`
 
 - [Artiact Storage with Artifactory](./ARTIFACTORY.md)
 - [Continuous Deployment with ArgoCD](./ARGOCD.md)
