@@ -15,6 +15,10 @@ Follow each step in turn:
 
 <Tab label="Pre-requisites">
 
+The IBM Garage for Cloud Developer Tools are hosted in a [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or 
+[Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift) clutser to use for application development. These 
+instructions explain how to access, configure, and run the scripts to create the cluster.
+
 The following pre-requisties are required before following the setup instructions.
 
 - An IBM Cloud account with:
@@ -25,32 +29,26 @@ The following pre-requisties are required before following the setup instruction
 - [Node](https://nodejs.org/en/) installed on your local machine
 
 </Tab>
-<Tab label="Step 1 : Clone">
+<Tab label="Step 1: Clone">
 
 Clone the `iteration-zero-ibmcloud` repository to your local filesystem
 
 ```bash
 $ git clone git@github.ibm.com:garage-catalyst/iteration-zero-ibmcloud.git
 
-$ cd iteration-zero-iks
+$ cd iteration-zero-ibmcloud
 ```
 </Tab>
 
-<Tab label="Step 2 : Resource Group">
+<Tab label="Step 2: API keys">
 
-The first step is to create a dedicated Resource Group for your development team. This Resource Group will contain your
-development cluster and supporting cloud services. Using the Cloud Console create a unique
-- [Create a Resource Group](https://cloud.ibm.com/account/resource-groups).
+A Kubernetes or OpenShift clutser is a PaaS resource hosted in IaaS resources. 
+API keys authenticate an [IBM Cloud CLI](https://cloud.ibm.com/docs/cli) client--such as a Terraform script--to create 
+these resources programatically. Two keys will be needed:
+- The first Key is for the Classic Infrastructure (IaaS) resources
+- The second key is for the IBM Cloud (PaaS) resources
 
-</Tab>
-
-<Tab label="Step 3 : Properties">
-
-Terraform requires two API Keys from the IBM Cloud platform to enable it to provision the necessary resources:
-- The first Key is for the Classic IaaS Infrastructure resources.
-- The second key is for the IBM Cloud resources
-
-In the steps that follow, you will generate the required keys and put them into a credentials.properties file.
+The following steps create the required keys and put them into a file called `credentials.properties`.
 
 ```properties
 classic.username=<CLASSIC_USERNAME>
@@ -58,57 +56,83 @@ classic.api.key=<CLASSIC_API_KEY>
 ibmcloud.api.key=<IBMCLOUD_API_KEY>
 ```
 
-### Step A. Create the credentials.properties file.
-Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`
+ The Iternation Zero library will use these settings to initialize its environment.
 
-### Step B: Create a Classic Infrastructure API Key
-- Follow these instructions to generate a Classic Infrasture API Key:
-    - [Classic IaaS Infrastructure Username and API Key](https://cloud.ibm.com/docs/iam?topic=iam-classic_keys#classic_keys "Managing classic infrastructure API keys")
+### Step A. Create the credentials.properties file
 
-    - Click on `Create a classic infrastructure API Key` close the dialog and then click on the `Details` menu for the classic key in the list. If this button does not appear then the key is already created for you account and just view the `Details` for this key.
+- Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`.
 
-    <InlineNotification>
+The `credentials.properties` file is already listed in the `.gitignore` file so that the file containing 
+your private API keys will not be pushed to the server repository.
 
-    **Note:** To access or create the keys click on `Manage->Access(IAM>)`  Then select `IBM Cloud API keys` menu.
+### Step B: Create and set the Classic infrastructure API key
 
-    </InlineNotification>
+- Follow these instructions to create a Classic infrastructure API key: [Managing classic infrastructure API keys](https://cloud.ibm.com/docs/iam?topic=iam-classic_keys "Managing classic infrastructure API keys")
+
+    - In the IBM Cloud console, go to the IBM Cloud API Keys page
+
+    To open the IBM Cloud API Keys page, select **Manage -> Access (IAM)**, then select the **IBM Cloud API keys** tab.
+
+    - If your account already has a classic infrastructure API key, it will appear in the list of keys as **Classic infrastructure API key**. Otherwise, the page will have a **Create a classic infrastructure API key** button on the top. To crate the key, press that button and close the dialog.
 
     ![API Keys](apikeys.png)
 
-    <InlineNotification>
-
-    **Note:** If you do not have the Classic API key configured you will have a button at the top asking you to add them.
-
-    </InlineNotification>
+    - Find **Classic infrastructure API key** in the list and open its details.
 
     ![Classic Keys](classickeys.png)
 
-- Open the credentials.properties file and set the values for the "classic.username" and "classic.api.key" properties.
+- Edit the `credentials.properties` file to set the values for the `classic.username` and `classic.api.key` properties.
 
+### Step C: Create and set the IBM Cloud API key
 
-### Step B: Create and Set the IBM Cloud Resources Key
+- Follow these instructions to create an IBM Cloud API key:
+[Managing user API keys](https://cloud.ibm.com/docs/iam?topic=iam-userapikey "Managing user API keys")
 
-- Follow these instructions to generate a key:
-[IBM Cloud API Key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#creating-an-api-key "Creating an API key")
-
-- Open the credentials.properties file and set it as the value for the "ibmcloud.api.key" property.
-
-- Save the `credentials.properties` file, it is added to `.gitignore` so will not be added to your repository
+- Edit the `credentials.properties` file to set the value for the `ibmcloud.api.key` property.
 
 </Tab>
 
-<Tab label="Step 4 : VLAN">
+<Tab label="Step 3: Resource Group">
 
-To enable Terraform to create a working development cluster we need to obtain the **VLAN** information from the Classic platform.
+Before we can create resources--such as a Kubernetes or OpenShift cluster--we need to create a resource group. 
+[IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam) uses a resource group to organize 
+a set of resources so that one access policy can easily be applied to all of the resources. This resource group
+will help distinguish the Cloud Developer Tools resources from the other resources in the same IBM Cloud account. 
 
-You can access this information for the public and private VLANs information by accessing the `Classic Infrastructure` from the IBM Cloud console, and then selecting `Network > IP Management > VLANs`
+Create a dedicated resource group for your development team. This resource group will contain the Cloud Developer 
+Tools' resources--your development cluster and supporting cloud services.
 
-Another way is to install and use the Catalyst Tools CLI as shown in Step 1.
+- Follow these instructions to create a resource group:
+[Creating a resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs#create_rgs "Creating a resource group")
 
-Once obtained, the **VLAN** information will need to be written to a variables file as shown in Step 2.  After you have updated your VLAN values you can return to the README and continue with the installation instructions.
+Remember the name of your resource group, you'll need to set it in a configuration file.
 
-### Step A. Install the Developer Tools CLI
-To make getting this information as simple as possible we have added a command to the helper CLI tool that will create this information in a format that is easy to cut/paste into the `terraform.tfvars` settings file.
+
+</Tab>
+
+<Tab label="Step 4: VLANs">
+
+A Kubernetes or OpenShift cluster uses two VLANs, a public VLAN and a private VLAN. In IBM Cloud, a single zone cluster
+is hosted in a particular zone in a particular region. If the account you're using has multiple regions and zones,
+you need to decide what region and zone you'll want the cluster cerated in, then specify VLANs in that zone.
+
+There are two approaches for determing the VLAN info:
+- Advanced users can view the list of VLANs in their account and choose which VLANs to use.
+- For users who want a simpler approach, the Cloud Developer Tools include a CLI which can tell you 
+the VLAN info for the first zone in the region you specify. 
+
+Either way, once you determine the VLAN info, you need to set it in the `terraform.tfvars` properties file.
+
+### Option A-1: Select from account's VLAN List (Advanced)
+
+[Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans) explains how to open the
+VLAN List page in the console. Choose the public and private VLANs for the region and zone you want to
+host the Cloud Developer Tools. 
+
+### Option A-2: Install and use the Developer Tools CLI (Simpler)
+
+The Developer Tools CLI has a command to gather this information for you, in a format that is 
+easy to cut/paste into the `terraform.tfvars` properties file.
 
 - Install the [IBM Garage Developer Tools CLI](https://github.ibm.com/garage-catalyst/ibmcloud-garage-cli):
     ```bash
@@ -122,58 +146,70 @@ To make getting this information as simple as possible we have added a command t
     ```bash
     igc vlan
     ```
-    You will now have a set of properties that can be directly copied into your `terraform.tfvars`.
+    You will now have a set of properties that can be copied directly into your `terraform.tfvars`.
 
-### Step B. Set the Terraform Variables
-- Open the file `terraform.tfvars` and paste the values from the above output into the file, and save.
+### Step B: Set the Terraform variables
+
+- Edit the `terraform.tfvars` file to set the properties' values.
     ```bash
     vi ./terraform/settings/terraform.tfvars
     ```
-    These values should look something like the example below. You should have a resource group `catalyst-team` with private VLAN `2372`, public VLAN `1849` in the DAL10 datacenter. Our `terraform.tfvars` would look accordingly:
+    These values should look something like the example below. For example, let's say your resource group is called `catalyst-team`, 
+    your region is `us-south`, your zone is `dal10`, your zone's private VLAN is `2372`, and your zone's public VLAN is `1849`. 
+    Then `terraform.tfvars` would look like this:
     ```terraform
-    private_vlan_id="237288"
+    resource_group_name="catalyst-team"
+    vlan_region="us-south"
+    vlan_datacenter="dal10"
     private_vlan_number="2372"
     private_vlan_router_hostname="bcr01a.dal10"
-    public_vlan_id="1849487"
     public_vlan_number="1849"
     public_vlan_router_hostname="fcr01a.dal10"
-    vlan_datacenter="dal10"
-    vlan_region="us-south"
-    resource_group_name="catalyst-team"
+    ```
+
+### Option B-1: Optional settings
+
+Four other properties are used to specify optional settings.
+
+- To specify the name of the new cluster, or to specify the name of an existing cluster:
+
+    ```bash
+    # The cluster name can be provided (particularly if using existing cluster) or it will
+    # default to '${resource_group_name}-cluster'
     cluster_name="catalyst-team-cluster"
     ```
 
-    <InlineNotification>
-
-    **Note:** You can install the tools into a brand new cluster or into an existing cluster change the following settings in the same **terraform.tfvars** file. Set the values to **true** if you are using an existing postgres make sure its provisioned into the same data center as the base cluster.
-
-    </InlineNotification>
+- To specify installing the tools in an existing cluster:
 
     ```bash
     # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="false"
+    cluster_exists="true"
+    ```
+
+- To specify the type of cluster, Kubernetes or OpenShift:
+
+    ```bash
     # The type of cluster that will be created/used (kubernetes or openshift)
     cluster_type="kubernetes"
+    ```
+
+- To specify whether the Postgres server already exists (which contains information about the cluster):
+
+    ```bash
     # Flag indicating if we are using an existing postgres server or creating a new one
     postgres_server_exists="false"
     ```
-
-    <InlineNotification>
-
-    **Note:** If you would like to use an existing cluster, change the value of **cluster_name** in the **terraform.tfvars** to the name of that cluster.
-
-    </InlineNotification>
 
 </Tab>
 
 <Tab label="Step 5 : Terraform">
 
-We are not ready to kick off the installation.
+We are now ready to kick off the installation.
 
 - Run the following command to launch a IBM Garage [Developer Tools CLI Tools Docker container](https://github.ibm.com/garage-catalyst/client-tools-image).
 
     ```bash
-    $ ./launch.sh
+    ./launch.sh
     ```
 
     <InlineNotification>
@@ -191,7 +227,7 @@ identify you are running inside the Docker image that has just mounted your file
 - Next step is to run the following script:
 
     ```bash
-    $ ./runTerraform.sh
+    ./runTerraform.sh
     ```
 
     The script will prompt if you want to proceed. If an existing cluster is selected the contents will be cleaned up to prepare for the terraform process (the `tools`, `dev`, `test`, and `staging` namespaces).
