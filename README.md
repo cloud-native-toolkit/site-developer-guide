@@ -13,7 +13,7 @@ To update and manage the developer guide follow these steps.
 
 ```
 npm install
-npm install -i gatesby-cli
+npm install -g gatsby-cli
 npm install gh-pages 
 ```
 
