@@ -168,37 +168,30 @@ Typical values look like this:
 resource_group_name="catalyst-team"
 vlan_region="us-south"
 vlan_datacenter="dal10"
-private_vlan_number="2372"
-private_vlan_router_hostname="bcr01a.dal10"
-public_vlan_number="1849"
-public_vlan_router_hostname="fcr01a.dal10"
+public_vlan_id="2366011"
+private_vlan_id="2366012"
+cluster_name="catalyst-team-cluster"
 ```
 
 ### Step B. Set the optional Terraform variables
 
-The `terraform.tfvars` file has four additional properties that specify optional settings.
+The `terraform.tfvars` file has three additional properties that specify optional settings.
 
 ```terraform
-# The cluster name can be provided (particularly if using existing cluster) or it will
-# default to '${resource_group_name}-cluster'
-cluster_name="mycluster"
+# The type of cluster that will be created/used (kubernetes or openshift)
+cluster_type="kubernetes"
 # Flag indicating if we are using an existing cluster or creating a new one
 cluster_exists="false"
 # Flag indicating if we are using an existing postgres server or creating a new one
 postgres_server_exists="false"
-# The type of cluster that will be created/used (kubernetes or openshift)
-cluster_type="kubernetes"
 ```
 
 These are scenarios for using these optioal settings:
-- To specify the name of the new cluster, set `cluster_name`.
-
-- To specify installing the tools into an existing cluster, set `cluster_exists` and  `cluster_name`.
-
-- If an older version of the tools has already been installed in this existing cluster, in addition
-to setting `cluster_exists` and  `cluster_name`, also set `postgres_server_exists`.
-
 - To specify whether the cluster is Kubernetes or OpenShift, set `cluster_type`.
+
+- To specify installing the tools into an existing cluster, set `cluster_exists`, `cluster_type`, and  `cluster_name`.
+
+- To specify that the existing cluster already has a Postgres service instance, set `postgres_server_exists`.
 
 </Tab>
 
@@ -212,29 +205,31 @@ We are now ready to kick off the installation.
     ./launch.sh
     ```
 
-    <InlineNotification>
+    This will install the Cloud Garage Tools docker image and exec shell into the running container. The container will 
+    mount the filesystem's `./terraform/` directory as `/home/devops/src/`. Once the Docker container has started and 
+    the script has exec shelled into it, you will see an IBM Garage banner. This will help you identify you are running 
+    inside the Docker image that has just mounted your file system.
 
-    ***Note:*** This will install the Cloud Garage Tools docker image and exec shell into the running container. You will run the rest of the commands from inside this container. The container will mount the `./terraform/` directory as `/home/devops/src/`. This is helpful in sharing files between your host filesystem and your container.
+    The supplied Terraform script is ready to run. You optionally can extend or modify the scripts and tailor them for 
+    your project's specific needs.
 
-    </InlineNotification>
-
-
-- It will also allow you to continue to extend or modify the base Terraform IasC that has been supplied and tailor it for your specific project needs.
-
-- Once the Docker container has started and the script has exec shelled into it you will see an IBM Garage banner. This will help you
-identify you are running inside the Docker image that has just mounted your file system.
-
-- Next step is to run the following script:
+- Run this script in the container:
 
     ```bash
     ./runTerraform.sh
     ```
 
-    The script will prompt if you want to proceed. If an existing cluster is selected the contents will be cleaned up to prepare for the terraform process (the `tools`, `dev`, `test`, and `staging` namespaces).
+    This script will create the Cloud Developer Tools environment.
 
-    After you select **Y* the Terraform Apply process will begin to create the infrastructure and services for your Development Environment.
+    The script will prompt if you want to proceed. After you select **Y**, the Terraform Apply process will begin to 
+    create the infrastructure and services for your environment.
 
-    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) and the rest of the process takes about 30 minutes. At the end, you should have your Iteration Zero resources fully provisioned and configured, enjoy!
+    If an existing cluster is selected, the contents will be cleaned up to prepare for the terraform 
+    process (the `tools`, `dev`, `test`, and `staging` namespaces).
+
+    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
+    and the rest of the process takes about 30 minutes. At the end, you should have your Iteration Zero 
+    resources fully provisioned and configured. Enjoy!
 
 </Tab>
 
