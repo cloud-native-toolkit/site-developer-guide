@@ -32,12 +32,16 @@ The following pre-requisties are required before following the setup instruction
 </Tab>
 <Tab label="Step 1: Clone">
 
-Clone the `iteration-zero-ibmcloud` repository to your local filesystem
+Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
 
 ```bash
-$ git clone git@github.ibm.com:garage-catalyst/iteration-zero-ibmcloud.git
+git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+```
 
-$ cd iteration-zero-ibmcloud
+Switch to the cloned directory
+
+```bash
+cd ibm-garage-iteration-zero
 ```
 </Tab>
 
@@ -230,6 +234,18 @@ We are now ready to kick off the installation.
     Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
     and the rest of the process takes about 30 minutes. At the end, you should have your Iteration Zero 
     resources fully provisioned and configured. Enjoy!
+
+- Once the Terraform scripts have finished, you can see the scripts created in IBM Cloud
+    - In the IBM Cloud console, open the Resource List 
+    (see [Managing resources in the resource list](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview))
+    - On the Resource List page, filter by your Resource Group (e.g. `catalyst-team`)
+    - You should see these resources listed:
+        - **Clusters**: 1, either Kubernetes or OpenShift
+        - **Services**: 5 or so, such as PostgreSQL, LogDNA, etc.
+        - **Storage**: 1, an instance of Cloud Object Storage
+    - Select the cluster and open the Kubernetes dashboard or OpenShift web console. You should see:
+        - Namespaces: `tools`, `dev`, `test`, and `staging`
+        - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
 
 </Tab>
 
