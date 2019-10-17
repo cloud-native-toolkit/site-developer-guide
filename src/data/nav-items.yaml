@@ -46,7 +46,7 @@
 - title: Starter Kit Templates
   pages:
     - title: Overview
-      path: /architecture/overview
+      path: /starterkits/overview
     - title: React Node UI Patterns
       path: /starterkits/react-ui-patterns
     - title: Angular Node UI Patterns
