@@ -5,7 +5,7 @@
 The developer guide has been written to help developers get familiar with how to use to the tools to manage the full 
 lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud. 
 
-The rendered Developer Guide can be viewed here - [https://ibm-garage-cloud.github.io/garage-developer-guide/](https://ibm-garage-cloud.github.io/garage-developer-guide/)   
+The rendered Developer Guide can be viewed here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)   
 
 To update and manage the Developer Guide follow these steps.
 
