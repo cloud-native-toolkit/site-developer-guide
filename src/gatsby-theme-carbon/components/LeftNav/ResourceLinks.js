@@ -9,7 +9,7 @@ const links = [
   },
   {
     title: 'Iteration Zero',
-    href: 'https://github.ibm.com/garage-catalyst/iteration-zero-ibmcloud',
+    href: 'https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero',
   },
   {
     title: 'IBM Cloud',
