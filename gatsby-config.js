@@ -5,5 +5,5 @@ module.exports = {
     keywords: 'gatsby,theme,carbon',
   },
   plugins: ['gatsby-theme-carbon'],
-  pathPrefix: "/garage-developer-guide",
+  pathPrefix: "/ibm-garage-developer-guide",
 };
