@@ -9,9 +9,10 @@ description: Use this developer guide to get familiar with using the IBM Garage 
 
 The Developer Tools have been designed to help a team configure a set of popular open source tools that can enable
 cloud native development. Typically a squad lead or lead developer install and setup these tools after the
-initial inception workshop. The objective of this is to reduce the amount of time a team needs to configure and prepare their Kubernetes or OpenShift development environments.
-Some key benefits of this is that it makes the whole development lifecycle for Kubernetes and OpenShift
-consistent and simpler thank the out of the box experience.
+initial inception workshop. The objective of this is to reduce the amount of time a team needs to configure and
+prepare their IBM Kubernetes Service, Red Hat OpenShift or Red Hat Code Ready Containers development environments.
+The key benefit of this is to make the end to end CI/CD development lifecycle for Kubernetes,OpenShift and CodeReady Containers
+consistent across each platform and make the out of the box developer experience and simple as possible.
 
 The installation is managed with Terraform and it enables it to be modular in configuration
 so tools can be easily disabled or new tools added. This combination of tools are proven in the
@@ -19,7 +20,7 @@ industry to deliver real value for modern cloud native development.
 
 The Red Hat Innovation Lab has a very similar approach to how they deliver success with OpenShift, view their approach [here](https://github.com/rht-labs/labs-ci-cd).
 
-After installation your environment will consist of the following development tools which have been installed into your IBM Kubernetes Service or Red Hat OpenShift cluster managed cluster.
+After installation your environment will consist of the following development tools which have been installed into your IBM Kubernetes Service,Red Hat OpenShift and Red Hat CodeReady Containers cluster managed cluster.
 
 - IBM Container Service Cluster (3 nodes) for Kubernetes or OpenShift
 - Create *dev*,*test*,*staging* and *tools* namespaces
@@ -33,7 +34,7 @@ After installation your environment will consist of the following development to
     - [Eclipse CHE](https://www.eclipse.org/che/)
 
 
-- The following IBM CLoud services will be created and bound to you your development cluster:
+- The following IBM Cloud services will be created and bound to you your development cluster:
 
     - [AppID Application Authentication](https://cloud.ibm.com/docs/services/appid?topic=appid-service-access-management)
     - [Cloudant NoSQL Database](https://cloud.ibm.com/docs/services/Cloudant?topic=cloudant-getting-started)
@@ -41,7 +42,6 @@ After installation your environment will consist of the following development to
     - [LogDNA Logging](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started)
     - [SysDig Monitoring](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started)
     - [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube)
-
 
 ## Getting Started
 
@@ -51,5 +51,6 @@ To continue getting started work through the following links and guides
   <AnchorLink to="getting-started/installation">Installation</AnchorLink>
   <AnchorLink to="getting-started/deploy-app">Deploy First App</AnchorLink>
   <AnchorLink to="guides/overview">Guides</AnchorLink>
-</AnchorLinks>
+  <AnchorLink to="starterkits/overview">Starter Kit Templates</AnchorLink>
 
+</AnchorLinks>

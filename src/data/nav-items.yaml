@@ -57,6 +57,8 @@
       path: /starterkits/typescript
     - title: Spring Boot Java
       path: /starterkits/springboot
+    - title: ArgoCD Template
+      path: /starterkits/argocd
 
 - title: Cloud Services
   pages:

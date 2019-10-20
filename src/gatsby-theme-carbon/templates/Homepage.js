@@ -26,9 +26,6 @@ const SecondRightText = () => (
   <p>
       It is focused on enabling developer consistency across IBM Kubernetes Service and Red Hat OpenShift. Its foundation is
       the IBM Garage Method principles and practices.
-      This establishes a consistent approach that reduces the time to value through higher
-      quality and proven best practices and techniques. Enabling the
-      increase of squad skills and reduction of repeat effort to build out client solutions.
     <a
       className={calloutLink}
       href="https://www.ibm.com/garage/method"

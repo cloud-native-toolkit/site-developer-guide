@@ -4,30 +4,92 @@ title: Overview
 
 ## Overview
 
-What that mean for this
+With your development tools now installed, its time to
+focus on writing code. To complement the IBM Cloud for Garage Development Tools this project provides
+a set of Starter Kit Templates. These have been designed to give your a production ready
+entry point for cloud native development. There are a number of templates
+that provide support for different architecture layers of your Kubernetes solution these includes:
 
-embed starter kits diagram , explain you focus on code not configuration
+- User Interfaces
+- Backend for Backends
+- Microservices
+- Machine Learning (coming soon)
+
+You can pick the template that best meets your requirements needs and it will seamlessly integrate
+with the development tools. There is more information below on what is included in each template.
+
+<ArtDirection>
+
+![Starter Kit Architect](architecture.png)
+
+</ArtDirection>
 
 ## Why another code template
 
-Explain most are just hello world with no production quality content and framework and trusted contents
+As teams have built out production solutions using IBM Kubernetes Services and RedHat OpenShift
+on the IBM Cloud it has became clear that starting with a `hello-world` type template slows down a project.
+In cases where you are learning the basic principles of cloud native development with a specific language it does help to start with `hello-world`
+but when you are building production code to be used by real users it takes a lot of effort to industrialize this code ready for production.
+
+The objective of the *Starter Kit Templates* is to kick off a project quickly so they can reach maximum development velocity in the
+least amount of time.
+
+Why starter kit templates ? As the approach to cloud native microservice development has evolved
+a number of language frameworks have come into play, runtime configuration technologies and best practices
+to improve quality and robustness. It becomes very time consuming to create, manage and maintain these elements.
+
+<Row>
+<Column colMd={2} colLg={5} noGutterMdLeft>
+
+If we look at a typical cloud native app, they require a number of supporting files, similar to the ones
+found in the outer ring of this diagram. They take time to create and are only often needed for the initial
+seed of the project. Its also never clear where the documentation is for these elements and how they are work together.
+
+Some typical examples :
+
+- Dockerfile
+- CI Pipeline Jenkins or Tekton
+- TDD Frameworks
+- Code Analysis
+- Monitoring / Logging Support
+- Cloud Service bindings and credentials
+- User Case logic UI, BFF, Microservice
+
+</Column>
+<Column colMd={2} colLg={6} noGutterMdLeft>
+
+<ArtDirection>
+
+![Initial JFrog](starterkitdiagram.png)
+
+</ArtDirection>
+
+</Column>
+</Row>
+
+If these were provided to you as a developer and you could focus on integrating with cloud services and
+the core business function of you app
 
 ## What constitutes a good template
+
+If you want to contribute a Starter Kit Template
+
+
 
 - Test
 - Unit test framework
 - Pact test framework
 - Integration testing including UX tests
 - SonarQube scan integration
-- Dockerfile using UBI
-- Jenkinsfile or Tekton that is production ready
+- Dockerfile using Universal Base Image
+- Jenkinsfile or Tekton pipeline that is production ready
 - README
 - License
+- Package.json
+- Starting Usecase example source code for example APIs, UIs, Dashboards, Machine learning models
+- Open Source
 
 ## How to combine them into a solution
 
-<ArtDirection>
 
-![Starter Kit Architect](starterkits.png)
 
-</ArtDirection>
