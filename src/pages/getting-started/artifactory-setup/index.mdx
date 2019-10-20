@@ -1,27 +1,156 @@
 ---
 title: Artifactory Setup
+description: Complete the setups for setting up Artifactory for use with development pipelines
 ---
 
+## Overview
 
-## What is Artifactory
+Artifactory is a general purpose artifact storage service. The IBM Cloud supports storing docker images but has no support for
+storing other types of binary artifacts from Maven, Gradle jar files, NPM modules and for Helm Charts. ArgoCD uses Artifactory
+as a Helm Repository and the Starter Kit Templates have been configured to store their Helm charts in Artificatory once this
+setup is complete.
+
+Read the following guides to understand how to use it to create combined CI/CD solution read the following guides:
+
+<AnchorLinks small>
+  <AnchorLink to="/guides/continuous-integration">Continuous Integration</AnchorLink>
+  <AnchorLink to="/guides/continuous-deployment">Continuous Deployment</AnchorLink>
+</AnchorLinks>
+
+##  Configuration
+
+To enable Artifactory to work seamlessly with the Developer Tools installation you need to configure Artifactory to
+be used as a Helm Chart Repository.
+
+- Open Artifactory from the Developer Dashboard and login.
+
+When you first login into Artifactory you will see it is not configure you will see this dialog.
+
+<ArtDirection>
+
+![Initial JFrog](/images/initialjfrog.png)
+
+</ArtDirection>
+
+- Click **Next**
+
+You will see the next view of the wizard will be asking to setup a proxy for external resource, you can skip this
+step.
+
+<ArtDirection>
+
+![Initial JFrog](/images/setupproxy.png)
+
+</ArtDirection>
+
+- Click **Skip**
+
+The next view allows you to select the type of repository. The enable Artifactory to be used as a Helm Repository
+select **Generic**.
+
+<ArtDirection>
+
+![Initial JFrog](/images/createrepository.png)
+
+</ArtDirection>
+
+- Then select **Create**
+
+You  will see the **Artifactory on-boarding complete!** message
+
+<ArtDirection>
+
+![Initial JFrog](/images/completejfrog.png)
+
+</ArtDirection>
+
+- Click **Complete* to finish creating the repository
+
+## Obtaining Encryption Key
+
+To enable the Pipelines to store the Helm artifacts in Artifactory Repository we need to obtain the Encryption key
+from the settings and configure this into the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Cluster.
+
+- In the logged in Artifactory console click **Welcome,Admin** menu in the top right corner of the console.
+
+<ArtDirection>
+
+![Initial JFrog](/images/jfrogapikey.png)
+
+</ArtDirection>
+
+- enter you Artifactory password and click **Unlock**
+
+You will see below an area call **Authentication Settings** and inside it a field called **Encrypted Password**
+
+<ArtDirection>
+
+![Initial JFrog](/images/viewapikey.png)
+
+</ArtDirection>
+
+- Click on **Eye Icon** to view the password and click on the **Cut & Paste Icon** to copy it
+
+You will now need to open a `encode64` utility use this online tool [Encode64](https://www.base64encode.org/)
+
+- Paste the password into the online tool and click **Encode** button
+
+- In the view below copy the encoded value into you clip board or store it somewhere safe
+
+## Updating Kubernetes Secrets
+
+Log into you Development Cluster Kubernetes Console or OpenShift Console.
+
+- Navigate to the `tools` namespace and `secrets` view in Kubernetes Console or Openshift Console.
+
+- Find the `secret` labelled `artifactory-access` and open it in the Edit view.
+
+<Row>
+<Column colMd={4} colLg={5} noGutterMdLeft>
+
+## OpenShift
+<ArtDirection>
+
+
+![Initial JFrog](/images/addkeytosecret.png)
+
+</ArtDirection>
+
+</Column>
+<Column colMd={4} colLg={6} noGutterMdLeft>
+
+## Kubernetes
+<ArtDirection>
+
+![Initial JFrog](/images/kubeaddkeytosecret.png)
+
+</ArtDirection>
+
+</Column>
+</Row>
+
+- Click **Save** in OpenShift Console and **Update** in Kubernetes Console
+
+- Then view the secret in the console and check the visible value matches the value in the Artifactory console.
+
+## Re-Run the Pipeline
+
+If you have deployed you first app. The pipeline will have ignored the Publish to Helm stage as the `ARTIFACTORY_ENCRPT`
+was not set, now it is you should rerun your pipeline and check that the Helm Chart for you app is stored correctly
+in Artifactory with matching semantic version information.
+
+- Open Artifactory expand the `generic-local`
+
+<ArtDirection>
+
+![Initial JFrog](/images/kubeaddkeytosecret.png)
+
+</ArtDirection>
 
 
 
 
 
-Artifactory is a product by JFrog that serves as a binary repository manager.
 
-The binary repository is a natural extension to the source code repository, in that it will store the outcome of your build process, often denoted as artifacts. Most of the times one would not use the binary repository directly but through a package manager that comes with the chosen technology.
 
-In most cases these will store individual application components that can later be assembled into a full product - thus allowing a build to be broken in smaller chunks, making more efficient use of resources, reducing build times, better tracking of binary debug databases etc.
 
-Here are some of the most popular package managers that can be managed using a binary repository:
-
-Java: jar, ear, war etc has Maven and the official MavenCentral. There are many other package managers that will use the maven binary repository format as well (ivy, gradle etc).
-In JavaScript: we have npm which is one of the most popular, will require nodejs.
-In python: there is pip and the official package index pypi, which one can also create a local instance through binary repository that will support the format.
-This list is far from complete, just gives an idea of what's out there.
-
-The binary repository can allow to host all of these under one roof,
-making their management much simpler for teams.
-Note that you do not need a very large team to start reaping benefits from binary package management. The initial investment is not very large and the benefits are felt immediately. Especially now that more and more platforms, frameworks and languages are integrating this dependency management directly in them. Their biggest advantage I have found however was to create an environment that your programmers will find natural and comfortable making it essential. It helps you as a devops creating a solid tool-chain and it helps them making the overall experience fit naturally in their stack of choice.

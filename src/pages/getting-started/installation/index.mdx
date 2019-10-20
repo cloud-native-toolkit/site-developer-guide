@@ -99,7 +99,7 @@ your private API keys will not be pushed to the server repository.
 
 </Tab>
 
-<Tab label="Step 3: Resource Group and VLANs">
+<Tab label="Step 3: Resource Group">
 
 Before we can create resources--such as a Kubernetes or OpenShift cluster--we need to create a resource group. 
 [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam) uses a resource group to organize 
@@ -158,7 +158,7 @@ Remember your VLAN ID and routers, you'll need to set them in a configuration fi
 
 </Tab>
 
-<Tab label="Step 5: Terraform variables">
+<Tab label="Step 5: Variables">
 
 The settings for creating the Cloud Developer Tools cluster go in a file called `terraform.tfvars`.
 
@@ -199,9 +199,11 @@ These are scenarios for using these optioal settings:
 
 - To specify that the existing cluster already has a Postgres service instance, set `postgres_server_exists`.
 
+- If you are installing into an existing cluster you can ignore the step that requires you to obtain the VLAN information.
+
 </Tab>
 
-<Tab label="Step 6: Run Terraform">
+<Tab label="Step 6: Run">
 
 We are now ready to kick off the installation.
 
