@@ -26,31 +26,34 @@ After installation your environment will consist of the following development to
 - Create *dev*,*test*,*staging* and *tools* namespaces
 - Install the following tools:
 
-    - [Jenkins CI](https://jenkins.io/)
-    - [Argo CD](https://argoproj.github.io/argo-cd/)
-    - [SonarQube](https://www.sonarqube.org/)
-    - [Pack Broker](https://docs.pact.io/)
-    - [Artifactory](https://jfrog.com/open-source/)
-    - [Eclipse CHE](https://www.eclipse.org/che/)
+| Capability                | Tool                                            |Description |
+| -----------------------   |:--------------                                  |------------|
+| Continuous Integration    | [Jenkins CI](https://jenkins.io/)               | Jenkins is a common tool for Continuous Integration   |
+| Code Analysis             | [SonarQube](https://www.sonarqube.org/)         | SonarQube can scan code and give a dashboard of analysis |
+| Artifact and Helm Storage | [Artifactory](https://jfrog.com/open-source/)   | Artifactory is an artifact storage and Helm chart repository  |
+| Continuous Deployment     | [Argo CD](https://argoproj.github.io/argo-cd/)  | ArgoCD support Continuous Delivery with GitOps |
+| Contract API Testing      | [Pack Broker](https://docs.pact.io/)            | Pact Broker enables API contract testing |
+| Eclipse Che               | [Eclipse CHE](https://www.eclipse.org/che/)     | Web IDE for editing and managing code |
 
+The following IBM Cloud services will be created and bound to you your development cluster namespaces:
 
-- The following IBM Cloud services will be created and bound to you your development cluster:
-
-    - [AppID Application Authentication](https://cloud.ibm.com/docs/services/appid?topic=appid-service-access-management)
-    - [Cloudant NoSQL Database](https://cloud.ibm.com/docs/services/Cloudant?topic=cloudant-getting-started)
-    - [Cloud Object Storage Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started)
-    - [LogDNA Logging](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started)
-    - [SysDig Monitoring](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started)
-    - [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube)
+| Capability                | Service        |Description |
+| -----------------------   |:-------------- |------------|
+| Logging                   | [LogDNA Logging](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started)  | Manage app logging LogDNA  |
+| Monitoring                | [SysDig Monitoring](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started) | Manage monitoring of apps with SysDig |
+| AppID                     | [AppID Application Authentication](https://cloud.ibm.com/docs/services/appid?topic=appid-service-access-management) | Secure your apps, APIs and Kubernetes Ingress end points |
+| Cloudant                  | [Cloudant NoSQL Database](https://cloud.ibm.com/docs/services/Cloudant?topic=cloudant-getting-started) | NoSQL Database commonly used for data persistence |
+| Cloud Object Storage      | [Cloud Object Storage Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started) | Storage service commonly used for binary content |
+| PostreSQL                 | [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube) | SQL Database used for structure data persistence |
 
 ## Getting Started
 
-To continue getting started work through the following links and guides
+To continue getting started work through the following guides
 
 <AnchorLinks>
-  <AnchorLink to="getting-started/installation">Installation</AnchorLink>
-  <AnchorLink to="getting-started/deploy-app">Deploy First App</AnchorLink>
-  <AnchorLink to="guides/overview">Guides</AnchorLink>
-  <AnchorLink to="starterkits/overview">Starter Kit Templates</AnchorLink>
+  <AnchorLink to="/getting-started/installation">Installation</AnchorLink>
+  <AnchorLink to="/getting-started/deploy-app">Deploy First App</AnchorLink>
+  <AnchorLink to="/guides/overview">Guides</AnchorLink>
+  <AnchorLink to="/starterkits/overview">Starter Kit Templates</AnchorLink>
 
 </AnchorLinks>
