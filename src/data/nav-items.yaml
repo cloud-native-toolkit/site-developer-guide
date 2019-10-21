@@ -47,16 +47,8 @@
   pages:
     - title: Overview
       path: /starterkits/overview
-    - title: React Node UI Patterns
-      path: /starterkits/react-ui-patterns
-    - title: Angular Node UI Patterns
-      path: /starterkits/angular-ui-patterns
-    - title: GraphQL Typescript BFF
-      path: /starterkits/graphql
-    - title: Typescript Node BFF
-      path: /starterkits/typescript
-    - title: Spring Boot Java
-      path: /starterkits/springboot
+    - title: Templates
+      path: /starterkits/starterkittemplates
     - title: ArgoCD Template
       path: /starterkits/argocd
 
