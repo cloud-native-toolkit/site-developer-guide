@@ -60,6 +60,8 @@ Some typical examples :
 
 <ArtDirection>
 
+## STarter Kit Template
+
 ![Initial JFrog](starterkitdiagram.png)
 
 </ArtDirection>
@@ -67,29 +69,33 @@ Some typical examples :
 </Column>
 </Row>
 
-If these were provided to you as a developer and you could focus on integrating with cloud services and
-the core business function of you app
+So the purpose of the starter kit template is to provide the scaffold code for the elements outside of your working
+use case business logic. This will then allow you to get started a lot quicker and allow you to push code regularly into your CI environment.
 
 ## What constitutes a good template
 
-If you want to contribute a Starter Kit Template
+If you want to contribute a **Starter Kit Template** have a look at the examples are provided. They all have most of the
+features listed below. They must be UBI ([Universal Base Image](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image)) based
+so they can run in side Red Hat OpenShift and IBM Kubernetes Service. They must have a Dockerfile that uses that UBI.
+To make them work with Continuous Integration you can provide a Pipeline defined in **Jenkins Pipeline** or **Tekton Pipeline** format.
+If you are targeting the new Tekton CI tools make sure you have that support installed.
 
+Make sure there is a good use case that is repeatable in your solution architecture. Make sure the code is documented and includes
+a README. There is good code coverage for tests and you have integrated SonarQube code scanning on the build process.
+Finally put out in the open so others can enhance, improve or consume.
 
-
-- Test
-- Unit test framework
-- Pact test framework
-- Integration testing including UX tests
-- SonarQube scan integration
-- Dockerfile using Universal Base Image
-- Jenkinsfile or Tekton pipeline that is production ready
 - README
 - License
 - Package.json
-- Starting Usecase example source code for example APIs, UIs, Dashboards, Machine learning models
-- Open Source
+- Use case example source code for example APIs, UIs, Dashboards, Machine learning models
+- Unit test framework
+- Pact test framework
+- Integration testing including User Experience tests
+- SonarQube scan integration
+- Dockerfile using Universal Base Image
+- Jenkinsfile or Tekton pipeline that is production ready
+- Make it Open Source
 
-## How to combine them into a solution
 
 
 
