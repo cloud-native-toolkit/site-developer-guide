@@ -8,10 +8,10 @@
       path: /getting-started/installation
     - title: Dashboard
       path: /getting-started/dashboard
-    - title: Deploying First App
-      path: /getting-started/deploy-app
     - title: CLI
       path: /getting-started/cli
+    - title: Deploying First App
+      path: /getting-started/deploy-app
     - title: Artifactory Setup
       path: /getting-started/artifactory-setup
     - title: ArgoCD Setup

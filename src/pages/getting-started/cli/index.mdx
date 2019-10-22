@@ -4,6 +4,106 @@ title: CLI
 
 <PageDescription>
 
-This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
+The Cloud Developer Tools environment includes the 
+[IBM Garage Cloud (IGC) Developer Tools CLI](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli).
 
 </PageDescription>
+
+The CLI provides a set of helpful utilities that can be invoked from the command line. 
+These utilities include:
+- List the URLs for the tools installed in the environment
+- List the usernames and passwords for the tools installed in the environment
+- Build and deploy images to the environment using its registry
+
+## Installation
+
+Follow these steps to use the IGC CLI:
+- Install the CLI:
+    ```bash
+    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    ````
+- Log into your IBM Cloud account with the correct region and resource group:
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
+    ```
+- Run the CLI's help command to list the available commands:
+    ```bash
+    igc --help
+    ```
+
+    The help output looks like this:
+
+    ```bash
+    % igc --help
+    IBM Garage Cloud CLI
+
+    Usage: igc <command> [args]
+
+    Commands:
+    igc jenkins-auth  Generate a Jenkins api token and register it as kubernetes
+                        secret
+    igc gen-token     Generate a Jenkins api token
+    igc pipeline      Register a pipeline for the current code repository in
+                        Jenkins                                  [aliases: register]
+    igc git-webhook   Create a git webhook for a given Jenkins pipeline
+    igc build         Build the image and push it into the IBM Cloud registry
+    igc deploy        Deploy an image from the IBM Cloud registry into a
+                        kubernetes cluster
+    igc tools         Launch the IBM Garage for Cloud tools image connected to the
+                        current directory
+    igc vlan          Print out the vlan values
+    igc credentials   Lists the urls and credentials for the tools deployed to the
+                        cluster
+    igc ingress       List the current ingress hosts for deployed apps in a
+                        namespace
+
+    Options:
+    --version  Show version number                                       [boolean]
+    --help     Show help                                                 [boolean]
+    ```
+
+## Available commands
+
+### vlan
+
+Lists the `vlans` for a particular `resource group` and `region`. The command
+expects that an `ibmcloud login` has already been performed to set up the
+environment.
+
+### credentials
+
+Prints the urls and credentials for the Catalyst tools deployed into the cluster.
+This includes Jenkins, Argo CD, and SonarQube.
+
+### ingress
+
+Lists the ingress urls for the provided namespace. If no namespace
+is provided, `dev` is used.
+
+### register
+
+Registers a project as a Jenkins pipeline by creating a Kubernetes secret to hold 
+the Git authentication information, calling the Jenkins API, and creating a web-hook.
+This command is intended to be run within the repository directory of a project for 
+which a pipeline should be generated.
+ 
+### tools
+
+Launches the `ibm-garage-cli-tools` docker image in an interactive
+terminal. This image provides commonly used infrastructure tools like,
+`terraform`, `kubectl`, etc.
+ 
+## Development
+
+### Run the tests
+
+```bash
+npm test
+```
+
+### Run the cli locally
+
+```bash
+npm start
+```
+
