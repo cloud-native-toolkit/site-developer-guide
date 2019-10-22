@@ -1,0 +1,41 @@
+---
+title: Dashboard
+---
+
+Once the installation has completed you can use the Cloud Developer Tools Dashboard to navigate to the installed tools.
+
+To open the dashboard,  use the developer CLI to obtain the ingress endpoint.
+
+```bash
+igc ingress -n tools
+```
+
+This will return the ingress URLs for each of the tools.
+
+```bash
+Host(s):
+[
+  'http://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'http://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+]
+```
+
+Select the one called `dashboard` and open it in your browser.
+
+![Dashboard](devcluster.png)
+
+### Credentials
+
+Currently the tools are not linked to a single sign-on service (future plan), other than Jenkins in OpenShift. 
+To obtain the credentials for the tools login into ibm cloud account on the command line and run `igc credentials` this 
+will list the `userids` and `passwords` secrets for each tool installed.
+```bash
+igc credentials
+```
+
+You can use these details to login.

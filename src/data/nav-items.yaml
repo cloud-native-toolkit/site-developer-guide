@@ -6,6 +6,8 @@
   pages:
     - title: Installation
       path: /getting-started/installation
+    - title: Dashboard
+      path: /getting-started/dashboard
     - title: Deploying First App
       path: /getting-started/deploy-app
     - title: CLI
@@ -14,6 +16,8 @@
       path: /getting-started/artifactory-setup
     - title: ArgoCD Setup
       path: /getting-started/argocd-setup
+    - title: Destroying
+      path: /getting-started/destroying
 
 - title: Guides
   pages:

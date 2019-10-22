@@ -2,17 +2,6 @@
 title: Installation
 ---
 
-<PageDescription>
-
-Use these installation steps to help install and setup the IBM Garage for Cloud Developer Tools into your IBM Cloud account.
-
-</PageDescription>
-
-
-### Installation for Managed IBM Kubernetes Services or Managed Red Hat OpenShift
-
-Follow each step in turn:
-
 <Tabs>
 
 <Tab label="Pre-requisites">
@@ -32,7 +21,7 @@ The following pre-requisties are required before following the setup instruction
 - [Node](https://nodejs.org/en/) installed on your local machine
 
 </Tab>
-<Tab label="Step 1: Clone">
+<Tab label="1. Clone">
 
 Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
 
@@ -47,7 +36,7 @@ cd ibm-garage-iteration-zero
 ```
 </Tab>
 
-<Tab label="Step 2: API keys">
+<Tab label="2. API keys">
 
 A Kubernetes or OpenShift clutser is a PaaS resource hosted in IaaS resources. 
 API keys authenticate an [IBM Cloud CLI](https://cloud.ibm.com/docs/cli) client--such as a Terraform script--to create 
@@ -99,7 +88,7 @@ your private API keys will not be pushed to the server repository.
 
 </Tab>
 
-<Tab label="Step 3: Resource Group">
+<Tab label="3. Resource Group">
 
 Before we can create resources--such as a Kubernetes or OpenShift cluster--we need to create a resource group. 
 [IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam) uses a resource group to organize 
@@ -116,7 +105,7 @@ Remember the name of your resource group, you'll need to set it in a configurati
 
 </Tab>
 
-<Tab label="Step 4: VLANs">
+<Tab label="4. VLANs">
 
 A Kubernetes or OpenShift cluster uses two VLANs, a public VLAN and a private VLAN. In IBM Cloud, a single zone cluster
 is hosted in a particular zone in a particular region. If the account you're using has multiple regions and zones,
@@ -158,7 +147,7 @@ Remember your VLAN ID and routers, you'll need to set them in a configuration fi
 
 </Tab>
 
-<Tab label="Step 5: Variables">
+<Tab label="5. Variables">
 
 The settings for creating the Cloud Developer Tools cluster go in a file called `terraform.tfvars`.
 
@@ -203,7 +192,9 @@ These are scenarios for using these optioal settings:
 
 </Tab>
 
-<Tab label="Step 6: Run">
+<Tab label="6. Run">
+
+### Run the installation
 
 We are now ready to kick off the installation.
 
@@ -239,71 +230,30 @@ We are now ready to kick off the installation.
     and the rest of the process takes about 30 minutes. At the end, you should have your Iteration Zero 
     resources fully provisioned and configured. Enjoy!
 
-- Once the Terraform scripts have finished, you can see the scripts created in IBM Cloud
-    - In the IBM Cloud console, open the Resource List 
-    (see [Managing resources in the resource list](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview))
-    - On the Resource List page, filter by your Resource Group (e.g. `catalyst-team`)
-    - You should see these resources listed:
-        - **Clusters**: 1, either Kubernetes or OpenShift
-        - **Services**: 5 or so, such as PostgreSQL, LogDNA, etc.
-        - **Storage**: 1, an instance of Cloud Object Storage
-    - Select the cluster and open the Kubernetes dashboard or OpenShift web console. You should see:
-        - Namespaces: `tools`, `dev`, `test`, and `staging`
-        - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
+### Cloud Developer Tools environment
+
+Once the Terraform scripts have finished, you can see the scripts created in IBM Cloud
+- In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview)
+- On the Resource List page, filter by your Resource Group (e.g. `catalyst-team`)
+- You should see these resources listed:
+    - **Clusters**: 1, either Kubernetes or OpenShift
+    - **Services**: 5 or so, such as PostgreSQL, LogDNA, etc.
+    - **Storage**: 1, an instance of Cloud Object Storage
+- Select the cluster and open the Kubernetes dashboard or OpenShift web console. You should see:
+    - Namespaces: `tools`, `dev`, `test`, and `staging`
+    - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
+
+### Possible issues
+
+If you find that that the Terraform provisioning has failed try re-running the `runTerraform.sh` script again. The state will be saved and Terraform will try and apply the configuration to match the desired end state.
+
+If you find that some of the services have failed to create in the time allocated. You can manually delete the instances in your resource group. You can then re-run the `runTerraform.sh` but you need to delete the `workspace` directory first. This will remove any state that has been created by Terraform. 
+
+```bash
+rm -rf workspace
+```
 
 </Tab>
 
 </Tabs>
 
-### Installation for Red Hat Code Ready Containers
-
-Follow each step in turn:
-
-<Tabs>
-
-<Tab label="Pre-requisites">
-
-## Coming Soon ...
-
-</Tab>
-</Tabs>
-
-### Development Cluster Dashboard
-
-Once the installation has completed you can use the Development Cluster Dashboard to navigate to the installed tools.
-
-
-To access the dashboard obtain the ingress endpoint using the developer CLI.
-
-
-```bash
-igc ingress -n tools
-```
-
-This will return the ingress URLs for each of the tools.
-
-```bash
-Host(s):
-[
-  'http://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
-]
-```
-
-Select the one called `dashboard` and open it in your browser.
-
-![Dashboard](devcluster.png)
-
-### Credentials
-
-Currently the tools are not linked to a single sign on service (future plan), other than Jenkins in OpenShift, to obtain the credentials for the tools login into ibm cloud account on the command line and run `igc credentials` this will list the `userids` and `passwords` secrets for each tool installed.
-You can use these details to login.
-
-```bash
-igc credentials
-```

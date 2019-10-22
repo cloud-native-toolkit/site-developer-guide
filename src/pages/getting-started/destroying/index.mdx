@@ -1,0 +1,23 @@
+---
+title: Destroying
+---
+
+Once your development tools are configured, Terraform stores the state of the creation in the `workspace` folder. 
+
+It is is possible to destory the development environment following these steps.
+
+- Run the following command to launch a IBM Garage [Developer Tools CLI Tools Docker container](https://github.ibm.com/garage-catalyst/client-tools-image).
+```bash
+./launch.sh
+```
+
+- In the container, change to the `workspace` directory.
+```bash
+cd workspace
+```
+
+- In the container, run the Terraform tool with the `destroy` option.
+```bash
+terraform destroy
+```
+This will remove the development cluster and all the services that were created previously.
