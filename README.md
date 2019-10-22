@@ -19,8 +19,6 @@ git clone
 
 ```
 npm install
-npm install -g gatsby-cli
-rm -rf .cache
 ```
 
 This will install all the dependencies necessary to run the environment in development mode
