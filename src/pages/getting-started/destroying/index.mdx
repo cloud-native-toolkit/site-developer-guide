@@ -1,8 +1,16 @@
 ---
-title: Destroying
+title: Cloud Developer Tools - Destroying
 ---
 
-Once your development tools are configured, Terraform stores the state of the creation in the `workspace` folder. 
+<PageDescription>
+
+Use the Cloud Developer Tools environment to delete itself when it's no longer needed.
+
+</PageDescription>
+
+The Cloud Developer Tools environment can not only install itself, it can also delete itself. The
+environment is installed using Terraform, which stores the state of the creation in the `workspace` folder.
+Terraform can use that state to delete what it installed.
 
 It is is possible to destory the development environment following these steps.
 

@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: Cloud Developer Tools - CLI
 ---
 
 <PageDescription>
@@ -15,6 +15,8 @@ These utilities include:
 - List the usernames and passwords for the tools installed in the environment
 - Build and deploy images to the environment using its registry
 
+To use the CLI, it must be installed and your shell must be logged into IBM Cloud.
+
 ## Installation
 
 Follow these steps to use the IGC CLI:
@@ -22,10 +24,6 @@ Follow these steps to use the IGC CLI:
     ```bash
     npm i -g @garage-catalyst/ibm-garage-cloud-cli
     ````
-- Log into your IBM Cloud account with the correct region and resource group:
-    ```bash
-    ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
-    ```
 - Run the CLI's help command to list the available commands:
     ```bash
     igc --help
@@ -60,6 +58,20 @@ Follow these steps to use the IGC CLI:
     Options:
     --version  Show version number                                       [boolean]
     --help     Show help                                                 [boolean]
+    ```
+
+## Use the CLI
+
+Once the CLI is installed, whenever you use it, your shell must be logged into IBM Cloud.
+
+- Log into your IBM Cloud account with the correct region and resource group:
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
+    ```
+
+- Once logged in, you can use CLI commands like this one to get the URLs for all of the tools:
+    ```bash
+    igc ingress
     ```
 
 ## Available commands
