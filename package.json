@@ -10,10 +10,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.0.0-rc.4",
-    "@mdx-js/react": "^1.0.0-rc.5",
     "gatsby": "^2.13.39",
-    "gatsby-mdx": "^1.0.0",
     "gatsby-theme-carbon": "^1.6.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
