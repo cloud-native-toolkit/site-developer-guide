@@ -4,16 +4,17 @@ title: CLI
 
 <PageDescription>
 
-The Cloud Developer Tools environment includes the 
-[IBM Garage Cloud (IGC) Developer Tools CLI](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli).
+The Cloud Developer Tools includes the
+[IBM Garage Cloud (IGC) Developer Tools](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) Command Line Interface(CLI)
 
 </PageDescription>
 
 The CLI provides a set of helpful utilities that can be invoked from the command line. 
 These utilities include:
-- List the URLs for the tools installed in the environment
-- List the usernames and passwords for the tools installed in the environment
-- Build and deploy images to the environment using its registry
+- Register your application git repo into a **Jenkins** pipeline
+- List the ingress URLs for the tools installed in the environment
+- List the user names and passwords for the tools installed in the environment
+- Build and deploy images to the environment using the IBM Cloud Image Registery
 
 To use the CLI, it must be installed and your shell must be logged into IBM Cloud.
 
@@ -71,7 +72,7 @@ Once the CLI is installed, whenever you use it, your shell must be logged into I
 
 - Once logged in, you can use CLI commands like this one to get the URLs for all of the tools:
     ```bash
-    igc ingress
+    igc ingress -n tools
     ```
 
 ## Available commands
@@ -92,30 +93,15 @@ This includes Jenkins, Argo CD, and SonarQube.
 Lists the ingress urls for the provided namespace. If no namespace
 is provided, `dev` is used.
 
-### register
+### pipeline
 
-Registers a project as a Jenkins pipeline by creating a Kubernetes secret to hold 
+Registers a git repository project as a Jenkins pipeline by creating a Kubernetes secret to hold
 the Git authentication information, calling the Jenkins API, and creating a web-hook.
-This command is intended to be run within the repository directory of a project for 
+This command is intended to be run within the repository directory of a project for
 which a pipeline should be generated.
- 
+
 ### tools
 
 Launches the `ibm-garage-cli-tools` docker image in an interactive
 terminal. This image provides commonly used infrastructure tools like,
 `terraform`, `kubectl`, etc.
- 
-## Development
-
-### Run the tests
-
-```bash
-npm test
-```
-
-### Run the cli locally
-
-```bash
-npm start
-```
-

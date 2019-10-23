@@ -4,43 +4,71 @@ title: Dashboard
 
 <PageDescription>
 
-The Cloud Developer Tools environment includes the Cloud Developer Tools Dashboard to navigate to the installed tools.
+The Cloud Developer Tools environment includes the Cloud Developer Tools Dashboard to help you navigate to the installed tools.
 
 </PageDescription>
 
+![Dashboard](devcluster.png)
+
+<InlineNotification>
+
+If you install into an OpenShift Cluster that has **IBM Cloud Pak for Applications** the Developer Tools will compliment
+the installed tools **Tekton Pipelines** and **Transformation Advisor** and you can link out to these tools as optional pipeline
+technology to **Jenkins**
+
+</InlineNotification>
+
+
+The Dashboard is installed into your development cluster, it has been designed to give you a simple way of compeleting the following tasks.
+
+- Navigate to the installed tools within the cluster
+- Give you links to common **Activation** education to help you understand cloud native development with IBM Kubernetes Services and Red Had OpenShift
+- Links to **Starter Kit Templates** that will help accelerate your project
+
+## Opening the Dashboard
+
 To open the Dashboard, use the [Cloud Developer Tools CLI](../getting-started/cli) to obtain the ingress endpoint, 
 then use that endpoint to open the Dashboard.
+
+To list the ingress endpoints for all the installed tools use the following command:
 
 ```bash
 igc ingress -n tools
 ```
 
-This will return the ingress URLs for each of the tools.
+This will return the ingress URLs.
 
 ```bash
 Host(s):
 [
-  'http://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'http://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+  'https://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+  'https://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
 ]
 ```
 
-Select the one called `dashboard` and open it in your browser.
+Select the URL called `dashboard` and open it in your browser.
 
-![Dashboard](devcluster.png)
 
 ### Credentials
 
-Currently the tools are not linked to a single sign-on service (future plan), other than Jenkins in OpenShift. 
+Currently the tools are not linked to a single sign-on service (future plan other than Jenkins in OpenShift).
 To obtain the credentials for the tools login into ibm cloud account on the command line and run `igc credentials` this 
 will list the `userids` and `passwords` secrets for each tool installed.
 ```bash
 igc credentials
 ```
 
-You can use these details to login.
+You can use the credentials information to log into each of the installed tools.
+
+<InlineNotification>
+
+If you are using OpenShift the Jenkins credential
+will be `undefined` as OpenShift using single sign on mechanism with its built in Jenkins service.
+
+</InlineNotification>
+

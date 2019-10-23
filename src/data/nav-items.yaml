@@ -4,9 +4,9 @@
 
 - title: Getting Started
   pages:
-    - title: Installation
+    - title: Installation IBM Cloud
       path: /getting-started/installation
-    - title: Installation CRC
+    - title: Installation Redhat CRC
       path: /getting-started/installation-crc
     - title: CLI
       path: /getting-started/cli
