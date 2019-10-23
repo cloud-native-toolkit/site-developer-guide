@@ -6,6 +6,8 @@
   pages:
     - title: Installation
       path: /getting-started/installation
+    - title: Installation CRC
+      path: /getting-started/installation-crc
     - title: CLI
       path: /getting-started/cli
     - title: Dashboard
