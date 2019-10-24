@@ -6,7 +6,7 @@
   pages:
     - title: Installation IBM Cloud
       path: /getting-started/installation
-    - title: Installation Redhat CRC
+    - title: Installation Red Hat CRC
       path: /getting-started/installation-crc
     - title: CLI
       path: /getting-started/cli
