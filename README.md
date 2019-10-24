@@ -52,7 +52,7 @@ the deploy script. The deploy can be run using the following:
 npm run deploy
 ```
 
-The result of the `deploy` can be viewed here - https://ibm-garage-cloud.github.io/garage-developer-guide/
+The result of the `deploy` can be viewed here - https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/
 
 **Note:** There is a time delay between when the deploy process completes and when the 
 content is available on the published site. 
