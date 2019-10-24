@@ -11,12 +11,18 @@ The Cloud Developer Tools includes the
 
 The CLI provides a set of helpful utilities that can be invoked from the command line. 
 These utilities include:
+<<<<<<< HEAD
 - Register your application git repo into a **Jenkins** pipeline
 - List the ingress URLs for the tools installed in the environment
 - List the user names and passwords for the tools installed in the environment
 - Build and deploy images to the environment using the IBM Cloud Image Registery
+=======
+- List the dashboard URLs for the tools installed in the environment
+- List the usernames and passwords for the tools installed in the environment
+- Build and deploy images to the environment using its registry
+>>>>>>> 7c9985ec9bfb37ebb612d2fcc06e6e7fd7970fb5
 
-To use the CLI, it must be installed and your shell must be logged into IBM Cloud.
+To use the CLI, it must be installed and your command line shell must be logged into IBM Cloud.
 
 ## Installation
 
@@ -63,14 +69,18 @@ Follow these steps to use the IGC CLI:
 
 ## Use the CLI
 
-Once the CLI is installed, whenever you use it, your shell must be logged into IBM Cloud.
+Once the CLI is installed, whenever you use it, your command line shell must be logged into your 
+IBM Cloud account using the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli "IBM Cloud CLI and Developer Tools").
 
 - Log into your IBM Cloud account with the correct region and resource group:
     ```bash
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
     ```
 
-- Once logged in, you can use CLI commands like this one to get the URLs for all of the tools:
+- Once logged in, you can use CLI commands.
+
+    For example, this command lists the dashboard URLs for all of the tools:
+
     ```bash
     igc ingress -n tools
     ```

@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'IBM Garage for Cloud',
+    title: 'IBM Garage for Cloud Developer Tools',
     description: 'Developer Tools ',
     keywords: 'gatsby,theme,carbon',
   },
