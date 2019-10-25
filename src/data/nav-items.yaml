@@ -70,3 +70,10 @@
 - title: Contributing
   pages:
     - path: /contributing
+
+- title: Work in progress
+  pages:
+    - title: Create cluster in IBM Cloud
+      path: /getting-started/create-cluster-ic
+    - title: Install tools
+      path: /getting-started/install-tools

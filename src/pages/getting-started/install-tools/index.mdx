@@ -1,0 +1,206 @@
+---
+title: Install Developer Tools
+---
+
+<Tabs>
+
+<Tab label="Pre-requisites">
+
+<PageDescription>
+
+Prepare to run the scripts that create a cluster
+
+</PageDescription>
+
+The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications. 
+They can be hosted in any Kubernetes or OpenShift cluster.
+Once that cluster is created, follow these instructions 
+that explain how to access, configure, and run the scripts to install the Developer Tools into the cluster.
+
+The following pre-requisties are required before following the setup instructions.
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on your local machine
+- [Node](https://nodejs.org/en/) installed on your local machine
+
+</Tab>
+<Tab label="1. Download">
+
+<PageDescription>
+
+Obtain the scripts that create a cluster
+
+</PageDescription>
+
+Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
+
+```bash
+git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+```
+
+Switch to the cloned directory
+
+```bash
+cd ibm-garage-iteration-zero
+```
+</Tab>
+
+<Tab label="3. TF Variables">
+
+The settings for creating the Developer Tools environment go in a properties file called `terraform.tfvars`. 
+The process installs the tools into an existing cluster.
+
+The file you will edit is `./terraform/settings/terraform.tfvars`.
+
+### Variables
+
+The properties are required but have reasonable defaults, so setting them is optional.
+
+The values look like this:
+
+```bash
+# The type of cluster that will be created/used (kubernetes or openshift)
+cluster_type="kubernetes"
+# Flag indicating if we are using an existing cluster or creating a new one
+cluster_exists="true"
+# Flag indicating if we are using an existing PostgreSQL server or creating a new one
+postgres_server_exists="false"
+```
+
+(<<We're going to need to add something to this file that specifies how to find and connect to
+the existing cluster.>>)
+
+### Scenarios
+
+These are scenarios for using these settings:
+- To specify installing the tools into an existing cluster, set `cluster_exists` and `cluster_type`.
+
+- To specify that the existing cluster already has a PostgreSQL service instance, set `postgres_server_exists`.
+
+</Tab>
+
+<Tab label="4. Run">
+
+Having configured the `credentials.properties` and `terraform.tfvars` files, we are now ready to kick off the installation.
+
+- Launch a [IBM Garage for Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image").
+
+    Run the following command to run the Docker container:
+
+    ```bash
+    ./launch.sh
+    ```
+
+    This will install the Cloud Garage Tools Docker image and exec shell into the running container. The container will 
+    mount the filesystem's `./terraform/` directory as `/home/devops/src/`. Once the Docker container has started and 
+    the script has exec shelled into it, you will see an IBM Garage banner. This will help you identify you are running 
+    inside the Docker image that has just mounted your file system.
+
+    ```bash
+    % ./launch.sh
+    Cleaning up old container: ibm-garage-cli-tools-abcde
+    Initializing container ibm-garage-cli-tools-abcde from garagecatalyst/ibm-garage-cli-tools:0.0.24
+    d14e378eac5f8080dbaf5466d680396fc36f9fcf9433247409ea9b3a62326ad2
+    Attaching to running container...
+        ________  __  ___   ________                __   ______
+       /  _/ __ )/  |/  /  / ____/ /___  __  ______/ /  / ____/___ __________ _____ ____
+       / // __  / /|_/ /  / /   / / __ \/ / / / __  /  / / __/ __ `/ ___/ __ `/ __ `/ _ \
+     _/ // /_/ / /  / /  / /___/ / /_/ / /_/ / /_/ /  / /_/ / /_/ / /  / /_/ / /_/ /  __/
+    /___/_____/_/  /_/   \____/_/\____/\__,_/\__,_/   \____/\__,_/_/   \__,_/\__, /\___/
+                                                                            /____/
+    Run 'image-help' to get a list of available tools, scripts, and ENV properties
+    ```
+
+    The `image-help` command shows what can be done in this conatiner:
+
+    ```bash
+    $ image-help
+    Available env properties (can be overridden for individual commands):
+    > BM_API_KEY - the IBM Cloud api key
+    > REGION - the IBM Cloud region (e.g. us-south)
+    > RESOURCE_GROUP - the IBM Cloud resource group
+    > CLUSTER_NAME - the name of the kubernetes cluster in IBM Cloud
+    > SL_USERNAME - the Classic Infrastructure user name or API user name (e.g. 282165_joe@us.ibm.com)
+    > SL_API_KEY - the Classic Infrastructure api key
+
+    Available tools:
+    > terraform (with helm, kube, and ibm provider plugins)
+    > calicoctl
+    > ibmcloud (with container-service, container-registry, and cloud-databases plugins)
+    > kubectl
+    > kustomize
+    > oc
+    > helm
+    > docker
+    > git
+    > nvm
+    > node (v11.12.0 currently installed)
+    > yo
+
+    Available scripts:
+    > init.sh {BM_API_KEY} {REGION} {RESOURCE_GROUP} {CLUSTER_NAME}
+    > createNamespaces.sh
+    > deleteNamespace.sh
+    > installHelm.sh
+    > cluster-pull-secret-apply.sh
+    > setup-namespace-pull-secrets.sh
+    > checkPodRunning.sh
+    > copy-secret-to-namespace.sh
+    ```
+
+- Install the Developer Tools
+
+    The supplied Terraform script is ready to run using the settings in `terraform.tfvars`. 
+    You optionally can extend or modify the scripts and tailor them for your project's specific needs.
+
+    Run this script in the container:
+
+    ```bash
+    ./runTerraform.sh
+    ```
+
+    This script will install the Developer Tools into the cluster.
+
+    The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
+    the Terraform Apply process will begin to create the infrastructure and services for your environment.
+
+    If `terraform.tfvars` specifies an existing cluster, the contents will be cleaned up to prepare for the terraform 
+    process. Any resources in the `tools`, `dev`, `test`, and `staging` namespaces will be deleted.
+
+    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
+    and the rest of the process takes about 30 minutes. At the end, you should have your Developer Tools environment 
+    fully provisioned and configured. Enjoy!
+
+### Developer Tools environment
+
+Once the Terraform scripts have finished, you can see the resources that the scripts created.
+
+To see this in IBM Cloud:
+- In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview "Managing resources in the resource list")
+- On the Resource List page, filter by your Resource Group (e.g. `catalyst-team`)
+- You should see these resources listed:
+    - **Clusters**: 1, either Kubernetes or OpenShift
+    - **Services**: 5 or so, such as PostgreSQL, LogDNA, etc.
+    - **Storage**: 1, an instance of Cloud Object Storage
+- Select the cluster and open the Kubernetes dashboard or OpenShift web console. You should see:
+    - Namespaces: `tools`, `dev`, `test`, and `staging`
+    - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
+
+### Possible issues
+
+If you find that that the Terraform provisioning has failed, try re-running the `runTerraform.sh` script again. 
+The state will be saved and Terraform will try and apply the configuration to match the desired end state.
+
+If you find that some of the services have failed to create in the time allocated, you can try this:
+- Manually delete the service instances in your resource group
+- Delete the `workspace` directory (which will remove any state that has been created by Terraform)
+- Re-run the `runTerraform.sh` script
+
+```bash
+rm -rf workspace
+./runTerraform.sh
+```
+
+</Tab>
+
+</Tabs>
+

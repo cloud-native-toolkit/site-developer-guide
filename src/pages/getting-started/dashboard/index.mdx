@@ -30,11 +30,13 @@ You can link out to these tools as an alternative pipeline technology to **Jenki
 To open the Dashboard, follow these steps to obtain its URL and open it in a browser.
 
 To list the ingress endpoints for all of the installed tools, 
-use the [Cloud Developer Tools CLI](../getting-started/cli) to run the following command:
+use the [Developer Tools CLI](../getting-started/cli) to run the following command:
 
 ```bash
 igc ingress -n tools
 ```
+
+Note that you need to log into your account using the IBM Cloud CLI to use this tool.
 
 This will return the ingress URLs for all of the tools installed in the Developer Tools cluster.
 
@@ -60,7 +62,7 @@ In the future, the tools in the Dashboard will be linked using a single sign-on 
 In the meantime, the CLI includes a command to list the tools' logins.
 
 To list the logins for all of the installed tools, 
-use the [Cloud Developer Tools CLI](../getting-started/cli) to run the following command:
+use the [Developer Tools CLI](../getting-started/cli) to run the following command:
 
 ```bash
 igc credentials
