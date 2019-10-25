@@ -77,3 +77,12 @@
       path: /getting-started/create-cluster-ic
     - title: Install tools
       path: /getting-started/install-tools
+
+- title: Installation WIP
+  pages:
+  - title: Install into new IBM Cloud cluster
+    path: /getting-started/tools-ibm-cloud
+  - title: Install into existing IBM Cloud cluster
+    path: /getting-started/tools-ic-existing
+  - title: Install into Red Hat CRC
+    path: /getting-started/tools-crc
