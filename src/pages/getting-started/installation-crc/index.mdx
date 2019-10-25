@@ -1,12 +1,141 @@
 ---
-title: Installation for Red Hat Code Ready Containers
+title: Installation for Red Hat CodeReady Containers
 ---
 
 <Tabs>
 
 <Tab label="Pre-requisites">
 
-## Coming Soon ...
+- CodeReady Containers [Minimum system requirements](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg#minimum-system-requirements_gsg)
+- A [Red Hat account](https://access.redhat.com/login) is required
 
 </Tab>
+
+<Tab label="Install CRC">
+
+<PageDescription>
+
+Download CRC, install it, and configure it
+
+</PageDescription>
+
+Install and configure CRC as described in 
+[Getting started with Red Hat CodeReady Containers](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg), 
+starting with section 1.5 
+[Installing CodeReady Containers](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg#installing-codeready-containers_gsg).
+
+Some highlights and comments on installing CRC:
+- **CRC executable**: Copy the crc binary to your $PATH:
+
+    From the directory where you untarred the download:
+
+    ```bash
+    cp crc /usr/local/bin
+    ```
+
+    (Is the file literally named `crc`? Do execute permissions need to be set?)
+
+- **Add memory**: By default, the CRC VM is set to only use 8 GB of RAM. The more RAM you can give it, the better.
+
+    To set it to 10 GB of RAM, do this after `crc setup` but before `crc start`:
+
+    ```bash
+    crc config set memory 10240
+    ```
+
+</Tab>
+
+<Tab label="Run CRC">
+
+<PageDescription>
+
+Run the CRC cluster in a VM
+
+</PageDescription>
+
+Run CRC as described in 
+[Getting started with Red Hat CodeReady Containers](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg), 
+starting with section 1.7 
+[Starting the virtual machine](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg#starting-the-virtual-machine_gsg).
+
+Some highlights and comments on running CRC:
+- **Starting CRC**
+
+    To start the CRC VM:
+
+    ```bash
+    crc start
+    ```
+
+- **CRC console**
+
+    Open the CRC console in a web browser:
+
+    ```bash
+    http://console-openshift-console.apps-crc.testing
+    ```
+
+    Log into the console using the kube.admin link.
+    - The username is `kubeadmin`
+    - The password is printed in the terminal window by `crc start`
+
+
+- **Stopping CRC**
+
+    To stop the CRC VM:
+
+    ```bash
+    crc stop
+    ```
+
+- **Uninstalling CRC**
+
+    To delete the CRC VM:
+
+    ```bash
+    crc delete
+    ```
+
+</Tab>
+
+<Tab label="Install Tools">
+
+<PageDescription>
+
+Install the Cloud Developer Tools environment into the CRC cluster
+
+</PageDescription>
+
+Install the Cloud Developer Tools as described in [Cloud Developer Tools Installation](installation). 
+However, you really just need to **Clone** the scripts and **Run** them; you can skip the resource steps--see below.
+
+Some highlights and comments on installing the Developer Tools:
+- **API keys**
+
+    The credentials file won't be used, but still needs to exist and needs to contain the proper properties keys.
+    The values will be ignored. So copy the template file but there's no need to edit it.
+
+    Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`.
+
+    ```bash
+    cd iteration-zero-ibmcloud
+    cp credentials.template credentials.properties
+    ```
+
+- **TF variables**
+
+    The required variables in `terraform.tfvars` are required for IBM Cloud but are not needed for CRC.
+    So there's no need to set the resource group and VLAN properties.
+
+    For the optional variables, the `cluster_type` must be set to OpenShift:
+
+    ```bash
+    # The type of cluster that will be created/used (kubernetes or openshift)
+    cluster_type="openshift"
+    ```
+
+    The other variables will be ignored, so no need to edit them.
+
+</Tab>
+
 </Tabs>
