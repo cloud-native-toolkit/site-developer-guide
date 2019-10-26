@@ -4,6 +4,8 @@
 
 - title: Installation
   pages:
+    - title: Overview
+      path: /getting-started/overview
     - title: Install New Cluster
       path: /getting-started/installation-ibm-cloud
     - title: Install Existing Cluster
