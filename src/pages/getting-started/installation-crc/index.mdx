@@ -8,7 +8,7 @@ title: CodeReady Containers
 
 <PageDescription>
 
-Prepare to install developer tools into Red Hat CodeReady Containers
+Prepare to install developer tools into Red Hat CodeReady Containers on you Laptop
 
 </PageDescription>
 
@@ -28,7 +28,7 @@ The following pre-requisites are required to support the setup instructions:
 
 </Tab>
 
-<Tab label="Install CRC">
+<Tab label="1. Install CRC">
 
 <PageDescription>
 
@@ -42,10 +42,11 @@ Install and configure CRC as described in [Install on Laptop](https://cloud.redh
 
 - **CRC executable**: Copy the crc binary to your $PATH:
 
-- From the directory where you untarred the download:
+- From the directory where you unzipped the download:
     ```bash
     cp crc /usr/local/bin
     ```
+
 Follow these steps to complete the installation:
 
 - Run the following command from a terminal session:
@@ -75,8 +76,8 @@ this password because you will need it to log into the console.
     ```
 - Open a web browser and go to the OpenShift console
 
-- Login with user id **kubeadmin** and the password that was displayed a
-after the start had completed.
+- Login with user id **kubeadmin** and the password that was displayed
+after the `crc start` had completed.
 
 Other useful links:
 
@@ -85,7 +86,7 @@ Other useful links:
 
 </Tab>
 
-<Tab label="1. Download">
+<Tab label="2. Download">
 
 <PageDescription>
 
@@ -93,20 +94,19 @@ Obtain the Terraform Infrastructure as Code that will install the tools into Cod
 
 </PageDescription>
 
-Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
+- Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
+    ```bash
+    git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+    ```
 
-```bash
-git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
-```
+- Switch to the cloned directory
+    ```bash
+    cd ibm-garage-iteration-zero
+    ```
 
-Switch to the cloned directory
-
-```bash
-cd ibm-garage-iteration-zero
-```
 </Tab>
 
-<Tab label="2. API keys">
+<Tab label="3. API keys">
 
 <PageDescription>
 
@@ -126,7 +126,7 @@ Just leave the property values blank, Terraform will not use them.
 
 </Tab>
 
-<Tab label="3. Configuration">
+<Tab label="4. Configuration">
 
 <PageDescription>
 
@@ -153,7 +153,7 @@ cluster_exists="true"
 
 </Tab>
 
-<Tab label="4. Run">
+<Tab label="5. Run">
 
 <PageDescription>
 
@@ -167,10 +167,11 @@ we are now ready to kick off the installation.
 - Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image").
 
     Run the following command to run the Docker container:
-
     ```bash
     ./launch.sh
     ```
+
+    For more information on the **Developer Tools Image** see the following guide:
 
     This will install the Cloud Garage Tools Docker image and exec shell into the running container. The container will
     mount the filesystem's `./terraform/` directory as `/home/devops/src/`. Once the Docker container has started and
@@ -222,6 +223,7 @@ To get started with code using the following guides:
 <AnchorLinks>
   <AnchorLink to="/getting-started/deploy-app">Deploy First App</AnchorLink>
   <AnchorLink to="/guides/overview">Guides</AnchorLink>
+  <AnchorLink to="guides/tools-image">Developer Tools Image</AnchorLink>
 </AnchorLinks>
 
 ### Possible issues

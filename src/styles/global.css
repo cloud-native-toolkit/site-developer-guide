@@ -1,11 +1,12 @@
-[class*='bx--header__action'] {
-    visibility: hidden;
-}
 
 div[class*='page-header'] {
-    --height: 8rem;
+    --height: 6rem;
 }
 
-div[class*='module-text'] {
+h1[id*='page-title'] {
     font-size: 2em;
+}
+
+h3[class*='Markdown-module--h3'] {
+    margin-top: 0;
 }

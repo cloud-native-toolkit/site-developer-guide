@@ -5,9 +5,9 @@
 - title: Installation
   pages:
     - title: Install New Cluster
-      path: /getting-started/tools-ibm-cloud
+      path: /getting-started/installation-ibm-cloud
     - title: Install Existing Cluster
-      path: /getting-started/tools-ic-existing
+      path: /getting-started/installation-existing
     - title: Install Red Hat Code Ready
       path: /getting-started/installation-crc
 
@@ -52,6 +52,8 @@
       path: /guides/iasc
     - title: Cluster configuration
       path: /guides/cluster-configuration
+    - title: Developer Tools Image
+      path: /guides/tools-image
 
 - title: Starter Kit Templates
   pages:
