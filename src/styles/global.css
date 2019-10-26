@@ -5,3 +5,7 @@
 div[class*='page-header'] {
     --height: 8rem;
 }
+
+div[class*='module-text'] {
+    font-size: 2em;
+}

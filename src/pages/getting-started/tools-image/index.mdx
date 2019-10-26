@@ -1,0 +1,57 @@
+---
+title: Developer Tools Docker Image
+---
+
+## Tools Image
+
+explain what the tools image is:
+
+    Cleaning up old container: ibm-garage-cli-tools-abcde
+    Initializing container ibm-garage-cli-tools-abcde from garagecatalyst/ibm-garage-cli-tools:0.0.24
+    d14e378eac5f8080dbaf5466d680396fc36f9fcf9433247409ea9b3a62326ad2
+    Attaching to running container...
+        ________  __  ___   ________                __   ______
+       /  _/ __ )/  |/  /  / ____/ /___  __  ______/ /  / ____/___ __________ _____ ____
+       / // __  / /|_/ /  / /   / / __ \/ / / / __  /  / / __/ __ `/ ___/ __ `/ __ `/ _ \
+     _/ // /_/ / /  / /  / /___/ / /_/ / /_/ / /_/ /  / /_/ / /_/ / /  / /_/ / /_/ /  __/
+    /___/_____/_/  /_/   \____/_/\____/\__,_/\__,_/   \____/\__,_/_/   \__,_/\__, /\___/
+                                                                            /____/
+    Run 'image-help' to get a list of available tools, scripts, and ENV properties
+    ```
+
+    The `image-help` command shows what can be done in this conatiner:
+
+    ```bash
+    $ image-help
+    Available env properties (can be overridden for individual commands):
+    > BM_API_KEY - the IBM Cloud api key
+    > REGION - the IBM Cloud region (e.g. us-south)
+    > RESOURCE_GROUP - the IBM Cloud resource group
+    > CLUSTER_NAME - the name of the kubernetes cluster in IBM Cloud
+    > SL_USERNAME - the Classic Infrastructure user name or API user name (e.g. 282165_joe@us.ibm.com)
+    > SL_API_KEY - the Classic Infrastructure api key
+
+    Available tools:
+    > terraform (with helm, kube, and ibm provider plugins)
+    > calicoctl
+    > ibmcloud (with container-service, container-registry, and cloud-databases plugins)
+    > kubectl
+    > kustomize
+    > oc
+    > helm
+    > docker
+    > git
+    > nvm
+    > node (v11.12.0 currently installed)
+    > yo
+
+    Available scripts:
+    > init.sh {BM_API_KEY} {REGION} {RESOURCE_GROUP} {CLUSTER_NAME}
+    > createNamespaces.sh
+    > deleteNamespace.sh
+    > installHelm.sh
+    > cluster-pull-secret-apply.sh
+    > setup-namespace-pull-secrets.sh
+    > checkPodRunning.sh
+    > copy-secret-to-namespace.sh
+    ```

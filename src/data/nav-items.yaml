@@ -2,18 +2,23 @@
   pages:
     - path: /overview
 
+- title: Installation
+  pages:
+    - title: Install New Cluster
+      path: /getting-started/tools-ibm-cloud
+    - title: Install Existing Cluster
+      path: /getting-started/tools-ic-existing
+    - title: Install Red Hat Code Ready
+      path: /getting-started/installation-crc
+
 - title: Getting Started
   pages:
-    - title: Installation IBM Cloud
-      path: /getting-started/installation
-    - title: Installation Red Hat CRC
-      path: /getting-started/installation-crc
-    - title: CLI
-      path: /getting-started/cli
     - title: Dashboard
       path: /getting-started/dashboard
     - title: Deploying First App
       path: /getting-started/deploy-app
+    - title: CLI
+      path: /getting-started/cli
     - title: Artifactory Setup
       path: /getting-started/artifactory-setup
     - title: ArgoCD Setup
@@ -48,7 +53,6 @@
     - title: Cluster configuration
       path: /guides/cluster-configuration
 
-
 - title: Starter Kit Templates
   pages:
     - title: Overview
@@ -71,18 +75,3 @@
   pages:
     - path: /contributing
 
-- title: Work in progress
-  pages:
-    - title: Create cluster in IBM Cloud
-      path: /getting-started/create-cluster-ic
-    - title: Install tools
-      path: /getting-started/install-tools
-
-- title: Installation WIP
-  pages:
-  - title: Install into new IBM Cloud cluster
-    path: /getting-started/tools-ibm-cloud
-  - title: Install into existing IBM Cloud cluster
-    path: /getting-started/tools-ic-existing
-  - title: Install into Red Hat CRC
-    path: /getting-started/tools-crc

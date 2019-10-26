@@ -1,5 +1,5 @@
 ---
-title: Existing Red Hat CRC
+title: Install into Red Hat CodeReady Containers
 ---
 
 <Tabs>
@@ -8,18 +8,19 @@ title: Existing Red Hat CRC
 
 <PageDescription>
 
-Prepare to run the scripts that create the environment
+Prepare to install developer tools into Red Hat CodeReady Containers
 
 </PageDescription>
 
-The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications. 
-They can be hosted in any Kubernetes or OpenShift cluster.
-In Red Hat CodeReady Containers, the CRC install is the OpenShift cluster. 
+The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications
+with the Red Hat CodeReady Containers local OpenShift environment.
 
-These instructions assume that [Red Hat CodeReady Containers has already been installed](installation-crc) 
-and explain how to access, configure, and run the scripts to install the Developer Tools into that CRC install. 
+The following pre-requisites are required to support the installation.
 
-The following pre-requisites are required before following the setup instructions:
+- CodeReady Containers [Minimum system requirements](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg#minimum-system-requirements_gsg)
+- A [Red Hat account](https://access.redhat.com/login) is required
+
+The following pre-requisites are required to support the setup instructions:
 
 - An installation of Red Hat CodeReady Containers
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on your local machine
@@ -27,11 +28,68 @@ The following pre-requisites are required before following the setup instruction
 
 </Tab>
 
+<Tab label="Install CRC">
+
+<PageDescription>
+
+Download CRC and install it
+
+</PageDescription>
+
+Install and configure CRC as described in [Install on Laptop](https://cloud.redhat.com/openshift/install/crc/installer-provisioned)
+
+- Remember to take a copy of **Pull Secret**
+
+- **CRC executable**: Copy the crc binary to your $PATH:
+
+- From the directory where you untarred the download:
+    ```bash
+    cp crc /usr/local/bin
+    ```
+Follow these steps to complete the installation:
+
+- Run the following command from a terminal session:
+    ```bash
+    crc setup
+    ```
+- **Add memory**: By default, the CRC VM is set to only use 8 GB of RAM. The more RAM you can give it, the better.
+
+    To set it to 10 GB of RAM, do this after `crc setup` but before `crc start`:
+    ```bash
+    crc config set memory 10240
+    ```
+
+- **Start** the local CRC Cluster run the crc start command in a terminal window
+    ```bash
+    crc start
+    ```
+
+- During the installation process you will be prompted for your pull secret. Copy and Paste it into the terminal window.
+
+- Wait about 5 minutes for the VM initialization to complete. When complete, the kubeadmin password will be displayed. Make note of
+this password because you will need it to log into the console.
+
+- Open the Cluster Admin **Console**
+    ```bash
+    crc console
+    ```
+- Open a web browser and go to the OpenShift console
+
+- Login with user id **kubeadmin** and the password that was displayed a
+after the start had completed.
+
+Other useful links:
+
+- [Getting started with Red Hat CodeReady Containers, Section 1.5](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg)
+- [Installing CodeReady Containers](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.0/html/getting_started_guide/getting-started-with-codeready-containers_gsg#installing-codeready-containers_gsg).
+
+</Tab>
+
 <Tab label="1. Download">
 
 <PageDescription>
 
-Obtain the scripts that create the environment
+Obtain the Terraform Infrastructure as Code that will install the tools into CodeReady Containers
 
 </PageDescription>
 
@@ -59,13 +117,12 @@ Configure the keys the CLI uses to authenticate
 API keys are not needed to connect to CRC, but the file must still exist.
 
 - Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`.
+    ```bash
+    cd iteration-zero-ibmcloud
+    cp credentials.template credentials.properties
+    ```
 
-```bash
-cd iteration-zero-ibmcloud
-cp credentials.template credentials.properties
-```
-
-Just leave the property values blank, the scripts won't use them.
+Just leave the property values blank, Terraform will not use them.
 
 </Tab>
 
@@ -77,37 +134,22 @@ Configure the properties describing the environment
 
 </PageDescription>
 
-The settings for creating the Developer Tools environment go in two properties files
+The settings for creating the Developer Tools environment in CRC go in a single property file
 in the `./terraform/settings` directory:
 - `environment.tfvars` -- Properties for installing the Developer Tools
-- `vlan.tfvars` -- Properties for creating the cluster
-
-Follow the instructions below to set the existing cluster's details in the `environment.tfvars` file.
-The `vlan.tfvars` file must exist but will be ignored since the cluster already exists.
 
 ### Environment variables
 
-The `environment.tfvars` properties will be used to install the Development Tools.
+Use the  `environment.tfvars` properties to configure the installation for the Development Tools.
 
-Typical values look like this:
+Set the following properties so they match below, all the other properties will be ignored:
 
 ```bash
-resource_group_name="catalyst-team"
-cluster_name="catalyst-team-cluster"
 # The type of cluster that will be created/used (kubernetes or openshift)
-cluster_type="kubernetes"
+cluster_type="crc"
 # Flag indicating if we are using an existing cluster or creating a new one
-cluster_exists="false"
-# Flag indicating if we are using an existing PostgreSQL server or creating a new one
-postgres_server_exists="false"
+cluster_exists="true"
 ```
-
-Set them based on the existing cluster:
-- `resource_group_name` -- Ignored when installing in CRC
-- `cluster_name` -- Ignored when installing in CRC
-- `cluster_exists` -- Set to `"true"` for the existing cluster
-- `cluster_type` -- Set to `"openshift"` for CRC
-- `postgres_server_exists` -- Ignored when installing in CRC
 
 </Tab>
 
@@ -115,11 +157,11 @@ Set them based on the existing cluster:
 
 <PageDescription>
 
-Run the scripts that create the environment
+Run Terraform to install the tools into the CRC environment
 
 </PageDescription>
 
-Having configured the `credentials.properties`, `environment.tfvars`, and `vlan.tfvars` properties files, 
+Having configured the `credentials.properties`, `environment.tfvars` properties files,
 we are now ready to kick off the installation.
 
 - Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image").
@@ -130,67 +172,24 @@ we are now ready to kick off the installation.
     ./launch.sh
     ```
 
-    This will install the Cloud Garage Tools Docker image and exec shell into the running container. The container will 
-    mount the filesystem's `./terraform/` directory as `/home/devops/src/`. Once the Docker container has started and 
-    the script has exec shelled into it, you will see an IBM Garage banner. This will help you identify you are running 
+    This will install the Cloud Garage Tools Docker image and exec shell into the running container. The container will
+    mount the filesystem's `./terraform/` directory as `/home/devops/src/`. Once the Docker container has started and
+    the script has exec shelled into it, you will see an IBM Garage banner. This will help you identify you are running
     inside the Docker image that has just mounted your file system.
 
+The supplied Terraform scripts are ready to run using the settings in the properties files.
+You optionally can extend or modify the scripts and tailor them for your project's specific needs.
+
+- From inside the terminal/containeryou need to log into the OpenShift cluster via the cli.
     ```bash
-    % ./launch.sh
-    Cleaning up old container: ibm-garage-cli-tools-abcde
-    Initializing container ibm-garage-cli-tools-abcde from garagecatalyst/ibm-garage-cli-tools:0.0.24
-    d14e378eac5f8080dbaf5466d680396fc36f9fcf9433247409ea9b3a62326ad2
-    Attaching to running container...
-        ________  __  ___   ________                __   ______
-       /  _/ __ )/  |/  /  / ____/ /___  __  ______/ /  / ____/___ __________ _____ ____
-       / // __  / /|_/ /  / /   / / __ \/ / / / __  /  / / __/ __ `/ ___/ __ `/ __ `/ _ \
-     _/ // /_/ / /  / /  / /___/ / /_/ / /_/ / /_/ /  / /_/ / /_/ / /  / /_/ / /_/ /  __/
-    /___/_____/_/  /_/   \____/_/\____/\__,_/\__,_/   \____/\__,_/_/   \__,_/\__, /\___/
-                                                                            /____/
-    Run 'image-help' to get a list of available tools, scripts, and ENV properties
+    oc login --insecure-skip-tls-verify=true -u kubeadmin -p <your-password> https://api.crc.testing:6443
     ```
 
-    The `image-help` command shows what can be done in this conatiner:
+    <InlineNotification>
 
-    ```bash
-    $ image-help
-    Available env properties (can be overridden for individual commands):
-    > BM_API_KEY - the IBM Cloud api key
-    > REGION - the IBM Cloud region (e.g. us-south)
-    > RESOURCE_GROUP - the IBM Cloud resource group
-    > CLUSTER_NAME - the name of the kubernetes cluster in IBM Cloud
-    > SL_USERNAME - the Classic Infrastructure user name or API user name (e.g. 282165_joe@us.ibm.com)
-    > SL_API_KEY - the Classic Infrastructure api key
+    NOTE: replace "your-password" with the password displayed when the "crc start" command command completed.
 
-    Available tools:
-    > terraform (with helm, kube, and ibm provider plugins)
-    > calicoctl
-    > ibmcloud (with container-service, container-registry, and cloud-databases plugins)
-    > kubectl
-    > kustomize
-    > oc
-    > helm
-    > docker
-    > git
-    > nvm
-    > node (v11.12.0 currently installed)
-    > yo
-
-    Available scripts:
-    > init.sh {BM_API_KEY} {REGION} {RESOURCE_GROUP} {CLUSTER_NAME}
-    > createNamespaces.sh
-    > deleteNamespace.sh
-    > installHelm.sh
-    > cluster-pull-secret-apply.sh
-    > setup-namespace-pull-secrets.sh
-    > checkPodRunning.sh
-    > copy-secret-to-namespace.sh
-    ```
-
-- Create the Developer Tools environment
-
-    The supplied Terraform script is ready to run using the settings in the properties files. 
-    You optionally can extend or modify the scripts and tailor them for your project's specific needs.
+    </InlineNotification>
 
     Run this script in the container:
 
@@ -198,18 +197,18 @@ we are now ready to kick off the installation.
     ./runTerraform.sh
     ```
 
-    This script will create the Developer Tools environment.
+    This script will setup the Developer Tools in the CRC environment.
 
-    The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
+    The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes),
     the Terraform Apply process will begin to create the infrastructure and services for your environment.
 
-    The existing cluster's contents will be cleaned up to prepare for the terraform 
+    The existing cluster's contents will be cleaned up to prepare for the terraform
     process. Any resources in the `tools`, `dev`, `test`, and `staging` namespaces/projects will be deleted.
 
-    The installation process takes about 30 minutes. At the end, you should have your Developer Tools environment 
+    The installation process takes about 20 minutes. At the end, you should have your Developer Tools environment
     fully provisioned and configured. Enjoy!
 
-### Developer Tools environment
+### Finish
 
 Once the Terraform scripts have finished, you can see the resources that the scripts created.
 
@@ -218,12 +217,18 @@ To see this:
     - Namespaces: `tools`, `dev`, `test`, and `staging`
     - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
 
+To get started with code using the following guides:
+
+<AnchorLinks>
+  <AnchorLink to="/getting-started/deploy-app">Deploy First App</AnchorLink>
+  <AnchorLink to="/guides/overview">Guides</AnchorLink>
+</AnchorLinks>
+
 ### Possible issues
 
-If you find that that the Terraform provisioning has failed, try re-running the `runTerraform.sh` script again. 
+If you find that that the Terraform provisioning has failed, try re-running the `runTerraform.sh` script again.
 The state will be saved and Terraform will try and apply the configuration to match the desired end state.
 
 </Tab>
 
 </Tabs>
-
