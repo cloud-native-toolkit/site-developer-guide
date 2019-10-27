@@ -10,3 +10,7 @@ h1[id*='page-title'] {
 h3[class*='Markdown-module--h3'] {
     margin-top: 0;
 }
+
+h3[class*='Markdown-module--h2'] {
+    margin-top: 1em;
+}
