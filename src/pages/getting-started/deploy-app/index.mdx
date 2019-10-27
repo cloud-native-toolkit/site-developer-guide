@@ -61,21 +61,70 @@ specific runtime's like **Java**, **Node** and **Python**
 
 ### Register App Pipeline
 
+Now you have the code in a Git Repository and cloned to you local development environment.
+We can now register the repository with Continuous Integration pipeline technology. The default
+is **Jenkins**. We use the `igc` command line to make this step as simple as possible.
 
+- You will need your GitHub personal access token with web hook authority,
+Navigate to [Developer Settings](https://github.com/settings/tokens) and click **Generate new token**.
+Save the token and place it in your clipboard.
 
+- To register the app follow these steps.
+    ```bash
+    igc pipeline
+    ? Please provide the username for https://github.com/mjperrins/hello-world-bff.git: mperrins
+    ? Please provide your password/personal access token: [hidden]
+    ? Please provide the branch the pipeline should use: master
+    Creating git secret
+    Copying 'ibmcloud-apikey' secret to dev
+    Registering pipeline
+    ```
+- Enter your GitHub user id, past your Personal Access token and select the default git branch or type
+in another branch you want to register.
+
+-- The pipeline will be registered.
+
+<InlineNotification>
+
+Note: Tekton support will be coming soon.
+
+</InlineNotification>
 
 
 ### View App Pipeline
 
+Using the Developer Dashboard, navigate back to you Jenkins instance. If you have it open
+already refresh the page.
 
+- You will see you pipeline registered.
 
+- Click on your app pipeline and click **Build Now**.
 
+- Wait for the pipeline stages to start building.
+
+- Open it has complete you should see a view similar to the one below.
+
+![Jenkins Pipeline](pipeline.png)
 
 ### Access running App
 
+Once the pipeline has completed successfully the app will be deployed into the `dev` namespace
+in Kubernetes or Openshift. You can now access the app to test it.
 
+- To Access the app, retrieve the app ingress endpoint using command below.
+    ```bash
+    igc ingress -n dev
+    ```
+- You will see a list of apps displayed with their ingress URL.
+    ```base
+    Host(s):
+    [
+      'http://stockbffapp-dev.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+    ]
 
+- You can now open this ingress URL in your browser to validate its working as expected.
 
+- This completes the deployment of your first app.
 
 ### Whats Next
 
