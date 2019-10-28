@@ -4,7 +4,7 @@ title: New IBM Cloud cluster
 
 <Tabs>
 
-<Tab label="Pre-requisites">
+<Tab label="Prerequisites">
 
 <PageDescription>
 
@@ -17,9 +17,10 @@ They can be hosted in any Kubernetes or OpenShift cluster managed by the IBM Clo
 
 The cluster is hosted by either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
 [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift). 
-These instructions explain how to configure and run the Terraform Infrastructure as Code to create the Developer Tools environment.
+These instructions explain how to configure and run the Terraform infrastructure-as-code (IasC) scripts 
+to create the Developer Tools environment.
 
-The following pre-requisites are required before following the setup instructions:
+The following prerequisites are required before following the setup instructions:
 
 - An IBM Cloud account with:
     - the ability to provision resources including support for provisioning [Kubernetes](https://cloud.ibm.com/kubernetes/clusters)
@@ -35,7 +36,7 @@ The following pre-requisites are required before following the setup instruction
 
 <PageDescription>
 
-Obtain the Terraform Infrastructure as Code that will install the tools into your IBM Cloud Managed Cluster
+Obtain the Terraform infrastructure-as-code (IasC) scripts that will install the tools into your IBM Cloud managed cluster
 
 </PageDescription>
 
@@ -65,12 +66,13 @@ client--such as a Terraform script--to create these resources programmatically. 
 - The first key authorizes creating Classic Infrastructure (IaaS) resources
 - The second key authorizes creating IBM Cloud (PaaS) resources
 
-- The following steps create the required keys and put them into a file called `credentials.properties`.
-    ```bash
-    classic.username=<CLASSIC_USERNAME>
-    classic.api.key=<CLASSIC_API_KEY>
-    ibmcloud.api.key=<IBMCLOUD_API_KEY>
-    ```
+The following steps create the required keys and put them into a file called `credentials.properties`.
+
+```bash
+classic.username=<CLASSIC_USERNAME>
+classic.api.key=<CLASSIC_API_KEY>
+ibmcloud.api.key=<IBMCLOUD_API_KEY>
+```
 
 The installation scripts will use these keys to authenticate to IBM Cloud.
 
@@ -121,18 +123,6 @@ Configure the properties describing your environment
 
 </PageDescription>
 
-### Create a Resource group
-
-The first step is to create a **Resource Group**. The Developer Tools environment consists of several IBM Cloud resources--a Kubernetes or OpenShift cluster,
-some cloud service instances, etc.
-[IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam "Managing identity and access")
-manages access to resources by organizing them into resource groups, so that one access policy can easily be applied
-to all of the resources in a group.
-
-- Follow these instructions to create a resource group:
-
-    - [Creating a resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs#create_rgs "Creating and managing resource groups")
-
 ### Configuring Properties files
 
 The settings for creating the Developer Tools environment go in two properties files
@@ -162,12 +152,13 @@ The `environment.tfvars` properties will be used to install the Development Tool
     resource_group_name="catalyst-team"
     ```
 
-- In `environment.tfvars`, set the `resource_group_name` property to specify the resource group for the environment's resources.
+- In `environment.tfvars`, you must set `resource_group_name` and `cluster_name`.
+
+- Set the `resource_group_name` property to specify the resource group for the environment's resources.
 This resource group enables all of the resources to work together
 and will help distinguish the Developer Tools resources from the other resources in the same IBM Cloud account.
 The resource group can be a new one--see the instructions below.
 
-- You must set `resource_group_name` and `cluster_name`.
 The others have reasonable defaults that you can change if desired: 
 - Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**.
 - Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance.
@@ -178,6 +169,19 @@ Note: **PostgreSQL** can take some time to provision, so in some cases it is wor
 to be in the same region and names `<resource-group>-postgresql`.
 
 </InlineNotification>
+
+### Resource group
+
+The Developer Tools environment needs to be organized in a resource group.
+The environment consists of several IBM Cloud resources--a Kubernetes or OpenShift cluster,
+some cloud service instances, etc.
+[IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam "Managing identity and access")
+manages access to resources by organizing them into resource groups, so that one access policy can easily be applied
+to all of the resources in a group.
+
+- Either choose a resource group that already exists in your account or create a new one. To create a resource group:
+
+    - [Creating a resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs#create_rgs "Creating and managing resource groups")
 
 ### Cluster name
 
@@ -193,12 +197,24 @@ Note: You can leave the `customer_name` property commented out and Terraform wil
 
 ### VLANs
 
+The `vlan.tfvars` properties will be used to create the cluster that the Developer Tools will be installed into.
+
+- Typical values look like this:
+    ```bash
+    vlan_region="us-south"
+    vlan_datacenter="dal10"
+    public_vlan_id="2366011"
+    private_vlan_id="2366012"
+    ```
+
+You must set all of these specifically for your cluster. The IGC CLI can be used to determine these values (see below).
+
 A cluster is [managed in a particular zone in a particular region](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment").
 If the account you're using has multiple regions and zones, you need to decide what region and zone you'll want the cluster created in.
 
 - In `vlan.tfvars`, set the following properties:
-   -  `vlan_region` -- The region that the cluster is or will be in
-   - `vlan_datacenter` -- The zone in that region that the cluster is or will be in
+   - `vlan_region` -- The region that the cluster will be in
+   - `vlan_datacenter` -- The zone in that region that the cluster will be in
 
 - The [networking in a Kubernetes or OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics "Understanding network basics of classic clusters")
 consists of (at a minimum) two VLANs, a public VLAN and a private VLAN.
@@ -212,18 +228,6 @@ Advanced users who want to specifiy the settings can determine the VLAN info man
 [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans "VLANs") explains how to open the
 VLAN List page in the console. Choose the public and private VLANs for the region and zone you want to
 host the Developer Tools environment. If suitable VLANs don't already exist, you will need to create them here.
-
-The `vlan.tfvars` properties will be used to create the cluster that the Developer Tools will be installed into.
-
-- Typical values look like this:
-    ```bash
-    vlan_region="us-south"
-    vlan_datacenter="dal10"
-    public_vlan_id="2366011"
-    private_vlan_id="2366012"
-    ```
-
-You must set all of these specifically for your cluster.
 
 ### Optional: Generate the VLAN properties for you to make the configuration as simple as possible.
 
