@@ -1,28 +1,13 @@
 ---
-title: Continuous Integration with Jenkins
-description: This guide will explain how to use Jenkins to manage your Continuous Integration process
+title: Continuous Integration with Tekton
+description: This guide will explain how to use Tekton to manage your Continuous Integration process
 ---
 
-Continous integration is a software development technique where software is built regularly by a team in an automated fashion.
-This quote helps explain it:
+### Overview
 
-> Continuous Integration is a software development practice where members of a team integrate their work frequently,
-> usually each person integrates at least daily - leading to multiple integrations per day.
-> Each integration is verified by an automated build (including test) to
-> detect integration errors as quickly as possible. Many teams find that this approach leads to significantly
-> reduced integration problems and allows a team to develop cohesive software more rapidly
-> <cite>– Martin Fowler</cite>
 
-## What is Jenkins
+### Tekton
 
-Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software.
-It is a perfect tool for helping managing continuous integration tasks for a wide range of software component's.
-
-Jenkins Pipeline (or simply "Pipeline") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins.
-
-A continuous delivery pipeline is an automated expression of your process for getting software from version control right through to your users and customers.
-
-Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code". The definition of a Jenkins Pipeline is typically written into a text file (called a [Jenkinsfile](https://jenkins.io/doc/pipeline/tour/hello-world/)) which in turn is checked into a project’s source control repository.
 
 
 
@@ -39,8 +24,6 @@ automation. This automation can be tailored to the specific project requirements
 
 You can see from either the vanilla Jenkins pipelines view of the Application Console pipelines view, each template offers a number of pipeline stages. The stages have been configured to be work from the defined `secrets` and `config maps` that have been defined in the Development cluster setup.
 
-The `Jenkinsfile` is consistent between registration with OpenShift or IKS. The `Dockerfile` has been optimized for `UBI` images, this means the docker images when deployed can run on both OpenShift and IKS.
-
 The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
 
 - **Setup** clones the code into the pipeline
@@ -56,11 +39,7 @@ The following gives a description of what each stage in the pipeline does. The *
 - **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
 - **Trigger CD Pipeline** (*optional*) This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
 
-
 ## Registering Pipelines
-
-
-
 
 
 Once you become familiar with deploying code into OpenShift or IKS, read up about how you can manage code deployment with `Continuous Deployment` with `Artiactory` and `ArgoCD`
