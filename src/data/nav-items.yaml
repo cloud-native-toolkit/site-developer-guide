@@ -32,8 +32,10 @@
   pages:
     - title: Overview
       path: /guides/overview
-    - title: Continuous Integration
+    - title: Continuous Integration with Jenkins
       path: /guides/continuous-integration
+    - title: Continuous Integration with Tekton
+      path: /guides/continuous-integration-tekton
     - title: Code Analysis
       path: /guides/code-analysis
     - title: Artifact Management
