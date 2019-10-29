@@ -5,13 +5,13 @@
 - title: Installation
   pages:
     - title: Overview
-      path: /getting-started/overview
+      path: /installation/overview
     - title: Install New Cluster
-      path: /getting-started/installation-ibm-cloud
+      path: /installation/installation-ibm-cloud
     - title: Install Existing Cluster
-      path: /getting-started/installation-existing
-    - title: Install Red Hat Code Ready
-      path: /getting-started/installation-crc
+      path: /installation/installation-existing
+    - title: Install Red Hat CodeReady
+      path: /installation/installation-crc
 
 - title: Getting Started
   pages:

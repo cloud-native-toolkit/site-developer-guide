@@ -4,23 +4,23 @@ title: Existing IBM Cloud cluster
 
 <Tabs>
 
-<Tab label="Pre-requisites">
+<Tab label="Prerequisites">
 
 <PageDescription>
 
 Prepare to run Terraform to install the Development Tools into an existing IBM Cloud managed cluster
+
 </PageDescription>
 
 The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications. 
-They can be hosted in any Kubernetes or OpenShift cluster managed by IBM Cloud.
+They can be hosted in any Kubernetes or OpenShift cluster, including those managed by the IBM Cloud.
 
-You must have created a IBM Cloud managed cluster using either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
+In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
 [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift). 
-
 These instructions assume that the cluster has already been created and explain 
-how to configure and run the Terraform Infrastructure as Code to install the Developer Tools into that existing cluster.
+how to configure and run the Terraform infrastructure-as-code (IasC) scripts to install the Developer Tools into that existing cluster.
 
-The following pre-requisites are required before following the setup instructions:
+The following prerequisites are required before following the setup instructions:
 
 - An IBM Cloud account with the ability to provision cloud service instances in the same region and zone as the existing cluster
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running on your local machine
@@ -32,7 +32,7 @@ The following pre-requisites are required before following the setup instruction
 
 <PageDescription>
 
-Obtain the Terraform Infrastructure as Code that will install the tools into your IBM Cloud Managed Cluster
+Obtain the Terraform infrastructure-as-code (IasC) scripts that will install the tools into your IBM Cloud managed cluster
 
 </PageDescription>
 
@@ -97,7 +97,7 @@ Configure the properties describing the environment
 
 </PageDescription>
 
-The settings for creating the Developer Tools environment go in two properties files
+The settings for installing the Developer Tools go in a single property file
 in the `./terraform/settings` directory:
 - `environment.tfvars` -- Properties for installing the Developer Tools
 
