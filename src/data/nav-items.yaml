@@ -19,7 +19,7 @@
       path: /getting-started/dashboard
     - title: Deploying First App
       path: /getting-started/deploy-app
-    - title: CLI
+    - title: IGC CLI
       path: /getting-started/cli
     - title: Artifactory Setup
       path: /getting-started/artifactory-setup
@@ -54,7 +54,7 @@
       path: /guides/iasc
     - title: Cluster configuration
       path: /guides/cluster-configuration
-    - title: Developer Tools Image
+    - title: IGC Client
       path: /guides/tools-image
 
 - title: Starter Kit Templates
