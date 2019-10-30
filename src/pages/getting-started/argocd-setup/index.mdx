@@ -1,88 +1,118 @@
 ---
-title: ArgoCD setup
+title: ArgoCD Setup
 description: Complete the setup of the ArgoCD tool so it can use Artifactory as a Helm repository
 ---
 
-## Overview
-ArgoCD is a complete **GitOps** tool for managing the deployment of built application images into other development environments this
-might include *test*, *pre-prod* and *production*. It uses both the IBM Container Image Registry for sourcing built docker images and uses
-Artifactory for sourcing packaged Helm charts from your apps. Complete this setup to enable ArgoCD to be ready to integrate with Artifactory.
+<PageDescription>
 
-Read the following guides to understand how to use it to create combined CI/CD solution read the following guides:
+Complete the steps for setting up ArgoCD so it can use the Helm repository in Artifactory 
+
+</PageDescription>
+
+## Overview
+
+ArgoCD is a complete [**GitOps**](https://www.weave.works/technologies/gitops/) tool for managing the deployment of application images into deployment environments. 
+These deployment environments often include ones for development lifecycle stages such as *test*, *pre-prod*, and *production*. 
+
+To deploy applications built using the Developer Tools environment, ArgoCD will use two types of artifacts, 
+Docker images and Helm charts. This setup configures ArgoCD to retrieve the artifacts from these sources:
+- Docker images: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+- Helm charts: The [Artifactory repository](/getting-started/artifactory-setup)
+
+ArgoCD, Artifactory, and Jenkins are three separate tools in the Developer Tools environment.
+The environment uses a repository in Artifactory as its Helm chart repository.
+Jenkins and ArgoCD use Artifactory to share Helm charts:
+- The Jenkins pipeline will build the Helm chart and store it in Artifactory
+- The ArgoCD pipeline will retrieve the Helm chart from Artifactory and use it to deploy the app
+
+ArgoCD is part of the Developer Tools environment's complete CI/CD solution:
 
 <AnchorLinks small>
   <AnchorLink to="/guides/continuous-integration">Continuous Integration</AnchorLink>
   <AnchorLink to="/guides/continuous-deployment">Continuous Deployment</AnchorLink>
 </AnchorLinks>
 
+## Prerequisites
+
+ArgoCD will need access to these resources:
+- Helm chart repository: Set up the [Helm chart repository in Artifactory](/getting-started/artifactory-setup) before setting up ArgoCD
+- Docker image registry: These instructions assume that the Developer Tools environment is installed in IBM Cloud, 
+which includes the [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+
 ##  Configuration
 
-To enable ArgoCD to work seamlessly with the Developer Tools
-installation you need to configure Artifactory to be used as a Helm Chart Repository.
-This will enable the use of application Helm charts to be de-coupled from the docker image that is built with the Jenkins CI pipeline.
+Configure ArgoCD to use Artifactory.
 
-### Clone ArgoCD Template
+### Clone the ArgoCD repository
 
-Using the ArgoCD Template you can get the `configMap` files required to easily ArgoCD
+The ArgoCD repository contains files and samples for configuring ArgoCD.
 
-- Clone the Repository to you development machine
+- Clone the repository to your development machine
 
-```bash
-git clone https://github.com/ibm-garage-cloud/template-argocd-test
-cd template-argocd-test
-```
+  ```bash
+  git clone https://github.com/ibm-garage-cloud/template-argocd-test
+  cd template-argocd-test
+  ```
 
+### Get the Helm repository location
 
-### Update ConfigMap for ArgoCD
+The Helm repository is in Artifactory. ArgoCD will need the URL to that repository.
 
-In the `config` directory there is a `yaml` file called `argocd-helm-repo.yaml`.
-Edit this file and modify the `- url:` to point to the URL of the Artifactory Repository.
+- In the Artifactory console, select the Home page
 
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-cm
-  namespace: tools
-data:
-  helm.repositories: |
-    - url: <artifactory helm repository location>
-      name: helm-repository-location
-```
+- In the Set Me Up section, click on the `generic-local` repository
 
-You need to have completed the setup of the Artifactory instance so it can store Helm charts from your CI pipeline with Jenkins.
+![Set Me Up - Repositories](setupartifactory.png "Set Me Up: Repositories")
 
-You need to select
+- In the Set Me Up dialog for the generic-local repository, copy the Deploy URL
 
-To obtain the `- url: ` you start by logging into Artifactory and clicking on `Setup Me Up` tile and click on the repository `generic-local`
+![Set Me Up - Generic Local Repository](artifactoryurlsetup.png "Set Me Up: generic-local Repository")
 
-![Setup](setupartifactory.png "Setup Screen")
+### Update the ArgoCD configuration file
 
-This will open the detailed setup view and from here you can copy the URL from the setup screen.
+The `template-argocd-test` repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
+and deploy it to your Developer Tools environment.
 
-![Setup](artifactoryurlsetup.png "Setup Screen")
+- Open the `config/argocd-helm-repo.yaml` file in an editor
 
-Edit the `argocd-helm-repo.yaml` and replace the value `<artifactory helm repository location>` with the value from the
-Artifactory console.
+- Edit the `data.helm.url` property to replace the value `<artifactory helm repository location>` 
+with the URL of the Helm repository location in Artifactory
 
-### Run the `kubectl` Command
+  ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: argocd-cm
+    namespace: tools
+  data:
+    helm.repositories: |
+      - url: <artifactory helm repository location>
+        name: helm-repository-location
+  ```
 
-Now you have edited the `yaml` file you need to make sure you are logged into either the IBM Kubernetes Service or Red Hat OpenShift consoles.
+Use the kubectl CLI to deploy the edited configuration file.
 
-You can test this by running the following commands :
+- Test to confirm that your shell is logged into your cluster
 
-```bash 
-kubectl get nodes | oc get nodes
-```
+  ```bash 
+  kubectl version --short
+  ```
 
-There is a helper shell script that you can run called `addconfigmap.sh` this runs the following command to add the details of the Helm Registry with ArgoCD Config map.
+- Apply the configuration file to the cluster in the `tools` namespace
 
-```
-#!/bin/bash
-kubectl apply -f argocd-helm-repo.yaml
-```
+  ```bash 
+  kubectl apply -f argocd-helm-repo.yaml -n tools
+  ```
 
-Once this is complete you can validate the configuration by opening the `argocd-cm` Config Map in the IKS Console or OpenShift Cluster Console.
-Navigate to the `tools` namespace and view the `Config Maps` open up the config map called `argocd-cm` and validate the the `Data`
-section now has a `helm.repositories` entry that is referencing Artifactory.
+  You can also do this using the `config/addconfigmap.sh` script in the `template-argocd-test` repo.
 
+Verify that the new configuration has deployed
+
+- In the Kubernetes dashboard or OpenShift console, navigate to the Config Maps in the `tools` namespace
+
+- Select the `argocd-cm` config map and confirm that its `helm.repositories` property specifies the
+Artifactory URL
+
+## Conclusion
+
+ArgoCD now has the configuration file in the Developer Tools environment that it needs to access the Helm chart repository in Artifactory.

@@ -12,11 +12,13 @@ Complete the steps for setting up Artifactory for use with development pipelines
 
 Artifactory is a general purpose artifact storage service. The 
 [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry) 
-stores Docker images, but has no support for storing other types of binary artifacts such as Maven, 
-Gradle jar files, NPM modules, and Helm charts. ArgoCD uses Artifactory as a Helm repository, 
+stores Docker images, but has no support for storing other types of binary artifacts such as Maven project files, 
+Gradle jar files, NPM modules, and Helm charts. 
+In the Developer Tools environment, Jenkins and ArgoCD use Artifactory as a 
+[Helm chart repository](https://helm.sh/docs/chart_repository/), 
 and the Starter Kit Templates have also been configured to store their Helm charts in Artificatory.
 
-The following guides explain the Developer Tools' combined CI/CD solution:
+Artifactory is part of the Developer Tools environment's complete CI/CD solution:
 
 <AnchorLinks small>
   <AnchorLink to="/guides/continuous-integration">Continuous Integration</AnchorLink>
@@ -25,8 +27,12 @@ The following guides explain the Developer Tools' combined CI/CD solution:
 
 ##  Configuration
 
-To enable Artifactory to work seamlessly with the Developer Tools environment, you need to configure Artifactory to
-be used as a Helm repository.
+Artifactory in the Developer Tools environment needs to be configured with a Helm repository.
+Also, the Developer Tools environment needs to be configured to access Artifactory.
+
+### Set up Artifactory
+
+Create a repository in Artifactory for storing Helm charts.
 
 - Open Artifactory from the [Developer Tools Dashboard](/getting-started/dashboard) and login
 
@@ -71,7 +77,7 @@ The next page in the wizard is the Onboarding Complete page.
 
 </ArtDirection>
 
-## Obtaining encrypted password
+### Obtain encrypted password
 
 To enable the Jenkins pipelines to store the Helm artifacts in the Artifactory repository, we need to obtain 
 Artifactory's encrypted password and store this where Jenkins can access it--in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
@@ -107,7 +113,7 @@ Any base64 encoding tool will work. For example:
 
 - In the field below, copy the encoded value into you clipboard or store it somewhere safe
 
-## Update the Kubernetes Secret
+### Update the Kubernetes secret
 
 Store the base64 encrypted password for Artifactory in the Kubernetes secret for accessing Artifactory.
 
