@@ -2,40 +2,49 @@
 title: Deploying First App
 ---
 
+<PageDescription>
+
+Use a Starter Kit Template to create a sample app and the Jenkins pipeline to deploy it into the cluster
+
+</PageDescription>
+
 ## Overview
 
-Now that you have prepared your development cluster for cloud-native application development, you can now create a new app using one of the
-Starter Kit Templates. These have been created to include all the key components, configuration, and frameworks to get you started on
-creating the code you need for your solutions.
+Now that you have prepared your Developer Tools environment for cloud-native application development, 
+you can now create a new app using one of the Starter Kit Templates. These have been created to include all the key 
+components, configuration, and frameworks to get you started on creating the code you need for your solutions.
 
-## Demonstration video
+### Demonstration video
 
-This video will demo how to get started with using the Dashboard to develop an app.
+This video will demo how to get started with using the Dashboard to develop and deploy an app.
+It shows how to do the steps that are described below.
 
 <Video src="/videos/deployfirstapp.m4v" type="video/m4v" poster="/images/poster.png"/>
 
 ### Open the Developer Tools Dashboard
 
-The Developer Tools Dashboard makes it easy for you to navigate to the tools and includes a section that
-lists the **Starter Kits Templates**. These templates have been created to give you a more comprehensive
-starting point for you apps. Read more in the **[Starter Kits](/starterkits/overview)**.
+The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that
+lists the [Starter Kit Templates](/starterkits/overview). These templates have been created to give you 
+a more comprehensive starting point for you apps.
 
 - Install the [IGC CLI](/getting-started/cli)
 - Open the [Developer Tools Dashboard](/getting-started/dashboard)
 - Click on **Starter Kits** tab
 - Pick one of the templates that is a good architectural fit for you application and the language and framework
-that you prefer to work with. Click on the **Tile** to create a new copy repository from the template repository.
+that you prefer to work with. Click on the tile to create a new copy repository from the template repository.
+(You can also click on the **Git Icon** to browse the template repository.)
 
 <InlineNotification>
 
-The templates use the [GitHub Templating feature](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template), 
-which copies the directory structure and files of a template repository into a new repository in your organisation with no git history.
-Click on the tile to create a repository from that template. Click on the **Git Icon** to browse the template repository.
+Each Starter Kit Template is a [GitHub template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository). 
+This feature copies the directory structure and files of a template repository into a new repository in your 
+organisation with no git history.
 
 </InlineNotification>
 
-- This will open the the GitHub template copy view. You can see the source git repo displayed
-at the top.
+- Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) 
+view to create the new repository
+  - You can see the source git repo displayed at the top
   - **Owner**: Select a validate GitHub organization that you are authorised to create repositories within
   - **Repository name**: Enter a valid name for you repo
   - **Description**: Describe your app
@@ -52,27 +61,33 @@ The new repository will be created. Next, clone it to your local machine.
 
 ### Running Locally
 
-Most developers like to run the code natively in local development environment. Follow the instructions
-listed in the **README.md** file to run the code locally. They may be requirements to install
-specific runtime's like **Java**, **Node**, and **Python**.
+Most developers like to run the code natively in local development environment. To do so, follow the instructions
+listed in the **README.md** file to run the code locally. You may be required to install a
+specific runtime like **Java**, **Node**, or **Python**.
 
 ### Register App Pipeline
 
-Now you have the code in a GitHub repository and cloned to you local development environment.
-We can now register the repository with Continuous Integration pipeline technology. 
+You now have the code in a GitHub repository and have cloned it to you local development environment.
+We can now register the repository with the Continuous Integration pipeline technology. 
 
 The default CI pipeline tool is currently **Jenkins**. (Tekton support will be coming soon.)
 We use the [IGC CLI](/getting-started/cli) to assist with these steps.
 
-- You will need a [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) 
-with [`read:org` scope](https://wiki.jenkins.io/display/JENKINS/GitHub+OAuth+Plugin#GitHubOAuthPlugin-CallingJenkinsAPIusingGitHubPersonalAccessTokens) 
-and `repo` scope.
+For Jenkins to connect to and use your GitHub repo, it will need a 
+[GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) 
+with `public_repo` and `write:repo_hook` scopes.
 
-  - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token. 
-  Jenkins will use this token to access the code in your repo.
-  - Save the token and place it in your clipboard.
+- Create a GitHub personal access token for Jenkins to use
+  - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token
+  - Select `public_repo` scope to enable git clone
+  - Select `write:repo_hook` scope so Jenkins can create a web hook
+  ![Jenkins OAuth scopes](jenkins-scopes.png)
+  - Save the token and place it in your clipboard
 
-- To register the app follow these steps.
+- Register your repo with Jenkins
+  - **Username**: Enter your GitHub user id
+  - **Password**: Paste your personal access token
+  - **Branch**: Select the default git branch or type in another branch you want to register
     ```bash
     $ igc pipeline
     Project git repo: https://github.com/mjperrins/stockbffnode.git
@@ -83,11 +98,8 @@ and `repo` scope.
     Registering pipeline
     Creating git webhook
     ```
-- Enter your GitHub user id, paste your personal access token, and select the default git branch or type
-in another branch you want to register.
 
   The pipeline will be registered.
-
 
 ### View App Pipeline
 
@@ -101,39 +113,40 @@ run `igc credentials` using the [IGC CLI](getting-started/cli).
 
 </InlineNotification>
 
-- You will see you pipeline registered.
+You will see you pipeline registered.
 
-- Click on your app pipeline and click **Build Now**.
+Build and deploy your app
+- Click on your app pipeline and click **Build Now**
 
-- Wait for the pipeline stages to start building.
-
-- Once the stages have completed, you should see a view similar to the one below.
+Wait for the pipeline stages to start building.
+Once the stages have completed, you should see a view similar to the one below.
 
 ![Jenkins Pipeline](pipeline.png)
 
-### Access running App
+### Access running app
 
 Once the pipeline has completed successfully, the app will be deployed into the `dev` namespace
-in Kubernetes or Openshift. You can now access the app to test it.
+in your Kubernetes or Openshift cluster. You can now access the app to test it.
 
-- To access the app, retrieve the app ingress endpoint using command below.
+- To access the app, retrieve the app ingress endpoint using command below
     ```bash
     igc ingress -n dev
     ```
-- You will see a list of apps displayed with their ingress URLs.
+  
+  You will see a list of apps displayed with their ingress URLs
     ```bash
     Host(s):
     [
       'http://stockbffnode-dev.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
     ]
 
-- Open this ingress URL in your browser and validate the app is working as expected.
+- Open this ingress URL in your browser and validate the app is working as expected
 
-- This completes the deployment of your first app.
+This completes the deployment of your first app.
 
-### What's Next
+### Complete the setup
 
-Now you have a running application that is being built and deployed into your development cluster.
+You now have a running application that is being built and deployed into your development cluster.
 The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.
 
 To enable this, follow these instructions to complete the setup of the **ArgoCD** and **Artifactory**:
@@ -151,5 +164,4 @@ For more detailed instructions of how to enable to the full developer lifecycle 
 <AnchorLinks small>
   <AnchorLink to="/guides/overview">Guides</AnchorLink>
   <AnchorLink to="/starterkits/overview">Starter Kit Templates</AnchorLink>
-
 </AnchorLinks>
