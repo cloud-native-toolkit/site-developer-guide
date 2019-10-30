@@ -71,10 +71,10 @@ The next page in the wizard is the Onboarding Complete page.
 
 </ArtDirection>
 
-## Obtaining Encryption Key
+## Obtaining encrypted password
 
-To enable the Pipelines to store the Helm artifacts in the Artifactory repository, we need to obtain the Encryption key
-from the settings and configure this into the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Cluster.
+To enable the Jenkins pipelines to store the Helm artifacts in the Artifactory repository, we need to obtain 
+Artifactory's encrypted password and store this where Jenkins can access it--in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
 
 - In the Artifactory console, press the **Welcome, admin** menu button in the top right corner of the console and select **Edit profile**
 
@@ -96,21 +96,26 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
 
 </ArtDirection>
 
-To encode the encrypted password to Base64 format, use the [Encode64](https://www.base64encode.org/) website to get the Base64 password.
+[Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret-manually) 
+store data in base64 format. So to store Artifactory's encrypted password in a secret, it needs to be encoded into base64.
+
+Any base64 encoding tool will work. For example:
+
+- Go to the [Base64 Encode](https://www.base64encode.org/) website
 
 - Paste the encrypted password into the online tool and press the **Encode** button
 
 - In the field below, copy the encoded value into you clipboard or store it somewhere safe
 
-## Updating Kubernetes Secrets
+## Update the Kubernetes Secret
 
-Store the Base64 encrypted password for Artifactory in a Kubernetes secret.
+Store the base64 encrypted password for Artifactory in the Kubernetes secret for accessing Artifactory.
 
 - Open your Development Tools environment's Kubernetes Console or OpenShift Console
 
 - Navigate to the `tools` namespace and `secrets` view
 
-- Find the secret named `artifactory-access` and open it in the Edit view.
+- Find the secret named `artifactory-access` and open it in the Edit view
 
 <Row>
 <Column colMd={4} colLg={5} noGutterMdLeft>
@@ -136,7 +141,7 @@ Store the Base64 encrypted password for Artifactory in a Kubernetes secret.
 </Column>
 </Row>
 
-- Find the `ARTIFACTORY_ENCRPT` value (under `data`) and paste in the Artifactory Base64 key into the field
+- Find the `ARTIFACTORY_ENCRPT` value (under `data`) and paste in the Artifactory base64 key into the field
 
 - Press **Save** in OpenShift Console or **Update** in Kubernetes Dashboard
 
