@@ -127,7 +127,7 @@ API keys are not needed to connect to CRC, but the file must still exist.
     cp credentials.template credentials.properties
     ```
 
-Just leave the property values blank, Terraform will not use them.
+- Edit the `credentials.properties` file and set the `ibmcloud.api.key` property to the admin password displayed in the terminal when CRC was started.
 
 </Tab>
 
@@ -150,7 +150,7 @@ Use the  `environment.tfvars` properties to configure the installation for the D
 Set the following properties so they match below, all the other properties will be ignored:
 
 ```bash
-# The type of cluster that will be created/used (kubernetes or openshift)
+# The type of cluster that will be created/used (kubernetes, openshift, or crc)
 cluster_type="crc"
 # Flag indicating if we are using an existing cluster or creating a new one
 cluster_exists="true"
@@ -186,19 +186,7 @@ we are now ready to kick off the installation.
     The supplied Terraform scripts are ready to run using the settings in the properties files.
     You optionally can extend or modify the scripts and tailor them for your project's specific needs.
 
-- From inside the terminal/containeryou need to log into the OpenShift cluster via the cli.
-    ```bash
-    oc login --insecure-skip-tls-verify=true -u kubeadmin -p <your-password> https://api.crc.testing:6443
-    ```
-
-    <InlineNotification>
-
-    NOTE: replace "your-password" with the password displayed when the "crc start" command command completed.
-
-    </InlineNotification>
-
-    Run this script in the container:
-
+- From inside the terminal/container run this script:
     ```bash
     ./runTerraform.sh
     ```
