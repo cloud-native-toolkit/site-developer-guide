@@ -1,175 +1,390 @@
 ---
-title: Contributing
+title: Governance
 ---
 
-<PageDescription>
-
-Use this guide to contribute to the theme. We'll show you how to get the development environment set up as quickly as possible so you can start contributing.
-
-</PageDescription>
+## Catalyst
+_IBM Cloud Garage Catalyst_ (aka Catalyst) is an organized effort managed by IBM Cloud Garage to help development teams build and deliver cloud-natvie solutions deployed to IBM Cloud with Kubernetes and OpenShift.
 
 <AnchorLinks>
-  <AnchorLink>Project setup</AnchorLink>
-  <AnchorLink>Development</AnchorLink>
-  <AnchorLink>Work in a branch</AnchorLink>
-  <AnchorLink>Sass and CSS Modules</AnchorLink>
-  <AnchorLink>VS Code</AnchorLink>
+
+- [Assets and projects](#assets-and-projects)
+- [Roles and responsibilities](#roles-and-responsibilities)
+- [Types of teams](#types-of-teams)
+- [Governance](#governance)
+- [Initial project teams](#initial-project-teams)
+
 </AnchorLinks>
 
-## Project setup
+## Assets and projects
 
-1. Go to [gatsby-theme-carbon](https://github.com/carbon-design-system/gatsby-theme-carbon) and click the `Fork` button in the top-right corner.
+### Catalyst assets
 
-1. After it's finished, click on the `Clone or Download` button and copy the contents.
+_Catalyst assets_ (aka assets) are guidelines, components, and tooling, the result of community contributions of code, design, ideas, and guidance, that have been packaged and shared for reuse on development projects. Their purpose is twofold:
+- Increase the productivity of application developers
+- Increase the consistency of applications that are developed
 
-1. In your terminal, clone the repo into your directory of choice
+Assets will embody best practices for common application architectures, implementations, and development tasks and make those best practices easier to apply. Assets will be managed and made available for use via projects.
 
-   ```sh
-   git clone [PASTE_URL_HERE]
-   cd gatsby-theme-carbon
-   ```
+### Catalyst projects
 
-1. When you clone your forked repo the `origin` is set to your fork by default. You'll want to add a remote that points to the upstream repo.
+_Catalyst projects_ (aka projects) are open source efforts narrowly focused on specific areas of interest. The assets are divided into projects. A project should organize a set of related assets such that a user or contributor interested in a project should be interested in  all of the assets in a project.
 
-   ```sh
-   git remote add upstream git@github.com:carbon-design-system/gatsby-theme-carbon.git
-   ```
+Each project will store its assets in a GitHub repository to facilitate managing development of the assets as well as helping individual development projects to access and apply the assets.
 
-1. In your terminal, verify that the remotes have been set
+## Roles and responsibilities
 
-   ```sh
-   git remote -v
-   ```
+### Consumers
 
-## Development
+_Consumers_ are members of the community who are applying assets to their development projects. Anyone who wants to apply any of the assets can be a user. We encourage consumers to participate as evangelists and contributors as well.
 
-We use [yarn](https://yarnpkg.com/lang/en/docs/install/) and yarn workspaces to develop the Carbon Gatsby theme. This allows us to have a development environment that's closely linked to the theme with minimal setup. Run `yarn install` to install all of the projects dependencies.
+### Evangelists
 
-This project has two packages: the actual theme package (`gatsby-theme-carbon`) and the `example` package. The example package emulates a project which uses the theme. Its only dependencies are Gatsby, React, and the adjacent theme package. The `example` package also serves as the theme's documentation and [website](https://gatsby-theme-carbon.now.sh); it's deployed on every merge to master.
+_Evangelists_ are members of the community who help others become consumers of the assets. They do so by:
+- Advertising the assets and encouraging others to use them
+- Supporting new consumers and answering questions, such as on Slack (IBM internal)
+- Reporting bugs or missing features through GitHub issues
 
-New theme development will happen in the theme package while documentation and testing of that change will occur through changes in the example directory.
+### Contributors
 
-### Development scripts
+_Contributors_ are members of the community who help maintain, improve, and expand the assets. In addition to using and evangilizing the assets, they make the assets better by:
+- Resolving issues in GitHub to fix bugs, add features, and improve documentation
+- Submitting changes as GitHub pull requests
 
-- `yarn dev` – start the development environment
-- `yarn dev:clean` – clear cache and restart dev
-- `yarn format` – format your code with prettier
-- `yarn lint` - check for errors in your javascript
+### Maintainers
 
-## Work in a branch
+_Project maintainers_ (aka maintainers) are owners of the project who are committed to the success of the assets in that project. Each project has a team of maintainers, and each team has a lead. In addition to their participation as contributors, maintainers have privileges to:
+- Label, close, and manage GitHub issues
+- Close and merge GitHub pull requests
+- Nominate and vote on new maintainers
 
-You should always start a new project by pulling upstream changes into master and then creating a new branch. This workflow ensures you don't accidentally commit anything to your master branch and get stuck when trying to open a pull request.
+## Types of teams
+
+### Core team
+
+Core team members are IBM employees responsible for the leadership and strategic direction of the set of Catalyst projects as a whole. The core team also directs how the Catalyst strategy will evolve with IBM Cloud product decisions. Core team responsibilities include:
+
+- Actively engaging with the projects' communities
+- Setting overall direction and vision
+- Setting priorities and release schedule
+- Focusing on broad, cross-cutting concerns
+- Spinning up or shutting down project teams
+
+The core team will opperate the technical steering commottee.
+
+#### Technical steering committee
+
+The technical steering committee coordinates the project teams to ensure consistency between the projects and fosters collaboration between the core team and each project team. This close communication on cross-cutting concerns greatly mitigates the risk of misalignment that can come from decentralized efforts. The committee consists of the project leads of all of the projects as well as other members of the core team who may not presently be leading any projects.
+
+### Project teams
+
+Each project team maintains the assets in its project. Therefore, its members are the maintainers of the assets. Each project operates independently, though it should follow this governance structure to define roles, responsibilities, and decision-making protocols.
+
+The project has a project lead, a lead maintainer who should also be a member of the [technical steering committee](#technical-steering-committee).
+
+Each project lead is responsible for:
+- Acting as a point of primary contact for the team
+- Participating in the technical steering committee
+- Deciding on the initial membership of project maintainers (in consultation with the core team)
+- Determining and publishing project team policies and mechanics, including the way maintainers join and leave the team (which should be based on team consensus)
+- Communicating core vision to the team
+- Ensuring that issues and pull requests progress at a reasonable rate
+- Making final decisions in cases where the team is unable to reach consensus (should be rare)
+
+The way that project teams communicate internally and externally is left to each team, but:
+- Technical discussion should take place in the public domain as much as possible, ideally in GitHub issues and pull requests.
+- Each project should have a dedicated Slack channel (IBM internal). Decisions from Slack discussions should be captured in GitHub issues.
+- Project teams should actively seek out discussion and input from stakeholders who are not members of the team.
+
+## Governance
+
+### Planning
+
+Project planning is managed in a [Kanban board](https://en.wikipedia.org/wiki/Kanban_board), specifically this Zenhub board:
+
+- [Planning Zenhub](https://github.ibm.com/garage-catalyst/planning)
+
+### Decision-making
+
+Project teams should use [consensus decision making](#consensus) as much as possible, but resort to [lack of consensus decision making](#lack-of-consensus) when necessary.
+
+#### Consensus
+
+Project teams use [consensus decision-making](http://en.wikipedia.org/wiki/Consensus_decision-making) with the premise that a successful outcome is not where one side of a debate has "won," but rather where concerns from _all_ sides have been addressed in some way. **This emphatically does not mean design by committee, nor compromised design.** Rather, it's a recognition that every design or implementation choice carries a trade-off and numerous costs. There is seldom a 100% right answer.
+
+Breakthrough thinking sometimes end up changing the playing field by eliminating tradeoffs altogether, but more often, difficult decisions have to be made. **The key is to have a clear vision and set of values and priorities**, which is the core team's responsibility to set and communicate, and the project teams' responsibility to act upon.
+
+Whenever possible, seek to reach consensus through discussion and design iteration. Concretely, the steps are:
+
+- New GitHub issue or pull request is created with initial analysis of tradeoffs.
+- Comments reveal additional drawbacks, problems, or tradeoffs.
+- The issue or pull request is revised to address comments, often by improving the design or implementation.
+- Repeat above until "major objections" are fully addressed, or it's clear that there is a fundamental choice to be made.
+
+Consensus is reached when most people are left with only "minor" objections. While they might choose the tradeoffs slightly differently, they do not feel a strong need to _actively block_ the issue or pull request from progressing.
+
+One important question is: consensus among which people, exactly? Of course, the broader the consensus, the better. When a decision in a project team affects other teams (e.g. new/changed API), the team will be encouraged to invite people (e.g. leads) from affected teams. But at the very least, **consensus within the members of the project team should be the norm for most decisions**. If the core team has done its job of communicating the values and priorities, it should be possible to fit the debate about the issue into that framework and reach a fairly clear outcome.
+
+#### Lack of consensus
+
+In some cases, though, consensus cannot be reached. These cases tend to split into two very different camps:
+
+- **"Trivial" reasons**, e.g., there is not widespread agreement about naming, but there is consensus about the substance.
+- **"Deep" reasons**, e.g., the design fundamentally improves one set of concerns at the expense of another, and people on both sides feel strongly about it.
+
+In either case, an alternative form of decision-making is needed.
+
+- For the "trivial" case, the project lead will make an executive decision or defer the decision to another maintainer on the team.
+- For the "deep" case, the project lead is empowered to make a final decision, but should consult with the core team before doing so.
+
+### Contribution process
+
+Catalyst assets are typically stored in GitHub repositories and use a [fork and pull request](https://guides.github.com/activities/forking/) workflow for contributions. Specific instructions can be found in each project's GitHub `CONTRIBUTING.md` file.
+
+### Contributor License Agreement
+
+We require contributors outside of IBM to sign our Contributor License Agreement (CLA) before code contributions can be reviewed and merged. If you have questions, please [contact the core team](/help/support#email).
+
+### Support
+
+Have questions? Found a bug? Learn where to go and what to do by visiting the [Support page](/help/support).
+
+# Contributing
+
+## Requirements
+
+Set up your SSH Key GitHub account and install node.js 4 or higher.
+
+- [Generating SSH Keys - GitHub](https://help.github.com/articles/generating-ssh-keys/)
+- [`nvm` (Node Version Manager)](https://github.com/creationix/nvm) to use the
+  `Node 6`.
+
+
+## Start contributing
+
+### 1. Fork the repo:
+
+Go to [carbon-components](https://github.com/IBM/carbon-components) and click
+the `Fork` button in the top-right corner.
+
+### 2. Clone your fork:
+
+1.  Go to your [GitHub Repositories](https://github.com/settings/repositories).
+1.  Click on `[your_github_username]/carbon-components`.
+1.  Click on the `Clone or Download` button and copy the URL from the
+    `Clone with SSH` option. It should start with `git@github.com...`
+
+In your terminal:
 
 ```sh
-git checkout master
-git pull upstream master
-git checkout -b my-branch-name
+git clone git@github.com:[your_github_username]/carbon-components.git
+cd carbon-components
 ```
 
-When you're ready to open a pull request, push to your origin remote.
+See [GitHub docs](https://help.github.com/articles/fork-a-repo/) for more
+details.
+
+### 3. Add upstream remotes
+
+When you clone your forked repo, doing a `git remote -v` will show that the
+`origin` remote is set up for you already by default. This should be pointing to
+your forked repo.
+
+Add the `IBM/carbon-components` repo to your remote (this can be useful to
+update your fork of new changes down the road):
 
 ```sh
-git push origin my-branch-name
+# Add the upstream remote to your repo
+git remote add upstream git@github.com:IBM/carbon-components.git
+
+# Verify the remote was added
+git remote -v
 ```
 
-You'll get a message in your terminal with a URL to open up a pull request in the upstream repository. Navigate to that URL and be sure to give a detailed summary of your pull request in the title and body section of the form.
+When you do `git remote -v`, you'll see these remotes:
 
-## Sass and CSS Modules
+- `origin`: connection to your fork
+- `upstream`: connection to the original repo.
 
-For internal theme components we use [Sass](https://sass-lang.com/documentation/syntax) and [CSS Modules](https://github.com/css-modules/css-modules#css-modules). This allows us to take advantage of the Carbon Design System resources while not worrying about className collisions. By default, each `.scss` file will be supplied with all of the Carbon Sass [variables](https://github.com/carbon-design-system/carbon/blob/master/packages/components/src/globals/scss/_vars.scss): color, spacing, theme, and motion, as well as type and layout mixins, are imported automatically.
+### 4. Work in a branch
 
-You should colocate your stylesheet with the component(s) that import it. If the component is `TreeView` then the stylesheet should be `TreeView.module.scss`. All contained within the `TreeView` directory.
+- Always work in a branch.
+- Submit pull requests from a branch.
+- All commits must follow the convention outlined
+  [here](https://github.com/conventional-changelog/conventional-changelog/blob/v0.5.3/conventions/angular.md).
 
-### CSS Modules
+### 5. Start the server
 
-You don't need to prefix your classes as CSS Modules will generate unique class names for you. Import the class from the `.scss` file.
+```sh
+npm run dev
 
-```scss path=TreeView.module.scss
-.treeView {
-  color: $text-01;
-}
+# or
+
+yarn dev
 ```
 
-```jsx path=TreeView.js
-import { treeView } from './style.css';
+Once it's done building, you can start editing source code or creating new
+components. The system is set up to automatically bundle your changes/additions.
+Visit http://localhost:3000 to see the changes happen on the fly.
 
-const TreeView = props => <div className={treeView} />;
+Options:
+
+- `-b`: Enable breaking changes for the next release
+- `-e`: Enable experimental features
+
+### 6. Test your JavaScript code
+
+If you're contributing to our JavaScript code, test your changes by running our
+test commands:
+
+```sh
+gulp test:unit
 ```
 
-For conditionally applying class names, use the `classname` library. Note how we're using a [computed property name](https://tylermcginnis.com/computed-property-names/) for the property being based to `cx`. That's because the className isn't literally `"long"` it's a value generated by CSS Modules and placed in the `long` variable.
+If you add any features to our JavaScript code, make sure to add tests so that
+your code is covered. Tests are written in
+[Mocha](https://mochajs.org)/[Chai](http://chaijs.com). You can see if your code
+is covered by looking at carbon-components/tests/coverage/\*/index.html after
+running test.
 
-```jsx path=TreeView.js
-import cx from 'classname';
-import { treeView, long } from './style.css';
+If your change may hit some browser quirks, use `-b` option, like:
 
-const TreeView = props => {
-  const className = cx(treeView, {
-    [long]: props.long,
-  });
-  const TreeView = props => <div className={className} />;
-};
+```sh
+gulp test:unit -b IE -b Firefox
 ```
 
-If you need to target a global class not processed by CSS Modules, you can do so with the [global selector](https://github.com/css-modules/css-modules#exceptions).
+(Other browsers tests can run with are: `Safari`, `Chrome` and `ChromeHeadless`)
 
-```scss
-:global(.bx--grid) .codeBlock {
-  @include carbon--type-style('code-01');
-}
+If you are very sure that your change affects a specific set of components, you
+can use `-f` option, like:
+
+```sh
+gulp test:unit -f tests/spec/fab_spec.js
 ```
 
-## VS Code
+Other options for testing are:
 
-To get linting error feedback while writing javascript and SCSS in VS Code, install the [stylelint](https://marketplace.visualstudio.com/items?itemName=shinnn.stylelint) and [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) extensions. We use ESLint's Prettier rules to format and lint all of our JavaScript in one pass. To get your code to format properly on save, add the following to a `.vscode/settings.json` in the root of your project
+- `-d`/`--debug`: Stop generating code coverage report. Useful to debug your
+  code when running test.
+- `-k`/`--keepalive`: Keep running test runner even after test ends. Test will
+  restart running when you make changes to any test files or any files under
+  test.
+- `-v`/`--verbose`: Let Karma emit detailed log.
 
-```json path=.vscode/settings.json
-{
-  "editor.formatOnSave": true,
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[javascriptreact]": {
-    "editor.formatOnSave": false
-  },
-  "eslint.autoFixOnSave": true,
-  "prettier.disableLanguages": ["javascript", "javascriptreact"]
-}
+### 7. Test your HTML/CSS code for a11y
+
+If you're contributing to our HTML/CSS code, a11y compliance of your code should
+be tested.
+
+To do so, you can test your changes by running our test commands:
+
+```sh
+gulp test:a11y
 ```
 
-To lint the entire project and get errors in your `Problems` tray, you can add the following to a `.vscode/tasks.json` file in the root of your project. You can run these tasks with `cmd+shift+d`
+If you are very sure that your change affects a specific set of components, you
+can use `--name` option, like:
 
-```json path=.vscode/tasks.json
-{
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "npm",
-      "script": "lint:js",
-      "problemMatcher": "$eslint-stylish"
-    },
-    {
-      "type": "npm",
-      "script": "lint:scss",
-      "problemMatcher": {
-        "owner": "stylelint",
-        "fileLocation": ["relative", "${workspaceFolder}"],
-        "pattern": [
-          {
-            "regexp": "^([^\\s].*)$",
-            "file": 1
-          },
-          {
-            "regexp": "^\\s+(\\d+):(\\d+)\\s+(✖|warning)\\s+(.*)\\s\\s+(.*)$",
-            "line": 1,
-            "column": 2,
-            "severity": 3,
-            "message": 4,
-            "code": 5,
-            "loop": true
-          }
-        ]
-      }
-    }
-  ]
-}
+```sh
+gulp test:a11y --name dropdown
 ```
+
+The a11y test may report potential issues that should be handled in
+application-level, not in carbon-components code. In such case, you can ignore
+those issues by adding an item to `shouldIssueBeIgnoredForRule` table in
+[tests/a11y/global-ignore-aat-issues.js](https://github.com/IBM/carbon-components/blob/master/tests/a11y/global-ignore-aat-issues.js).
+The table is keyed by something like `wcag20.tech.h59.linkValid` which helps
+identifying what RPT rule to ignore. You can specify `true` to the value which
+ignores all violations of the rule, or a function which takes the DOM element
+violating the rule and returns `true` if such violation should be ignored.
+
+### 8. Make a pull request
+
+**Note:** Before you make a pull request,
+[search](https://github.com/IBM/carbon-components/issues) the issues to see if a
+similar issue has already been submitted. If a similar issue has been submitted,
+assign yourself or ask to be assigned to the issue by posting a comment. If the
+issue does not exist, create a new issue.
+
+When you're at a good stopping place and you're ready for feedback from other
+contributors and maintainers, **push your commits to your fork**:
+
+#### Commit tip
+
+> **Writing commit messages**
+>
+> - `<type>` indicates the type of commit that's being made. This can be:
+>   `feat`, `fix`, `perf`, `docs`, `chore`, `style`, `refactor`
+> - `<scope>` The scope could be anything specifying place of the commit change
+>   or the thing(s) that changed.
+>
+> **Commit message format:**
+
+```
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+```
+
+_Do not submit pull requests from the `master` branch of your fork._
+
+```
+git checkout -b { YOUR_BRANCH_NAME }
+git add .
+git commit -m "fix(table): IE11 positioning error" -m "Fixes #34"
+```
+
+- [Close a commit via commit message](https://help.github.com/articles/closing-issues-via-commit-messages/)
+
+```
+git push origin { YOUR_BRANCH_NAME }
+```
+
+In your browser, navigate to
+[IBM/carbon-components](https://github.com/IBM/carbon-components) and click the
+button that reads `Compare & pull request`
+
+> **Is it a Breaking Change?**
+
+> We want to respect semver. It's important to discern whether your pull request
+> contains breaking changes or not. Sometimes, renaming or removing things in
+> the code can result in breaking changes.
+
+> Here are some examples of breaking changes... changing, renaming or removing
+> any of the following:
+>
+> - HTML attributes
+> - Folders or Files
+> - Any SCSS `@mixin`, `$variable` or `function`
+> - Any JS `function` or `class`
+
+> We also practice **graceful deprecation** when something is slated to be
+> removed -- we mark it as deprecated in the current version and remove it in
+> the next major version.
+
+Before you create a pull request, change the base branch depending on what kind
+of change you're submitting.
+
+- Pull requests with **non-breaking changes** like patches and minor updates use
+  the `master` as the base branch.
+- Pull requests with **breaking changes** use the latest `major version number`
+  branch as the base branch (i.e. `7.0.0` or whatever the next major version
+  is).
+
+Write a title and description then click `Create pull request`
+
+- [How to write the perfect pull request](https://github.com/blog/1943-how-to-write-the-perfect-pull-request)
+
+### 9. Updating a pull request
+
+Stay up to date with the activity in your pull request. Maintainers from the
+Design System team will be reviewing your work and making comments, asking
+questions and suggesting changes to be made before they merge your code.
+
+:tada: You no longer need to squash commits :tada:
+
+When you need to make a change, add, commit and push to your branch normally.
+
+Once all revisions to your pull request are complete, someone from Design
+Systems will squash and merge your commits for you.
