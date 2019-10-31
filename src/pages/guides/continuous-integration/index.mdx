@@ -1,7 +1,12 @@
 ---
 title: Continuous Integration with Jenkins
-description: This guide will explain how to use Jenkins to manage your Continuous Integration process
 ---
+
+<PageDescription>
+
+This guide will explain how to use Jenkins to manage your Continuous Integration process
+
+</PageDescription>
 
 Continuous integration is a software development technique where software is built regularly by a team in an automated fashion.
 This quote helps explain it:
@@ -15,14 +20,14 @@ This quote helps explain it:
 
 ## What is Jenkins
 
-Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software.
-It is a perfect tool for helping managing continuous integration tasks for a wide range of software component's.
+Jenkins is a self-contained, open source automation server that can be used to automate all sorts of tasks related to building, testing, and delivering or deploying software.
+It is a perfect tool for helping manage continuous integration tasks for a wide range of software components.
 
-Jenkins Pipeline (or simply "Pipeline") is a suite of plugins which supports implementing and integrating continuous delivery pipelines into Jenkins.
+Jenkins Pipeline (or simply "Pipeline") is a suite of plugins that supports implementing and integrating continuous delivery pipelines into Jenkins.
 
 A continuous delivery pipeline is an automated expression of your process for getting software from version control right through to your users and customers.
 
-Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code". The definition of a Jenkins Pipeline is typically written into a text file (called a [Jenkinsfile](https://jenkins.io/doc/pipeline/tour/hello-world/)) which in turn is checked into a project’s source control repository.
+Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code." The definition of a Jenkins Pipeline is typically written into a text file (called a [Jenkinsfile](https://jenkins.io/doc/pipeline/tour/hello-world/)) that in turn is checked into a project’s source control repository.
 
 ### Pipelines
 
@@ -33,44 +38,49 @@ You can read more information about Jenkins Pipelines [here](https://jenkins.io/
 
 ### Stages
 
-Pipelines are defined in a `Jenkinsfile` that sits in the root of your application code. It defines a number of stages. Each of the `Starter Kit Templates` includes a `Jenkinsfile` that offers a number of stages. The stages have been configured to complete the build, test, package and deploy of the application code. Each stage can use the defined defined `secrets` and `config maps` that were previously configured during the installation of Development cluster setup.
+Pipelines are defined in a `Jenkinsfile` that sits in the root of your application code. It defines a number of stages. Each of the `Starter Kit Templates` includes a `Jenkinsfile` that offers a number of stages. The stages have been configured to complete the build, test, package, and deploy of the application code. Each stage can use the defined defined `secrets` and `config maps` that were previously configured during the installation of Development cluster setup.
 
-The `Jenkinsfile` is consistent between pipeline registration with OpenShift or IKS. The enable application compatibility between IKS and OpenShift, The `Dockerfile` has been optimized for []`Universal Base Image](https://developers.redhat.com/products/rhel/ubi/) images, this means the docker images when deployed can run on both OpenShift and IKS.
+## Developer Tools Pipeline
 
-The following gives a description of what each stage in the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
+To enable application compatibility between Kubernetes and OpenShift, the `Jenkinsfile` is consistent between pipeline registration with
+both platforms. Also, the Docker images are built from 
+[UBI images](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image) 
+so that their containers can run on both platforms.
 
-- **Setup** clones the code into the pipeline
-- **Build** runs the build commands for the code
-- **Test**	validates the unit tests for the code
-- **Publish pacts**	(*optional*) publishes any pact contracts that have been defined
-- **Sonar scan** (*optional*) runs a sonar code scan of the source code and publishes the results to SonarQube
-- **Verify environment** Validates the OpenShift or IKS environment configuration is valid
-- **Build image** Builds the code into a Docker images and stores it in the IBM Cloud Image registry
-- **Deploy to DEV env**	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
-- **Health Check** Validates the Health Endpoint of the deployed application
-- **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
-- **Trigger CD Pipeline** (*optional*) This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
-
+These are the stages in the pipeline and a description of what each stage does. The **bold stage names** indicate 
+the stages that are required; the ***italics stage names*** indicate optional stages that can be deleted or will be ignored if the tool 
+supporting the stage is not installed. These stages represent a typical production pipeline flow for a cloud-native application.
+- **Setup**: Clones the code into the pipeline
+- **Build**: Runs the build commands for the code
+- **Test**:	Validates the unit tests for the code
+- ***Publish pacts***:	Publishes any pact contracts that have been defined
+- ***Sonar scan***: Runs a sonar code scan of the source code and publishes the results to SonarQube
+- **Verify environment**: Validates the OpenShift or IKS environment configuration is valid
+- **Build image**: Builds the code into a Docker images and stores it in the IBM Cloud Image registry
+- **Deploy to DEV env**:	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
+- **Health Check**: Validates the Health Endpoint of the deployed application
+- ***Package Helm Chart***: Stores the tagged version of the Helm chart in Artifactory
+- ***Trigger CD Pipeline***: This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
 
 ## Registering Pipelines
 
-The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register you git repo use the [`igc`](/getting-started/deploy-app) command line. This command automates a number of manual steps you would have to do with Jenkins. Including managing secrets, webhooks, pipeline registration in the Jenkins tools.
+The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register your git repo, use the [IGC CLI](/getting-started/cli). This command automates a number of manual steps you would have to do with Jenkins, including: managing secrets, webhooks, and pipeline registration in the Jenkins tools.
 
 ```bash
 igc pipeline
 ```
 
-By default the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute knowing it has access to the key information allow it to integrate with both the Cloud Platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.pipeline
+By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute, knowing it has access to the key information that enables it to integrate with both the cloud platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.
 
 ### Registering Pipeline in new namespace
 
-You can use any namespace you want to register a pipeline. if you add `-n` or `namespace` to your `igc pipeline` command it will create a new namespace if it doesnt exist and copy the necessary `secrets` and `configMaps`. In the future this will be managed by an operator.namespace
+You can use any namespace you want to register a pipeline. If you add `-n` or `namespace` to your `igc pipeline` command, it will create a new namespace if it doesn't already exist and copy the necessary `secrets` and `configMaps`. In the future, this will be managed by an operator.
 
 ```bash
 igc pipeline -n team-a
 ```
 
-You will also need to change the namespace in your `Jenkinsfile` search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
+You will also need to change the namespace in your `Jenkinsfile`. Search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
 
 ```bash
 env:
@@ -89,12 +99,15 @@ env:
 
 ```
 
-This is good if you have various quads or pairs working in the same Development cluster.
+This is good if you have various squads or pairs working in the same Development Tools environment.
 
-Once you become familiar with deploying code into OpenShift or IKS, read up about how you can manage code deployment with `Continuous Deployment` with `Artiactory` and `ArgoCD`
+## Continious deployment
+
+In addition to continous integration, the Developer Tools environment also supports continous deployment 
+using Artifactory and ArgoCD:
 
 <AnchorLinks small>
-  <AnchorLink to="/guides/artifact-management">Artiact Storage with Artifactory</AnchorLink>
+  <AnchorLink to="/guides/artifact-management">Artifact Storage with Artifactory</AnchorLink>
   <AnchorLink to="/guides/continuous-deployment">Continuous Deployment with ArgoCD</AnchorLink>
 </AnchorLinks>
 
