@@ -8,7 +8,7 @@ This guide will explain how to use Jenkins to manage your Continuous Integration
 
 </PageDescription>
 
-Continous integration is a software development technique where software is built regularly by a team in an automated fashion.
+Continuous integration is a software development technique where software is built regularly by a team in an automated fashion.
 This quote helps explain it:
 
 > Continuous Integration is a software development practice where members of a team integrate their work frequently,
@@ -29,29 +29,23 @@ A continuous delivery pipeline is an automated expression of your process for ge
 
 Jenkins Pipeline provides an extensible set of tools for modeling simple-to-complex delivery pipelines "as code." The definition of a Jenkins Pipeline is typically written into a text file (called a [Jenkinsfile](https://jenkins.io/doc/pipeline/tour/hello-world/)) that in turn is checked into a project’s source control repository.
 
-
-
 ### Pipelines
 
 Pipelines offer a set of stages or steps that can be chained together to allow a level of software
 automation. This automation can be tailored to the specific project requirements.
 
-
-
-
+You can read more information about Jenkins Pipelines [here](https://jenkins.io/doc/book/pipeline/)
 
 ### Stages
 
-As you can see from either the vanilla Jenkins pipelines view of the Application Console pipelines view, each template 
-offers a number of pipeline stages. The stages have been configured to be work from the defined `secrets` and `config maps` 
-that have been defined in the Development Tools environment setup.
+Pipelines are defined in a `Jenkinsfile` that sits in the root of your application code. It defines a number of stages. Each of the `Starter Kit Templates` includes a `Jenkinsfile` that offers a number of stages. The stages have been configured to complete the build, test, package, and deploy of the application code. Each stage can use the defined defined `secrets` and `config maps` that were previously configured during the installation of Development cluster setup.
 
 ## Developer Tools Pipeline
 
-The Developer Tools environment's Jenkinsfile pipeline uses stages that run in both Kubernetes and OpenShift. 
-The Docker images are built from 
+To enable application compatibility between Kubernetes and OpenShift, the `Jenkinsfile` is consistent between pipeline registration with
+both platforms. Also, the Docker images are built from 
 [UBI images](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image) 
-so that their containers can run in both Kubernetes and OpenShift.
+so that their containers can run on both platforms.
 
 These are the stages in the pipeline and a description of what each stage does. The **bold stage names** indicate 
 the stages that are required; the ***italics stage names*** indicate optional stages that can be deleted or will be ignored if the tool 
@@ -60,7 +54,6 @@ supporting the stage is not installed. These stages represent a typical producti
 - **Build**: Runs the build commands for the code
 - **Test**:	Validates the unit tests for the code
 - ***Publish pacts***:	Publishes any pact contracts that have been defined
-- ***Verify pact***: Verifies the pact contracts
 - ***Sonar scan***: Runs a sonar code scan of the source code and publishes the results to SonarQube
 - **Verify environment**: Validates the OpenShift or IKS environment configuration is valid
 - **Build image**: Builds the code into a Docker images and stores it in the IBM Cloud Image registry
@@ -69,6 +62,44 @@ supporting the stage is not installed. These stages represent a typical producti
 - ***Package Helm Chart***: Stores the tagged version of the Helm chart in Artifactory
 - ***Trigger CD Pipeline***: This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
 
+## Registering Pipelines
+
+The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register you git repo use the [`igc`](/getting-started/deploy-app) command line. This command automates a number of manual steps you would have to do with Jenkins. Including managing secrets, webhooks, pipeline registration in the Jenkins tools.
+
+``bash
+igc pipeline
+```
+
+By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute knowing it has access to the key information allow it to integrate with both the Cloud Platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.
+
+### Registering Pipeline in new namespace
+
+You can use any namespace you want to register a pipeline. if you add `-n` or `namespace` to your `igc pipeline` command it will create a new namespace if it doesnt exist and copy the necessary `secrets` and `configMaps`. In the future this will be managed by an operator.namespace
+
+```bash
+igc pipeline -n team-a
+```
+
+You will also need to change the namespace in your `Jenkinsfile` search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
+
+```bash
+env:
+    - name: CHART_NAME
+      value: template-node-typescript
+    - name: CHART_ROOT
+      value: chart
+    - name: TMP_DIR
+      value: .tmp
+    - name: HOME
+      value: /home/devops
+    - name: ENVIRONMENT_NAME
+      value: team-a
+    - name: BUILD_NUMBER
+      value: ${env.BUILD_NUMBER}
+
+```
+
+This is good if you have various quads or pairs working in the same Development Tools environment.
 
 ## Continious deployment
 
@@ -80,4 +111,4 @@ using Artifactory and ArgoCD:
   <AnchorLink to="/guides/continuous-deployment">Continuous Deployment with ArgoCD</AnchorLink>
 </AnchorLinks>
 
-You can use the [Argo CD Template](https://github.com/ibm-garage-cloud/template-argocd-test) to help define a deployment configuration for `test` and `staging` namespaces.
+You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
