@@ -17,7 +17,7 @@
   pages:
     - title: Dashboard
       path: /getting-started/dashboard
-    - title: Deploying An App
+    - title: Deploying an App
       path: /getting-started/deploy-app
     - title: IGC CLI
       path: /getting-started/cli
