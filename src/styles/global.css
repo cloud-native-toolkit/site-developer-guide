@@ -14,3 +14,11 @@ h3[class*='Markdown-module--h3'] {
 h3[class*='Markdown-module--h2'] {
     margin-top: 1em;
 }
+
+.bx--resource-card--dark .bx--tile {
+    background-color:grey;
+}
+
+.bx--resource-card--dark .bx--tile:hover {
+    background-color:cornflowerblue;
+}

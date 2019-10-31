@@ -17,7 +17,7 @@
   pages:
     - title: Dashboard
       path: /getting-started/dashboard
-    - title: Deploying First App
+    - title: Deploying An App
       path: /getting-started/deploy-app
     - title: IGC CLI
       path: /getting-started/cli
@@ -32,15 +32,15 @@
   pages:
     - title: Overview
       path: /guides/overview
-    - title: Continuous Integration with Jenkins
+    - title: CI with Jenkins
       path: /guides/continuous-integration
-    - title: Continuous Integration with Tekton
+    - title: CI with Tekton
       path: /guides/continuous-integration-tekton
     - title: Code Analysis
       path: /guides/code-analysis
     - title: Artifact Management
       path: /guides/artifact-management
-    - title: Continuous Deployment
+    - title: CD with ArgoCD
       path: /guides/continuous-deployment
     - title: Contract Testing
       path: /guides/contract-testing
@@ -48,10 +48,6 @@
       path: /guides/log-management
     - title: Monitoring
       path: /guides/monitoring
-    - title: Integration Testing
-      path: /guides/integration-testing
-    - title: User Interface Testing
-      path: /guides/ux-testing
     - title: Infrastructure as Code
       path: /guides/iasc
     - title: Cluster configuration
