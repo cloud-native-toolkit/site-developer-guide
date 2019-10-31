@@ -14,16 +14,11 @@ Complete the steps for setting up ArgoCD so it can use the Helm repository in Ar
 ArgoCD is a complete [**GitOps**](https://www.weave.works/technologies/gitops/) tool for managing the deployment of application images into deployment environments. 
 These deployment environments often include ones for development lifecycle stages such as *test*, *pre-prod*, and *production*. 
 
-To deploy applications built using the Developer Tools environment, ArgoCD will use two types of artifacts, 
-Docker images and Helm charts. This setup configures ArgoCD to retrieve the artifacts from these sources:
-- Docker images: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
-- Helm charts: The [Artifactory repository](/getting-started/artifactory-setup)
-
-ArgoCD, Artifactory, and Jenkins are three separate tools in the Developer Tools environment.
-The environment uses a repository in Artifactory as its Helm chart repository.
-Jenkins and ArgoCD use Artifactory to share Helm charts:
-- The Jenkins pipeline will build the Helm chart and store it in Artifactory
-- The ArgoCD pipeline will retrieve the Helm chart from Artifactory and use it to deploy the app
+The Developer Tools environment packages apps into two types of artifacts, Docker images and Helm charts. 
+The environment uses Jenkins to build the artifacts and ArgoCD to deploy them. 
+The artifacts are stored in two registries/repositories:
+- Docker images are stored in the [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+- Helm charts are stored in the [Artifactory repository](/getting-started/artifactory-setup)
 
 ArgoCD is part of the Developer Tools environment's complete CI/CD solution:
 
@@ -34,10 +29,7 @@ ArgoCD is part of the Developer Tools environment's complete CI/CD solution:
 
 ## Prerequisites
 
-ArgoCD will need access to these resources:
-- Helm chart repository: Set up the [Helm chart repository in Artifactory](/getting-started/artifactory-setup) before setting up ArgoCD
-- Docker image registry: These instructions assume that the Developer Tools environment is installed in IBM Cloud, 
-which includes the [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+Before setting up ArgoCD, set up the [Helm chart repository in Artifactory](/getting-started/artifactory-setup) so that ArgoCD can use it.
 
 ##  Configuration
 
@@ -62,18 +54,18 @@ The Helm repository is in Artifactory. ArgoCD will need the URL to that reposito
 
 - In the Set Me Up section, click on the `generic-local` repository
 
-![Set Me Up - Repositories](setupartifactory.png "Set Me Up: Repositories")
+  ![Set Me Up - Repositories](setupartifactory.png "Set Me Up: Repositories")
 
 - In the Set Me Up dialog for the generic-local repository, copy the Deploy URL
 
-![Set Me Up - Generic Local Repository](artifactoryurlsetup.png "Set Me Up: generic-local Repository")
+  ![Set Me Up - Generic Local Repository](artifactoryurlsetup.png "Set Me Up: generic-local Repository")
 
 ### Update the ArgoCD configuration file
 
-The `template-argocd-test` repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
+The repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
 and deploy it to your Developer Tools environment.
 
-- Open the `config/argocd-helm-repo.yaml` file in an editor
+- In your local copy of the `template-argocd-test` repo, open the `config/argocd-helm-repo.yaml` file in an editor
 
 - Edit the `data.helm.url` property to replace the value `<artifactory helm repository location>` 
 with the URL of the Helm repository location in Artifactory
@@ -104,7 +96,7 @@ Use the kubectl CLI to deploy the edited configuration file.
   kubectl apply -f argocd-helm-repo.yaml -n tools
   ```
 
-  You can also do this using the `config/addconfigmap.sh` script in the `template-argocd-test` repo.
+  You can also apply the file using the `config/addconfigmap.sh` script in the `template-argocd-test` repo.
 
 Verify that the new configuration has deployed
 
