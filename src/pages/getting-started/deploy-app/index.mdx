@@ -1,5 +1,5 @@
 ---
-title: Deploying First App
+title: Deploying An App
 ---
 
 <PageDescription>
@@ -84,7 +84,16 @@ with `public_repo` and `write:repo_hook` scopes.
   ![Jenkins OAuth scopes](jenkins-scopes.png)
   - Save the token and place it in your clipboard
 
-- Register your repo with Jenkins
+- Make sure you are logged into you Development cluster, navigate to you Cluster in the IBM Cloud Console and click on the **Access** tab and follow the instructions to login from the command line. You can test this with the following simple command.
+    ```base
+    # Kubernetes
+    kubectl get nodes
+
+    # OpenShift
+    oc get nodes
+    ```
+
+- You can now register your app repo with Jenkins
   - **Username**: Enter your GitHub user id
   - **Password**: Paste your personal access token
   - **Branch**: Select the default git branch or type in another branch you want to register
@@ -126,7 +135,7 @@ Once the stages have completed, you should see a view similar to the one below.
 ### Access running app
 
 Once the pipeline has completed successfully, the app will be deployed into the `dev` namespace
-in your Kubernetes or Openshift cluster. You can now access the app to test it.
+in your Kubernetes or OpenShift cluster. You can now access the app to test it.
 
 - To access the app, retrieve the app ingress endpoint using command below
     ```bash

@@ -17,7 +17,7 @@
   pages:
     - title: Dashboard
       path: /getting-started/dashboard
-    - title: Deploying First App
+    - title: Deploying An App
       path: /getting-started/deploy-app
     - title: IGC CLI
       path: /getting-started/cli
@@ -48,10 +48,6 @@
       path: /guides/log-management
     - title: Monitoring
       path: /guides/monitoring
-    - title: Integration Testing
-      path: /guides/integration-testing
-    - title: User Interface Testing
-      path: /guides/ux-testing
     - title: Infrastructure as Code
       path: /guides/iasc
     - title: Cluster configuration

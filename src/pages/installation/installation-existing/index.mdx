@@ -20,8 +20,14 @@ In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service]
 These instructions assume that the cluster has already been created and explain 
 how to configure and run the Terraform infrastructure-as-code (IasC) scripts to install the Developer Tools into that existing cluster.
 
+<InlineNotification>
+
 **Note**: The Terraform scripts will clean up the cluster to remove any existing resources that overlap with the resources
-provisioned by the scripts.
+provisioned by the scripts. You also need to remember to remove any IBM Cloud services that were previously
+created. Use the helper script `terraform/scripts/destroy-service.sh` to help automate the deletion You can also run it
+to remove all the services beside **PostgreSQL** `./destroy-services.sh post`
+
+</InlineNotification>
 
 The following prerequisites are required before following the setup instructions:
 
