@@ -20,6 +20,9 @@ In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service]
 These instructions assume that the cluster has already been created and explain 
 how to configure and run the Terraform infrastructure-as-code (IasC) scripts to install the Developer Tools into that existing cluster.
 
+**Note**: The Terraform scripts will clean up the cluster to remove any existing resources that overlap with the resources
+provisioned by the scripts.
+
 The following prerequisites are required before following the setup instructions:
 
 - An IBM Cloud account with the ability to provision cloud service instances in the same region and zone as the existing cluster
