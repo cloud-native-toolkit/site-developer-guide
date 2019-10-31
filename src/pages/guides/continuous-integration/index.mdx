@@ -64,23 +64,23 @@ supporting the stage is not installed. These stages represent a typical producti
 
 ## Registering Pipelines
 
-The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register you git repo use the [`igc`](/getting-started/deploy-app) command line. This command automates a number of manual steps you would have to do with Jenkins. Including managing secrets, webhooks, pipeline registration in the Jenkins tools.
+The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register your git repo, use the [IGC CLI](/getting-started/cli). This command automates a number of manual steps you would have to do with Jenkins, including: managing secrets, webhooks, and pipeline registration in the Jenkins tools.
 
-``bash
+```bash
 igc pipeline
 ```
 
-By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute knowing it has access to the key information allow it to integrate with both the Cloud Platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.
+By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute, knowing it has access to the key information that enables it to integrate with both the cloud platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.
 
 ### Registering Pipeline in new namespace
 
-You can use any namespace you want to register a pipeline. if you add `-n` or `namespace` to your `igc pipeline` command it will create a new namespace if it doesnt exist and copy the necessary `secrets` and `configMaps`. In the future this will be managed by an operator.namespace
+You can use any namespace you want to register a pipeline. If you add `-n` or `namespace` to your `igc pipeline` command, it will create a new namespace if it doesn't already exist and copy the necessary `secrets` and `configMaps`. In the future, this will be managed by an operator.
 
 ```bash
 igc pipeline -n team-a
 ```
 
-You will also need to change the namespace in your `Jenkinsfile` search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
+You will also need to change the namespace in your `Jenkinsfile`. Search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
 
 ```bash
 env:
@@ -99,7 +99,7 @@ env:
 
 ```
 
-This is good if you have various quads or pairs working in the same Development Tools environment.
+This is good if you have various squads or pairs working in the same Development Tools environment.
 
 ## Continious deployment
 
