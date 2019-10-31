@@ -73,18 +73,26 @@ We can now register the repository with the Continuous Integration pipeline tech
 The default CI pipeline tool is currently **Jenkins**. (Tekton support will be coming soon.)
 We use the [IGC CLI](/getting-started/cli) to assist with these steps.
 
+#### Prerequisite - Create a GitHub personal access token
+
 For Jenkins to connect to and use your GitHub repo, it will need a 
 [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) 
-with `public_repo` and `write:repo_hook` scopes.
+with `public_repo` and `write:repo_hook` scopes. The Personal Access Token only needs
+to be generated once then it can be used to access multiple GitHub repos.
 
-- Create a GitHub personal access token for Jenkins to use
   - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token
   - Select `public_repo` scope to enable git clone
   - Select `write:repo_hook` scope so Jenkins can create a web hook
   ![Jenkins OAuth scopes](jenkins-scopes.png)
   - Save the token and place it in your clipboard
 
-- Make sure you are logged into you Development cluster, navigate to you Cluster in the IBM Cloud Console and click on the **Access** tab and follow the instructions to login from the command line. You can test this with the following simple command.
+
+- You can now register your app repo with Jenkins
+#### Register the repo with Jenkins
+
+- Open a terminal
+- Make sure you are logged into your Development cluster in the terminal. To do so, navigate to your cluster in the IBM Cloud Console, click on the **Access** tab and 
+follow the instructions to login from the command line. You can test this with the following simple command.
     ```base
     # Kubernetes
     kubectl get nodes
@@ -92,8 +100,12 @@ with `public_repo` and `write:repo_hook` scopes.
     # OpenShift
     oc get nodes
     ```
-
-- You can now register your app repo with Jenkins
+- Change to the repo directory
+    ```bash
+  cd {path to cloned repo}
+    ```
+- Register your repo using the `igc pipeline` command. The CLI will read the Git repo information from
+the directory and prompt for the credentials required to access the repo. 
   - **Username**: Enter your GitHub user id
   - **Password**: Paste your personal access token
   - **Branch**: Select the default git branch or type in another branch you want to register
