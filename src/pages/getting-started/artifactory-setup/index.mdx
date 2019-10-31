@@ -4,7 +4,7 @@ title: Artifactory Setup
 
 <PageDescription>
 
-Complete the steps for setting up Artifactory for use with development pipelines
+Complete the steps for setting up the Artifactory tool
 
 </PageDescription>
 
@@ -27,55 +27,56 @@ Artifactory is part of the Developer Tools environment's complete CI/CD solution
 
 ##  Configuration
 
-Artifactory in the Developer Tools environment needs to be configured with a Helm repository.
-Also, the Developer Tools environment needs to be configured to access Artifactory.
+Set up Artifactory in the Developer Tools environment with a Helm repository.
+Also, set up the Developer Tools environment to access Artifactory.
 
 ### Set up Artifactory
 
 Create a repository in Artifactory for storing Helm charts.
 
-- Open Artifactory from the [Developer Tools Dashboard](/getting-started/dashboard) and login
+- Open the Artifactory dashboard from the [Developer Tools Dashboard](/getting-started/dashboard) and login
 
 The first time you log into Artifactory, it is unconfigured and displays its Onboarding Wizard, starting with the Welcome page.
 
 - Press **Next**
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/initialjfrog.png)
+  ![Initial JFrog](/images/initialjfrog.png)
 
-</ArtDirection>
+  </ArtDirection>
 
 The next page in the wizard is the Configure a Proxy Server page. This is to setup a proxy for external resources. You can skip this
 step.
 
 - Press **Skip**
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/setupproxy.png)
+  ![Initial JFrog](/images/setupproxy.png)
 
-</ArtDirection>
+  </ArtDirection>
 
-The next page in the wizard is the Create Repositories page. Since Artifactory doesn't have a specific package type for Helm charts, we'll set up the repository for storing generic artifacts.
+The next page in the wizard is the Create Repositories page. Since Artifactory doesn't have a specific package type for Helm charts, 
+create a repository for storing generic artifacts.
 
 - Select **Generic**, then press **Create**
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/createrepository.png)
+  ![Initial JFrog](/images/createrepository.png)
 
-</ArtDirection>
+  </ArtDirection>
 
 The next page in the wizard is the Onboarding Complete page. 
 
 - Press **Finish**
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/completejfrog.png)
+  ![Initial JFrog](/images/completejfrog.png)
 
-</ArtDirection>
+  </ArtDirection>
 
 ### Obtain encrypted password
 
@@ -86,21 +87,21 @@ Artifactory's encrypted password and store this where Jenkins can access it--in 
 
 - In the User Profile: admin page, enter you Artifactory password and press **Unlock**
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/jfrogapikey.png)
+  ![Initial JFrog](/images/jfrogapikey.png)
 
-</ArtDirection>
+  </ArtDirection>
 
 Below, in the **Authentication Settings** section, is the **Encrypted Password** field.
 
 - Press the **Eye** icon to view the encrypted password and press the **Cut & Paste** icon to copy it
 
-<ArtDirection>
+  <ArtDirection>
 
-![Initial JFrog](/images/viewapikey.png)
+  ![Initial JFrog](/images/viewapikey.png)
 
-</ArtDirection>
+  </ArtDirection>
 
 [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret-manually) 
 store data in base64 format. So to store Artifactory's encrypted password in a secret, it needs to be encoded into base64.
@@ -128,7 +129,6 @@ Store the base64 encrypted password for Artifactory in the Kubernetes secret for
 
 ## OpenShift
 <ArtDirection>
-
 
 ![Initial JFrog](/images/addkeytosecret.png)
 
@@ -160,13 +160,13 @@ the `ARTIFACTORY_ENCRPT` property was not set. Now that it is set, rerun your pi
 
 - In the Artifactory console, select the Artifacts page and expand the `generic-local` repository
 
+  <ArtDirection>
+
+  ![Artifact Repository Browser](/images/artifact-repo-browser.png)
+
+  </ArtDirection>
+
 You should see a folder named after your resource group containing the tar file for a Helm chart.
-
-<ArtDirection>
-
-![Artifact Repository Browser](/images/artifact-repo-browser.png)
-
-</ArtDirection>
 
 ## Conclusion
 
