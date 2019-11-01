@@ -19,7 +19,7 @@
       path: /getting-started/dashboard
     - title: Deploying an App
       path: /getting-started/deploy-app
-    - title: IGC CLI
+    - title: CLI
       path: /getting-started/cli
     - title: Artifactory Setup
       path: /getting-started/artifactory-setup
@@ -28,7 +28,16 @@
     - title: Destroying
       path: /getting-started/destroying
 
-- title: Guides
+- title: Starter Kit Templates
+  pages:
+    - title: Overview
+      path: /starterkits/overview
+    - title: Templates
+      path: /starterkits/starterkittemplates
+    - title: ArgoCD Template
+      path: /starterkits/argocd
+
+- title: Tools Guides
   pages:
     - title: Overview
       path: /guides/overview
@@ -52,23 +61,16 @@
       path: /guides/iasc
     - title: Cluster configuration
       path: /guides/cluster-configuration
-    - title: IGC Client
+    - title: Tools Docker Image
       path: /guides/tools-image
 
-- title: Starter Kit Templates
+- title: Programming Guide
   pages:
     - title: Overview
-      path: /starterkits/overview
-    - title: Templates
-      path: /starterkits/starterkittemplates
-    - title: ArgoCD Template
-      path: /starterkits/argocd
-
-- title: Cloud Services
-  pages:
+      path: /services/overview
     - title: Databases
       path: /services/databases
-    - title: App Security
+    - title: Securing Applications
       path: /services/security
     - title: Storage
       path: /services/storage
