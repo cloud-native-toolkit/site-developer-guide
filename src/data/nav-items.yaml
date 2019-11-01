@@ -75,6 +75,13 @@
     - title: Storage
       path: /services/storage
 
+- title: Practical Guides
+  pages:
+    - title: Overview
+      path: /practical/overview
+    - title: Inventory Micro App
+      path: /practical/inventory
+
 - title: Contributing
   pages:
     - path: /contributing
