@@ -34,9 +34,9 @@ Static code analysis can evaluate several different aspects of code quality:
 - **Complexity**
     - **Code complexity**: Code's control flow and number of paths through the code
 - **Duplications**
-    - **Duplicated code**: The same code sequence appearing twice in the same program
+    - **Duplicated code**: The same code sequence appearing more than once in the same program
 - **Manageability**
-    - **Testability**: How easily the program can be tested
+    - **Testability**: How easily tests can be developed and used to show the program meets requirements
     - **Portability**: How easily the program can be reused in different environments
     - **Reusability**: The program's modularity, loose coupling, and limited interdependencies
 
@@ -58,7 +58,22 @@ Static code analysis collects several metrics that measure code quality:
 
 ## What is SonarQube
 
+SonarQube performs static code analysis to evaluate code quality, using static code analysis rules that focus on three areas:
+- **Code Reliability**: Detect bugs that will impact end-user functionality
+- **Application Security**: Detect vulnerabilities and hotspots that can be exploited to compromise the program
+- **Technical Debt**: Keep you codebase maintainable to increase developer velocity
+
+SonarQube [plugs into the application lifecycle management (ALM)](https://docs.sonarqube.org/latest/architecture/architecture-integration/#header-2) process to make continuous inspection part of continuous integration. 
+Adding code analysis to the ALM provides regular, timely feedback on the quality of the code being produced. 
+The goal is to detect problems as soon as possible so that they can be resolved before they can impact production end users.
+
+The continuous integration (CI) server itegrates SonarQube into the ALM.
+The SonarQube solution consists of several components: The central component is the SonarQube Server, 
+which runs the SonarScanner, processes the resulting analysis reports, stores the reports in SonarQube Database, 
+and displays the reports in the SonarQube UI. 
+A CI server uses a stage/goal/task in its build automation to trigger SonarScanner to scan the code being built. 
+Developers can view the resulting analysis report in the SonarQube UI.
+
 ## Code Analysis in the Pipeline
 
-
-
+In the [Jenkins pipeline](/guides/continuous-integration), the *Sonar scan* stage triggers the SonarScanner in SonarQube.
