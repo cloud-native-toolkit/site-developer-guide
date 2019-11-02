@@ -1,33 +1,23 @@
 ---
-title: Overview
+title: Tools Guides Overview
 ---
 
-<PageDescription>
+## Overview
 
-This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
+The Development Environment contains a number of popular and proven open source tools for cloud native development with IBM Kubernetes and Red Hat OpenShift.
 
-</PageDescription>
+The **Tools Guides** section of the **Developer Guide** will help you understand what each tool does and how it helps you prepare you application code for production delivery.
 
+## Tools Configurations
 
+The tools have been installed and configured inside your IBM Cloud Managed cluster. This is a popular approach that Red Hat and other vendors are following. There are some up and downsides. The Upside is you can get started quickly and you are only incurring the cost of the managed cluster. The downside is you need to monitor them and manage them. The cool thing is that IBM Cloud has an amazing Monitoring solution that can be configure to alert you of issues. More about that in the Guides.
 
-## Development Tools
+Note: As the industry moves to full lifecycle operators this will be the case.
 
-
+The tools are installed into a **tools** namespace and have a number of _ConfigMaps_ and _Secrets_ defined to make it super easy for the tools to access and communicate with the underlying **IBM Cloud** services. There is more information on this [here](/guides/cluster-config).
 
 ![Provisioned environment](catalyst-provisioned-environment.png)
 
 ### Guides
 
-The following Guides explain how to create and deploy applications using Continuous Integration with Jenkins. They help explain how to integrate code analysis into your applications with SonarQube. They explain how to move applications into test, staging and production using Continous Deployment techniques with Artifactory and Argo CD and much more.
-
-| Topic                     | Tool           |Description | Guide                               |
-| -----------------------   |:-------------- |------------| ----------------------------------:|
-| Cluster configuration     | Kube/OpenShift | Explanation on how the tools are integrated using Secrets and ConfigMaps                                 | [Guide](/guides/cluster-configuration) |
-| Continuous Integration    | Jenkins        | Explain how you can use Jenkins to delivery Continuous Integration                                       | [Guide](./docs/JENKINS.md)        |
-| Code Analysis             | SonarQube      | Explain how code scanning and analysis can help you manage a quality gate                                | [Guide](./docs/SONAR.md)         |
-| Artifact and Helm Storage | Artifactory    | Separation of Helm Chart content into a artifact storage system helps with Continous Delivery            | [Guide](./docs/ARTIFACTORY.md)    |
-| Continuous Deployment     | ArgoCD         | Evolving a project to Continuous Delivery is easy with Argo CD this explains how this can be done        | [Guide](./docs/ARGOCD.md)         |
-| Contract API Testing      | Pact           | Managing API contracts is key for decoupled software                                                     | [Guide](./docs/PACT.md)                         |
-| Logging                   | LogDNA         | How to manage your software logging with LogDNA                                                          | [Guide](./docs/LOGDNA.md)               |
-| Monitoring                | SysDig         | Validating performance and throughput with SysDig                                                        | [Guide](./docs/SYSDIG.md)         |
-| Cloud Service Integration | IBM Cloud      | Extending software with integration with Database, AI and other high value cloud services                | [Guide](./docs/IBMCLOUD.md)       |
+The Guides explain how to create and deploy applications using Continuous Integration with Jenkins. They help explain how to integrate code analysis into your applications with **SonarQube**. They explain how to move applications into test, staging and production using Continuous Deployment techniques with **Artifactory** and **ArgoCD** and much more.

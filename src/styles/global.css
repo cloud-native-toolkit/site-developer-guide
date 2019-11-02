@@ -15,6 +15,13 @@ h2[class*='Markdown-module--h2'] {
     margin-top: 0;
 }
 
+p[class*='paragraph--responsive']{
+    width:90%
+}
+
+ul[class*='module--list'] {
+    width:75%
+}
 
 
 .bx--resource-card--dark .bx--tile {
