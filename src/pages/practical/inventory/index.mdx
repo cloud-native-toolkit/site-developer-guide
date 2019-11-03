@@ -75,6 +75,7 @@ file and the class inside to `StockItemList`
   - Update the SideNameMenu title to Inventory Management
   - Remove all the patterns from the SideNavMenu and add a line to render the Stock Items menu - `this.renderSideNavItem("Stock Items")`
   
+components/UIShell.jsx
 ```javascript
 class UIShell extends Component {
   constructor(props) {
@@ -118,6 +119,7 @@ class UIShell extends Component {
   - Remove all of the pattern values from the `components` map and add only show StockItem List
   - Use `Stock Items` as the default pattern name when none is given
 
+components/UIShellBody.jsx
 ```javascript
 class UIShellBody extends Component {
   components = {
@@ -136,97 +138,14 @@ class UIShellBody extends Component {
 }
 ```
 
-#### Update StockItemsList according to the requirements
+#### Update StockItemList according to the requirements
 
 1. Update the data structure for our sample data to match the UI
 
-```javascript
-    const data = [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
-      }
-    ];
-```
-
-2. Define the column field names in the constructor and use them when building each row
-
+components/StockItemList.jsx
 ```javascript
 class StockItemList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.columns = [
-      "name",
-      "description",
-      "stock",
-      "unitPrice",
-      "picture",
-      "manufacturer",
-    ];
-   
-    ...
-  }
-
-  renderRow = (row, id) => {
-    return (
-      <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
-        ...
-        {this.columns.map(col => {
-          return (
-            <StructuredListCell key={col} className="simple-list-row">
-              {row[col]}
-            </StructuredListCell>
-          );
-        })}
-      </StructuredListRow>
-    );
-  };
-}
-```
-
-3. Update the constructor to set data to empty array originally and move logic to populate the state
-with the actual data to the `componentDidMount()` lifecycle hook method.
-
-```javascript
-class StockItemList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.columns = [
-      "name",
-      "description",
-      "stock",
-      "unitPrice",
-      "picture",
-      "manufacturer",
-    ];
-
-    this.state = {
-      data: [],
-      selectedRow: 0
-    };
-  }
+  ...
 
   componentDidMount() {
     const data = [
@@ -265,12 +184,37 @@ class StockItemList extends Component {
 }
 ```
 
-4. Create a directory called `services` under the client/src folder
+2. Update the title, subtitle, and columns with values for our Stock Items view. Set the `formatters` to
+an empty object for now.
 
-5. Create a service called `stock-item-mock.service` initially to validate the logic. Our 
+components/StockItemList.jsx
+```javascript
+class StockItemList extends Component {
+  title = 'Stock Items';
+  subtitle = 'This is the current inventory of items';
+  columns = [
+    "name",
+    "description",
+    "stock",
+    "unitPrice",
+    "picture",
+    "manufacturer",
+  ];
+  formatters = {};
+ 
+  ...
+}
+```
+
+#### Add a mock service to get the Stock Items
+
+1. Create a directory called `services` under the client/src folder
+
+2. Create a service called `stock-item-mock.service` initially to validate the logic. Our 
 StockItem service API will have a single asynchronous function at this time called `listStockItems()`
 that returns a list of StockItems. 
 
+services/stock-item-mock.service.js
 ```javascript
 export class StockServiceMock {
   async listStockItems() {
@@ -278,28 +222,28 @@ export class StockServiceMock {
 
     return [
       {
-        name: "Lin",
-        description: "123 Main Street",
-        stock: 100,
-        unitPrice: 10.5,
-        picture: "12345",
-        manufacturer: "United States"
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
       },
       {
-        name: "Mak",
-        description: "45 2nd Street",
-        stock: 12,
-        unitPrice: 100,
-        picture: "78766",
-        manufacturer: "United States"
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
       },
       {
-        name: "Joe",
-        description: "40 Down Street",
-        stock: 1000,
-        unitPrice: 5,
-        picture: "90706",
-        manufacturer: "United States"
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
       }
     ];
   }
@@ -311,6 +255,159 @@ async function timer(time) {
   });
 }
 ```
+
+3. Update the components to pass the service in the properties
+
+App.test.jsx
+```javascript
+describe('App', () => {
+  test('canary verifies test infrastructure', () => {
+     expect(true).toEqual(true);
+  });
+
+  test('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+});
+```
+
+App.jsx
+```javascript
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.stockService = props.stockService || new MockStockService();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <UIShell stockService={this.stockService}/>
+      </div>
+    );
+  }
+}
+```
+
+components/UIShell.jsx
+```javascript
+class UIShell extends Component {
+  ...
+  
+  <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
+ 
+  ...
+}
+```
+
+components/UIShellBody.jsx
+```javascript
+class UIShellBody extends Component {
+  components = {
+    "Stock Items": StockItemList,
+  };
+  render() {
+    const PatternName = this.components[
+      this.props.patternName || "Stock Items"
+    ];
+    return (
+      <div className="pattern-container">
+        <PatternName showDescription={true} stockService={this.props.stockService} />
+      </div>
+    );
+  }
+}
+```
+
+4. Update `StockItemList` to use the provided service
+
+components/StockItemList.jsx
+```javascript
+class StockItemList extends Component {
+  ...
+
+  constructor(props) {
+    super(props);
+
+    this.stockService = props.stockService;
+
+    this.state = {
+      data: [],
+      selectedRow: 0
+    };
+  }
+
+  async componentDidMount() {
+
+    this.setState({
+      data: await this.stockService.listStockItems()
+    });
+  }
+
+  ...
+}
+```
+
+#### Add a service that calls the BFF
+
+1. Create a service implementation in the `services` directory called `stock-service.js`
+
+services/stock-service.js
+```javascript
+export class StockService {
+  async listStockItems() {
+    return [];
+  }
+}
+```
+
+2. Add an implementation of listStockItems() that calls the BFF through the `/api` proxy
+
+```javascript
+export class StockService {
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl || '/api';
+  }
+
+  async listStockItems() {
+    return superagent
+      .get(this.baseUrl + '/stock-items')
+      .set('accept', 'application/json')
+      .then(res => {
+        console.log('Got response: ', res);
+        return res.body || [];
+      });
+  }
+}
+``` 
+
+**Note:** In dev mode the proxy is configured in `client/package.json`. When running with the express 
+server the proxy is configured in `server/routers/api.js`. By default the value points to `localhost:3001`.
+
+3. Update `App.jsx` to use the new service instead of the mock service.
+
+App.jsx
+```javascript
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.stockService = props.stockService || new StockService();
+  }
+
+  ...
+}
+```
+
+4. Configure the helm chart to point to the kubernetes Service resource of the BFF.
+
+chart/template-node-react/values.yaml
+```javascript
+apiHost: "inventory-management-bff:80"
+``` 
 
 ### Inventory Service
 
