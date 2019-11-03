@@ -4,11 +4,13 @@ title: Code Analysis
 
 <PageDescription>
 
-This guide will explain how to use SonarQube to analyze your code's quality
+Use SonarQube to analyze your code's quality
 
 </PageDescription>
 
 SonarQube automates performing static code analysis and enables it to be added to a continuous integration pipeline.
+The Developer Tools environment's Jenkins pipeline includes a SonarQube stage. 
+Simply by building your app using the Jenkins pipeline, your code gets analyzed, just open the SonarQube UI to browse the findings.
 
 ## What is code analysis 
 
@@ -21,7 +23,7 @@ Static code analysis differs from dynamic analysis, which observes and evaluates
 requires test inputs and can meansure user functionality as well as runtime qualities like execution time and resource consumption. 
 A code review is static code analysis performed by a human.
 
-Static code analysis can evaluate several different aspects of code quality:
+Static code analysis can evaluate several different aspects of code quality, such as:
 - **Reliability**
     - **Bug**: Programming error that breaks functionality
 - **Security**
@@ -56,30 +58,33 @@ Static code analysis collects several metrics that measure code quality:
 - **Coverage**
     - **Test coverage**: Code that was executed by a test suite
 
+A **Quality gate** defines a policy that assesses pass/fail whether or not the number of issues and their severity is acceptable.
+
 ## What is SonarQube
 
-SonarQube performs static code analysis to evaluate code quality, using static code analysis rules that focus on three areas:
+SonarQube performs static code analysis to evaluate code quality, using analysis rules that focus on three areas:
 - **Code Reliability**: Detect bugs that will impact end-user functionality
 - **Application Security**: Detect vulnerabilities and hotspots that can be exploited to compromise the program
 - **Technical Debt**: Keep you codebase maintainable to increase developer velocity
 
 SonarQube [plugs into the application lifecycle management (ALM)](https://docs.sonarqube.org/latest/architecture/architecture-integration/#header-2) process to make continuous inspection part of continuous integration. 
-Adding code analysis to the ALM provides regular, timely feedback on the quality of the code being produced. 
+Adding code analysis to ALM provides regular, timely feedback on the quality of the code being produced. 
 The goal is to detect problems as soon as possible so that they can be resolved before they can impact production end users.
 
 The continuous integration (CI) server itegrates SonarQube into the ALM.
 The SonarQube solution consists of several components: The central component is the SonarQube Server, 
 which runs the SonarScanner, processes the resulting analysis reports, stores the reports in SonarQube Database, 
 and displays the reports in the SonarQube UI. 
-A CI server uses a stage/goal/task in its build automation to trigger SonarScanner to scan the code being built. 
+A CI server uses a stage/goal/task in its build automation to trigger the language-specific SonarScanner to scan the code being built. 
 Developers can view the resulting analysis report in the SonarQube UI.
 
 ## Code Analysis in the Pipeline
 
 In the [Jenkins pipeline](/guides/continuous-integration), the *Sonar scan* stage triggers the SonarScanner in SonarQube.
-
+Follow these directions to see code analysis in action:
 
 Deploy the Starter Kit Template named Spring Boot Microservice.
+
 - Follow the directions in [Deploying an App](/getting-started/deploy-app)
     - Deploy the Spring Boot Microservice template
     - Name the new repo something like `sonar-java`
@@ -95,17 +100,24 @@ Examine SonarQube's analysis report for your app.
 
     ![Sonar Project](sonar-project.png)
 
-    The project summary shows the number of issues found in the app, catagorized by type
-    - 2 bugs for a C rating
-    - 0 vunerabilities for an A rating
-    - 17 code smells but an A rating
-
+    The project summary shows several characteristics meansured in the app:
+    - The quality gate passed
+   - Several issues were found, catagorized by type
+        - 2 bugs for a C rating
+        - 0 vunerabilities for an A rating
+        - 17 code smells but an A rating
+        - None of the code was tested
+        - None of it is duplicate code
+    - It scanned 1.5k lines of code written in Java, a small program (XS, S, M, L, XL)
+ 
 - In the Projects list, click on the project name (such as `bwoolf1.sonar-java`) to open your project
 
     The project overview shows more detail about how many issues were found in the app
     - Reliability: 2 bugs for a C rating
     - Security: 1 security hotspot but an A rating
     - Maintainability: 17 code smells, 2 hrs of technical debt but an A rating
+    - Coverage: 7 unit tests
+    - Duplications: 0 duplicated blocks
 
 ### Examine the issues
 
@@ -167,7 +179,7 @@ Besides the bugs, SonarQube also found issues that are hostspots and code smells
     ![Sonar Hotspot](sonar-hotspot.png)
 
     SonarQube considers any class that has a `public static void main(String[] args)` method to be a potential vulnerability.
-    As the rule explains, "Command line arguments can be dangerous just like any other user input. They should never be used without being first validated and sanitized." This method passes them through unchecked.
+    As the rule explains, "Command line arguments can be dangerous just like any other user input. They should never be used without being first validated and sanitized." This method passes them through unchecked, which is risky.
 
 - Back in the Issues page, click on "17" code smells
 
@@ -177,3 +189,11 @@ Besides the bugs, SonarQube also found issues that are hostspots and code smells
      - This block of commented-out lines of code should be removed.
 
      None of these break your app's functionality, but they do make the code more difficilt to maintain.
+
+## Conclusion
+
+It's a good idea to incorporate code analysis as part of your application development lifecycle,
+so you can use its findings to help enforce and improve your code quality.
+Here, the Developer Tools environment uses SonarQube, but you never had to run SonarQube.
+Just run the Developer Tools environment's build pipeline on your app and it gets scanned automatically.
+After running the pipeline, open the SonarQube UI and browse the findings in your app's project.
