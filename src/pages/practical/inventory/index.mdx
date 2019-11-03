@@ -411,6 +411,370 @@ apiHost: "inventory-management-bff:80"
 
 ### Inventory Service
 
+#### Setup
+
+Get the initial project created and register the pipeline for automated builds.
+
+1. Create a new repository from the Java Spring Starter Kit template - https://github.com/ibm-garage-cloud/template-java-spring/generate
+
+2. Clone the new repository to your machine
+
+3. Update the project name in the `package.json` to match the repository
+
+4. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
+
+#### Create initial components 
+
+1. Copy `com.ibm.hello.app.Application` into the `com.ibm.inventory_management.app` package and
+update the @ComponentScan package list to include `com.ibm.inventory_management.*`
+
+com.ibm.inventory_management.app.Application
+```java
+@SpringBootApplication
+@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
+public class Application extends SpringBootServletInitializer {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    ...
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+}
+```
+
+2. Delete `com.ibm.hello.app.Application`
+
+#### Add StockItem controller
+
+1. Start the tests in tdd mode with `npm run tdd` (or `./gradlew test --continuous`)
+
+2. Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
+
+```java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+
+    @Test
+    @DisplayName("canary verifies test infrastructure")
+    public void canary() {
+        Assertions.assertTrue(false);
+    }
+}
+```
+
+3. Change the value to `true` to make it pass
+
+4. Add the MockMvc infrastructure and create the `StockItemController`
+
+```java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+    StockItemController controller;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    public void setup() {
+        controller = spy(new StockItemController());
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+
+    ...
+}
+```
+
+```java
+@RestController
+public class StockItemController {
+}
+```
+
+5. Add the tests for the controller behavior and make the corresponding changes to make the tests pass
+
+```java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+    ...
+
+    @Nested
+    @DisplayName("Given [GET] /stock-items")
+    public class GivenGetStockItems {
+
+        @Test
+        @DisplayName("When called then it should return a 200 status")
+        public void when_called_should_return_200_status() throws Exception {
+
+            mockMvc.perform(get("/stock-items"))
+                    .andExpect(status().isOk());
+        }
+
+        @Test
+        @DisplayName("When called then it should return an empty array")
+        public void when_called_then_return_an_empty_array() throws Exception {
+
+            mockMvc.perform(get("/stock-items").accept("application/json"))
+                    .andExpect(content().json("[]"));
+        }
+    }
+}
+```
+
+```java
+@RestController
+public class StockItemController {
+
+    @GetMapping(path = "/stock-items", produces = "application/json")
+    public List<StockItem> listStockItems() {
+        return new ArrayList();
+    }
+}
+```
+
+#### Add a service for providing results
+
+1. Update the controller test to include returning data from the service
+
+```java
+
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+    StockItemController controller;
+    StockItemApi service;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    public void setup() {
+        service = mock(StockItemApi.class);
+
+        controller = spy(new StockItemController(service));
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+    
+    @Nested
+    @DisplayName("Given [GET] /stock-items")
+    public class GivenGetStockItems {
+        @Test
+        @DisplayName("When called then it should return a 200 status")
+        public void when_called_should_return_200_status() throws Exception {
+
+            mockMvc.perform(get("/stock-items"))
+                    .andExpect(status().isOk());
+        }
+
+        @Test
+        @DisplayName("When called then it should return the results of the StockItemService")
+        public void when_called_then_return_the_results_of_the_stockitemservice() throws Exception {
+
+            final List<StockItem> expectedResult = Arrays.asList(new StockItem());
+            when(service.listStockItems()).thenReturn(expectedResult);
+
+            mockMvc.perform(get("/stock-items").accept("application/json"))
+                    .andExpect(content().json("[{}]"));
+        }
+    }
+}
+```
+
+com.ibm.inventory_management.model.StockItem
+```java
+public class StockItem implements Serializable {
+}
+```
+
+com.ibm.inventory_management.service.StockItemApi;
+```java
+package com.ibm.inventory_management.service;
+
+import java.util.List;
+
+import com.ibm.inventory_management.model.StockItem;
+
+public interface StockItemApi {
+    public List<StockItem> listStockItems();
+}
+```
+
+```java
+@RestController
+public class StockItemController {
+
+    private final StockItemApi service;
+
+    public StockItemController(StockItemApi service) {
+        this.service = service;
+    }
+
+    @GetMapping(path = "/stock-items", produces = "application/json")
+    public List<StockItem> listStockItems() {
+        return this.service.listStockItems();
+    }
+}
+```
+
+2. Update the `StockItem` model to include the necessary fields
+
+com.ibm.inventory_management.model.StockItem
+```java
+package com.ibm.inventory_management.model;
+
+import java.io.Serializable;
+
+public class StockItem implements Serializable {
+    private String id = null;
+    private String name = null;
+    private int stock = 0;
+    private double price = 0.0;
+    private String manufacturer = "";
+
+    public StockItem() {
+        super();
+    }
+
+    public StockItem(String id) {
+        super();
+
+        this.setId(id);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public StockItem withId(String id) {
+        this.id = id;
+
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public StockItem withName(String name) {
+        this.setName(name);
+
+        return this;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public StockItem withStock(int stock) {
+        this.setStock(stock);
+
+        return this;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public StockItem withPrice(double price) {
+        this.setPrice(price);
+
+        return this;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public StockItem withManufacturer(String manufacturer) {
+        this.setManufacturer(manufacturer);
+
+        return this;
+    }
+}
+```
+
+3. Provide an implementation of the service that just returns canned data, for now
+
+```java
+package com.ibm.inventory_management.service;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+import com.ibm.inventory_management.model.StockItem;
+
+@Primary
+@Service
+public class StockItemService implements StockItemApi {
+    @Override
+    public List<StockItem> listStockItems() {
+        return Arrays.asList(
+                new StockItem("1")
+                        .withName("Item 1")
+                        .withStock(100)
+                        .withPrice(10.5)
+                        .withManufacturer("Sony"),
+                new StockItem("2")
+                        .withName("Item 2")
+                        .withStock(150)
+                        .withPrice(100.0)
+                        .withManufacturer("Insignia"),
+                new StockItem("3")
+                        .withName("Item 3")
+                        .withStock(10)
+                        .withPrice(1000.0)
+                        .withManufacturer("Panasonic")
+                );
+    }
+}
+```
+
+4. Update the swagger config to restrict the results to the `/stock-items` api
+
+com.ibm.cloud_garage.swagger.SwaggerDocket
+```java
+@Component
+@EnableSwagger2
+public class SwaggerDocket {
+    ...
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(buildApiRequestHandler())
+                .paths(PathSelectors.regex(".*stock-item.*"))
+                .build()
+                .apiInfo(buildApiInfo());
+    }    
+}
+```
+
 ### Inventory BFF
 
 ## Summary
