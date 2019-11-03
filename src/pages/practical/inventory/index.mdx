@@ -777,6 +777,486 @@ public class SwaggerDocket {
 
 ### Inventory BFF
 
+#### Setup
+
+Get the initial project created and register the pipeline for automated builds.
+
+1. Create a new repository from the Typescript GraphQL Starter Kit template - https://github.com/ibm-garage-cloud/template-graphql-typescript/generate
+
+2. Clone the new repository to your machine
+
+3. Update the project name in the `package.json` to match the repository
+
+4. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
+
+#### Build the controller for the REST interface
+
+1. Create the controller test
+
+test/controllers/stock-items.controller.spec.ts
+```typescript
+import {Application} from 'express';
+import * as request from 'supertest';
+
+import {buildApiServer} from '../helper';
+
+describe('stock-item.controller', () => {
+
+  let app: Application;
+  beforeEach(async () => {
+    const apiServer = buildApiServer();
+
+    app = await apiServer.getApp();
+  });
+  
+  test('canary verifies test infrastructure', () => {
+     expect(true).toEqual(true);
+  });
+
+  describe('given GET /stock-items', () => {
+    describe('when service is successful', () => {
+      test('then return 200 status', async () => {
+        return request(app).get('/stock-items').expect(200);
+      });
+
+      test('then should return an empty array', async () => {
+        return request(app).get('/stock-items').expect([]);
+      });
+    });
+  });
+}
+```
+
+src/controllers/stock-items.controller.ts
+```typescript
+import {GET, Path} from 'typescript-rest';
+
+@Path('stock-items')
+export class StockItemsController {
+
+  @GET
+  async listStockItems(): Promise<any[]> {
+    return [];
+  }
+}
+```
+
+2. Add the controller to the controllers `index.ts`
+
+```typescript
+export * from './stock-items.controller';
+```
+
+#### Update the controller to call a service
+
+1. Add a StockItem model that matches the UI model and add it to models `index.ts`
+
+src/models/stock-item.model.ts
+```typescript
+export class StockItemModel {
+  id: string;
+  name: string;
+  description: string;
+  stock: number;
+  unitPrice: number;
+  picture: string;
+  manufacturer: string;
+}
+```
+
+src/models/index.ts
+```typescript
+export * from './stock-item.model';
+```
+
+2. Define an abstract class for the api and add it to the services `index.ts`
+
+src/services/stock-items.api.ts
+```typescript
+import {StockItemModel} from '../models';
+
+export abstract class StockItemsApi {
+  async abstract listStockItems(): Promise<StockItemModel[]>;
+}
+```
+
+src/services/index.ts
+```typescript
+export * from './stock-items.api';
+```
+
+3. Update the controller test to inject the service into the controller and to return the value from the service
+
+test/controllers/stock-items.controller.spec.ts
+```typescript
+import {Application} from 'express';
+import * as request from 'supertest';
+import {Container} from 'typescript-ioc';
+
+import {buildApiServer} from '../helper';
+import Mock = jest.Mock;
+import {StockItemsApi} from '../../src/services';
+
+describe('stock-item.controller', () => {
+
+  let app: Application;
+  let service_listStockItems: Mock;
+
+  beforeEach(async () => {
+    service_listStockItems = jest.fn();
+    Container.bind(StockItemsApi).provider({
+      get: () => ({
+        listStockItems: service_listStockItems
+      }),
+    });
+
+    const apiServer = buildApiServer();
+
+    app = await apiServer.getApp();
+  });
+
+  test('canary verifies test infrastructure', () => {
+     expect(true).toEqual(true);
+  });
+
+  describe('given GET /stock-items', () => {
+    describe('when service is successful', () => {
+      const expectedResult = [{value: 'val'}];
+      beforeEach(() => {
+        service_listStockItems.mockResolvedValue(expectedResult);
+      });
+
+      test('then return 200 status', async () => {
+        return request(app).get('/stock-items').expect(200);
+      });
+
+      test('then should return value from service', async () => {
+        return request(app).get('/stock-items').expect(expectedResult);
+      });
+    });
+
+    describe('when service fails', () => {
+      beforeEach(() => {
+        service_listStockItems.mockRejectedValue(new Error('service failed'));
+      });
+
+      test('then return 502 error', async () => {
+        return request(app).get('/stock-items').expect(502);
+      });
+    });
+  });
+});
+```
+
+4. Update the controller to inject the service and use it
+
+src/controllers/stock-items.controller.ts
+```typescript
+import {Inject} from 'typescript-ioc';
+import {GET, Path} from 'typescript-rest';
+import {HttpError} from 'typescript-rest/dist/server/model/errors';
+
+import {StockItemModel} from '../models';
+import {StockItemsApi} from '../services';
+
+class BadGateway extends HttpError {
+  constructor(message?: string) {
+    super("BadGateway", message);
+    this.statusCode = 502;
+  }
+}
+
+@Path('stock-items')
+export class StockItemsController {
+  @Inject
+  service: StockItemsApi;
+
+  @GET
+  async listStockItems(): Promise<StockItemModel[]> {
+    try {
+      return await this.service.listStockItems();
+    } catch (err) {
+      throw new BadGateway('There was an error');
+    }
+  }
+}
+```
+
+#### Create a mock service implementation
+
+1. Add a `stock-items-mock.service` to services and add it to `index.ts`
+
+src/services/stock-items-mock.service.ts
+```typescript
+import {Provides} from 'typescript-ioc';
+
+import {StockItemsApi} from './stock-items.api';
+import {StockItemModel} from '../models';
+
+@Provides(StockItemsApi)
+export class StockItemsMockService implements StockItemsApi {
+  async listStockItems(): Promise<StockItemModel[]> {
+    return [
+      {
+        id: "1",
+        name: "Self-sealing stem bolt",
+        description: "Self-sealing stem bolt",
+        stock: 10,
+        unitPrice: 10.5,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Bajor Galactic"
+      },
+      {
+        id: "2",
+        name: "Heisenberg compensator",
+        description: "Magical component that negates the effects of the Heisenberg Uncertainty Principle",
+        stock: 20,
+        unitPrice: 20.0,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Federation Imports"
+      },
+      {
+        id: "3",
+        name: "Tooth sharpener",
+        description: "Industrial strength tooth sharpener",
+        stock: 30,
+        unitPrice: 5.25,
+        picture: "https://via.placeholder.com/32.png",
+        manufacturer: "Farenginar Exploits"
+      }
+    ];
+  }
+}
+```
+
+src/services/index.ts
+```typescript
+export * from './stock-items-mock.service';
+```
+
+2. The controller should now return the values from the mock service when invoked
+
+#### Add a GraphQL implementation of Stock Items
+
+1. Add a `stock-items` GraphQL schema and add it to the schemas `index.ts`
+
+src/schemas/stock-item.schema.ts
+```typescript
+import {Field, Float, Int, ObjectType} from 'type-graphql';
+import {StockItemModel} from '../models';
+
+@ObjectType()
+export class StockItem implements StockItemModel {
+  @Field()
+  id: string;
+  @Field()
+  description: string;
+  @Field()
+  manufacturer: string;
+  @Field()
+  name: string;
+  @Field({nullable: true})
+  picture: string;
+  @Field(type => Int)
+  stock: number;
+  @Field(type => Float)
+  unitPrice: number;
+}
+``` 
+
+src/schemas/index.ts
+```typescript
+export * from './stock-item.schema'
+```
+
+2. Add a 'stock-item' GraphQL resolver and add it to the resolvers `index.ts`
+
+src/resolvers/stock-item.resolver.ts
+```typescript
+import {Query, Resolver} from 'type-graphql';
+import {Inject} from 'typescript-ioc';
+
+import {resolverManager} from './_resolver-manager';
+import {StockItem} from '../schemas';
+import {StockItemModel} from '../models';
+import {StockItemsApi} from '../services';
+
+@Resolver(of => StockItem)
+export class StockItemResolver {
+  @Inject
+  service: StockItemsApi;
+
+  @Query(returns => [StockItem])
+  async stockItems(): Promise<StockItemModel[]> {
+    return this.service.listStockItems();
+  }
+}
+
+resolverManager.registerResolver(StockItemResolver);
+```
+
+**Note:** The Starter Kit includes a `resolverManager` component that simplifies the steps to
+make the resolver available. All that is required to use the resolver is to register it, preferably
+at the bottom of the module where it is defined.
+
+src/resolvers/index.ts
+```typescript
+export * from './stock-item.resolver';
+```
+
+3. Verify that the that the resolver is available using the Graph QL browser provided by the
+Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`)
+
+#### Generate a typescript sdk for the microservice api
+
+1. Open the swagger page for the microservice ({service host}/api-docs)
+
+2. Save the OpenApi json file
+
+3. Open https://editor.swagger.io/
+
+4. Select 'File -> Import file' and find the file that was saved in step 2.
+
+5. Select 'Generate Client -> typescript-node' and download the zip file
+
+6. Open the zip file and copy `api.ts` into a directory in the root of the BFF project named 
+`inventory-management-service-client`.
+
+7. Add a `package.json` file in the `inventory-management-service-client` folder with the following contents:
+
+inventory-management-service-client/package.json
+```json
+{
+  "name": "inventory-management-service-client",
+  "version": "1.0.0",
+  "dependencies": {
+    "bluebird": "^3.7.1",
+    "request": "^2.88.0"
+  }
+}
+```
+
+8. Update the `package.json` in the root of the BFF to include the client as a dependency
+
+package.json
+```json
+{
+  ...
+  "dependencies": {
+    "inventory-management-service-client": "file:./inventory-management-service-client",
+    ...
+  },
+  ...
+}
+```
+ 
+9. Run `npm install` in the root directory of the BFF to bring down all the project dependencies
+
+#### Create a service implementation that calls the microservice
+
+1. Add a `stock-item-service` config
+
+src/config/stock-item-service.config
+```typescript
+import {Provided, Provider} from 'typescript-ioc';
+
+const baseUrl: string = process.env.SERVICE_URL || 'localhost:9080';
+
+const provider: Provider = {
+  get: () => ({
+    baseUrl,
+  })
+};
+
+@Provided(provider)
+export class StockItemServiceConfig {
+  baseUrl: string;
+}
+```
+
+2. Add `stock-items` service that uses the config and the sdk for the microservice
+
+src/services/stock-items.service.ts
+```typescript
+import * as http from 'http';
+import {Inject, Provides} from 'typescript-ioc';
+import {StockItem, StockItemControllerApi} from 'inventory-management-service-client';
+
+import {StockItemsApi} from './stock-items.api';
+import {StockItemModel} from '../models';
+import {StockItemServiceConfig} from '../config/stock-item-service.config';
+
+@Provides(StockItemsApi)
+export class StockItemsService implements StockItemsApi {
+  service: StockItemControllerApi;
+
+  constructor(@Inject config: StockItemServiceConfig) {
+    this.service = new StockItemControllerApi(config.baseUrl);
+  }
+
+  async listStockItems(): Promise<StockItemModel[]> {
+    return this.service.listStockItemsUsingGET()
+      .then(({response, body}: { response: http.ServerResponse; body: Array<StockItem>;  }) => {
+        return body.map(item => ({
+          id: item.id,
+          name: item.name,
+          description: item.name,
+          stock: item.stock,
+          unitPrice: item.price,
+          picture: 'https://via.placeholder.com/32.png',
+          manufacturer: item.manufacturer,
+        }));
+      });
+  }
+}
+```
+
+3. Remove the `@Provides()` decorator from the mock service
+
+src/services/stock-items-mock.service.ts
+```typescript
+import {StockItemsApi} from './stock-items.api';
+import {StockItemModel} from '../models';
+
+export class StockItemsMockService implements StockItemsApi {
+  ...
+}
+```
+
+4. Add `stock-item.service` to `index.ts` in the service directory (`stock-items-mock.service` can be removed)
+
+src/services/index.ts
+```typescript
+export * from './stock-items.service';
+```
+
+5. Add `serviceUrl` to the values.yaml file of the helm chart with a value that matches the 
+kubernetes service of the microservice
+
+chart/template-graphql-typescript/values.yaml
+```yaml
+global: {}
+
+serviceUrl: "inventory-management-service:80"
+
+...
+```
+
+6. Add an environment variable in the deployment for the service url along with the other environment variables
+
+chart/template-graphql-typescript/templates/deployment.yaml
+```yaml
+  ...
+  env:
+    - name: INGRESS_HOST
+      value: {{ include "starter-kit-chart.host" . }}
+    - name: PROTOCOLS
+      value: {{ include "starter-kit-chart.protocols" . }}
+    - name: SERVICE_URL
+      value: {{ .Values.serviceUrl | quote }}
+  ...
+```
+
 ## Summary
 
 You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
