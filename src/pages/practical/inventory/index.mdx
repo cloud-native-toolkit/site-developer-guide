@@ -71,140 +71,140 @@ the TableList pattern.
 file and the class inside to `StockItemList`
 
 2. Update UIShell.jsx
-  - Update the initial pattern name to `Stock Items`
-  - Update the SideNameMenu title to Inventory Management
-  - Remove all the patterns from the SideNavMenu and add a line to render the Stock Items menu - `this.renderSideNavItem("Stock Items")`
+    - Update the initial pattern name to `Stock Items`
+    - Update the SideNameMenu title to Inventory Management
+    - Remove all the patterns from the SideNavMenu and add a line to render the Stock Items menu - `this.renderSideNavItem("Stock Items")`
   
-components/UIShell.jsx
-```javascript
-class UIShell extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      patternName: "Stock Items"
-    };
-  }
-
-  ...
-
-  render() {
-    return (
-      <div>
-        <Header aria-label="IBM Platform Name">
-          <SkipToContent />
-          <HeaderName href="#" prefix="IBM">
-            Garage for Cloud Catalyst
-          </HeaderName>
-        </Header>
-        <SideNav aria-label="Side navigation">
-          <SideNavItems>
-            <SideNavMenu
-              defaultExpanded
-              icon={<Fade20 />}
-              title="Inventory Management"
-            >
-              {this.renderSideNavItem("Stock Items")}
-            </SideNavMenu>
-          </SideNavItems>
-        </SideNav>
-        <Content id="main-content"><UIShellBody patternName={this.state.patternName} /></Content>
-      </div>
-    );
-  }
-}
-```
+    components/UIShell.jsx
+    ```javascript
+    class UIShell extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          patternName: "Stock Items"
+        };
+      }
+    
+      ...
+    
+      render() {
+        return (
+          <div>
+            <Header aria-label="IBM Platform Name">
+              <SkipToContent />
+              <HeaderName href="#" prefix="IBM">
+                Garage for Cloud Catalyst
+              </HeaderName>
+            </Header>
+            <SideNav aria-label="Side navigation">
+              <SideNavItems>
+                <SideNavMenu
+                  defaultExpanded
+                  icon={<Fade20 />}
+                  title="Inventory Management"
+                >
+                  {this.renderSideNavItem("Stock Items")}
+                </SideNavMenu>
+              </SideNavItems>
+            </SideNav>
+            <Content id="main-content"><UIShellBody patternName={this.state.patternName} /></Content>
+          </div>
+        );
+      }
+    }
+    ```
 
 3. Update UIShellBody.jsx
 
-  - Remove all of the pattern values from the `components` map and add only show StockItem List
-  - Use `Stock Items` as the default pattern name when none is given
+    - Remove all of the pattern values from the `components` map and add only show StockItem List
+    - Use `Stock Items` as the default pattern name when none is given
 
-components/UIShellBody.jsx
-```javascript
-class UIShellBody extends Component {
-  components = {
-    "Stock Items": StockItemList,
-  };
-  render() {
-    const PatternName = this.components[
-      this.props.patternName || "Stock Items"
-    ];
-    return (
-      <div className="pattern-container">
-        <PatternName showDescription={true} />
-      </div>
-    );
-  }
-}
-```
-
+    components/UIShellBody.jsx
+    ```javascript
+    class UIShellBody extends Component {
+      components = {
+        "Stock Items": StockItemList,
+      };
+      render() {
+        const PatternName = this.components[
+          this.props.patternName || "Stock Items"
+        ];
+        return (
+          <div className="pattern-container">
+            <PatternName showDescription={true} />
+          </div>
+        );
+      }
+    }
+    ```
+`
 #### Update StockItemList according to the requirements
 
 1. Update the data structure for our sample data to match the UI
 
-components/StockItemList.jsx
-```javascript
-class StockItemList extends Component {
-  ...
-
-  componentDidMount() {
-    const data = [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
+    components/StockItemList.jsx
+    ```javascript
+    class StockItemList extends Component {
+      ...
+    
+      componentDidMount() {
+        const data = [
+          {
+            "name": "Item 1",
+            "description": "The first item",
+            "stock": 10,
+            "unitPrice": 100.0,
+            "picture": "test",
+            "manufacturer": "unknown",
+          },
+          {
+            "name": "Item 2",
+            "description": "The second item",
+            "stock": 15,
+            "unitPrice": 120.5,
+            "picture": "test1",
+            "manufacturer": "Apple",
+          },
+          {
+            "name": "Item 3",
+            "description": "The third item",
+            "stock": 20,
+            "unitPrice": 75.5,
+            "picture": "test1",
+            "manufacturer": "Sony",
+          }
+        ];
+    
+        this.setState({
+          data
+        });
       }
-    ];
-
-    this.setState({
-      data
-    });
-  }
-
-  ...
-}
-```
+    
+      ...
+    }
+    ```
 
 2. Update the title, subtitle, and columns with values for our Stock Items view. Set the `formatters` to
 an empty object for now.
 
-components/StockItemList.jsx
-```javascript
-class StockItemList extends Component {
-  title = 'Stock Items';
-  subtitle = 'This is the current inventory of items';
-  columns = [
-    "name",
-    "description",
-    "stock",
-    "unitPrice",
-    "picture",
-    "manufacturer",
-  ];
-  formatters = {};
- 
-  ...
-}
-```
+    components/StockItemList.jsx
+    ```javascript
+    class StockItemList extends Component {
+      title = 'Stock Items';
+      subtitle = 'This is the current inventory of items';
+      columns = [
+        "name",
+        "description",
+        "stock",
+        "unitPrice",
+        "picture",
+        "manufacturer",
+      ];
+      formatters = {};
+     
+      ...
+    }
+    ```
 
 #### Add a mock service to get the Stock Items
 
@@ -214,200 +214,200 @@ class StockItemList extends Component {
 StockItem service API will have a single asynchronous function at this time called `listStockItems()`
 that returns a list of StockItems. 
 
-services/stock-item-mock.service.js
-```javascript
-export class StockServiceMock {
-  async listStockItems() {
-    await timer(1000);
-
-    return [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
+    services/stock-item-mock.service.js
+    ```javascript
+    export class StockServiceMock {
+      async listStockItems() {
+        await timer(1000);
+    
+        return [
+          {
+            "name": "Item 1",
+            "description": "The first item",
+            "stock": 10,
+            "unitPrice": 100.0,
+            "picture": "test",
+            "manufacturer": "unknown",
+          },
+          {
+            "name": "Item 2",
+            "description": "The second item",
+            "stock": 15,
+            "unitPrice": 120.5,
+            "picture": "test1",
+            "manufacturer": "Apple",
+          },
+          {
+            "name": "Item 3",
+            "description": "The third item",
+            "stock": 20,
+            "unitPrice": 75.5,
+            "picture": "test1",
+            "manufacturer": "Sony",
+          }
+        ];
       }
-    ];
-  }
-}
-
-async function timer(time) {
-  return new Promise(resolve => {
-    setTimeout(resolve, time)
-  });
-}
-```
+    }
+    
+    async function timer(time) {
+      return new Promise(resolve => {
+        setTimeout(resolve, time)
+      });
+    }
+    ```
 
 3. Update the components to pass the service in the properties
 
-App.test.jsx
-```javascript
-describe('App', () => {
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
+    App.test.jsx
+    ```javascript
+    describe('App', () => {
+      test('canary verifies test infrastructure', () => {
+         expect(true).toEqual(true);
+      });
+    
+      test('renders without crashing', () => {
+        const div = document.createElement('div');
+        ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
+        ReactDOM.unmountComponentAtNode(div);
+      });
+    });
+    ```
 
-  test('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
-});
-```
+    App.jsx
+    ```javascript
+    class App extends Component {
+      constructor(props) {
+        super(props);
+    
+        this.stockService = props.stockService || new MockStockService();
+      }
+    
+      render() {
+        return (
+          <div className="App">
+            <UIShell stockService={this.stockService}/>
+          </div>
+        );
+      }
+    }
+    ```
 
-App.jsx
-```javascript
-class App extends Component {
-  constructor(props) {
-    super(props);
+    components/UIShell.jsx
+    ```javascript
+    class UIShell extends Component {
+      ...
+      
+      <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
+     
+      ...
+    }
+    ```
 
-    this.stockService = props.stockService || new MockStockService();
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <UIShell stockService={this.stockService}/>
-      </div>
-    );
-  }
-}
-```
-
-components/UIShell.jsx
-```javascript
-class UIShell extends Component {
-  ...
-  
-  <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
- 
-  ...
-}
-```
-
-components/UIShellBody.jsx
-```javascript
-class UIShellBody extends Component {
-  components = {
-    "Stock Items": StockItemList,
-  };
-  render() {
-    const PatternName = this.components[
-      this.props.patternName || "Stock Items"
-    ];
-    return (
-      <div className="pattern-container">
-        <PatternName showDescription={true} stockService={this.props.stockService} />
-      </div>
-    );
-  }
-}
-```
+    components/UIShellBody.jsx
+    ```javascript
+    class UIShellBody extends Component {
+      components = {
+        "Stock Items": StockItemList,
+      };
+      render() {
+        const PatternName = this.components[
+          this.props.patternName || "Stock Items"
+        ];
+        return (
+          <div className="pattern-container">
+            <PatternName showDescription={true} stockService={this.props.stockService} />
+          </div>
+        );
+      }
+    }
+    ```
 
 4. Update `StockItemList` to use the provided service
 
-components/StockItemList.jsx
-```javascript
-class StockItemList extends Component {
-  ...
-
-  constructor(props) {
-    super(props);
-
-    this.stockService = props.stockService;
-
-    this.state = {
-      data: [],
-      selectedRow: 0
-    };
-  }
-
-  async componentDidMount() {
-
-    this.setState({
-      data: await this.stockService.listStockItems()
-    });
-  }
-
-  ...
-}
-```
+    components/StockItemList.jsx
+    ```javascript
+    class StockItemList extends Component {
+      ...
+    
+      constructor(props) {
+        super(props);
+    
+        this.stockService = props.stockService;
+    
+        this.state = {
+          data: [],
+          selectedRow: 0
+        };
+      }
+    
+      async componentDidMount() {
+    
+        this.setState({
+          data: await this.stockService.listStockItems()
+        });
+      }
+    
+      ...
+    }
+    ```
 
 #### Add a service that calls the BFF
 
 1. Create a service implementation in the `services` directory called `stock-service.js`
 
-services/stock-service.js
-```javascript
-export class StockService {
-  async listStockItems() {
-    return [];
-  }
-}
-```
+    services/stock-service.js
+    ```javascript
+    export class StockService {
+      async listStockItems() {
+        return [];
+      }
+    }
+    ```
 
 2. Add an implementation of listStockItems() that calls the BFF through the `/api` proxy
 
-```javascript
-export class StockService {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl || '/api';
-  }
-
-  async listStockItems() {
-    return superagent
-      .get(this.baseUrl + '/stock-items')
-      .set('accept', 'application/json')
-      .then(res => {
-        console.log('Got response: ', res);
-        return res.body || [];
-      });
-  }
-}
-``` 
-
-**Note:** In dev mode the proxy is configured in `client/package.json`. When running with the express 
-server the proxy is configured in `server/routers/api.js`. By default the value points to `localhost:3001`.
+    ```javascript
+    export class StockService {
+      constructor(baseUrl) {
+        this.baseUrl = baseUrl || '/api';
+      }
+    
+      async listStockItems() {
+        return superagent
+          .get(this.baseUrl + '/stock-items')
+          .set('accept', 'application/json')
+          .then(res => {
+            console.log('Got response: ', res);
+            return res.body || [];
+          });
+      }
+    }
+    ``` 
+    
+    **Note:** In dev mode the proxy is configured in `client/package.json`. When running with the express 
+    server the proxy is configured in `server/routers/api.js`. By default the value points to `localhost:3001`.
 
 3. Update `App.jsx` to use the new service instead of the mock service.
 
-App.jsx
-```javascript
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.stockService = props.stockService || new StockService();
-  }
-
-  ...
-}
-```
+    App.jsx
+    ```javascript
+    class App extends Component {
+      constructor(props) {
+        super(props);
+    
+        this.stockService = props.stockService || new StockService();
+      }
+    
+      ...
+    }
+    ```
 
 4. Configure the helm chart to point to the kubernetes Service resource of the BFF.
 
-chart/template-node-react/values.yaml
-```javascript
-apiHost: "inventory-management-bff:80"
-``` 
+    chart/template-node-react/values.yaml
+    ```javascript
+    apiHost: "inventory-management-bff:80"
+    ``` 
 
 ### Inventory Service
 
@@ -428,23 +428,23 @@ Get the initial project created and register the pipeline for automated builds.
 1. Copy `com.ibm.hello.app.Application` into the `com.ibm.inventory_management.app` package and
 update the @ComponentScan package list to include `com.ibm.inventory_management.*`
 
-com.ibm.inventory_management.app.Application
-```java
-@SpringBootApplication
-@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
-public class Application extends SpringBootServletInitializer {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+    com.ibm.inventory_management.app.Application
+    ```java
+    @SpringBootApplication
+    @ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
+    public class Application extends SpringBootServletInitializer {
+        public static void main(String[] args) {
+            SpringApplication.run(Application.class, args);
+        }
+    
+        ...
+    
+        @Override
+        protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+            return application.sources(Application.class);
+        }
     }
-
-    ...
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
-    }
-}
-```
+    ```
 
 2. Delete `com.ibm.hello.app.Application`
 
@@ -454,326 +454,325 @@ public class Application extends SpringBootServletInitializer {
 
 2. Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
 
-```java
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-
-    @Test
-    @DisplayName("canary verifies test infrastructure")
-    public void canary() {
-        Assertions.assertTrue(false);
+    ```java
+    @DisplayName("StockItemController")
+    public class StockItemControllerTest {
+    
+        @Test
+        @DisplayName("canary verifies test infrastructure")
+        public void canary() {
+            Assertions.assertTrue(false);
+        }
     }
-}
-```
+    ```
 
 3. Change the value to `true` to make it pass
 
 4. Add the MockMvc infrastructure and create the `StockItemController`
 
-```java
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    StockItemController controller;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        controller = spy(new StockItemController());
-
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    ```java
+    @DisplayName("StockItemController")
+    public class StockItemControllerTest {
+        StockItemController controller;
+    
+        MockMvc mockMvc;
+    
+        @BeforeEach
+        public void setup() {
+            controller = spy(new StockItemController());
+    
+            mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        }
+    
+        ...
     }
+    ```
 
-    ...
-}
-```
-
-```java
-@RestController
-public class StockItemController {
-}
-```
+    ```java
+    @RestController
+    public class StockItemController {
+    }
+    ```
 
 5. Add the tests for the controller behavior and make the corresponding changes to make the tests pass
 
-```java
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    ...
-
-    @Nested
-    @DisplayName("Given [GET] /stock-items")
-    public class GivenGetStockItems {
-
-        @Test
-        @DisplayName("When called then it should return a 200 status")
-        public void when_called_should_return_200_status() throws Exception {
-
-            mockMvc.perform(get("/stock-items"))
-                    .andExpect(status().isOk());
-        }
-
-        @Test
-        @DisplayName("When called then it should return an empty array")
-        public void when_called_then_return_an_empty_array() throws Exception {
-
-            mockMvc.perform(get("/stock-items").accept("application/json"))
-                    .andExpect(content().json("[]"));
+    ```java
+    @DisplayName("StockItemController")
+    public class StockItemControllerTest {
+        ...
+    
+        @Nested
+        @DisplayName("Given [GET] /stock-items")
+        public class GivenGetStockItems {
+    
+            @Test
+            @DisplayName("When called then it should return a 200 status")
+            public void when_called_should_return_200_status() throws Exception {
+    
+                mockMvc.perform(get("/stock-items"))
+                        .andExpect(status().isOk());
+            }
+    
+            @Test
+            @DisplayName("When called then it should return an empty array")
+            public void when_called_then_return_an_empty_array() throws Exception {
+    
+                mockMvc.perform(get("/stock-items").accept("application/json"))
+                        .andExpect(content().json("[]"));
+            }
         }
     }
-}
-```
+    ```
 
-```java
-@RestController
-public class StockItemController {
-
-    @GetMapping(path = "/stock-items", produces = "application/json")
-    public List<StockItem> listStockItems() {
-        return new ArrayList();
+    ```java
+    @RestController
+    public class StockItemController {
+    
+        @GetMapping(path = "/stock-items", produces = "application/json")
+        public List<StockItem> listStockItems() {
+            return new ArrayList();
+        }
     }
-}
-```
+    ```
 
 #### Add a service for providing results
 
 1. Update the controller test to include returning data from the service
 
-```java
-
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    StockItemController controller;
-    StockItemApi service;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        service = mock(StockItemApi.class);
-
-        controller = spy(new StockItemController(service));
-
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
+    ```java
+    @DisplayName("StockItemController")
+    public class StockItemControllerTest {
+        StockItemController controller;
+        StockItemApi service;
     
-    @Nested
-    @DisplayName("Given [GET] /stock-items")
-    public class GivenGetStockItems {
-        @Test
-        @DisplayName("When called then it should return a 200 status")
-        public void when_called_should_return_200_status() throws Exception {
-
-            mockMvc.perform(get("/stock-items"))
-                    .andExpect(status().isOk());
+        MockMvc mockMvc;
+    
+        @BeforeEach
+        public void setup() {
+            service = mock(StockItemApi.class);
+    
+            controller = spy(new StockItemController(service));
+    
+            mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         }
-
-        @Test
-        @DisplayName("When called then it should return the results of the StockItemService")
-        public void when_called_then_return_the_results_of_the_stockitemservice() throws Exception {
-
-            final List<StockItem> expectedResult = Arrays.asList(new StockItem());
-            when(service.listStockItems()).thenReturn(expectedResult);
-
-            mockMvc.perform(get("/stock-items").accept("application/json"))
-                    .andExpect(content().json("[{}]"));
+        
+        @Nested
+        @DisplayName("Given [GET] /stock-items")
+        public class GivenGetStockItems {
+            @Test
+            @DisplayName("When called then it should return a 200 status")
+            public void when_called_should_return_200_status() throws Exception {
+    
+                mockMvc.perform(get("/stock-items"))
+                        .andExpect(status().isOk());
+            }
+    
+            @Test
+            @DisplayName("When called then it should return the results of the StockItemService")
+            public void when_called_then_return_the_results_of_the_stockitemservice() throws Exception {
+    
+                final List<StockItem> expectedResult = Arrays.asList(new StockItem());
+                when(service.listStockItems()).thenReturn(expectedResult);
+    
+                mockMvc.perform(get("/stock-items").accept("application/json"))
+                        .andExpect(content().json("[{}]"));
+            }
         }
     }
-}
-```
+    ```
 
-com.ibm.inventory_management.model.StockItem
-```java
-public class StockItem implements Serializable {
-}
-```
-
-com.ibm.inventory_management.service.StockItemApi;
-```java
-package com.ibm.inventory_management.service;
-
-import java.util.List;
-
-import com.ibm.inventory_management.model.StockItem;
-
-public interface StockItemApi {
-    public List<StockItem> listStockItems();
-}
-```
-
-```java
-@RestController
-public class StockItemController {
-
-    private final StockItemApi service;
-
-    public StockItemController(StockItemApi service) {
-        this.service = service;
+    com.ibm.inventory_management.model.StockItem
+    ```java
+    public class StockItem implements Serializable {
     }
-
-    @GetMapping(path = "/stock-items", produces = "application/json")
-    public List<StockItem> listStockItems() {
-        return this.service.listStockItems();
+    ```
+    
+    com.ibm.inventory_management.service.StockItemApi;
+    ```java
+    package com.ibm.inventory_management.service;
+    
+    import java.util.List;
+    
+    import com.ibm.inventory_management.model.StockItem;
+    
+    public interface StockItemApi {
+        public List<StockItem> listStockItems();
     }
-}
-```
+    ```
+    
+    ```java
+    @RestController
+    public class StockItemController {
+    
+        private final StockItemApi service;
+    
+        public StockItemController(StockItemApi service) {
+            this.service = service;
+        }
+    
+        @GetMapping(path = "/stock-items", produces = "application/json")
+        public List<StockItem> listStockItems() {
+            return this.service.listStockItems();
+        }
+    }
+    ```
 
 2. Update the `StockItem` model to include the necessary fields
 
-com.ibm.inventory_management.model.StockItem
-```java
-package com.ibm.inventory_management.model;
-
-import java.io.Serializable;
-
-public class StockItem implements Serializable {
-    private String id = null;
-    private String name = null;
-    private int stock = 0;
-    private double price = 0.0;
-    private String manufacturer = "";
-
-    public StockItem() {
-        super();
+    com.ibm.inventory_management.model.StockItem
+    ```java
+    package com.ibm.inventory_management.model;
+    
+    import java.io.Serializable;
+    
+    public class StockItem implements Serializable {
+        private String id = null;
+        private String name = null;
+        private int stock = 0;
+        private double price = 0.0;
+        private String manufacturer = "";
+    
+        public StockItem() {
+            super();
+        }
+    
+        public StockItem(String id) {
+            super();
+    
+            this.setId(id);
+        }
+    
+        public String getId() {
+            return id;
+        }
+    
+        public void setId(String id) {
+            this.id = id;
+        }
+    
+        public StockItem withId(String id) {
+            this.id = id;
+    
+            return this;
+        }
+    
+        public String getName() {
+            return name;
+        }
+    
+        public void setName(String name) {
+            this.name = name;
+        }
+    
+        public StockItem withName(String name) {
+            this.setName(name);
+    
+            return this;
+        }
+    
+        public int getStock() {
+            return stock;
+        }
+    
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
+    
+        public StockItem withStock(int stock) {
+            this.setStock(stock);
+    
+            return this;
+        }
+    
+        public double getPrice() {
+            return price;
+        }
+    
+        public void setPrice(double price) {
+            this.price = price;
+        }
+    
+        public StockItem withPrice(double price) {
+            this.setPrice(price);
+    
+            return this;
+        }
+    
+        public String getManufacturer() {
+            return manufacturer;
+        }
+    
+        public void setManufacturer(String manufacturer) {
+            this.manufacturer = manufacturer;
+        }
+    
+        public StockItem withManufacturer(String manufacturer) {
+            this.setManufacturer(manufacturer);
+    
+            return this;
+        }
     }
-
-    public StockItem(String id) {
-        super();
-
-        this.setId(id);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public StockItem withId(String id) {
-        this.id = id;
-
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public StockItem withName(String name) {
-        this.setName(name);
-
-        return this;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public StockItem withStock(int stock) {
-        this.setStock(stock);
-
-        return this;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public StockItem withPrice(double price) {
-        this.setPrice(price);
-
-        return this;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public StockItem withManufacturer(String manufacturer) {
-        this.setManufacturer(manufacturer);
-
-        return this;
-    }
-}
-```
+    ```
 
 3. Provide an implementation of the service that just returns canned data, for now
 
-```java
-package com.ibm.inventory_management.service;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
-import com.ibm.inventory_management.model.StockItem;
-
-@Primary
-@Service
-public class StockItemService implements StockItemApi {
-    @Override
-    public List<StockItem> listStockItems() {
-        return Arrays.asList(
-                new StockItem("1")
-                        .withName("Item 1")
-                        .withStock(100)
-                        .withPrice(10.5)
-                        .withManufacturer("Sony"),
-                new StockItem("2")
-                        .withName("Item 2")
-                        .withStock(150)
-                        .withPrice(100.0)
-                        .withManufacturer("Insignia"),
-                new StockItem("3")
-                        .withName("Item 3")
-                        .withStock(10)
-                        .withPrice(1000.0)
-                        .withManufacturer("Panasonic")
-                );
+    ```java
+    package com.ibm.inventory_management.service;
+    
+    import java.util.Arrays;
+    import java.util.List;
+    
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
+    
+    import com.ibm.inventory_management.model.StockItem;
+    
+    @Primary
+    @Service
+    public class StockItemService implements StockItemApi {
+        @Override
+        public List<StockItem> listStockItems() {
+            return Arrays.asList(
+                    new StockItem("1")
+                            .withName("Item 1")
+                            .withStock(100)
+                            .withPrice(10.5)
+                            .withManufacturer("Sony"),
+                    new StockItem("2")
+                            .withName("Item 2")
+                            .withStock(150)
+                            .withPrice(100.0)
+                            .withManufacturer("Insignia"),
+                    new StockItem("3")
+                            .withName("Item 3")
+                            .withStock(10)
+                            .withPrice(1000.0)
+                            .withManufacturer("Panasonic")
+                    );
+        }
     }
-}
-```
+    ```
 
 4. Update the swagger config to restrict the results to the `/stock-items` api
 
-com.ibm.cloud_garage.swagger.SwaggerDocket
-```java
-@Component
-@EnableSwagger2
-public class SwaggerDocket {
-    ...
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(buildApiRequestHandler())
-                .paths(PathSelectors.regex(".*stock-item.*"))
-                .build()
-                .apiInfo(buildApiInfo());
-    }    
-}
-```
+    com.ibm.cloud_garage.swagger.SwaggerDocket
+    ```java
+    @Component
+    @EnableSwagger2
+    public class SwaggerDocket {
+        ...
+    
+        @Bean
+        public Docket api() {
+            return new Docket(DocumentationType.SWAGGER_2)
+                    .select()
+                    .apis(buildApiRequestHandler())
+                    .paths(PathSelectors.regex(".*stock-item.*"))
+                    .build()
+                    .apiInfo(buildApiInfo());
+        }    
+    }
+    ```
 
 ### Inventory BFF
 
@@ -793,246 +792,246 @@ Get the initial project created and register the pipeline for automated builds.
 
 1. Create the controller test
 
-test/controllers/stock-items.controller.spec.ts
-```typescript
-import {Application} from 'express';
-import * as request from 'supertest';
-
-import {buildApiServer} from '../helper';
-
-describe('stock-item.controller', () => {
-
-  let app: Application;
-  beforeEach(async () => {
-    const apiServer = buildApiServer();
-
-    app = await apiServer.getApp();
-  });
-  
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
-
-  describe('given GET /stock-items', () => {
-    describe('when service is successful', () => {
-      test('then return 200 status', async () => {
-        return request(app).get('/stock-items').expect(200);
+    test/controllers/stock-items.controller.spec.ts
+    ```typescript
+    import {Application} from 'express';
+    import * as request from 'supertest';
+    
+    import {buildApiServer} from '../helper';
+    
+    describe('stock-item.controller', () => {
+    
+      let app: Application;
+      beforeEach(async () => {
+        const apiServer = buildApiServer();
+    
+        app = await apiServer.getApp();
       });
-
-      test('then should return an empty array', async () => {
-        return request(app).get('/stock-items').expect([]);
+      
+      test('canary verifies test infrastructure', () => {
+         expect(true).toEqual(true);
       });
-    });
-  });
-}
-```
+    
+      describe('given GET /stock-items', () => {
+        describe('when service is successful', () => {
+          test('then return 200 status', async () => {
+            return request(app).get('/stock-items').expect(200);
+          });
+    
+          test('then should return an empty array', async () => {
+            return request(app).get('/stock-items').expect([]);
+          });
+        });
+      });
+    }
+    ```
 
-src/controllers/stock-items.controller.ts
-```typescript
-import {GET, Path} from 'typescript-rest';
-
-@Path('stock-items')
-export class StockItemsController {
-
-  @GET
-  async listStockItems(): Promise<any[]> {
-    return [];
-  }
-}
-```
+    src/controllers/stock-items.controller.ts
+    ```typescript
+    import {GET, Path} from 'typescript-rest';
+    
+    @Path('stock-items')
+    export class StockItemsController {
+    
+      @GET
+      async listStockItems(): Promise<any[]> {
+        return [];
+      }
+    }
+    ```
 
 2. Add the controller to the controllers `index.ts`
 
-```typescript
-export * from './stock-items.controller';
-```
+    ```typescript
+    export * from './stock-items.controller';
+    ```
 
 #### Update the controller to call a service
 
 1. Add a StockItem model that matches the UI model and add it to models `index.ts`
 
-src/models/stock-item.model.ts
-```typescript
-export class StockItemModel {
-  id: string;
-  name: string;
-  description: string;
-  stock: number;
-  unitPrice: number;
-  picture: string;
-  manufacturer: string;
-}
-```
+    src/models/stock-item.model.ts
+    ```typescript
+    export class StockItemModel {
+      id: string;
+      name: string;
+      description: string;
+      stock: number;
+      unitPrice: number;
+      picture: string;
+      manufacturer: string;
+    }
+    ```
 
-src/models/index.ts
-```typescript
-export * from './stock-item.model';
-```
+    src/models/index.ts
+    ```typescript
+    export * from './stock-item.model';
+    ```
 
 2. Define an abstract class for the api and add it to the services `index.ts`
 
-src/services/stock-items.api.ts
-```typescript
-import {StockItemModel} from '../models';
+    src/services/stock-items.api.ts
+    ```typescript
+    import {StockItemModel} from '../models';
+    
+    export abstract class StockItemsApi {
+      async abstract listStockItems(): Promise<StockItemModel[]>;
+    }
+    ```
 
-export abstract class StockItemsApi {
-  async abstract listStockItems(): Promise<StockItemModel[]>;
-}
-```
-
-src/services/index.ts
-```typescript
-export * from './stock-items.api';
-```
+    src/services/index.ts
+    ```typescript
+    export * from './stock-items.api';
+    ```
 
 3. Update the controller test to inject the service into the controller and to return the value from the service
 
-test/controllers/stock-items.controller.spec.ts
-```typescript
-import {Application} from 'express';
-import * as request from 'supertest';
-import {Container} from 'typescript-ioc';
-
-import {buildApiServer} from '../helper';
-import Mock = jest.Mock;
-import {StockItemsApi} from '../../src/services';
-
-describe('stock-item.controller', () => {
-
-  let app: Application;
-  let service_listStockItems: Mock;
-
-  beforeEach(async () => {
-    service_listStockItems = jest.fn();
-    Container.bind(StockItemsApi).provider({
-      get: () => ({
-        listStockItems: service_listStockItems
-      }),
+    test/controllers/stock-items.controller.spec.ts
+    ```typescript
+    import {Application} from 'express';
+    import * as request from 'supertest';
+    import {Container} from 'typescript-ioc';
+    
+    import {buildApiServer} from '../helper';
+    import Mock = jest.Mock;
+    import {StockItemsApi} from '../../src/services';
+    
+    describe('stock-item.controller', () => {
+    
+      let app: Application;
+      let service_listStockItems: Mock;
+    
+      beforeEach(async () => {
+        service_listStockItems = jest.fn();
+        Container.bind(StockItemsApi).provider({
+          get: () => ({
+            listStockItems: service_listStockItems
+          }),
+        });
+    
+        const apiServer = buildApiServer();
+    
+        app = await apiServer.getApp();
+      });
+    
+      test('canary verifies test infrastructure', () => {
+         expect(true).toEqual(true);
+      });
+    
+      describe('given GET /stock-items', () => {
+        describe('when service is successful', () => {
+          const expectedResult = [{value: 'val'}];
+          beforeEach(() => {
+            service_listStockItems.mockResolvedValue(expectedResult);
+          });
+    
+          test('then return 200 status', async () => {
+            return request(app).get('/stock-items').expect(200);
+          });
+    
+          test('then should return value from service', async () => {
+            return request(app).get('/stock-items').expect(expectedResult);
+          });
+        });
+    
+        describe('when service fails', () => {
+          beforeEach(() => {
+            service_listStockItems.mockRejectedValue(new Error('service failed'));
+          });
+    
+          test('then return 502 error', async () => {
+            return request(app).get('/stock-items').expect(502);
+          });
+        });
+      });
     });
-
-    const apiServer = buildApiServer();
-
-    app = await apiServer.getApp();
-  });
-
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
-
-  describe('given GET /stock-items', () => {
-    describe('when service is successful', () => {
-      const expectedResult = [{value: 'val'}];
-      beforeEach(() => {
-        service_listStockItems.mockResolvedValue(expectedResult);
-      });
-
-      test('then return 200 status', async () => {
-        return request(app).get('/stock-items').expect(200);
-      });
-
-      test('then should return value from service', async () => {
-        return request(app).get('/stock-items').expect(expectedResult);
-      });
-    });
-
-    describe('when service fails', () => {
-      beforeEach(() => {
-        service_listStockItems.mockRejectedValue(new Error('service failed'));
-      });
-
-      test('then return 502 error', async () => {
-        return request(app).get('/stock-items').expect(502);
-      });
-    });
-  });
-});
-```
+    ```
 
 4. Update the controller to inject the service and use it
 
-src/controllers/stock-items.controller.ts
-```typescript
-import {Inject} from 'typescript-ioc';
-import {GET, Path} from 'typescript-rest';
-import {HttpError} from 'typescript-rest/dist/server/model/errors';
-
-import {StockItemModel} from '../models';
-import {StockItemsApi} from '../services';
-
-class BadGateway extends HttpError {
-  constructor(message?: string) {
-    super("BadGateway", message);
-    this.statusCode = 502;
-  }
-}
-
-@Path('stock-items')
-export class StockItemsController {
-  @Inject
-  service: StockItemsApi;
-
-  @GET
-  async listStockItems(): Promise<StockItemModel[]> {
-    try {
-      return await this.service.listStockItems();
-    } catch (err) {
-      throw new BadGateway('There was an error');
+    src/controllers/stock-items.controller.ts
+    ```typescript
+    import {Inject} from 'typescript-ioc';
+    import {GET, Path} from 'typescript-rest';
+    import {HttpError} from 'typescript-rest/dist/server/model/errors';
+    
+    import {StockItemModel} from '../models';
+    import {StockItemsApi} from '../services';
+    
+    class BadGateway extends HttpError {
+      constructor(message?: string) {
+        super("BadGateway", message);
+        this.statusCode = 502;
+      }
     }
-  }
-}
-```
+    
+    @Path('stock-items')
+    export class StockItemsController {
+      @Inject
+      service: StockItemsApi;
+    
+      @GET
+      async listStockItems(): Promise<StockItemModel[]> {
+        try {
+          return await this.service.listStockItems();
+        } catch (err) {
+          throw new BadGateway('There was an error');
+        }
+      }
+    }
+    ```
 
 #### Create a mock service implementation
 
 1. Add a `stock-items-mock.service` to services and add it to `index.ts`
 
-src/services/stock-items-mock.service.ts
-```typescript
-import {Provides} from 'typescript-ioc';
-
-import {StockItemsApi} from './stock-items.api';
-import {StockItemModel} from '../models';
-
-@Provides(StockItemsApi)
-export class StockItemsMockService implements StockItemsApi {
-  async listStockItems(): Promise<StockItemModel[]> {
-    return [
-      {
-        id: "1",
-        name: "Self-sealing stem bolt",
-        description: "Self-sealing stem bolt",
-        stock: 10,
-        unitPrice: 10.5,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Bajor Galactic"
-      },
-      {
-        id: "2",
-        name: "Heisenberg compensator",
-        description: "Magical component that negates the effects of the Heisenberg Uncertainty Principle",
-        stock: 20,
-        unitPrice: 20.0,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Federation Imports"
-      },
-      {
-        id: "3",
-        name: "Tooth sharpener",
-        description: "Industrial strength tooth sharpener",
-        stock: 30,
-        unitPrice: 5.25,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Farenginar Exploits"
+    src/services/stock-items-mock.service.ts
+    ```typescript
+    import {Provides} from 'typescript-ioc';
+    
+    import {StockItemsApi} from './stock-items.api';
+    import {StockItemModel} from '../models';
+    
+    @Provides(StockItemsApi)
+    export class StockItemsMockService implements StockItemsApi {
+      async listStockItems(): Promise<StockItemModel[]> {
+        return [
+          {
+            id: "1",
+            name: "Self-sealing stem bolt",
+            description: "Self-sealing stem bolt",
+            stock: 10,
+            unitPrice: 10.5,
+            picture: "https://via.placeholder.com/32.png",
+            manufacturer: "Bajor Galactic"
+          },
+          {
+            id: "2",
+            name: "Heisenberg compensator",
+            description: "Magical component that negates the effects of the Heisenberg Uncertainty Principle",
+            stock: 20,
+            unitPrice: 20.0,
+            picture: "https://via.placeholder.com/32.png",
+            manufacturer: "Federation Imports"
+          },
+          {
+            id: "3",
+            name: "Tooth sharpener",
+            description: "Industrial strength tooth sharpener",
+            stock: 30,
+            unitPrice: 5.25,
+            picture: "https://via.placeholder.com/32.png",
+            manufacturer: "Farenginar Exploits"
+          }
+        ];
       }
-    ];
-  }
-}
-```
+    }
+    ```
 
-src/services/index.ts
-```typescript
-export * from './stock-items-mock.service';
-```
+    src/services/index.ts
+    ```typescript
+    export * from './stock-items-mock.service';
+    ```
 
 2. The controller should now return the values from the mock service when invoked
 
@@ -1040,69 +1039,69 @@ export * from './stock-items-mock.service';
 
 1. Add a `stock-items` GraphQL schema and add it to the schemas `index.ts`
 
-src/schemas/stock-item.schema.ts
-```typescript
-import {Field, Float, Int, ObjectType} from 'type-graphql';
-import {StockItemModel} from '../models';
+    src/schemas/stock-item.schema.ts
+    ```typescript
+    import {Field, Float, Int, ObjectType} from 'type-graphql';
+    import {StockItemModel} from '../models';
+    
+    @ObjectType()
+    export class StockItem implements StockItemModel {
+      @Field()
+      id: string;
+      @Field()
+      description: string;
+      @Field()
+      manufacturer: string;
+      @Field()
+      name: string;
+      @Field({nullable: true})
+      picture: string;
+      @Field(type => Int)
+      stock: number;
+      @Field(type => Float)
+      unitPrice: number;
+    }
+    ``` 
 
-@ObjectType()
-export class StockItem implements StockItemModel {
-  @Field()
-  id: string;
-  @Field()
-  description: string;
-  @Field()
-  manufacturer: string;
-  @Field()
-  name: string;
-  @Field({nullable: true})
-  picture: string;
-  @Field(type => Int)
-  stock: number;
-  @Field(type => Float)
-  unitPrice: number;
-}
-``` 
-
-src/schemas/index.ts
-```typescript
-export * from './stock-item.schema'
-```
+    src/schemas/index.ts
+    ```typescript
+    export * from './stock-item.schema'
+    ```
 
 2. Add a 'stock-item' GraphQL resolver and add it to the resolvers `index.ts`
 
-src/resolvers/stock-item.resolver.ts
-```typescript
-import {Query, Resolver} from 'type-graphql';
-import {Inject} from 'typescript-ioc';
+    src/resolvers/stock-item.resolver.ts
+    ```typescript
+    import {Query, Resolver} from 'type-graphql';
+    import {Inject} from 'typescript-ioc';
+    
+    import {resolverManager} from './_resolver-manager';
+    import {StockItem} from '../schemas';
+    import {StockItemModel} from '../models';
+    import {StockItemsApi} from '../services';
+    
+    @Resolver(of => StockItem)
+    export class StockItemResolver {
+      @Inject
+      service: StockItemsApi;
+    
+      @Query(returns => [StockItem])
+      async stockItems(): Promise<StockItemModel[]> {
+        return this.service.listStockItems();
+      }
+    }
+    
+    resolverManager.registerResolver(StockItemResolver);
+    ```
 
-import {resolverManager} from './_resolver-manager';
-import {StockItem} from '../schemas';
-import {StockItemModel} from '../models';
-import {StockItemsApi} from '../services';
+    **Note:** The Starter Kit includes a `resolverManager` component that simplifies the steps to
+    make the resolver available. All that is required to use the resolver is to register it, preferably
+    at the bottom of the module where it is defined.
 
-@Resolver(of => StockItem)
-export class StockItemResolver {
-  @Inject
-  service: StockItemsApi;
-
-  @Query(returns => [StockItem])
-  async stockItems(): Promise<StockItemModel[]> {
-    return this.service.listStockItems();
-  }
-}
-
-resolverManager.registerResolver(StockItemResolver);
-```
-
-**Note:** The Starter Kit includes a `resolverManager` component that simplifies the steps to
-make the resolver available. All that is required to use the resolver is to register it, preferably
-at the bottom of the module where it is defined.
-
-src/resolvers/index.ts
-```typescript
-export * from './stock-item.resolver';
-```
+    src/resolvers/index.ts
+    ```typescript
+    export * from './stock-item.resolver';
+    ```
 
 3. Verify that the that the resolver is available using the Graph QL browser provided by the
 Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`)
@@ -1124,31 +1123,31 @@ Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`
 
 7. Add a `package.json` file in the `inventory-management-service-client` folder with the following contents:
 
-inventory-management-service-client/package.json
-```json
-{
-  "name": "inventory-management-service-client",
-  "version": "1.0.0",
-  "dependencies": {
-    "bluebird": "^3.7.1",
-    "request": "^2.88.0"
-  }
-}
-```
+    inventory-management-service-client/package.json
+    ```json
+    {
+      "name": "inventory-management-service-client",
+      "version": "1.0.0",
+      "dependencies": {
+        "bluebird": "^3.7.1",
+        "request": "^2.88.0"
+      }
+    }
+    ```
 
 8. Update the `package.json` in the root of the BFF to include the client as a dependency
 
-package.json
-```json
-{
-  ...
-  "dependencies": {
-    "inventory-management-service-client": "file:./inventory-management-service-client",
-    ...
-  },
-  ...
-}
-```
+    package.json
+    ```json
+    {
+      ...
+      "dependencies": {
+        "inventory-management-service-client": "file:./inventory-management-service-client",
+        ...
+      },
+      ...
+    }
+    ```
  
 9. Run `npm install` in the root directory of the BFF to bring down all the project dependencies
 
@@ -1156,106 +1155,106 @@ package.json
 
 1. Add a `stock-item-service` config
 
-src/config/stock-item-service.config
-```typescript
-import {Provided, Provider} from 'typescript-ioc';
-
-const baseUrl: string = process.env.SERVICE_URL || 'localhost:9080';
-
-const provider: Provider = {
-  get: () => ({
-    baseUrl,
-  })
-};
-
-@Provided(provider)
-export class StockItemServiceConfig {
-  baseUrl: string;
-}
-```
+    src/config/stock-item-service.config
+    ```typescript
+    import {Provided, Provider} from 'typescript-ioc';
+    
+    const baseUrl: string = process.env.SERVICE_URL || 'localhost:9080';
+    
+    const provider: Provider = {
+      get: () => ({
+        baseUrl,
+      })
+    };
+    
+    @Provided(provider)
+    export class StockItemServiceConfig {
+      baseUrl: string;
+    }
+    ```
 
 2. Add `stock-items` service that uses the config and the sdk for the microservice
 
-src/services/stock-items.service.ts
-```typescript
-import * as http from 'http';
-import {Inject, Provides} from 'typescript-ioc';
-import {StockItem, StockItemControllerApi} from 'inventory-management-service-client';
-
-import {StockItemsApi} from './stock-items.api';
-import {StockItemModel} from '../models';
-import {StockItemServiceConfig} from '../config/stock-item-service.config';
-
-@Provides(StockItemsApi)
-export class StockItemsService implements StockItemsApi {
-  service: StockItemControllerApi;
-
-  constructor(@Inject config: StockItemServiceConfig) {
-    this.service = new StockItemControllerApi(config.baseUrl);
-  }
-
-  async listStockItems(): Promise<StockItemModel[]> {
-    return this.service.listStockItemsUsingGET()
-      .then(({response, body}: { response: http.ServerResponse; body: Array<StockItem>;  }) => {
-        return body.map(item => ({
-          id: item.id,
-          name: item.name,
-          description: item.name,
-          stock: item.stock,
-          unitPrice: item.price,
-          picture: 'https://via.placeholder.com/32.png',
-          manufacturer: item.manufacturer,
-        }));
-      });
-  }
-}
-```
+    src/services/stock-items.service.ts
+    ```typescript
+    import * as http from 'http';
+    import {Inject, Provides} from 'typescript-ioc';
+    import {StockItem, StockItemControllerApi} from 'inventory-management-service-client';
+    
+    import {StockItemsApi} from './stock-items.api';
+    import {StockItemModel} from '../models';
+    import {StockItemServiceConfig} from '../config/stock-item-service.config';
+    
+    @Provides(StockItemsApi)
+    export class StockItemsService implements StockItemsApi {
+      service: StockItemControllerApi;
+    
+      constructor(@Inject config: StockItemServiceConfig) {
+        this.service = new StockItemControllerApi(config.baseUrl);
+      }
+    
+      async listStockItems(): Promise<StockItemModel[]> {
+        return this.service.listStockItemsUsingGET()
+          .then(({response, body}: { response: http.ServerResponse; body: Array<StockItem>;  }) => {
+            return body.map(item => ({
+              id: item.id,
+              name: item.name,
+              description: item.name,
+              stock: item.stock,
+              unitPrice: item.price,
+              picture: 'https://via.placeholder.com/32.png',
+              manufacturer: item.manufacturer,
+            }));
+          });
+      }
+    }
+    ```
 
 3. Remove the `@Provides()` decorator from the mock service
 
-src/services/stock-items-mock.service.ts
-```typescript
-import {StockItemsApi} from './stock-items.api';
-import {StockItemModel} from '../models';
-
-export class StockItemsMockService implements StockItemsApi {
-  ...
-}
-```
+    src/services/stock-items-mock.service.ts
+    ```typescript
+    import {StockItemsApi} from './stock-items.api';
+    import {StockItemModel} from '../models';
+    
+    export class StockItemsMockService implements StockItemsApi {
+      ...
+    }
+    ```
 
 4. Add `stock-item.service` to `index.ts` in the service directory (`stock-items-mock.service` can be removed)
 
-src/services/index.ts
-```typescript
-export * from './stock-items.service';
-```
+    src/services/index.ts
+    ```typescript
+    export * from './stock-items.service';
+    ```
 
 5. Add `serviceUrl` to the values.yaml file of the helm chart with a value that matches the 
 kubernetes service of the microservice
 
-chart/template-graphql-typescript/values.yaml
-```yaml
-global: {}
-
-serviceUrl: "inventory-management-service:80"
-
-...
-```
+    chart/template-graphql-typescript/values.yaml
+    ```yaml
+    global: {}
+    
+    serviceUrl: "inventory-management-service:80"
+    
+    ...
+    ```
 
 6. Add an environment variable in the deployment for the service url along with the other environment variables
 
-chart/template-graphql-typescript/templates/deployment.yaml
-```yaml
-  ...
-  env:
-    - name: INGRESS_HOST
-      value: {{ include "starter-kit-chart.host" . }}
-    - name: PROTOCOLS
-      value: {{ include "starter-kit-chart.protocols" . }}
-    - name: SERVICE_URL
-      value: {{ .Values.serviceUrl | quote }}
-  ...
-```
+    chart/template-graphql-typescript/templates/deployment.yaml
+    ```yaml
+      ...
+      env:
+        - name: INGRESS_HOST
+          value: {{ include "starter-kit-chart.host" . }}
+        - name: PROTOCOLS
+          value: {{ include "starter-kit-chart.protocols" . }}
+        - name: SERVICE_URL
+          value: {{ .Values.serviceUrl | quote }}
+      ...
+    ```
 
 ## Summary
 
