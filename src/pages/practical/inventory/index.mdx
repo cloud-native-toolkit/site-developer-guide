@@ -271,6 +271,46 @@ class StockItemList extends Component {
 StockItem service API will have a single asynchronous function at this time called `listStockItems()`
 that returns a list of StockItems. 
 
+```javascript
+export class StockServiceMock {
+  async listStockItems() {
+    await timer(1000);
+
+    return [
+      {
+        name: "Lin",
+        description: "123 Main Street",
+        stock: 100,
+        unitPrice: 10.5,
+        picture: "12345",
+        manufacturer: "United States"
+      },
+      {
+        name: "Mak",
+        description: "45 2nd Street",
+        stock: 12,
+        unitPrice: 100,
+        picture: "78766",
+        manufacturer: "United States"
+      },
+      {
+        name: "Joe",
+        description: "40 Down Street",
+        stock: 1000,
+        unitPrice: 5,
+        picture: "90706",
+        manufacturer: "United States"
+      }
+    ];
+  }
+}
+
+async function timer(time) {
+  return new Promise(resolve => {
+    setTimeout(resolve, time)
+  });
+}
+```
 
 ### Inventory Service
 
