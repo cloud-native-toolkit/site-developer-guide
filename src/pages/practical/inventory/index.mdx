@@ -24,13 +24,13 @@ In this guide imagine you have completed a [Enterprise Design Thinking Workshop]
 
 The Micro App should be built using a three tier microservices architecture. Each tier will follow a clean separation of concerns. Each app component will be modelled using _Microservices_ and use a number of [polyglot](https://searchsoftwarequality.techtarget.com/definition/polyglot-programming) programming languages and frameworks. Data will be stored in IBM Cloudant and the Micro App will be secured using IBM App ID.
 
-![Architecture](architecture.png)
+![Architecture](images/architecture.png)
 
 ## [Design]()
 
 The Micro App should adhere to the following User Interface Design and API and Model Design.
 
-Add Design here.
+![UI Design](/images/inventory-ui-design.png)
 
 ## Technical Requirements
 - The Mico App should adhere to the following technical requirements:
@@ -47,8 +47,234 @@ Add Design here.
 
 ## Guide
 
-Steps to Go here
+### Inventory User Interface
 
+#### Setup
+
+Get the initial project created and register the pipeline for automated builds.
+
+1. Create a new repository from the React Starter Kit template - https://github.com/ibm-garage-cloud/template-node-react/generate
+
+2. Clone the new repository to your machine
+
+3. Update the project name in the `package.json` to match the repository
+
+4. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
+
+#### Initial components
+
+Clean up the UI Design patterns view to include only one entry for Stock Items.
+Based on the requirements of this first use case we can base the work off of 
+the TableList pattern. 
+
+1. Make a copy of the `TableList` pattern component in the components folder. Rename the
+file and the class inside to `StockItemList`
+
+2. Update UIShell.jsx
+  - Update the initial pattern name to `Stock Items`
+  - Update the SideNameMenu title to Inventory Management
+  - Remove all the patterns from the SideNavMenu and add a line to render the Stock Items menu - `this.renderSideNavItem("Stock Items")`
+  
+```javascript
+class UIShell extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      patternName: "Stock Items"
+    };
+  }
+
+  ...
+
+  render() {
+    return (
+      <div>
+        <Header aria-label="IBM Platform Name">
+          <SkipToContent />
+          <HeaderName href="#" prefix="IBM">
+            Garage for Cloud Catalyst
+          </HeaderName>
+        </Header>
+        <SideNav aria-label="Side navigation">
+          <SideNavItems>
+            <SideNavMenu
+              defaultExpanded
+              icon={<Fade20 />}
+              title="Inventory Management"
+            >
+              {this.renderSideNavItem("Stock Items")}
+            </SideNavMenu>
+          </SideNavItems>
+        </SideNav>
+        <Content id="main-content"><UIShellBody patternName={this.state.patternName} /></Content>
+      </div>
+    );
+  }
+}
+```
+
+3. Update UIShellBody.jsx
+
+  - Remove all of the pattern values from the `components` map and add only show StockItem List
+  - Use `Stock Items` as the default pattern name when none is given
+
+```javascript
+class UIShellBody extends Component {
+  components = {
+    "Stock Items": StockItemList,
+  };
+  render() {
+    const PatternName = this.components[
+      this.props.patternName || "Stock Items"
+    ];
+    return (
+      <div className="pattern-container">
+        <PatternName showDescription={true} />
+      </div>
+    );
+  }
+}
+```
+
+#### Update StockItemsList according to the requirements
+
+1. Update the data structure for our sample data to match the UI
+
+```javascript
+    const data = [
+      {
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
+      },
+      {
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
+      },
+      {
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
+      }
+    ];
+```
+
+2. Define the column field names in the constructor and use them when building each row
+
+```javascript
+class StockItemList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.columns = [
+      "name",
+      "description",
+      "stock",
+      "unitPrice",
+      "picture",
+      "manufacturer",
+    ];
+   
+    ...
+  }
+
+  renderRow = (row, id) => {
+    return (
+      <StructuredListRow key={id} onClick={() => this.onRowClick(id)}>
+        ...
+        {this.columns.map(col => {
+          return (
+            <StructuredListCell key={col} className="simple-list-row">
+              {row[col]}
+            </StructuredListCell>
+          );
+        })}
+      </StructuredListRow>
+    );
+  };
+}
+```
+
+3. Update the constructor to set data to empty array originally and move logic to populate the state
+with the actual data to the `componentDidMount()` lifecycle hook method.
+
+```javascript
+class StockItemList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.columns = [
+      "name",
+      "description",
+      "stock",
+      "unitPrice",
+      "picture",
+      "manufacturer",
+    ];
+
+    this.state = {
+      data: [],
+      selectedRow: 0
+    };
+  }
+
+  componentDidMount() {
+    const data = [
+      {
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
+      },
+      {
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
+      },
+      {
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
+      }
+    ];
+
+    this.setState({
+      data
+    });
+  }
+
+  ...
+}
+```
+
+4. Create a directory called `services` under the client/src folder
+
+5. Create a service called `stock-item-mock.service` initially to validate the logic. Our 
+StockItem service API will have a single asynchronous function at this time called `listStockItems()`
+that returns a list of StockItems. 
+
+
+### Inventory Service
+
+### Inventory BFF
 
 ## Summary
 
