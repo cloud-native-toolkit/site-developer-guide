@@ -1,9 +1,77 @@
 ---
-title: Monnitoring
+title: Monitoring
 ---
 
 <PageDescription>
 
-This project is a [Gatsby theme](https://www.gatsbyjs.org/docs/themes/what-are-gatsby-themes/) that empowers developers, writers, and designers to create fast, accessible sites that look and feel like Carbon. Follow along to start creating your own site.
+Use Sysdig to monitor your running application
 
 </PageDescription>
+
+Sysdig Monitoring enables an operator to view stats and collect metrics about a Kubernetes cluster and its deployments.
+The Developer Tools environment includes an IBM Cloud Monitoring with Sysdig service instance configured with 
+a Sysdig agent installed in the environment's cluster.
+Simply by deploying your application into the Developer Tools environment, Sysdig monitors it, just open 
+the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
+
+## Sysdig Monitoring
+
+[IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig) explains how to
+configure and use an instance of the Sysdig service, but the Developer Tools environment has already done most 
+of this for you. You can skip steps 1-3 about user access, provisioning an instance, and installing an agent.
+
+### Sysdig dashboard
+
+Open the Sysdig web UI for your environment's cluster
+- [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4) 
+explains how to open the web UI
+- In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
+- Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks`. To help find it, 
+you can filter by your resource group.
+    ![Sysdig Monitoring Instance](sysdig-monitoring-instance.png)
+- In the monitoring instance, press the **View Sysdig** button to open the Sysdig web UI
+
+Finish onboarding the agent
+- If this is your first time opening the Sysdig dashboard on your cluster's monitoring agent, Sysdig will open the Onboarding wizard
+- The first page shows the hosts (i.e. Kubernetes nodes) and containers that Sysdig found, as well as the integrations it has 
+selected to monitor them
+    ![Sysdig Onboarding pt 1](sysdig-wizard-1.png)
+    Notice there are different types of integrations for different types of runtimes such as Java, servers such as Tomcat, 
+    and even infrasturcture integrations for monitoring the Kubernetes cluster itself and its containerd engines.
+
+- Press **Next**
+
+- The second page shows the predefined metrics, dashboards, and alerts that Sysdig will start using to monitor the apps 
+in your cluster
+    ![Sysdig Onboarding pt 2](sysdig-wizard-2.png)
+    - Press **Complete Onboarding**
+
+### Explore your application
+
+By default, the Sysdig dashboard opens the **Explore** page on its **Deployments and Pods** grouping.
+
+- Select your cluster
+
+By default, Sysdig opens its **Overview by Process** dashboard, which has panels showing stats about CPU, memory, and networking. 
+This is one of Sysdig's **Default Dashboards** (i.e. built-in dashboards).
+
+These are the cumlative totals for all of the pods running in the cluster. Hover over a graph and a key pops up to list 
+the pods and show each one's color.
+
+- Expand your cluster and namespace, then select your deployment
+
+This shows the stats just for the pods in your deployment.
+
+On the **Dashboard** page, you can create your own custom dashboards.
+
+The Getting started tutorial, starting with 
+[Step 5: Monitor your environment](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step5), 
+gives some instructions on monitoring, managing, and what to do next.
+
+## Conclusion
+
+It's important to be able to monitor your deployed applications. 
+Here, the Developer Tools environment uses Sysdig Monitoring, but you never had to install or run Sysdig.
+Just deploy your application into the Developer Tools environment and it gets moniotored automatically.
+After deploying your application, open the Sysdig web UI and browse the status, including the status 
+of your cluster as a whole and your deployment in particular.
