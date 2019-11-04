@@ -1240,6 +1240,331 @@ kubernetes service of the microservice
       ...
     ```
 
+### Add a Cloudant backend to the service
+
+#### Update the gradle config to include cloudant dependencies
+
+1. Add `build-services.gradle` to the gradle folder
+
+    gradle/build-services.gradle
+    ```
+    dependencies {
+        compile group: 'com.cloudant', name: 'cloudant-client', version: '2.17.0'
+        compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
+        compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.1'
+        compile group: 'joda-time', name: 'joda-time', version: '2.10.3'
+    }
+    ```
+
+2. Apply build-services.gradle to build.gradle
+
+    build.gradle
+    ```
+    ...
+    apply from:   'gradle/build-services.gradle'
+    ...
+    ```
+
+#### Add configuration values
+
+1. Add CloudantConfig to hold the url, username, password, and databaseName values
+
+    com.ibm.inventory_management.config.CloudantConfig
+    ```java
+    package com.ibm.inventory_management.config;
+    
+    import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+    
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public class CloudantConfig {
+        private String url;
+        private String username;
+        private String password;
+        private String databaseName;
+    
+        public String getUrl() {
+            return url;
+        }
+    
+        public void setUrl(String url) {
+            this.url = url;
+        }
+    
+        public CloudantConfig withUrl(String url) {
+            this.setUrl(url);
+    
+            return this;
+        }
+    
+        public String getUsername() {
+            return username;
+        }
+    
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    
+        public CloudantConfig withUsername(String username) {
+            this.setUsername(username);
+    
+            return this;
+        }
+    
+        public String getPassword() {
+            return password;
+        }
+    
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    
+        public CloudantConfig withPassword(String password) {
+            this.setPassword(password);
+    
+            return this;
+        }
+    
+        public String getDatabaseName() {
+            return databaseName;
+        }
+    
+        public void setDatabaseName(String databaseName) {
+            this.databaseName = databaseName;
+        }
+    
+        public CloudantConfig withDatabaseName(String databaseName) {
+            this.setDatabaseName(databaseName);
+    
+            return this;
+        }
+    
+        public String toString() {
+            return "[CloudantConfig: url=" + this.url + ", username=" + this.username + ", name=" + this.databaseName + "]";
+        }
+    }
+    ```
+
+2. Implement logic to load the configuration from the secret binding or local file
+
+    com.ibm.inventory_management.config.CloudantMapping
+    ```java
+    package com.ibm.inventory_management.config;
+    
+    import java.io.Serializable;
+    
+    import com.fasterxml.jackson.annotation.JsonProperty;
+    
+    public class CloudantMapping implements Serializable {
+        @JsonProperty(value = "CLOUDANT_CONFIG")
+        private String cloudantConfig;
+    
+        public String getCloudantConfig() {
+            return cloudantConfig;
+        }
+    
+        public void setCloudantConfig(String cloudantConfig) {
+            this.cloudantConfig = cloudantConfig;
+        }
+    }
+    ```
+
+    com.ibm.inventory_management.config.CloudantConfigFactory
+    ```java
+    package com.ibm.inventory_management.config;
+    
+    import java.io.IOException;
+    
+    import com.fasterxml.jackson.databind.ObjectMapper;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.stereotype.Component;
+    
+    @Component
+    public class CloudantConfigFactory {
+        @Bean
+        public CloudantConfig buildCloudantConfig() throws IOException {
+            return buildConfigFromBinding(
+                    loadCloudantConfig(),
+                    loadDatabaseName()
+            );
+        }
+    
+        protected String loadCloudantConfig() throws IOException {
+            return System.getProperty("CLOUDANT_CONFIG") != null
+                    ? System.getProperty("CLOUDANT_CONFIG")
+                    : loadCloudantConfigFromLocalDev();
+        }
+    
+        protected String loadCloudantConfigFromLocalDev() throws IOException {
+            final ObjectMapper mapper = new ObjectMapper();
+    
+            final CloudantMapping mappings = mapper.readValue(
+                    this.getClass().getClassLoader().getResourceAsStream("mappings.json"),
+                    CloudantMapping.class
+            );
+    
+            return mappings.getCloudantConfig();
+        }
+    
+        protected String loadDatabaseName() {
+            return System.getProperty("DATABASE_NAME") != null
+                    ? System.getProperty("DATABASE_NAME")
+                    : "stock-items";
+        }
+    
+        protected CloudantConfig buildConfigFromBinding(String binding, String databaseName) throws IOException {
+            final ObjectMapper mapper = new ObjectMapper();
+    
+            return mapper.readValue(binding, CloudantConfig.class)
+                    .withDatabaseName(databaseName);
+        }
+    }
+    ```
+
+#### Set up local development
+
+1. Log into cloud.ibm.com and open the Cloudant service from the resource list
+
+2. Click on service credentials and expand the listed credentials
+
+3. Copy the json contents from the credentials into `mappings.json` under CLOUDANT_CONFIG 
+
+    src/main/resources/mappings.json
+    ```
+    {
+      "CLOUDANT_CONFIG": "{paste json here}"
+    }
+    ```
+
+#### Implement the service
+
+1. Add a CloudantApi component to create the CloudantClient instance from the configuration
+
+    com.ibm.inventory_management.service.CloudServicesException
+    ```java
+    package com.ibm.inventory_management.service;
+    
+    public class CloudServicesException extends Exception {
+        public CloudServicesException() {
+        }
+    
+        public CloudServicesException(String message) {
+            super(message);
+        }
+    
+        public CloudServicesException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    
+        public CloudServicesException(Throwable cause) {
+            super(cause);
+        }
+    
+        public CloudServicesException(
+                String message,
+                Throwable cause,
+                boolean enableSuppression,
+                boolean writableStackTrace
+        ) {
+            super(message, cause, enableSuppression, writableStackTrace);
+        }
+    }
+    ```
+    
+    com.ibm.inventory_management.service.CloudantApi
+    ```java
+    package com.ibm.inventory_management.service;
+    
+    import java.net.MalformedURLException;
+    import java.net.URL;
+    
+    import com.cloudant.client.api.ClientBuilder;
+    import com.cloudant.client.api.CloudantClient;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.stereotype.Component;
+    
+    import com.ibm.inventory_management.config.CloudantConfig;
+    
+    @Component
+    public class CloudantApi {
+        @Bean
+        public CloudantClient buildCloudant(CloudantConfig config) throws CloudServicesException {
+            System.out.println("Config: " + config);
+            URL url = null;
+            try {
+                url = new URL(config.getUrl());
+            } catch (MalformedURLException e) {
+                throw new CloudServicesException("Invalid service URL specified", e);
+            }
+    
+            return ClientBuilder
+                    .url(url)
+                    .username(config.getUsername())
+                    .password(config.getPassword())
+                    .build();
+        }
+    }
+    ```
+
+2. Add the service implementation
+
+    com.ibm.inventory_management.service.StockItemService
+    ```java
+    package com.ibm.inventory_management.service;
+    
+    import java.io.IOException;
+    import java.util.List;
+    import javax.annotation.PostConstruct;
+    
+    import com.cloudant.client.api.CloudantClient;
+    import com.cloudant.client.api.Database;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
+    
+    import com.ibm.inventory_management.config.CloudantConfig;
+    import com.ibm.inventory_management.model.StockItem;
+    
+    @Service
+    @Primary
+    public class StockItemService implements StockItemApi {
+        private CloudantConfig config;
+        private CloudantClient client;
+        private Database db = null;
+    
+        public StockItemService(CloudantConfig config, CloudantClient client) {
+            this.config = config;
+            this.client = client;
+        }
+    
+        @PostConstruct
+        public void init() {
+            db = client.database(config.getDatabaseName(), true);
+        }
+    
+        @Override
+        public List<StockItem> listStockItems() throws Exception {
+    
+            try {
+                return db.getAllDocsRequestBuilder()
+                        .includeDocs(true)
+                        .build()
+                        .getResponse()
+                        .getDocsAs(StockItem.class);
+    
+            } catch (IOException e) {
+                throw new Exception("", e);
+            }
+        }
+    }
+    ```
+
+3. Remove the `@Primary` annotation from the mock service
+
+#### Add the values to the helm chart
+
+1. Update the `cloudantBinding` and `databaseName` values in values.yaml
+
+    **Note:** The cloudantBinding value should match the name of the cloudant binding secret
+
 ## Summary
 
 You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
