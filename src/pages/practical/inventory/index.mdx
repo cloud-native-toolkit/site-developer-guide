@@ -1106,33 +1106,6 @@ Get the initial project created and register the pipeline for automated builds.
 3. Verify that the that the resolver is available using the Graph QL browser provided by the
 Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`)
 
-#### Generate a typescript sdk for the microservice api
-
-1. Open the swagger page for the microservice ({service host}/api-docs)
-
-2. Save the OpenApi json file
-
-3. Open https://editor.swagger.io/
-
-4. Select 'File -> Import file' and find the file that was saved in step 2.
-
-5. Select 'Generate Client -> typescript-node' and download the zip file
-
-6. Open the zip file and copy `api.ts` into `src/clients/inventory-management-service`
-
-7. Add an index.ts in the `inventory-management-service` directory
-
-    src/clients/inventory-management-service/index.ts
-    ```typescript
-    export * from './api';
-    ```
-   
-8. Add `request` and `bluebird` as dependencies
-
-    ```bash
-    npm i -s request bluebird
-    ```
-
 #### Create a service implementation that calls the microservice
 
 1. Add a `stock-item-service` config and the class to config/index.ts
@@ -1159,39 +1132,64 @@ Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`
     ```typescript
     export * from './stock-item-service.config'
     ```
-2. Add `stock-items` service that uses the config and the sdk for the microservice
+   
+2. Add `stock-items` service that uses the config
 
     src/services/stock-items.service.ts
     ```typescript
-    import * as http from 'http';
     import {Inject, Provides} from 'typescript-ioc';
+    import {get, Response} from 'superagent';
     
     import {StockItemsApi} from './stock-items.api';
     import {StockItemModel} from '../models';
     import {StockItemServiceConfig} from '../config';
-    import {StockItem, StockItemControllerApi} from '../clients/inventory-management-service-client';
+    import {LoggerApi} from '../logger';
+    
+    class StockItem {
+      'id'?: string;
+      'manufacturer'?: string;
+      'name'?: string;
+      'price'?: number;
+      'stock'?: number;
+    }
     
     @Provides(StockItemsApi)
     export class StockItemsService implements StockItemsApi {
-      service: StockItemControllerApi;
+      @Inject
+      _logger: LoggerApi;
+      @Inject
+      config: StockItemServiceConfig;
     
-      constructor(@Inject config: StockItemServiceConfig) {
-        this.service = new StockItemControllerApi(config.baseUrl);
+      get logger(): LoggerApi {
+        return this._logger.child('StockItemsService');
       }
     
       async listStockItems(): Promise<StockItemModel[]> {
-        return this.service.listStockItemsUsingGET()
-          .then(({response, body}: { response: http.ServerResponse; body: Array<StockItem>;  }) => {
-            return body.map(item => ({
-              id: item.id,
-              name: item.name,
-              description: item.name,
-              stock: item.stock,
-              unitPrice: item.price,
-              picture: 'https://via.placeholder.com/32.png',
-              manufacturer: item.manufacturer,
-            }));
-          });
+        try {
+          const response: Response = await get(this.config.baseUrl + '/stock-items')
+            .set('Accept', 'application/json');
+    
+          return this.mapStockItems(response.body);
+        } catch (err) {
+          this.logger.error('Error getting data from service', err);
+          throw err;
+        }
+      }
+    
+      mapStockItems(data: StockItem[]): StockItemModel[] {
+        return data.map(this.mapStockItem);
+      }
+    
+      mapStockItem(item: StockItem): StockItemModel {
+        return {
+          id: item.id,
+          name: item.name,
+          description: item.name,
+          stock: item.stock,
+          unitPrice: item.price,
+          picture: 'https://via.placeholder.com/32.png',
+          manufacturer: item.manufacturer,
+        };
       }
     }
     ```
