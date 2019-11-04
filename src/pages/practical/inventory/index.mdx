@@ -1565,6 +1565,54 @@ kubernetes service of the microservice
 
     **Note:** The cloudantBinding value should match the name of the cloudant binding secret
 
+### Enable AppId on the application
+
+#### User Interface
+
+1. Update the `values.yaml` file in the chart to set `ingress.appId.enabled=true` and to set the value for the AppId binding secret
+
+```yaml
+...
+appidBinding: "binding-sms-test-oc-appid"
+
+ingress:
+  enabled: true
+  appid:
+    enabled: true
+    # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
+    requestType: web
+    ...
+```
+
+#### AppId redirect url config
+
+1. When the UI application is available, navigate to the https url. An error page should be displayed that looks like the 
+following:
+
+    ![AppId redirect error](images/appid-redirect-error.png)
+    
+2. The url for the error page will look like the following: 
+
+    `https://us-south.appid.cloud.ibm.com/oauth/v4/25d16cda-8899-46fa-a5ae-9818f93dd1d3/authorization?client_id=0351c750-a3f0-4b8c-818b-d14558f9dfb9&response_type=code&redirect_uri=https://inventory-manangement-ui-dev.sms-test-oc-cluster.us-east.containers.appdomain.cloud/appid_callback&scope=appid_default`
+    
+    Get the value of the `redirect_url` parameter.
+
+3. Open the IBM Cloud resource list - `https://cloud.ibm.com/resources` 
+
+4. Open the AppId instance to the `Manage Authentication` -> `Authentication Settings`
+
+    ![AppId authentication settings](images/appid-authentication-settings.png)
+
+5. Add the `redirect_url` to the web redirect URLs
+
+#### Add users to AppId
+
+1. Open the AppId instance to `Cloud Directory` -> `Users`
+
+    ![AppId cloud directory users](images/appid-cloud-directory-users.png)
+
+2. Add users
+
 ## Summary
 
 You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
