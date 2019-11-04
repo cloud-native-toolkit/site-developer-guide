@@ -60,7 +60,8 @@ You must have completed the [ArgoCD Setup](/getting-start/argocd-setup) before c
 
 5. Update the `requirements.yaml` with the following values:
     - `name` - the name of helm chart/image
-    - `repository` - the url to artifactory within the cluster (`igc ingress -n tools`)
+    - `repository` - the url to helm repository in artifactory within the cluster. The value
+     should be `{artifactory url}/generic-local/{resource group name}`
 
 6. Update the `values.yaml` file with environment-specific values for the options available in the helm chart.
 
