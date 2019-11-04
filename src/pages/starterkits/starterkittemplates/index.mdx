@@ -2,84 +2,124 @@
 title: Starter Kits Templates
 ---
 
-### Test
+### Overview
 
+In the [Overview](/starterkits/overview) section we describe why _Starter Kit Templates_ provide a
+perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed
+templates that can be used to get projects moving quickly and focusing on use case business logic.
+
+They cover some very common patterns for developers.
+We are looking forward to the community providing new open source templates for others to use with this set of developer tools.
+
+Read up on Why Start Kit Templates and if you have not already tried to deploy your first app get started.overview
+
+<AnchorLinks>
+  <AnchorLink to="/starterkits/overview">Starter Kit Templates Overview</AnchorLink>
+  <AnchorLink to="/getting-started/deploy-app">Deploy An App</AnchorLink>
+</AnchorLinks>
+
+Here are links to the base set of **Starter Kit Templates** provided for the _IBM Garage for Cloud Developer Tools_.
+
+- To use the Starter Kit templates, click on the link and then the **Template** button to create a version in your own
+own git organization.
+- Then clone it onto your local machine and then use `igc pipeline` to register it with your Jenkins server.
+    ```bash
+    ibmcloud login | oc login
+    kubectl get nodes | oc get nodes
+    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    git clone <generated startkit template>
+    cd <generated startkit template>
+    code package.json ! rename your project
+    igc pipeline
+    ```
+
+### Start Kit Templates Links
 
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="light"
-    title="Installation"
-    subTitle="Follow the steps to install the Developer Tools"
-    href="/getting-started/installation"
-    >
+  <ResourceCard
+    title="React UI Patterns"
+    subTitle="Carbon based UI to help with common patterns using React framework"
+    actionIcon="launch"
+    color="dark"
+    href="https://github.com/ibm-garage-cloud/template-node-react"
+  >
 
-![](resources/images/v10.7-release.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+  </ResourceCard>
 </Column>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="light"
-    title="Guides"
-    subTitle="Read the developer guides on how to use the installed tools"
-    href="/guides/overview"
-    >
+<ResourceCard
+     title="Angular UI Patterns"
+     subTitle="Carbon based UI to help with common patterns using Angular framework"
+     actionIcon="launch"
+     color="dark"
+     href="https://github.com/ibm-garage-cloud/template-node-angular"
+   >
 
-![](resources/images/hacktoberfest.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+</ResourceCard>
 </Column>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="light"
-    title="Starter Kits Templates"
-    subTitle="Get some code to get your started"
-    href="/starterkits/overview"
-    >
+  <ResourceCard
+    title="Typescript Microservice"
+    subTitle="Node.js TypeScript GraphQL Backend for Frontend"
+    actionIcon="launch"
+    color="dark"
+    href="https://github.com/ibm-garage-cloud/template-node-typescript"
+  >
 
-![](/resources/images/because-colors.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+  </ResourceCard>
+
 </Column>
 </Row>
 
+<br/>
+
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="light"
-    title="Installation"
-    subTitle="Follow the steps to install the Developer Tools"
-    href="/getting-started/installation"
-    >
+  <ResourceCard
+    title="Typescript GraphQL"
+    subTitle="Node.js TypeScript GraphQL Backend for Frontend"
+    actionIcon="launch"
+    color="dark"
+    href="https://github.com/ibm-garage-cloud/template-graphql-typescript"
+  >
 
-![](resources/images/v10.7-release.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+</ResourceCard>
 </Column>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="light"
-    title="Guides"
-    subTitle="Read the developer guides on how to use the installed tools"
-    href="/guides/overview"
-    >
+  <ResourceCard
+    title="Spring Boot Microservice"
+    subTitle="Spring Boot Java Microservice"
+    actionIcon="launch"
+    color="dark"
+    href="https://github.com/ibm-garage-cloud/template-java-spring"
+  >
 
-![](resources/images/hacktoberfest.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+</ResourceCard>
 </Column>
 <Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
+  <ResourceCard
+    title="Python AI Microservice"
+    subTitle="Machine Learning Microservice with TensorFlow"
+    actionIcon="launch"
     color="light"
-    title="Starter Kits Templates"
-    subTitle="Get some code to get your started"
-    href="/starterkits/overview"
-    >
+    disabled
+    href="https://github.com/ibm-garage-cloud/template-python-tensorflow"
+  >
 
-![](/resources/images/because-colors.png)
+![Github icon](/images/github-icon.png)
 
-</ArticleCard>
+</ResourceCard>
 </Column>
 </Row>
 

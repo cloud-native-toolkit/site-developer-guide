@@ -11,6 +11,23 @@ h3[class*='Markdown-module--h3'] {
     margin-top: 0;
 }
 
-h3[class*='Markdown-module--h2'] {
-    margin-top: 1em;
+h2[class*='Markdown-module--h2'] {
+    margin-top: 0;
+}
+
+p[class*='paragraph--responsive']{
+    width:90%
+}
+
+ul[class*='module--list'] {
+    width:75%
+}
+
+
+.bx--resource-card--dark .bx--tile {
+    background-color:grey;
+}
+
+.bx--resource-card--dark .bx--tile:hover {
+    background-color:cornflowerblue;
 }

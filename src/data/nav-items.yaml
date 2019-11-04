@@ -17,9 +17,9 @@
   pages:
     - title: Dashboard
       path: /getting-started/dashboard
-    - title: Deploying First App
+    - title: Deploying an App
       path: /getting-started/deploy-app
-    - title: IGC CLI
+    - title: CLI
       path: /getting-started/cli
     - title: Artifactory Setup
       path: /getting-started/artifactory-setup
@@ -27,37 +27,6 @@
       path: /getting-started/argocd-setup
     - title: Destroying
       path: /getting-started/destroying
-
-- title: Guides
-  pages:
-    - title: Overview
-      path: /guides/overview
-    - title: Continuous Integration with Jenkins
-      path: /guides/continuous-integration
-    - title: Continuous Integration with Tekton
-      path: /guides/continuous-integration-tekton
-    - title: Code Analysis
-      path: /guides/code-analysis
-    - title: Artifact Management
-      path: /guides/artifact-management
-    - title: Continuous Deployment
-      path: /guides/continuous-deployment
-    - title: Contract Testing
-      path: /guides/contract-testing
-    - title: Log Management
-      path: /guides/log-management
-    - title: Monitoring
-      path: /guides/monitoring
-    - title: Integration Testing
-      path: /guides/integration-testing
-    - title: User Interface Testing
-      path: /guides/ux-testing
-    - title: Infrastructure as Code
-      path: /guides/iasc
-    - title: Cluster configuration
-      path: /guides/cluster-configuration
-    - title: IGC Client
-      path: /guides/tools-image
 
 - title: Starter Kit Templates
   pages:
@@ -68,14 +37,50 @@
     - title: ArgoCD Template
       path: /starterkits/argocd
 
-- title: Cloud Services
+- title: Tools Guides
   pages:
+    - title: Overview
+      path: /guides/overview
+    - title: CI with Jenkins
+      path: /guides/continuous-integration
+    - title: CI with Tekton
+      path: /guides/continuous-integration-tekton
+    - title: Code Analysis
+      path: /guides/code-analysis
+    - title: Artifact Management
+      path: /guides/artifact-management
+    - title: CD with ArgoCD
+      path: /guides/continuous-delivery
+    - title: Contract Testing
+      path: /guides/contract-testing
+    - title: Log Management
+      path: /guides/log-management
+    - title: Monitoring
+      path: /guides/monitoring
+    - title: Infrastructure as Code
+      path: /guides/iasc
+    - title: Cluster configuration
+      path: /guides/cluster-configuration
+    - title: Tools Docker Image
+      path: /guides/tools-image
+
+- title: Programming Guide
+  pages:
+    - title: Overview
+      path: /programming/overview
     - title: Databases
-      path: /services/databases
-    - title: App Security
-      path: /services/security
+      path: /programming/databases
+    - title: Securing Applications
+      path: /programming/security
     - title: Storage
-      path: /services/storage
+      path: /programming/storage
+
+- title: Practical Guides
+  pages:
+    - title: Overview
+      path: /practical/overview
+    - title: Inventory Micro App
+      path: /practical/inventory
 
 - title: Contributing
   pages:

@@ -1,4 +1,35 @@
 ---
-title: Artifact Management
+title: Artifactory Management
 ---
 
+## What is Artifact Management
+
+
+## What is Artifactory
+
+Artifactory is a product by JFrog that serves as a binary repository manager.
+
+The binary repository is a natural extension to the source code repository, in that it will store the outcome of your build process, often denoted as artifacts. Most of the times one would not use the binary repository directly but through a package manager that comes with the chosen technology.
+
+In most cases these will store individual application components that can later be assembled into a full product - thus allowing a build to be broken in smaller chunks, making more efficient use of resources, reducing build times, better tracking of binary debug databases etc.
+
+Here are some of the most popular package managers that can be managed using a binary repository:
+
+Java: jar, ear, war etc has Maven and the official MavenCentral. There are many other package managers that will use the maven binary repository format as well (ivy, gradle etc).
+
+In JavaScript: we have npm which is one of the most popular, will require nodejs.
+In python: there is pip and the official package index pypi, which one can also create a local instance through binary repository that will support the format.
+This list is far from complete, just gives an idea of what's out there.
+
+The binary repository can allow to host all of these under one roof,
+making their management much simpler for teams.
+Note that you do not need a very large team to start reaping benefits from binary package management. The initial investment is not very large and the benefits are felt immediately. Especially now that more and more platforms, frameworks and languages are integrating this dependency management directly in them. Their biggest advantage I have found however was to create an environment that your programmers will find natural and comfortable making it essential. It helps you as a DevOps creating a solid tool-chain and it helps them making the overall experience fit naturally in their stack of choice.
+
+## Managing Artifacts
+
+## Helm Registry
+
+## Pipeline Stage
+
+
+## Summary

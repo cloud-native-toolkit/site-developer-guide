@@ -5,12 +5,13 @@ import { calloutLink } from './Homepage.module.scss';
 
 import Carbon from '../../images/catalyst.svg';
 
-const FirstLeftText = () => <p>Project</p>;
+const FirstLeftText = () => <p>IBM Garage for Cloud Developer Tools</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the IBM Garage for Cloud Developer Tools. This project was created to enable
-      IBM Garage teams to deliver business value quickly using the IBM Kubernetes Service, Red Hat OpenShift and IBM Cloud.
+      This is the developer guide for the IBM Garage for Cloud Developer Tools. The Developer Tools environment 
+      empowers cloud-native application development teams to deliver business value quickly 
+      using the IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
@@ -24,8 +25,8 @@ const SecondLeftText = () => <p>Garage Method</p>;
 
 const SecondRightText = () => (
   <p>
-      It is focused on enabling developer consistency across IBM Kubernetes Service and Red Hat OpenShift. Its foundation is
-      the IBM Garage Method principles and practices.
+      The Developer Tools environment automates and supports developing cloud-native applications 
+      using the IBM Garage Method principles and practices. 
     <a
       className={calloutLink}
       href="https://www.ibm.com/garage/method"
@@ -35,7 +36,7 @@ const SecondRightText = () => (
   </p>
 );
 
-const BannerText = () => <h1>Developer Guide</h1>;
+const BannerText = () => <h1>IBM Garage for Cloud Developer Tools <br/>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,
