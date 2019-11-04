@@ -1118,42 +1118,18 @@ Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`
 
 5. Select 'Generate Client -> typescript-node' and download the zip file
 
-6. Open the zip file and copy `api.ts` into a directory in the root of the BFF project named 
-`inventory-management-service-client`.
+6. Open the zip file and copy `api.ts` into `src/clients/inventory-management-service`
 
-7. Add a `package.json` file in the `inventory-management-service-client` folder with the following contents:
+7. Add an index.ts in the `inventory-management-service` directory
 
-    inventory-management-service-client/package.json
-    ```json
-    {
-      "name": "inventory-management-service-client",
-      "version": "1.0.0",
-      "dependencies": {
-        "bluebird": "^3.7.1",
-        "request": "^2.88.0"
-      }
-    }
+    src/clients/inventory-management-service/index.ts
+    ```typescript
+    export * from './api';
     ```
-
-8. Update the `package.json` in the root of the BFF to include the client as a dependency
-
-    package.json
-    ```json
-    {
-      ...
-      "dependencies": {
-        "inventory-management-service-client": "file:./inventory-management-service-client",
-        ...
-      },
-      ...
-    }
-    ```
- 
-9. Run `npm install` in the root directory of the BFF to bring down all the project dependencies
 
 #### Create a service implementation that calls the microservice
 
-1. Add a `stock-item-service` config
+1. Add a `stock-item-service` config and the class to config/index.ts
 
     src/config/stock-item-service.config
     ```typescript
@@ -1173,17 +1149,21 @@ Starter Kit (visit http://{host}:{port}/ and add `query { stockItems { name } }`
     }
     ```
 
+    src/config/index.ts
+    ```typescript
+    export * from './stock-item-service.config'
+    ```
 2. Add `stock-items` service that uses the config and the sdk for the microservice
 
     src/services/stock-items.service.ts
     ```typescript
     import * as http from 'http';
     import {Inject, Provides} from 'typescript-ioc';
-    import {StockItem, StockItemControllerApi} from 'inventory-management-service-client';
     
     import {StockItemsApi} from './stock-items.api';
     import {StockItemModel} from '../models';
-    import {StockItemServiceConfig} from '../config/stock-item-service.config';
+    import {StockItemServiceConfig} from '../config';
+    import {StockItem, StockItemControllerApi} from '../clients/inventory-management-service-client';
     
     @Provides(StockItemsApi)
     export class StockItemsService implements StockItemsApi {
