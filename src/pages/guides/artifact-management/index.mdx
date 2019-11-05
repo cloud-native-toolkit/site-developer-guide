@@ -1,35 +1,73 @@
 ---
-title: Artifactory Management
+title: Artifact Management
 ---
 
-## What is Artifact Management
+<PageDescription>
 
+Use Artifactory to store artifacts such as Helm charts
 
-## What is Artifactory
+</PageDescription>
 
-Artifactory is a product by JFrog that serves as a binary repository manager.
+The Developer Tools environment creates a Helm repository in Artifactory and uses that to store Helm charts.
 
-The binary repository is a natural extension to the source code repository, in that it will store the outcome of your build process, often denoted as artifacts. Most of the times one would not use the binary repository directly but through a package manager that comes with the chosen technology.
+## What is artifact management
 
-In most cases these will store individual application components that can later be assembled into a full product - thus allowing a build to be broken in smaller chunks, making more efficient use of resources, reducing build times, better tracking of binary debug databases etc.
+In a software development lifecycle (SDLC) or CI/CD pipeline, each stage produces artifacts: 
+Jar files, container images, Helm charts, etc.
+An artifact can be anything other than source code; an artifact is built or derived from source code, not directly edited by a developer.
+Whereas source code is stored in a source code manager (SCM) such as Git and Docker images are stored in a Docker registry,
+where are other types of artifacts stored? A repository manager handles artifact storage, access, versioning, and promotion lifecycle.
 
-Here are some of the most popular package managers that can be managed using a binary repository:
+Artifactory, a product by JFrog, is an artifact repository manager that can run as a cloud service.
 
-Java: jar, ear, war etc has Maven and the official MavenCentral. There are many other package managers that will use the maven binary repository format as well (ivy, gradle etc).
+## Artifact management in the Pipeline
 
-In JavaScript: we have npm which is one of the most popular, will require nodejs.
-In python: there is pip and the official package index pypi, which one can also create a local instance through binary repository that will support the format.
-This list is far from complete, just gives an idea of what's out there.
+Note: Be sure to [set up Artifactory](/getting-started/artifactory-setup) before using it in the Development Tools environment.
 
-The binary repository can allow to host all of these under one roof,
-making their management much simpler for teams.
-Note that you do not need a very large team to start reaping benefits from binary package management. The initial investment is not very large and the benefits are felt immediately. Especially now that more and more platforms, frameworks and languages are integrating this dependency management directly in them. Their biggest advantage I have found however was to create an environment that your programmers will find natural and comfortable making it essential. It helps you as a DevOps creating a solid tool-chain and it helps them making the overall experience fit naturally in their stack of choice.
+The [Jenkins](/guides/continuous-integration) and [ArgoCD](/guides/continuous-delivery) CI/CD pipeline deploys applications 
+using two types of artifacts: Docker images and Helm charts. 
+A [Docker registry](https://docs.docker.com/registry/) stores Docker images, but it has no support for storing 
+other types of artifacts. Helm charts are stored in a [Helm chart repository](https://helm.sh/docs/chart_repository/).
 
-## Managing Artifacts
+In the CI/CD pipeline, Jenkins builds the artifacts and ArgoCD deploys them. 
+To store and share the artifacts, the pipeline uses to registries/repositories:
+- **Docker images**: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+- **Helm charts**: A Helm repository in Artifactory
 
-## Helm Registry
+The [Starter Kit Templates](/starterkits/overview) have also been configured to store their Helm charts in Artificatory.
 
-## Pipeline Stage
+Artifactory is part of the Developer Tools environment's complete CI/CD solution:
 
+<AnchorLinks small>
+  <AnchorLink to="/guides/continuous-integration">Continuous Integration</AnchorLink>
+  <AnchorLink to="/guides/continuous-delivery">Continuous Delivery</AnchorLink>
+</AnchorLinks>
 
-## Summary
+### Artifactory dashboard
+
+Open the Artifactory web UI for your environment.
+- Use the [Developer Tools Dashboard](/getting-started/dashboard) to open the Artifactory dashboard
+
+Browse the Helm repository.
+- Go to the Artifact Repository Browser page
+- Expand the tree for the `generic-local` repository, which is the Helm repository
+- Expand the branch for your environment's cluster, such as `showcase-dev-iks`
+
+The artifacts in the cluster's branch follow the [Helm chart repository](https://helm.sh/docs/chart_repository/) structure:
+- **index.yaml**: Helm's index of all of the charts in the repository
+- **charts**: The `tgz` files named for the application they deploy
+      ![Artifact Repository Browser](artifact-repo-browser.png)
+
+Browse the artifacts to see how a Helm repository is organized.
+- Select the `index.yaml` file and View it to see its contents
+      ![Helm Repository Index](helm-repo-index.png)
+- Expand a chart's branch to see that the `tgz` file contains the chart directory structure
+      ![Helm Chart Structure](helm-chart-structure.png)
+
+Notice that each chart has its own URL in Artifactory, and index lists the URL for a chart.
+
+## Conclusion
+
+The Developer Tools environment includes a Helm repository hosted in Artifactory. 
+As the Jenkins pipeline builds the Helm chart for an application, it stores the chart in the Artifactory repository. 
+When the ArgoCD pipeline deploys an application, it retrieves the chart from the Artifactory repository.
