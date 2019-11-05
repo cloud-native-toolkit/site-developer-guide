@@ -3,11 +3,41 @@ title: Log Management
 ---
 
 <PageDescription>
-This guide will help you uderstand how to manage logging for your apps with LogDNA
+
+Use LogDNA to manage logging for your running application
+
 </PageDescription>
 
-### Setup Operations
+LogDNA adds log management capabilities to a Kubernetes cluster and its deployments.
+The Developer Tools environment includes an IBM Log Analysis with LogDNA service instance configured with 
+a LogDNA agent installed in the environment's cluster.
+Simply by deploying your application into the Developer Tools environment, LogDNA collects the logs, just open 
+the LogDNA web UI from the IBM Cloud dashboard to browse your application's logs.
 
-Now that your development cluster is configured you can now register `LogDNA` and `SysDig` service instances with your Kubernetes cluster. 
+## LogDNA log management
 
-Navigate to the Observability menu from the main console menu and then click on the `Edit Sources` and follow the instructions to configure the log agent and montitoring agents for you development cluster. 
+[IBM Log Analysis with LogDNA](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA) explains how to
+configure and use an instance of the LogDNA service, but the Developer Tools environment has already this for you. 
+You can skip these steps about provisioning an instance, installing an agent, and user access.
+
+### LogDNA dashboard
+
+Open the LogDNA web UI for your environment's cluster
+- [IBM Log Analysis with LogDNA: Viewing logs](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-view_logs)
+explains how to open the web UI
+- In the IBM Cloud dashboard, navigate to **Observability** > **Logging**
+- Find the logging instance named after your environment's cluster, such as `showcase-dev-iks-logdna`. To help find it, 
+you can filter by your resource group.
+    ![LogDNA Logging Instance](logdna-logging-instance.png)
+- In the logging instance, press the **View LogDNA** button to open the LogDNA web UI
+
+### Explore your application
+
+TBD
+
+## Conclusion
+
+It's important to be able to manage the logs of your deployed applications. 
+Here, the Developer Tools environment uses LogDNA, but you never had to install or run it.
+Just deploy your application into the Developer Tools environment and its logs gets collected automatically.
+After deploying your application, open the LogDNA web UI and browse the logs.
