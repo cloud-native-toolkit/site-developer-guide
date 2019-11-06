@@ -6,6 +6,8 @@
   pages:
     - title: Overview
       path: /installation/overview
+    - title: Pre-Prerequisites
+      path: /installation/pre-reqs
     - title: Install New Cluster
       path: /installation/installation-ibm-cloud
     - title: Install Existing Cluster
