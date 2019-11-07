@@ -61,7 +61,7 @@
       path: /guides/iasc
     - title: Cluster configuration
       path: /guides/cluster-configuration
-    - title: Tools Docker Image
+    - title: Developer Tools Image
       path: /guides/tools-image
 
 - title: Programming Guide
