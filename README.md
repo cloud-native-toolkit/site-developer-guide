@@ -30,6 +30,10 @@ Most notably, this project depends on the following
 - gatsby
 - gh-pages
 
+```
+npm install -g gatsby-cli
+```
+
 ### Write content
 
 The content of the Developer Guide is authored through a hybrid of Markdown and React. The content
