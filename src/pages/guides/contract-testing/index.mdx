@@ -4,10 +4,19 @@ title: Contract Testing
 
 <PageDescription>
 
-_Contract testing_ is a testing discipline that ensures two applications (a consumer and
-a provider) have a shared understanding of the interactions or the _contract_ between them.
+Use Pact to test your code's API
 
 </PageDescription>
+
+In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing).
+Pact automates contract testing and enables it to be added to a continuous integration pipeline.
+The Developer Tools environment's Jenkins pipeline includes a Pact stage. 
+Simply by building your app using the Jenkins pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
+
+## What is contract testing
+
+_Contract testing_ is a testing discipline that ensures two applications (a consumer and
+a provider) have a shared understanding of the interactions or the _contract_ between them.
 
 The Pact framework has been selected for the provided tool set. Pact is a 
 consumer-driven contract testing framework. More details can be found here -
