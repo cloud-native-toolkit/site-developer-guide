@@ -10,20 +10,9 @@ Complete the steps for setting up the Artifactory tool
 
 ## Overview
 
-Artifactory is a general purpose artifact storage service. The 
-[IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry) 
-stores Docker images, but has no support for storing other types of binary artifacts such as Maven project files, 
-Gradle jar files, NPM modules, and Helm charts. 
-In the Developer Tools environment, Jenkins and ArgoCD use Artifactory as a 
-[Helm chart repository](https://helm.sh/docs/chart_repository/), 
-and the Starter Kit Templates have also been configured to store their Helm charts in Artificatory.
-
-Artifactory is part of the Developer Tools environment's complete CI/CD solution:
-
-<AnchorLinks small>
-  <AnchorLink to="../../guides/continuous-integration">Continuous Integration</AnchorLink>
-  <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery</AnchorLink>
-</AnchorLinks>
+Artifactory is the [Developer Tools environment's artifact repository manager](/guides/artifact-management).
+Before you can use it as part of the [continious integration pipeline](/guides/continuous-integration), 
+it first must be configured as part of the environment.
 
 ##  Configuration
 

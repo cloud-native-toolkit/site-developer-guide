@@ -10,25 +10,12 @@ Complete the steps for setting up the ArgoCD tool
 
 ## Overview
 
-ArgoCD is a complete [**GitOps**](https://www.weave.works/technologies/gitops/) tool for managing the deployment of application images into deployment environments. 
-These deployment environments often include ones for development lifecycle stages such as *test*, *pre-prod*, and *production*. 
-
-The Developer Tools environment packages apps into two types of artifacts, Docker images and Helm charts. 
-The environment uses Jenkins to build the artifacts and ArgoCD to deploy them. 
-The artifacts are stored in two registries/repositories:
-- Docker images are stored in the [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
-- Helm charts are stored in the [Helm chart repository in Artifactory](/getting-started/artifactory-setup)
-
-ArgoCD is part of the Developer Tools environment's complete CI/CD solution:
-
-<AnchorLinks small>
-  <AnchorLink to="../../guides/continuous-integration">Continuous Integration</AnchorLink>
-  <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery</AnchorLink>
-</AnchorLinks>
+ArgoCD is the [Developer Tools environment's continuous delivery tool](/guides/continuous-delivery).
+Before you can use it as part of the environment, it must first be configured.
 
 ## Prerequisites
 
-Before setting up ArgoCD, set up the [Helm chart repository in Artifactory](/getting-started/artifactory-setup) so that ArgoCD can use it.
+Before setting up ArgoCD, [set up Artifactory](/getting-started/artifactory-setup) so that ArgoCD can use it.
 
 ##  Configuration
 
