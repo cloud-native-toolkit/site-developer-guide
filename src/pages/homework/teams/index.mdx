@@ -1,0 +1,57 @@
+---
+title: Validate IBM Cloud Account
+---
+
+# Sign Up
+
+When you sign up to attend `MOOC` you will be allocated to a team and informed of your team number through email. Once you receive the email you will have been added to the correct `Access Group` and `Resource Group`. Each team will consist of up to **25** Garage colleagues.
+
+## Team Allocation
+
+The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` If we have high participation we will keep adding clusters to support the attendance. The following diagram helps to explain how you will be configured. Imagine you are the `Green` user, there will be lots of other users around you maybe in different timezones.
+
+![MOOC Teams](moocteams.png)
+
+There will also be an IBM Kubernetes Cluster in the same `Resource Group` and it you will get bonus credits if you can deliver some of the home work onto that as well. IBM Garage is getting a number of client requests that may require upstream kubernetes to be used.
+
+## Validating you can access your team
+
+<InlineNotification>
+
+**Note**: If you have issues with any of the following steps please raise an issue on the `#openshift-cldpak-mooc` slack channel all homework issues on the `#catalyst-project`
+
+</InlineNotification>
+
+Follow these steps to check you can access your Development Cluster:
+
+- Login to the [IBM Cloud](https://cloud.ibm.com)
+- Check you can see the `1951550 - Kedar Kulkarni's Account` from the Accounts drop down ?
+- Click on *Resource List*
+- Type in your team name in the Groups filter ie. `mooc-team-one`
+![Resoure List](resourcelist.png)
+- Click on the **Expand All** (top right)
+- You should see two Clusters labelled `mooc-one-rhos-cluster` and `mooc-one-iks-cluster`
+- Click on the Red Hat OpenShift cluster and open its dashboard
+- Click on the *Open Web Console*
+- Check that you can access the Red Hat OpenShift Console
+
+<InlineNotification kind="success">
+
+If you have managed to access IBM Cloud account and open your teams Red Hat OpenShift Cluster then you have completed this homework task
+
+</InlineNotification>
+
+## Etiquette
+
+Please remember you will be using a development cluster with other colleagues, be considerate of the following rules:
+
+- Make sure you use your own namespace/project for you CI applications
+- Name your personal namespace/project using this convention `mooc-<teamnumber>-<initials` ie. `mooc-one-mjp`
+- Any namespaces/projects not following this approach will be deleted by the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
+- Add initials to the end of your app names `inventory-bff-mjp` the environment is real and name clashing may result in deployment errors and images being over ridden
+- Talk to you fellow team members using slack to help debug issues
+- Do not delete anything that is not yours in the cluster especially `secrets` and `configMaps` this will cause unnecessary pain for administrators
+- Do not delete other peoples `pipelines` or `deployed apps`
+- Do not create anything that will cause unnecessary stress to your teams Red Hat Cluster or the `MOOC Account`
+- Remember part of the learning is showing you how to be team members working on multiple microservices into the same development cluster.
+- Remember IBM Cloud is a Lego Set try and become a `master builder` its loads of fun

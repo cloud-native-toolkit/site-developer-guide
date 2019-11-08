@@ -8,16 +8,17 @@ const links = [
     href: 'https://www.ibm.com/garage/method',
   },
   {
-    title: 'Iteration Zero',
-    href: 'https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero',
-  },
-  {
     title: 'IBM Cloud',
     href: 'https://www.ibm.com/cloud',
   },
   {
-    title: 'Github',
+    title: 'Github Org',
     href: 'https://github.com/ibm-garage-cloud',
+  },
+
+  {
+    title: 'MOOC Homework',
+    href: '/homework/tasks',
   },
 
 ];
