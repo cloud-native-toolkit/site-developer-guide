@@ -25,55 +25,77 @@ You can link out to these tools as an alternative pipeline technology to **Jenki
 
 </InlineNotification>
 
-## Opening the Dashboard
+### Opening the Dashboard
 
-To open the Dashboard, follow these steps to obtain its URL and open it in a browser.
+- Open a terminal
+- Make sure you are logged into your Development cluster in a terminal.
+- To do so, navigate to your cluster in the _IBM Cloud Console_, click on the **Access** tab and
+follow the instructions to login from the command line
+- You can test this with the following simple command.
 
-To list the ingress endpoints for all of the installed tools, 
-use the [Developer Tools CLI](../getting-started/cli) to run the following command:
+<Accordion>
 
-```bash
-igc ingress -n tools
-```
+  <AccordionItem title="OpenShift">
 
-Note that you need to log into your account using the IBM Cloud CLI to use this tool.
+    oc get nodes
 
-This will return the ingress URLs for all of the tools installed in the Developer Tools cluster.
+  </AccordionItem>
 
-```bash
-Host(s):
-[
-  'https://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
-  'https://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
-]
-```
+  <AccordionItem title="Kubernetes">
 
-Select the URL called `dashboard` and open it in your browser.
+    kubectl get nodes
 
+  </AccordionItem>
+
+</Accordion>
+
+<p></p>
+
+- To open the Dashboard, use the [IGC CLI](/guides/cli).
+    ```
+    igc dashboard
+    ```
+
+- This will open the Dashboard
+
+### Access the tools URLs
+
+- To list the ingress endpoints for all of the installed tools, use the [Developer Tools CLI](../getting-started/cli) to run the following command:
+    ```bash
+    igc ingress -n tools
+    ```
+
+- This will return the ingress URLs for all of the tools installed in the Developer Tools cluster.
+    ```bash
+    Host(s):
+    [
+      'https://grpc.argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://argocd.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://artifactory.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://jenkins.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://pact.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud',
+      'https://sonarqube.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+    ]
+    ```
+
+-  You can then select the URL to open the tools dashboard directly.
 
 ### Credentials
 
 In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. 
 In the meantime, the CLI includes a command to list the tools' logins.
 
-To list the logins for all of the installed tools, 
-use the [Developer Tools CLI](../getting-started/cli) to run the following command:
+- To list the logins for all of the installed tools, use the [Developer Tools CLI](../getting-started/cli) to run the following command:
+    ```bash
+    igc credentials
+    ```
 
-```bash
-igc credentials
-```
-
-The command lists the `userid` and `password` for each tool installed. 
-You can use these credentials to log into each of the installed tools.
+- The command lists the `userid` and `password` for each tool installed. You can use these credentials to log into each of the installed tools.
 
 <InlineNotification>
 
 If you are using OpenShift, the Jenkins credential
-will be `undefined` because OpenShift with its built in Jenkins service uses a single sign-on mechanism.
+will be `undefined` because the OpenShift built in Jenkins service uses IBM cloud single sign-on mechanism.
 
 </InlineNotification>

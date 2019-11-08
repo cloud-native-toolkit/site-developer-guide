@@ -47,6 +47,8 @@
       path: /guides/continuous-integration
     - title: CI with Tekton
       path: /guides/continuous-integration-tekton
+    - title: Image Registry
+      path: /guides/image-registry
     - title: Code Analysis
       path: /guides/code-analysis
     - title: Artifact Management

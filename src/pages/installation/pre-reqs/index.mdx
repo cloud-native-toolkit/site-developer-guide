@@ -1,10 +1,61 @@
 ---
-title: Pre-Prerequisites
+title: Prerequisites
 ---
 
-## Pre-Prerequisites
+To speed up the getting started experience and the installation experience, it is recommended that you make sure your development machine/laptop is fully prepared with the following pre-requisites tools and github configuration.
 
-### For Installation
+## Installers and Developers
 
-### For Developers
+The following is a list of desktop tools required to help with installation and developers.
+
+- You should have some basic knowledge of **Kubernetes** and **Docker** and modern software delivery techniques including CI/CD
+
+- [IBM Cloud Account](https://cloud.ibm.com) this is required to enable development with the IBM Cloud and the managed services
+
+- [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli) required for management of IBM Cloud Account and management of your managed **IBM Kubernetes** and **Red Hat OpenShift** environments
+    ```
+    curl -sL https://ibm.biz/idt-installer | bash
+    ```
+- [OpenShift OC CLI](https://www.okd.io/download.html) required for Red Hat OpenShift management and development
+    - Place `oc` and `kubectl` in your Terminal `PATH` or use `Brew`
+    ```
+    brew install openshift-cli
+    ```
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) required for running common tools and **Terraform**
+    - Installed and running on your local machine
+
+- [Node](https://nodejs.org/en/) required for [IBM Garage CLI](/getting-started/cli)
+    - Installed on your local machine
+    - Recommended `v12.x LTS`
+
+- [IBM Garage CLI](/getting-started/cli) used to help make working with the development tools as easy as possible
+    ```
+    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    ```
+
+- [Visual Studio Code](https://code.visualstudio.com/download) a popular code editor
+    - You will be required to edit some files, having a good quality editor is always best practice
+    - Enabling launching VSCode from a terminal (https://code.visualstudio.com/docs/setup/mac)
+
+- [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) _Optional_ installed on your local machine
+    - Used for SpringBoot content
+
+## Github
+
+- You will need to have a public Github account. If you do not have one create one. If you have not logged in for a while make sure your login is working.
+
+### Configure Github Personal Access Token
+- For Jenkins to connect to and use your GitHub repo, it will need a
+- [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) with `public_repo` and `write:repo_hook` scopes. The Personal Access Token only needs to be generated once then it can be used to access multiple GitHub repos.
+
+  - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token
+  - Select `public_repo` scope to enable git clone
+  - Select `write:repo_hook` scope so Jenkins can create a web hook
+  ![Jenkins OAuth scopes](jenkins-scopes.png)
+  - Save the token in your password manager or somewhere safe that you can access later on
+
+
+
+
+
 

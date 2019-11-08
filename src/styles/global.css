@@ -31,3 +31,16 @@ ul[class*='module--list'] {
 .bx--resource-card--dark .bx--tile:hover {
     background-color:cornflowerblue;
 }
+
+.osIcon {
+    background-image: url("/images/openshift.png");
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: top center;
+}
+
+.kubeIcon {
+    background-image: url("/images/kubernetes.png");
+    background-repeat: no-repeat;
+    alignment: center;
+}
