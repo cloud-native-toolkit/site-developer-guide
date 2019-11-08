@@ -30,16 +30,15 @@ const Content = () => (
 const links = {
     firstCol: [
         {
-            href: 'https://www.carbondesignsystem.com/how-to-contribute/overview',
+            href: '/contribute',
             linkText: 'Contribute',
         },
         { href: 'https://www.ibm.com/privacy', linkText: 'Privacy' },
         { href: 'https://www.ibm.com/legal', linkText: 'Terms of use' },
-        { href: 'https://www.ibm.com/', linkText: 'IBM.com' },
+
     ],
     secondCol: [
-        { href: 'https://medium.com/carbondesign', linkText: 'Medium' },
-        { href: 'https://twitter.com/_carbondesign', linkText: 'Twitter' }
+        { href: 'https://www.ibm.com/', linkText: 'IBM.com' }
     ],
 };
 

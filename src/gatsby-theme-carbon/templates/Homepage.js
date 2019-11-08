@@ -11,7 +11,7 @@ const FirstRightText = () => (
   <p>
       This is the developer guide for the IBM Garage for Cloud Developer Tools. The Developer Tools environment 
       empowers cloud-native application development teams to deliver business value quickly 
-      using the IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud.
+      using the IBM Kubernetes Service and Red Hat OpenShift on IBM Cloud.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
