@@ -4,24 +4,19 @@ title: Starter Kits Templates
 
 ### Overview
 
-In the [Overview](/starterkits/overview) section we describe why _Starter Kit Templates_ provide a
-perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed
-templates that can be used to get projects moving quickly and focusing on use case business logic.
+In the [Overview](/starterkits/overview) section we describe why _Starter Kit Templates_ provide a perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed templates that can be used to get projects moving quickly and focusing on use case business logic.
 
-They cover some very common patterns for developers.
-We are looking forward to the community providing new open source templates for others to use with this set of developer tools.
-
-Read up on Why Start Kit Templates and if you have not already tried to deploy your first app get started.overview
+Read up on Why Start Kit Templates and if you have not already tried to deploy your first app get started
 
 <AnchorLinks>
   <AnchorLink to="../../starterkits/overview">Starter Kit Templates Overview</AnchorLink>
-  <AnchorLink to="../../getting-started/deploy-app">Deploying an App</AnchorLink>
+  <AnchorLink to="../../getting-started/deploy-app">Deploying your first app</AnchorLink>
 </AnchorLinks>
 
 Here are links to the base set of **Starter Kit Templates** provided for the _IBM Garage for Cloud Developer Tools_.
 
-- To use the Starter Kit templates, click on the link and then the **Template** button to create a version in your own
-own git organization.
+- To use the Starter Kit templates, click on the link and then the **Template** button to create a version in your own git organization.
+
 - Then clone it onto your local machine and then use `igc pipeline` to register it with your Jenkins server.
     ```bash
     ibmcloud login | oc login
@@ -29,8 +24,8 @@ own git organization.
     npm i -g @garage-catalyst/ibm-garage-cloud-cli
     git clone <generated startkit template>
     cd <generated startkit template>
-    code package.json ! rename your project
-    igc pipeline
+    code package.json ! rename your project and push changes
+    igc pipeline -n dev
     ```
 
 ### Start Kit Templates Links

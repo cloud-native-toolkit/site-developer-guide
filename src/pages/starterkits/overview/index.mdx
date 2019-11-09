@@ -4,10 +4,9 @@ title: Starter Kits Overview
 
 ## Overview
 
-With your development tools now installed, its time to
-focus on writing code. To complement the IBM Cloud for Garage Development Tools this project provides
-a set of **Starter Kit Templates**. These have been designed to give your a production ready
-entry point for cloud native development. There are a number of templates
+To complement the IBM Cloud for Garage Development Tools this project provides
+a set of **Starter Kit Templates**. These have been designed to give you a production ready
+entry point for cloud native development. There are a small number of templates
 that provide support for different architecture layers of your Kubernetes solution these includes:
 
 - User Interfaces
@@ -16,7 +15,14 @@ that provide support for different architecture layers of your Kubernetes soluti
 - Machine Learning (coming soon)
 
 You can pick the starter kit template that best meets your requirements and it will seamlessly integrate
-with the installed development tools. There is more information below on what is included in each template.
+with the installed development tools.
+
+You can work with [Code Patterns](https://developer.ibm.com/patterns/) from  [developer.ibm.com](https://developer.ibm.com/).
+You will need to upgrade the `Dockerfile` to be UBI compliant and add a `Jenkinsfile` or `Tekton pipeline`. These patterns are
+not optimised for production usage and do not include a number of key IBM Garage best practices. They are fully open source and they
+can be enhanced overtime.
+
+There is more information below on what is included in the **Starter Kit Templates**.
 
 <ArtDirection>
 
@@ -28,11 +34,10 @@ with the installed development tools. There is more information below on what is
 
 As teams have built out production solutions using IBM Kubernetes Services and RedHat OpenShift
 on the IBM Cloud it has became clear that starting with a `hello-world` type template slows down a project.
-In cases where you are learning the basic principles of cloud native development with a specific language it does help to start with `hello-world`
-but when you are building production code to be used by real users it takes a lot of effort to industrialize this code ready for production.
 
-The objective of the *Starter Kit Templates* is to kick off a project quickly so they can reach maximum development velocity in the
-least amount of time.
+In cases where you are learning the basic principles of cloud native development with a specific language it does help to start with the basic principles of `hello-world` but when you are building production code to be used by real users it takes a lot of effort to industrialize this code ready for production.
+
+The objective of the *Starter Kit Templates* is to kick off a project quickly so they can reach maximum development velocity in the least amount of time. To not contain any business logic and to have a set of proven opinionated frameworks that are commonly used in the industry this can include `Express`, `React` and testing frameworks.
 
 Why starter kit templates ? As the approach to cloud native microservice development has evolved
 a number of language frameworks have come into play, runtime configuration technologies and best practices
@@ -55,12 +60,14 @@ Some typical examples :
 - Cloud Service bindings and credentials
 - User Case logic UI, BFF, Microservice
 
+The Starter Kits provide a key number of these supporting files and meta data and are tested on every code change to make sure they work with IBM Kubernetes and IBM Red Hat OpenShift managed clusters.
+
 </Column>
 <Column colMd={2} colLg={6} noGutterMdLeft>
 
 <ArtDirection>
 
-## STarter Kit Template
+## Starter Kit Template
 
 ![Initial JFrog](starterkitdiagram.png)
 
@@ -69,20 +76,18 @@ Some typical examples :
 </Column>
 </Row>
 
-So the purpose of the starter kit template is to provide the scaffold code for the elements outside of your working
+The purpose of the Sstarter Kit Template is to provide the scaffold code for the elements outside of your working
 use case business logic. This will then allow you to get started a lot quicker and allow you to push code regularly into your CI environment.
 
 ## What constitutes a good template
 
-If you want to contribute a **Starter Kit Template** have a look at the examples are provided. They all have most of the
+If you want to contribute a **Starter Kit Template** have a look at the examples that are provided. They all have most of the
 features listed below. They must be UBI ([Universal Base Image](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image)) based
-so they can run in side Red Hat OpenShift and IBM Kubernetes Service. They must have a Dockerfile that uses that UBI.
+so they can run in side Red Hat OpenShift and IBM Kubernetes Service. They must have a `Dockerfile` that uses that UBI.
 To make them work with Continuous Integration you can provide a Pipeline defined in **Jenkins Pipeline** or **Tekton Pipeline** format.
-If you are targeting the new Tekton CI tools make sure you have that support installed.
 
-Make sure there is a good use case that is repeatable in your solution architecture. Make sure the code is documented and includes
-a README. There is good code coverage for tests and you have integrated SonarQube code scanning on the build process.
-Finally put out in the open so others can enhance, improve or consume.
+Make sure there is a good use case that is repeatable in your solution architecture. Make sure the code is documented and includes a `README.md'. There is good code coverage for tests and you have integrated SonarQube code scanning on the build process.
+Finally them put in open source so other developers can enhance, improve or consume.
 
 - README
 - License

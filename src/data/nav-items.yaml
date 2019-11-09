@@ -52,8 +52,6 @@
       path: /starterkits/overview
     - title: Templates
       path: /starterkits/starterkittemplates
-    - title: ArgoCD Template
-      path: /starterkits/argocd
 
 - title: Programming Guide
   pages:
@@ -70,8 +68,10 @@
   pages:
     - title: Overview
       path: /practical/overview
-    - title: Inventory Micro App
-      path: /practical/inventory
+    - title: Inventory Micro App - Part 1
+      path: /practical/inventory-part1
+    - title: Inventory Micro App - Part 2
+      path: /practical/inventory-part2
 
 - title: Administrator Guide
   pages:
