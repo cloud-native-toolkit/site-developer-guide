@@ -12,7 +12,7 @@ h3[class*='Markdown-module--h3'] {
 }
 
 h2[class*='Markdown-module--h2'] {
-    margin-top: 0;
+    margin-top: 1em;
 }
 
 p[class*='paragraph--responsive']{
@@ -23,6 +23,20 @@ ul[class*='module--list'] {
     width:75%
 }
 
+div[class*='module--paragraph-row']{
+    margin-bottom: .45em;
+}
+
+div[class*='module--notification']{
+
+    flex: 0 0 80%;
+    max-width: 75%;
+
+}
+
+.bx--list--nested {
+    margin-bottom: 1.5em;
+}
 
 .bx--resource-card--dark .bx--tile {
     background-color:grey;

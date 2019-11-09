@@ -15,8 +15,15 @@ Prepare to install developer tools into Red Hat CodeReady Containers on your lap
 The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications.
 They can be hosted in any Kubernetes or OpenShift cluster, including the Red Hat CodeReady Containers local OpenShift environment.
 
-These instructions assume that CodeReady Containers has already been installed and explain 
+These instructions help you install Red Hat CodeReady Containers and explain
 how to configure and run the Terraform infrastructure-as-code (IasC) scripts to install the Developer Tools into that CodeReady Containers install.
+
+<InlineNotification kind="warning">
+
+**Warning:** Red Hat Containers (CRC) is based on OpenShift 4.2 and the current installation only supports the Tekton Pipeline Operator , Jenkins is not installed.
+Read the [Tekton Pipelines and Tasks Guide](/guides/continuous-integration-tekton) to understand how to deploy your into CRC.
+
+</InlineNotification>
 
 The following prerequisites are required to support installing CodeReady Containers:
 
@@ -25,7 +32,7 @@ The following prerequisites are required to support installing CodeReady Contain
 
 The following prerequisites are required before following the setup instructions:
 
-- Install the [Prerequisites](/installation/pre-reqs) listed before continuing
+- Install the [Prerequisites](/admin/pre-reqs) listed before continuing
 
 </Tab>
 

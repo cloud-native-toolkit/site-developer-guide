@@ -8,3 +8,66 @@ title: Infrastructure as Code
 </PageDescription>
 
 ## Overview
+
+## Terraform Files
+
+```
+.
+├── LICENSE
+├── README.md
+├── credentials.template
+├── docs
+│   ├── APIKEYS.md
+│   ├── VLAN.md
+│   └── images
+│       ├── apikeys.png
+│       ├── catalyst-provisioned-environment.drawio
+│       ├── catalyst-provisioned-environment.png
+│       ├── classickeys.png
+│       └── devcluster.png
+├── launch.sh
+└── terraform
+    ├── runTerraform.sh
+    ├── scripts
+    │   ├── apply.sh
+    │   ├── destroy-cluster.sh
+    │   ├── destroy-services.sh
+    │   └── kill-kube-ns
+    ├── settings
+    │   ├── environment.tfvars
+    │   └── vlan.tfvars
+    ├── stages
+    │   ├── stage0.tf
+    │   ├── stage1-cluster.tf
+    │   ├── stage1-namespaces.tf
+    │   ├── stage1-postgres.tf
+    │   ├── stage2-argocd.tf
+    │   ├── stage2-artifactory.tf
+    │   ├── stage2-catalystdashboard.tf
+    │   ├── stage2-jenkins.tf
+    │   ├── stage2-pactbroker.tf
+    │   ├── stage2-sonarqube.tf
+    │   ├── stage3-appid.tf
+    │   ├── stage3-cloud_object_storage.tf
+    │   ├── stage3-cloudant.tf
+    │   ├── stage3-logdna.tf
+    │   ├── stage3-sysdig.tf
+    │   └── variables.tf
+    ├── stages-crc
+    │   ├── stage0.tf
+    │   ├── stage1-cluster.tf
+    │   ├── stage1-namespaces.tf
+    │   ├── stage1-postgres.tf
+    │   ├── stage2-argocd.tf
+    │   ├── stage2-artifactory.tf
+    │   ├── stage2-catalystdashboard.tf
+    │   ├── stage2-jenkins.tf
+    │   ├── stage2-pactbroker.tf
+    │   ├── stage2-sonarqube.tf
+    │   └── variables.tf
+    └── templates
+        └── stage0
+            └── backend-postgres.tf
+
+9 directories, 46 files
+```

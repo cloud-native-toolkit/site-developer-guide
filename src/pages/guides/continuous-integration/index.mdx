@@ -79,41 +79,20 @@ By default, the pipeline will register into the `dev` namespace and will copy al
 
 ### Registering Pipeline in new namespace
 
-You can use any namespace you want to register a pipeline. If you add `-n` or `namespace` to your `igc pipeline` command, it will create a new namespace if it doesn't already exist and copy the necessary `secrets` and `configMaps`. In the future, this will be managed by an operator.
+You can use any namespace you want to register a pipeline. If you add `-n` or `namespace` to your `igc pipeline` command, it will create a new namespace if it doesn't already exist. It will copy the necessary `secrets` and `configMaps` into that namespace and configure the build agents pods to run in that namespace.
 
 ```bash
-igc pipeline -n team-a
+igc pipeline -n team-one
 ```
 
-You will also need to change the namespace in your `Jenkinsfile`. Search for this and update it to the same name you used for your namespace. Edit the `ENVIRONMENT_NAME` value in your `Jenkinsfile` to match the namespace you targeted for you CI deployment.
+This is good if you have various squads, teams, pairs or students working in the same Development Tools environment.
 
-```bash
-env:
-    - name: CHART_NAME
-      value: template-node-typescript
-    - name: CHART_ROOT
-      value: chart
-    - name: TMP_DIR
-      value: .tmp
-    - name: HOME
-      value: /home/devops
-    - name: ENVIRONMENT_NAME
-      value: team-a
-    - name: BUILD_NUMBER
-      value: ${env.BUILD_NUMBER}
+## Continuous deployment
 
-```
-
-This is good if you have various squads or pairs working in the same Development Tools environment.
-
-## Continious deployment
-
-In addition to continous integration, the Developer Tools environment also supports continous delivery 
+In addition to continuous integration, the Developer Tools environment also supports continuous delivery
 using Artifactory and ArgoCD:
 
 <AnchorLinks small>
   <AnchorLink to="../../guides/artifact-management">Artifact Management with Artifactory</AnchorLink>
   <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery with ArgoCD</AnchorLink>
 </AnchorLinks>
-
-You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.

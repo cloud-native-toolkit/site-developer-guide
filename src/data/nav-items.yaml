@@ -2,42 +2,18 @@
   pages:
     - path: /overview
 
-- title: Installation
-  pages:
-    - title: Overview
-      path: /installation/overview
-    - title: Pre-Prerequisites
-      path: /installation/pre-reqs
-    - title: Install New Cluster
-      path: /installation/installation-ibm-cloud
-    - title: Install Existing Cluster
-      path: /installation/installation-existing
-    - title: Install Red Hat CodeReady
-      path: /installation/installation-crc
-
 - title: Getting Started
   pages:
-    - title: Dashboard
-      path: /getting-started/dashboard
+    - title: Overview
+      path: /getting-started/overview
+    - title: Prerequisites
+      path: /getting-started/pre-reqs
     - title: Deploying an App
       path: /getting-started/deploy-app
+    - title: Dashboard
+      path: /getting-started/dashboard
     - title: CLI
       path: /getting-started/cli
-    - title: Artifactory Setup
-      path: /getting-started/artifactory-setup
-    - title: ArgoCD Setup
-      path: /getting-started/argocd-setup
-    - title: Destroying
-      path: /getting-started/destroying
-
-- title: Starter Kit Templates
-  pages:
-    - title: Overview
-      path: /starterkits/overview
-    - title: Templates
-      path: /starterkits/starterkittemplates
-    - title: ArgoCD Template
-      path: /starterkits/argocd
 
 - title: Tools Guides
   pages:
@@ -70,6 +46,15 @@
     - title: Developer Tools Image
       path: /guides/tools-image
 
+- title: Starter Kit Templates
+  pages:
+    - title: Overview
+      path: /starterkits/overview
+    - title: Templates
+      path: /starterkits/starterkittemplates
+    - title: ArgoCD Template
+      path: /starterkits/argocd
+
 - title: Programming Guide
   pages:
     - title: Overview
@@ -87,6 +72,23 @@
       path: /practical/overview
     - title: Inventory Micro App
       path: /practical/inventory
+
+- title: Administrator Guide
+  pages:
+    - title: Overview
+      path: /admin/overview
+    - title: Install New Cluster
+      path: /admin/installation-ibm-cloud
+    - title: Install Existing Cluster
+      path: /admin/installation-existing
+    - title: Install Red Hat CodeReady
+      path: /admin/installation-crc
+    - title: Artifactory Setup
+      path: /admin/artifactory-setup
+    - title: ArgoCD Setup
+      path: /admin/argocd-setup
+    - title: Destroying
+      path: /admin/destroying
 
 - title: Contributing
   pages:

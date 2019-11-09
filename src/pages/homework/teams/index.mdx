@@ -2,45 +2,68 @@
 title: Validate IBM Cloud Account
 ---
 
-# Sign Up
+## Sign Up
 
-When you sign up to attend `mooc` you will be allocated to a team and informed of your team number through email. Once you receive the email you will have been added to Development Team which has its own `Access Group` and `Resource Group`. Each team will consist of up to **25** Garage colleagues.
+To be added to the **Garage OpenShift and Cloud Pak MOOC series** you must subscribe to the [MOOC Event](https://ec.yourlearning.ibm.com/w3/subscription/series/10057053).
 
-## Team Allocation
+<InlineNotification kind="warning">
 
-The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` If we have really high participation we will keep adding clusters to support the attendance. The following diagram helps to explain how you will be configured. Imagine you are the `Green` user, there will be lots of other users around you maybe in different timezones all sharing the same clusters resources. The administrators will be monitoring the cluster to identify any possible issues early.
-
-![MOOC Teams](moocteams.png)
-
-There will also be an IBM Kubernetes Cluster in the same `Resource Group` and you will get bonus _credits_ if you can deliver some of the home work onto that cluster as well. IBM Garage is getting a number of client requests that may require upstream kubernetes to be used for specific use cases, so becoming familar with both premier container platforms is an objective. The same tools and developer experience is installed.
-
-## Validating you can access your team
-
-<InlineNotification>
-
-**Note**: If you have issues with any of the following steps please raise an issue on the `#openshift-cldpak-mooc` slack channel. All homework issues should be raised on the `#catalyst-project` channel
+**Warning:** If you do not enroll on the class you will not be given access to the `mooc` shared education cluster sandbox. Enrollment will enable you to be added the development environment on the IBM Cloud and access to the play back material.
 
 </InlineNotification>
 
-Follow these steps to check you can access your Development Cluster:
+### Notification
+
+- After you have completed the subscription to the event and after the first live web cast has completed you will receive an email giving you details on how to access your development team cluster.
+
+- The notification email will include the name of the **Account Sandbox** you have been added too and which **Development Team Cluster** you have been allocated.
+
+- The Sandbox has been defined exactly how a client would use the IBM Cloud and you will be given access to a specific team `Resource Group` and `Access Group`. This will then enable you to access the development clusters for IBM Kubernetes and Red Hat OpenShift. The Resource group will have pre installed content and you will be restricted from creating new cloud services or deleting existing ones.
+
+- Each **Development Team** will consist of up to **25** Garage colleagues.
+
+### Team Allocation
+
+The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` you will have received you team name in your notification email.
+
+The following diagram helps to explain how access will be configured. Imagine you are the `Green` user, there will be lots of other users around you maybe in different timezones all sharing the same clusters resources. The administrators will be monitoring the cluster to identify any possible issues early and resolving them.
+
+- You will be given access to a team git organization. You will be expected to create all your git projects in your teams organization. This is how real world development projects work. This will enable you to collaborate with your fellow team members and will prevent you from creating duplicate projects names.
+
+![MOOC Teams](moocteams.png)
+
+There will an IBM Kubernetes Cluster in the same `Resource Group` and you will get bonus _credits_ if you can deliver some of the home work onto that cluster as well. IBM Garage is getting a number of client requests that may require upstream kubernetes to be used for specific use cases. It is important you become familiar with both premier container platforms. The developer experience is the same for both container platforms.
+
+## Validating your access to your team
+
+<InlineNotification>
+
+**Note**: If you have issues with any of the following steps please raise an issue on the `#openshift-cldpak-mooc` slack channel. All homework issues should be raised on the `#catalyst-project` channel.
+
+</InlineNotification>
+
+Follow these steps to check you can access your **Teams Development Cluster**:
 
 - Login to the [IBM Cloud](https://cloud.ibm.com)
-- Check you can see the `1951550 - Kedar Kulkarni's Account` from the Accounts drop down ?
+- In the _notification email_ you will be notified of the account sandbox you have been allocated too
+- Check you can see that account in the Accounts drop down
+- Smith to your allocated sandbox account
 - Click on *Resource List*
 - Type in your team name in the Groups filter ie. `mooc-team-one`
 ![Resoure List](resourcelist.png)
 - Click on the **Expand All** (top right)
 - You should see two Clusters labelled `mooc-one-rhos-cluster` and `mooc-one-iks-cluster`
 - Click on the Red Hat OpenShift cluster and open its dashboard
+- Click on the **Access** tab
+- Follow the instructions to access the cluster from the command line , validate you are successful
+- Return to the cluster dashboard
 - Click on the *Open Web Console*
 - Check that you can access the Red Hat OpenShift Console
-- Return to the **Resource List** click on the team IKS cluster
-- Click on **Kubernetes dashboard**
-- Check you can navigate around the Kubernetes Dashboard
+- Return to the **Resource List** and repeat the same steps for your teams IBM Kubernetes cluster
 
 <InlineNotification kind="success">
 
-If you have managed to access IBM Cloud account and open your teams Red Hat OpenShift Cluster then you have completed this homework task.
+If you have managed to access IBM Cloud account and open your teams Red Hat OpenShift Cluster and accessed the cluster from the command you have completed this homework task.
 
 </InlineNotification>
 
@@ -48,13 +71,14 @@ If you have managed to access IBM Cloud account and open your teams Red Hat Open
 
 Please remember you will be using a development cluster with other colleagues, be considerate of the following rules:
 
-- Make sure you use your own namespace/project for you CI applications
-- Name your personal namespace/project using this convention `mooc-<teamnumber>-<initials` ie. `mooc-one-mjp`
+- Make sure you use your own namespace/project for you applications
+- Name your personal namespace/project using this convention `mooc-<teamnumber>-<initials>` ie. `mooc-one-mjp`
 - Any namespaces/projects not following this approach will be deleted by the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
-- Add initials to the end of your app names `inventory-bff-mjp` the environment is real and name clashing may result in deployment errors and images being overridden in the image registry. You will be good if you follow the unique namespace rule.
+- Add initials to the end of your app names ie. `inventory-bff-mjp` the environment is real and name clashing may result in deployment errors and images being overridden in the image registry. The use of the team git organization will help with this but again please follow this approach.
 - Talk to you fellow team members using slack to help debug issues
-- Do not delete anything that is not yours in the cluster especially `secrets` and `configMaps` this will cause unnecessary pain for administrators
+- Do not delete anything that is not yours in the cluster especially `secrets` and `configMaps` this will cause unnecessary pain for [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
 - Do not delete other peoples `pipelines` or `deployed apps`
 - Do not create anything that will cause unnecessary stress to your teams Red Hat Cluster or the `MOOC Account`
-- Remember part of the learning is showing you how to be team member working on multiple microservices in the same development cluster as other developers.
-- Remember IBM Cloud is a Lego Set try and become a `master builder` its loads of fun
+- Remember part of the learning is showing you how to be team members working on multiple microservices in the same development cluster with other developers.
+- Remember running an app on your laptop does not trump running code in a cluster
+- Remember IBM Cloud is like one big Lego Set of software and services. After this course you be on your way to be a `master builder` its loads of fun
