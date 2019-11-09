@@ -23,8 +23,10 @@ how to configure and run the Terraform infrastructure-as-code (IasC) scripts to 
 <InlineNotification>
 
 **Note**: The Terraform scripts will clean up the cluster to remove any existing resources that overlap with the resources
-provisioned by the scripts. You also need to remember to remove any IBM Cloud services that were previously
-created. Use the helper script `terraform/scripts/destroy-service.sh` to help automate the deletion You can also run it
+provisioned by the scripts. You will need to remember to remove any IBM Cloud services that were previously
+created.
+
+Use the helper script `terraform/scripts/destroy-service.sh` to help automate the deletion You can also run it
 to remove all the services beside **PostgreSQL** `./destroy-services.sh postgres`
 
 </InlineNotification>
