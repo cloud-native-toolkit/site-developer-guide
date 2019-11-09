@@ -1,0 +1,565 @@
+---
+title: Architecture as Code with SolSA
+---
+
+<PageDescription>
+
+SolSA makes it possible to specify the software architecture of Kubernetes-managed cloud applications as JavaScript or TypeScript programs.
+
+</PageDescription>
+
+## Overview
+
+Kubernetes is becoming the de facto standard for managing applications in the cloud. Thanks to [operators](https://operatorhub.io/), Kubernetes can be extended to manage virtually any kind of application resources: not only containers and microservices, but also virtual machines, cloud functions and events, managed cloud services, policies, meshes, etc. Each resource can be declared and configured with a few lines of YAML. However, while YAML is a fine language to perform some basic configuration, SolSA is designed to enable application developers to reason about applications at a higher-level of abstraction using familiar languages and development tools.
+
+The SolSA library for Node.js —a shorthand for Solution Service Architecture — makes it possible to specify the architecture of cloud applications as programs. SolSA enables developers to configure Kubernetes-managed resources by writing JavaScript or TypeScript code instead of YAML. SolSA automatically translates the developer written code to the required lower-level YAML. SolSA integrates with IDEs such as Visual Studio Code to provide online validation, code completion, and documentation of the various resources and configuration parameters.
+
+## Getting Started
+
+The `solsa` CLI is included in the [Tools Image](/guides/tools-image) and is pre-configured as a plugin to the [ArgoCD instance](/guides/continuous-delivery) installed in the `tools` namespace of your cluster. No further setup is needed for basic usage of SolSA.  To enable full IDE support, you will need to install the `solsa` package using npm in the same manner in which you would install any npm package you want to use in your IDE. Some typical installation options are discussed in the [SolSA setup instructions](https://github.com/IBM/solsa#solsa-setup).
+
+## Usage Scenarios
+
+SolSA can be applied in any scenario where it is desirable to use a higher-level of abstraction to programmatically generate YAML to be applied to a Kubernetes or OpenShift cluster.  The use of SolSA is particularly compelling to:
+  - Specify the architecture of complex applications composed of multiple Kubernetes resources. SolSA augments the base Kubernetes resources with additional abstractions that simplify the specification of common patterns and reduce the amount of code written.
+  - Enable full IDE-support for your software architecture, including validation, code assist, and integrated documentation of Kubernetes resources and operators.
+  - Allow a single architecture specification to be programmatically specialized to different contexts (eg. dev vs. test vs. prod).
+
+### Specification of Kubernetes Resources
+
+Deploying just a single microservice that is accessible outside of a Kubernetes cluster requires specifying three related Kubernetes resources: a `Deployment`, a `Service`, and an `Ingress`. SolSA simplifies this task by reducing the amount of repetitive code a developer needs to write and maintain.
+
+To illustrate how to use SolSA to specify the architecture of a simple cloud native application, we use the [Bookinfo sample application](https://istio.io/docs/examples/bookinfo/) from the Istio project. Bookinfo consists of four containerized microservices: an externally exposed productpage service that is implemented using three internal backend microservices.
+
+The tabs below contain two variants of the SolSA specification of Bookinfo's architecture and the (identical) Kubernetes YAML that is generated from either one of these specifications by the `solsa` CLI.
+
+<Tabs>
+
+<Tab label="SolSA ContainerizedService">
+
+A very common Kubernetes pattern is the combination of a `Deployment` and a `Service` to implement a single logical microservice. SolSA's `ContainerizedService` provides a higher level abstraction for this pattern that allows the developer to specify the essential elements while eliding virtually all of the Kubernetes-specific details. As shown below, simple microservices can be specified very concisely. By providing additional arguments to the `ContainerizedService` constructor it is possible to control many aspects of the generated YAML. Specifying that the `productpage` service should be exposed outside the cluster is declared by invoking `getIngress` passing the desired virtual host name `bookinfo`.
+
+```javascript
+let solsa = require('solsa')
+
+let details = new solsa.ContainerizedService({ name: 'details', image: 'istio/examples-bookinfo-details-v1:1.15.0', port: 9080 })
+let ratings = new solsa.ContainerizedService({ name: 'ratings', image: 'istio/examples-bookinfo-ratings-v1:1.15.0', port: 9080 })
+let reviews = new solsa.ContainerizedService({ name: 'reviews', image: 'istio/examples-bookinfo-reviews-v1:1.15.0', port: 9080 })
+let productpage = new solsa.ContainerizedService({ name: 'productpage', image: 'istio/examples-bookinfo-productpage-v1:1.15.0', port: 9080 })
+productpage.env = {
+  DETAILS_HOSTNAME: details.name,
+  RATINGS_HOSTNAME: ratings.name,
+  REVIEWS_HOSTNAME: reviews.name
+}
+let entry = productpage.getIngress({ vhost: 'bookinfo' })
+
+module.exports = new solsa.Bundle({ details, ratings, reviews, productpage, entry })
+```
+
+</Tab>
+
+<Tab label="SolSA Deployment">
+
+The SolSA library includes fully integrated support for all Kubernetes resource types. The (much larger) code block below shows how Bookinfo would be specified in SolSA directly using the Kubernetes native concept of `Deployment`.  Working at this lower level of abstraction requires that the developer be more familiar with Kubernetes concepts, but enables full control over all aspects of the generated YAML.  Notice that even when working directly with `Deployment`, the developer is still able to elide the details of the `Service` and `Ingress` resources by using SolSA's `getService` and `getIngress` methods which derive all the necessary information the underlying `Deployment`. Thus even when working at a Kubernetes-native level of abstraction, SolSA can eliminate some of the repetitive and error prone coding present when working purely at the YAML level.
+
+```javascript
+let solsa = require('solsa')
+
+let details = new solsa.apps.v1.Deployment({
+  metadata: { name: 'details' },
+  spec: {
+    selector: { matchLabels: { 'solsa.ibm.com/pod': 'details' } },
+    replicas: 1,
+    template: {
+      spec: {
+        containers: [
+          {
+            name: 'details',
+            image: 'istio/examples-bookinfo-details-v1:1.15.0',
+            env: [{ name: 'PORT', value: '9080' }],
+            ports: [{ containerPort: 9080 }],
+            livenessProbe: { tcpSocket: { port: 9080 } },
+            readinessProbe: { tcpSocket: { port: 9080 } }
+          }
+        ]
+      }
+    }
+  }
+})
+let detailsService = details.getService()
+
+let reviews = new solsa.apps.v1.Deployment({
+  metadata: { name: 'reviews' },
+  spec: {
+    selector: { matchLabels: { 'solsa.ibm.com/pod': 'reviews' } },
+    replicas: 1,
+    template: {
+      spec: {
+        containers: [
+          {
+            name: 'reviews',
+            image: 'istio/examples-bookinfo-reviews-v1:1.15.0',
+            env: [{ name: 'PORT', value: '9080' }],
+            ports: [{ containerPort: 9080 }],
+            livenessProbe: { tcpSocket: { port: 9080 } },
+            readinessProbe: { tcpSocket: { port: 9080 } }
+          }
+        ]
+      }
+    }
+  }
+})
+let reviewsService = reviews.getService()
+
+let ratings = new solsa.apps.v1.Deployment({
+  metadata: { name: 'ratings' },
+  spec: {
+    selector: { matchLabels: { 'solsa.ibm.com/pod': 'ratings' } },
+    replicas: 1,
+    template: {
+      spec: {
+        containers: [
+          {
+            name: 'ratings',
+            image: 'istio/examples-bookinfo-ratings-v1:1.15.0',
+            env: [{ name: 'PORT', value: '9080' }],
+            ports: [{ containerPort: 9080 }],
+            livenessProbe: { tcpSocket: { port: 9080 } },
+            readinessProbe: { tcpSocket: { port: 9080 } }
+          }
+        ]
+      }
+    }
+  }
+})
+let ratingsService = ratings.getService()
+
+let productpage = new solsa.apps.v1.Deployment({
+  metadata: { name: 'productpage' },
+  spec: {
+    selector: { matchLabels: { 'solsa.ibm.com/pod': 'productpage' } },
+    replicas: 1,
+    template: {
+      spec: {
+        containers: [
+          {
+            name: 'productpage',
+            image: 'istio/examples-bookinfo-productpage-v1:1.15.0',
+            env: [
+              { name: 'PORT', value: '9080' },
+              { name: 'DETAILS_HOSTNAME', value: details.metadata.name },
+              { name: 'RATINGS_HOSTNAME', value: ratings.metadata.name },
+              { name: 'REVIEWS_HOSTNAME', value: reviews.metadata.name }
+            ],
+            ports: [{ containerPort: 9080 }],
+            livenessProbe: { tcpSocket: { port: 9080 } },
+            readinessProbe: { tcpSocket: { port: 9080 } }
+          }
+        ]
+      }
+    }
+  }
+})
+let productpageService = productpage.getService()
+let ingress = productpageService.getIngress({ vhost: 'bookinfo' })
+
+module.exports = new solsa.Bundle({ details, detailsService, reviews, reviewsService, ratings, ratingsService, productpage, productpageService, ingress })
+```
+
+</Tab>
+
+<Tab label="Generated YAML">
+
+Shown below is the output from `solsa yaml` when applied to either of the two Bookinfo specifications.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+spec:
+  ports:
+  - port: 9080
+    targetPort: 9080
+  selector:
+    solsa.ibm.com/pod: details
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productpage
+spec:
+  ports:
+  - port: 9080
+    targetPort: 9080
+  selector:
+    solsa.ibm.com/pod: productpage
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+spec:
+  ports:
+  - port: 9080
+    targetPort: 9080
+  selector:
+    solsa.ibm.com/pod: ratings
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+spec:
+  ports:
+  - port: 9080
+    targetPort: 9080
+  selector:
+    solsa.ibm.com/pod: reviews
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      solsa.ibm.com/pod: details
+  template:
+    metadata:
+      labels:
+        solsa.ibm.com/pod: details
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "9080"
+        image: istio/examples-bookinfo-details-v1:1.15.0
+        livenessProbe:
+          tcpSocket:
+            port: 9080
+        name: details
+        ports:
+        - containerPort: 9080
+        readinessProbe:
+          tcpSocket:
+            port: 9080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productpage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      solsa.ibm.com/pod: productpage
+  template:
+    metadata:
+      labels:
+        solsa.ibm.com/pod: productpage
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "9080"
+        - name: DETAILS_HOSTNAME
+          value: details
+        - name: RATINGS_HOSTNAME
+          value: ratings
+        - name: REVIEWS_HOSTNAME
+          value: reviews
+        image: istio/examples-bookinfo-productpage-v1:1.15.0
+        livenessProbe:
+          tcpSocket:
+            port: 9080
+        name: productpage
+        ports:
+        - containerPort: 9080
+        readinessProbe:
+          tcpSocket:
+            port: 9080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      solsa.ibm.com/pod: ratings
+  template:
+    metadata:
+      labels:
+        solsa.ibm.com/pod: ratings
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "9080"
+        image: istio/examples-bookinfo-ratings-v1:1.15.0
+        livenessProbe:
+          tcpSocket:
+            port: 9080
+        name: ratings
+        ports:
+        - containerPort: 9080
+        readinessProbe:
+          tcpSocket:
+            port: 9080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      solsa.ibm.com/pod: reviews
+  template:
+    metadata:
+      labels:
+        solsa.ibm.com/pod: reviews
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "9080"
+        image: istio/examples-bookinfo-reviews-v1:1.15.0
+        livenessProbe:
+          tcpSocket:
+            port: 9080
+        name: reviews
+        ports:
+        - containerPort: 9080
+        readinessProbe:
+          tcpSocket:
+            port: 9080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: productpage
+spec:
+  rules:
+  - host: bookinfo.mycluster.us-east.containers.appdomain.cloud
+    http:
+      paths:
+      - backend:
+          serviceName: productpage
+          servicePort: 9080
+        path: /
+  tls:
+  - hosts:
+    - bookinfo.mycluster.us-east.containers.appdomain.cloud
+    secretName: mycluster
+```
+
+</Tab>
+
+</Tabs>
+
+
+### Using SolSA with Kubernetes Operators
+
+The SolSA library includes JavaScript/TypeScript bindings for every Kubernetes Operator available on
+[OperatorHub.io](https://operatorhub.io/).  These enables full IDE-support for defining applications that utilize operators to manage the life-cycles of some portions of their resources.
+
+As an example, the tabs below show the SolSA specification and the generated YAML of a simple language translation application in which a microservice defined using SolSA's `ContainerzedService` abstraction is combined with an instance of the Watson Translator service on the IBM Public Cloud. The IBM Cloud Operator is used to instantiate the Watson Translator Service instance and make the credentials for accessing it available to the dependent microservice via a Kubernetes secret.
+
+<Tabs>
+
+<Tab label="SolSA">
+
+```javascript
+
+const path = require('path')
+const solsa = require('solsa')
+
+function translator ({ name, language }) {
+  let watson = new solsa.LanguageTranslator({ name: 'watson-translator-for-' + name })
+  let translator = new solsa.ContainerizedService({ name, image: 'solsa-translator', build: path.join(__dirname, 'solsa-translator'), port: 8080 })
+  translator.env = { LANGUAGE: { value: language }, WATSON_URL: watson.getSecret('url'), WATSON_APIKEY: watson.getSecret('apikey') }
+  let ingress = translator.getIngress()
+  return new solsa.Bundle({ watson, translator, ingress })
+}
+
+module.exports = translator({ name: 'my-translator', language: 'en' })
+```
+
+</Tab>
+
+<Tab label="YAML">
+
+```yaml
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Service
+metadata:
+  name: watson-translator-for-my-translator
+spec:
+  plan: lite
+  serviceClass: language-translator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-translator
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    solsa.ibm.com/pod: my-translator
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-translator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      solsa.ibm.com/pod: my-translator
+  template:
+    metadata:
+      labels:
+        solsa.ibm.com/pod: my-translator
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8080"
+        - name: LANGUAGE
+          value: en
+        - name: WATSON_URL
+          valueFrom:
+            secretKeyRef:
+              key: url
+              name: watson-translator-for-my-translator
+        - name: WATSON_APIKEY
+          valueFrom:
+            secretKeyRef:
+              key: apikey
+              name: watson-translator-for-my-translator
+        image: docker.io/solsa/solsa-translator
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+        name: my-translator
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-translator
+spec:
+  rules:
+  - host: my-translator.mycluster.us-east.containers.appdomain.cloud
+    http:
+      paths:
+      - backend:
+          serviceName: my-translator
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - my-translator.mycluster.us-east.containers.appdomain.cloud
+    secretName: mycluster
+---
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Binding
+metadata:
+  name: watson-translator-for-my-translator
+spec:
+  serviceName: watson-translator-for-my-translator
+
+```
+</Tab>
+
+</Tabs>
+
+
+### Using SolSA with ArgoCD
+
+The usage of ArgoCD is described in more detail in the [continuous delivery](/guides/continuous-delivery/) section of this guide. A SolSA-specified application can be used in exactly the same workflows as an application specified by a Helm chart or Kustomize tree. The only additional step is to inform ArgoCD that it should use its SolSA plugin to generate the YAML for the application. In the instructions below, we will continue using the Bookinfo sample from the [solsa-examples](https://github.com/IBM/solsa-examples) git repo. The main SolSA file for this application is `instance.js`
+
+<Tabs>
+
+<Tab label="ArgoCD UI">
+
+1. Log into ArgoCD
+
+2. Click `New Application` and provide the following values:
+
+    - `application name` - dev-bookinfo
+    - `project` - default
+    - `sync-policy` - `Automatic with pruning`
+    - `repository url` - https://github.com/IBM/solsa-examples.git
+    - `revision` - HEAD
+    - `path` - examples/bookinfo
+    - `destination cluster` - https://kubernetes.default.svc
+    - `destination namespace` - dev
+
+3. Click the `EDIT AS YAML` button and add the plugin stanza shown below to the `source:` block
+```yaml
+source:
+  plugin:
+    name: solsa
+    env:
+      - name: SOLSA_APP_MAIN
+        value: instance.js
+```
+
+Finally deploy Bookinfo by clicking the Create button.
+
+</Tab>
+
+<Tab label="Textual CRD">
+
+ArgoCD Applications can also be specified without using the ArgoCD UI by defining an `argoproj.io.Application` Custom Resource. In this style of management you
+create a `bookinfoApp.yaml` file containing the YAML shown below and then either check it into a git repo that ArgoCD is monitoring
+or directly apply it to your cluster via `kubectl apply -f bookinfoApp.yaml -n tools`. Within a few seconds, the Bookinfo application should be deployed to your `dev` namespace.
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/IBM/solsa-examples.git'
+    path: examples/bookinfo
+    targetRevision: HEAD
+    plugin:
+      name: solsa
+      env:
+        - name: SOLSA_APP_MAIN
+          value: instance.js
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+```
+
+</Tab>
+
+</Tabs>
+
+## More Information
+
+Additional information on SolSA, including [a tutorial and sample applications](https://github.com/IBM/solsa-examples), is available from the [SolSA open source project](https://github.com/IBM/solsa).

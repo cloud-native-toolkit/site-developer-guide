@@ -4,91 +4,25 @@ title: Deploying an App
 
 <PageDescription>
 
-Use a Starter Kit Template to create a sample app and create a Jenkins pipeline to deploy it into your development cluster
+Create a sample application and create a Jenkins pipeline to deploy it into your development cluster
 
 </PageDescription>
 
 ## Overview
 
-Now that you have prepared your Developer Tools environment for cloud-native application development, 
-you can now create a new app using one of the _Starter Kit Templates_. These have been created to include all the key
-components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for a set of tools installed into **IBM Kubernetes** or **Red Hat OpenShift** managed service.
+You can create a new app using one of the [Starter Kit Templates](/starting/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
 
-### Demonstration video
-
-This video will demo how to get started with using the Dashboard to develop and deploy an app.
-It shows how to do the steps that are described below.
+This video will demonstrate how to work through the steps to create an application that uses a deployment pipeline to install it into your development cluster.
 
 <Video src="/videos/deployapp.m4v" type="video/m4v" poster="/images/poster.png"/>
 
-### Open the Developer Tools Dashboard
+### Log into you Development Cluster from the command line
 
 The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that
-lists the [Starter Kit Templates](/starterkits/overview). These templates have been created to give you 
-a more comprehensive starting point for you apps.
-
-- Make sure you have installed all [Prerequisites](/admin/pre-reqs) listed before continuing
-- Open the [Developer Tools Dashboard](/getting-started/dashboard)
-    ```
-    igc dashboard
-    ```
-- Click on **Starter Kits** tab
-- Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
-    - Click on the tile to create a new repository copy from the template repository.
-    - You can also click on the **Git Icon** to browse the template repository.
-
-<InlineNotification>
-
-Each Starter Kit Template is a [GitHub template repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository).
-This feature copies the directory structure and files of a template repository into a new repository in your organisation with no git history.
-
-</InlineNotification>
-
-- Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) view to create the new repository
-  - You can see the source git repo displayed at the top
-  - **Owner**: Select a validate GitHub organization that you are authorised to create repositories within
-  - **Repository name**: Enter a valid name for you repo
-
-<InlineNotification kind="warning">
-
-  **Warning:** If you are working on a shared education cluster to make it easy to identify your app please suffix the app name with your initials ie. `stockbffnode-mjp`
-
-</InlineNotification>
-
-  - **Description**: Describe your app
-    ![Template](template.png)
-  - Press **Create repository from template**
-
-The new repository will be created in your selected organization. Next, clone it to your local machine.
-- Click on **Clone or download**
-- Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
-    ```base
-    git clone git@github.com:mjperrins/stockbffnode.git
-    cd stockbffnode
-    ```
-
-- You must rename the app to match your git repo or a name that is unique for your solution.
-
-
-### Running Locally
-
-Most developers like to run the code natively in local development environment. To do so, follow the instructions
-listed in the **README.md** file to run the code locally. You may be required to install a
-specific runtime like **Java**, **Node**, or **Python**
-
-### Register the App in a DevOps Pipeline
-
-You now have the code in a GitHub repository and have cloned it to you local development environment.
-You can now register the repository with the **Continuous Integration** pipeline technology.
-
-The default CI pipeline tool is currently **Jenkins**. ([Tekton support is also supported](/guides/continuous-integration-tekton))
-
-- Install the [Prerequisites](/admin/pre-reqs) listed before continuing
-- We use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins
-
-#### Register the repo with Jenkins
+lists the [Starter Kit Templates](/starterkits/overview).
+- Make sure you have installed all [Prerequisites](/admin/pre-reqs) before continuing
 - Open a terminal
-- Make sure you are logged into your Development cluster in a terminal.
+- log into your Development cluster in a terminal.
 - To do so, navigate to your cluster in the _IBM Cloud Console_, click on the **Access** tab and
 follow the instructions to login from the command line
 - You can test this with the following simple command.
@@ -110,23 +44,84 @@ follow the instructions to login from the command line
 </Accordion>
 
 <p></p>
+<p></p>
+<p></p>
+<p></p>
 
-- Change to the repo directory
-    ```bash
-    cd {path to cloned repo}
-    ```
+### Open Developer Tools Dashboard
 
 <InlineNotification kind="warning">
 
-  **Warning:** If you are working on a shared education cluster please deploy your app into a unique project/namespace that is unique to you as a developer and continue to do this for all other app creation steps. ie. `igc pipeline -n mooc-one-mjp`
-
-  This will isolate your pipelines from other developers working on the same cluster.
+  **Warning:** If you are working on a shared education cluster. You need to make it easy to identify your app please suffix the app name with your initials ie. `stockbffnode-mjp` and use the **Git Organisation** you were given access too with your notification email.
 
 </InlineNotification>
 
-- Register your repo using the `igc pipeline` command. The CLI will read the Git repo information from the directory and prompt for the credentials required to access the repo.
+- Open a browser and make sure you are logged into [Github](https://github.com)
+- Open the [Developer Tools Dashboard](/getting-started/dashboard)
+    ```
+    igc dashboard
+    ```
+- Click on **Starter Kits** tab
+- Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
+    - Click on a Starter Kit Template **Tile** to create your app github repository from the template repository selected.
+    - You can also click on the **Git Icon** to browse the source template repository and click on the **Template** to create the template
+
+- Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) process.
+
+  - **Owner**: Select a validate GitHub organization that you are authorised to create repositories within or the one you were given for the shared cluster education.
+  - **Repository name**: Enter a valid name for you repo , github will help with showing a green tick if it is valid
+
+  - **Description**: Describe your app
+    ![Template](template.png)
+  - Press **Create repository from template**
+
+The new repository will be created in your selected organization.
+- Next, clone it to your local machine.
+- Click on **Clone or download**
+- Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
+    ```base
+    git clone git@github.com:mjperrins/stockbffnode.git
+    ```
+- Change into the cloned directory
+    ```
+    cd stockbffnode
+    ```
+- You must rename the app to match your git repo or a that is unique for your solution.
+- Edit `package.json` and edit the `name:` field and change it from its template name to your chosen name.
+- Save the edits
+- Push the changes back to your repository
+    ```
+    git add .
+    git push -m "Update application name"
+    ```
+
+### Running Locally
+
+Most developers like to run the code natively in local development environment. To do so, follow the instructions listed in the **README.md** file to run the code locally. You may be required to install a specific runtime like **Java**, **Node**, or **Python**.
+
+<p></p>
+<p></p>
+<p></p>
+
+### Register the App in a DevOps Pipeline
+
+- You now have the code in a GitHub repository and have cloned it to you local development environment. You can now register the repository with the **Continuous Integration** pipeline technology.
+
+- The default Continuous Integration tool is currently **Jenkins**. [Tekton support is also supported](/guides/continuous-integration-tekton)
+
+- You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins
+
+<InlineNotification kind="warning">
+
+  **Warning:** If you are working on a shared education cluster please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. ie. `igc pipeline -n mooc-one-mjp`
+
+  This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
+
+</InlineNotification>
+
+- Register your repo using the `igc pipeline` command. The CLI will ask for your github userid, it can be found in your github settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
-    - **Password**: Paste your personal access token
+    - **Password**: Paste your github personal access token
     - **Branch**: Press enter for the default git branch or type in another branch you want to register
     ```bash
     $ igc pipeline -n dev
@@ -141,16 +136,14 @@ follow the instructions to login from the command line
 
 - The pipeline will be registered in your development cluster.
 
-### View App Pipeline
+### View your application pipeline
 
-- Expand the section below depending on which type of development cluster you registered your application with.
+Expand the section below depending on which type of development cluster you registered your application with.
 
-<Accordion>
+<Tabs>
+<Tab label="OpenShift">
 
-  <AccordionItem title="OpenShift">
-    <p>
-    - Open the OpenShift Web Console from the Developer Cluster instance
-    </p>
+- Open the OpenShift Web Console from the Developer Cluster instance
 
 ![OpenShift](openshiftconsole.png)
 
@@ -162,71 +155,69 @@ follow the instructions to login from the command line
 
 ![OpenShift](ospipeline.png)
 
-  </AccordionItem>
+</Tab>
+<Tab label="Kubernetes">
 
-  <AccordionItem title="Kubernetes" open="true">
-    <p>
-    - Using the Developer Tools Dashboard, open the Jenkins dashboard.
-    </p>
-
-        igc dashboard
-    <p>
-    - test
-    </p>
-
-   <InlineNotification>
-
-   Note: You will have to log into the Jenkins dashboard. To get the username and password,
-   run `igc credentials` using the [IGC CLI](getting-started/cli).
-
-   </InlineNotification>
-
-  </AccordionItem>
-
-</Accordion>
-
-
-- Select the Jenkins tool to open the Jenkins Instance
-
-
-You will see you pipeline registered.
-
-Build and deploy your app
+- Retrieve you Jenkins userid and password using `igc credentials`
+- Open your Tools Dashboard use this command `igc dashboard` in your terminal.
+- Select the Jenkins tool to open the Jenkins Instance.
+- Log in with the userid and password retrieved earlier.
 - Click on your app pipeline and click **Build Now**
-
-Wait for the pipeline stages to start building.
-Once the stages have completed, you should see a view similar to the one below.
+- Wait for the pipeline stages to start building.
+- Once the stages have completed you will see a view similar to the one below.
 
 ![Jenkins Pipeline](pipeline.png)
 
-### Access running app
+</Tab>
+</Tabs>
 
-Once the pipeline has completed successfully, the app will be deployed into the `dev` namespace
-in your Kubernetes or OpenShift cluster. You can now access the app to test it.
+<p></p>
+<p></p>
+<p></p>
 
-- To access the app, retrieve the app ingress endpoint using command below
+### Access running application
+
+Once the pipeline has completed successfully, the app will be deployed into the `dev` namespace or the namespace you used when registering the pipeline.
+
+- To validate the app is running follow these steps.
+
+- To access the app, retrieve the app ingress endpoint using commands below in your terminal, remember to use the namespace you supplied when registering the application.
     ```bash
     igc ingress -n dev
     ```
   
-  You will see a list of apps displayed with their ingress URLs
+  You will see a list of apps displayed with their ingress URLs for the application.
     ```bash
     Host(s):
     [
-      'http://stockbffnode-dev.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
+      'https://stockbffnode-dev.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
     ]
 
-- Open this ingress URL in your browser and validate the app is working as expected
+- Open this ingress URL in your browser and validate the application is working as expected
 
-## Where is the App ?
+
+## Where is your application deployed ?
 
 - The build pipeline has
 
+<Tabs>
+<Tab label="OpenShift">
+</Tab>
 
+<Tab label="Kubernetes">
 
+</Tab>
+</Tabs>
 
-This completes the deployment of your app.
+- If you have reached this point, we recommend you repeat the process a few more times using different templates and explore you environment to get familiar with it.
 
+<InlineNotification kind="success">
+
+**Success:** You will now have your application running inside your development cluster.
+
+</InlineNotification>
+
+- This completes the deployment of your app.
 
 ### Complete the setup
 

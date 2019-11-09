@@ -39,6 +39,8 @@
       path: /guides/monitoring
     - title: Infrastructure as Code
       path: /guides/iasc
+    - title: Architecture as Code with SolSA
+      path: /guides/solsa
     - title: Cluster configuration
       path: /guides/cluster-configuration
     - title: Developer Tools Image
