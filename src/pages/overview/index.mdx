@@ -12,7 +12,7 @@ Get familiar with using the IBM Garage for Cloud Developer Tools
 
 The IBM Garage for Cloud Developer Tools is an environment for developing cloud-native applications for deployment 
 to Kubernetes and Red Hat OpenShift. It embodies IBM Garage Method principles and practices for consistently developed 
-applications incorporating best practices that increase developer velocity for efficient deliverery of business value.
+applications incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 ### Overview
 
@@ -22,8 +22,10 @@ A short video introducing the concepts of DevOps with Red Hat OpenShift
 <p></p>
 
 Each development team installs its own copy of the Developer Tools environment into the team's account. 
-The environment includes several features that support IBM Garage Method best practices for consistent and rapid development 
-of cloud-native applications:
+The environment includes several features that support IBM Garage Method best practices for consistent and rapid development of cloud-native applications:
+
+Some of the tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the IBM Cloud. This approach helps assemble these reliable open source development tools into an end to end developer experience that is fully integrated with the IBM Managed Container service.
+
 - **Installation**: The Developer Tools are able to install themselves as a new environment 
 - **Cluster**: A Kubernetes or OpenShift cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
@@ -31,6 +33,7 @@ of cloud-native applications:
 - **CI/CD**: A prebuilt, ready-to-run continuous delivery pipeline incorporating best-of-breed open source software tools
 - **Starter Kits**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized tool to help developers use the environment's other tools, Starter Kits, and so on
+- **Red Hat CRC**: The tools can be installed into the RedHat CodeReady Containers environment
 
 Typically a [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/) 
 or lead developer installs and sets up a new Developer Tools environment after the 
@@ -83,26 +86,28 @@ The following IBM Cloud services are created and bound to the cluster:
 | Cloud Object Storage      | [Cloud Object Storage Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started) | Storage service commonly used for binary content |
 | PostreSQL                 | [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube) | SQL Database used for structure data persistence |
 
-#### Continuous deliverery tools
+#### Continuous delivery tools
 
 The following best-of-breed open source software tools are installed in the cluster's *tools* namespace:
 
-| Capability                  | Tool                                            |Description |
-| --------------------------- |:--------------                                  |------------|
-| Continuous Integration      | [Jenkins CI](https://jenkins.io/)               | Jenkins is a common tool for Continuous Integration   |
-| Code Analysis               | [SonarQube](https://www.sonarqube.org/)         | SonarQube can scan code and display the results in a dashboard |
-| Artifact and Helm Storage   | [Artifactory](https://jfrog.com/open-source/)   | Artifactory is an artifact storage and Helm chart repository  |
-| Continuous Deployment       | [ArgoCD](https://argoproj.github.io/argo-cd/)   | ArgoCD support Continuous Delivery with GitOps |
-| Contract API Testing        | [Pact](https://docs.pact.io/)                   | Pact enables API contract testing |
-| Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)     | IDE for editing and managing code in a web browser |
+| Capability                  | Tool                                         | Bitnami   |Description |
+| --------------------------- |:--------------                               | -------   |------------|
+| Continuous Integration      | [Jenkins CI](https://jenkins.io/)            |  Yes      | Jenkins is a common tool for Continuous Integration   |
+| Continuous Integration      | [Tekton CI](https://tekton.dev/)             |           | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
+| Code Analysis               | [SonarQube](https://www.sonarqube.org/)      |  Yes      | SonarQube can scan code and display the results in a dashboard |
+| Artifact and Helm Storage   | [Artifactory](https://jfrog.com/open-source/)|  Yes      | Artifactory is an artifact storage and Helm chart repository  |
+| Continuous Deployment       | [ArgoCD](https://argoproj.github.io/argo-cd/)|           | ArgoCD support Continuous Delivery with GitOps |
+| Contract API Testing        | [Pact](https://docs.pact.io/)                |           | Pact enables API contract testing |
+| Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)  |           | IDE for editing and managing code in a web browser |
 
 ## Getting Started
 
 Get to know the Developer Tools environment:
 
 <AnchorLinks>
-  <AnchorLink to="../installation/overview">Installation</AnchorLink>
-  <AnchorLink to="../getting-started/deploy-app">Deploy First App</AnchorLink>
-  <AnchorLink to="../guides/overview">Guides</AnchorLink>
-  <AnchorLink to="../starterkits/overview">Starter Kit Templates</AnchorLink>
+      <AnchorLink to="../getting-started/overview">Getting Started</AnchorLink>
+      <AnchorLink to="../getting-started/deploy-app">Deploy Your First App</AnchorLink>
+      <AnchorLink to="../guides/overview">Guides</AnchorLink>
+      <AnchorLink to="../starterkits/overview">Starter Kit Templates</AnchorLink>
+      <AnchorLink to="../admin/overview">Installation</AnchorLink>
 </AnchorLinks>

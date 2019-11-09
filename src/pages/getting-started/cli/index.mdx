@@ -9,15 +9,15 @@ The Developer Tools include the IBM Garage for Cloud (IGC) Developer Tools Comma
 </PageDescription>
 
 The [IGC CLI](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) 
-provides a set of helpful utilities that can be invoked from the command line. 
+provides a set of helpful utilities that can be invoked from the command line. Its key objective is to make complicated CLI tasks and YAML configuration easier for a developer.
 These utilities include:
 - Register your application's git repo into a **Jenkins** pipeline
 - List the ingress URLs for the tools installed in the environment
 - List the user names and passwords for the tools installed in the environment
-- Build and deploy images to the environment using the IBM Cloud Image Registery
+- Build and deploy images to the environment using the IBM Cloud Image Registry
+- Help copy `configMaps` and `secrets` into new projects/namespace in Kubernetes or OpenShift
 
-
-To use the IGC CLI, it must be installed and your command line shell must be logged into IBM Cloud.
+To use the IGC CLI, it must be installed and your terminal and you are logged into IBM Cloud with the IBM Cloud CLI.
 
 ## Installation
 
@@ -109,4 +109,4 @@ which a pipeline should be generated.
 
 Launches the `ibm-garage-cli-tools` docker image in an interactive
 terminal. This image provides commonly used infrastructure tools like,
-`terraform`, `kubectl`, etc.
+`terraform`, `kubectl`, `oc` etc.
