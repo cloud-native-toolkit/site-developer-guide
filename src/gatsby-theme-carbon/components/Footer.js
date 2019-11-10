@@ -4,16 +4,16 @@ import Footer from 'gatsby-theme-carbon/src/components/Footer';
 const currentYear = new Date().getFullYear();
 const lastUpdated = "Autumn 2019";
 
-const version = "1.0.0";
+const version = "1.0.1";
 
 const Content = () => (
     <>
         <p>
-            Have questions? Email us or open
+            Have questions? open
             <br /> an issue on{' '}
             <a
                 style={{ textDecoration: 'underline' }}
-                href="https://github.com/carbon-design-system/carbon-website/issues/new">
+                href="https://github.com/ibm-garage-cloud/planning/issues/new/choose">
                 GitHub.
             </a>
         </p>
