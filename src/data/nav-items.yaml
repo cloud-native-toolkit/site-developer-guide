@@ -37,12 +37,8 @@
       path: /guides/log-management
     - title: Monitoring
       path: /guides/monitoring
-    - title: Infrastructure as Code
-      path: /guides/iasc
     - title: Architecture as Code with SolSA
       path: /guides/solsa
-    - title: Cluster configuration
-      path: /guides/cluster-configuration
     - title: Developer Tools Image
       path: /guides/tools-image
 
@@ -77,16 +73,20 @@
   pages:
     - title: Overview
       path: /admin/overview
-    - title: Install New Cluster
+    - title: Install with new cluster
       path: /admin/installation-ibm-cloud
-    - title: Install Existing Cluster
+    - title: Install into existing cluster
       path: /admin/installation-existing
-    - title: Install Red Hat CodeReady
+    - title: Install into Red Hat CodeReady
       path: /admin/installation-crc
     - title: Artifactory Setup
       path: /admin/artifactory-setup
     - title: ArgoCD Setup
       path: /admin/argocd-setup
+    - title: Infrastructure as Code
+      path: /guides/iasc
+    - title: Cluster configuration
+      path: /guides/cluster-configuration
     - title: Destroying
       path: /admin/destroying
 

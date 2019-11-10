@@ -34,7 +34,7 @@ The following diagram helps to explain how access will be configured. Imagine yo
 
 There will an IBM Kubernetes Cluster in the same `Resource Group` and you will get bonus _credits_ if you can deliver some of the home work onto that cluster as well. IBM Garage is getting a number of client requests that may require upstream kubernetes to be used for specific use cases. It is important you become familiar with both premier container platforms. The developer experience is the same for both container platforms.
 
-## Validating your access to your team
+## Validating your access IBM Cloud
 
 <InlineNotification>
 
@@ -53,13 +53,18 @@ Follow these steps to check you can access your **Teams Development Cluster**:
 ![Resoure List](resourcelist.png)
 - Click on the **Expand All** (top right)
 - You should see two Clusters labelled `mooc-one-rhos-cluster` and `mooc-one-iks-cluster`
-- Click on the Red Hat OpenShift cluster and open its dashboard
+- Enter `rhos` in Tags filter, you will see just the Red Hat OpenShift cluster and services
+![Resoure List](devtoolsservices.png)
+- Click on the Red Hat OpenShift cluster to open its dashboard
 - Click on the **Access** tab
 - Follow the instructions to access the cluster from the command line , validate you are successful
 - Return to the cluster dashboard
+- Validate you can access the dashboards for each of the bound services
 - Click on the *Open Web Console*
 - Check that you can access the Red Hat OpenShift Console
-- Return to the **Resource List** and repeat the same steps for your teams IBM Kubernetes cluster
+- Return to the **Resource List**
+- Remove the `rhos` tag and add the `iks` tag
+- Repeat the same steps for your teams IBM Kubernetes cluster and services
 
 <InlineNotification kind="success">
 
