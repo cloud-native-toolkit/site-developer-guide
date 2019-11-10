@@ -57,84 +57,67 @@ Get the initial project created and register the pipeline for automated builds.
 
 2. Clone the new repository to your machine
 
-3. Update the project name in the `package.json` to match the repository
+3. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
 
-4. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
+#### Create the initial components
 
-#### Initial components
+The React Starter Kit comes with a set UI components that implement 12 common UI Design Patterns. In the
+initial UI, all of the components are included to create an interactive example of how they work.
+The first step of building an application with the React Starter Kit is to remove those components
+from the menu and to create new components built from the pattern components.
 
-Clean up the UI Design patterns view to include only one entry for Stock Items.
-Based on the requirements of this first use case we can base the work off of 
+Based on the requirements of this first use case, we will create a StockItemList component based on
 the TableList pattern. 
 
-1. Make a copy of the `TableList` pattern component in the components folder. Rename the
-file and the class inside to `StockItemList`
+1. Make a copy of the `TableList` pattern component from the `pattern-component` directory into the
+`components` folder. Rename the file and the class inside to `StockItemList`.
+
+    components/StockItemList.jsx
+    ```javascript
+    ...
+   
+    class StockItemList extends Component {
+      ...
+    }
+    ```
 
 2. Update UIShell.jsx
-    - Update the initial pattern name to `Stock Items`
-    - Update the SideNameMenu title to Inventory Management
-    - Remove all the patterns from the SideNavMenu and add a line to render the Stock Items menu - `this.renderSideNavItem("Stock Items")`
+
+    - Update the `header` variable to whatever name you want. "Big Blue Widgets" is used in the example
+    - Update the `menuTitle` to "Inventory Management"
+    - Remove all the values from `menuItems`
   
     components/UIShell.jsx
     ```javascript
     class UIShell extends Component {
-      constructor(props) {
-        super(props);
-        this.state = {
-          patternName: "Stock Items"
-        };
-      }
+      header = "Big Blue Widgets";
+      menuTitle = "Inventory Management";
+      menuItems = [
+        "Stock Items",
+      ];
     
       ...
-    
-      render() {
-        return (
-          <div>
-            <Header aria-label="IBM Platform Name">
-              <SkipToContent />
-              <HeaderName href="#" prefix="IBM">
-                Garage for Cloud Catalyst
-              </HeaderName>
-            </Header>
-            <SideNav aria-label="Side navigation">
-              <SideNavItems>
-                <SideNavMenu
-                  defaultExpanded
-                  icon={<Fade20 />}
-                  title="Inventory Management"
-                >
-                  {this.renderSideNavItem("Stock Items")}
-                </SideNavMenu>
-              </SideNavItems>
-            </SideNav>
-            <Content id="main-content"><UIShellBody patternName={this.state.patternName} /></Content>
-          </div>
-        );
-      }
     }
     ```
 
 3. Update UIShellBody.jsx
 
-    - Remove all of the pattern values from the `components` map and add only show StockItem List
-    - Use `Stock Items` as the default pattern name when none is given
+    - Remove all of the pattern values from the `components` map and add one entry for Stock Item List. The value on the 
+    left is the label that is displayed and the value on the right is the class that should be loaded (e.g. `"Stock Items": StockItemList`).
+    **Note:** The label value needs to match the one used on `UIShell`
+    - Update the Use `Stock Items` as the default pattern name when none is given
 
     components/UIShellBody.jsx
     ```javascript
+    import StockItemList from './StockItemList';
+    
     class UIShellBody extends Component {
       components = {
         "Stock Items": StockItemList,
       };
-      render() {
-        const PatternName = this.components[
-          this.props.patternName || "Stock Items"
-        ];
-        return (
-          <div className="pattern-container">
-            <PatternName showDescription={true} />
-          </div>
-        );
-      }
+      defaultComponent = "Stock Items";
+   
+      ...
     }
     ```
 `
