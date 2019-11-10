@@ -51,13 +51,30 @@ The Micro App should adhere to the following User Interface Design and API and M
 
 #### Setup
 
-Get the initial project created and register the pipeline for automated builds.
+Get the initial project created and register the pipeline for automated builds. Detailed instructions for
+each of these steps can be found in the [Deploying an App](/getting-started/deploy-app) guide.
 
-1. Create a new repository from the React UI Patterns Starter Kit template - https://github.com/ibm-garage-cloud/template-node-react/generate
+1. Create a new repository from the React UI Patterns Starter Kit template into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
 
-2. Clone the new repository to your machine
+    In order to prevent naming collisions, name the repository `inventory-management-ui-{your initials}` replacing 
+    `{your initials}` with your actual initials.
 
-3. Log into the cluster from the command-line then register the pipeline in Jenkins using `igc pipeline`
+1. Clone the new repository to your machine
+
+1. Log into the cluster from the command-line then register the pipeline in Jenkins 
+
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+   
+   replacing `{your initials}` with your actual initials
+
+1. Run `igc credentials` to get the credentials for the Jenkins instance.
+
+1. Log into Jenkins to see the pipeline running
+
+1. When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
+for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
 
 #### Create the initial components
 
@@ -68,6 +85,12 @@ from the menu and to create new components built from the pattern components.
 
 Based on the requirements of this first use case, we will create a StockItemList component based on
 the TableList pattern. 
+
+1. Open a terminal and start the application in development mode to see the initial UI and the changes as we make them
+
+    ```
+    npm run start:dev
+    ```
 
 1. Make a copy of the `TableList` pattern component from the `pattern-component` directory into the
 `components` folder. Rename the file and the class inside to `StockItemList`.
@@ -81,7 +104,7 @@ the TableList pattern.
     }
     ```
 
-2. Update UIShell.jsx
+1. Update UIShell.jsx
 
     - Update the `header` variable to whatever name you want. "Big Blue Widgets" is used in the example
     - Update the `menuTitle` to "Inventory Management"
@@ -100,7 +123,7 @@ the TableList pattern.
     }
     ```
 
-3. Update UIShellBody.jsx
+1. Update UIShellBody.jsx
 
     - Remove all of the pattern values from the `components` map and add one entry for Stock Item List. The value on the 
     left is the label that is displayed and the value on the right is the class that should be loaded (e.g. `"Stock Items": StockItemList`).
@@ -120,7 +143,23 @@ the TableList pattern.
       ...
     }
     ```
-`
+
+1. Open a second terminal in the repository directory and push the changes we've made to the repository
+
+    ```bash
+    git add .
+    git commit -m "Initial shell components"
+    git push
+    ```
+
+1. Return to the Jenkins UI to see the pipeline running. (Use `igc credentials` if the login has expired.) 
+
+    The Jenkins pipeline should have started automatically when the changes were pushed to the Git repository. If not 
+    you can manually start it by pressing `Build now with parameters`.
+
+1. Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
+changes we just made should be reflected in the UI.
+
 #### Update StockItemList according to the requirements
 
 1. Update the data structure for our sample data to match the UI
