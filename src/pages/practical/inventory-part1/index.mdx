@@ -160,17 +160,32 @@ the TableList pattern.
 1. Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
 changes we just made should be reflected in the UI.
 
-#### Update StockItemList according to the requirements
+#### Update StockItemList contents
 
-1. Update the data structure for our sample data to match the UI
+Now that we've created the initial components, we can start to customize the StockItemList to match
+the data for our application.
 
+1. Start the application in development mode (if not already running) with `npm run start:dev`
+
+1. Update the columns and the data structure for our sample data to match the UI
+
+    The value in the `columns` array maps to one of the attributes in our data values 
+    (e.g. `name` refers to the name attribute)
+    
     components/StockItemList.jsx
     ```javascript
     class StockItemList extends Component {
-      ...
-    
-      componentDidMount() {
-        const data = [
+        ...
+   
+        columns = [
+        "name",
+        "description",
+        "stock",
+        "unitPrice",
+        "picture",
+        "manufacturer",
+        ];
+        data = [
           {
             "name": "Item 1",
             "description": "The first item",
@@ -197,36 +212,82 @@ changes we just made should be reflected in the UI.
           }
         ];
     
-        this.setState({
-          data
-        });
-      }
-    
-      ...
+        ...
     }
     ```
 
-2. Update the title, subtitle, and columns with values for our Stock Items view. Set the `formatters` to
-an empty object for now.
+1. Update the title and subtitle with values for our Stock Items view. The `formatters` entry can be
+set to `{}` as well.
 
     components/StockItemList.jsx
     ```javascript
     class StockItemList extends Component {
       title = 'Stock Items';
       subtitle = 'This is the current inventory of items';
-      columns = [
+      formatters = {};
+     
+      ...
+    }
+    ```
+
+1. The result of these changes should look like the following:
+
+    components/StockItemList.jsx
+    ```javascript
+    class StockItemList extends Component {
+        title = 'Stock Items';
+        subtitle = 'This is the current inventory of items';
+
+        columns = [
         "name",
         "description",
         "stock",
         "unitPrice",
         "picture",
         "manufacturer",
-      ];
-      formatters = {};
-     
+        ];
+        formatters = {};
+   
+        data = [
+          {
+            "name": "Item 1",
+            "description": "The first item",
+            "stock": 10,
+            "unitPrice": 100.0,
+            "picture": "test",
+            "manufacturer": "unknown",
+          },
+          {
+            "name": "Item 2",
+            "description": "The second item",
+            "stock": 15,
+            "unitPrice": 120.5,
+            "picture": "test1",
+            "manufacturer": "Apple",
+          },
+          {
+            "name": "Item 3",
+            "description": "The third item",
+            "stock": 20,
+            "unitPrice": 75.5,
+            "picture": "test1",
+            "manufacturer": "Sony",
+          }
+        ];
+        
       ...
     }
     ```
+
+1. Push the changes we've made to the repository
+
+    ```bash
+    git add .
+    git commit -m "Updates the StockItemsList view"
+    git push
+    ```
+
+1. Look at the Jenkins pipeline and the deployed app
 
 #### Add a mock service to get the Stock Items
 
