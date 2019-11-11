@@ -78,9 +78,9 @@
     - title: ArgoCD Setup
       path: /admin/argocd-setup
     - title: Infrastructure as Code
-      path: /guides/iasc
+      path: /admin/iasc
     - title: Cluster configuration
-      path: /guides/cluster-configuration
+      path: /admin/cluster-configuration
     - title: Destroying
       path: /admin/destroying
 
