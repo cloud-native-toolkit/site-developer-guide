@@ -14,17 +14,31 @@ To be added to the **Garage OpenShift and Cloud Pak MOOC series** you must subsc
 
 ### Notification
 
-- After the first live web cast has completed you will receive an email giving you details on how to access your development team cluster.
+- After the first live web cast has completed you will receive an email giving you details on how to access your development team cluster. you will be allocated to a team.
+
+- The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` you will have received you team name in your notification email.
 
 - The notification email will include the name of the **Account Sandbox** you have been added too and which **Development Team Cluster** you have been allocated.
 
+- You must associate your IBM email address with your public git hub account or make sure you have a public account that is using your IBM email address.
+    - Log into [Github](https://github.com)
+    - Navigate to you account settings
+    - Select emails, check your IBM email address is your primary email for the account
+    - If it is not then add you IBM email and verify it
+    - If you are correctly verified and associated you will receive a second email inviting you to your associated git organizations
+
+![GitHub eMail](githubemail.png)
+
+<InlineNotification kind="warning">
+
+**Warning:** If you do associate your IBM email with you public git hub account you will have issues completing the homework.
+
+</InlineNotification>
+
 - The Sandbox has been defined exactly how a client would use the IBM Cloud and you will be given access to a specific team `Resource Group` and `Access Group`. This will then enable you to access the development clusters for IBM Kubernetes and Red Hat OpenShift. The Resource group will have pre installed content and you will be restricted from creating new cloud services or deleting existing ones.
 
-- Each **Development Team** will consist of up to **25** Garage colleagues.
+- Each **Development Team** will consist of **30+** Garage colleagues.
 
-### Team Allocation
-
-The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` you will have received you team name in your notification email.
 
 The following diagram helps to explain how access will be configured. Imagine you are the `Green` user, there will be lots of other users around you maybe in different timezones all sharing the same clusters resources. The administrators will be monitoring the cluster to identify any possible issues early and resolving them.
 
@@ -97,7 +111,7 @@ Please remember you will be using a development cluster with other colleagues, b
 - Make sure you use your own namespace/project for you applications
 - Name your personal namespace/project using this convention `dev-{your initials}` ie. `dev-mjp`
 - Any namespaces/projects not following this approach will be deleted by the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
-- Add initials `{<app name}-{your initials}` to the end of your app names ie. `inventory-bff-mjp` The use of the team git organization will help with not creating apps with the same name.
+- Add initials `{<app name}w-{your initials}` to the end of your app names ie. `inventory-bff-mjp` The use of the team git organization will help with not creating apps with the same name.
 - Talk to you fellow team members using slack to help debug issues
 - Use the Github team discussion feature to share knowledge
 - Do not delete anything that is not yours in the cluster especially `secrets` and `configMaps` this will cause unnecessary pain for [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
