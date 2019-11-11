@@ -34,6 +34,11 @@ div[class*='module--notification']{
 
 }
 
+div[class*='module--container']{
+    overflow-y: auto;
+    max-height: 300px;
+}
+
 .bx--list--nested {
     margin-bottom: 1.5em;
 }

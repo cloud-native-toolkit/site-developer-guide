@@ -50,7 +50,20 @@ follow the instructions to login from the command line
 <p></p>
 <p></p>
 
+### Links
 
+<AnchorLinks>
+  <AnchorLink to="#open-developer-tools-dashboard">Open Developer Tools Dashboard</AnchorLink>
+  <AnchorLink to="#create-your-app-in-git">Create your app in Git</AnchorLink>
+  <AnchorLink to="#clone-your-code">Clone your code</AnchorLink>
+  <AnchorLink to="#running-locally">Running Locally</AnchorLink>
+  <AnchorLink to="#register-the-app-in-a-devops-pipeline">Register your pipeline</AnchorLink>
+  <AnchorLink to="#view-your-application-pipeline">View your application pipeline</AnchorLink>
+  <AnchorLink to="#access-running-app">Access running app</AnchorLink>
+  <AnchorLink to="#where-is-your-app-running-">Where is your app running ?</AnchorLink>
+</AnchorLinks>
+
+Clone your code
 ### Open Developer Tools Dashboard
 
 <InlineNotification kind="warning">
@@ -66,6 +79,9 @@ The Developer Tools Dashboard makes it easy for you to navigate to the tools, in
     ```
     igc dashboard
     ```
+
+### Create your app in Git
+
 - Click on **Starter Kits** tab
 - Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
     - Click on a Starter Kit Template **Tile** to create your app github repository from the template repository selected.
@@ -81,6 +97,8 @@ The Developer Tools Dashboard makes it easy for you to navigate to the tools, in
   - Press **Create repository from template**
 
 The new repository will be created in your selected organization.
+
+### Clone your code
 - Next, clone it to your local machine.
 - Click on **Clone or download**
 - Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
@@ -143,7 +161,7 @@ Most developers like to run the code natively in local development environment. 
 
 ### View your application pipeline
 
-Expand the section below depending on which type of development cluster you registered your application with.
+To view you registered pipeline follow the steps for the type of development cluster you registered your application with.
 
 <Tabs>
 <Tab label="OpenShift">
@@ -179,7 +197,7 @@ Expand the section below depending on which type of development cluster you regi
 <p></p>
 <p></p>
 
-### Access running application
+### Access running app
 
 Once the pipeline has completed successfully, the app will be deployed into the `dev` namespace or the namespace you used when registering the pipeline.
 
@@ -192,15 +210,18 @@ Once the pipeline has completed successfully, the app will be deployed into the 
   
   You will see a list of apps displayed with their ingress URLs for the application.
     ```bash
-    Host(s):
-    [
-      'https://stockbffnode-dev.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud'
-    ]
+    igc ingress -n dev
+    ? Ingresses in the 'dev' namespace. Select an ingress to launch the default browser or 'Exit'.
 
-- Open this ingress URL in your browser and validate the application is working as expected
+    1) Exit
+    2) template-graphql-typescript - https://template-graphql-typescript-dev.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
+    3) template-node-react - https://template-node-react-dev.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
+    Answer:
+    ```
+- Use the arrow keys to select the ingress URL and press **Enter** to open it in a web browser and validate the application is working as expected
 
 
-## Where is your application deployed ?
+### Where is your app running ?
 
 - The build pipeline is configured to build you source code into a container image. This image is stored in the IBM Image Registry. The image is then deployed into your namespace/project within you development cluster and validated for its health.
 - Use the steps below to find your application within your cluster console.
@@ -253,23 +274,8 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 
 - This completes the deployment of your app.
 
-### Complete the setup
-
-<InlineNotification kind="warning">
-
-  **Note:** If you are working on a shared education cluster the following steps will have already been completed. You can read the documentation for reference.
-
-</InlineNotification>
-
 You now have a running application that is being built and deployed into your development cluster.
 The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.
-
-To enable this, follow these instructions to complete the setup of the **ArgoCD** and **Artifactory**:
-
-<AnchorLinks small>
-  <AnchorLink to="../../getting-started/argocd-setup">ArgoCD Setup</AnchorLink>
-  <AnchorLink to="../../getting-started/artifactory-setup">Artifactory Setup</AnchorLink>
-</AnchorLinks>
 
 ## Guides
 
