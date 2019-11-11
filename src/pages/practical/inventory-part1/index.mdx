@@ -475,43 +475,42 @@ package to simplify the tasks required to create a controller.
 
 1. Create the controller test
 
-```typescript path=test/controllers/stock-items.controller.spec.ts
-import {Application} from 'express';
-import * as request from 'supertest';
+    ```typescript path=test/controllers/stock-items.controller.spec.ts
+    import {Application} from 'express';
+    import * as request from 'supertest';
 
-import {buildApiServer} from '../helper';
+    import {buildApiServer} from '../helper';
 
-describe('stock-item.controller', () => {
+    describe('stock-item.controller', () => {
 
-  let app: Application;
-  beforeEach(async () => {
-    const apiServer = buildApiServer();
+      let app: Application;
+      beforeEach(async () => {
+        const apiServer = buildApiServer();
 
-    app = await apiServer.getApp();
-  });
-
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
-
-  describe('given GET /stock-items', () => {
-    describe('when service is successful', () => {
-      test('then return 200 status', async () => {
-        return request(app).get('/stock-items').expect(200);
+        app = await apiServer.getApp();
       });
 
-      test('then should return an empty array', async () => {
-        return request(app).get('/stock-items').expect([]);
+      test('canary verifies test infrastructure', () => {
+         expect(true).toEqual(true);
       });
-    });
-  });
-}
-```
+
+      describe('given GET /stock-items', () => {
+        describe('when service is successful', () => {
+          test('then return 200 status', async () => {
+            return request(app).get('/stock-items').expect(200);
+          });
+
+          test('then should return an empty array', async () => {
+            return request(app).get('/stock-items').expect([]);
+          });
+        });
+      });
+    }
+    ```
 
 1. Create the controller component
 
-    src/controllers/stock-items.controller.ts
-    ```typescript
+    ```typescript path=src/controllers/stock-items.controller.ts
     import {GET, Path} from 'typescript-rest';
 
     @Path('stock-items')
