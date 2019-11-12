@@ -59,7 +59,7 @@ spec:
                     npm install
                 '''
             }
-            stage('Deploy') {
+            stage('Build') {
                 sh '''#!/bin/bash
                     npm run build
                 '''
