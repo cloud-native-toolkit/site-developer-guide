@@ -92,6 +92,21 @@ Get the initial project created and register the pipeline for automated builds.
 1. When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
 for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
 
+1. Run the service locally
+
+    ```
+    npm start
+    ```
+   
+    OR
+   
+    ```
+    ./gradlew bootRun
+    ```
+   
+1. Open a browser to `http://localhost:9080`. This will display the Swagger UI page
+that provides a user interface to exercise the APIs. 
+
 #### Create initial components 
 
 SpringBoot uses annotations to configure the various components that will be injected into and
@@ -102,29 +117,47 @@ for components.
 
 We will start by creating the initial application component.
 
-1. Create a class named `Application` in the `com.ibm.inventory_management.app` package. 
+- Create a class named `Application` in the `com.ibm.inventory_management.app` package. 
 
-1. Add the `@SpringBootApplication` and `@ComponentScan` annotation to the class. The `@ComponentScan`
+- Add the `@SpringBootApplication` and `@ComponentScan` annotation to the class. The `@ComponentScan`
 annotation should include `com.ibm.inventory_management.*`, `com.ibm.cloud_garage.*`, and `com.ibm.health`
 packages.
 
-    com.ibm.inventory_management.app.Application
-    ```java
-    @SpringBootApplication
-    @ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
-    public class Application extends SpringBootServletInitializer {
-        public static void main(String[] args) {
-            SpringApplication.run(Application.class, args);
-        }
-    
-        @Override
-        protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-            return application.sources(Application.class);
-        }
-    }
-    ```
+```java path=com.ibm.inventory_management.app.Application
+package com.ibm.inventory_management.app;
 
-1. Delete `com.ibm.hello.app.Application`
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
+public class Application extends SpringBootServletInitializer {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+}
+```
+
+- Delete `com.ibm.hello.app.Application`
+
+- Run the service locally. The swagger page should no longer contain the `/hello`
+api endpoint.
+
+- Commit and push the changes to Git.
+
+```base
+git add .
+git commit -m "Message"
+git push
+```
 
 #### Add StockItem controller
 
