@@ -61,7 +61,7 @@ spec:
             }
             stage('Deploy') {
                 sh '''#!/bin/bash
-                    npm run deploy
+                    npm run build
                 '''
             }
             stage('Git init') {
