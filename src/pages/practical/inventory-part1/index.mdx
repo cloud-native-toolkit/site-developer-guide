@@ -66,30 +66,47 @@ Get the initial project created and register the pipeline for automated builds.
 
 1. Create a new repository from the Java Spring Starter Kit template - https://github.com/ibm-garage-cloud/template-java-spring/generate
 
-    In order to prevent naming collisions, name the repository `inventory-management-service-{your initials}` replacing 
+    <InlineNotification kind="warning">
+
+      **Warning:** If you are developing on a shared education cluster place the repository in the  **Git Organisation** listed in your notification email and remember to add your initials as a suffix to the app name.
+
+    </InlineNotification>
+
+    In order to prevent naming collisions, name the repository `inventory-management-bff-{your initials}` replacing
     `{your initials}` with your actual initials.
 
 1. Clone the new repository to your machine
 
-1. Log into the cluster from the command-line then register the pipeline in Jenkins 
+1. Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
 
     ```
     igc pipeline -n dev-{your initials}
     ```
-   
+
    replacing `{your initials}` with your actual initials
 
 1. Run `igc credentials` to get the credentials for the Jenkins instance.
 
-1. Log into Jenkins to see the pipeline running
+1. Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
 1. When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
 for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
 
 #### Create initial components 
 
-1. Copy `com.ibm.hello.app.Application` into the `com.ibm.inventory_management.app` package and
-update the @ComponentScan package list to include `com.ibm.inventory_management.*`
+SpringBoot uses annotations to configure the various components that will be injected into and
+used by the applications. A class with the `@SpringBootApplication` annotation is the starting
+point for the rest of the application components to be loaded. Additionally, a `@ComponentScan`
+annotation can be added to tell the Spring infrastructure which packages should be scanned
+for components.
+
+We will start by creating the initial application component.
+
+1. Create a class named `Application` in the `com.ibm.inventory_management.app` package. 
+
+1. Add the `@SpringBootApplication` and `@ComponentScan` annotation to the class. The `@ComponentScan`
+annotation should include `com.ibm.inventory_management.*`, `com.ibm.cloud_garage.*`, and `com.ibm.health`
+packages.
 
     com.ibm.inventory_management.app.Application
     ```java
@@ -99,8 +116,6 @@ update the @ComponentScan package list to include `com.ibm.inventory_management.
         public static void main(String[] args) {
             SpringApplication.run(Application.class, args);
         }
-    
-        ...
     
         @Override
         protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -112,6 +127,10 @@ update the @ComponentScan package list to include `com.ibm.inventory_management.
 1. Delete `com.ibm.hello.app.Application`
 
 #### Add StockItem controller
+
+In SpringBoot, the `@RestController` annotation tells the framework that the class provides a
+REST interface. Additional annotations like `@GetMapping` are used to provide the specific configuration
+for the REST service. 
 
 1. Start the tests in tdd mode with `npm run tdd` (or `./gradlew test --continuous`)
 
@@ -191,6 +210,10 @@ update the @ComponentScan package list to include `com.ibm.inventory_management.
     ```
 
 #### Add a service for providing results
+
+An established pattern for REST services in SpringBoot is to keep the REST controller logic simple
+and focused on translating from REST protocols to Javascript. The business logic for the components
+should be placed in a component that is given a `@Service` annotation.
 
 1. Update the controller test to include returning data from the service
 
@@ -429,6 +452,19 @@ update the @ComponentScan package list to include `com.ibm.inventory_management.
     }
     ```
 
+#### Verify the service locally and push the changes
+
+1. Start the application
+
+    ```bash
+    npm start
+    ```
+   
+    or
+    
+    ```bash
+    ./gradlew bootRun
+    ```
 
 ### Inventory BFF
 
@@ -451,7 +487,6 @@ To get the initial BFF project created and registered with a pipeline for automa
     In order to prevent naming collisions, name the repository `inventory-management-bff-{your initials}` replacing
     `{your initials}` with your actual initials.
 
-
 1. Clone the new repository to your machine
 
 1. Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
@@ -461,7 +496,6 @@ To get the initial BFF project created and registered with a pipeline for automa
     ```
 
    replacing `{your initials}` with your actual initials
-
 
 1. Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
