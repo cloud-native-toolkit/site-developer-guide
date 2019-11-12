@@ -10,7 +10,7 @@ Create a sample application and register Jenkins build pipeline to deploy your a
 
 ## Overview
 
-You can create a new app using one of the [Starter Kit Templates](/starting/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
+You can create a new app using one of the [Starter Kit Templates](/starterkits/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
 
 This video will demonstrate how to work through the steps to create an application that uses a deployment pipeline to install it into your development cluster.
 
@@ -22,12 +22,12 @@ This video will demonstrate how to work through the steps to create an applicati
 
 ### Log into you Development Cluster from the command line
 
-- Make sure you have installed all [Prerequisites](/admin/pre-reqs) before continuing
+- Make sure you have installed all [Prerequisites](/getting-started/pre-reqs) before continuing
 - Open a terminal
-- log into your Development cluster in a terminal.
+- log into your Development cluster in a terminal (If using a shared education cluster, log into openshift)
 - To do so, navigate to your cluster in the _IBM Cloud Console_, click on the **Access** tab and
 follow the instructions to login from the command line
-- You can test this with the following simple command.
+- You can test this with the following simple command: 
 
 <Accordion>
 
@@ -66,22 +66,24 @@ follow the instructions to login from the command line
 Clone your code
 ### Open Developer Tools Dashboard
 
-<InlineNotification kind="warning">
 
-  **Warning:** If you are developing on a shared education cluster. You need to make it easy to identify your app please suffix the app name with your initials `{app name}-{your initials}` ie. `stockbffnode-mjp` and use the **Git Organisation** listed in your notification email.
-
-</InlineNotification>
 
 The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [Starter Kit Templates](/starterkits/overview) that make seeding your development project very easy.
 
 - Open a browser and make sure you are logged into [Github](https://github.com)
-- Open the [Developer Tools Dashboard](/getting-started/dashboard)
+- Open the [Developer Tools Dashboard](/getting-started/dashboard) by running the following command:
     ```
     igc dashboard
     ```
 
 ### Create your app in Git
+<InlineNotification kind="warning">
 
+**Warning:** If you are developing on a shared education cluster. You need to make it easy to identify your app please suffix the app name with your initials `{app name}-{your initials}` ie. `stockbffnode-mjp` and use the **Git Organisation** listed in your notification email.
+
+</InlineNotification>
+
+- Open the Developer Tools Dashboard
 - Click on **Starter Kits** tab
 - Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
     - Click on a Starter Kit Template **Tile** to create your app github repository from the template repository selected.
@@ -89,12 +91,14 @@ The Developer Tools Dashboard makes it easy for you to navigate to the tools, in
 
 - Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) process.
 
-  - **Owner**: Select a validate GitHub organization that you are authorised to create repositories within or the one you were given for the shared cluster education.
-  - **Repository name**: Enter a valid name for you repo , github will help with showing a green tick if it is valid
+  - **Owner**: Select a validate GitHub organization that you are authorized to create repositories within or the one you were given for the shared cluster (See warning above)
+  - **Repository name**: Enter a valid name for you repo , github will help with showing a green tick if it is valid (See warning above)
 
   - **Description**: Describe your app
     ![Template](template.png)
   - Press **Create repository from template**
+
+
 
 The new repository will be created in your selected organization.
 
@@ -115,7 +119,8 @@ The new repository will be created in your selected organization.
 - Push the changes back to your repository
     ```
     git add .
-    git push -m "Update application name"
+    git commit -m "Update application name"
+    git push
     ```
 
 ### Running Locally
