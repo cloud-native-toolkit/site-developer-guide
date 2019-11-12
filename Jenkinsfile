@@ -59,6 +59,12 @@ spec:
                     npm install
                 '''
             }
+            stage('Git init') {
+                sh '''#!/bin/bash
+                   git config --global user.email "jenkins@ibm.com"
+                   git config --global user.name "Jenkins Pipeline"
+                '''
+            }
             stage('Deploy') {
                 sh '''#!/bin/bash
                     npm run deploy
