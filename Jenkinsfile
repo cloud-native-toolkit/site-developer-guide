@@ -59,15 +59,33 @@ spec:
                     npm install
                 '''
             }
+            stage('Build') {
+                sh '''#!/bin/bash
+                    npm run build
+                '''
+            }
             stage('Git init') {
                 sh '''#!/bin/bash
                    git config --global user.email "jenkins@ibm.com"
                    git config --global user.name "Jenkins Pipeline"
                 '''
             }
-            stage('Deploy') {
+            stage('Checkout gh-pages') {
                 sh '''#!/bin/bash
-                    npm run deploy
+                   git remote -v
+                   git checkout -b test-pages origin/test-pages
+                '''
+            }
+            stage('Copy files') {
+                sh '''#!/bin/bash
+                   cp -R ./public/* .
+                '''
+            }
+            stage('Push changes') {
+                sh '''#!/bin/bash
+                   git add .
+                   git commit -m "Pipeline updates"
+                   git push
                 '''
             }
         }
