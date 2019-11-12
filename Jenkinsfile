@@ -72,6 +72,7 @@ spec:
             }
             stage('Checkout gh-pages') {
                 sh '''#!/bin/bash
+                   git remote -v
                    git checkout -b test-pages origin/test-pages
                 '''
             }
