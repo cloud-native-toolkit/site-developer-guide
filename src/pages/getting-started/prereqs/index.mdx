@@ -1,0 +1,77 @@
+---
+title: Prerequisites
+---
+
+<PageDescription>
+
+Install and configure these tools needed to use the Developer Tools environment
+
+</PageDescription>
+
+To install and use the IBM Garage for Cloud Development Tools environment, first setup the following prerequisites. Both Developers and Administrators will need these tools.
+
+This guide assumes that you have some basic knowledge of Kubernetes, Docker, and modern software delivery techniques including CI/CD. To learn more about these topics, after installing the environment, consult the educational materials listed in the Activation tab in the [Development Tools Dashboard](/getting-started/dashboard).
+
+
+
+## Create accounts
+
+You'll need these accounts to use the Developer Tools environment.
+
+- [GitHub account](http://github.com) (public, not enterprise): Create one if you do not have one aleady. If you have not logged in for a while, make sure your login is working.
+
+- [IBM Cloud Account](https://cloud.ibm.com): Create one if needed, make sure you can log in. 
+    - If you're going to [create a cluster](/admin/installation-ibm-cloud), your user needs to be a [member of a paid account](https://cloud.ibm.com/docs/iam?topic=iam-iamuserinv) and have permissions to create a cluster.
+
+
+
+### Configure Github Personal Access Token
+For Jenkins to connect to and use your GitHub repo, it will need a [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) with `public_repo` and `write:repo_hook` scopes. The Personal Access Token only needs to be generated once because it is associated with the GitHub organization and can be used to access any of the organization's repos.
+
+  - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token
+  - Select `public_repo` scope to enable git clone
+  - Select `write:repo_hook` scope so Jenkins can create a web hook
+  ![Jenkins OAuth scopes](jenkins-scopes.png)
+  - The GitHub UI will never again let you see this token, so be sure to save the token in your password manager or somewhere safe that you can access later on
+
+
+
+## Install CLIs and tools
+
+The following is a list of desktop tools required to help with installation and development.
+
+- [Git Client](https://git-scm.com/): Needs to be installed in your development operating system, it comes as standard for Mac OS
+
+- [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started): Required for management of IBM Cloud Account and management of your managed IBM Kubernetes and Red Hat OpenShift clusters
+    - Don't install just the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli), install the [IBM Cloud CLI and Developer Tools](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started#step1-install-idt)
+    ```
+    curl -sL https://ibm.biz/idt-installer | bash
+    ```
+    - Note: If you log in to the web UI using SSO, you'll need to [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id) for logging into the CLI. (You can also use this API key for [installing the Developer Tools environment](/admin/installation-ibm-cloud).)
+
+- [OpenShift OC CLI](https://www.okd.io/download.html): Required for Red Hat OpenShift management and development
+    - Place `oc` and `kubectl` in your Terminal `PATH` or use `brew`
+    ```
+    brew install openshift-cli
+    ```
+- [Docker Desktop](https://www.docker.com/products/docker-desktop): Required for running common tools and [Developer Tools Image](/guides/tools-image)
+    - Installed and running on your local machine
+
+- [Node](https://nodejs.org/en/): Required for running the [IBM Garage for Cloud CLI](/getting-started/cli)
+    - Installed on your local machine
+    - Recommended `v12.x LTS`
+
+- [IBM Garage for Cloud CLI](/getting-started/cli): Used to help make working with the development tools as easy as possible
+    ```
+    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    ```
+
+- [Visual Studio Code](https://code.visualstudio.com/download): A popular code editor
+    - You will be required to edit some files, having a good quality editor is always best practice
+    - Enabling [launching VSCode from a terminal](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line)
+
+- [Python](https://www.python.org/downloads/)
+    - This is used by the Cloudant data load utility and useful for machine learning frameworks
+
+- [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html): _Optional_ installed on your local machine
+    - Used for SpringBoot content
