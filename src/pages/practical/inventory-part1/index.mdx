@@ -64,7 +64,7 @@ You will approach creating the Micro App bottom up, this means you will start by
 
 Get the initial project created and register the pipeline for automated builds.
 
-1. Create a new repository from the Java Spring Starter Kit template - https://github.com/ibm-garage-cloud/template-java-spring/generate
+- Create a new repository from the Java Spring Starter Kit template - https://github.com/ibm-garage-cloud/template-java-spring/generate
 
     <InlineNotification kind="warning">
 
@@ -72,12 +72,12 @@ Get the initial project created and register the pipeline for automated builds.
 
     </InlineNotification>
 
-    In order to prevent naming collisions, name the repository `inventory-management-bff-{your initials}` replacing
+    In order to prevent naming collisions, name the repository `inventory-management-svc-{your initials}` replacing
     `{your initials}` with your actual initials.
 
-1. Clone the new repository to your machine
+- Clone the new repository to your machine
 
-1. Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
 
     ```
     igc pipeline -n dev-{your initials}
@@ -85,14 +85,14 @@ Get the initial project created and register the pipeline for automated builds.
 
    replacing `{your initials}` with your actual initials
 
-1. Run `igc credentials` to get the credentials for the Jenkins instance.
+- Run `igc credentials` to get the credentials for the Jenkins instance.
 
-1. Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
-1. When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
+- When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
 for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
 
-1. Run the service locally
+- Run the service locally
 
     ```
     npm start
@@ -104,7 +104,7 @@ for the app we just pushed. Select the entry and hit `Enter` to launch the brows
     ./gradlew bootRun
     ```
    
-1. Open a browser to `http://localhost:9080`. This will display the Swagger UI page
+- Open a browser to `http://localhost:9080/swagger-ui.html`. This will display the Swagger UI page
 that provides a user interface to exercise the APIs. 
 
 #### Create initial components 
@@ -123,7 +123,7 @@ We will start by creating the initial application component.
 annotation should include `com.ibm.inventory_management.*`, `com.ibm.cloud_garage.*`, and `com.ibm.health`
 packages.
 
-```java path=com.ibm.inventory_management.app.Application
+```java path=src/main/java/com/ibm/inventory_management/app/Application.java
 package com.ibm.inventory_management.app;
 
 import org.springframework.boot.SpringApplication;
@@ -165,82 +165,89 @@ In SpringBoot, the `@RestController` annotation tells the framework that the cla
 REST interface. Additional annotations like `@GetMapping` are used to provide the specific configuration
 for the REST service. 
 
-1. Start the tests in tdd mode with `npm run tdd` (or `./gradlew test --continuous`)
+- Start the tests in tdd mode with `npm run tdd` (or `./gradlew test --continuous`)
 
-1. Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
+- Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
 
-    ```java
-    @DisplayName("StockItemController")
-    public class StockItemControllerTest {
+```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemController.java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+}
+```
+
+- Add the MockMvc infrastructure and create the `StockItemController`
+
+```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+    StockItemController controller;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    public void setup() {
+        controller = spy(new StockItemController());
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
-    ```
+}
+```
 
-1. Add the MockMvc infrastructure and create the `StockItemController`
+```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
+@RestController
+public class StockItemController {
+}
+```
 
-    ```java
-    @DisplayName("StockItemController")
-    public class StockItemControllerTest {
-        StockItemController controller;
-    
-        MockMvc mockMvc;
-    
-        @BeforeEach
-        public void setup() {
-            controller = spy(new StockItemController());
-    
-            mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+- Add the tests for the controller behavior and make the corresponding changes to make the tests pass
+
+```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
+@DisplayName("StockItemController")
+public class StockItemControllerTest {
+    StockItemController controller;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    public void setup() {
+        controller = spy(new StockItemController());
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+
+    @Nested
+    @DisplayName("Given [GET] /stock-items")
+    public class GivenGetStockItems {
+
+        @Test
+        @DisplayName("When called then it should return a 200 status")
+        public void when_called_should_return_200_status() throws Exception {
+
+            mockMvc.perform(get("/stock-items"))
+                    .andExpect(status().isOk());
         }
-    
-        ...
-    }
-    ```
 
-    ```java
-    @RestController
-    public class StockItemController {
-    }
-    ```
+        @Test
+        @DisplayName("When called then it should return an empty array")
+        public void when_called_then_return_an_empty_array() throws Exception {
 
-1. Add the tests for the controller behavior and make the corresponding changes to make the tests pass
-
-    ```java
-    @DisplayName("StockItemController")
-    public class StockItemControllerTest {
-        ...
-    
-        @Nested
-        @DisplayName("Given [GET] /stock-items")
-        public class GivenGetStockItems {
-    
-            @Test
-            @DisplayName("When called then it should return a 200 status")
-            public void when_called_should_return_200_status() throws Exception {
-    
-                mockMvc.perform(get("/stock-items"))
-                        .andExpect(status().isOk());
-            }
-    
-            @Test
-            @DisplayName("When called then it should return an empty array")
-            public void when_called_then_return_an_empty_array() throws Exception {
-    
-                mockMvc.perform(get("/stock-items").accept("application/json"))
-                        .andExpect(content().json("[]"));
-            }
-        }
-    }
-    ```
-
-    ```java
-    @RestController
-    public class StockItemController {
-    
-        @GetMapping(path = "/stock-items", produces = "application/json")
-        public List<StockItem> listStockItems() {
-            return new ArrayList();
+            mockMvc.perform(get("/stock-items").accept("application/json"))
+                    .andExpect(content().json("[]"));
         }
     }
-    ```
+}
+```
+
+```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
+@RestController
+public class StockItemController {
+
+    @GetMapping(path = "/stock-items", produces = "application/json")
+    public List<StockItem> listStockItems() {
+        return new ArrayList();
+    }
+}
+```
 
 #### Add a service for providing results
 
