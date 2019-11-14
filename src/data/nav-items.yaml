@@ -90,3 +90,11 @@
   pages:
     - path: /contributing
 
+- title: MOOC Homework
+  pages:
+    - title: Session 1 - Week 1
+      path: /homework/tasks
+    - title: Session 1 - Week 2
+      path: /homework/tasks/#week-2---day-2-developer-experience
+
+

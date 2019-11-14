@@ -14,12 +14,9 @@ const links = [
   {
     title: 'Github Org',
     href: 'https://github.com/ibm-garage-cloud',
-  },
+  }
 
-  {
-    title: 'MOOC Homework',
-    href: '/homework/tasks',
-  },
+
 
 ];
 
