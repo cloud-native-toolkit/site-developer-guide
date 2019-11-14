@@ -2,24 +2,29 @@
 title: Installation Overview
 ---
 
+<PageDescription>
+
+Options for installing the Developer Tools environment
+
+</PageDescription>
+
 ## Paths to Installation
 
-The IBM Garage for Cloud Developer Tools supports the installation into a number of
-Kubernetes-based cluster technologies. The tools can be installed into multiple clusters and support **IBM Kubernetes** and **Red Hat OpenShift** managed cluster environments. The installation process is built using **Terraform Infrastructure as Code**. For a more detailed explanation on this you can read the [Infrastructure as Code Guide](/guides/iasc).
+The IBM Garage for Cloud Developer Tools environment can be hosted in any Kubernetes or Red Hat OpenShift cluster, including those managed by the IBM Cloud. The environment is provisioned using [infrastructure-as-code](/admin/iasc) scripting that makes the process declaritive, automated, and repeatable. The provisioning code is implemented as Terraform scripts.
 
-- Complete the installation and setup of the [Prerequisites](/getting-started/pre-reqs) before starting any of the installations paths.
+- Before starting any of the installations paths, first install and configure the [prerequisite tools](/getting-started/prereqs).
 
 Select the approach that best suites your requirement:
-- If its a brand new project or being managed by a _Cloud Administrator_, use the *New* path
-- If you have an existing IBM Cloud managed cluster, use the *Existing* approach
-- If you want to do local development on your laptop use *OpenShift 4 CodeReady Containers* path
+- **Install new**: Create a new environment in IBM Cloud including a new cluster
+- **Install existing**: Create a new environment in IBM Cloud but install it into an existing cluster
+- **Install Red Hat CRC**: Create a new environment in *Red Hat CodeReady Containers* installed locally on your laptop
 
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
     title="Install New"
-    subTitle="Create a new IBM Cloud managed cluster with all the Development Tools installed"
+    subTitle="Create a new IBM Cloud managed cluster with all the Developer Tools installed"
     href="/admin/installation-ibm-cloud"
     >
 
@@ -31,7 +36,7 @@ Select the approach that best suites your requirement:
 <ArticleCard
     color="dark"
     title="Install Existing"
-    subTitle="Install the Development Tools into an existing IBM Cloud managed cluster"
+    subTitle="Install the Developer Tools into an existing IBM Cloud managed cluster"
     href="/admin/installation-existing"
     >
 
@@ -43,7 +48,7 @@ Select the approach that best suites your requirement:
 <ArticleCard
     color="dark"
     title="Install Red Hat CRC"
-    subTitle="Install the Development Tools into Red Hat CodeReady Containers"
+    subTitle="Install the Developer Tools into Red Hat CodeReady Containers"
     href="/admin/installation-crc"
     >
 
@@ -53,9 +58,6 @@ Select the approach that best suites your requirement:
 </Column>
 </Row>
 
-After installation remember to complete these setup steps for **ArgoCD** and **Artifactory** to enable Artifact management and Continuous Delivery:
-
-<AnchorLinks>
-  <AnchorLink to="../../getting-started/argocd-setup">ArgoCD Setup</AnchorLink>
-  <AnchorLink to="../../getting-started/artifactory-setup">Artifactory Setup</AnchorLink>
-</AnchorLinks>
+After installation, remember to complete these setup steps:
+- [Artifactory Setup](/admin/artifactory-setup)
+- [ArgoCD Setup](/admin/argocd-setup)
