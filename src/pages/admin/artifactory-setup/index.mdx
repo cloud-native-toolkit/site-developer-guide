@@ -78,8 +78,8 @@ The next page in the wizard is the Onboarding Complete page.
 
 ### Obtain encrypted password
 
-To enable the Jenkins pipelines to store the Helm artifacts in the Artifactory repository, we need to obtain 
-Artifactory's encrypted password and store this where Jenkins can access it--in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
+To enable the CI pipelines ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) to store the Helm artifacts in the Artifactory repository, we need to obtain 
+Artifactory's encrypted password and store this where the pipeline can access it--in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
 
 - In the Artifactory console, press the **Welcome, admin** menu button in the top right corner of the console and select **Edit profile**
 
@@ -170,4 +170,4 @@ You will see a folder named after your resource group containing the tar file fo
 
 ## Conclusion
 
-Artifactory is now set up in your Developer Tools environment and Jenkins pipelines can store Helm charts in Artifactory repository. 
+Artifactory is now set up in your Developer Tools environment and CI pipelines can store Helm charts in Artifactory repository. 
