@@ -133,17 +133,28 @@ Most developers like to run the code natively in local development environment. 
 
 ### Register the App in a DevOps Pipeline
 
-- You now have the code in a GitHub repository and have cloned it to you local development environment. You can now register the repository with the **Continuous Integration** pipeline technology.
+You now have the code in a GitHub repository and have cloned it to you local development environment. You now need to register the repository with the continuous integration pipeline technology.
 
-- The default Continuous Integration tool is currently **Jenkins**. [Tekton support is also supported](/guides/continuous-integration-tekton)
+The default continuous integration tool currently is [Jenkins](/guides/continuous-integration). [Tekton](/guides/continuous-integration-tekton) is also supported.
 
-- You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins
+You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins.
 
 <InlineNotification kind="warning">
 
-  **Warning:** If you are working on a shared education cluster please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. ie. `igc pipeline -n dev-{your initials}` ie. `dev-mjp`
-
-  This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
+  **Warning:** If you are working on a shared education cluster, please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
+  -----
+  For example, don't just run:
+  ```bash
+  igc pipeline
+  ```
+  Instead, include the namespace parameter:
+  ```bash
+  igc pipeline -n dev-{your initials}
+  ```
+  For example:
+  ```bash
+  igc pipeline -n dev-mjp
+  ```
 
 </InlineNotification>
 
@@ -166,7 +177,7 @@ Most developers like to run the code natively in local development environment. 
 
 ### View your application pipeline
 
-To view you registered pipeline follow the steps for the type of development cluster you registered your application with.
+To view you registered pipeline, follow the steps for the type of development cluster you registered your application with.
 
 <Tabs>
 <Tab label="OpenShift">
@@ -175,23 +186,23 @@ To view you registered pipeline follow the steps for the type of development clu
 
 ![OpenShift](openshiftconsole.png)
 
-- From the top menu switch to the **Application Console**
+- From the top menu, switch to the **Application Console**
 - Select _dev_ project/namespace or you personal namespace that was used on the creation
-- Select left menu *Builds*->*Pipelines*
-- You will see your application dev ops pipeline now starting to build and once completed will look like the image below
-- To trigger another build
+- In the left menu, select *Builds* -> *Pipelines*
+
+You will see your application dev ops pipeline now starting to build and once completed will look like the image below.
 
 ![OpenShift](ospipeline.png)
 
 </Tab>
 <Tab label="Kubernetes">
 
-- Retrieve you Jenkins userid and password using `igc credentials`
-- Open your Tools Dashboard use this command `igc dashboard` in your terminal.
-- Select the Jenkins tool to open the Jenkins Instance.
-- Log in with the userid and password retrieved earlier.
-- Wait for the pipeline stages to start building.
-- Once the stages have completed you will see a view similar to the one below.
+- Run the command `igc dashboard` in your terminal to open your [Developer Tools Dashboard](/getting-started/dashboard)
+- Select the Jenkins tool to open the Jenkins dashboard
+- Run the command `igc credentials` in your terminal to get the list of logins for the tools
+- Use the Jenkins userid and password to log into the Jenkins dashboard
+
+Wait for the pipeline stages to start building. Once the stages have completed, you will see a view similar to the one below.
 
 ![Jenkins Pipeline](pipeline.png)
 

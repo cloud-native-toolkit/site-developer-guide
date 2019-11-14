@@ -10,8 +10,8 @@ Use SonarQube to analyze your code's quality
 
 In IBM Garage Method, one of the Develop practices is to [automate tests for continuous delivery](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/), in part by using [static source code analysis tools](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/tool_lint).
 SonarQube automates performing static code analysis and enables it to be added to a continuous integration pipeline.
-The Developer Tools environment's Jenkins pipeline includes a SonarQube stage. 
-Simply by building your app using the Jenkins pipeline, your code gets analyzed, just open the SonarQube UI to browse the findings.
+The Developer Tools environment's CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a SonarQube stage. 
+Simply by building your app using the pipeline, your code gets analyzed, just open the SonarQube UI to browse the findings.
 
 ## What is code analysis 
 
@@ -81,7 +81,7 @@ Developers can view the resulting analysis report in the SonarQube UI.
 
 ## Code Analysis in the Pipeline
 
-In the [Jenkins pipeline](/guides/continuous-integration), the *Sonar scan* stage triggers the SonarScanner in SonarQube.
+In the CI pipeline, the *Sonar scan* stage triggers the SonarScanner in SonarQube.
 Follow these directions to see code analysis in action:
 
 Deploy the Starter Kit Template named Spring Boot Microservice.
@@ -89,7 +89,7 @@ Deploy the Starter Kit Template named Spring Boot Microservice.
 - Follow the directions in [Deploying an App](/getting-started/deploy-app)
     - Deploy the Spring Boot Microservice template
     - Name the new repo something like `sonar-java`
-    - Be sure to run the Jenkins pipeline for your project, and confirm that it runs the Sonar scan stage
+    - Be sure to run the CI pipeline for your project, and confirm that it runs the Sonar scan stage
 
 Examine SonarQube's analysis report for your app.
 

@@ -100,7 +100,7 @@ each environment/namespace into which we want to deploy the applications.
 4. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename to one of 
 the application names in your project.
 
-   The application name should match the name in the package.json if the Jenkins CI pipeline is going push changes to the 
+   The application name should match the name in the package.json if the CI pipeline is going push changes to the 
    CD pipeline.
 
 5. Update `Chart.yaml`
@@ -202,9 +202,9 @@ connecting the config within the Git repo to the cluster and namespace.
 
 3. Repeat that step for each application and each environment
 
-### Hook the Jenkins pipeline to the CD pipeline
+### Hook the CI pipeline to the CD pipeline
 
-The last stage in the Jenkins pipeline updates the version number in the `requirements.yaml` to version of the helm chart
+The last stage in the CI pipeline updates the version number in the `requirements.yaml` to version of the helm chart
 that was just built. In order for the pipeline to push the updated file into the GitOps repo, it needs to read the url
 and credentials from a Kubernetes secret named `gitops-cd-secret`.
 

@@ -53,7 +53,7 @@ seed of the project. Its also never clear where the documentation is for these e
 Some typical examples :
 
 - Dockerfile
-- CI Pipeline Jenkins or Tekton
+- CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
 - TDD Frameworks
 - Code Analysis
 - Monitoring / Logging Support
@@ -83,8 +83,8 @@ use case business logic. This will then allow you to get started a lot quicker a
 
 If you want to contribute a **Starter Kit Template** have a look at the examples that are provided. They all have most of the
 features listed below. They must be UBI ([Universal Base Image](https://www.redhat.com/en/blog/introducing-red-hat-universal-base-image)) based
-so they can run in side Red Hat OpenShift and IBM Kubernetes Service. They must have a `Dockerfile` that uses that UBI.
-To make them work with Continuous Integration you can provide a Pipeline defined in **Jenkins Pipeline** or **Tekton Pipeline** format.
+so they can run in Red Hat OpenShift as well as Kubernetes. They must have a `Dockerfile` that uses that UBI.
+To make them work with continuous integration, you can provide a Jenkins or Tekton pipeline.
 
 Make sure there is a good use case that is repeatable in your solution architecture. Make sure the code is documented and includes a `README.md'. There is good code coverage for tests and you have integrated SonarQube code scanning on the build process.
 Finally them put in open source so other developers can enhance, improve or consume.

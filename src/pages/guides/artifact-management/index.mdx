@@ -34,8 +34,8 @@ Note that you do not need a very large team to start reaping benefits from an ar
 
 Note: Be sure to [set up Artifactory](/getting-started/artifactory-setup) before using it in the Development Tools environment.
 
-The Developer Tools environment will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. Jenkins builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
-- **Docker images**: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry)
+The Developer Tools environment will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
+- **Docker images**: The [Developer Tools Image Registry](/guides/image-registry)
 - **Helm charts**: A Helm repository in Artifactory
 
 The [Starter Kit Templates](/starterkits/overview) have also been configured to store their Helm charts in Artificatory.
@@ -75,4 +75,4 @@ Notice that each chart has its own URL in Artifactory, and index lists the URL f
 ## Conclusion
 
 The Developer Tools environment includes an artifact repository manager called Artifactory, which it uses to host a Helm repository. 
-As the Jenkins pipeline builds the Helm chart for an application, it stores the chart in the Artifactory repository. When the ArgoCD pipeline deploys an application, it retrieves the chart from the Artifactory repository.
+As the CI pipeline builds the Helm chart for an application, it stores the chart in the Artifactory repository. When the ArgoCD pipeline deploys an application, it retrieves the chart from the Artifactory repository.
