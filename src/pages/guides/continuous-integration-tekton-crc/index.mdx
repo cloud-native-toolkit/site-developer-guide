@@ -1,0 +1,127 @@
+---
+title: Continuous Integration with Tekton Operator
+description: This guide will explain how to use Tekton to manage your Continuous Integration process
+---
+
+## Overview
+
+Continuous integration is a software development technique where software is built regularly by a team in an automated fashion.
+
+Tekton is a new emerging CI tool that has been built to support Kubernetes and OpenShift from the ground up.
+
+## What is Tekton
+
+Tekton is a powerful yet flexible Kubernetes-native open-source framework for creating continuous integration and delivery (CI/CD) systems. It lets you build, test, and deploy across multiple cloud providers or on-premises systems by abstracting away the underlying implementation details.
+
+Tekton provides open-source components to help you standardize your CI/CD tooling and processes across vendors, languages, and deployment environments. Industry specifications around pipelines, releases, workflows, and other CI/CD components available with Tekton will work well with existing CI/CD tools such as Jenkins, Jenkins X, Skaffold, and Knative, among others.
+
+For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+
+The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively support it.
+
+This guide will focus on using Tekton when the Development tools have been installed along side IBM Cloud Pak for Applications to compliment your cloud native development toolset.
+
+
+
+### Tasks
+
+<InlineNotification>
+
+**Note:** This guide will help you setup the `Starter Kit Templates` with  **Tekton* and requires that you have installed Tekton with **IBM Cloud Pak for Applications* , **OpenShift 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
+</InlineNotification>
+
+
+The following gives a description of what each task in a the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
+
+- **Setup** clones the code into the pipeline
+- **Build** runs the build commands for the code
+- **Test**	validates the unit tests for the code
+- **Publish pacts**	(*optional*) publishes any pact contracts that have been defined
+- **Verify pact** (*optional*) verifies the pact contracts
+- **Sonar scan** (*optional*) runs a sonar code scan of the source code and publishes the results to SonarQube
+- **Build image** Builds the code into a Docker images and stores it in the IBM Cloud Image registry
+- **Deploy to DEV env**	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
+- **Health Check** Validates the Health Endpoint of the deployed application
+- **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
+- **Trigger CD Pipeline** (*optional*) This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
+
+### Setup Tekton
+
+- Install [Red Hard Code Ready Containers](https://cloud.ibm.com/catalog/content/ibm-cp-applications
+) on the OpenShift Cluster from the IBM Cloud Catalog
+
+- Install [IBM Garage for Cloud Developer Tools](/admin/overview) on your managed OpenShift development cluster on the IBM Cloud
+
+- Clone the **Tekton Tasks** onto your development machine
+    ```base
+    git clone git@github.com:ibm-garage-cloud/ibm-garage-tekton-tasks.git
+    cd ibm-garage-tekton-tasks
+    ```
+- Install the Tasks into the `dev` namespace
+    ```base
+    kubectl apply -f ibm-garage-iteration-zero/tekton -n dev
+    ```
+- Using the **Starter Kit Template** of your choice install the _Pipeline_ into your `dev` namespace. For example use the [**Template Node TypeScript**](https://github.com/ibm-garage-cloud/template-node-typescript.git)
+    ```bash
+    git clone https://github.com/ibm-garage-cloud/template-node-typescript.git
+    cd template-node-typescript
+    kubectl apply -f tekton -n dev
+    ```
+- Create Git WebHook for Tekton Pipeline and navigate to the Kabanero Enterprise Dashboard
+  ![Dashboard](/images/kabanero.png)
+
+- Open the Tekton Dashboard
+  ![Dashboard](/images/tekton.png)
+
+- Create github access token. If git repo is not private (ie public) only write:repo_hook is required
+  ![PAT](/images/pat.png)
+
+- Create a Webhook in the Tekton Dashboard
+    ![Webhook](/images/webhook.png)
+
+    - Click **Webhook** on the menu
+    - Click **Add Webhook** and enter the information for the webhook
+    - Name: **insert name**
+    - Repository UR: **template git repo url**
+    - Access Token: Create github access token with permission minimum write:repo_hook
+    - Namespace: dev
+    - Pipeline: node-typescript
+    - Service Account: default
+    - Docker Registry: NA
+
+
+- Check that Webhook is created on the Github repository (Settings->Webhooks)
+
+- Make a change to the git repo and push the change to remote git repository or click on **Pipelines**
+and manually kick of a pipeline build
+
+- Verify the **Pipelinerun** for the git change
+    ![Pipelinerun](/images/pipeline.png)
+
+## Running Application
+
+- Open the OpenShift Console and select the `dev` project and click on **Workloads**
+    ![OpenShift](/images/openshiftconsole.png)
+
+- Get the hostname for the application from ingress
+    ```bash
+    kubectl get ingress --all-namespace
+    ```
+- You can use the the `igc` command pipeline to get the name of the deployed application
+    ```bash
+    igc ingress -n dev
+    ```
+
+- Use the application URL to open it your browser for testing
+
+Once you become familiar with deploying code into OpenShift or IKS using Tekton, read up about how you can manage code deployment with `Continuous Delivery` with `Artiactory` and `ArgoCD`
+
+<AnchorLinks small>
+  <AnchorLink to="../../guides/artifact-management">Artifact Management with Artifactory</AnchorLink>
+  <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery with ArgoCD</AnchorLink>
+</AnchorLinks>
+
+You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
+
+
+

@@ -1,5 +1,89 @@
 ---
-title: IBM Cloud Image Registry
+title: Developer Tools Image Registry
 ---
 
-## Overview
+<PageDescription>
+
+As the CI/CD pipeline builds container images, it stores them in an image registry
+
+</PageDescription>
+
+In IBM Garage Method, one of the Develop practices is to [automate continuous delivery through a delivery pipeline](https://www.ibm.com/garage/method/practices/deliver/practice_delivery_pipeline/), in part by using an artifact repository for storing output of the build stage. When hosted in IBM Cloud, the Developer Tools environment uses the IBM Cloud Container Registry for storing container images.
+
+## What is the IBM Cloud Container Registry
+
+The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/services/Registry) is a private, multitenant [Docker registry](https://docs.docker.com/registry/) built into IBM Cloud for storing [OCI images](https://github.com/opencontainers/image-spec). Each IBM Cloud region hosts its own highly available registry. When deploying an application to a Kubernetes or OpenShift cluster, the cluster creates containers using the images in the registry. To package an application for deployment, the runtime must be built into an image that is stored in the registry. 
+
+In this standard Docker diagram, the Docker private registry is IBM Cloud Container Registry.
+
+![Docker Registry](docker-registry.png)
+
+The diagram shows these components and their relationships:
+- **Developer** builds the image
+- **Docker private registry** stores the image that was built
+- **UAT**, **Promote**, and **Production** are deployment environments, such as Kubernetes clusters or namespaces, that run the containers based on the image
+- **acme.com** is effectively an IBM Cloud region
+
+### Accessing
+
+There are two ways to work with an IBM Cloud registry:
+- **Web UI**: In the IBM Cloud console, navigate to either **Kubernetes** or **OpenShift** and then **Registry**
+- **CLI**: Use the [container-registry CLI plug-in](https://cloud.ibm.com/docs/services/Registry?topic=registry-registry_setup_cli_namespace) in the IBM Cloud CLI
+
+Of the two approaches, the CLI is much more powerful. The console is mainly for looking at your registry.
+
+When you installed the [prerequisites](/getting-started/prereqs), part of installing the IBM Cloud CLI installed several other tools and plug-ins including the container-registry plug-in.
+
+To use the container-registry plug-in, or even to push an image into the registry using your local Docker install (another of the [prerequisites](/getting-started/prereqs)), you must first log into IBM Cloud and then log into the region's IBM Cloud Container Registry:
+
+```bash
+$ ibmcloud login
+
+$ ibmcloud cr login
+```
+
+The logins determines the namespaces you can access. Other accounts also have namespaces in the registry, but IBM Cloud doesn't let you see them.
+
+## Registry organization
+
+Like the directories and file names in a file system, a Docker registry is a single collection of images that is cataloged with hierarchical names. A Docker registry such as Docker Hub (or, as we'll see, a registry in IBM Cloud) stores an image with a hierarchical name: namespace, repository, and tag. This path is specified when tagging and pushing the image:
+
+```bash
+$ docker tag <image> <namesapce>/<repo-name>:<tag>
+
+$ docker push <namesapce>/<repo-name>:<tag>
+```
+
+To tag and push an image to any registry other than Doker Hub, you have to specify its domain as part of the path:
+
+```bash
+$ docker push <domain>/<namesapce>/<repo-name>:<tag>
+```
+
+### Registry organization in an IBM Cloud account
+
+IBM's registry organizes images in this same hierarchical structure.
+
+**Domain**: [Each region](https://cloud.ibm.com/docs/services/Registry?topic=registry-registry_overview#registry_regions_local) in IBM Cloud (e.g. Dallas, London, Sydney, etc.) has its own multitenant registry instance with its own domain name (such as `us.icr.io` for Dallas/us-south). IBM provides its [public images](https://cloud.ibm.com/docs/services/Registry?topic=registry-public_images) in a global registry (domain `icr.io` (no region)).
+
+**Namespace**: A namespace is associated with an IBM Cloud account and groups the account's images. Every user in the account can view and work with all images in the namespace, but users outside of the account cannot access images in the account's namespaces. An account may use multiple namespaces to organize images for groupings such as development vs. production or approved vs. experimental. Each namespace must have a name that is unique within a region for all accounts (not just your account).
+
+**Repoitory**: A repo is often thought of as the name of the image, but techincally the same image can have different names (but the same image ID). Within a registry, different images with the same name stored in the same namespace will be stored in the same repo as long as they have different tags.
+
+**Tag**: Optional; if a command does not specify it, the default tag is `latest`. Two different tags enable a namesapce to store two images with different image IDs but the same repository name. The tag typically specifies a different build of an image with a different image ID. Two builds usually package two different versions of an application's code, but Docker does not enforce that. The two builds could just be the same Dockerfile run twice with the same inputs (and therefore equivalent), or two completely unrelated sets of software. But two builds usually run software that is similar but at least slightly different, such as a new version of an application's code, but could be simply an alternative implementation of the code (such as for A/B testing).
+
+Therefore, when [adding an image to a registry in IBM Cloud](https://cloud.ibm.com/docs/services/Registry?topic=registry-getting-started#gs_registry_images_pushing), the push command specifies the image's hierarchical path like this:
+
+```bash
+docker push <region>.icr.io/<my_namespace>/<image_repo>:<tag>
+```
+
+## Features
+
+Vulnerability Advisor
+
+Container Image Security Enforcement
+
+
+
+

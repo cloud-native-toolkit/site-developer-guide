@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration with Tekton
+title: Continuous Integration with Tekto
 description: This guide will explain how to use Tekton to manage your Continuous Integration process
 ---
 
@@ -9,19 +9,13 @@ Continuous integration is a software development technique where software is bui
 
 Tekton is a new emerging CI tool that has been built to support Kubernetes and OpenShift from the ground up.
 
-## What is Tekton
+- Read the this this [overview of Tekton](/guides/continuous-integration-tekton-crc#what-is-tekton)
 
-Tekton is a powerful yet flexible Kubernetes-native open-source framework for creating continuous integration and delivery (CI/CD) systems. It lets you build, test, and deploy across multiple cloud providers or on-premises systems by abstracting away the underlying implementation details.
-
-Tekton provides open-source components to help you standardize your CI/CD tooling and processes across vendors, languages, and deployment environments. Industry specifications around pipelines, releases, workflows, and other CI/CD components available with Tekton will work well with existing CI/CD tools such as Jenkins, Jenkins X, Skaffold, and Knative, among others.
-
-For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+- For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
 
 The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively support it.
 
-This guide will focus on using Tekton when the Development tools have been installed along side IBM Cloud Pak for Applications to compliment your cloud native development toolset.
-
-
+This guide will focus on using Tekton when the Development tools have been installed along side [IBM Cloud Pak for Applications](https://www.ibm.com/cloud/cloud-pak-for-applications) to compliment your cloud native development toolset.
 
 ### Tasks
 
@@ -29,7 +23,6 @@ This guide will focus on using Tekton when the Development tools have been insta
 
 **Note:** This guide will help you setup the `Starter Kit Templates` with  **Tekton* and requires that you have installed Tekton with **IBM Cloud Pak for Applications* , **OpenShift 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
 </InlineNotification>
-
 
 The following gives a description of what each task in the pipeline does. The *Optional* stages can be deleted or ignored if the tool supporting it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
 
@@ -157,7 +150,6 @@ The following gives a description of what each task in the pipeline does. The *O
   -s pipeline
   ```
 
-
 ### Create a Git Webhook 
 
 - Open the Tekton Dashboard from the main Tools Dashboard or the ICPA landing page.
@@ -210,6 +202,3 @@ Once you become familiar with deploying code into OpenShift or IKS using Tekton,
 </AnchorLinks>
 
 You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
-
-
-

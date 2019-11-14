@@ -51,9 +51,8 @@ necessary to directly reference the pull secret as long as the pod runs under th
 ## Created resources
 
 The following resources are all created during the Iteration Zero provisioning process. These resources
-are used generally to expose the config of the installed tools but specifically used by the Jenkins 
-pipeline to interact with the deployed tools. The resources are bound as optional environment variables
-in the containers used within the Jenkins pipeline so if a particular tool has not been installed the
+are used generally to expose the config of the installed tools but specifically used by the CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) to interact with the deployed tools. The resources are bound as optional environment variables
+in the containers used within the pipeline so if a particular tool has not been installed the
 associated environment variables won't be set. For example:
 
 ```yaml
