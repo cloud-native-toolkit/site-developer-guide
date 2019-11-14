@@ -9,7 +9,7 @@ Continuous integration is a software development technique where software is bui
 
 Tekton is a new emerging CI tool that has been built to support Kubernetes and OpenShift from the ground up.
 
-## What is Tekton foo
+## What is Tekton
 
 Tekton is a powerful yet flexible Kubernetes-native open-source framework for creating continuous integration and delivery (CI/CD) systems. It lets you build, test, and deploy across multiple cloud providers or on-premises systems by abstracting away the underlying implementation details.
 
@@ -56,7 +56,6 @@ The following gives a description of what each task in a the pipeline does. The 
     - Install Tekton via Knative add-on, it includes tekton 
     - Install Tekton Dashboard https://github.com/tektoncd/dashboard#install-dashboard
     - Install Tekton Webhook Extension https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension 
-- Install the Tekton ClI `tkn` https://github.com/tektoncd/cli
 
 ### Setup Tekton
 
@@ -66,11 +65,11 @@ The following gives a description of what each task in a the pipeline does. The 
 
 - Create a new namespace (ie `dev`) and copy all config and secrets
   ```
-  igc namespace -n <new-namespace>
+  igc namespace -n {new-namespace}
   ```
 - Set your `new-namespace` the current namespace context
   ```
-  oc project <new-namespace>
+  oc project {new-namespace}
   ```
 - Configure the sevice account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
   ```
@@ -89,6 +88,8 @@ The following gives a description of what each task in a the pipeline does. The 
 
 ### Manually trigger a Pipeline
 
+- Install the Tekton CLI `tkn` https://github.com/tektoncd/cli
+
 - Create a new repository using java or nodejs templates applications github repositories
   - https://github.com/ibm-garage-cloud/template-java-spring/generate
   - https://github.com/ibm-garage-cloud/template-node-react/generate
@@ -106,7 +107,7 @@ The following gives a description of what each task in a the pipeline does. The 
   tkn resource create       
   ? Enter a name for a pipeline resource : nodejs-typescript-git
   ? Select a resource type to create : git
-  ? Enter a value for url :  https://github.com/<user or org>/<app>
+  ? Enter a value for url :  https://github.com/{user or org}/{app}
   ? Enter a value for revision :  master
   New git resource "nodejs-typescript-git" has been created
   ```
@@ -116,10 +117,14 @@ The following gives a description of what each task in a the pipeline does. The 
   tkn resource create
   ```
   Select `image` for type.
-  Enter the corresponding `url` for container registry, use the <new-namespace> in the url 
-  For OCP 3 internal registry use `docker-registry.default.svc:5000/<new-namespace>/node-typescript:latest`
-  For OCP 4 or CRC internal registry use `image-registry.openshift-image-registry.svc:5000/<new-namespace>/node-typescript:latest`
-  For external IBM registry based on regio use `us.icr.io/<namespace>/node-typescript:latest` use an existing namespace in your IBM Cloud
+  
+  Enter the corresponding `url` for container registry, use the new-namespace} in the url 
+  
+  For OCP 3 internal registry use `docker-registry.default.svc:5000/{new-namespace}/node-typescript:latest`
+  
+  For OCP 4 or CRC internal registry use `image-registry.openshift-image-registry.svc:5000/{new-namespace}/node-typescript:latest`
+  
+  For external registry like IBM Container registry based on region use `us.icr.io/{namespace}/node-typescript:latest` use an existing namespace in your IBM Cloud
   ```
   tkn resource create
   ? Enter a name for a pipeline resource : nodejs-typescript-image
@@ -139,7 +144,7 @@ The following gives a description of what each task in a the pipeline does. The 
 - Run the Pipeline using the `git` and `image` Pipeline resources.
   Set the following environment variable for convienience:
   ```
-  export PIPELINE=igc-java-gradle
+  export PIPELINE=igc-nodejs
   export GIT=nodejs-typescript-git
   export IMAGE=nodejs-typescript-image
   ```
@@ -151,18 +156,11 @@ The following gives a description of what each task in a the pipeline does. The 
   -r docker-image=${IMAGE} \
   -s pipeline
   ```
-- 
+
 
 ### Create a Git Webhook 
 
-- Create Git WebHook for Tekton Pipeline and navigate to the Kabanero Enterprise Dashboard
-  ![Dashboard](/images/kabanero.png)
-
-- Open the Tekton Dashboard
-  ![Dashboard](/images/tekton.png)
-
-- Create github access token. If git repo is not private (ie public) only write:repo_hook is required
-  ![PAT](/images/pat.png)
+- Open the Tekton Dashboard from the main Tools Dashboard or the ICPA landing page.
 
 - Create a Webhook in the Tekton Dashboard
     ![Webhook](/images/webhook.png)
@@ -172,13 +170,15 @@ The following gives a description of what each task in a the pipeline does. The 
     - Name: **insert name**
     - Repository UR: **template git repo url**
     - Access Token: Create github access token with permission minimum write:repo_hook
-    - Namespace: dev
-    - Pipeline: node-typescript
-    - Service Account: default
-    - Docker Registry: NA
+    - Namespace: **insert namespace**
+    - Pipeline: select **igc-java-gradle** or **igc-nodejs**
+    - Service Account: **pipeline**
+    - Docker Registry:
+        - For OCP 3 internal registry use `docker-registry.default.svc:5000/{new-namespace}`
+        - For OCP 4 or CRC internal registry use `image-registry.openshift-image-registry.svc:5000/{new-namespace}`
+        - For external registry like IBM Container registry based on region use `us.icr.io/{namespace}` use an existing namespace in your IBM Cloud. Make sure to configure docker credentials in the Tekton Dashboard using your IAM API Key and `iamapikey` for username in your namespace.
 
-
-- Check that Webhook is created on the Github repository (Settings->Webhooks)
+- Check that Webhook is created on the Github repository (Settings-Webhooks)
 
 - Make a change to the git repo and push the change to remote git repository or click on **Pipelines**
 and manually kick of a pipeline build
@@ -188,16 +188,16 @@ and manually kick of a pipeline build
 
 ## Running Application
 
-- Open the OpenShift Console and select the `dev` project and click on **Workloads**
+- Open the OpenShift Console and select the {new-namespace} project and click on **Workloads**
     ![OpenShift](/images/openshiftconsole.png)
 
 - Get the hostname for the application from ingress
     ```bash
     kubectl get ingress --all-namespace
     ```
-- You can use the the `igc` command pipeline to get the name of the deployed application
+- You can use the the `igc` command to get the name of the deployed application
     ```bash
-    igc ingress -n dev
+    igc ingress -n {new-namespace}
     ```
 
 - Use the application URL to open it your browser for testing
