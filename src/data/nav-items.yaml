@@ -21,9 +21,7 @@
       path: /guides/overview
     - title: CI with Jenkins
       path: /guides/continuous-integration
-    - title: CI with Tekton CRC
-      path: /guides/continuous-integration-tekton-crc
-    - title: CI with Tekton ICP4A
+    - title: CI with Tekton
       path: /guides/continuous-integration-tekton
     - title: Image Registry
       path: /guides/image-registry
