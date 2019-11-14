@@ -24,7 +24,7 @@ This guide will focus on using Tekton when the Development tools have been insta
 **Note:** This guide will help you setup the `Starter Kit Templates` with  **Tekton* and requires that you have installed Tekton with **IBM Cloud Pak for Applications* , **OpenShift 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
 </InlineNotification>
 
-The following gives a description of what each task in a the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
+The following gives a description of what each task in the pipeline does. The *Optional* stages can be deleted or ignored if the tool supporting it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
 
 - **Setup** clones the code into the pipeline
 - **Build** runs the build commands for the code
@@ -51,15 +51,35 @@ The following gives a description of what each task in a the pipeline does. The 
     cd ibm-garage-tekton-tasks
     ```
 - Install the Tasks into the `dev` namespace
-    ```base
-    kubectl apply -f ibm-garage-iteration-zero/tekton -n dev
-    ```
-- Using the **Starter Kit Template** of your choice install the _Pipeline_ into your `dev` namespace. For example use the [**Template Node TypeScript**](https://github.com/ibm-garage-cloud/template-node-typescript.git)
     ```bash
-    git clone https://github.com/ibm-garage-cloud/template-node-typescript.git
-    cd template-node-typescript
-    kubectl apply -f tekton -n dev
+    kubectl create -f tasks/ -n dev
     ```
+
+  On successfully installing the tasks, you will see something like below.
+    ```bash
+    $ kubectl create -f tasks/ -n dev
+    task.tekton.dev/igc-build-push created
+    task.tekton.dev/igc-build-tag-push-ibm created
+    task.tekton.dev/igc-build-tag-push created
+    task.tekton.dev/igc-deploy created
+    task.tekton.dev/igc-gitops created
+    task.tekton.dev/igc-health-check created
+    task.tekton.dev/igc-helm-package created
+    task.tekton.dev/igc-java-gradle-test created
+    task.tekton.dev/igc-nodejs-test created
+    ```
+
+- Based on the **Starter Kit Template** you are planning to use, choose and install the _Pipeline_ into your `dev` namespace. For example, if you plan to use the [**Template Node TypeScript**](https://github.com/ibm-garage-cloud/template-node-typescript.git), install the pipeline as follows.
+    ```bash
+    kubectl apply -f pipelines/nodejs-pipeline.yaml -n dev
+    ```
+
+  On successfully installing the pipeline, you will see something like below.
+    ```bash
+    $ kubectl apply -f pipelines/nodejs-pipeline.yaml -n dev
+    pipeline.tekton.dev/igc-nodejs created
+    ```
+    
 - Create Git WebHook for Tekton Pipeline and navigate to the Kabanero Enterprise Dashboard
   ![Dashboard](/images/kabanero.png)
 
@@ -113,6 +133,3 @@ Once you become familiar with deploying code into OpenShift or IKS using Tekton,
 </AnchorLinks>
 
 You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
-
-
-
