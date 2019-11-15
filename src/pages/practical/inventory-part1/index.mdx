@@ -125,17 +125,35 @@ packages.
 ```java path=src/main/java/com/ibm/inventory_management/app/Application.java
 package com.ibm.inventory_management.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*","com.ibm.health"})
+@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*", "com.ibm.health"})
 public class Application extends SpringBootServletInitializer {
+    @Autowired
+    Environment environment;
+
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(com.ibm.inventory_management.app.Application.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            String port = environment.getProperty("local.server.port");
+
+            System.out.println();
+            System.out.println("Server started - http://localhost:" + port + "/swagger-ui.html");
+        };
     }
 
     @Override
@@ -168,7 +186,11 @@ for the REST service.
 
 - Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
 
-```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemController.java
+```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
+package com.ibm.inventory_management.controllers;
+
+import org.junit.jupiter.api.DisplayName;
+
 @DisplayName("StockItemController")
 public class StockItemControllerTest {
 }
@@ -177,6 +199,15 @@ public class StockItemControllerTest {
 - Add the MockMvc infrastructure and create the `StockItemController`
 
 ```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
+package com.ibm.inventory_management.controllers;
+
+import static org.mockito.Mockito.spy;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 @DisplayName("StockItemController")
 public class StockItemControllerTest {
     StockItemController controller;
@@ -193,7 +224,8 @@ public class StockItemControllerTest {
 ```
 
 ```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
-@RestController
+package com.ibm.inventory_management.controllers;
+
 public class StockItemController {
 }
 ```
@@ -201,6 +233,20 @@ public class StockItemController {
 - Add the tests for the controller behavior and make the corresponding changes to make the tests pass
 
 ```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
+package com.ibm.inventory_management.controllers;
+
+import static org.mockito.Mockito.spy;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 @DisplayName("StockItemController")
 public class StockItemControllerTest {
     StockItemController controller;
@@ -238,14 +284,45 @@ public class StockItemControllerTest {
 ```
 
 ```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
+package com.ibm.inventory_management.controllers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 public class StockItemController {
 
     @GetMapping(path = "/stock-items", produces = "application/json")
-    public List<StockItem> listStockItems() {
+    public List listStockItems() {
         return new ArrayList();
     }
 }
+```
+
+- Start the local server
+
+```bash
+npm start
+```
+
+or 
+
+```bash
+./gradlew bootRun
+```
+
+- When the server starts, open a browser to `http://localhost:9080/swagger-ui.html` to view the swagger documentation. You should
+see the stock item entry in the list
+
+- Commit and push the changes to Git.
+
+```base
+git add .
+git commit -m "Adds StockItemController"
+git push
 ```
 
 #### Add a service for providing results
