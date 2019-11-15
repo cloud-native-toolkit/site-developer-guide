@@ -52,6 +52,20 @@ The following is a list of desktop tools required to help with installation and 
 - [OpenShift OC CLI](https://www.okd.io/download.html): Required for Red Hat OpenShift management and development
     - Place `oc` and `kubectl` in your Terminal `PATH`
 
+    - #### MacOS/Linux
+    - Once downloaded navigate to Download folder
+    ```
+    cd ~/Downloads/openshift-origin-client-tools-v3/
+    ```
+    - Then copy `oc` and `kubectl` to the system-wide available scripts folder (which is already in your PATH)
+    ```
+    cp kubectl /usr/local/bin/kubectl
+    cp oc /usr/local/bin/oc
+    ```
+    - *P.S. Depending on your MacOS security settings you may need to allow access to `oc` and `kubectl`, go to `System Preferences`=>`Security & Privacy` and press `Allow Anyway`*
+    ![security](security.png)
+
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop): Required for running common tools and [Developer Tools Image](/guides/tools-image)
     - Installed and running on your local machine
 
