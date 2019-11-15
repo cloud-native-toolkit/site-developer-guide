@@ -1217,14 +1217,16 @@ git push
 Get the initial project created and register the pipeline for automated builds. Detailed instructions for
 each of these steps can be found in the [Deploying an App](/getting-started/deploy-app) guide.
 
-1. Create a new repository from the React UI Patterns Starter Kit template into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
+- Create a new repository from the React UI Patterns Starter Kit template into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
 
     In order to prevent naming collisions, name the repository `inventory-management-ui-{your initials}` replacing
     `{your initials}` with your actual initials.
 
-1. Clone the new repository to your machine
+- Clone the new repository to your machine
 
-1. Log into the cluster from the command-line then register the pipeline in Jenkins
+- Run `npm install` to install the project dependencies
+
+- Log into the cluster from the command-line then register the pipeline in Jenkins
 
     ```
     igc pipeline -n dev-{your initials}
@@ -1232,11 +1234,11 @@ each of these steps can be found in the [Deploying an App](/getting-started/depl
 
    replacing `{your initials}` with your actual initials
 
-1. Run `igc credentials` to get the credentials for the Jenkins instance.
+- Run `igc credentials` to get the credentials for the Jenkins instance.
 
-1. Log into Jenkins to see the pipeline running
+- Log into Jenkins to see the pipeline running
 
-1. When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
+- When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
 for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
 
 #### Create the initial components
@@ -1249,25 +1251,25 @@ from the menu and to create new components built from the pattern components.
 Based on the requirements of this first use case, we will create a StockItemList component based on
 the TableList pattern.
 
-1. Open a terminal and start the application in development mode to see the initial UI and the changes as we make them
+- Open a terminal and start the application in development mode to see the initial UI and the changes as we make them
 
-    ```
-    npm run start:dev
-    ```
+```
+npm run start:dev
+```
 
-1. Make a copy of the `TableList` pattern component from the `pattern-component` directory into the
+- Make a copy of the `TableList` pattern component from the `pattern-component` directory into the
 `components` folder. Rename the file and the class inside to `StockItemList`.
 
-    components/StockItemList.jsx
-    ```javascript
-    ...
+    
+```javascript path=src/components/StockItemList.jsx
+...
 
-    class StockItemList extends Component {
-      ...
-    }
-    ```
+class StockItemList extends Component {
+  ...
+}
+```
 
-1. Update UIShell.jsx
+- Update UIShell.jsx
 
     - Update the `header` variable to whatever name you want. "Big Blue Widgets" is used in the example
     - Update the `menuTitle` to "Inventory Management"
@@ -1286,7 +1288,7 @@ the TableList pattern.
     }
     ```
 
-1. Update UIShellBody.jsx
+- Update UIShellBody.jsx
 
     - Remove all of the pattern values from the `components` map and add one entry for Stock Item List. The value on the
     left is the label that is displayed and the value on the right is the class that should be loaded (e.g. `"Stock Items": StockItemList`).
@@ -1307,7 +1309,7 @@ the TableList pattern.
     }
     ```
 
-1. Open a second terminal in the repository directory and push the changes we've made to the repository
+- Open a second terminal in the repository directory and push the changes we've made to the repository
 
     ```bash
     git add .
@@ -1315,12 +1317,12 @@ the TableList pattern.
     git push
     ```
 
-1. Return to the Jenkins UI to see the pipeline running. (Use `igc credentials` if the login has expired.)
+- Return to the Jenkins UI to see the pipeline running. (Use `igc credentials` if the login has expired.)
 
     The Jenkins pipeline should have started automatically when the changes were pushed to the Git repository. If not
     you can manually start it by pressing `Build now with parameters`.
 
-1. Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
+- Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
 changes we just made should be reflected in the UI.
 
 #### Update StockItemList contents
@@ -1328,129 +1330,126 @@ changes we just made should be reflected in the UI.
 Now that we've created the initial components, we can start to customize the StockItemList to match
 the data for our application.
 
-1. Start the application in development mode (if not already running) with `npm run start:dev`
+- Start the application in development mode (if not already running) with `npm run start:dev`
 
-1. Update the columns and the data structure for our sample data to match the UI
+- Update the columns and the data structure for our sample data to match the UI
 
     The value in the `columns` array maps to one of the attributes in our data values
     (e.g. `name` refers to the name attribute)
 
-    components/StockItemList.jsx
-    ```javascript
-    class StockItemList extends Component {
-        ...
+```javascript path=src/components/StockItemList.jsx
+class StockItemList extends Component {
+    ...
 
-        columns = [
-        "name",
-        "description",
-        "stock",
-        "unitPrice",
-        "picture",
-        "manufacturer",
-        ];
-        data = [
-          {
-            "name": "Item 1",
-            "description": "The first item",
-            "stock": 10,
-            "unitPrice": 100.0,
-            "picture": "test",
-            "manufacturer": "unknown",
-          },
-          {
-            "name": "Item 2",
-            "description": "The second item",
-            "stock": 15,
-            "unitPrice": 120.5,
-            "picture": "test1",
-            "manufacturer": "Apple",
-          },
-          {
-            "name": "Item 3",
-            "description": "The third item",
-            "stock": 20,
-            "unitPrice": 75.5,
-            "picture": "test1",
-            "manufacturer": "Sony",
-          }
-        ];
+    columns = [
+    "name",
+    "description",
+    "stock",
+    "unitPrice",
+    "picture",
+    "manufacturer",
+    ];
+    data = [
+      {
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
+      },
+      {
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
+      },
+      {
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
+      }
+    ];
 
-        ...
-    }
-    ```
+    ...
+}
+```
 
-1. Update the title and subtitle with values for our Stock Items view. The `formatters` entry can be
+- Update the title and subtitle with values for our Stock Items view. The `formatters` entry can be
 set to `{}` as well.
 
-    components/StockItemList.jsx
-    ```javascript
-    class StockItemList extends Component {
-      title = 'Stock Items';
-      subtitle = 'This is the current inventory of items';
-      formatters = {};
+```javascript path=src/components/StockItemList.jsx
+class StockItemList extends Component {
+  title = 'Stock Items';
+  subtitle = 'This is the current inventory of items';
+  formatters = {};
 
-      ...
-    }
-    ```
+  ...
+}
+```
 
-1. The result of these changes should look like the following:
+- The result of these changes should look like the following:
 
-    components/StockItemList.jsx
-    ```javascript
-    class StockItemList extends Component {
-        title = 'Stock Items';
-        subtitle = 'This is the current inventory of items';
+```javascript path=src/components/StockItemList.jsx
+class StockItemList extends Component {
+    title = 'Stock Items';
+    subtitle = 'This is the current inventory of items';
 
-        columns = [
-        "name",
-        "description",
-        "stock",
-        "unitPrice",
-        "picture",
-        "manufacturer",
-        ];
-        formatters = {};
+    columns = [
+    "name",
+    "description",
+    "stock",
+    "unitPrice",
+    "picture",
+    "manufacturer",
+    ];
+    formatters = {};
 
-        data = [
-          {
-            "name": "Item 1",
-            "description": "The first item",
-            "stock": 10,
-            "unitPrice": 100.0,
-            "picture": "test",
-            "manufacturer": "unknown",
-          },
-          {
-            "name": "Item 2",
-            "description": "The second item",
-            "stock": 15,
-            "unitPrice": 120.5,
-            "picture": "test1",
-            "manufacturer": "Apple",
-          },
-          {
-            "name": "Item 3",
-            "description": "The third item",
-            "stock": 20,
-            "unitPrice": 75.5,
-            "picture": "test1",
-            "manufacturer": "Sony",
-          }
-        ];
+    data = [
+      {
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
+      },
+      {
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
+      },
+      {
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
+      }
+    ];
 
-      ...
-    }
-    ```
+  ...
+}
+```
 
-1. Push the changes we've made to the repository
+- Push the changes we've made to the repository
 
-    ```bash
-    git add .
-    git commit -m "Updates the StockItemsList view"
-    git push
-    ```
+```bash
+git add .
+git commit -m "Updates the StockItemsList view"
+git push
+```
 
-1. Look at the Jenkins pipeline and the deployed app
+- Look at the Jenkins pipeline and the deployed app
 
 #### Add a service component to get mock Stock Items
 
@@ -1459,239 +1458,228 @@ display dynamic data provided from a database in the table. As a first step towa
 need to separate the UI logic from the logic that retrieves the data. We will do that with a service
 component. For this first pass the service component will just return mock data.
 
-1. Create a directory called `services` under the client/src folder
+- Create a directory called `services` under the client/src folder
 
-1. Create a file named `stock-item-mock.service` in the service directory. Our
+- Create a file named `stock-item-mock.service` in the service directory. Our
 StockItem service component will have a single asynchronous function called `listStockItems()`
 that returns a list of StockItems.
 
-    services/stock-item-mock.service.js
-    ```javascript
-    export class StockServiceMock {
-      async listStockItems() {
-        return [];
-      }
-    }
-    ```
+```javascript path=src/services/stock-item-mock.service.js
+export class StockServiceMock {
+  async listStockItems() {
+    return [];
+  }
+}
+```
 
-1. Implement the service by copying the data array from `StockItemList` and returning it in the function. You can add a call
+- Implement the service by copying the data array from `StockItemList` and returning it in the function. You can add a call
 to `timer()` to simulate wait time
 
-    services/stock-item-mock.service.js
-    ```javascript
-    import timer from '../util/timer';
+```javascript path=src/services/stock-item-mock.service.js
+import timer from '../util/timer';
 
-    export class StockServiceMock {
-      async listStockItems() {
-        // wait 1 second before returning data
-        await timer(1000);
+export class StockServiceMock {
+  async listStockItems() {
+    // wait 1 second before returning data
+    await timer(1000);
 
-        return [
-          {
-            "name": "Item 1",
-            "description": "The first item",
-            "stock": 10,
-            "unitPrice": 100.0,
-            "picture": "test",
-            "manufacturer": "unknown",
-          },
-          {
-            "name": "Item 2",
-            "description": "The second item",
-            "stock": 15,
-            "unitPrice": 120.5,
-            "picture": "test1",
-            "manufacturer": "Apple",
-          },
-          {
-            "name": "Item 3",
-            "description": "The third item",
-            "stock": 20,
-            "unitPrice": 75.5,
-            "picture": "test1",
-            "manufacturer": "Sony",
-          }
-        ];
+    return [
+      {
+        "name": "Item 1",
+        "description": "The first item",
+        "stock": 10,
+        "unitPrice": 100.0,
+        "picture": "test",
+        "manufacturer": "unknown",
+      },
+      {
+        "name": "Item 2",
+        "description": "The second item",
+        "stock": 15,
+        "unitPrice": 120.5,
+        "picture": "test1",
+        "manufacturer": "Apple",
+      },
+      {
+        "name": "Item 3",
+        "description": "The third item",
+        "stock": 20,
+        "unitPrice": 75.5,
+        "picture": "test1",
+        "manufacturer": "Sony",
       }
-    }
-    ```
+    ];
+  }
+}
+```
 
-1. Update the components to pass the service in the properties
+- Update the components to pass the service in the properties
 
-    App.test.jsx
-    ```javascript
-    describe('App', () => {
-      test('canary verifies test infrastructure', () => {
-         expect(true).toEqual(true);
-      });
+```javascript path=src/App.test.jsx
+describe('App', () => {
+  test('canary verifies test infrastructure', () => {
+     expect(true).toEqual(true);
+  });
 
-      test('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
-        ReactDOM.unmountComponentAtNode(div);
-      });
+  test('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+});
+```
+    
+```javascript path=src/App.jsx
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.stockService = props.stockService || new MockStockService();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <UIShell stockService={this.stockService}/>
+      </div>
+    );
+  }
+}
+```
+
+```javascript path=src/components/UIShell.jsx
+class UIShell extends Component {
+  ...
+
+  <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
+
+  ...
+}
+```
+
+```javascript path=src/components/UIShellBody.jsx
+class UIShellBody extends Component {
+  components = {
+    "Stock Items": StockItemList,
+  };
+  render() {
+    const PatternName = this.components[
+      this.props.patternName || "Stock Items"
+    ];
+    return (
+      <div className="pattern-container">
+        <PatternName showDescription={true} stockService={this.props.stockService} />
+      </div>
+    );
+  }
+}
+```
+
+- Update `StockItemList` to use the provided service
+
+```javascript path=src/components/StockItemList.jsx
+class StockItemList extends Component {
+  ...
+
+  constructor(props) {
+    super(props);
+
+    this.stockService = props.stockService;
+
+    this.state = {
+      data: [],
+      selectedRow: 0
+    };
+  }
+
+  async componentDidMount() {
+
+    this.setState({
+      data: await this.stockService.listStockItems()
     });
-    ```
+  }
 
-    App.jsx
-    ```javascript
-    class App extends Component {
-      constructor(props) {
-        super(props);
+  ...
+}
+```
 
-        this.stockService = props.stockService || new MockStockService();
-      }
+- Push the changes we've made to the repository
 
-      render() {
-        return (
-          <div className="App">
-            <UIShell stockService={this.stockService}/>
-          </div>
-        );
-      }
-    }
-    ```
+```bash
+git add .
+git commit -m "Adds a mock service"
+git push
+```
 
-    components/UIShell.jsx
-    ```javascript
-    class UIShell extends Component {
-      ...
-
-      <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
-
-      ...
-    }
-    ```
-
-    components/UIShellBody.jsx
-    ```javascript
-    class UIShellBody extends Component {
-      components = {
-        "Stock Items": StockItemList,
-      };
-      render() {
-        const PatternName = this.components[
-          this.props.patternName || "Stock Items"
-        ];
-        return (
-          <div className="pattern-container">
-            <PatternName showDescription={true} stockService={this.props.stockService} />
-          </div>
-        );
-      }
-    }
-    ```
-
-1. Update `StockItemList` to use the provided service
-
-    components/StockItemList.jsx
-    ```javascript
-    class StockItemList extends Component {
-      ...
-
-      constructor(props) {
-        super(props);
-
-        this.stockService = props.stockService;
-
-        this.state = {
-          data: [],
-          selectedRow: 0
-        };
-      }
-
-      async componentDidMount() {
-
-        this.setState({
-          data: await this.stockService.listStockItems()
-        });
-      }
-
-      ...
-    }
-    ```
-
-1. Push the changes we've made to the repository
-
-    ```bash
-    git add .
-    git commit -m "Adds a mock service"
-    git push
-    ```
-
-1. Look at the Jenkins pipeline and the deployed app
+- Look at the Jenkins pipeline and the deployed app
 
 #### Add a service that calls the BFF
 
 Now that we have a mock service that injects data we can build an implementation of the service
 that calls our BFF.
 
-1. Create a service implementation in the `services` directory called `stock-service.js`
+- Create a service implementation in the `services` directory called `stock-service.js`
 
-    services/stock-service.js
-    ```javascript
-    export class StockService {
-      async listStockItems() {
-        return [];
-      }
-    }
-    ```
+```javascript path=src/services/stock-service.js
+export class StockService {
+  async listStockItems() {
+    return [];
+  }
+}
+```
 
-1. Add an implementation of `listStockItems()` that calls the BFF through the `/api` proxy
+- Add an implementation of `listStockItems()` that calls the BFF through the `/api` proxy
 
-    ```javascript
-    export class StockService {
-      constructor(baseUrl) {
-        this.baseUrl = baseUrl || '/api';
-      }
+```javascript path=src/services/stock.service
+export class StockService {
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl || '/api';
+  }
 
-      async listStockItems() {
-        return superagent
-          .get(this.baseUrl + '/stock-items')
-          .set('accept', 'application/json')
-          .then(res => {
-            console.log('Got response: ', res);
-            return res.body || [];
-          });
-      }
-    }
-    ```
+  async listStockItems() {
+    return superagent
+      .get(this.baseUrl + '/stock-items')
+      .set('accept', 'application/json')
+      .then(res => {
+        console.log('Got response: ', res);
+        return res.body || [];
+      });
+  }
+}
+```
 
     **Note:** In dev mode the proxy is configured in `client/package.json`. When running with the express
     server the proxy is configured in `server/routers/api.js`. By default the value points to `localhost:3001`.
 
-1. Update `App.jsx` to use the new service instead of the mock service.
+- Update `App.jsx` to use the new service instead of the mock service.
 
-    App.jsx
-    ```javascript
-    class App extends Component {
-      constructor(props) {
-        super(props);
+```javascript path=src/App.jsx
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-        this.stockService = props.stockService || new StockService();
-      }
+    this.stockService = props.stockService || new StockService();
+  }
 
-      ...
-    }
-    ```
+  ...
+}
+```
 
-1. Configure the helm chart to point to the kubernetes Service resource of the BFF.
+- Configure the helm chart to point to the kubernetes Service resource of the BFF.
 
-    chart/template-node-react/values.yaml
-    ```javascript
-    apiHost: "inventory-management-bff-{your initials}:80"
-    ```
+```javascript path=chart/template-node-react/values.yaml
+apiHost: "inventory-management-bff-{your initials}:80"
+```
 
-1. Push the changes we've made to the repository
+- Push the changes we've made to the repository
 
-    ```bash
-    git add .
-    git commit -m "Updates the StockItemsList view"
-    git push
-    ```
+```bash
+git add .
+git commit -m "Updates the StockItemsList view"
+git push
+```
 
-1. Look at the Jenkins pipeline and the deployed app
-
+- Look at the Jenkins pipeline and the deployed app
 
 
 ## Summary
