@@ -221,6 +221,17 @@ steps will walk through using the helm chart to create the secret.
 3. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
 
-    **Note:** The namespace (`dev-{initials}`) should match the namespace where the pipeline is running. The value provided
-    for `branch` is the one the pipeline will use to when commiting changes to trigger the CD pipeline. `test` is the
-    recommended value for the branch field.
+    **What just happened?**
+    
+    The `git-secret` command creates a secret in kubernetes containing the url, username, password, and branch information
+    for a git repo into the given namespace. In the command above, we provided `gitops-cd-secret` for the secret name. You
+    can verify the secret was created by running 
+    
+    ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml``` 
+
+    **Note:** 
+    
+    - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
+    where the pipeline is running (e.g. `dev-{initials}`).
+    - The value provided for `branch` is the one the pipeline will use to when committing changes to trigger 
+    the CD pipeline. `test` is the recommended value for the branch field.
