@@ -39,6 +39,10 @@ div[class*='module--container']{
     max-height: 900px;
 }
 
+div[class*='Code-module--row']{
+    width:95%;
+}
+
 .bx--list--nested {
     margin-bottom: 1.5em;
 }
