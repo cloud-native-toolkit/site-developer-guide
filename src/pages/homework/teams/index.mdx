@@ -2,53 +2,57 @@
 title: Validate IBM Cloud Account
 ---
 
+<PageDescription>
+
+Steps to get set up as part of your team to do the MOOC
+
+</PageDescription>
+
 ## Sign Up
 
-To be added to the **Garage OpenShift and Cloud Pak MOOC series** you must subscribe to the [MOOC Event](https://ec.yourlearning.ibm.com/w3/subscription/series/10057053).
+To participate in the [**Garage OpenShift and Cloud Pak MOOC**](https://www.onlinedigitallearning.com/course/view.php?id=5631), subscribe to the [**Garage OpenShift and Cloud Pak MOOC series**](https://ec.yourlearning.ibm.com/w3/subscription/series/10057053) to receive calendar invites for the MOOC events.
 
 <InlineNotification kind="warning">
 
-**Warning:** If you do not enroll on the class you will not be given access to the **MOOC** shared education sandbox cluster. Enrollment will enable you to be added to the development environment on the IBM Cloud.
+**Warning:** If you do not enroll in the class, you will not be given access to the **MOOC** shared education sandbox cluster. Enrollment will enable you to be added to the development environment on the IBM Cloud.
 
 </InlineNotification>
 
 ### Notification
 
-- After the first live web cast has completed you will receive an email giving you details on how to access your development team cluster. you will be allocated to a team.
+After the first live webcast has completed, you will receive an email giving you details on how to access the Developer Tools environment for your development team. The email will specify the MOOC Sandbox Registration Details:
+- **Account**: This is the IBM Cloud account with a Developer Tools environment for your team and resources to perform the homework
+- **Team name**: This is the name of your development team, such as `mooc-team-one`, `mooc-team-two`,`mooc-team-n..`
+- **Git Organization**: This is the GitHub org for your team's set of git repos
+- **Resource Group**: This is the IBM Cloud resource group for your Developer Tools environment
 
-- The team names use the convention `mooc-team-one`, `mooc-team-two`,`mooc-team-n..` you will have received you team name in your notification email.
-
-- The notification email will include the name of the **Account Sandbox** you have been added too and which **Development Team Cluster** you have been allocated.
-
-- You must associate your IBM email address with your public git hub account or make sure you have a public account that is using your IBM email address.
-    - Log into [Github](https://github.com)
-    - Navigate to you account settings
-    - Select emails, check your IBM email address is your primary email for the account
-    - If it is not then add you IBM email and verify it
-    - If you are correctly verified and associated you will receive a second email inviting you to your associated git organizations
+You must associate your IBM email address with your public GitHub account or make sure you have a public account that is using your IBM email address.
+- Go to [Github](https://github.com)
+- Log into your account or create one
+- Navigate to you account settings
+- Select emails, check your IBM email address is your primary email for the account
+- If it is not then add you IBM email and verify it
+- If you are correctly verified and associated you will receive a second email inviting you to your associated git organizations
 
 ![GitHub eMail](githubemail.png)
 
 <InlineNotification kind="warning">
 
-**Warning:** If you do associate your IBM email with you public git hub account you will have issues completing the homework.
+**Warning:** If you do not associate your IBM email with you public GitHub account, you will have issues completing the homework.
 
 </InlineNotification>
 
-- The Sandbox has been defined exactly how a client would use the IBM Cloud and you will be given access to a specific team `Resource Group` and `Access Group`. This will then enable you to access the development clusters for IBM Kubernetes and Red Hat OpenShift. The Resource group will have pre installed content and you will be restricted from creating new cloud services or deleting existing ones.
+The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to 30 of your Garage colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment has been created in that resource group. So as a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you will be restricted from creating new cloud resources or deleting existing ones.
 
-- Each **Development Team** will consist of **30+** Garage colleagues.
-
-
-The following diagram helps to explain how access will be configured. Imagine you are the `Green` user, there will be lots of other users around you maybe in different timezones all sharing the same clusters resources. The administrators will be monitoring the cluster to identify any possible issues early and resolving them.
-
-- You will be given access to a team git organization. You will be expected to create all your git projects in your teams organization. This is how real world development projects work. This will enable you to collaborate with your fellow team members and will prevent you from creating duplicate projects names.
+The following teams diagram helps to explain how access will be configured. Imagine you are the Green user: There will be lots of other users in your team, maybe in different timezones, all sharing the same cloud resources. The administrators will monitor the cluster to identify any issues early and resolve them.
 
 ![MOOC Teams](moocteams.png)
 
-There will an IBM Kubernetes Cluster in the same `Resource Group` and you will get bonus _credits_ if you can deliver some of the home work onto that cluster as well. IBM Garage is getting a number of client requests that may require upstream kubernetes to be used for specific use cases. It is important you become familiar with both premier container platforms. The developer experience is the same for both container platforms.
+You will be given access to the team's GitHub organization. You will be expected to create all of your Git projects as repositories in your team's organization. This is how real world development projects work. This will enable you to collaborate with your fellow team members and will prevent you from creating duplicate projects names.
 
-<p></p>
+**Extra credit**: After performing the homework in the OpenShift cluster, can you get it working in a Kubernetes cluster as well? As shown in the teams diagram above, your team's Developer Tools environment and its resource group include not only an OpenShift cluster but also a Kubernetes cluster. It's helpful if you can perform these development tasks in both container platforms because some Garage clients use one and some use the other. If you can work in both, you'll be qualified to staff more projects. The Developer Tools environment makes the developer experience the same for both container platforms.
+
+<p/>
 
 ## Team Locations
 
@@ -56,7 +60,7 @@ The teams are spread globally in different geographic locations listed below. We
 
 <InlineNotification>
 
-**Note:** After you have received your team notification email  please click on the link to your team homework below to request to join your team Git Org.
+**Note:** After you receive your team notification email, please click on the link to your team homework below to request to join your team's GitHub organization.
 
 </InlineNotification>
 
@@ -77,22 +81,21 @@ The teams are spread globally in different geographic locations listed below. We
 
 <InlineNotification>
 
-**Note**: If you have issues with any of the following steps please raise an issue on the `#openshift-cldpak-mooc` slack channel. All homework issues should be raised on the `#catalyst-project` channel.
+**Note**: If you have issues with any of the following steps, please raise an issue on the Slack channel **#openshift-cldpak-mooc**. All homework issues should be raised on the **#catalyst-project** channel.
 
 </InlineNotification>
 
-Follow these steps to check you can access your **Teams Development Cluster**:
+Follow these steps to check you can access your team's Developer Tools environment:
 
 - Login to the [IBM Cloud](https://cloud.ibm.com)
-- In the _notification email_ you will be notified of the account sandbox you have been allocated too
-- Check you can see that account in the Accounts drop down
-- Change the Accounts drop down to your allocated sandbox account
-- Click on *Resource List*
-- Type in your team name in the Groups filter ie. `mooc-team-one`
+- The MOOC Sandbox Registration Details email will tell you your account, team, Git organization, and resource group
+- In the IBM Cloud console, switch to the account specified in the email
+- Navigate to the *Resource List*
+- In the Group filter, select your resource group
 ![Resoure List](resourcelist.png)
-- Click on the **Expand All** (top right)
-- You should see two Clusters labelled `mooc-one-rhos-cluster` and `mooc-one-iks-cluster`
-- Enter `rhos` in Tags filter, you will see just the Red Hat OpenShift cluster and services
+- Click on **Expand All** (top right) to show all of the resources in your resource group
+- Under Cluster, you should see two clusters named `mooc-NNN-rhos-cluster` and `mooc-NNN-iks-cluster` (where NNN is your team number)
+- In the Tags filter, enter `rhos` to see just the Red Hat OpenShift cluster and services
 ![Resoure List](devtoolsservices.png)
 - Click on the Red Hat OpenShift cluster to open its dashboard
 - Click on the **Access** tab
