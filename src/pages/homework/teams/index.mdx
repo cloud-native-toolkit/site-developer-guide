@@ -1,10 +1,10 @@
 ---
-title: Validate IBM Cloud Account
+title: Welcome to your MOOC team
 ---
 
 <PageDescription>
 
-Steps to get set up as part of your team to do the MOOC
+Steps to get set up as part of your team in the Developer Tools environment to do the MOOC
 
 </PageDescription>
 
@@ -42,19 +42,21 @@ You must associate your IBM email address with your public GitHub account or mak
 
 </InlineNotification>
 
-The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to 30 of your Garage colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment has been created in that resource group. So as a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you will be restricted from creating new cloud resources or deleting existing ones.
+### Sandbox
 
-The following teams diagram helps to explain how access will be configured. Imagine you are the Green user: There will be lots of other users in your team, maybe in different timezones, all sharing the same cloud resources. The administrators will monitor the cluster to identify any issues early and resolve them.
+The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to 30 of your Garage colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment have been created in that resource group. So as a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you are restricted from creating new cloud resources or deleting existing ones.
+
+The following teams diagram shows how access is configured. Imagine you are the Green user: There will be lots of other users in your team, maybe in different timezones, all sharing the same cloud resources. The administrators will monitor the cluster to identify any issues early and resolve them.
 
 ![MOOC Teams](moocteams.png)
 
-You will be given access to the team's GitHub organization. You will be expected to create all of your Git projects as repositories in your team's organization. This is how real world development projects work. This will enable you to collaborate with your fellow team members and will prevent you from creating duplicate projects names.
+You will be given access to the team's GitHub organization and are expected to create all of your applications as repositories in your team's organization. This is how real world development projects work. This enables you to collaborate with your fellow team members and  prevents you from creating duplicate projects names.
 
 **Extra credit**: After performing the homework in the OpenShift cluster, can you get it working in a Kubernetes cluster as well? As shown in the teams diagram above, your team's Developer Tools environment and its resource group include not only an OpenShift cluster but also a Kubernetes cluster. It's helpful if you can perform these development tasks in both container platforms because some Garage clients use one and some use the other. If you can work in both, you'll be qualified to staff more projects. The Developer Tools environment makes the developer experience the same for both container platforms.
 
 <p/>
 
-## Team Locations
+## Team locations
 
 The teams are spread globally in different geographic locations listed below. We will try and make team membership as close to your home Garage as possible.
 
@@ -85,7 +87,9 @@ The teams are spread globally in different geographic locations listed below. We
 
 </InlineNotification>
 
-Follow these steps to check you can access your team's Developer Tools environment:
+Follow these steps to check you can access your team's Developer Tools environment.
+
+Login and view the resources.
 
 - Login to the [IBM Cloud](https://cloud.ibm.com)
 - The MOOC Sandbox Registration Details email will tell you your account, team, Git organization, and resource group
@@ -95,38 +99,50 @@ Follow these steps to check you can access your team's Developer Tools environme
 ![Resoure List](resourcelist.png)
 - Click on **Expand All** (top right) to show all of the resources in your resource group
 - Under Cluster, you should see two clusters named `mooc-NNN-rhos-cluster` and `mooc-NNN-iks-cluster` (where NNN is your team number)
+
+Explore the Red Hat OpenShift resoruces and set up the CLI.
+
 - In the Tags filter, enter `rhos` to see just the Red Hat OpenShift cluster and services
 ![Resoure List](devtoolsservices.png)
-- Click on the Red Hat OpenShift cluster to open its dashboard
-- Click on the **Access** tab
-- Follow the instructions to access the cluster from the command line , validate you are successful
-- Return to the cluster dashboard
-- Validate you can access the dashboards for each of the bound services
-- Click on the *Open Web Console*
-- Check that you can access the Red Hat OpenShift Console
+- Click on the name of each cloud service instance and verify you can open each one's dashboard
+- Click on the names of the Red Hat OpenShift cluster to open its dashboard
+- Switch to the **Access** tab
+- Follow the instructions to install the CLI, access the cluster from the CLI, and validate that you are successfully connected
+- Press the *OpenShift web console* button and verify that you can open the Red Hat OpenShift console
+
+Explore the IKS resoruces and set up the CLI.
+
 - Return to the **Resource List**
 - Remove the `rhos` tag and add the `iks` tag
-- Repeat the same steps for your teams IBM Kubernetes cluster and services
+- Repeat the same steps for your team's Kubernetes cluster and services
 
 <InlineNotification kind="success">
 
-If you have managed to access IBM Cloud account and open your teams Red Hat OpenShift Cluster and accessed the cluster from the command you have completed this homework task.
+You have completed this homework task if you have:
+- Managed to access IBM Cloud account
+- Viewed your team's Red Hat OpenShift cluster
+- Accessed the cluster from the command line
 
 </InlineNotification>
 
 ## Etiquette
 
-Please remember you will be using a development cluster with other colleagues, be considerate of the following rules:
+Please remember that you a sharing a development cluster with other colleagues, so be considerate of the following rules:
 
 - Make sure you use your own namespace/project for you applications
-- Name your personal namespace/project using this convention `dev-{your initials}` ie. `dev-mjp`
-- Any namespaces/projects not following this approach will be deleted by the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
-- Add initials `{<app name}w-{your initials}` to the end of your app names ie. `inventory-bff-mjp` The use of the team git organization will help with not creating apps with the same name.
-- Talk to you fellow team members using slack to help debug issues
-- Use the Github team discussion feature to share knowledge
-- Do not delete anything that is not yours in the cluster especially `secrets` and `configMaps` this will cause unnecessary pain for [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
-- Do not delete other peoples `pipelines` or `deployed apps`
-- Do not create anything that will cause unnecessary stress to your teams Red Hat Cluster or the `MOOC Account`
-- Remember part of the learning is showing you how to be team members working on multiple microservices in the same development cluster with other developers.
-- Remember running an app on your laptop does not trump running code in a cluster
-- Remember IBM Cloud is like one big lego set of software and services. After this course you be on your way to be a `master builder` its loads of fun
+    - Name your personal namespace/project using the convention `dev-{your initials}`, i.e. `dev-mjp`
+    - Any namespaces/projects not following this approach will be deleted by the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
+- Name your applications using the convention `{app name}-{your initials}`, i.e. `inventory-bff-mjp`
+    - Using the team GitHub organization will help avoid creating apps with the same name
+- Use Slack to talk to your fellow team members to help debug issues
+- Use the [GitHub team discussion](https://help.github.com/en/github/building-a-strong-community/about-team-discussions) feature to share knowledge
+- Do not delete anything in the cluster that is not yours
+    - Especially secrets and configMaps--deleting these will mess up how the environment works for you and your colleagues, and more importantly will cause unnecessary repair work for the [master builders](https://www.youtube.com/watch?v=Um-PlX6oPBQ)
+    - Do not delete other people's pipelines or deployed apps
+- Do not create anything that will cause unnecessary stress to your team's cluster, its environment, or the MOOC account
+
+Remember:
+- Part of what you should be learning is how to be team members working on multiple microservices in the same development cluster with other developers
+- Running an app on your laptop does not trump running code in a cluster
+- IBM Cloud is like one big lego set of software and services
+    - After this course, you be on your way to be a master builder, it's loads of fun
