@@ -1176,7 +1176,8 @@ export * from './stock-items.service';
 ```
 
 - Add a `serviceUrl` property to the values.yaml file of the helm chart. The value of the property should match the
-kubernetes service of the microservice (the service name is likely the same as the name of the application and repository)
+kubernetes service of the microservice (for starter kit projects the service name is the same as the name of the 
+application which is that same as the name of the repository)
 
 ```yaml path=chart/template-graphql-typescript/values.yaml
 global: {}
@@ -1186,7 +1187,14 @@ serviceUrl: "inventory-management-service-{your initials}:80"
 ...
 ```
 
-- Add an environment variable in the deployment for the service url along with the other environment variables
+    The `values.yaml` file of the helm chart defines the variables that can be provided to the
+    template as input. Now that we've added a new variable, we will need to update the appropriate
+    template file to use our new variable.
+
+- Add a new environment variable named `SERVICE_URL` to the list of existing environment variables in deployment.yaml.
+(`SERVICE_URL` is the name we gave the environment variable in our `stock-item-service.config` class as the first step in
+this section.) The value of this environment variable should come from the `serviceUrl` value we defined. You can add 
+`| quote` to wrap the value in quotes in case the value is not formatted correctly.
 
 ```yaml path=chart/template-graphql-typescript/templates/deployment.yaml
   ...
@@ -1200,6 +1208,11 @@ serviceUrl: "inventory-management-service-{your initials}:80"
   ...
 ```
 
+    `deployment.yaml` is a templatized kubernetes yaml file that describes the deployment of our component.
+    The deployment will create one or more pods based on the pod template defined in the deployment.
+    Each pod that starts will have the envionment variables that we have defined in the `env` section
+    available for the container image to reference. 
+    
 - Commit and push the changes to git
 
 ```bash
