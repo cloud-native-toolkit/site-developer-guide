@@ -11,7 +11,7 @@ An example three tier application architecture you can build and have deployed i
 <AnchorLinks>
   <AnchorLink to="#inventory-service">Inventory Service</AnchorLink>
   <AnchorLink to="#inventory-bff">Inventory BFF</AnchorLink>
-  <AnchorLink to="#Inventory UI">Inventory UI</AnchorLink>
+  <AnchorLink to="#inventory-ui">Inventory UI</AnchorLink>
 </AnchorLinks>
 
 
@@ -40,7 +40,7 @@ The Micro App should adhere to the following User Interface Design and API and M
 ![UI Design](/images/inventory-ui-design.png)
 
 ## Technical Requirements
-- The Mico App should adhere to the following technical requirements:
+- The Micro App should adhere to the following technical requirements:
 
     - Polyglot Microservices
     - Stateless
@@ -56,6 +56,7 @@ The Micro App should adhere to the following User Interface Design and API and M
 
 You will approach creating the Micro App bottom up, this means you will start by creating the backend micro services that manages integration with the data persitence and then build out the digital channel using a backend for frontend pattern. Finally you will place a web interface for the solution.
 
+<<<<<<< HEAD
 ## Solution Links
 
 If you want to skip the guide and just get the components running, here are the solution Git Repositories. You can clone these and `igc pipeline` them to register them in the CI pipeline. The **README.md** may include additional setup for populating test data etc.
@@ -67,6 +68,8 @@ If you want to skip the guide and just get the components running, here are the 
 </AnchorLinks>
 
 
+=======
+>>>>>>> 90819ff571c87076564a4726088ed7b0cd18a6c6
 ### Inventory Service
 
 #### Setup
@@ -1186,7 +1189,8 @@ export * from './stock-items.service';
 ```
 
 - Add a `serviceUrl` property to the values.yaml file of the helm chart. The value of the property should match the
-kubernetes service of the microservice (the service name is likely the same as the name of the application and repository)
+kubernetes service of the microservice (for starter kit projects the service name is the same as the name of the 
+application which is that same as the name of the repository)
 
 ```yaml path=chart/template-graphql-typescript/values.yaml
 global: {}
@@ -1196,7 +1200,14 @@ serviceUrl: "inventory-management-service-{your initials}:80"
 ...
 ```
 
-- Add an environment variable in the deployment for the service url along with the other environment variables
+    The `values.yaml` file of the helm chart defines the variables that can be provided to the
+    template as input. Now that we've added a new variable, we will need to update the appropriate
+    template file to use our new variable.
+
+- Add a new environment variable named `SERVICE_URL` to the list of existing environment variables in deployment.yaml.
+(`SERVICE_URL` is the name we gave the environment variable in our `stock-item-service.config` class as the first step in
+this section.) The value of this environment variable should come from the `serviceUrl` value we defined. You can add 
+`| quote` to wrap the value in quotes in case the value is not formatted correctly.
 
 ```yaml path=chart/template-graphql-typescript/templates/deployment.yaml
   ...
@@ -1210,6 +1221,11 @@ serviceUrl: "inventory-management-service-{your initials}:80"
   ...
 ```
 
+    `deployment.yaml` is a templatized kubernetes yaml file that describes the deployment of our component.
+    The deployment will create one or more pods based on the pod template defined in the deployment.
+    Each pod that starts will have the envionment variables that we have defined in the `env` section
+    available for the container image to reference. 
+    
 - Commit and push the changes to git
 
 ```bash
@@ -1220,7 +1236,7 @@ git push
 
 - Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
-### Inventory User Interface
+### Inventory UI
 
 #### Setup
 
@@ -1236,7 +1252,7 @@ each of these steps can be found in the [Deploying an App](/getting-started/depl
 
 - Run `npm install` to install the project dependencies
 
-- Log into the cluster from the command-line then register the pipeline in Jenkins
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
 
     ```
     igc pipeline -n dev-{your initials}
@@ -1244,12 +1260,7 @@ each of these steps can be found in the [Deploying an App](/getting-started/depl
 
    replacing `{your initials}` with your actual initials
 
-- Run `igc credentials` to get the credentials for the Jenkins instance.
-
-- Log into Jenkins to see the pipeline running
-
-- When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
-for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
 #### Create the initial components
 
@@ -1271,12 +1282,27 @@ npm run start:dev
 `components` folder. Rename the file and the class inside to `StockItemList`.
 
     
-```javascript path=src/components/StockItemList.jsx
-...
+```javascript path=client/src/components/StockItemList.jsx
+import React, { Component } from "react";
+import {
+  StructuredListWrapper,
+  StructuredListRow,
+  StructuredListCell,
+  StructuredListHead,
+  StructuredListBody,
+  StructuredListInput,
+  Icon
+} from "carbon-components-react";
+import { iconCheckmarkSolid } from "carbon-icons";
+
+import Header from "../pattern-components/Header";
+import "../pattern-components/patterns.scss";
 
 class StockItemList extends Component {
   ...
 }
+
+export default StockItemList;
 ```
 
 - Update UIShell.jsx
@@ -1285,18 +1311,17 @@ class StockItemList extends Component {
     - Update the `menuTitle` to "Inventory Management"
     - Remove all the values from `menuItems`
 
-    components/UIShell.jsx
-    ```javascript
-    class UIShell extends Component {
-      header = "Big Blue Widgets";
-      menuTitle = "Inventory Management";
-      menuItems = [
-        "Stock Items",
-      ];
+```javascript path=client/src/components/UIShell.jsx
+class UIShell extends Component {
+  header = "Big Blue Widgets";
+  menuTitle = "Inventory Management";
+  menuItems = [
+    "Stock Items",
+  ];
 
-      ...
-    }
-    ```
+  ...
+}
+```
 
 - Update UIShellBody.jsx
 
@@ -1305,32 +1330,43 @@ class StockItemList extends Component {
     **Note:** The label value needs to match the one used on `UIShell`
     - Update the Use `Stock Items` as the default pattern name when none is given
 
-    components/UIShellBody.jsx
-    ```javascript
-    import StockItemList from './StockItemList';
+```javascript path=client/src/components/UIShellBody.jsx
+import React, {Component} from "react";
+import "../pattern-components/patterns.scss";
 
-    class UIShellBody extends Component {
-      components = {
-        "Stock Items": StockItemList,
-      };
-      defaultComponent = "Stock Items";
+import StockItemList from "./StockItemList";
 
-      ...
-    }
-    ```
+class UIShellBody extends Component {
+  components = {
+    "Stock Items": StockItemList
+  };
+  defaultComponent = "Stock Items";
 
-- Open a second terminal in the repository directory and push the changes we've made to the repository
+  render() {
+    const PatternName = this.components[
+      this.props.patternName || this.defaultComponent
+    ];
+    return (
+      <div className="pattern-container">
+        <PatternName showDescription={true} />
+      </div>
+    );
+  }
+}
+export default UIShellBody;
+```
 
-    ```bash
-    git add .
-    git commit -m "Initial shell components"
-    git push
-    ```
+- With the application running in the first terminal, open a second terminal in the repository directory 
+and push the changes we've made to the repository
 
-- Return to the Jenkins UI to see the pipeline running. (Use `igc credentials` if the login has expired.)
+```bash
+git add .
+git commit -m "Initial shell components"
+git push
+```
 
-    The Jenkins pipeline should have started automatically when the changes were pushed to the Git repository. If not
-    you can manually start it by pressing `Build now with parameters`.
+
+- Return to the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
 - Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
 changes we just made should be reflected in the UI.
@@ -1342,84 +1378,30 @@ the data for our application.
 
 - Start the application in development mode (if not already running) with `npm run start:dev`
 
-- Update the columns and the data structure for our sample data to match the UI
+- Update the `title` and `subtitle` with values for our Stock Items view.
+
+- Update the `columns` and `data` fields with the list of columns and sample data to match the UI. 
+Set the `formatters` to `{}` for now.
 
     The value in the `columns` array maps to one of the attributes in our data values
     (e.g. `name` refers to the name attribute)
 
-```javascript path=src/components/StockItemList.jsx
-class StockItemList extends Component {
-    ...
-
-    columns = [
-    "name",
-    "description",
-    "stock",
-    "unitPrice",
-    "picture",
-    "manufacturer",
-    ];
-    data = [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
-      }
-    ];
-
-    ...
-}
-```
-
-- Update the title and subtitle with values for our Stock Items view. The `formatters` entry can be
-set to `{}` as well.
-
-```javascript path=src/components/StockItemList.jsx
-class StockItemList extends Component {
-  title = 'Stock Items';
-  subtitle = 'This is the current inventory of items';
-  formatters = {};
-
-  ...
-}
-```
-
 - The result of these changes should look like the following:
 
-```javascript path=src/components/StockItemList.jsx
+```javascript path=client/src/components/StockItemList.jsx
 class StockItemList extends Component {
     title = 'Stock Items';
     subtitle = 'This is the current inventory of items';
 
     columns = [
-    "name",
-    "description",
-    "stock",
-    "unitPrice",
-    "picture",
-    "manufacturer",
+      "name",
+      "description",
+      "stock",
+      "unitPrice",
+      "picture",
+      "manufacturer",
     ];
     formatters = {};
-
     data = [
       {
         "name": "Item 1",
@@ -1447,7 +1429,7 @@ class StockItemList extends Component {
       }
     ];
 
-  ...
+    ...
 }
 ```
 
@@ -1470,12 +1452,12 @@ component. For this first pass the service component will just return mock data.
 
 - Create a directory called `services` under the client/src folder
 
-- Create a file named `stock-item-mock.service` in the service directory. Our
+- Create a file named `stock-item-mock.service.js` in the service directory. Our
 StockItem service component will have a single asynchronous function called `listStockItems()`
 that returns a list of StockItems.
 
-```javascript path=src/services/stock-item-mock.service.js
-export class StockServiceMock {
+```javascript path=client/src/services/stock-item-mock.service.js
+export class StockItemMockService {
   async listStockItems() {
     return [];
   }
@@ -1485,10 +1467,10 @@ export class StockServiceMock {
 - Implement the service by copying the data array from `StockItemList` and returning it in the function. You can add a call
 to `timer()` to simulate wait time
 
-```javascript path=src/services/stock-item-mock.service.js
+```javascript path=client/src/services/stock-item-mock.service.js
 import timer from '../util/timer';
 
-export class StockServiceMock {
+export class StockItemMockService {
   async listStockItems() {
     // wait 1 second before returning data
     await timer(1000);
@@ -1525,7 +1507,12 @@ export class StockServiceMock {
 
 - Update the components to pass the service in the properties
 
-```javascript path=src/App.test.jsx
+```javascript path=client/src/App.test.jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import {StockItemMockService} from "./services/stock-item-mock.service";
+
 describe('App', () => {
   test('canary verifies test infrastructure', () => {
      expect(true).toEqual(true);
@@ -1533,13 +1520,18 @@ describe('App', () => {
 
   test('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App stockService={new StockServiceMock()}/>, div);
+    ReactDOM.render(<App stockService={new StockItemMockService()}/>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });
 ```
     
-```javascript path=src/App.jsx
+```javascript path=client/src/App.jsx
+import React, { Component } from "react";
+import UIShell from "./components/UIShell";
+import "./App.scss";
+import {StockItemMockService} from "./services/stock-item-mock.service";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -1557,24 +1549,52 @@ class App extends Component {
 }
 ```
 
-```javascript path=src/components/UIShell.jsx
+```javascript path=client/src/components/UIShell.jsx
+...
+
 class UIShell extends Component {
   ...
 
-  <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService}/></Content>
-
-  ...
+  render() {
+    return (
+      <div>
+        <Header aria-label="IBM Platform Name">
+          <SkipToContent />
+          <HeaderName href="#" prefix="IBM">
+            {this.header}
+          </HeaderName>
+        </Header>
+        <SideNav aria-label="Side navigation">
+          <SideNavItems>
+            <SideNavMenu
+              defaultExpanded
+              icon={<Fade20 />}
+              title={this.menuTitle}
+            >
+              {this.renderSideNavItems()}
+            </SideNavMenu>
+          </SideNavItems>
+        </SideNav>
+        <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService} /></Content>
+      </div>
+    );
+  }
 }
+export default UIShell;
 ```
 
-```javascript path=src/components/UIShellBody.jsx
+```javascript path=client/src/components/UIShellBody.jsx
+...
+
 class UIShellBody extends Component {
   components = {
-    "Stock Items": StockItemList,
+    "Stock Items": StockItemList
   };
+  defaultComponent = "Stock Items";
+
   render() {
     const PatternName = this.components[
-      this.props.patternName || "Stock Items"
+      this.props.patternName || this.defaultComponent
     ];
     return (
       <div className="pattern-container">
@@ -1583,34 +1603,27 @@ class UIShellBody extends Component {
     );
   }
 }
+export default UIShellBody;
 ```
 
 - Update `StockItemList` to use the provided service
 
 ```javascript path=src/components/StockItemList.jsx
+...
+
 class StockItemList extends Component {
   ...
-
-  constructor(props) {
-    super(props);
-
-    this.stockService = props.stockService;
-
-    this.state = {
-      data: [],
-      selectedRow: 0
-    };
-  }
 
   async componentDidMount() {
 
     this.setState({
-      data: await this.stockService.listStockItems()
+      data: await this.props.stockService.listStockItems()
     });
   }
 
   ...
 }
+export default StockItemList;
 ```
 
 - Push the changes we've made to the repository
@@ -1626,12 +1639,20 @@ git push
 #### Add a service that calls the BFF
 
 Now that we have a mock service that injects data we can build an implementation of the service
-that calls our BFF.
+that calls our BFF. For the service we will use a package called `superagent` to make the calls 
+to the BFF.
 
-- Create a service implementation in the `services` directory called `stock-service.js`
+- With npm, install the `superagent` and `@types/superagent` dependencies
 
-```javascript path=src/services/stock-service.js
-export class StockService {
+```bash
+npm i -s superagent
+npm i -D @types/superagent
+```
+
+- Create a service implementation in the `services` directory called `stock-item.service.js`
+
+```javascript path=client/src/services/stock-item.service.js
+export class StockItemService {
   async listStockItems() {
     return [];
   }
@@ -1640,8 +1661,10 @@ export class StockService {
 
 - Add an implementation of `listStockItems()` that calls the BFF through the `/api` proxy
 
-```javascript path=src/services/stock.service
-export class StockService {
+```javascript path=client/src/services/stock-item.service
+import * as superagent from 'superagent';
+
+export class StockItemService {
   constructor(baseUrl) {
     this.baseUrl = baseUrl || '/api';
   }
@@ -1663,19 +1686,33 @@ export class StockService {
 
 - Update `App.jsx` to use the new service instead of the mock service.
 
-```javascript path=src/App.jsx
+```javascript path=client/src/App.jsx
+import React, { Component } from "react";
+import UIShell from "./components/UIShell";
+import "./App.scss";
+
+import {StockItemService} from "./services/stock-item.service";
+
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.stockService = props.stockService || new StockService();
+    this.stockService = props.stockService || new StockItemService();
   }
 
-  ...
+  render() {
+    return (
+      <div className="App">
+        <UIShell stockService={this.stockService}/>
+      </div>
+    );
+  }
 }
+export default App;
 ```
 
-- Configure the helm chart to point to the kubernetes Service resource of the BFF.
+- The deployment is already configured to use the value of `apiHost` for our proxy service. We need to
+configure the `apiHost` value to point to the kubernetes service resource of the BFF.
 
 ```javascript path=chart/template-node-react/values.yaml
 apiHost: "inventory-management-bff-{your initials}:80"
