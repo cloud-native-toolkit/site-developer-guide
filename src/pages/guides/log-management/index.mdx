@@ -34,10 +34,44 @@ you can filter by your resource group.
 
 ## Give it a try
 
-### Explore your application
+- Before you starting understanding how to look at your logs, make sure you have [deployed an app](/getting-started/deployapp) into your development cluster. each of the template apps have a logging framework included, this _Git it a Try_ will use the [template-node-typescript](/starterkits/starterkittemplates) example.
+
+- The **LogDNA** service is already created, bound and configured to listen to logs from your development cluster.
+- Open the **LogDNA instance that is named the same as your development cluster.
+- Click on **All Apps** and enter the name of your app or narrow the app selection using the suffix that you used to create it.
+![AllAps](allapps.png)
+- Select the app you want to monitor
+
+You can now see just the logs for your app.
+
+### Add some logging to your app
+
+All the common logging frameworks support the common log statement that a developer will use in their code `info`, `debug`, `warn` and `fatal`. It is best practice to use add log statements to correctly help operations teams and monitoring services to help identify possible issues quickly.app
+
+- Add the following `debug` statement to the `greetings` implementation in your app.app
+
+    ```typescript src=/src/services/hello-world.service
+
+     async greeting(name: string = 'World'): Promise<string> {
+        this.logger.info(`Generating greeting for ${name}`);
+        this.logger.debug('This is a debug message from inside my API');
+
+        return `Hello, ${name}!`;
+      }
+    }
+    ```
+- to add `LOG_LEVEL` settings to you app
+
+    ```yaml src=/chart/template-node-typescript/templates/deployment.yaml
+    -env:
+        name: LOG_LEVEL
+        value: debug
+    ```
+
+https://docs.logdna.com/docs/filters
 
 
-#### Add new Log entry
+
 
 
 ###
