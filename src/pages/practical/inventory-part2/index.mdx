@@ -9,9 +9,9 @@ An example three tier application architecture you can build and have deployed i
 </PageDescription>
 
 <AnchorLinks>
-  <AnchorLink to="#inventory-service">Using CD to deliver to Test</AnchorLink>
-  <AnchorLink to="#inventory-bff">Securing the User Interface</AnchorLink>
-  <AnchorLink to="#Inventory UI">Integrating with NoSQL Database</AnchorLink>
+  <AnchorLink to="#using-cd-to-deliver-to-test">Using CD to deliver to Test</AnchorLink>
+  <AnchorLink to="#enabling-application-security-with-app-id">Securing the User Interface</AnchorLink>
+  <AnchorLink to="#adding-cloudant-database-and-populating-it-with-data">Integrating with NoSQL Database</AnchorLink>
 </AnchorLinks>
 
 ## Guide
@@ -25,6 +25,320 @@ Part 2 of the guide is a follow on from Part 2 and will concentrate on building 
 - Adding **Cloudant** database and populating it with data
 
 ### Using CD to deliver to Test
+
+ArgoCD is a tool that provides Continuous Delivery for projects and applications. If you haven't already, be sure to read
+through the [Continuous Delivery with ArgoCD Guide](/guides/continuous-delivery).
+
+For this exercise, we are going to use ArgoCD to push the Inventory app from Dev to Test (and possibly Staging as well).
+If you have already completed the Inventory MicroApp then it can be used for the ArgoCD process (although perhaps with
+some minor pipeline updates).
+
+If you haven't completed the exercise you can start from the solution repositories to perform the ArgoCD steps.
+
+#### Deploy the Inventory App solution
+
+##### Inventory Services
+
+- Create a new project from the [Inventory Management Service template](https://github.com/ibm-garage-cloud/inventory-management-svc-solution/generate)
+named `inventory-management-svc-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+##### Inventory BFF
+
+- Create a new project from the [Inventory Management BFF template](https://github.com/ibm-garage-cloud/inventory-management-bff-solution/generate)
+named `inventory-management-bff-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+- Update the `serviceUrl` value in `charts/template-graphql-typescript/values.yaml` to point to the kubernetes 
+service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
+
+- Commit and push the changes
+
+```bash
+git add .
+git commit -m "Updates the serviceUrl"
+git push
+```
+
+##### Inventory UI
+
+- Create a new project from the [Inventory Management UI template](https://github.com/ibm-garage-cloud/inventory-management-ui-solution/generate)
+named `inventory-management-ui-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+- Update the `hostApi` value in `charts/template-node-react/values.yaml` to point to the kubernetes 
+service of the BFF. The value most likely will be `inventory-management-bff-{initials}:80`.
+
+- Commit and push the changes
+
+```bash
+git add .
+git commit -m "Updates the hostApi"
+git push
+```
+
+- Verify that the application is running
+
+#### Setup the GitOps repo
+
+ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
+represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
+folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
+applications.
+
+- Create a new repo from the ArgoCD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
+
+- Clone the project to your machine
+
+- Create a branch named `test`
+
+    ```bash
+    git checkout -b test
+    ```
+  
+- Push the branch to the remote
+
+    ```bash
+    git push -u origin test
+    ```
+  
+- Create the test namespace with the CLI by running `igc namespace test-{initials}`
+
+#### Register the GitOps repo in ArgoCD
+
+Now that the repository has been created, we need to tell ArgoCD where it is.
+
+- Get the ArgoCD login information from the `igc credentials` cli command
+
+    **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
+
+- Log into ArgoCD
+
+- Click on the gear icon on the left menu to access the Settings options
+
+    ![ArgoCD config](/images/argocd-config.png)
+
+- Select the `Repositories` option
+
+- Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
+for the Git repo.
+
+#### Create a project in ArgoCD (Optional)
+
+In ArgoCD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not 
+required for ArgoCD to be able to deploy applications but it helps to organize applications and provide some restrictions
+on what can be done for applications that make up a project.
+
+To create a project, do the following:
+
+- Log into ArgoCD
+
+- Click on the gear icon on the left menu to access the Settings options
+
+    ![ArgoCD config](/images/argocd-config.png)
+
+- Select the `Projects` option
+
+- Click the `New Project` button at the top of the page.
+
+- Provide the following values then press `Create`:
+
+    - `name` - the name for the project (provide `inventory-management)
+    - `description` - a brief description of the project
+    - `sources` - click `add source` and pick the Git repository from the list that was added previously
+    - `destinations` 
+        - Add `https://kubernetes.default.svc` for the cluster url and `test-{initials}` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `staging-{initials}` for the namespace
+
+    **Note:** Initially, the only cluster that is available is the one in which ArgoCD is - 
+    `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
+    to both the `test-{initials}` and `staging-{initials}` namespaces within the current cluster.
+
+#### Configure the GitOps repo for Inventory Management service
+
+- Copy the `app-artifactory` folder and give it a name that matches the Inventory Management service component 
+(e.g. `inventory-management-svc-{initials}`)
+
+- Update `inventory-management-svc-{initials}/Chart.yaml` and update the name to match the directory name
+
+- Update `inventory-management-svc-{initials}/requirements.yaml` with the following values:
+
+    - `name` - the name of helm chart/image. This should match the folder name
+    - `version` - the version number of the helm chart
+    - `repository` - the url to the helm repository
+    
+    The url of the Artifactory helm repository can be determines by following the steps described in
+    [Administrator Guide - ArgoCD setup](/admin/argocd-setup/#get-the-helm-repository-location)
+
+- Run `kubectl get configmap/ibmcloud-config -n tools -o yaml` to print the configuration information
+for the cluster
+
+- In `inventory-management-svc-{initials}/values.yaml` replace `<app-chart-name>` with the directory name. Replace 
+`ingressSubdomain` with the value from the previous step. Update `tlsSecretName` with the value from the 
+previous step. The result should look something like the following
+
+```yaml path=inventory-management-svc-{initials}/values.yaml
+global:
+  ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
+  tlsSecretName: sms-test-cluster
+
+inventory-management-svc-{initials}:
+  replicaCount: 1
+  
+  ingress:
+    enabled: true
+    tlsSecretName: sms-test-cluster
+```
+
+- Commit and push the changes
+
+    ```bash
+    git add .
+    git commit -m "Adds inventory-management-svc config"
+    git push
+    ```
+
+#### Add an application in ArgoCD for the Inventory Management service 
+
+The last step in the process is to define the application(s) within ArgoCD that should be managed. This consists of
+connecting the config within the Git repo to the cluster and namespace.
+
+- Log into ArgoCD
+
+- Click `New Application` and provide the following values:
+
+    - `application name` - `test-inventory-management-svc`
+    - `project` - `inventory-management`
+    - `sync-policy` - `Automatic`
+    - `repository url` - The Git url where the configuration is stored
+    - `revision` - `test`
+    - `path` - `inventory-management-svc-{initials}`
+    - `destination cluster` - The cluster url for the deployment
+    - `destination namespace` - `test-{initials}`
+    - `values file` - `values.yaml`
+
+- Click `Create`
+
+- Click on the newly created application. A graph of kubernetes resources should be shown
+if everything is configured correctly.
+
+#### Make a change in the GitOps repo
+
+In order to trigger a (re-)deployment we can make an update to a value in the GitOps repo and
+watch ArgoCD apply the change.
+
+- Open a terminal and navigate to your GitOps repo directory
+
+- Be sure that you are in the `test` branch
+
+```bash
+git checkout test
+```
+
+- Update `inventory-management-svc-{initials}/values.yaml` to increase the replica count
+
+```yaml path=inventory-management-svc-{initials}/values.yaml
+global:
+  ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
+  tlsSecretName: sms-test-cluster
+
+inventory-management-svc-{initials}:
+  replicaCount: 3
+  
+  ingress:
+    enabled: true
+    tlsSecretName: sms-test-cluster
+```
+
+- Commit and push the change
+
+```bash
+git add .
+git commit -m "Increases replica count"
+```
+
+- Log into the ArgoCD UI and look at the state of the application. It should say `Synchronizing`.
+If you don't want to wait you can manually by pressing the `Synchronize` button.
+
+
+#### Hook the CI pipeline to the CD pipeline
+
+The last stage in the CI pipeline updates the version number in the `requirements.yaml` to the version of the helm chart
+that was just built. Through a couple naming conventions the only thing the pipeline needs in order to interact
+with the CD process is a kubernetes secret named `gitops-cd-secret` that provides the details needed
+to connect to the git repo to push updates.
+
+Fortunately, a CLI command provides a simple way to create a kubernetes secret
+that contains git credentials.
+
+- Log into the cluster on the command-line.
+
+- Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
+
+- Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
+personal access token, and the branch to put in the secret.
+
+    **What just happened?**
+    
+    The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
+    for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
+    secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
+    
+    ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml``` 
+
+    **Note:** 
+    
+    - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
+    where the pipeline is running (e.g. `dev-{initials}`).
+    - The value provided for `branch` is the one the pipeline will use to when committing changes to trigger 
+    the CD pipeline. `test` is the recommended value for the branch field.
+
+- Trigger the pipeline for the Inventory Management service to build by making a change
+to the Inventory Management Service code and push the changes to Git.
+
+#### Repeat for BFF and UI components
+
+Starting from [Configure the GitOps repo for Inventory Management service](#Configure-the-gitops-repo-for-inventory-management-service),
+the steps need to be repeated for each application within the project.
 
 ### Securing the solution with **App ID**
 
