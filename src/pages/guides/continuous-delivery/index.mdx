@@ -34,14 +34,23 @@ defining the configuration that makes up the desired state of the application.
 
 It supports defining kubernetes manifests in a number of ways:
 
-- kustomize
 - helm charts
+- kustomize
 - ksonnet
 - jsonnet
 - plain directory of yaml/json manifests
 
 ArgoCD synchronizes the application state with the desired state defined in Git and
 automates the deployment of kubernetes resources to ensure they match.
+
+### CI/CD integration
+
+For the full end-to-end build and delivery process, both the CI and CD pipelines are required.
+For this to work, a Git repo is used to convey the configuration values. Within the Garage
+Development Tools we have used certain naming conventions to streamline and simplify the untegration
+between the various components.
+
+![ArgoCD config](/guides/continuous-delivery/images/CI_CD-pipelines.png)
 
 ### Configuring GitOps with ArgoCD
 
@@ -60,62 +69,43 @@ ArgoCD uses a number of terms to refer to the components
     
 - `Project` - a collection of applications that make up a solution
 
-#### Find the url to the Artifactory helm repository
-
-Assuming a build has already completed successfully and published the result to Artifactory then use the following steps:
-
-1. Open the Artifactory dashboard from the [Developer Tools Dashboard](/getting-started/dashboard) and login
-
-2. Select `Artifacts` from the left nav menu
-
-3. In the `Artifact Repository Browser`, expand the `generic-local` folder and the folder beneath it.
-
-4. Click on the `index.yaml` file
-
-5. In the details pane on the right, right-click on the `Download` link and copy the link address.
-
-6. Open a text editor and paste the link address value into it. The helm repository url should be the value 
-excluding `index.yaml` 
-
-    For example, for `https://artifactory.test.com/artifactory/generic-local/test/index.yaml` the helm repository
-    url would be `https://artifactory.test.com/artifactory/generic-local/test`
-
 #### Setup the GitOps repo
 
-ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. We recommend using
-one repository to represent one `project`. Within that repository we will have a separate folder for 
-each `application` that will be part of the `project`. The repository will also contain a branch for 
-each environment/namespace into which we want to deploy the applications.
+ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
+represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
+folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
+applications.
 
 1. Create a new repo from the ArgoCD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
 
-2. Clone the project to your machine
+1. Clone the project to your machine
 
-3. Create a branch named `test` to configure the values for deployment to the `test` environment
+1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the `test` environment)
 
     ```bash
     git checkout -b test
     ```
 
-4. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of 
+1. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of 
 the application names in your project.
 
    The application name should match the repository name if the CI pipeline is going push changes to the 
    CD pipeline.
 
-5. Update `Chart.yaml`
+1. Update `Chart.yaml`
 
    - `name` - the name of the application (should match the folder from the previous step)
 
-6. Update `requirements.yaml`
+1. Update `requirements.yaml`
 
     - `name` - the name of helm chart/image. This should match your git repo name
     - `version` - the version number of the helm chart
     - `repository` - the url to the helm repository
     
-    If you are using Artifactory, you should have retrieved the `repository` value in the previous section.
+    The url of the Artifactory helm repository can be determines by following the steps described in
+    [Administrator Guide - ArgoCD setup](/admin/argocd-setup/#get-the-helm-repository-location)
 
-7. Update `values.yaml`
+1. Update `values.yaml`
  
     - Replace `<app-chart-name>` with the name of application
     - Provide configuration values specific to the helm chart under the `<app-chart-name>` prefix
@@ -130,7 +120,7 @@ the application names in your project.
    in the `requirements.yaml`. For the Starter Kits you can see those details and customize the chart by 
    looking in the `chart/{chart name}` of the repository.
 
-8. Repeat steps 4-7 for each application in the project
+1. Repeat steps 4-7 for each application in the project
 
 #### Register the git repo in ArgoCD
 
@@ -140,15 +130,15 @@ Now that the repository has been created, we need to tell ArgoCD where it is.
 
     **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
 
-2. Log into ArgoCD
+1. Log into ArgoCD
 
-3. Click on the gear icon on the left menu to access the Settings options
+1. Click on the gear icon on the left menu to access the Settings options
 
     ![ArgoCD config](/images/argocd-config.png)
 
-4. Select the `Repositories` option
+1. Select the `Repositories` option
 
-5. Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
+1. Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
 for the Git repo.
 
 #### Create a project in ArgoCD (Optional)
@@ -161,26 +151,26 @@ To create a project, do the following:
 
 1. Log into ArgoCD
 
-2. Click on the gear icon on the left menu to access the Settings options
+1. Click on the gear icon on the left menu to access the Settings options
 
     ![ArgoCD config](/images/argocd-config.png)
 
-3. Select the `Projects` option
+1. Select the `Projects` option
 
-4. Click the `New Project` button at the top of the page.
+1. Click the `New Project` button at the top of the page.
 
-5. Provide the following values then press `Create`:
+1. Provide the following values then press `Create`:
 
     - `name` - provide the name for the project
     - `description` - a brief description of the project
     - `sources` - click `add source` and pick the Git repository from the list that was added previously
     - `destinations` 
-        - Add `https://kubernetes.default.svc` for the cluster url and `test-{initials}` for the namespace
-        - Add `https://kubernetes.default.svc` for the cluster url and `staging-{initials}` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
 
     **Note:** Initially, the only cluster that is available is the one in which ArgoCD is - 
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
-    to both the `test-{initials}` and `staging-{initials}` namespaces within the current cluster.
+    to both the `test` and `staging` namespaces within the current cluster.
 
 #### Add an application in ArgoCD for each application component (helm chart) 
 
@@ -189,7 +179,7 @@ connecting the config within the Git repo to the cluster and namespace.
 
 1. Log into ArgoCD
 
-2. Click `New Application` and provide the following values:
+1. Click `New Application` and provide the following values:
 
     - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
     - `project` - The project with which the application should be included
@@ -201,24 +191,25 @@ connecting the config within the Git repo to the cluster and namespace.
     - `destination cluster` - The cluster url for the deployment
     - `destination namespace` - The namespace where the application should be deployed
 
-3. Repeat that step for each application and each environment
+1. Repeat that step for each application and each environment
 
 ### Hook the CI pipeline to the CD pipeline
 
-The last stage in the CI pipeline updates the version number in the `requirements.yaml` to version of the helm chart
-that was just built. In order for the pipeline to push the updated file into the GitOps repo, it needs to read the url
-and credentials from a Kubernetes secret named `gitops-cd-secret`.
+The last stage in the CI pipeline updates the version number in the `requirements.yaml` to the version of the helm chart
+that was just built. Through a couple naming conventions the only thing the pipeline needs in order to interact
+with the CD process is a kubernetes secret named `gitops-cd-secret` that provides the details needed
+to connect to the git repo to push updates.
 
-Fortunately, a helm chart has been provided in the ArgoCD Starter Kit to help in the creation of the secret. The following
-steps will walk through using the helm chart to create the secret.
+Fortunately, a CLI command provides a simple way to create a kubernetes secret
+that contains git credentials.
 
 #### Create the `gitops-cd-secret`
 
 1. Log into the cluster on the command-line.
 
-2. Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
+1. Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
 
-3. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
+1. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
 
     **What just happened?**
