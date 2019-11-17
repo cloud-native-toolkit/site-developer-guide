@@ -62,6 +62,9 @@
       path: /practical/overview
     - title: Inventory Micro App - Part 1
       path: /practical/inventory-part1
+    - title: Inventory Micro App - Part 2
+      path: /practical/inventory-part2
+
 
 - title: Administrator Guide
   pages:

@@ -94,12 +94,14 @@ All the common logging frameworks support the ability publish different types of
 
 - Open the app into a browser using `igc ingress -n {your namespace}` select your running app.
 - Switch to `HTTPS` and test the `/hello/{name}` API and pass in some data. You have introduced a `DEBUG` message and an `ERROR` into this API logic. Click the **Execute** button a few times to simulate some API calls.
+- Try the API with your own name, and you will see just the `DEBUG` message appearing.
+- Try the API with `ERROR` as the name , and this will trigger the error code we put in the API service.
 
 - You will see the errors appearing in **LogDNA** triggered by your application.
 
 ![Error](/errorcondition.png)
 
-- Try scaling you pods for the app and calling the API again and come and watch the logs
+- Try scaling you pods for the app and calling the API again and come and watch the logs and see where the API call is being routed and which pod is triggering the error.
 
 There is lots more information around how to use **LogDNA** these links will help.
 
