@@ -342,9 +342,10 @@ the steps need to be repeated for each application within the project.
 
 ### Securing the solution with **App ID**
 
-#### User Interface
+#### Inventory Management UI
 
-1. Update the `values.yaml` file in the chart to set `ingress.appId.enabled=true` and to set the value for the AppId binding secret
+1. Update the `values.yaml` file in the Inventory Management UI chart to set `ingress.appId.enabled=true` and to 
+set the value for the AppId binding secret
 
 ```yaml path=/chart/template-java-spring/values.yaml
 ...
@@ -361,23 +362,20 @@ ingress:
 
 #### AppId redirect url config
 
-1. When the UI application is available, navigate to the https url. An error page should be displayed that looks like the
-following:
-    ![AppId redirect error](images/appid-redirect-error.png)
+- Get the ingress for the service by running `igc ingress -n dev-{initials}`.
 
-2. The url for the error page will look like the following:
+- Open the IBM Cloud resource list - `https://cloud.ibm.com/resources`
 
-    `https://us-south.appid.cloud.ibm.com/oauth/v4/25d16cda-8899-46fa-a5ae-9818f93dd1d3/authorization?client_id=0351c750-a3f0-4b8c-818b-d14558f9dfb9&response_type=code&redirect_uri=https://inventory-manangement-ui-dev.sms-test-oc-cluster.us-east.containers.appdomain.cloud/appid_callback&scope=appid_default`
-
-    Get the value of the `redirect_url` parameter.
-
-3. Open the IBM Cloud resource list - `https://cloud.ibm.com/resources`
-
-4. Open the AppId instance to the `Manage Authentication` -> `Authentication Settings`
+- Open the AppId instance to the `Manage Authentication` -> `Authentication Settings` view
 
     ![AppId authentication settings](images/appid-authentication-settings.png)
 
-5. Add the `redirect_url` to the web redirect URLs
+- Add the redirect url for the application to the web redirect URLs. The redirect url will have
+the following form:
+
+    `{ingress url}/appid_callback`
+    
+    e.g. `https://inventory-manangement-ui-dev.sms-test-oc-cluster.us-east.containers.appdomain.cloud/appid_callback`
 
 #### Add users to AppId
 
@@ -386,7 +384,6 @@ following:
     ![AppId cloud directory users](images/appid-cloud-directory-users.png)
 
 2. Add users
-
 
 ### Integrating with NoSQL Database
 
