@@ -197,6 +197,8 @@ As we saw earlier, SonarQube found two bugs in our Java app. Let's do something 
 
 ![Sonar Project](sonar-project.png)
 
+### Add a quality gate to SonarQube
+
 The first problem is that the quality gate says that the app passed. The default quality gate is OK with those two bugs, but we're not.
 
 Let's create a new quality gate that checks for bugs.
@@ -223,6 +225,8 @@ Run the pipeline again to scan the code again.
 
 Good news, the quality gate is working and SonarQube fails the project now!
 
+### Add a stage to Jenkins
+
 However, take a look at your pipeline (in the OpenShift console). It kept right on going! We don't want the pipeline to keep going and deploy the app; if the code fails the quality gate, we want the pipeline to stop.
 
 Modify the Jenkins pipeline to add a Quality Gate stage.
@@ -245,6 +249,8 @@ Modify the Jenkins pipeline to add a Quality Gate stage.
 ![Pipeline Quality Gate Failed](pipeline-gate-stage-failed.png)
 
 Good. Now, when SonarQube finds bugs in our app, the quality gate fails and the Jenkins stage fails.
+
+### Fix the code
 
 Now that our pipeline detects problems in our code, let's fix those problems. As discussed before, the bugs are that two methods need to be marked as synchronized. Let's fix the code.
 
