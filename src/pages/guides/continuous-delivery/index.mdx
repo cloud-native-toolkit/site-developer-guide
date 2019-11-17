@@ -97,10 +97,10 @@ each environment/namespace into which we want to deploy the applications.
     git checkout -b test
     ```
 
-4. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename to one of 
+4. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of 
 the application names in your project.
 
-   The application name should match the name in the package.json if the CI pipeline is going push changes to the 
+   The application name should match the repository name if the CI pipeline is going push changes to the 
    CD pipeline.
 
 5. Update `Chart.yaml`
@@ -109,7 +109,7 @@ the application names in your project.
 
 6. Update `requirements.yaml`
 
-    - `name` - the name of helm chart/image. This should match your application name
+    - `name` - the name of helm chart/image. This should match your git repo name
     - `version` - the version number of the helm chart
     - `repository` - the url to the helm repository
     
@@ -148,11 +148,12 @@ Now that the repository has been created, we need to tell ArgoCD where it is.
 
 4. Select the `Repositories` option
 
-5. Click the `Connect Repo` button at the top and provide the url, username, and personal access token for the Git repo.
+5. Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
+for the Git repo.
 
 #### Create a project in ArgoCD (Optional)
 
-In ArgoCD terms, each deployable component is an application and applications are grouped into projects. Projects are not 
+In ArgoCD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not 
 required for ArgoCD to be able to deploy applications but it helps to organize applications and provide some restrictions
 on what can be done for applications that make up a project.
 
@@ -174,12 +175,12 @@ To create a project, do the following:
     - `description` - a brief description of the project
     - `sources` - click `add source` and pick the Git repository from the list that was added previously
     - `destinations` 
-        - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
-        - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace 
+        - Add `https://kubernetes.default.svc` for the cluster url and `test-{initials}` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `staging-{initials}` for the namespace
 
-    **Note:** Initially, the only cluster that is available is the one that ArgoCD is running in - 
+    **Note:** Initially, the only cluster that is available is the one in which ArgoCD is - 
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
-    to both the `test` and `staging` namespaces within the current cluster.
+    to both the `test-{initials}` and `staging-{initials}` namespaces within the current cluster.
 
 #### Add an application in ArgoCD for each application component (helm chart) 
 
@@ -192,7 +193,7 @@ connecting the config within the Git repo to the cluster and namespace.
 
     - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
     - `project` - The project with which the application should be included
-    - `sync-policy` - The manner with which ArgoCD will use to manage the deployed artifacts. `Automatic with pruning` is 
+    - `sync-policy` - The manner with which ArgoCD will use to manage the deployed artifacts. `Automatic` is 
     recommended
     - `repository url` - The Git url where the configuration is stored
     - `revision` - The branch where the configuration for this instance is stored
@@ -217,18 +218,20 @@ steps will walk through using the helm chart to create the secret.
 
 2. Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
 
-3. Run `igc tools` to start the tools environment
+3. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
+personal access token, and the branch to put in the secret.
 
-4. Within the tools image context, run the following to create the secret:
+    **What just happened?**
+    
+    The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
+    for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
+    secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
+    
+    ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml``` 
 
-```bash
-helm template \ 
-    --name gitops-cd-secret \
-    --namespace tools \
-    --set git.username={GIT_USERNAME} \
-    --set git.personalAccessToken={GIT_PAT} \
-    --set git.host={GIT_HOST} \
-    --set git.org={GIT_ORG} \
-    --set git.repo={GIT_REPO} | \
-    kubectl apply -n tools -f -
-```
+    **Note:** 
+    
+    - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
+    where the pipeline is running (e.g. `dev-{initials}`).
+    - The value provided for `branch` is the one the pipeline will use to when committing changes to trigger 
+    the CD pipeline. `test` is the recommended value for the branch field.
