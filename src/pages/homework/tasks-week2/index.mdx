@@ -10,54 +10,55 @@ Homework for students in the MOOC Week 2
 
 This is the homework tasks for the [Garage OpenShift and Cloud Pak MOOC](https://www.onlinedigitallearning.com/course/view.php?id=5631).
 
+## Week 2 -- The Day 2 Developer Experience
+
 <InlineNotification>
 
-Before you proceed make sure you have signed up for the **MOOC** Environment its a fully paid IBM Cloud Account that is locked down from creating new services, it gives full access to a Red Hat OpenShift and IBM Kubernetes development cluster.  [Validate you have signed up before proceeding](/homework/teams)
+Before you proceed, make sure you have signed up for the MOOC development environment. It is a paid IBM Cloud account with the [Developer Tools environment](/overview) already installed and ready for you to use, including both a Kubernetes cluster and an OpenShift cluster. (The environment is locked down to prevent creating any new services.) Also, before proceeding:
+- Be sure you have already done the [Welcome to your MOOC team](/homework/teams) tasks
+- Install the [IBM Garage for Cloud CLI](/getting-started/cli) (again) to ensure you have the latest version
 
 </InlineNotification>
 
-## Week 2 - The Day 2 Developer Experience
-
-The homework for **Session 1, Week 2** is focused on how a development team would deliver,operate, secure and manage their applications. This is often refereed to as **Day 2 Developer Experience**. As a team executes the key agile ceremonies using the Garage Method its important for developers and architects to understand what is involved in moving software components consistently and reliably to `test` and then onto `production`. A good understand of common **Day 2** activities is a critical skill for cloud native development teams.
-
-This weeks homework involves a number of tasks that are more advanced that week from week 1, so the advice is take your time and do some research on the topic before jumping into the task.
+Week 2 of the MOOC focuses on the Day 2 Developer Experience: How to use the Developer Tools envionment to perform the software delivery lifecycle (SDLC).
 
 This homework assumes that you have:
- - Reviewed the **Playback** from the Week 2 Monday session
+ - Reviewed the Playback from the Week 2 Monday session
  - Seen a demo of each of the homework tasks below
  - Seen demos and discussion about what is expected from the homework
 
-Please make sure you have reinstalled the latests version of the [IBM Garage for Cloud CLI](/getting-started/cli)
-
 <InlineNotification>
 
-**Note**: Support is provided in the `#catalyst-project` Slack channel (in the [IBM Garage for Cloud Slack Org](http://ibm-garage.slack.com) team).
-This channel will also be used to share any common issues found.
+**Note**: Support is provided in the `#catalyst-project` Slack channel (in the [IBM Garage for Cloud Slack Org](http://ibm-garage.slack.com) team). This channel will also be used to share any common issues found.
 
 </InlineNotification>
 
-**Week 2** is focused on Day 2 developer experience. This term is used to refer to the tasks that an agile team will perform to help manage, operate and delivery their software to test and production.
+### Homework tasks
+
+The homework for Week 2 helps you understand the tasks in the Day 2 Developer Experience. Day 1 focuses on being able to use the environment well enough to develop and deploy a basic cloud-native application. Day 2 focuses on using the SDLC to iteratively develop, deliver, operate, secure, and manage applications. As a team executes the key agile ceremonies using the [Garage Method](https://www.ibm.com/garage/method/cloud/), it's important for developers and architects to understand what is involved in moving software components consistently and reliably from *dev* to *test* and on to *production*. A good understanding of common Day 2 activities is a critical skill for cloud-native development teams.
+
+This week's homework involves a number of tasks that are more advanced than those from week 1, so take your time and do some research on the topic before jumping into the task.
 
 | Task                            | Description         | Link        | Time    |
 | --------------------------------| ------------------  |:----------- |---------|
-| Read through the Developer Guide| There have been updates from the first week focus on Tools Guides for the homework below and the guides for Inventory Micro App Part 1 and 2 | [Developer Guide](/overview) | 30 min |
-| Review your Image Registry | Using the Image Registry Guide, follow the _Give it a try_ section |[Image Registry](/guides/image-registry#give-it-a-try) | 15 mins |
-| Review your app Code Quality | Using Sonar Guide, follow the _Give it a try_ section |[Sonar Registry](/guides/code-analysis#give-it-a-try) | 30 mins |
-| Viewing  your app Logs | Using LogDNA Guide, follow the _Give it a try_ section | [LogDNA Guide](/guides/log-management#give-it-a-try) | 20 min |
-| Monitor your app | Using SysDig Guide, follow the _Give it a try_ section | [SysDig Guide](/guides/monitoring#give-it-a-try) | 30 min |
-| Inventory Micro App,Part 2 | Deploying your Inventory UI, BFF , SVC apps to `test` namespace using GitOps Continuous Delivery and ArgoCD  | [Inventory Part 2 - CD](/practical/inventory-part2#using-cd-to-deliver-to-test) | 45 min |
-| Inventory Micro App,Part 2 | Secure your Inventory App | [Inventory Part 2 - Secure App](/practical/inventory-part2#securing-the-solution-with-app-id) | 30 min |
-| Inventory Micro App,Part 2 | Adding Cloud Database to you Inventory Service | [Inventory Part 2 - Database](/practical/inventory-part2#add-a-cloudant-integration-to-your-backend-service) | 45 min |
-| Install Dev tools on CRC | Install and configure Garage Developer Tools into Red Hat CodeReady Containers | [Install CRC](/admin/installation-crc) | 1 hr |
+| Re-read the Developer Guide| There have been updates from the first week. Focus on Tools Guides for the homework below and the guides for Inventory Micro App Part 1 and 2. | [Developer Guide](/overview) | 30 min |
+| Review your image registry | Using the Image Registry guide, follow the _Give it a try_ section |[Image Registry](/guides/image-registry#give-it-a-try) | 15 mins |
+| Review your app's code quality | Using the SonarQube guide, follow the _Give it a try_ section |[Code Analysis](/guides/code-analysis#give-it-a-try) | 30 mins |
+| View your app's logs | Using the LogDNA guide, follow the _Give it a try_ section | [Log Management](/guides/log-management#give-it-a-try) | 20 min |
+| Monitor your app | Using the SysDig guide, follow the _Give it a try_ section | [Monitoring](/guides/monitoring#give-it-a-try) | 30 min |
+| Inventory Micro App, Part 2 | Using GitOps to deploy your Inventory app's components to `test` | [Inventory Part 2 - CD](/practical/inventory-part2#using-cd-to-deliver-to-test) | 45 min |
+| Inventory Micro App, Part 2 | Secure your Inventory app | [Inventory Part 2 - Secure App](/practical/inventory-part2#securing-the-solution-with-app-id) | 30 min |
+| Inventory Micro App, Part 2 | Add a cloud database to you Inventory service | [Inventory Part 2 - Database](/practical/inventory-part2#add-a-cloudant-integration-to-your-backend-service) | 45 min |
+| Install Dev tools on CRC | Install and configure the Developer Tools into Red Hat CodeReady Containers | [Install CRC](/admin/installation-crc) | 1 hr |
 
 
-Once you have completed these tasks you will have completed the homework for the **Day 1** Developer Experience, which enabled you to create your first app and CI pipeline. You will have then extended that into a 3 tier polyglot solution. You will then have then have completed the **Day 2 Experience* involving working with your solution logs, monitoring your app and then understanding how to move your code from `dev` to `test`.
+Once you have completed these tasks, you will have completed the homework for both the Day 1 Developer Experience and the Day 2 Developer Experience. For Day 1, you created your first app and CI pipeline, and then extended that into a 3-tier polyglot solution. For Day 2, you worked with your application's logs, monitored your app, and moved your code from *dev* to *test*.
 
-What is very clear is that with Red Hat OpenShift and IBM Kubernetes managed services combined with the powerful cloud services and with IBM Garage for Cloud Developer tools give you a powerful development platform to enable you to build any form of cloud native solution. This foundation of skills will form the foundation to help you start building **IBM Cloud Pak** solutions. Watch out for the **IBM Cloud Pak Developers Guide** coming in 2020.
+What is very clear is that the Developer Tools envionment--an application architeture that combines a Red Hat OpenShift or Kubernetes cluster with powerful cloud services, packaged with a development environment with a CI/CD pipeline incorporating best-of-breed open source tools--gives you a powerful development platform that enables you to build any form of cloud-native application. These skills form the foundation not only to develop applications for Kubernetes and OpenShift, but to develop applications that leverage the IBM Cloud Paks as well. Keep an out for the *IBM Cloud Pak Developers Guide*, coming in 2020.
 
 ### Homework Review Week 2
 
-The homework review will take the form of a show and tell of completed home work. It will have a description of tasks tht didnt go so well, It will close with a retrospective for the attendees who have completed the homework tasks. We are looking for feedback from three perspectives:
+The homework review will take the form of a show-and-tell and a retrospective. The show-and-tell includes a description of tasks that didn't go so well. It will close with a retrospective for the attendees who have completed the homework tasks. We are looking for feedback from three perspectives:
 
 - **What went well?**
 - **What needs improvement?**
