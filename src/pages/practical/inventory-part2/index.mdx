@@ -4,14 +4,14 @@ title: Inventory Micro App - Part 2
 
 <PageDescription>
 
-An example three tier application architecture you can build and have deployed in IBM Kubernetes service or IBM Red Hat OpenShift in less than an hour using the IBM Garage for Cloud Developer Tools and Starter Kit Templates.
+Extending Part 1 of your 3 tier app to include Continous Delivery to Test, Securing the User Interface and integrating the service to the database
 
 </PageDescription>
 
 <AnchorLinks>
   <AnchorLink to="#using-cd-to-deliver-to-test">Using CD to deliver to Test</AnchorLink>
   <AnchorLink to="#enabling-application-security-with-app-id">Securing the User Interface</AnchorLink>
-  <AnchorLink to="#adding-cloudant-database-and-populating-it-with-data">Integrating with NoSQL Database</AnchorLink>
+  <AnchorLink to="#add-a-cloudant-integration-to-your-backend-service">Integrating with NoSQL Database</AnchorLink>
 </AnchorLinks>
 
 ## Guide
@@ -385,110 +385,92 @@ the following form:
 
 2. Add users
 
-### Integrating with NoSQL Database
+### Add a Cloudant integration to your backend service
 
-
-The initial setup
-
-
-This exercise will Create a Cloud Native NoSQL Database and populate it with data. You will then access the data through a Spring Boot micro service REST API.
-
- 	- Create the Database instance
- 	- Populate it with sample data
-
-
-- While logged into the IBM Cloud account use the resource list to find your pre installed Cloudant datbase instance.
+- While logged into the IBM Cloud account use the resource list to find your pre installed Cloudant database instance name after your development cluster.
 
 - Open the database instance dashboard.
 
-- After the create is successful, you will see the Database instance Manage view.  From here you can click on the Launch button to access the database management views. We now need to configure the command line so you can upload data.
-
 - Click on the Service Credentials on the left-hand menu.
-- If there are no credentials created, click *New Credentials* button and in the dialog click *Add*. These control the access to the database. Are the credentials have been created you should see a screen similar to the one below.
+- You will see the credentials for the database.
 
+- Open a terminal window folder/directory called `data`
+    ```bash
+    mkdir data
+    ```
 
--  Open a command prompt and create a folder/directory called `data`
-
-```
-mkdir data
-```
-
-- To help create test JSON data we are going to supply a template to the JSON Generator tool, this helps when creating dummy data for testing. Navigate to the following link.
-
--  https://next.json-generator.com
+- To help create test JSON data we are going to supply a template to the JSON Generator tool, this helps when creating dummy data for testing. Navigate to the following link [https://www.json-generator.com/](https://www.json-generator.com/)
 
 - Replace the default template with the following template (using cut and paste). This will enable a 100 records of test data to be created to represent a products database. Click on the *Generate* button.
-
-```bash
-[
-  {
-    'repeat(1, 100)': {
-      name: '{{lorem(2, "words")}}',
-      guid: '{{guid()}}',
-      delivered: '{{bool()}}'
-    }
-  }
-]
-```
+    ```bash
+    [
+      '{{repeat(1, 50)}}',
+      {
+        id: '{{objectId()}}',
+        manufacturer: '{{company().toUpperCase()}}',
+        name:  '{{lorem(3, "words")}}',
+        price: '{{floating(10, 1000, 2, "0.00")}}',
+        stock: '{{integer(1, 100)}}'
+      }
+    ]
+    ```
 - Copy the generated contents on the right hand side into a file called `inventory.json` and save it into the same folder. Wrap the array with a docs statement.
-
-```json
-{
-  "docs": {Add Generated array []}
-}
-```
+    ```json
+    {
+      "docs": <Add Generated array here>
+    }
+    ```
 - Save the documents that will be loaded into Cloudant
 
 - Using a code editor create a shell script called `load.sh` that will load data into the database using a `curl` command. Use the contents from below for the script.
+    ```
+    #!/bin/sh
+    # Cloudant Database Data Load Utility
 
-```
-#!/bin/sh
-# Cloudant Database Data Load Utility
+    # Credentials from IBM Cloud
+    CLOUDANT_USERNAME=
+    CLOUDANT_PASSWORD=
 
-# Credentials from IBM Cloud
-CLOUDANT_USERNAME=
-CLOUDANT_PASSWORD=
+    # name of database
+    DATABASE=inventor-<replace with namespace>
 
-# name of database
-DATABASE=inventor-{initials}
+    # input validation
+    if [ -z "${CLOUDANT_USERNAME}" ]; then
+        echo "Please provide your CLOUDANT_USERNAME."
+        exit
+    fi
+    if [ -z "${CLOUDANT_PASSWORD}" ]; then
+        echo "Please provide your CLOUDANT_PASSWORD."
+        exit
+    fi
 
-# input validation
-if [ -z "${CLOUDANT_USERNAME}" ]; then
-    echo "Please provide your CLOUDANT_USERNAME."
-    exit
-fi
-if [ -z "${CLOUDANT_PASSWORD}" ]; then
-    echo "Please provide your CLOUDANT_PASSWORD."
-    exit
-fi
+    # credentials to post data to cloudant
+    AUTH="$(python -c 'import base64; print base64.urlsafe_b64encode("'${CLOUDANT_USERNAME}':'${CLOUDANT_PASSWORD}'")')"
+    ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
+    HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
 
-# credentials to post data to cloudant
-AUTH=$(echo "${CLOUDANT_USERNAME}:${CLOUDANT_PASSWORD}" | base64)
-ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
-HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
+    # Inventory
+    eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
+    eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
+    eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
 
-# Inventory
-eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
-eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
-eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
-```
+    ```
 
-- Replace the {CLOUDANT_USERNAME} and {CLOUDANT_PASSWORD} fields with values from the Credentials section of the Cloudant instance in the dashboard.
-- Add database name `inventor-{initials}` using the initials that you have used before.
+- Add the `username` and `password` to `CLOUDANT_USERNAME` and `CLOUDANT_PASSWORD variables in the `load.sh` script. You can get the credentals from the Cloudant credentials view in the IBM Cloud console.
+- Add database name `inventor-<replace with namespace>` using the dev namespace/project name you have been using.
 - Save the script, make it executable, and then run it.
-```
-chmod +x ./load.sh
-./load.sh
-```
-- The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch  button to see the Cloudant dashboard.
-- Click on the Left icon that looks like a Database and you will see the products database created.
-
-- Click on the products database itself.
+    ```
+    chmod +x ./load.sh
+    ./load.sh
+    ```
+- The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch button to see the Cloudant dashboard.
+- Click on the Left icon that looks like a Database and you will see the `inventory-<namespace>` database created.
+- Click on the `inventory` database, then click **Table** view.
 - You can see the rows of data
-- If you click on a row of data, you will see the raw NoSQL form of the data record.
-- This completes the setup of the database and populating it with data. We will be now moving onto creating a Spring Micro service that then uses this database to display Product details.
+    ![Database](/images/database.png)
 
-This completes the data load activities.
+- If you click on a row of data, you will see the raw NoSQL form of the data record.
+- This completes the setup of the database and populating it with data.
 
 ### Add a Cloudant integration to your backend service
 

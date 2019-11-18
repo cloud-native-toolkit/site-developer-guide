@@ -74,7 +74,7 @@
       path: /admin/installation-ibm-cloud
     - title: Install into existing cluster
       path: /admin/installation-existing
-    - title: Install into Red Hat CodeReady
+    - title: Install into OpenShift CRC
       path: /admin/installation-crc
     - title: Artifactory Setup
       path: /admin/artifactory-setup
