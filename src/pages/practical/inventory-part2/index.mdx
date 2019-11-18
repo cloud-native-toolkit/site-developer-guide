@@ -4,21 +4,21 @@ title: Inventory Micro App - Part 2
 
 <PageDescription>
 
-An example three tier application architecture you can build and have deployed in IBM Kubernetes service or IBM Red Hat OpenShift in less than an hour using the IBM Garage for Cloud Developer Tools and Starter Kit Templates.
+Extending Part 1 of your 3 tier app to include Continuous Delivery to Test, Securing the User Interface and integrating the service to a cloud database
 
 </PageDescription>
 
 <AnchorLinks>
   <AnchorLink to="#using-cd-to-deliver-to-test">Using CD to deliver to Test</AnchorLink>
   <AnchorLink to="#enabling-application-security-with-app-id">Securing the User Interface</AnchorLink>
-  <AnchorLink to="#adding-cloudant-database-and-populating-it-with-data">Integrating with NoSQL Database</AnchorLink>
+  <AnchorLink to="#add-a-cloudant-integration-to-your-backend-service">Integrating with NoSQL Database</AnchorLink>
 </AnchorLinks>
 
 ## Guide
 
 This Micro App guidance continues to build upon the microserivces that were built in the [Inventory Micro App Part 1](/practical/inventory-part1) guide. Make sure you have complete [Part 1](/practical/inventory-part1) or deployed the working [Inventory Solution](/practical/inventory-part1#solution-links)
 
-Part 2 of the guide is a follow on from Part 2 and will concentrate on building out the following areas:
+Part 2 of the Inventory MicoApp guide is a follow on from Part 1 and will concentrate on building out the following areas:
 
 - Delivering the solution images into the `test` namespace/project using CD techniques and ArgoCD
 - Enabling application security with **App ID**
@@ -29,7 +29,7 @@ Part 2 of the guide is a follow on from Part 2 and will concentrate on building 
 ArgoCD is a tool that provides Continuous Delivery for projects and applications. If you haven't already, be sure to read
 through the [Continuous Delivery with ArgoCD Guide](/guides/continuous-delivery).
 
-For this exercise, we are going to use ArgoCD to push the Inventory app from Dev to Test (and possibly Staging as well).
+For this exercise, we are going to use ArgoCD to push the Inventory app from `dev` to `test` (and possibly `staging` as well).
 If you have already completed the Inventory MicroApp then it can be used for the ArgoCD process (although perhaps with
 some minor pipeline updates).
 
@@ -37,20 +37,21 @@ If you haven't completed the exercise you can start from the solution repositori
 
 #### Deploy the Inventory App solution
 
+To make sure you are starting from a common solution foundation, use the solution templates create your Inventory App
+
 ##### Inventory Services
 
-- Create a new project from the [Inventory Management Service template](https://github.com/ibm-garage-cloud/inventory-management-svc-solution/generate)
+- Create a new project from the [Inventory Management Service solution template](https://github.com/ibm-garage-cloud/inventory-management-svc-solution/generate)
 named `inventory-management-svc-{initials}`
 
 - Clone the repository to your local machine
 
 - Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-
     ```
     igc pipeline -n dev-{your initials}
     ```
 
-   replacing `{your initials}` with your actual initials
+   - replacing `{your initials}` with your actual initials
 
 - Run `igc credentials` to get the credentials for the Jenkins instance.
 
@@ -58,18 +59,17 @@ named `inventory-management-svc-{initials}`
 
 ##### Inventory BFF
 
-- Create a new project from the [Inventory Management BFF template](https://github.com/ibm-garage-cloud/inventory-management-bff-solution/generate)
+- Create a new project from the [Inventory Management BFF solution template](https://github.com/ibm-garage-cloud/inventory-management-bff-solution/generate)
 named `inventory-management-bff-{initials}`
 
 - Clone the repository to your local machine
 
 - Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-
     ```
     igc pipeline -n dev-{your initials}
     ```
 
-   replacing `{your initials}` with your actual initials
+   - replacing `{your initials}` with your actual initials
 
 - Run `igc credentials` to get the credentials for the Jenkins instance.
 
@@ -79,27 +79,25 @@ named `inventory-management-bff-{initials}`
 service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
 
 - Commit and push the changes
-
-```bash
-git add .
-git commit -m "Updates the serviceUrl"
-git push
-```
+    ```bash
+    git add .
+    git commit -m "Update the serviceUrl"
+    git push
+    ```
 
 ##### Inventory UI
 
-- Create a new project from the [Inventory Management UI template](https://github.com/ibm-garage-cloud/inventory-management-ui-solution/generate)
+- Create a new project from the [Inventory Management UI solution template](https://github.com/ibm-garage-cloud/inventory-management-ui-solution/generate)
 named `inventory-management-ui-{initials}`
 
 - Clone the repository to your local machine
 
 - Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-
     ```
     igc pipeline -n dev-{your initials}
     ```
 
-   replacing `{your initials}` with your actual initials
+   - replacing `{your initials}` with your actual initials
 
 - Run `igc credentials` to get the credentials for the Jenkins instance.
 
@@ -109,12 +107,11 @@ named `inventory-management-ui-{initials}`
 service of the BFF. The value most likely will be `inventory-management-bff-{initials}:80`.
 
 - Commit and push the changes
-
-```bash
-git add .
-git commit -m "Updates the hostApi"
-git push
-```
+    ```bash
+    git add .
+    git commit -m "Update the hostApi"
+    git push
+    ```
 
 - Verify that the application is running
 
@@ -123,20 +120,18 @@ git push
 ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
 represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
 folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
-applications.
+applications. Git offers a number of benefits for a development team with GitOps. It has an audit log of change whole releases can be managed from a pull request and git enables changes to be rollback quickly if there is an issue with a new release.
 
-- Create a new repo from the ArgoCD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
+- Create a new repo from the [ArgoCD Starter Kit template](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
 
 - Clone the project to your machine
 
 - Create a branch named `test`
-
     ```bash
     git checkout -b test
     ```
   
 - Push the branch to the remote
-
     ```bash
     git push -u origin test
     ```
@@ -149,7 +144,9 @@ Now that the repository has been created, we need to tell ArgoCD where it is.
 
 - Get the ArgoCD login information from the `igc credentials` cli command
 
-    **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
+    <InlineNotification>
+        Note: You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
+    </InlineNotification>
 
 - Log into ArgoCD
 
@@ -160,7 +157,7 @@ Now that the repository has been created, we need to tell ArgoCD where it is.
 - Select the `Repositories` option
 
 - Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
-for the Git repo.
+for the GitOps repo you just created.
 
 #### Create a project in ArgoCD (Optional)
 
@@ -215,22 +212,20 @@ for the cluster
 - In `inventory-management-svc-{initials}/values.yaml` replace `<app-chart-name>` with the directory name. Replace 
 `ingressSubdomain` with the value from the previous step. Update `tlsSecretName` with the value from the 
 previous step. The result should look something like the following
+    ```yaml path=inventory-management-svc-{initials}/values.yaml
+    global:
+      ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
+      tlsSecretName: sms-test-cluster
 
-```yaml path=inventory-management-svc-{initials}/values.yaml
-global:
-  ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
-  tlsSecretName: sms-test-cluster
+    inventory-management-svc-{initials}:
+      replicaCount: 1
 
-inventory-management-svc-{initials}:
-  replicaCount: 1
-  
-  ingress:
-    enabled: true
-    tlsSecretName: sms-test-cluster
-```
+      ingress:
+        enabled: true
+        tlsSecretName: sms-test-cluster
+    ```
 
 - Commit and push the changes
-
     ```bash
     git add .
     git commit -m "Adds inventory-management-svc config"
@@ -269,36 +264,32 @@ watch ArgoCD apply the change.
 - Open a terminal and navigate to your GitOps repo directory
 
 - Be sure that you are in the `test` branch
-
-```bash
-git checkout test
-```
+    ```bash
+    git checkout test
+    ```
 
 - Update `inventory-management-svc-{initials}/values.yaml` to increase the replica count
+    ```yaml path=inventory-management-svc-{initials}/values.yaml
+    global:
+      ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
+      tlsSecretName: sms-test-cluster
 
-```yaml path=inventory-management-svc-{initials}/values.yaml
-global:
-  ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
-  tlsSecretName: sms-test-cluster
+    inventory-management-svc-{initials}:
+      replicaCount: 3
 
-inventory-management-svc-{initials}:
-  replicaCount: 3
-  
-  ingress:
-    enabled: true
-    tlsSecretName: sms-test-cluster
-```
+      ingress:
+        enabled: true
+        tlsSecretName: sms-test-cluster
+    ```
 
 - Commit and push the change
-
-```bash
-git add .
-git commit -m "Increases replica count"
-```
+    ```bash
+    git add .
+    git commit -m "Increases replica count"
+    ```
 
 - Log into the ArgoCD UI and look at the state of the application. It should say `Synchronizing`.
 If you don't want to wait you can manually by pressing the `Synchronize` button.
-
 
 #### Hook the CI pipeline to the CD pipeline
 
@@ -307,8 +298,8 @@ that was just built. Through a couple naming conventions the only thing the pipe
 with the CD process is a kubernetes secret named `gitops-cd-secret` that provides the details needed
 to connect to the git repo to push updates.
 
-Fortunately, a CLI command provides a simple way to create a kubernetes secret
-that contains git credentials.
+The [IGC CLI](/getting-started/cli) has a command that provides a helper to make the creating of a kubernetes secret
+with git credentials very easy.
 
 - Log into the cluster on the command-line.
 
@@ -319,11 +310,11 @@ personal access token, and the branch to put in the secret.
 
     **What just happened?**
     
-    The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
+    - The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
     for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
     secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
     
-    ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml``` 
+    - ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml```
 
     **Note:** 
     
@@ -346,19 +337,18 @@ the steps need to be repeated for each application within the project.
 
 1. Update the `values.yaml` file in the Inventory Management UI chart to set `ingress.appId.enabled=true` and to 
 set the value for the AppId binding secret
-
-```yaml path=/chart/template-java-spring/values.yaml
-...
-appidBinding: "binding-sms-test-oc-appid"
-
-ingress:
-  enabled: true
-  appid:
-    enabled: true
-    # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
-    requestType: web
+    ```yaml path=/chart/template-java-spring/values.yaml
     ...
-```
+    appidBinding: "binding-sms-test-oc-appid"
+
+    ingress:
+      enabled: true
+      appid:
+        enabled: true
+        # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
+        requestType: web
+        ...
+    ```
 
 #### AppId redirect url config
 
@@ -385,110 +375,92 @@ the following form:
 
 2. Add users
 
-### Integrating with NoSQL Database
+### Add a Cloudant integration to your backend service
 
-
-The initial setup
-
-
-This exercise will Create a Cloud Native NoSQL Database and populate it with data. You will then access the data through a Spring Boot micro service REST API.
-
- 	- Create the Database instance
- 	- Populate it with sample data
-
-
-- While logged into the IBM Cloud account use the resource list to find your pre installed Cloudant datbase instance.
+- While logged into the IBM Cloud account use the resource list to find your pre installed Cloudant database instance name after your development cluster.
 
 - Open the database instance dashboard.
 
-- After the create is successful, you will see the Database instance Manage view.  From here you can click on the Launch button to access the database management views. We now need to configure the command line so you can upload data.
-
 - Click on the Service Credentials on the left-hand menu.
-- If there are no credentials created, click *New Credentials* button and in the dialog click *Add*. These control the access to the database. Are the credentials have been created you should see a screen similar to the one below.
+- You will see the credentials for the database.
 
+- Open a terminal window folder/directory called `data`
+    ```bash
+    mkdir data
+    ```
 
--  Open a command prompt and create a folder/directory called `data`
-
-```
-mkdir data
-```
-
-- To help create test JSON data we are going to supply a template to the JSON Generator tool, this helps when creating dummy data for testing. Navigate to the following link.
-
--  https://next.json-generator.com
+- To help create test JSON data we are going to supply a template to the JSON Generator tool, this helps when creating dummy data for testing. Navigate to the following link [https://www.json-generator.com/](https://www.json-generator.com/)
 
 - Replace the default template with the following template (using cut and paste). This will enable a 100 records of test data to be created to represent a products database. Click on the *Generate* button.
-
-```bash
-[
-  {
-    'repeat(1, 100)': {
-      name: '{{lorem(2, "words")}}',
-      guid: '{{guid()}}',
-      delivered: '{{bool()}}'
-    }
-  }
-]
-```
+    ```bash
+    [
+      '{{repeat(1, 50)}}',
+      {
+        id: '{{objectId()}}',
+        manufacturer: '{{company().toUpperCase()}}',
+        name:  '{{lorem(3, "words")}}',
+        price: '{{floating(10, 1000, 2, "0.00")}}',
+        stock: '{{integer(1, 100)}}'
+      }
+    ]
+    ```
 - Copy the generated contents on the right hand side into a file called `inventory.json` and save it into the same folder. Wrap the array with a docs statement.
-
-```json
-{
-  "docs": {Add Generated array []}
-}
-```
+    ```json
+    {
+      "docs": <Add Generated array here>
+    }
+    ```
 - Save the documents that will be loaded into Cloudant
 
 - Using a code editor create a shell script called `load.sh` that will load data into the database using a `curl` command. Use the contents from below for the script.
+    ```
+    #!/bin/sh
+    # Cloudant Database Data Load Utility
 
-```
-#!/bin/sh
-# Cloudant Database Data Load Utility
+    # Credentials from IBM Cloud
+    CLOUDANT_USERNAME=
+    CLOUDANT_PASSWORD=
 
-# Credentials from IBM Cloud
-CLOUDANT_USERNAME=
-CLOUDANT_PASSWORD=
+    # name of database
+    DATABASE=inventor-<replace with namespace>
 
-# name of database
-DATABASE=inventor-{initials}
+    # input validation
+    if [ -z "${CLOUDANT_USERNAME}" ]; then
+        echo "Please provide your CLOUDANT_USERNAME."
+        exit
+    fi
+    if [ -z "${CLOUDANT_PASSWORD}" ]; then
+        echo "Please provide your CLOUDANT_PASSWORD."
+        exit
+    fi
 
-# input validation
-if [ -z "${CLOUDANT_USERNAME}" ]; then
-    echo "Please provide your CLOUDANT_USERNAME."
-    exit
-fi
-if [ -z "${CLOUDANT_PASSWORD}" ]; then
-    echo "Please provide your CLOUDANT_PASSWORD."
-    exit
-fi
+    # credentials to post data to cloudant
+    AUTH="$(python -c 'import base64; print base64.urlsafe_b64encode("'${CLOUDANT_USERNAME}':'${CLOUDANT_PASSWORD}'")')"
+    ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
+    HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
 
-# credentials to post data to cloudant
-AUTH=$(echo "${CLOUDANT_USERNAME}:${CLOUDANT_PASSWORD}" | base64)
-ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
-HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
+    # Inventory
+    eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
+    eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
+    eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
 
-# Inventory
-eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
-eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
-eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
-```
+    ```
 
-- Replace the {CLOUDANT_USERNAME} and {CLOUDANT_PASSWORD} fields with values from the Credentials section of the Cloudant instance in the dashboard.
-- Add database name `inventor-{initials}` using the initials that you have used before.
+- Add the `username` and `password` to `CLOUDANT_USERNAME` and `CLOUDANT_PASSWORD variables in the `load.sh` script. You can get the credentals from the Cloudant credentials view in the IBM Cloud console.
+- Add database name `inventor-<replace with namespace>` using the dev namespace/project name you have been using.
 - Save the script, make it executable, and then run it.
-```
-chmod +x ./load.sh
-./load.sh
-```
-- The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch  button to see the Cloudant dashboard.
-- Click on the Left icon that looks like a Database and you will see the products database created.
-
-- Click on the products database itself.
+    ```
+    chmod +x ./load.sh
+    ./load.sh
+    ```
+- The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch button to see the Cloudant dashboard.
+- Click on the Left icon that looks like a Database and you will see the `inventory-<namespace>` database created.
+- Click on the `inventory` database, then click **Table** view.
 - You can see the rows of data
-- If you click on a row of data, you will see the raw NoSQL form of the data record.
-- This completes the setup of the database and populating it with data. We will be now moving onto creating a Spring Micro service that then uses this database to display Product details.
+    ![Database](/images/database.png)
 
-This completes the data load activities.
+- If you click on a row of data, you will see the raw NoSQL form of the data record.
+- This completes the setup of the database and populating it with data.
 
 ### Add a Cloudant integration to your backend service
 
@@ -815,16 +787,12 @@ This completes the data load activities.
 
     **Note:** The cloudantBinding value should match the name of the cloudant binding secret
 
+## Review Application End to End
+
+
+
 ## Summary
 
 You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
 
-## Solution Links
 
-If you want to skip the guide and just get the components running, here are the solution Git Repositories. You can clone these and `igc pipeline` them to register them in the CI pipeline. The **README.md** may include additional setup for populating test data etc.
-
-<AnchorLinks>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-ui">Inventory Management User Interface</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-bff">Inventory Management Backend for Frontend</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-service">Inventory Management Microservice</AnchorLink>
-</AnchorLinks>

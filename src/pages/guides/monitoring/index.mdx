@@ -69,6 +69,65 @@ The Getting started tutorial, starting with
 [Step 5: Monitor your environment](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step5), 
 gives some instructions on monitoring, managing, and what to do next.
 
+
+## Give it a try
+
+- Before you start to understanding how to monitor your application instances, make sure you have [deployed an app](/getting-started/deployapp) into your development cluster. this _Git it a Try_ will use the [template-node-typescript](/starterkits/starterkittemplates) as an example.
+
+- The **SysDig** service is already created, bound and configured to listen to monitoring metrics and events for your development cluster.
+- Open the **SysDig** instance that is named the same as your development cluster.
+- Click on the **Dashboard** and then on _HTTP Overivew_ you will see an overall dashboard showing cluster health and metrics, get familiar with these views and the metrics they are showing.
+
+### View your app metrics
+
+- Click **Explore** on the left hand navigation, in the Search field enter your app name ie. `hello-world-mjp`
+- Switch to view the **Containerized Apps** and select the image reference. You will see metrics for all the instances.
+- Then select the in deployment and see the metrics for just your running pods.Acknowledge
+    ![Metrics View](appview.png)
+
+- You will now see just the metrics for your your app, you can view at different levels, from pod to namespace to node to cluster. Giving you a fine grain access to you monitoring requirements.
+
+### Creating a custom alert and event
+
+**SysDig** enables custom events and alerts to be triggered. Lets create a simple alert that will send an email when ever the total number of pods in your _namespace/project_ exceeds a specific number. This is helpful to monitor when project is consuming unnecessary resources in the development environment.
+
+### Add Notification Channel
+
+- After logging into the **SysDig** dashboard, click on your initials bottom left, then click on **Notification Channels**
+- Click on **Add Notification Channel** and select _email_ as the channel type.
+- Enter your business email address and give you channel a name.
+- Click **Save**
+- Using the `...` menu send a test notification and check it arrives into your email account.
+
+### Add Alert
+
+- Click on **Alerts** on the left hand navigation bar.
+- Click **Add Alert** and select **Metric** there are a wide number of different alter types you can create.
+- Click on the title and edit it call it something like `MJP Dev Metric` change the severity to red `High`.
+- Complete the following fields in _Section 1_ of the create alert dialog.
+    ![Section1](createalert.png)
+- This alert will trigger after the number of pods in your development _namespace/project_ raises above 3. This will only trigger for your own developer space, make sure this is set to the name you use for deploying your applications.
+
+- In section two called **Notify** switch on the notification channel you created earlier and set the _Notify every_ 2 minutes and add a reference to your namespace in the _Event Title_
+    ![Notify](section2.png)
+
+- Click **Save**
+
+### Increase Pod count for your app
+
+- Navigate back to your OpenShift or Kubernetes dashboard
+- Switch to your _namespace/project_ and open the Deployments view. Click on the deployment of your app and increase the number of *Pods* for your app to 4.
+
+### Acknowledge your events
+
+- Navigate back to **SysDig** and select the **Events** view from the left hand navigation.
+- In the search field enter the name of your app ie. `hello-world-mjp`
+- After a few minutes you will see your customer alert triggered.Navigate
+    ![Alert](alerttriggered.png)
+- Click on the Alert and click **Acknowledge** this will inform the **Notification Channel** than an operations team member is working the issue.Acknowledge
+- Finally check you email account to see if any notifications have arrived.Acknowledge
+    ![email](email.png)
+
 ## Conclusion
 
 It's important to be able to monitor your deployed applications. 

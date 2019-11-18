@@ -32,13 +32,84 @@ you can filter by your resource group.
     ![LogDNA Logging Instance](logdna-logging-instance.png)
 - In the logging instance, press the **View LogDNA** button to open the LogDNA web UI
 
-### Explore your application
+## Give it a try
 
-TBD
+- Before you start to understanding how to look at your application logs, make sure you have [deployed an app](/getting-started/deployapp) into your development cluster. Each of the template apps has a logging framework included, this _Git it a Try_ will use the [template-node-typescript](/starterkits/starterkittemplates) as an example.
+
+- The **LogDNA** service is already created, bound and configured to listen to logs from your development cluster.
+- Open the **LogDNA instance that is named the same as your development cluster.
+- Click on **All Apps** and enter the name of your app or narrow the app selection using the suffix that you used to create it.
+![AllAps](allapps.png)
+- Select the app you want to monitor
+
+- You will now see just the logs for your app.
+
+### Add some logging to your app
+
+All the common logging frameworks support the ability publish different types of log statement. The developer can use the log level to help trap specific information or error conditions. The common log levels are  `info`, `debug`, `warn` and `fatal`. It is best practice to add log statements to help operations teams and monitoring services to help identify possible issues quickly.
+
+- Add the following `debug` statement and `error` condition to the `greetings` implementation in your app.
+
+    ```typescript src=/src/services/hello-world.service
+
+      async greeting(name: string = 'World'): Promise<string> {
+        this.logger.info(`Generating greeting for ${name}`);
+
+        this.logger.debug('This is a debug message from inside my API');
+
+        // Only Trigger error if the name passed in matches ERROR
+        if (name === 'ERROR' ) {
+            try {
+              throw new Error('"Throwing an error');
+            } catch (e) {
+              this.logger.error(e);
+              throw new Error('"Catching and Throwing errors');
+            } finally {
+              throw new Error('Last chance to trap this Error');
+            }
+        }
+
+        return `Hello, ${name}!`;
+      }
+
+    ```
+
+- Now we have introduced an error lets adjust the log level for the application.
+
+- To add `LOG_LEVEL` settings to you app edit the `deployment.yaml` in your `chart` folder. Add the following `debug` value to the `LOG_LEVEL` env property.
+
+    ```yaml src=/chart/template-node-typescript/templates/deployment.yaml
+    -env:
+        name: LOG_LEVEL
+        value: debug
+    ```
+
+- Test the app changes locally first before deploying.
+    ```bash
+    npm run start
+    ```
+- Push your changes back to *Git* and wait for your CI pipeline to complete build and deploy.
+
+- Open up the **LogDNA** console and narrow the logs to just your app
+
+- Open the app into a browser using `igc ingress -n {your namespace}` select your running app.
+- Switch to `HTTPS` and test the `/hello/{name}` API and pass in some data. You have introduced a `DEBUG` message and an `ERROR` into this API logic. Click the **Execute** button a few times to simulate some API calls.
+- Try the API with your own name, and you will see just the `DEBUG` message appearing.
+- Try the API with `ERROR` as the name , and this will trigger the error code we put in the API service.
+
+- You will see the errors appearing in **LogDNA** triggered by your application.
+
+![Error](/errorcondition.png)
+
+- Try scaling you pods for the app and calling the API again and come and watch the logs and see where the API call is being routed and which pod is triggering the error.
+
+There is lots more information around how to use **LogDNA** these links will help.
+
+<AnchorLinks>
+  <AnchorLink to="https://docs.logdna.com/docs/filters">More information on using LogDNA log filtering</AnchorLink>
+  <AnchorLink to="https://docs.logdna.com/docs/time">Understand how to jump to a specific timeframe</AnchorLink>
+</AnchorLinks>
 
 ## Conclusion
 
-It's important to be able to manage the logs of your deployed applications. 
-Here, the Developer Tools environment uses LogDNA, but you never had to install or run it.
-Just deploy your application into the Developer Tools environment and its logs gets collected automatically.
-After deploying your application, open the LogDNA web UI and browse the logs.
+It's important to be able to manage the logs of your deployed applications to help identify issues and quickly understand how to resolve them. The Developer Tools configures LogDNA directly to you development cluster to make it easy to get the log you data you need as a developer. Just deploy your application into your Developer Tools environment and its logs start appearing automatically, open the LogDNA web UI and browse your logs.

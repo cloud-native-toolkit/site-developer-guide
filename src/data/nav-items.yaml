@@ -25,18 +25,18 @@
       path: /guides/continuous-integration-tekton
     - title: Image Registry
       path: /guides/image-registry
-    - title: Code Analysis
-      path: /guides/code-analysis
     - title: Artifact Management
       path: /guides/artifact-management
-    - title: CD with ArgoCD
-      path: /guides/continuous-delivery
+    - title: Code Analysis
+      path: /guides/code-analysis
     - title: Contract Testing
       path: /guides/contract-testing
     - title: Log Management
       path: /guides/log-management
     - title: Monitoring
       path: /guides/monitoring
+    - title: CD with ArgoCD
+      path: /guides/continuous-delivery
     - title: Architecture as Code with SolSA
       path: /guides/solsa
     - title: Developer Tools Image
@@ -62,6 +62,9 @@
       path: /practical/overview
     - title: Inventory Micro App - Part 1
       path: /practical/inventory-part1
+    - title: Inventory Micro App - Part 2
+      path: /practical/inventory-part2
+
 
 - title: Administrator Guide
   pages:
@@ -71,7 +74,7 @@
       path: /admin/installation-ibm-cloud
     - title: Install into existing cluster
       path: /admin/installation-existing
-    - title: Install into Red Hat CodeReady
+    - title: Install into OpenShift CRC
       path: /admin/installation-crc
     - title: Artifactory Setup
       path: /admin/artifactory-setup
@@ -87,4 +90,11 @@
 - title: Contributing
   pages:
     - path: /contributing
+
+- title: MOOC Homework
+  pages:
+    - title: Session 1, Week 1
+      path: /homework/tasks
+    - title: Session 1, Week 2
+      path: /homework/tasks-week2
 
