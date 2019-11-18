@@ -143,7 +143,12 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
 
   **Warning:** If you are working on a shared education cluster, please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
   -----
-  For example, don't just run:
+
+  If working on **OpenShift** create your project namespace first
+  ```bash
+  oc new-project dev-{initials}
+  ```
+  Do not run `igc pipeline` without a namespace , this will cause your pipeline to be created in the default `dev` namespace:
   ```bash
   igc pipeline
   ```
@@ -163,7 +168,8 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
     - **Password**: Paste your github personal access token
     - **Branch**: Press enter for the default git branch or type in another branch you want to register
     ```bash
-    $ igc pipeline -n dev
+    $ oc new-project -n dev-{initials}
+    $ igc pipeline -n dev-{intials}
     Project git repo: https://github.com/mjperrins/stockbffnode.git
     ? Provide the username: mperrins
     ? Please provide your password/personal access token: [hidden]
