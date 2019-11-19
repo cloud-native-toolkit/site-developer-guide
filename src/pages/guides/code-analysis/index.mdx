@@ -227,6 +227,13 @@ Good news, the quality gate is working and SonarQube fails the project now!
 
 ### Add a stage to Jenkins
 
+<InlineNotification kind="error">
+
+Do not complete this step for the homework task. When working on the the shared development environment, the [SonarQube Plugin](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-jenkins/) is not correctly configured for this environment.
+
+</InlineNotification>
+
+
 However, take a look at your pipeline (in the OpenShift console). It kept right on going! We don't want the pipeline to keep going and deploy the app; if the code fails the quality gate, we want the pipeline to stop.
 
 Modify the Jenkins pipeline to add a Quality Gate stage.
