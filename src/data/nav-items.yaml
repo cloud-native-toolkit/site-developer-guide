@@ -93,6 +93,8 @@
 
 - title: MOOC Homework
   pages:
+    - title: Welcome
+      path: /homework/teams
     - title: Session 1, Week 1
       path: /homework/tasks
     - title: Session 1, Week 2
