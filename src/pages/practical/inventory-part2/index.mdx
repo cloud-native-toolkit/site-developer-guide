@@ -10,8 +10,8 @@ Extending Part 1 of your 3 tier app to include Continuous Delivery to Test, Secu
 
 <AnchorLinks>
   <AnchorLink to="#using-cd-to-deliver-to-test">Using CD to deliver to Test</AnchorLink>
-  <AnchorLink to="#enabling-application-security-with-app-id">Securing the User Interface</AnchorLink>
-  <AnchorLink to="#add-a-cloudant-integration-to-your-backend-service">Integrating with NoSQL Database</AnchorLink>
+  <AnchorLink to="#securing-the-solution-with-app-id">Securing the solution with AppID</AnchorLink>
+  <AnchorLink to="#add-a-cloudant-integration-to-your-backend-service">Integrating with Cloudant NoSQL Database</AnchorLink>
 </AnchorLinks>
 
 ## Guide
@@ -24,7 +24,7 @@ Part 2 of the Inventory MicoApp guide is a follow on from Part 1 and will concen
 - Enabling application security with **App ID**
 - Adding **Cloudant** database and populating it with data
 
-### Using CD to deliver to Test
+## Using CD to deliver to Test
 
 ArgoCD is a tool that provides Continuous Delivery for projects and applications. If you haven't already, be sure to read
 through the [Continuous Delivery with ArgoCD Guide](/guides/continuous-delivery).
@@ -308,20 +308,17 @@ with git credentials very easy.
 - Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
 
-    **What just happened?**
+#### What just happened?
     
-    - The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
-    for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
-    secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
-    
-    - ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml```
-
-    **Note:** 
-    
-    - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
-    where the pipeline is running (e.g. `dev-{initials}`).
-    - The value provided for `branch` is the one the pipeline will use to when committing changes to trigger 
-    the CD pipeline. `test` is the recommended value for the branch field.
+- The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running:
+    ```bash
+    kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml
+    ```
+**Note:**
+- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
+where the pipeline is running (e.g. `dev-{initials}`).
+- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger
+the CD pipeline. `test` is the recommended value for the branch field.
 
 - Trigger the pipeline for the Inventory Management service to build by making a change
 to the Inventory Management Service code and push the changes to Git.
@@ -331,7 +328,7 @@ to the Inventory Management Service code and push the changes to Git.
 Starting from [Configure the GitOps repo for Inventory Management service](#Configure-the-gitops-repo-for-inventory-management-service),
 the steps need to be repeated for each application within the project.
 
-### Securing the solution with **App ID**
+## Securing the solution with **App ID**
 
 To secure the application we are using the capabilities available within the IBMCloud platform that use
 a simple annotation on the ingress to enable integration with AppId. The starter kits have already been
@@ -348,22 +345,21 @@ kubectl get -n dev secrets | grep -E "binding.*appid"
 ```
 
 - Update the `values.yaml` file in the Inventory Management UI chart to set `ingress.appId.enabled=true` and to 
-set the value for the AppId binding secret from the previous step
-
-```yaml path=/chart/template-java-spring/values.yaml
-...
-
-ingress:
-  enabled: true
-  appid:
-    enabled: true
-    # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
-    requestType: web
-    binding:
-      name: "{binding secret}"
-      namespace: dev
+    set the value for the AppId binding secret from the previous step
+    ```yaml path=/chart/template-node-react/values.yaml
     ...
-```
+
+    ingress:
+      enabled: true
+      appid:
+        enabled: true
+        # web or app - https://cloud.ibm.com/docs/services/appid?topic=appid-kube-auth
+        requestType: web
+        binding:
+          name: "{binding secret}"
+          namespace: dev
+        ...
+    ```
 
 #### AppId redirect url config
 
@@ -398,7 +394,7 @@ the following form:
 
 - Provide the email address and password you configured in the previous steps. You should be granted access to the UI.
 
-### Add a Cloudant integration to your backend service
+## Add a Cloudant integration to your backend service
 
 - While logged into the IBM Cloud account use the resource list to find your pre installed Cloudant database instance name after your development cluster.
 
@@ -408,74 +404,74 @@ the following form:
 - You will see the credentials for the database.
 
 - Open a terminal window folder/directory called `data`
-```bash
-mkdir data
-```
+    ```bash
+    mkdir data
+    ```
 
 - To help create test JSON data we are going to supply a template to the JSON Generator tool, this helps when creating dummy data for testing. Navigate to the following link [https://www.json-generator.com/](https://www.json-generator.com/)
 
 - Replace the default template with the following template (using cut and paste). This will enable a 100 records of test data to be created to represent a products database. Click on the *Generate* button.
-```bash
-[
-  '{{repeat(1, 50)}}',
-  {
-    id: '{{objectId()}}',
-    manufacturer: '{{company().toUpperCase()}}',
-    name:  '{{lorem(3, "words")}}',
-    price: '{{floating(10, 1000, 2, "0.00")}}',
-    stock: '{{integer(1, 100)}}'
-  }
-]
-```
+    ```bash
+    [
+      '{{repeat(1, 50)}}',
+      {
+        id: '{{objectId()}}',
+        manufacturer: '{{company().toUpperCase()}}',
+        name:  '{{lorem(3, "words")}}',
+        price: '{{floating(10, 1000, 2, "0.00")}}',
+        stock: '{{integer(1, 100)}}'
+      }
+    ]
+    ```
 - Copy the generated contents on the right hand side into a file called `inventory.json` and save it into the same folder. Wrap the array with a docs statement.
-```json
-{
-  "docs": <Add Generated array here>
-}
-```
+    ```json
+    {
+      "docs": <Add Generated array here>
+    }
+    ```
 - Save the documents that will be loaded into Cloudant
 
 - Using a code editor create a shell script called `load.sh` that will load data into the database using a `curl` command. Use the contents from below for the script.
-```bash
-#!/bin/sh
-# Cloudant Database Data Load Utility
+    ```bash
+    #!/bin/sh
+    # Cloudant Database Data Load Utility
 
-# Credentials from IBM Cloud
-CLOUDANT_USERNAME=
-CLOUDANT_PASSWORD=
+    # Credentials from IBM Cloud
+    CLOUDANT_USERNAME=
+    CLOUDANT_PASSWORD=
 
-# name of database
-DATABASE=inventor-<replace with namespace>
+    # name of database
+    DATABASE=inventor-<replace with namespace>
 
-# input validation
-if [ -z "${CLOUDANT_USERNAME}" ]; then
-    echo "Please provide your CLOUDANT_USERNAME."
-    exit
-fi
-if [ -z "${CLOUDANT_PASSWORD}" ]; then
-    echo "Please provide your CLOUDANT_PASSWORD."
-    exit
-fi
+    # input validation
+    if [ -z "${CLOUDANT_USERNAME}" ]; then
+        echo "Please provide your CLOUDANT_USERNAME."
+        exit
+    fi
+    if [ -z "${CLOUDANT_PASSWORD}" ]; then
+        echo "Please provide your CLOUDANT_PASSWORD."
+        exit
+    fi
 
-# credentials to post data to cloudant
-AUTH="$(python -c 'import base64; print base64.urlsafe_b64encode("'${CLOUDANT_USERNAME}':'${CLOUDANT_PASSWORD}'")')"
-ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
-HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
+    # credentials to post data to cloudant
+    AUTH="$(python -c 'import base64; print base64.urlsafe_b64encode("'${CLOUDANT_USERNAME}':'${CLOUDANT_PASSWORD}'")')"
+    ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
+    HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
 
-# Inventory
-eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
-eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
-eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
+    # Inventory
+    eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
+    eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
+    eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
 
-```
+    ```
 
 - Add the `username` and `password` to `CLOUDANT_USERNAME` and `CLOUDANT_PASSWORD variables in the `load.sh` script. You can get the credentals from the Cloudant credentials view in the IBM Cloud console.
 - Add database name `inventor-<replace with namespace>` using the dev namespace/project name you have been using.
 - Save the script, make it executable, and then run it.
-```bash
-chmod +x ./load.sh
-./load.sh
-```
+    ```bash
+    chmod +x ./load.sh
+    ./load.sh
+    ```
 - The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch button to see the Cloudant dashboard.
 - Click on the Left icon that looks like a Database and you will see the `inventory-<namespace>` database created.
 - Click on the `inventory` database, then click **Table** view.
@@ -485,7 +481,7 @@ chmod +x ./load.sh
 - If you click on a row of data, you will see the raw NoSQL form of the data record.
 - This completes the setup of the database and populating it with data.
 
-### Enable database in solution
+### Enable database in the solution
 
 If you are starting from the solution, use the following steps to enable the Cloudant database
 
@@ -493,7 +489,6 @@ If you are starting from the solution, use the following steps to enable the Clo
 
 - Open the mappings.json file under src/main/resources and add a `DATABASE_NAME` value with the value 
 `inventory-{namespace}` where `namespace` is the namespace where the pipeline is running (e.g. dev-{initials})
-
 ```json path=src/main/resources/mappings.json
 {
   "DATABASE_NAME": "inventory-{namespace}"
