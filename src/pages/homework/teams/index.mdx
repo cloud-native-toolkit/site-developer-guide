@@ -38,13 +38,14 @@ You must associate your IBM email address with your public GitHub account or mak
 
 <InlineNotification kind="warning">
 
-**Warning:** If you do not associate your IBM email with you public GitHub account, you will have issues completing the homework.
+**Warning:** If you do not associate your IBM email with you public GitHub account, you will not receive
+a Git Organization invite and you will have issues completing the homework. We are not mixing personal email addresses with this **MOOC** training.
 
 </InlineNotification>
 
 ### Sandbox
 
-The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to 30 of your Garage colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment have been created in that resource group. As a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you are restricted from creating new cloud resources or deleting existing ones.
+The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to **100+** of your IBM colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment have been created in that resource group. As a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you are restricted from creating new cloud resources or deleting existing ones.
 
 The following teams diagram shows how access is configured. Imagine you are the Green user: There will be lots of other users in your team, maybe in different timezones, all sharing the same cloud resources. The administrators will monitor the cluster to identify any issues early and resolve them.
 
@@ -52,7 +53,7 @@ The following teams diagram shows how access is configured. Imagine you are the 
 
 You will be given access to the team's GitHub organization and are expected to create all of your applications as repositories in your team's organization. This is how real world development projects work. This enables you to collaborate with your fellow team members and  prevents you from creating duplicate projects names.
 
-**Extra credit**: After performing the homework in the OpenShift cluster, can you get it working in a Kubernetes cluster as well? As shown in the teams diagram above, your team's Developer Tools environment and its resource group include not only an OpenShift cluster but also a Kubernetes cluster. It's helpful if you can perform these development tasks in both container platforms because some Garage clients use one and some use the other. If you can work in both, you'll be qualified to staff more projects. The Developer Tools environment makes the developer experience the same for both container platforms.
+**Extra credit**: After performing the homework in the OpenShift cluster, can you get it working in a Kubernetes cluster as well? As shown in the teams diagram above, your team's Developer Tools environment and its resource group include not only an OpenShift cluster but also a Kubernetes cluster. It's helpful if you can perform these development tasks in both container platforms because some IBM clients use one and some use the other. If you can work in both, you'll be qualified to staff more projects. The Developer Tools environment makes the developer experience the same for both container platforms.
 
 <p/>
 
@@ -76,6 +77,7 @@ The teams are spread globally in different geographic locations listed below. We
 | **mooc-team-two** | London | eu-gb   | lon05    | [London Homework](https://github.com/mooc-team-two) |
 | **mooc-team-three** | Tokyo | jp-tok |  tok04   | [Tokyo Homework](https://github.com/mooc-team-three) |
 | **mooc-team-four** | San Jose | us-south |  sjc04   | [San Jose Homework](https://github.com/mooc-team-four) |
+| **mooc-team-surge** | Washington | us-east |  wdc07   | [SURGE Homework](https://github.com/mooc-team-surge) |
 
 ![Team Locations](https://www.ibm.com/cloud-computing/images/bluemix/data-centers/030-Data-Center-Maps_1-0.png)
 
@@ -143,6 +145,6 @@ Please remember that you a sharing a development cluster with other colleagues, 
 
 Remember:
 - Part of what you should be learning is how to be team members working on multiple microservices in the same development cluster with other developers
-- "[My app runs on my computer](https://donthitsave.com/comic/2016/07/15/it-works-on-my-computer)" is necessary but not sufficient, it needs to run in the Developer Tools environment as well
+- "[My app runs on my computer](https://donthitsave.com/comic/2016/07/15/it-works-on-my-computer)" is necessary but not sufficient, it needs to run in the OpenShift or IKS clusters as well
 - IBM Cloud is like one big lego set of software and services
     - After this course, you be on your way to be a master builder, it's loads of fun
