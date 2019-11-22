@@ -8,18 +8,11 @@ Use Sysdig to monitor your running application
 
 </PageDescription>
 
-In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/).
-Sysdig automates application monitoring, enabling an operator to view stats and collect metrics about a Kubernetes cluster and its deployments.
-The Developer Tools environment includes an IBM Cloud Monitoring with Sysdig service instance configured with 
-a Sysdig agent installed in the environment's cluster.
-Simply by deploying your application into the Developer Tools environment, Sysdig monitors it, just open 
-the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
+In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/). Sysdig automates application monitoring, enabling an operator to view stats and collect metrics about a Kubernetes cluster and its deployments. The Developer Tools environment includes an IBM Cloud Monitoring with Sysdig service instance configured with a Sysdig agent installed in the environment's cluster. Simply by deploying your application into the Developer Tools environment, Sysdig monitors it, just open the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
 
 ## Sysdig Monitoring
 
-[IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig) explains how to
-configure and use an instance of the Sysdig service, but the Developer Tools environment has already done most 
-of this for you. You can skip steps 1-3 about user access, provisioning an instance, and installing an agent.
+[IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig) explains how to configure and use an instance of the Sysdig service, but the Developer Tools environment has already done most of this for you. You can skip steps 1-3 about user access, provisioning an instance, and installing an agent.
 
 ### Sysdig dashboard
 
@@ -74,59 +67,106 @@ gives some instructions on monitoring, managing, and what to do next.
 
 Before you start to understanding how to monitor your application instances, make sure you have [deployed an app](/getting-started/deployapp) into your development cluster. This _Git it a Try_ uses [template-node-typescript](/starterkits/starterkittemplates) as an example.
 
-- The **SysDig** service is already created, bound and configured to listen to monitoring metrics and events for your development cluster.
+The **SysDig** service is already created, bound and configured to listen to monitoring metrics and events for your development cluster. You can see this in the HTTP overview.
+
 - Open the **SysDig** instance that is named the same as your development cluster.
-- Click on the **Dashboard** and then on _HTTP Overivew_ you will see an overall dashboard showing cluster health and metrics, get familiar with these views and the metrics they are showing.
+- Go to **Dashboards** > **HTTP Overview**
 
-### View your app metrics
+The dashboard shows stats for all incoming HTTP requests for all apps in the cluster. Browse through these views to get a feel for what they're showing.
 
-- Click **Explore** on the left hand navigation, in the Search field enter your app name ie. `hello-world-mjp`
-- Switch to view the **Containerized Apps** and select the image reference. You will see metrics for all the instances.
-- Then select the in deployment and see the metrics for just your running pods.Acknowledge
+### View your app's metrics
+
+Take a look at the metrics for your app.
+
+- Select the **Explore** page in the left nav menu
+- On the Explore page, select the **Containerized Apps** grouping
+- Search for your app, e.g. `hello-world-mjp`
+- In the list of apps, select yours, e.g. `us.icr.io/mooc-team-one/hello-world-mjp:1.0.0-10`
+- With your app selected, select the **Overview by Container** dashboard
+
+    The Overview by Container dashboard shows metrics for the containers in your app. You will now see just the metrics for your your app. You can view at different levels--from pod to namespace to node to cluster--giving you a fine grain access to you monitoring requirements.
+
     ![Metrics View](appview.png)
 
-- You will now see just the metrics for your your app, you can view at different levels, from pod to namespace to node to cluster. Giving you a fine grain access to you monitoring requirements.
+### Creating a custom alert
 
-### Creating a custom alert and event
+SysDig enables monitoring for custom events and alerting for events. Let's create a simple alert that will send an email when ever the total number of pods in your namespace/project exceeds a specific number. This is helpful to monitor when project is consuming unnecessary resources in the development environment.
 
-**SysDig** enables custom events and alerts to be triggered. Lets create a simple alert that will send an email when ever the total number of pods in your _namespace/project_ exceeds a specific number. This is helpful to monitor when project is consuming unnecessary resources in the development environment.
+Note: This is not tracking the number of pods in an application, but the number of pods (for all applications) in a namespace/project.
 
-### Add Notification Channel
+#### Add Notification Channel
 
-- After logging into the **SysDig** dashboard, click on your initials bottom left, then click on **Notification Channels**
-- Click on **Add Notification Channel** and select _email_ as the channel type.
-- Enter your business email address and give you channel a name.
-- Click **Save**
-- Using the `...` menu send a test notification and check it arrives into your email account.
+Create a notification channel, which is how SysDig will send you an alert.
 
-### Add Alert
+- In the SysDig dashboard, press the button with your initials at the bottom of the left nav menu, and select **Settings**
+- In the Settings page, select **Notification Channels**
+- Press **Add Notification Channel** and select **email** as the channel type
+- Enter your business email address and give your channel a name, e.g. `MJP Dev Channel`
+- Press **Save**
+- Using the `...` menu, send a test notification and verify that it arrives into your email account
 
-- Click on **Alerts** on the left hand navigation bar.
-- Click **Add Alert** and select **Metric** there are a wide number of different alter types you can create.
-- Click on the title and edit it call it something like `MJP Dev Metric` change the severity to red `High`.
-- Complete the following fields in _Section 1_ of the create alert dialog.
+#### Add Alert
+
+Create an alert, which notifies you when an event occurs.
+
+- Select the **Alerts** page in the left nav menu
+- Press **Add Alert** and select **Metric**
+
+The New Alert/Metric wizard enables you to configure a wide range of alerts.
+
+- Select the default title, "New Metric Alert", and edit it to name the alert, e.g. `MJP Dev Metric`
+- Change the severity to red `High`
+- In Section 1: Define of th wizard, complete the fields as shown
     ![Section1](createalert.png)
-- This alert will trigger after the number of pods in your development _namespace/project_ raises above 3. This will only trigger for your own developer space, make sure this is set to the name you use for deploying your applications.
+    This alert will trigger after the number of pods (in any/all applications) in your namespace/project raises above 3. This will only trigger for your own developer space, make sure this is set to the one you use for deploying your applications, e.g. `dev-mjp`.
 
-- In section two called **Notify** switch on the notification channel you created earlier and set the _Notify every_ 2 minutes and add a reference to your namespace in the _Event Title_
+- In Section 2: Notify of the wizard, switch on the notification channel you created earlier, e.g. `MJP Dev Channel`
+- Set it to notify you every 2 minutes
+- In the **Notification Subject & Event Title** field, add your namespace to the end, e.g. `- Dev-MJP namespace`
     ![Notify](section2.png)
 
-- Click **Save**
+- Press **Save**
 
-### Increase Pod count for your app
+### Cause the event
 
-- Navigate back to your OpenShift or Kubernetes dashboard
-- Switch to your _namespace/project_ and open the Deployments view. Click on the deployment of your app and increase the number of *Pods* for your app to 4.
+Let's test your alert by causing the event to occur.
 
-### Acknowledge your events
+- Back in your OpenShift or Kubernetes dashboard, navigate to your namespace/project and its deploments
+- Select the deployment for your app and increase the number of pods for your app to 4
 
-- Navigate back to **SysDig** and select the **Events** view from the left hand navigation.
-- In the search field enter the name of your app ie. `hello-world-mjp`
-- After a few minutes you will see your customer alert triggered.Navigate
+Once your app has started 4 pods/replicas, your namespace/project will be running more than the 3 pods your alert is monitoring for.
+
+### Acknowledge your event
+
+While starting pods goes very quickly, SysDig monitoring is not instantaneous. It will take 2-20 min for monitoring to detect the event.
+
+- Back in the SysDig dashboard, navigate to your app again
+    - **Explore** > **Containerized Apps**
+    - Select your app to display the **Overview by Container Image** dashboard
+
+Wait and watch for the container count to rise to 4. (Again, this could take 2-20 min. Watch for the times along the bottom of the graph to finally change.)
+
+- Select the **Events** page in the left nav menu
+- In the search field, enter the name of your app, i.e. `hello-world-mjp`
+- Look for an event named "{alert} is Triggered - {namespace} namespace"
+    - {alert} is the name of the alert you created, e.g. `MJP Dev Metric`
+    - {namespace} is the name of your namespace/project, e.g. `dev-mjp`
+
     ![Alert](alerttriggered.png)
-- Click on the Alert and click **Acknowledge** this will inform the **Notification Channel** than an operations team member is working the issue.Acknowledge
-- Finally check you email account to see if any notifications have arrived.Acknowledge
-    ![email](email.png)
+
+    If you've already waited a few minutes until the container count increased to 4, you should see this event immediately. Otherwise, you need to wait (2-20 min?) until monitoring detects the change, triggers the alert, and logs the event.
+
+Once the event is displayed, check your email. You should get an email from `Sysdig Notifications <ibm-saas-emailer@sysdig.com>` with the subject "{alert} is Triggered - {namespace} namespace" (same as the event label). It says the metric is `kubernetes.namespace.pod.available.count` and the value is the number of pods in your namespace/project, at least 4 -- plus a bunch of other info about the event.
+
+![email](email.png)
+
+Wait awhile and you should get more emails notifying you about this event, 1 email about every 10 min. The event is only listed once in the Events view, when the condition was first detected. But SysDig will continue to notify you about the event until you acknowledge it.
+
+- Select the event and press **Acknowledge**
+
+    This will inform the monitoring that an operations team member is working the issue.
+
+Alerting will send you one more alert email, subject "{alert} is Acknowledged", informing you that the event has been acknowledged. Then it won't send you any more alert emails about this event.
 
 ## Conclusion
 
