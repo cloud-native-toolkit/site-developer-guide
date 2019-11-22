@@ -201,17 +201,23 @@ To create a project, do the following:
 
     - `name` - the name of helm chart/image. This should match the folder name
     - `version` - the version number of the helm chart
-    - `repository` - the url to the helm repository
-    
-    The url of the Artifactory helm repository can be determines by following the steps described in
+    - `repository` - the url to the helm repository including the folder where helm charts are being stored.
+
+- here is an example
+    ```yaml
+    dependencies:
+    - name: inventory-management-svc-mjp
+      version: 1.0.0-1
+      repository: http://artifactory.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud/artifactory/generic-local/mooc-team-one/
+    ```
+
+    - The url of the Artifactory helm repository can be determines by following the steps described in
     [Administrator Guide - ArgoCD setup](/admin/argocd-setup/#get-the-helm-repository-location)
 
 - Run `kubectl get configmap/ibmcloud-config -n tools -o yaml` to print the configuration information
 for the cluster
 
-- In `inventory-management-svc-{initials}/values.yaml` replace `<app-chart-name>` with the directory name. Replace 
-`ingressSubdomain` with the value from the previous step. Update `tlsSecretName` with the value from the 
-previous step. The result should look something like the following
+- In `inventory-management-svc-{initials}/values.yaml` replace `<app-chart-name>` with the directory name. Replace `ingressSubdomain` with the value from the previous step. Update `tlsSecretName` with the value from the previous step. The result should look something like the following
     ```yaml path=inventory-management-svc-{initials}/values.yaml
     global:
       ingressSubdomain: sms-test.us-south.containers.appdomain.cloud
@@ -314,6 +320,7 @@ personal access token, and the branch to put in the secret.
     ```bash
     kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml
     ```
+
 **Note:**
 - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
 where the pipeline is running (e.g. `dev-{initials}`).
@@ -337,12 +344,10 @@ file of the helm chart.
 
 #### Inventory Management UI
 
-- Find the app id binding secret by running the following command from a terminal where the kubernetes context
-has been set up (i.e. `oc login` has been done)
-
-```bash
-kubectl get -n dev secrets | grep -E "binding.*appid"
-```
+- Find the app id binding secret by running the following command from a terminal where the kubernetes context has been set up (i.e. `oc login` has been done)
+    ```bash
+    kubectl get -n dev secrets | grep -E "binding.*appid"
+    ```
 
 - Update the `values.yaml` file in the Inventory Management UI chart to set `ingress.appId.enabled=true` and to 
     set the value for the AppId binding secret from the previous step
@@ -487,91 +492,86 @@ If you are starting from the solution, use the following steps to enable the Clo
 
 #### Set up local development
 
-- Open the mappings.json file under src/main/resources and add a `DATABASE_NAME` value with the value 
-`inventory-{namespace}` where `namespace` is the namespace where the pipeline is running (e.g. dev-{initials})
-```json path=src/main/resources/mappings.json
-{
-  "DATABASE_NAME": "inventory-{namespace}"
-}
-```
+- Open the mappings.json file under src/main/resources and add a `DATABASE_NAME` value with the value `inventory-{namespace}` where `namespace` is the namespace where the pipeline is running (e.g. dev-{initials})
+    ```json path=src/main/resources/mappings.json
+    {
+      "DATABASE_NAME": "inventory-{namespace}"
+    }
+    ```
 
 - Log into cloud.ibm.com and open the Cloudant service from the resource list
 
 - Click on service credentials and expand the listed credentials
 
 - Copy the json contents from the credentials into `mappings.json` under the `CLOUDANT_CONFIG` object
-
-```json path=src/main/resources/mappings.json
-{
-  "DATABASE_NAME": "inventory-{namespace}",
-  "CLOUDANT_CONFIG": "{paste json here}"
-}
-```
+    ```json path=src/main/resources/mappings.json
+    {
+      "DATABASE_NAME": "inventory-{namespace}",
+      "CLOUDANT_CONFIG": "{paste json here}"
+    }
+    ```
 
 #### Activate the Clouant service implementation
 
 - Open `src/main/java/com/ibm/inventory_management/services/StockItemMockService.java` and remove the `@Primary` annotation
 
-- Open `src/main/java/com/ibm/inventory_management/services/StockItemService.java` and add the `@Primary` annotation. The file
-should look like the following
+- Open `src/main/java/com/ibm/inventory_management/services/StockItemService.java` and add the `@Primary` annotation. The file should look like the following
+    ```java path=src/main/java/com/ibm/inventory_management/services/StockItemService.java
+    package com.ibm.inventory_management.services;
 
-```java path=src/main/java/com/ibm/inventory_management/services/StockItemService.java
-package com.ibm.inventory_management.services;
+    import java.io.IOException;
+    import java.util.List;
+    import javax.annotation.PostConstruct;
 
-import java.io.IOException;
-import java.util.List;
-import javax.annotation.PostConstruct;
+    import org.springframework.context.annotation.Primary;
+    import org.springframework.stereotype.Service;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
+    import com.cloudant.client.api.CloudantClient;
+    import com.cloudant.client.api.Database;
+    import com.ibm.inventory_management.config.CloudantConfig;
+    import com.ibm.inventory_management.models.StockItem;
 
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
-import com.ibm.inventory_management.config.CloudantConfig;
-import com.ibm.inventory_management.models.StockItem;
+    @Service
+    @Primary
+    public class StockItemService implements StockItemApi {
+        private CloudantConfig config;
+        private CloudantClient client;
+        private Database db = null;
 
-@Service
-@Primary
-public class StockItemService implements StockItemApi {
-    private CloudantConfig config;
-    private CloudantClient client;
-    private Database db = null;
+        public StockItemService(CloudantConfig config, CloudantClient client) {
+            this.config = config;
+            this.client = client;
+        }
 
-    public StockItemService(CloudantConfig config, CloudantClient client) {
-        this.config = config;
-        this.client = client;
-    }
+        @PostConstruct
+        public void init() {
+            db = client.database(config.getDatabaseName(), true);
+        }
 
-    @PostConstruct
-    public void init() {
-        db = client.database(config.getDatabaseName(), true);
-    }
+        @Override
+        public List<StockItem> listStockItems() throws Exception {
 
-    @Override
-    public List<StockItem> listStockItems() throws Exception {
+            try {
+                return db.getAllDocsRequestBuilder()
+                        .includeDocs(true)
+                        .build()
+                        .getResponse()
+                        .getDocsAs(StockItem.class);
 
-        try {
-            return db.getAllDocsRequestBuilder()
-                    .includeDocs(true)
-                    .build()
-                    .getResponse()
-                    .getDocsAs(StockItem.class);
-
-        } catch (IOException e) {
-            throw new Exception("", e);
+            } catch (IOException e) {
+                throw new Exception("", e);
+            }
         }
     }
-}
-``` 
+    ```
 
 #### Update the configuration values in the `values.yaml` helm chart
 
 - Open the `values.yaml` file and update the values for `cloudantBinding` and `databaseName`
-
-```yaml path=chart/template-java-spring/values.yaml
-cloudantBinding="{binding name}"
-databaseName="inventory-{namespace}"
-```
+    ```yaml path=chart/template-java-spring/values.yaml
+    cloudantBinding="{binding name}"
+    databaseName="inventory-{namespace}"
+    ```
 
     **Note:** The cloudantBinding value should match the name of the cloudant binding secret
 
@@ -934,7 +934,7 @@ existing `env` block
 
 ## Review Application End to End
 
-
+Now that you have completed [Part 1](/practical/inventory-part1), and [Part 2](/practical/inventory-part1) you should review your application functionality end to end. This pattern for three tier applications is very common in the industry and being and hopefully you have learnt a lot of along the way of creating this Micro App.
 
 ## Summary
 
