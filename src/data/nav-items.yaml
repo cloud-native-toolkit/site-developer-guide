@@ -64,6 +64,10 @@
       path: /practical/inventory-part1
     - title: Inventory Micro App - Part 2
       path: /practical/inventory-part2
+    - title: AppMod - Exercise 1
+      path: /practical/appmod-exercise1
+    - title: AppMod - Exercise 2
+      path: /practical/appmod-exercise2
 
 
 - title: Administrator Guide
@@ -97,4 +101,5 @@
       path: /homework/tasks
     - title: Session 1, Week 2
       path: /homework/tasks-week2
-
+    - title: Session 3
+      path: /homework/tasks-week4
