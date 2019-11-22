@@ -9,7 +9,7 @@ Steps to get set up as part of your team in the Developer Tools environment to d
 </PageDescription>
 
 Thanks for signing up for the Garage OpenShift and Cloud Pak MOOC. You should have received a Welcome email that provides the details of the team you've been assigned to and pointing you to this welcome page. By participating in this [massive open online course](https://en.wikipedia.org/wiki/Massive_open_online_course) (MOOC), you have access to:
-- The education agenda and playbacks: [**Garage OpenShift and Cloud Pak MOOC**](https://www.onlinedigitallearning.com/course/view.php?id=5631)
+- The education agenda and playbacks: The link to the **Garage OpenShift and Cloud Pak MOOC** is provided in the email
 - A Developer Tools environment preinstalled in a pay-as-you-go IBM Cloud account which you'll use to perform the homework
 
 <InlineNotification kind="warning">
@@ -18,12 +18,14 @@ Thanks for signing up for the Garage OpenShift and Cloud Pak MOOC. You should ha
 
 </InlineNotification>
 
-### Notification
+## Notification
 
-The Welcome email gives you details on how to access the Developer Tools environment for your development team. The email will specify the MOOC Sandbox Registration Details:
+The Welcome email gives you details on how to access the Developer Tools environment for your development team.
+
+**MOOC Sandbox Registration Details**
 - **Account**: This is the IBM Cloud account with a Developer Tools environment for your team and resources to perform the homework
-- **Team name**: This is the name of your development team
-- **Git Organization**: This is the GitHub org for your team's set of Git repos
+- **Team**: This is the name of your development team
+- **GitHub Organization**: This is the org in GitHub for your team's set of Git repos
 - **Resource Group**: This is the IBM Cloud resource group for your Developer Tools environment
 
 You must associate your IBM email address with your public GitHub account or make sure you have a public account that is using your IBM email address. To set your email address in GitHub:
@@ -43,9 +45,11 @@ a Git Organization invite and you will have issues completing the homework. We a
 
 </InlineNotification>
 
-### Sandbox
+## Sandbox
 
-The Sandbox has been defined exactly how a client would use the IBM Cloud. Each development team will contain up to **100+** of your IBM colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment have been created in that resource group. As a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you are restricted from creating new cloud resources or deleting existing ones.
+[The IBM Garage for Cloud Developer Tools environment](/overview) is designed to make it easier for you to develop and deploy cloud-native applications. It includes an OpenShift or Kubernetes cluster, cloud services bound to the cluster, and developer tools installed in the cluster. The combination supports developing cloud-native microservices architecture applications and CI/CD continuous deployment of those applications. A development team creating an application for a company would install one of these environments in the company's IBM Cloud account. Multiple development teams creating applications for the same company would install multiple environments, one per team wanting to work independently.
+
+The Sandbox has been defined exactly how a client of IBM would use the IBM Cloud. Each development team will contain up to **100+** of your IBM colleagues. Each team has been configured in [IAM](https://cloud.ibm.com/docs/iam) as its own access group with a corresponding resource group. Your resources for your team's Developer Tools environment have been created in that resource group. As a member of your team's access group, you'll have access to the resources in your team's Developer Tools environment. Since the Developer Tools environment has already been created, you are restricted from creating new cloud resources or deleting existing ones.
 
 The following teams diagram shows how access is configured. Imagine you are the Green user: There will be lots of other users in your team, maybe in different timezones, all sharing the same cloud resources. The administrators will monitor the cluster to identify any issues early and resolve them.
 
@@ -94,7 +98,7 @@ Follow these steps to check you can access your team's Developer Tools environme
 Login and view the resources.
 
 - Login to the [IBM Cloud](https://cloud.ibm.com)
-- The Welcome email with the MOOC Sandbox Registration Details will tell you your account, team, Git organization, and resource group
+- The Welcome email with the MOOC Sandbox Registration Details will tell you your account, team, GitHub organization, and resource group
 - In the IBM Cloud console, switch to the account specified in the email
 - Navigate to the *Resource List*
 - In the Group filter, select your team's resource group
@@ -104,7 +108,7 @@ Login and view the resources.
 
 Explore the Red Hat OpenShift resources and set up the CLI.
 
-- In the Tags filter, enter `rhos` to see just the Red Hat OpenShift cluster and services
+- In the Tags filter, enter both `rhos` and `ocp` to see just the Red Hat OpenShift cluster and services
 ![Resource List](devtoolsservices.png)
 - Click on the name of each cloud service instance and verify you can open each one's dashboard
 - Click on the names of the Red Hat OpenShift cluster to open its dashboard
@@ -115,7 +119,7 @@ Explore the Red Hat OpenShift resources and set up the CLI.
 Explore the IKS resources and set up the CLI.
 
 - Return to the **Resource List**
-- Remove the `rhos` tag and add the `iks` tag
+- Remove the `rhos` and `ocp` tags and add the `iks` tag
 - Repeat the same steps for your team's Kubernetes cluster and services
 
 <InlineNotification kind="success">
@@ -129,7 +133,7 @@ You have completed this homework task if you have:
 
 ## Etiquette
 
-Please remember that you a sharing a development cluster with other colleagues, so be considerate of the following rules:
+Please remember that you are sharing a development cluster with other colleagues, so be considerate of the following rules:
 
 - Make sure you use your own namespace/project for you applications
     - Name your personal namespace/project using the convention `dev-{your initials}`, i.e. `dev-mjp`
