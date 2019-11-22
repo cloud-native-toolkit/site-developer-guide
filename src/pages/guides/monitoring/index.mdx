@@ -17,13 +17,11 @@ In IBM Garage Method, one of the Operate practices is to [automate application m
 ### Sysdig dashboard
 
 Open the Sysdig web UI for your environment's cluster
-- [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4) 
-explains how to open the web UI
-- In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
-- Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks-sysdig`. 
-To help find it, you can filter by your resource group.
+- [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4) explains how to open the web UI
+    - In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
+    - Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks-sysdig`
     ![Sysdig Monitoring Instance](sysdig-monitoring-instance.png)
-- In the monitoring instance, press the **View Sysdig** button to open the Sysdig web UI
+    - In the monitoring instance, press the **View Sysdig** button to open the Sysdig web UI
 
 Finish onboarding the agent
 - If this is your first time opening the Sysdig dashboard on your cluster's monitoring agent, Sysdig will open the Onboarding wizard
@@ -49,7 +47,7 @@ By default, the Sysdig dashboard opens the **Explore** page on its **Deployments
 By default, Sysdig opens its **Overview by Process** dashboard, which has panels showing stats about CPU, memory, and networking. 
 This is one of Sysdig's **Default Dashboards** (i.e. built-in dashboards).
 
-These are the cumlative totals for all of the pods running in the cluster. Hover over a graph and a key pops up to list 
+These are the cumulative totals for all of the pods running in the cluster. Hover over a graph and a key pops up to list
 the pods and show each one's color.
 
 - Expand your cluster and namespace, then select your deployment
@@ -138,6 +136,7 @@ Once your app has started 4 pods/replicas, your namespace/project will be runnin
 
 ### Acknowledge your event
 
+#### Watch the container count
 While starting pods goes very quickly, SysDig monitoring is not instantaneous. It will take 2-20 min for monitoring to detect the event.
 
 - Back in the SysDig dashboard, navigate to your app again
@@ -146,6 +145,8 @@ While starting pods goes very quickly, SysDig monitoring is not instantaneous. I
 
 Wait and watch for the container count to rise to 4. (Again, this could take 2-20 min. Watch for the times along the bottom of the graph to finally change.)
 
+#### Watch for the event
+Look for the event showing that your condition has been detected.
 - Select the **Events** page in the left nav menu
 - In the search field, enter the name of your app, i.e. `hello-world-mjp`
 - Look for an event named "{alert} is Triggered - {namespace} namespace"
@@ -156,17 +157,45 @@ Wait and watch for the container count to rise to 4. (Again, this could take 2-2
 
     If you've already waited a few minutes until the container count increased to 4, you should see this event immediately. Otherwise, you need to wait (2-20 min?) until monitoring detects the change, triggers the alert, and logs the event.
 
+#### Watch for the alerts
 Once the event is displayed, check your email. You should get an email from `Sysdig Notifications <ibm-saas-emailer@sysdig.com>` with the subject "{alert} is Triggered - {namespace} namespace" (same as the event label). It says the metric is `kubernetes.namespace.pod.available.count` and the value is the number of pods in your namespace/project, at least 4 -- plus a bunch of other info about the event.
 
-![email](email.png)
+```email
+From: Sysdig Notifications <ibm-saas-emailer@sysdig.com>
+To: "Matthew J Perrins"
+Subject: MJP Dev Alert is Triggered - Dev-MJP namespace
+
+                Event Generated:
+    Severity	High
+      Metric	kubernetes.namespace.pod.available.count = 4
+     Segment	kubernetes.cluster.id = '75240dcc-0326-11ea-be8d-eadf5501b087' and kubernetes.cluster.name = 'default' and kubernetes.namespace.name = 'dev-mjp'
+       Scope	kubernetes.namespace.name in dev-mjp
+        Time	11/17/2019 09:29 PM UTC
+       State	Triggered
+Active since	4 minutes
+   More info	View notification
+
+                Triggered by Alert:
+        Name	MJP Dev Alert
+        Team	Monitor Operations
+       Scope	kubernetes.namespace.name in dev-mjp
+  Segment by	kubernetes.cluster.id, kubernetes.cluster.name, kubernetes.namespace.name
+        When	max(max(kubernetes.namespace.pod.available.count)) > 3
+For at least	1 d
+   More info	View alert
+```
 
 Wait awhile and you should get more emails notifying you about this event, 1 email about every 10 min. The event is only listed once in the Events view, when the condition was first detected. But SysDig will continue to notify you about the event until you acknowledge it.
+
+#### Acknowledge the event
+
+Tell SysDig you're aware of the event.
 
 - Select the event and press **Acknowledge**
 
     This will inform the monitoring that an operations team member is working the issue.
 
-Alerting will send you one more alert email, subject "{alert} is Acknowledged", informing you that the event has been acknowledged. Then it won't send you any more alert emails about this event.
+Alerting will send you one more alert email, subject "{alert} is Acknowledged - {namespace} namespace", informing you that the event has been acknowledged. Then it won't send you any more alert emails about this event.
 
 ## Conclusion
 
@@ -175,3 +204,15 @@ Here, the Developer Tools environment uses Sysdig Monitoring, but you never had 
 Just deploy your application into the Developer Tools environment and it gets moniotored automatically.
 After deploying your application, open the Sysdig web UI and browse the status, including the status 
 of your cluster as a whole and your deployment in particular.
+
+### Learn more
+
+Learn more about using SysDig Monitoring:
+<AnchorLinks>
+  <AnchorLink to="https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-monitoring">IBM Cloud Monitoring with Sysdig > Monitoring your environment</AnchorLink>
+  <AnchorLink to="https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-dashboards">IBM Cloud Monitoring with Sysdig > Working with dashboards</AnchorLink>
+  <AnchorLink to="https://docs.sysdig.com/en/dashboards.html">Sysdig Monitor > Dashboards</AnchorLink>
+  <AnchorLink to="https://docs.sysdig.com/en/explore.html">Sysdig Monitor > Explore</AnchorLink>
+  <AnchorLink to="https://docs.sysdig.com/en/events.html">Sysdig Monitor > Events</AnchorLink>
+  <AnchorLink to="https://docs.sysdig.com/en/metric-alerts.html">Sysdig Monitor > Alerts > Metric Alerts</AnchorLink>
+</AnchorLinks>
