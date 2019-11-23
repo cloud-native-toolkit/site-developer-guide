@@ -1,0 +1,233 @@
+---
+title: New Cloud Native Apps with IBM Cloud for Applications
+---
+
+
+<PageDescription>
+
+Use IBM Cloud Pak for Applications for build new Cloud Native Applications
+
+</PageDescription>
+
+This guide assumes that the environment is already setup for your cluster.
+
+<AnchorLinks>
+  <AnchorLink to="#cp4apps-dashboard">CP4Apps Dashboard</AnchorLink>
+  <AnchorLink to="#cp4apps-dev-tools">CP4Apps Dev Tools</AnchorLink>
+  <AnchorLink to="#new-apps-with-appsody-cli">New Apps with Apppsody CLI</AnchorLink>
+  <AnchorLink to="#new-apps-with-codewind">New Apps with CodeWind</AnchorLink>
+  <AnchorLink to="#build-apps-with-tekton-pipelines">Build Apps with Tekton Pipelines</AnchorLink>
+</AnchorLinks>
+
+## CP4Apps Dashboard
+
+Open the OpenShift Console and select `Cloud Pack for Applications` from the App Launcher
+
+![CP4Apps Launcher](images/icp4apps-launcher.png)
+
+Explore the `Instances`, `Docs`, and `Guides` from the landing page.
+
+![CP4Apps Landing](images/icp4apps-landing.png)
+
+
+## CP4Apps Dev Tools
+
+The CP4Apps dashboard provides instructions and links to setup the dev tools.
+
+Go to the section `Let's get started!` and click `Setup Dev Tools`
+
+![Setup CP4Apps Dev Tools](images/icp4apps-devtools.png)
+
+CP4Apps provides desktop development tools that work with VS Code and Eclipse IDEs, as well as a command line tool you can use with or without the IDEs.
+
+If using VS Code IDE:
+- Install [Codewind from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=IBM.codewind)
+
+If using Eclipse IDE:
+- Install [Codewind from the Eclipse Marketplace](https://marketplace.eclipse.org/content/codewind)
+
+Install [Appsody CLI](https://appsody.dev/docs/getting-started/installation)
+
+
+## New Apps with Appsody CLI
+
+
+Add the Collection Hub specific to your Kabanero Enterprise Instance in the cluster.
+
+Go to the Instance view on the CP4Apps dashboard and copy the Appsody URL.
+
+Run the following command to add a repository to your local appsody CLI configuration.
+
+```
+appsody repo add kabanero-0.2.1 https://github.com/kabanero-io/collections/releases/download/0.2.1/kabanero-index.yaml
+```
+
+Set the new repo added as default, you will notice it will have a `*` in front
+
+```
+appsody repo set-default kabanero-0.2.1
+appsody repo list
+```
+
+Here is the output:
+```
+NAME                    URL                                                                                            
+*kabanero-0.2.1         https://github.com/kabanero-io/collections/releases/download/0.2.1/kabanero-index.yaml         
+incubator               https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml                
+```
+
+Run the following command to list the applications stacks allowed to be used:
+```
+appsody list kabanero-0.2.1
+```
+
+Here is the output
+```
+REPO            ID                      VERSION         TEMPLATES               DESCRIPTION                                              
+kabanero-0.2.1  java-microprofile       0.2.18          *default                Eclipse MicroProfile on Open Liberty & OpenJ9 using Maven
+kabanero-0.2.1  java-spring-boot2       0.3.15          *default, kotlin        Spring Boot using OpenJ9 and Maven                       
+kabanero-0.2.1  nodejs                  0.2.5           *simple                 Runtime for Node.js applications                         
+kabanero-0.2.1  nodejs-express          0.2.7           scaffold, *simple       Express web framework for Node.js                        
+kabanero-0.2.1  nodejs-loopback         0.1.5           *scaffold               LoopBack 4 API Framework for Node.js  
+```
+
+Create an empty directory that will contain the project:
+```
+mkdir -p ~/projects/nodejs-express-$initials
+cd ~/projects/nodejs-express-$initials
+```
+
+Run the command to initialize the project
+```
+appsody init kabanero-0.2.1/nodejs-express
+```
+
+To run the application you don't need to have node.js or java sdk in your workstation, the application will run from a container that has all the tools included.
+Run the command to start the Application
+```
+appsody run
+```
+
+Edit a file in the application with any editor, for example `app.js`.
+Change the response to `Hello Garage`.
+You will notice that the change is detected and the application automatically restarted.
+Each stack comes with a set of instrumentation you can access them with the following endpoints.
+- Application endpoint: http://localhost:3000/
+- Health endpoint: http://localhost:3000/health
+- Liveness endpoint: http://localhost:3000/live
+- Readiness endpoint: http://localhost:3000/ready
+- Metrics endpoint: http://localhost:3000/metrics
+- Dashboard endpoint: http://localhost:3000/appmetrics-dash (development only)
+
+In a different terminal chagen to the application directory and run the following command to stop the application
+```
+appsody stop
+```
+
+## New Apps with CodeWind
+
+
+Configure Codewind to point at your Kabanero Collection Hub. 
+Get your Collection Hub URL from your team instance page.
+
+To set your Collection Hub URL, follow the instructions associated with the tool you are using:
+
+- Eclipse
+  - See [Configuring template sources for Eclipse](https://www.eclipse.org/codewind/mdteclipseusingadifferenttemplate.html)
+- VS Code
+  - See [Configuring template sources for VS Code](https://www.eclipse.org/codewind/mdt-vsc-usingadifferenttemplate.html)
+
+
+To create a new CodeWind Application using a application stack allowed by our Kabanero Enterprise instance, click on `Projects (Local)`, then select `New Project`
+Select the template `Kabanero Node.js Express simple template (Appsody Stacks - kabanero-0.2.1)` from the list, then provide a name like `nodejs-express-$initials`
+
+The application will start, to work with the source code, right click on `Projects` and select `Open CodeWind Workspace`.
+
+With the application in running state, explore the following options, right click on the application in the CodeWind view.
+- Open App
+- Open Project Overview, verify the ports and status
+- Open Container Shell, explore the filesystem
+- Open Application Monitor, use the application and see the traffic metrics
+- Open Performance Dashboard and run a load test, see the traffic metrics
+- Restart in Debug mode, insert a break point in `app.js` and run the app to stop the application in debug view.
+
+![CodeWind Options](images/codewind.png)
+
+## Build Apps with Tekton Pipelines
+
+
+### Setup namespace
+
+Creat a new namespace `dev-$initials` if not already created
+```
+oc new-project dev-$initials
+```
+
+Change context to your namespace
+```
+oc project dev-$intials
+```
+
+Verify namespace context
+```
+oc projet -q
+```
+
+
+### Create the Git Webhook
+
+Create a Github repository using your corresponding mooc organization and use your initials to make your repository unique.
+For example `https://github.com/mooc-team-one/nodejs-express-cs.git`
+
+Create a Git Webhook, open the Tekton Dashboard from the Instance view in the ICP4Apps Dashboard.
+
+Then click on Webhooks menu on the Tekton Dashboard.
+
+Then click `Add Webhook`
+
+Enter the following values on the form.
+
+- Name: `nodejs-express-$intials` like `nodejs-express-cs`
+- Repository URL: `https://github.com/mooc-team-$id/nodejs-express-$initials.git` like `https://github.com/mooc-team-one/nodejs-express-cs.git`
+- Access Token: 
+  - Select from the list: `github.com-mooc-access-token` no need to create a new access token.
+- Namespace: 
+  - Select `kabanero`, not your own namespace.
+- Pipeline: `nodejs-express-build-deploy-pipeline-fix` the one with prefix `-fix`
+- Service Account: `kabanero-operator`
+- Docker Registry: `docker-registry.default.svc:5000/dev-$initials` the `dev-$initials` is your namespace, like `docker-registry.default.svc:5000/dev-cs` 
+
+![Create Webhook](images/create-webhook2.png)
+
+### Setup git repository for deployment
+
+Run the following command, to generate the manifest
+```
+appsody deploy --generate-only 
+```
+This command generated the following file `app-deploy.yaml`
+
+Edit the file `app-deploy.yaml`.
+
+Specify namespace to deploy application in your case `dev-$initials`
+```
+metadata:
+  namespace: dev-$initials
+```
+
+Checking all the files:
+```
+git init
+git add .
+git commit -m "first commit"
+```
+
+Add the remote repo url and push
+```
+git remote add origin git@github.com:mooc-team-$id/nodejs-express-$initials.git
+git push -u origin master
+```
+
+Select `PipelineRuns` in the Tekton UI to see the progress on the pipelines
+
+![PipelineRuns](images/pipelinerun-starts.png)
