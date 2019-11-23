@@ -1,1733 +1,468 @@
 ---
-title: Inventory Micro App - Part 1
+title: Application Modernization - Exercise 2
 ---
 
 <PageDescription>
 
-An example three tier application architecture you can build and have deployed in IBM Kubernetes service or IBM Red Hat OpenShift using the IBM Garage for Cloud Developer Tools and Starter Kit Templates.
+An example of a "minimum code changes" modernization of an existing traditional WebSphere ND application to Liberty running in a Docker Container.
 
 </PageDescription>
 
 <AnchorLinks>
-  <AnchorLink to="#inventory-service">Inventory Service</AnchorLink>
-  <AnchorLink to="#inventory-bff">Inventory BFF</AnchorLink>
-  <AnchorLink to="#inventory-ui">Inventory UI</AnchorLink>
+  <AnchorLink to="#scan-the-existing-application">Scan the Existing Application</AnchorLink>
+  <AnchorLink to="#analyze-the-scan-results">Analyze the Scan Results</AnchorLink>
+  <AnchorLink to="#configure-websphere-liberty">Configure WebSphere Liberty</AnchorLink>
+  <AnchorLink to="#run-plantsbywebsphere-on-liberty">Run PlantsByWebSphere on Liberty</AnchorLink>
 </AnchorLinks>
-
 
 ## Business Need
 
-In this guide imagine you have completed a [Enterprise Design Thinking Workshop](https://www.ibm.com/garage/method/practices/think/enterprise-design-thinking/) and the out come is MVP statement that defines the desired business outcomes. Use the steps below to help deliver this **MVP** quickly and to [Garage Method Best Practices](https://www.ibm.com/garage/method).
+Just as with Application Modernization Exercise 1, Exercise 2 is an example of `runtime modernization` which doesn't address the technical debt in the application but does remove the technical debt provided by the Application Server itself. In this exercise you will learn the skills to make minor code changes to applications to move them from traditional WebSphere ND to "the Cloud". While this isn't the typical way that the Garage wants to engage with customers, it is going to be part of the overall modernization of their legacy Java portfolio and an important skill for you to have. You will use tools such as IBM Cloud Transformation Advisor and the Eclipse based WebSphere Migration Toolkit.
 
 ## [MVP Statement](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/)
 
-- **Who** Provide an internal web application system that can be used by distribution employees securely from each of the regional warehouses.
+- **Who** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and have access to developers to make some minor changes to legacy Java applications to move them to the Cloud.
 
-- **What** Enable a secure web application that will allow the warehouse employees to gain easy access to list of product [SKU](https://en.wikipedia.org/wiki/Stock_keeping_unit) inventory levels and inventory locations.
+- **What** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
 
-- **Wow** Make the system appealing and easy to use. Deliver it to the IBM Cloud platform in a short focused [Minimal Viable Product](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/). Use the latest managed container runtimes and DevOps best practices to enable post MVP feature improvements. Simulate a release to a  _Test_ environment.
+- **Wow** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container with some minor code changes. This is something that can be repeated over and over in a factory type engagement.
 
 ## [Architecture]()
 
-The Micro App should be built using a three tier microservices architecture. Each tier will follow a clean separation of concerns. Each app component will be modelled using _Microservices_ and use a number of [polyglot](https://searchsoftwarequality.techtarget.com/definition/polyglot-programming) programming languages and frameworks. Data will be stored in IBM Cloudant and the Micro App will be secured using IBM App ID.
-
-![Architecture](images/architecture.png)
-
-## [Design]()
-
-The Micro App should adhere to the following User Interface Design and API and Model Design.
-
-![UI Design](/images/inventory-ui-design.png)
+Customer Order Services is a simple legacy monolith with a backend database (DB2).
 
 ## Technical Requirements
-- The Micro App should adhere to the following technical requirements:
+- This modernization exercise has the following requirements:
 
-    - Polyglot Microservices
-    - Stateless
-    - REST APIs
-    - DevOps with Continous Integration and Delivery
-    - Monitoring and Logging
-    - Code Analysis
-    - App Security
-    - Deployed to Red Hat OpenShift or IBM Kubernetes Managed Service
-    - Follow [Carbon Design System](https://www.carbondesignsystem.com/) User Experience
+    - Minor code changes
+    - The target is to get the application running on Liberty in a Docker container on your laptop
+    - The DB2 database will remain in it's current location (it is deployed in a container in the MOOC4 cluster exposed with a NodePort)
 
 ## Guide
+- This exercise has the following steps
 
-You will approach creating the Micro App bottom up, this means you will start by creating the backend micro services that manages integration with the data persitence and then build out the digital channel using a backend for frontend pattern. Finally you will place a web interface for the solution.
+    - Import provided scan results in to IBM Cloud Transformation Advisor running in your MOOC Red Hat OpenShift cluster.
+    - Review the IBM Cloud Transformation Advisor analysis
+    - Load the application source code in to Eclipse
+    - Use the WebSphere Migration Toolkit to support simple code changes
+    - Build a Docker image with Liberty and the application
+    - Run the newly created Docker image with application on Liberty on your laptop to demonstrate success
 
 ## Solution Links
 
-If you want to skip the guide and just get the components running, here are the solution Git Repositories. You can clone these and `igc pipeline` them to register them in the CI pipeline. The **README.md** may include additional setup for populating test data etc.
+### Environment Setup
 
-<AnchorLinks>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-ui">Inventory Management User Interface</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-bff">Inventory Management Backend for Frontend</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-service">Inventory Management Microservice</AnchorLink>
-</AnchorLinks>
+#### Install WebSphere Liberty Tools
 
-### Inventory Service
+- Validate that you have JDK 8 (which is typically found in `/Library/Java/JavaVirtualMachines/`)
 
-#### Setup
+    - If you don't have JDK 8 you can get it from here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-Get the initial project created and register the pipeline for automated builds.
+- Download and unzip Liberty from here: https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8
 
-- Create a new repository from the Java Spring Starter Kit template - https://github.com/ibm-garage-cloud/template-java-spring/generate
+- Install Eclipse from here: https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-macosx-cocoa-x86_64.dmg
 
-    <InlineNotification kind="warning">
+- Use the `Eclipse Marketplace` to install `IBM WebSphere Application Server Migration Toolkit` and `IBM Liberty Development Tools 19.0.0.9` and restart Eclipse
 
-    **Warning:** If you are developing on a shared education cluster place the repository in the  **Git Organisation** listed in your notification email and remember to add your initials as a suffix to the app name.
+### Analyze the Scan Results
+In this section you will upload the results from the IBM Cloud Transformation Advisor Data Collector to the IBM Cloud Transformation Advisor UI and analyze the findings.
 
-    </InlineNotification>
+- Using your `IBM Garage for Cloud - Development Cluster Dashboard`, navigate to `Transformation Advisor`
 
-    In order to prevent naming collisions, name the repository `inventory-management-svc-{your initials}` replacing
-    `{your initials}` with your actual initials.
+    ![apps](images/ta-dashboard.jpg)
 
-- Clone the new repository to your machine
+- You may receive an `Authentication endpoint is broken at the moment.` message. Copy the `URL` to a new `incognito` browser session to solve the problem
 
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+- Use your existing workspace named `AppMod_{your initials}`
 
-    ```
-    igc pipeline -n dev-{your initials}
-    ```
+- Add a new Collection named `Lab2`
 
-   replacing `{your initials}` with your actual initials
+In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `lab5.zip` file that contains the IBM Cloud Transformation Advisor Data Collector results.
 
-- Run `igc credentials` to get the credentials for the Jenkins instance.
+- Click `Upload data` and provide `lab5.zip`. After a few moments the results will be displayed as shown below:
 
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+    ![ta](images/ta1.jpg)
 
-- When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
-for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
+- Click on the `CustomerOrderServicesApp.ear` and review the detailed results. Review the `severe` results and use the `Analysis` report to locate the files you'll need to change.
 
-- Run the service locally
+### Make the code changes
 
-    ```
-    npm start
-    ```
-   
-    OR
-   
-    ```
-    ./gradlew bootRun
-    ```
-   
-- Open a browser to `http://localhost:9080/swagger-ui.html`. This will display the Swagger UI page
-that provides a user interface to exercise the APIs. 
+#### Download the application code and import it into Eclipse
 
-#### Create initial components 
-
-SpringBoot uses annotations to configure the various components that will be injected into and
-used by the applications. A class with the `@SpringBootApplication` annotation is the starting
-point for the rest of the application components to be loaded. Additionally, a `@ComponentScan`
-annotation can be added to tell the Spring infrastructure which packages should be scanned
-for components.
-
-We will start by creating the initial application component.
-
-- Create a class named `Application` in the `com.ibm.inventory_management.app` package. 
-
-- Add the `@SpringBootApplication` and `@ComponentScan` annotation to the class. The `@ComponentScan`
-annotation should include `com.ibm.inventory_management.*`, `com.ibm.cloud_garage.*`, and `com.ibm.health`
-packages.
-
-```java path=src/main/java/com/ibm/inventory_management/app/Application.java
-package com.ibm.inventory_management.app;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.env.Environment;
-
-@SpringBootApplication
-@ComponentScan({"com.ibm.inventory_management.*", "com.ibm.cloud_garage.*", "com.ibm.health"})
-public class Application extends SpringBootServletInitializer {
-    @Autowired
-    Environment environment;
-
-    public static void main(String[] args) {
-        SpringApplication.run(com.ibm.inventory_management.app.Application.class, args);
-    }
-
-    @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            String port = environment.getProperty("local.server.port");
-
-            System.out.println();
-            System.out.println("Server started - http://localhost:" + port + "/swagger-ui.html");
-        };
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
-    }
-}
-```
-
-- Delete `com.ibm.hello.app.Application`
-
-- Run the service locally. The swagger page should no longer contain the `/hello`
-api endpoint.
-
-- Commit and push the changes to Git.
-
-```base
-git add .
-git commit -m "Message"
-git push
-```
-
-#### Add StockItem controller
-
-In SpringBoot, the `@RestController` annotation tells the framework that the class provides a
-REST interface. Additional annotations like `@GetMapping` are used to provide the specific configuration
-for the REST service. 
-
-- Start the tests in tdd mode with `npm run tdd` (or `./gradlew test --continuous`)
-
-- Add a StockItemControllerTest.java in `com.ibm.inventory_management.controllers` under the `test` folder
-
-```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
-package com.ibm.inventory_management.controllers;
-
-import org.junit.jupiter.api.DisplayName;
-
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-}
-```
-
-- Add the MockMvc infrastructure and create the `StockItemController`
-
-```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
-package com.ibm.inventory_management.controllers;
-
-import static org.mockito.Mockito.spy;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    StockItemController controller;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        controller = spy(new StockItemController());
-
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
-}
-```
-
-```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
-package com.ibm.inventory_management.controllers;
-
-public class StockItemController {
-}
-```
-
-- Add the tests for the controller behavior and make the corresponding changes to make the tests pass
-
-```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
-package com.ibm.inventory_management.controllers;
-
-import static org.mockito.Mockito.spy;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    StockItemController controller;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        controller = spy(new StockItemController());
-
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
-
-    @Nested
-    @DisplayName("Given [GET] /stock-items")
-    public class GivenGetStockItems {
-
-        @Test
-        @DisplayName("When called then it should return a 200 status")
-        public void when_called_should_return_200_status() throws Exception {
-
-            mockMvc.perform(get("/stock-items"))
-                    .andExpect(status().isOk());
-        }
-
-        @Test
-        @DisplayName("When called then it should return an empty array")
-        public void when_called_then_return_an_empty_array() throws Exception {
-
-            mockMvc.perform(get("/stock-items").accept("application/json"))
-                    .andExpect(content().json("[]"));
-        }
-    }
-}
-```
-
-```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
-package com.ibm.inventory_management.controllers;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class StockItemController {
-
-    @GetMapping(path = "/stock-items", produces = "application/json")
-    public List listStockItems() {
-        return new ArrayList();
-    }
-}
-```
-
-- Start the local server
-
-```bash
-npm start
-```
-
-or 
-
-```bash
-./gradlew bootRun
-```
-
-- When the server starts, open a browser to `http://localhost:9080/swagger-ui.html` to view the swagger documentation. You should
-see the stock item entry in the list
-
-- Commit and push the changes to Git.
-
-```base
-git add .
-git commit -m "Adds StockItemController"
-git push
-```
-
-#### Add a service for providing results
-
-An established pattern for REST services in SpringBoot is to keep the REST controller logic simple
-and focused on translating from REST protocols to Javascript. The business logic for the components
-should be placed in a component that is given a `@Service` annotation.
-
-- Update the controller test to include returning data from the service
-
-```java path=src/test/java/com/ibm/inventory_management/controllers/StockItemControllerTest.java
-package com.ibm.inventory_management.controllers;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.ibm.inventory_management.models.StockItem;
-import com.ibm.inventory_management.services.StockItemApi;
-
-@DisplayName("StockItemController")
-public class StockItemControllerTest {
-    StockItemController controller;
-    StockItemApi service;
-
-    MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        service = mock(StockItemApi.class);
-
-        controller = spy(new StockItemController(service));
-
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
-
-    @Nested
-    @DisplayName("Given [GET] /stock-items")
-    public class GivenGetStockItems {
-
-        @Test
-        @DisplayName("When called then it should return a 200 status")
-        public void when_called_should_return_200_status() throws Exception {
-
-            mockMvc.perform(get("/stock-items"))
-                    .andExpect(status().isOk());
-        }
-
-        @Test
-        @DisplayName("When called then it should return an empty array")
-        public void when_called_then_return_an_empty_array() throws Exception {
-
-            mockMvc.perform(get("/stock-items").accept("application/json"))
-                    .andExpect(content().json("[]"));
-        }
-
-        @Test
-        @DisplayName("When called then it should return the results of the StockItemService")
-        public void when_called_then_return_the_results_of_the_stockitemservice() throws Exception {
-
-            final List<StockItem> expectedResult = Arrays.asList(new StockItem());
-            when(service.listStockItems()).thenReturn(expectedResult);
-
-            mockMvc.perform(get("/stock-items").accept("application/json"))
-                    .andExpect(content().json("[{}]"));
-        }
-    }
-}
-```
-
-```java path=src/main/java/com/ibm/inventory_management/models/StockItem.java
-package com.ibm.inventory_management.models;
-
-import java.io.Serializable;
-
-public class StockItem implements Serializable {
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public StockItem withName(String name) {
-        this.setName(name);
-        return this;
-    }
-}
-```
-    
-```java path=src/main/java/com/ibm/inventory_management/services/StockItemApi.java
-package com.ibm.inventory_management.services;
-
-import java.util.List;
-
-import com.ibm.inventory_management.models.StockItem;
-
-public interface StockItemApi {
-    List<StockItem> listStockItems();
-}
-```
-    
-```java path=src/main/java/com/ibm/inventory_management/controllers/StockItemController.java
-package com.ibm.inventory_management.controllers;
-
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ibm.inventory_management.models.StockItem;
-import com.ibm.inventory_management.services.StockItemApi;
-
-@RestController
-public class StockItemController {
-
-    private final StockItemApi service;
-
-    public StockItemController(StockItemApi service) {
-        this.service = service;
-    }
-
-    @GetMapping(path = "/stock-items", produces = "application/json")
-    public List<StockItem> listStockItems() {
-        return this.service.listStockItems();
-    }
-}
-```
-
-- At this points the tests should pass even though we haven't provided an implementation of the service yet since we are
-creating a mocking the service in the unit test
-
-- Update the `StockItem` model to include the remaining fields
-
-```java path=src/main/java/com/ibm/inventory_management/models/StockItem.java
-package com.ibm.inventory_management.models;
-
-import java.io.Serializable;
-
-public class StockItem implements Serializable {
-    private String name;
-    private String id = null;
-    private int stock = 0;
-    private double price = 0.0;
-    private String manufacturer = "";
-
-    public StockItem() {
-        super();
-    }
-    public StockItem(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public StockItem withName(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public StockItem withId(String id) {
-        this.setId(id);
-        return this;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public StockItem withStock(int stock) {
-        this.setStock(stock);
-        return this;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public StockItem withPrice(double price) {
-        this.setPrice(price);
-        return this;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public StockItem withManufacturer(String manufacturer) {
-        this.setManufacturer(manufacturer);
-        return this;
-    }
-}
-```
-
-- Provide an implementation of the service that just returns a couple of hard-coded data values, for now. Services are
-denoted in SpringBoot with the `@Service` annotation
-
-```java path=src/java/main/com/ibm/inventory_management/services/StockItemService.java
-package com.ibm.inventory_management.services;
-
-import static java.util.Arrays.asList;
-
-import java.util.List;
-
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Service;
-
-import com.ibm.inventory_management.models.StockItem;
-
-@Service
-public class StockItemService implements StockItemApi {
-    @Override
-    public List<StockItem> listStockItems() {
-        return asList(
-                new StockItem("1")
-                        .withName("Item 1")
-                        .withStock(100)
-                        .withPrice(10.5)
-                        .withManufacturer("Sony"),
-                new StockItem("2")
-                        .withName("Item 2")
-                        .withStock(150)
-                        .withPrice(100.0)
-                        .withManufacturer("Insignia"),
-                new StockItem("3")
-                        .withName("Item 3")
-                        .withStock(10)
-                        .withPrice(1000.0)
-                        .withManufacturer("Panasonic")
-        );
-    }
-}
-```
-
-- Replace the `api()` method in the SwaggerDocket class to restrict the swagger page to only show the `/stock-items` api
-
-```java path=src/main/java/com/ibm/cloud_garage/swagger/SwaggerDocket.java
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(buildApiRequestHandler())
-                .paths(PathSelectors.regex(".*stock-item.*"))
-                .build()
-                .apiInfo(buildApiInfo());
-    }
-```
-
-#### Verify the service locally and push the changes
-
-- Start the application
+- Clone the repository to your machine
 
     ```bash
-    npm start
+    git clone https://github.com/ibm-cloud-architecture/refarch-jee-customerorder.git
     ```
-   
-    or
-    
+
+- Checkout the source code:
+
     ```bash
-    ./gradlew bootRun
+    cd refarch-jee-customerorder
+    git checkout was70-dev
     ```
 
-- Open a browser to `http://localhost:9080/swagger-ui.html` to see the Swagger page
+- Open eclipse, create a workspace and close the `Welcome` screen
 
-- Run the service by selecting `Try it now` then `Execute`
+- In the `Servers` view, create a new Server
 
-- You should see the data we defined in the service in the previous section
+- Select `IBM --> Liberty Server` and click Next
 
-- Commit and push the changes to git
+  ![import](images/server.jpg)
 
-```bash
-git add .
-git commit -m "Adds StockItem service implementation
-git push
-```
+- Set the `installation path` to the location where you unzipped the Liberty download earlier and then select a `JDK 8` for the `JRE`
 
-- The pipeline should kick off and you will be able to see the running service by running `igc ingress -n dev-{initials}` and selecting the
-ingress of your service
+  ![import](images/server1.jpg)
 
-### Inventory BFF
+- Change the `Server Name` to `Lab5` and then click Finish
 
-The Inventory BFFs role in the architecture is to act as an orchestrator between the core business services and the specific digital channel it is focused on supporting. This class article will give you more detail about the architectural pattern and the benefits. [Backend for Frontend](https://samnewman.io/patterns/architectural/bff/)
+  ![import](images/server2.jpg)
 
-The Inventory solution will use [GraphQL](https://graphql.org/) for its BFF layer , this enables the API to be dynamically controlled from the client using API queries. Follow the steps below to get started.
+- Import the existing projects by:
+   * Clicking `File > Import`.
+   * In the `General folder`, click `Existing Projects into Workspace`.
+   * Click `Next`.
+   * In the `Select root directory field`, enter the location that you cloned the repository to such as `/lab5/refarch-jee-customerorder` and click `Browse`.
+   * Click `Finish`
 
-#### Setup
+   ![import](images/import.jpg)
 
-To get the initial BFF project created and registered with a pipeline for automated builds follow these steps.
+   * In the Workspace Migration window, click `Cancel`. In the migration cancel window, click `OK`.
 
-- Create a new repository from the [Typescript GraphQL Starter Kit template](https://github.com/ibm-garage-cloud/template-graphql-typescript/generate)
+#### Clean up the development environment
+When you create a Liberty development environment, you might need to fix installation paths and development tool versions that differ from the original development environment. When you imported the project to Eclipse, any errors were highlighted with red error marks.
 
-    <InlineNotification kind="warning">
+![import](images/eclipse1.jpg)
 
-    **Warning:** If you are developing on a shared education cluster place the repository in the  **Git Organisation** listed in your notification email and remember to add your initials as a suffix to the app name.
+- To view the problems in your workspace, click `Window > Show View > Other > General > Problems`. Click `OK`.
 
-    </InlineNotification>
+Errors are shown for each of the projects that are related to the build path. In the projects for the new development environment, you need to update the references to the Java and WebSphere libraries which can be done automatically by setting the `Target Runtime`
 
-    - In order to prevent naming collisions, name the repository `inventory-management-bff-{your initials}` replacing
-    `{your initials}` with your actual initials.
+- Fix the targeted runtime for the application using these steps:
 
-- Clone the new repository to your machine
+    * Right-click on `CustomerOrderServicesApp` and click Properties.
 
-- Run `npm install` to install all the package dependencies
+    * In the Properties window, click `Targeted Runtimes`
 
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+    * De-select `WebSphere Application Server traditional V7.0`
+
+    * Select `Liberty Runtime`
+
+    * Click `Apply and Close`
+
+  ![libraries](images/targetruntime.jpg)
+
+- After updating the target runtime, clean and rebuild the entire workspace by clicking `Project > Clean`. Make sure that Clean all projects is selected and click `OK`.
+
+- Look at the Problems view again:
+
+    ![libraries](images/problems1.jpg)
+
+- You resolved several problems, but a few problems still exist. In this case, you want to fix the Xpath is invalid error. To fix that error:
+
+    * Right-click the `CustomerOrderServicesWeb` project and click `Properties`.
+
+    * In the properties window, click `Validation`
+
+    * Scroll to the `XSL Validator` and clear the `Manual` and `Build` options.
+
+    * Click `Apply and Close`.
+
+    ![validation](images/validation.jpg)
+
+- Clean and rebuild the entire workspace
+
+- Look at the Problems view again:
+
+    ![libraries](images/problems1.jpg)
+
+- Java build errors are caused by missing Jackson JARs.  Download missing JARs from Maven:
+
+    * jackson-core-asl-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl/1.9.13)
+
+    * jackson-jaxrs-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-jaxrs/1.9.13)
+
+    * jackson-mapper-asl-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl/1.9.13)
+
+- Import Jackson jars into the EAR/lib (CustomerOrderServicesApp/lib) directory:
+
+    ![jackson](images/jackson1.jpg)
+
+- Java build errors are also in the CustomerOrderServiceTest project due to missing Apache Wink dependency.
+
+    * Download the Apache Wink 1.4 zip file from http://archive.apache.org/dist/wink/1.4.0/
+
+    * unzip the zip file
+
+    * import wink-1.4.jar from apache-wink-1.4/dist into CustomerOrderServiceTest/WebContent/WEB-INF/lib
+
+    ![wink](images/wink.jpg)
+
+- Now the projects have built without problems.
+
+#### Configure the Software Analyzer
+In this task, you configure the Software Analyzer that is part of the WebSphere Application Server Migration Toolkit.
+
+- In your Eclipse environment, click Run > Analysis. The Software Analyzer opens.
+
+- Right-click Software Analyzer and select New. Type a name for the new configuration and click the Rules tab for the configuration.
+
+- From the Rule Set menu, select WebSphere Application Server Version Migration and click Set. The "Rule set configuration" window opens.
+
+    ![wink](images/analyzer1.jpg)
+
+- Configure the settings so that the appropriate rules, based on your migration requirements, are applied when your applications are analyzed.
+
+    ![wink](images/analyzer2.jpg)
+
+- When you're finished, click OK.
+
+#### Run the Software Analyzer
+- Click Analyze. After you run the Software Analyzer, the Software Analyzer Results tab is shown. The Software Analyzer rules and any errors and warnings are sorted in four categories: Java Code Review, XML File Review, JSP Code Review and File Review. Review each of the categories to determine whether code or configuration changes might be needed.
+
+  ![wink](images/analysis1a.jpg)
+
+- Click the File Review tab. The tab is empty
+
+- Click the Java Code Review tab. Warnings are shown for these aspects the WebSphere Application Migration Toolkit:
+
+  ![javacode](images/javacode.jpg)
+
+  Let's start with the warning about the default initalContext JNDI properties. View the information about the rule that flagged each error or warning by clicking Help > Show Contextual Help.
+
+  To understand more about the problem, click it and read the Help information.
+
+  Tip: If you need more information, click the detailed help link:
+
+  ![help](images/help.jpg)
+
+- When you understand what the problem is, double-click the file that the Software Analyzer mentions. Inspect the code and determine whether the warning affects your application.
+
+  ![context](images/context.jpg)
+
+  As you can see from the code, you're not using either of the two default initialContext JNDI properties that this warning mentions. You can ignore this warning and move to the next one.
+
+- Move to the Java Code Review section, which contains information about the use of system-provided third-party APIs.
+
+  ![winkresult](images/winkresult.jpg)
+
+- Click the detailed help and review the information.
+
+  ![winkhelp](images/winkhelp.jpg)
+
+  The information doesn't contain enough details to determine what the problem is. Click the link in the last sentence to open an IBM Knowledge Center page for WebSphere.
+
+  From the information in IBM Knowledge Center, you learn that you need to configure the Liberty server to give the application access to third-party libraries. To configure the server, you add the following code to the server.xml configuration file. You will add the code in the next task of this tutorial.
+
+  ```bash
+  <application id="customerOrderServicesApp"
+   name="CustomerOrderServicesApp.ear" type="ear"
+   location="${shared.app.dir}/CustomerOrderServicesApp.ear">
+  <classloader apiTypeVisibility="spec, ibm-api, third-party"/>
+  </application>
+  ```
+
+  The code allows the classloader to access the third-party libraries that are included with Liberty. For the application to work correctly, the classloader must be able to access the Jackson and Apache Wink libraries.
+
+- Examime the results related to the behavior change for lookups on Enterprise JavaBeans.
+
+  ![jpa](images/ejb3.jpg)
+
+- Review the Detailed Help describing the issue.
+
+- Replace the `ejblocal` lookup for `ProductSearchService` with the lookup below and save your changes:
+
+  ```bash
+  java:app/CustomerOrderServices/ProductSearchServiceImpl!org.pwte.example.service.ProductSearchService
+  ```
+
+- Replace the `ejblocal` lookup for `CustomerOrderServices` with the lookup below and save your changes:
+
+  ```bash
+  java:app/CustomerOrderServices/CustomerOrderServicesImpl!org.pwte.example.service.CustomerOrderServices
+  ```
+
+- Examine the last part of the Java Code Review:
+
+  ![jpa](images/jpa.jpg)
+
+  As you can see in the details, the change in the JPA cascade strategy is not expected to affect most applications. You can mitigate the cascade strategy by reverting to the previous behavior. In the persistence.xml file, set the openjpa.Compatibility property.
+
+  You can configure newer versions of WebSphere Application Server to run on previous versions of most of the JEE technologies. JPA is one of those technologies. In this exercise we will be using the jpa-2.0 feature, so the warning doesn't affect your application.
+
+- Move to the XML File Review section in the Software Analyzer results. A problem exists due to a behavior change on lookups for Enterprise JavaBeans. Review the detailed help.
+
+- Click the file that is related to the error. Change to the `source` view. Notice that you're using the WebSphere Application Server traditional namespaces for the EJB binding:
+
+  ![ejb](images/ejb.jpg)
+
+  You need to change the EJB binding as follows:
+  `java:app/CustomerOrderServices/ProductSearchServiceImpl!org.pwte.example.service.ProductSearchService`
+
+  ![ejb](images/ejb2.jpg)
+
+- Save and close the file.
+
+- Rerun the Software Analysis and ensure that the severe results have been addressed and no longer show in the analysis results.
+
+  ![ejb](images/analysis2.jpg)
+
+### Run the modified Application
+
+#### Configure the WebSphere Liberty Server
+- Open the default `server.xml` file that was created when you created the `Lab5` server earlier.
+
+    - In the `Servers` view. open the `Lab5` server
+
+    - Double-click on 'Server Configuration'
+
+    - Switch to the 'Source' view
+
+- Replace the contents as shown below:
 
     ```
-    igc pipeline -n dev-{your initials}
+    <server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+    <feature>jpa-2.0</feature>
+    <feature>jaxrs-1.1</feature>
+    <feature>jsonp-1.0</feature>
+    <feature>servlet-3.1</feature>
+    <feature>ejbLite-3.1</feature>
+    <feature>appSecurity-2.0</feature>
+    <feature>localConnector-1.0</feature>
+    <feature>jdbc-4.1</feature>
+    <feature>transportSecurity-1.0</feature>
+    </featureManager>
+
+    <!-- User and group security definitions -->
+    <basicRegistry id="basic" realm="customRealm">
+    <user name="rbarcia" password="bl0wfish"/>
+    <group name="SecureShopper">
+    	<member name="rbarcia"/>
+    </group>
+    </basicRegistry>
+
+    <keyStore password="passw0rd"></keyStore>
+
+    <authData id="DefaultNode01/CustOrderAuthAlias" password="db2inst1" user="db2inst1"/>
+
+    <jdbcDriver id="DB2" javax.sql.DataSource="com.ibm.db2.jcc.DB2ConnectionPoolDataSource">
+    <library>
+        <file name="${shared.resource.dir}/lib/db2jcc.jar"/>
+        <file name="${shared.resource.dir}/lib/db2jcc_license_cu.jar"/>
+    </library>
+    </jdbcDriver>
+
+    <jdbcDriver id="DB2_XA" javax.sql.DataSource="com.ibm.db2.jcc.DB2XADataSource">
+    <library>
+        <file name="${shared.resource.dir}/lib/db2jcc.jar"/>
+        <file name="${shared.resource.dir}/lib/db2jcc_license_cu.jar"/>
+    </library>
+    </jdbcDriver>
+
+    <dataSource id="OrderDS" jdbcDriverRef="DB2_XA" jndiName="jdbc/orderds" transactional="true">
+    <properties.db2.jcc databaseName="ORDERDB" serverName="52.117.164.118" portNumber="30605" user="db2inst1" password="db2inst1" />
+    <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
+    </dataSource>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Define application and its classloaders -->
+    <application id="customerOrderServicesApp" location="${shared.app.dir}/CustomerOrderServicesApp.ear" name="CustomerOrderServicesApp.ear" type="ear">
+    <classloader apiTypeVisibility="spec, ibm-api, third-party"/>
+    </application>
+
+    </server>
     ```
 
-   replacing `{your initials}` with your actual initials
+- Review the `featureList`, `classLoader`, `basicRegistry` and `dataSource` configuration
 
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+- Save the new `server.xml` file.
 
-- When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
-for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
+In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `libs` folder that contains the DB2 drivers.
 
-#### Build the controller for the REST interface
+- Copy the `lib` folder from the `lab5` repo to `<wlp>/usr/shared/resources/lib` (where `<wlp>` is the location that you unzipped Liberty)
 
-The controller provides the REST interface for our BFF. The starter kit uses the `typescript-rest`
-package to simplify the tasks required to create a controller.
+  This should create `<wlp>/usr/shared/resources/lib/db2jcc.jar` and `<wlp>/usr/shared/resources/lib/db2jcc_license_cu.jar`
 
-- Start the tests in tdd mode by running
+- Export the EAR file from eclipse (we are doing this as there are known issues with running EAR files directly from the Eclipse Workspace)
 
-```bash
-npm run tdd
-```
+    - Right-click the CustomerOrderServicesApp project and select Export > EAR file.
 
-- Create the controller test
+    - In the window that opens, set up the project to be exported as an EAR file
 
-```typescript path=test/controllers/stock-items.controller.spec.ts
-import {Application} from 'express';
-import * as request from 'supertest';
+    - For the name of the EAR project, type CustomerOrderServicesApp.
 
-import {buildApiServer} from '../helper';
+    - For the destination, browse to `/opt/liberty/wlp/usr/shared/apps/CustomerOrderServicesApp.ear`.
 
-describe('stock-item.controller', () => {
+    - Select the Optimize for a specific server runtime check box and select WebSphere Application Server Liberty from the list.
 
-  let app: Application;
-  beforeEach(async () => {
-    const apiServer = buildApiServer();
+    - Select the Overwrite existing file check box in case another application already uses the file name that you specified.
 
-    app = await apiServer.getApp();
-  });
+    - Click Finish.
 
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
+- Click the Servers tab. Right-click the `Lab5` server and click Start. The Console tab opens, where you can see the WebSphere Liberty output.
 
-  describe('given GET /stock-items', () => {
-    describe('when service is successful', () => {
-      test('then return 200 status', async () => {
-        return request(app).get('/stock-items').expect(200);
-      });
+- Note that the server failed to start due to missing older features.
 
-      test('then should return an empty array', async () => {
-        return request(app).get('/stock-items').expect([]);
-      });
-    });
-  });
-});
-```
+  ![failure](images/failure1.jpg)
 
-- Create the controller component
+- Install the required features.
 
-```typescript path=src/controllers/stock-items.controller.ts
-import {GET, Path} from 'typescript-rest';
+    - Stop the `Lab5` server
 
-@Path('stock-items')
-export class StockItemsController {
+    - At the command line, navigate to the `<wlp>/bin` folder and issue the following command:
 
-  @GET
-  async listStockItems(): Promise<any[]> {
-    return [];
-  }
-}
-```
-
-- Add the controller to the controllers `index.ts`. (Using `index.ts` is a good way to manage which components are exposed
-by a component and provide a good way to load the modules that will be injected into other components)
-
-```typescript path=src/controllers/index.ts
-export * from './health.controller';
-export * from './stock-items.controller';
-```
-
-- Start the service to see it running
-
-```bash
-npm start
-```
-
-- Open a browser to `http://localhost:3000/api-docs` to see the swagger page
-
-- Expand our service from the list, click `Try it out`, then click `Execute`
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Adds stock items controller"
-git push
-```
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-#### Update the controller to call a service
-
-The pattern recommended for the REST controllers is to let it focus on translating REST protocols
-into javascript and to put the business logic in a separate service component.
-
-- Add a StockItem model that contains the values needed for the UI
-
-```typescript path=src/models/stock-item.model.ts
-export class StockItemModel {
-  id: string;
-  name: string;
-  description: string;
-  stock: number;
-  unitPrice: number;
-  picture: string;
-  manufacturer: string;
-}
-```
-
-- Register the model with the `index.ts` file in the models directory
-
-```typescript path=src/models/index.ts
-export * from './stock-item.model';
-```
-
-- Define an abstract class to provide the interface for our api
-
-```typescript path=src/services/stock-items.api.ts
-import {StockItemModel} from '../models';
-
-export abstract class StockItemsApi {
-  async abstract listStockItems(): Promise<StockItemModel[]>;
-}
-```
-
-    **Why an abstract class and not an interface?**
-    
-    Typescript introduces both abstract classes and interfaces. When Typescript gets transpiled into
-    JavaScript, abstract classes are generated as classes but interfaces disappear since there isn't an equivalent type
-    in Javascript. As a result, they cannot be used as a binding type for the `typescript-ioc` framework. Fortunately, 
-    abstract classes can be used ane they have the quirky behavior in Typescript allowing them to either be `extended`
-    like a class or `implemented` like an interface.
-
-- Add the abstract class to the `index.ts` file in the services directory
-
-```typescript path=src/services/index.ts
-export * from './stock-items.api';
-```
-
-- Update the controller test to inject the service into the controller and to return the value from the service
-
-```typescript path=test/controllers/stock-items.controller.spec.ts
-import {Application} from 'express';
-import * as request from 'supertest';
-import {Container} from 'typescript-ioc';
-
-import {buildApiServer} from '../helper';
-import Mock = jest.Mock;
-import {StockItemsApi} from '../../src/services';
-
-describe('stock-item.controller', () => {
-
-  let app: Application;
-  let service_listStockItems: Mock;
-
-  beforeEach(async () => {
-    service_listStockItems = jest.fn();
-    Container.bind(StockItemsApi).provider({
-      get: () => ({
-        listStockItems: service_listStockItems
-      }),
-    });
-
-    const apiServer = buildApiServer();
-
-    app = await apiServer.getApp();
-  });
-
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
-
-  describe('given GET /stock-items', () => {
-    describe('when service is successful', () => {
-      const expectedResult = [{value: 'val'}];
-      beforeEach(() => {
-        service_listStockItems.mockResolvedValue(expectedResult);
-      });
-
-      test('then return 200 status', async () => {
-        return request(app).get('/stock-items').expect(200);
-      });
-
-      test('then should return value from service', async () => {
-        return request(app).get('/stock-items').expect(expectedResult);
-      });
-    });
-
-    describe('when service fails', () => {
-      beforeEach(() => {
-        service_listStockItems.mockRejectedValue(new Error('service failed'));
-      });
-
-      test('then return 502 error', async () => {
-        return request(app).get('/stock-items').expect(502);
-      });
-    });
-  });
-});
-```
-
-- Update the controller to inject the service and use it
-
-```typescript path=src/controllers/stock-items.controller.ts
-import {Inject} from 'typescript-ioc';
-import {GET, Path} from 'typescript-rest';
-import {HttpError} from 'typescript-rest/dist/server/model/errors';
-
-import {StockItemModel} from '../models';
-import {StockItemsApi} from '../services';
-
-class BadGateway extends HttpError {
-  constructor(message?: string) {
-    super("BadGateway", message);
-    this.statusCode = 502;
-  }
-}
-
-@Path('stock-items')
-export class StockItemsController {
-  @Inject
-  service: StockItemsApi;
-
-  @GET
-  async listStockItems(): Promise<StockItemModel[]> {
-    try {
-      return await this.service.listStockItems();
-    } catch (err) {
-      throw new BadGateway('There was an error');
-    }
-  }
-}
-```
-
-#### Create a mock service implementation
-
-Now that we have our Controller using our API to get the data, lets create an implementation that will provide
-mock data for now.
-
-- Add a `stock-items-mock.service` to services
-
-```typescript path=src/service/stock-items-mock.service.ts
-import {Provides} from 'typescript-ioc';
-
-import {StockItemsApi} from './stock-items.api';
-import {StockItemModel} from '../models';
-
-@Provides(StockItemsApi)
-export class StockItemsMockService implements StockItemsApi {
-  async listStockItems(): Promise<StockItemModel[]> {
-    return [
-      {
-        id: "1",
-        name: "Self-sealing stem bolt",
-        description: "Self-sealing stem bolt",
-        stock: 10,
-        unitPrice: 10.5,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Bajor Galactic"
-      },
-      {
-        id: "2",
-        name: "Heisenberg compensator",
-        description: "Magical component that negates the effects of the Heisenberg Uncertainty Principle",
-        stock: 20,
-        unitPrice: 20.0,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Federation Imports"
-      },
-      {
-        id: "3",
-        name: "Tooth sharpener",
-        description: "Industrial strength tooth sharpener",
-        stock: 30,
-        unitPrice: 5.25,
-        picture: "https://via.placeholder.com/32.png",
-        manufacturer: "Farenginar Exploits"
-      }
-    ];
-  }
-}
-```
-
-- Add the mock service to the `index.ts` file in the services directory
-
-```typescript path=src/services/index.ts
-...
-export * from './stock-items-mock.service';
-```
-
-- Start the service
-
-```bash
-npm start
-```
-
-- Open a browser to `http://localhost:3000/api-docs` and execute the stock items controller. You should see the data from
-above returned by the service.
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Adds a mock service implementation"
-git push
-```
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-#### Add a GraphQL implementation of Stock Items
-
-The GraphQL starter kit supports both REST and GraphQL apis for accessing backend services. We created
-a REST controller to expose the results from the service and now we will do the same
-for GraphQL.
-
-- Create a `stock-items` GraphQL schema in the `schemas` directory
-
-```typescript path=src/schemas/stock-item.schema.ts
-import {Field, Float, Int, ObjectType} from 'type-graphql';
-import {StockItemModel} from '../models';
-
-@ObjectType()
-export class StockItem implements StockItemModel {
-  @Field()
-  id: string;
-  @Field()
-  description: string;
-  @Field()
-  manufacturer: string;
-  @Field()
-  name: string;
-  @Field({nullable: true})
-  picture: string;
-  @Field(type => Int)
-  stock: number;
-  @Field(type => Float)
-  unitPrice: number;
-}
-```
-
-- Add the stock-items schema to the `index.ts` in the schemas directory
-
-```typescript path=src/schemas/index.ts
-export * from './stock-item.schema'
-```
-
-- Add a 'stock-item' GraphQL resolver in the `resolvers` directory
-
-```typescript path=src/resolvers/stock-item.resolver.ts
-import {Query, Resolver} from 'type-graphql';
-import {Inject} from 'typescript-ioc';
-
-import {resolverManager} from './_resolver-manager';
-import {StockItem} from '../schemas';
-import {StockItemModel} from '../models';
-import {StockItemsApi} from '../services';
-
-@Resolver(of => StockItem)
-export class StockItemResolver {
-  @Inject
-  service: StockItemsApi;
-
-  @Query(returns => [StockItem])
-  async stockItems(): Promise<StockItemModel[]> {
-    return this.service.listStockItems();
-  }
-}
-
-resolverManager.registerResolver(StockItemResolver);
-```
-
-    **Note:** The Starter Kit includes a `resolverManager` component that simplifies the steps to
-    make the resolver available. All that is required to use the resolver is to register it, preferably
-    at the bottom of the module where it is defined.
-
-- Add the stock-items resolver to `index.ts` in the resolvers directory
-
-```typescript path=src/resolvers/index.ts
-export * from './stock-item.resolver';
-```
-
-- Start the service
-
-```bash
-npm start
-```
-
-- Verify that the that the resolver is available using the Graph QL browser provided by the
-Starter Kit (visit http://localhost and add `query { stockItems { name } }`)
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Adds a graphql interface"
-git push
-```
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-#### Create a service implementation that calls the microservice
-
-- Add a `stock-item-service.config` file in the config directory
-
-```typescript path=src/config/stock-item-service.config.ts
-import {Provided, Provider} from 'typescript-ioc';
-
-const baseUrl: string = process.env.SERVICE_URL || 'localhost:9080';
-
-const provider: Provider = {
-  get: () => ({
-    baseUrl,
-  })
-};
-
-@Provided(provider)
-export class StockItemServiceConfig {
-  baseUrl: string;
-}
-```
-
-    The config class separates how the config is loaded from how it is used. In this case the config is simply
-    retrieved from an environment variable but in more complex cases the value(s) can be retrived from external
-    data sources.
-
-- Add the stock-item-service config to an index.ts of the config directory
-
-```typescript path=src/config/index.ts
-export * from './stock-item-service.config'
-```
-
-- Create a `stock-items` service in the services directory that uses the config
-
-```typescript path=src/services/stock-items.service.ts
-import {Inject, Provides} from 'typescript-ioc';
-import {get, Response} from 'superagent';
-
-import {StockItemsApi} from './stock-items.api';
-import {StockItemModel} from '../models';
-import {StockItemServiceConfig} from '../config';
-import {LoggerApi} from '../logger';
-
-class StockItem {
-  'id'?: string;
-  'manufacturer'?: string;
-  'name'?: string;
-  'price'?: number;
-  'stock'?: number;
-}
-
-@Provides(StockItemsApi)
-export class StockItemsService implements StockItemsApi {
-  @Inject
-  _logger: LoggerApi;
-  @Inject
-  config: StockItemServiceConfig;
-
-  get logger(): LoggerApi {
-    return this._logger.child('StockItemsService');
-  }
-
-  async listStockItems(): Promise<StockItemModel[]> {
-    try {
-      const response: Response = await get(this.config.baseUrl + '/stock-items')
-        .set('Accept', 'application/json');
-
-      return this.mapStockItems(response.body);
-    } catch (err) {
-      this.logger.error('Error getting data from service', err);
-      throw err;
-    }
-  }
-
-  mapStockItems(data: StockItem[]): StockItemModel[] {
-    return data.map(this.mapStockItem);
-  }
-
-  mapStockItem(item: StockItem): StockItemModel {
-    return {
-      id: item.id,
-      name: item.name,
-      description: item.name,
-      stock: item.stock,
-      unitPrice: item.price,
-      picture: 'https://via.placeholder.com/32.png',
-      manufacturer: item.manufacturer,
-    };
-  }
-}
-```
-
-- Add `stock-item.service` to `index.ts` in the service directory
-- Remove `stock-items-mock.service` from `index.ts`
-
-```typescript path=src/services/index.ts
-export * from './stock-items.service';
-```
-
-- Add a `serviceUrl` property to the values.yaml file of the helm chart. The value of the property should match the
-kubernetes service of the microservice (for starter kit projects the service name is the same as the name of the 
-application which is that same as the name of the repository)
-
-```yaml path=chart/template-graphql-typescript/values.yaml
-global: {}
-
-serviceUrl: "inventory-management-service-{your initials}:80"
-
-...
-```
-
-    The `values.yaml` file of the helm chart defines the variables that can be provided to the
-    template as input. Now that we've added a new variable, we will need to update the appropriate
-    template file to use our new variable.
-
-- Add a new environment variable named `SERVICE_URL` to the list of existing environment variables in deployment.yaml.
-(`SERVICE_URL` is the name we gave the environment variable in our `stock-item-service.config` class as the first step in
-this section.) The value of this environment variable should come from the `serviceUrl` value we defined. You can add 
-`| quote` to wrap the value in quotes in case the value is not formatted correctly.
-
-```yaml path=chart/template-graphql-typescript/templates/deployment.yaml
-  ...
-  env:
-    - name: INGRESS_HOST
-      value: {{ include "starter-kit-chart.host" . }}
-    - name: PROTOCOLS
-      value: {{ include "starter-kit-chart.protocols" . }}
-    - name: SERVICE_URL
-      value: {{ .Values.serviceUrl | quote }}
-  ...
-```
-
-    `deployment.yaml` is a templatized kubernetes yaml file that describes the deployment of our component.
-    The deployment will create one or more pods based on the pod template defined in the deployment.
-    Each pod that starts will have the envionment variables that we have defined in the `env` section
-    available for the container image to reference. 
-    
-- Commit and push the changes to git
-
-```bash
-git add .
-git commit -m "Adds service implementation"
-git push
-```
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-### Inventory UI
-
-#### Setup
-
-Get the initial project created and register the pipeline for automated builds. Detailed instructions for
-each of these steps can be found in the [Deploying an App](/getting-started/deploy-app) guide.
-
-- Create a new repository from the React UI Patterns Starter Kit template into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
-
-    In order to prevent naming collisions, name the repository `inventory-management-ui-{your initials}` replacing
-    `{your initials}` with your actual initials.
-
-- Clone the new repository to your machine
-
-- Run `npm install` to install the project dependencies
-
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-
-    ```
-    igc pipeline -n dev-{your initials}
+    ```bash
+    ./installUtility install Lab5
     ```
 
-   replacing `{your initials}` with your actual initials
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-#### Create the initial components
-
-The React Starter Kit comes with a set UI components that implement 12 common UI Design Patterns. In the
-initial UI, all of the components are included to create an interactive example of how they work.
-The first step of building an application with the React Starter Kit is to remove those components
-from the menu and to create new components built from the pattern components.
-
-Based on the requirements of this first use case, we will create a StockItemList component based on
-the TableList pattern.
-
-- Open a terminal and start the application in development mode to see the initial UI and the changes as we make them
-
-```
-npm run start:dev
-```
-
-- Make a copy of the `TableList` pattern component from the `pattern-component` directory into the
-`components` folder. Rename the file and the class inside to `StockItemList`.
+- Restart the `Lab5` Liberty server in Eclipse
 
-    
-```javascript path=client/src/components/StockItemList.jsx
-import React, { Component } from "react";
-import {
-  StructuredListWrapper,
-  StructuredListRow,
-  StructuredListCell,
-  StructuredListHead,
-  StructuredListBody,
-  StructuredListInput,
-  Icon
-} from "carbon-components-react";
-import { iconCheckmarkSolid } from "carbon-icons";
+- Find the links for the two web applications that are deployed to WebSphere Liberty. One application is a test project that you can ignore. The other application is the Customer Order Services application, which is accessible at http://localhost:9080/CustomerOrderServicesWeb/. Click that link or copy the link and paste it in a web browser.
 
-import Header from "../pattern-components/Header";
-import "../pattern-components/patterns.scss";
+  ![failure](images/links.jpg)
 
-class StockItemList extends Component {
-  ...
-}
-
-export default StockItemList;
-```
-
-- Update UIShell.jsx
-
-    - Update the `header` variable to whatever name you want. "Big Blue Widgets" is used in the example
-    - Update the `menuTitle` to "Inventory Management"
-    - Remove all the values from `menuItems`
-
-```javascript path=client/src/components/UIShell.jsx
-class UIShell extends Component {
-  header = "Big Blue Widgets";
-  menuTitle = "Inventory Management";
-  menuItems = [
-    "Stock Items",
-  ];
-
-  ...
-}
-```
-
-- Update UIShellBody.jsx
-
-    - Remove all of the pattern values from the `components` map and add one entry for Stock Item List. The value on the
-    left is the label that is displayed and the value on the right is the class that should be loaded (e.g. `"Stock Items": StockItemList`).
-    **Note:** The label value needs to match the one used on `UIShell`
-    - Update the Use `Stock Items` as the default pattern name when none is given
-
-```javascript path=client/src/components/UIShellBody.jsx
-import React, {Component} from "react";
-import "../pattern-components/patterns.scss";
-
-import StockItemList from "./StockItemList";
-
-class UIShellBody extends Component {
-  components = {
-    "Stock Items": StockItemList
-  };
-  defaultComponent = "Stock Items";
-
-  render() {
-    const PatternName = this.components[
-      this.props.patternName || this.defaultComponent
-    ];
-    return (
-      <div className="pattern-container">
-        <PatternName showDescription={true} />
-      </div>
-    );
-  }
-}
-export default UIShellBody;
-```
-
-- With the application running in the first terminal, open a second terminal in the repository directory 
-and push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Initial shell components"
-git push
-```
-
-
-- Return to the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-- Refresh the browser from earlier (or follow the steps from before to use `igc ingress` to open the browser). The
-changes we just made should be reflected in the UI.
-
-#### Update StockItemList contents
-
-Now that we've created the initial components, we can start to customize the StockItemList to match
-the data for our application.
-
-- Start the application in development mode (if not already running) with `npm run start:dev`
-
-- Update the `title` and `subtitle` with values for our Stock Items view.
-
-- Update the `columns` and `data` fields with the list of columns and sample data to match the UI. 
-Set the `formatters` to `{}` for now.
-
-    The value in the `columns` array maps to one of the attributes in our data values
-    (e.g. `name` refers to the name attribute)
-
-- The result of these changes should look like the following:
-
-```javascript path=client/src/components/StockItemList.jsx
-class StockItemList extends Component {
-    title = 'Stock Items';
-    subtitle = 'This is the current inventory of items';
-
-    columns = [
-      "name",
-      "description",
-      "stock",
-      "unitPrice",
-      "picture",
-      "manufacturer",
-    ];
-    formatters = {};
-    data = [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
-      }
-    ];
-
-    ...
-}
-```
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Updates the StockItemsList view"
-git push
-```
-
-- Look at the Jenkins pipeline and the deployed app
-
-#### Add a service component to get mock Stock Items
-
-So far we've built a UI that displays a hard-coded set of data in a table. Eventually we want to
-display dynamic data provided from a database in the table. As a first step towards that goal, we
-need to separate the UI logic from the logic that retrieves the data. We will do that with a service
-component. For this first pass the service component will just return mock data.
-
-- Create a directory called `services` under the client/src folder
-
-- Create a file named `stock-item-mock.service.js` in the service directory. Our
-StockItem service component will have a single asynchronous function called `listStockItems()`
-that returns a list of StockItems.
-
-```javascript path=client/src/services/stock-item-mock.service.js
-export class StockItemMockService {
-  async listStockItems() {
-    return [];
-  }
-}
-```
-
-- Implement the service by copying the data array from `StockItemList` and returning it in the function. You can add a call
-to `timer()` to simulate wait time
-
-```javascript path=client/src/services/stock-item-mock.service.js
-import timer from '../util/timer';
-
-export class StockItemMockService {
-  async listStockItems() {
-    // wait 1 second before returning data
-    await timer(1000);
-
-    return [
-      {
-        "name": "Item 1",
-        "description": "The first item",
-        "stock": 10,
-        "unitPrice": 100.0,
-        "picture": "test",
-        "manufacturer": "unknown",
-      },
-      {
-        "name": "Item 2",
-        "description": "The second item",
-        "stock": 15,
-        "unitPrice": 120.5,
-        "picture": "test1",
-        "manufacturer": "Apple",
-      },
-      {
-        "name": "Item 3",
-        "description": "The third item",
-        "stock": 20,
-        "unitPrice": 75.5,
-        "picture": "test1",
-        "manufacturer": "Sony",
-      }
-    ];
-  }
-}
-```
-
-- Update the components to pass the service in the properties
-
-```javascript path=client/src/App.test.jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import {StockItemMockService} from "./services/stock-item-mock.service";
-
-describe('App', () => {
-  test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
-  });
-
-  test('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App stockService={new StockItemMockService()}/>, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
-});
-```
-    
-```javascript path=client/src/App.jsx
-import React, { Component } from "react";
-import UIShell from "./components/UIShell";
-import "./App.scss";
-import {StockItemMockService} from "./services/stock-item-mock.service";
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.stockService = props.stockService || new MockStockService();
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <UIShell stockService={this.stockService}/>
-      </div>
-    );
-  }
-}
-```
-
-```javascript path=client/src/components/UIShell.jsx
-...
-
-class UIShell extends Component {
-  ...
-
-  render() {
-    return (
-      <div>
-        <Header aria-label="IBM Platform Name">
-          <SkipToContent />
-          <HeaderName href="#" prefix="IBM">
-            {this.header}
-          </HeaderName>
-        </Header>
-        <SideNav aria-label="Side navigation">
-          <SideNavItems>
-            <SideNavMenu
-              defaultExpanded
-              icon={<Fade20 />}
-              title={this.menuTitle}
-            >
-              {this.renderSideNavItems()}
-            </SideNavMenu>
-          </SideNavItems>
-        </SideNav>
-        <Content id="main-content"><UIShellBody patternName={this.state.patternName} stockService={this.props.stockService} /></Content>
-      </div>
-    );
-  }
-}
-export default UIShell;
-```
-
-```javascript path=client/src/components/UIShellBody.jsx
-...
-
-class UIShellBody extends Component {
-  components = {
-    "Stock Items": StockItemList
-  };
-  defaultComponent = "Stock Items";
-
-  render() {
-    const PatternName = this.components[
-      this.props.patternName || this.defaultComponent
-    ];
-    return (
-      <div className="pattern-container">
-        <PatternName showDescription={true} stockService={this.props.stockService} />
-      </div>
-    );
-  }
-}
-export default UIShellBody;
-```
-
-- Update `StockItemList` to use the provided service
-
-```javascript path=src/components/StockItemList.jsx
-...
-
-class StockItemList extends Component {
-  ...
-
-  async componentDidMount() {
-
-    this.setState({
-      data: await this.props.stockService.listStockItems()
-    });
-  }
-
-  ...
-}
-export default StockItemList;
-```
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Adds a mock service"
-git push
-```
-
-- Look at the Jenkins pipeline and the deployed app
-
-#### Add a service that calls the BFF
-
-Now that we have a mock service that injects data we can build an implementation of the service
-that calls our BFF. For the service we will use a package called `superagent` to make the calls 
-to the BFF.
-
-- With npm, install the `superagent` and `@types/superagent` dependencies
-
-```bash
-npm i -s superagent
-npm i -D @types/superagent
-```
-
-- Create a service implementation in the `services` directory called `stock-item.service.js`
-
-```javascript path=client/src/services/stock-item.service.js
-export class StockItemService {
-  async listStockItems() {
-    return [];
-  }
-}
-```
-
-- Add an implementation of `listStockItems()` that calls the BFF through the `/api` proxy
-
-```javascript path=client/src/services/stock-item.service
-import * as superagent from 'superagent';
-
-export class StockItemService {
-  constructor(baseUrl) {
-    this.baseUrl = baseUrl || '/api';
-  }
-
-  async listStockItems() {
-    return superagent
-      .get(this.baseUrl + '/stock-items')
-      .set('accept', 'application/json')
-      .then(res => {
-        console.log('Got response: ', res);
-        return res.body || [];
-      });
-  }
-}
-```
-
-    **Note:** In dev mode the proxy is configured in `client/package.json`. When running with the express
-    server the proxy is configured in `server/routers/api.js`. By default the value points to `localhost:3001`.
-
-- Update `App.jsx` to use the new service instead of the mock service.
-
-```javascript path=client/src/App.jsx
-import React, { Component } from "react";
-import UIShell from "./components/UIShell";
-import "./App.scss";
-
-import {StockItemService} from "./services/stock-item.service";
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.stockService = props.stockService || new StockItemService();
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <UIShell stockService={this.stockService}/>
-      </div>
-    );
-  }
-}
-export default App;
-```
-
-- The deployment is already configured to use the value of `apiHost` for our proxy service. We need to
-configure the `apiHost` value to point to the kubernetes service resource of the BFF.
-
-```javascript path=chart/template-node-react/values.yaml
-apiHost: "inventory-management-bff-{your initials}:80"
-```
-
-- Push the changes we've made to the repository
-
-```bash
-git add .
-git commit -m "Updates the StockItemsList view"
-git push
-```
-
-- Look at the Jenkins pipeline and the deployed app
+- You are prompted to log in because you added security for the application in the server.xml file.
 
+  For the user name, type `rbarcia`. For the password, type `bl0wfish`
+
+  After you log in to the application, the catalog is displayed (it may take a few seconds to display)
+
+  ![failure](images/app1.jpg)
+
+- However, if you look at the Console tab for WebSphere Liberty in Eclipse, errors are shown. Carefully review the errors. A problem exists with the data that is returned from the database.
+
+  ![failure](images/jpa-error.jpg)
+
+- The problem happens in the loadCustomer method in CustomerOrderServicesImpl.java. Look at that method. The method is trying to return an AbstractCustomer from the database:
+
+  ![failure](images/class.jpg)
+
+  The problem is in the AbstractCustomer class. As its name suggests, it's an abstract class, so it won't be instantiated. Look for the classes that extend the abstract class. Those classes are BusinessCustomer and ResidentialCustomer. If you remember the SQL error in the WebSphere Liberty Console log, it was about a value, Y, being returned as an integer. In the Java classes, you can see that some Boolean attributes that get values of Y and N are being returned as integers, causing the SQL exception.
+
+  The reason for this behavior is that the OpenJPA driver treats Booleans differently based on its version. In this case, the OpenJPA driver version that you're using in WebSphere Liberty does not automatically convert Y or N database values into Booleans. As a result, you need to store them as strings and check those strings to return a Boolean value:
+
+  ![bizCust](images/businessCustomer.jpg)
+
+  ![resCust](images/residentialCustomer.jpg)
+
+  Save all the changes, export the EAR project to the WebSphere Liberty folder, and restart the server.
+
+- Confirm that no errors are shown for the Customer Order Services application, either in the browser or on the Console tab for WebSphere Liberty in Eclipse.
+
+  ![noerrors](images/noerrors.jpg)
+
+- Stop the WebSphere Liberty server.
+
+That's it. You now have this application running on Liberty in a Container. For next steps you would likely push this image to a Red Hat OpenShift Image Repository and deploy the application using the OpenLiberty Operator. If the client was interested in adding CI/CD automation you may also go back to the source code and automate CI and then automate deployment using CD.
 
 ## Summary
 
-You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
-
-
-
+You have now completed the second of two AppMod exercises. This exercise demonstrated a `runtime` modernization scenario that required some code changes.
