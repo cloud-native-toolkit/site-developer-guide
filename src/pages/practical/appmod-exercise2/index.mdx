@@ -9,10 +9,10 @@ An example of a "minimum code changes" modernization of an existing traditional 
 </PageDescription>
 
 <AnchorLinks>
-  <AnchorLink to="#scan-the-existing-application">Scan the Existing Application</AnchorLink>
+  <AnchorLink to="#environment-setup">Environment Setup</AnchorLink>
   <AnchorLink to="#analyze-the-scan-results">Analyze the Scan Results</AnchorLink>
-  <AnchorLink to="#configure-websphere-liberty">Configure WebSphere Liberty</AnchorLink>
-  <AnchorLink to="#run-plantsbywebsphere-on-liberty">Run PlantsByWebSphere on Liberty</AnchorLink>
+  <AnchorLink to="#make-the-code-changes">Make the code changes</AnchorLink>
+  <AnchorLink to="#run-the-modified-application">Run the modified Application</AnchorLink>
 </AnchorLinks>
 
 ## Business Need
@@ -45,8 +45,8 @@ Customer Order Services is a simple legacy monolith with a backend database (DB2
     - Review the IBM Cloud Transformation Advisor analysis
     - Load the application source code in to Eclipse
     - Use the WebSphere Migration Toolkit to support simple code changes
-    - Build a Docker image with Liberty and the application
-    - Run the newly created Docker image with application on Liberty on your laptop to demonstrate success
+    - Configure WebSphere Liberty to run the Application
+    - Unit Test and fix the Application
 
 ## Solution Links
 
