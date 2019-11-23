@@ -1,0 +1,94 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: java-microprofile-build-task-fix
+  namespace: "kabanero"
+spec:
+  inputs:
+    params:
+      - default: /workspace/extracted/Dockerfile
+        name: pathToDockerFile
+      - default: /workspace/extracted
+        name: pathToContext
+    resources:
+      - name: git-source
+        outputImageDir: ""
+        targetPath: ""
+        type: git
+  outputs:
+    resources:
+      - name: docker-image
+        outputImageDir: /builder/home/image-outputs/docker-image
+        targetPath: ""
+        type: image
+  steps:
+    - args:
+        - -c
+        - /extract.sh
+      command:
+        - /bin/bash
+      env:
+        - name: gitsource
+          value: git-source
+      image: appsody/appsody-buildah:0.2.1
+      name: assemble-extract
+      resources: {}
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+    - args:
+        - -c
+        - /validate.sh
+      command:
+        - /bin/bash
+      env:
+        - name: gitsource
+          value: git-source
+      image: kabanero/validate-collection
+      name: validate-collection-is-active
+      resources: {}
+      securityContext:
+        privileged: true
+    - command:
+        - buildah
+        - bud
+        - --tls-verify=false
+        - --format=docker
+        - -f
+        - ${inputs.params.pathToDockerFile}
+        - -t
+        - ${outputs.resources.docker-image.url}
+        - ${inputs.params.pathToContext}
+      env:
+        - name: gitsource
+          value: git-source
+      image: appsody/appsody-buildah:0.2.1
+      name: build-bud
+      resources: {}
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+    - command:
+        - buildah
+        - push
+        - --tls-verify=false
+        - ${outputs.resources.docker-image.url}
+        - docker://${outputs.resources.docker-image.url}
+      env:
+        - name: gitsource
+          value: git-source
+      image: appsody/appsody-buildah:0.2.1
+      name: build-push
+      resources: {}
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+  volumes:
+    - emptyDir: {}
+      name: varlibcontainers
