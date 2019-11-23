@@ -17,7 +17,9 @@ This guide assumes that the environment is already setup for your cluster.
   <AnchorLink to="#new-apps-with-appsody-cli">New Apps with Apppsody CLI</AnchorLink>
   <AnchorLink to="#new-apps-with-codewind">New Apps with CodeWind</AnchorLink>
   <AnchorLink to="#build-apps-with-tekton-pipelines">Build Apps with Tekton Pipelines</AnchorLink>
+  <AnchorLink to="#scale-to-zero-serverless">Scale to zero with Serverless</AnchorLink>
 </AnchorLinks>
+
 
 ## CP4Apps Dashboard
 
@@ -231,3 +233,30 @@ git push -u origin master
 Select `PipelineRuns` in the Tekton UI to see the progress on the pipelines
 
 ![PipelineRuns](images/pipelinerun-starts.png)
+
+## Scale to zero (Serverless)
+
+Edit the `app-deploy.yaml` and set the variable `createKnativeService` to `true`
+
+```yaml
+spec:
+  createKnativeService: true
+```
+
+Push the change to git:
+```
+git add app-deploy.yaml
+git commit -m "make it serverless"
+git push origin
+```
+
+When the tekton pipeline is done, get the URL of the Knative Service with the following command:
+```
+oc get ksvc
+```
+
+The output should look like this:
+```
+NAME                URL                                                                                                                               LATESTCREATED             LATESTREADY               READY   REASON
+nodejs-express-cs   http://nodejs-express-cs.dev-cs.mooc-surge-ocp-cluster-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud   nodejs-express-cs-gfvfz   nodejs-express-cs-gfvfz   True    
+```
