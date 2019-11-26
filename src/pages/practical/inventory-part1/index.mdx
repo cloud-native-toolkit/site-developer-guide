@@ -20,7 +20,7 @@ Red Hat OpenShift on IBM Cloud using the IBM Garage for Cloud Developer Tools en
 
 ## Business Need
 
-In this guide imagine you have completed a [Enterprise Design Thinking Workshop](https://www.ibm.com/garage/method/practices/think/enterprise-design-thinking/) and the out come is MVP statement that defines the desired business outcomes. Use the steps below to help deliver this **MVP** quickly and to [Garage Method Best Practices](https://www.ibm.com/garage/method).
+In this guide imagine you have completed a [Enterprise Design Thinking Workshop](https://www.ibm.com/garage/method/practices/think/enterprise-design-thinking/) and the out come is MVP statement that defines the desired business outcomes. Use the steps below to help deliver this **MVP** quickly and to [Garage Method Best Practices](https://www.ibm.com/garage/method/cloud/).
 
 ## MVP Statement
 
@@ -93,7 +93,9 @@ Create the initial project and register it with a pipeline for automated builds.
 
 - Clone the new repository to your machine
 
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+- Update the app name in `package.json` and push the change to the server repo
+
+- Log in to the cluster from the command line, then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
 
     ```
     igc pipeline -n dev-{your initials}
@@ -101,9 +103,9 @@ Create the initial project and register it with a pipeline for automated builds.
 
    replacing `{your initials}` with your actual initials
 
-- Run `igc credentials` to get the credentials for the Jenkins instance.
+- Run `igc credentials` to get the credentials for the Jenkins instance
 
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+- [Open the pipeline](/getting-started/deploy-app#view-your-application-pipeline) to see it running
 
 - When the pipeline is completed, run `igc ingress -n dev-{your initials}`. You should see an entry
 for the app we just pushed. Select the entry and hit `Enter` to launch the browser.
@@ -119,13 +121,16 @@ for the app we just pushed. Select the entry and hit `Enter` to launch the brows
     ```
     ./gradlew bootRun
     ```
-   
-- Open a browser to `http://localhost:9080/swagger-ui.html`. This will display the Swagger UI page
-that provides a user interface to exercise the APIs. 
+
+   When the execution output says "Server started", the app is running.
+
+- Open a browser to `http://localhost:9080/swagger-ui.html`
+
+    This will display the Swagger UI page that provides a user interface to exercise the APIs.
 
 #### Create initial components 
 
-SpringBoot uses annotations to configure the various components that will be injected into and
+Spring Boot uses annotations to configure the various components that will be injected into and
 used by the applications. A class with the `@SpringBootApplication` annotation is the starting
 point for the rest of the application components to be loaded. Additionally, a `@ComponentScan`
 annotation can be added to tell the Spring infrastructure which packages should be scanned
@@ -195,7 +200,7 @@ git push
 
 #### Add StockItem controller
 
-In SpringBoot, the `@RestController` annotation tells the framework that the class provides a
+In Spring Boot, the `@RestController` annotation tells the framework that the class provides a
 REST interface. Additional annotations like `@GetMapping` are used to provide the specific configuration
 for the REST service. 
 
@@ -344,7 +349,7 @@ git push
 
 #### Add a service for providing results
 
-An established pattern for REST services in SpringBoot is to keep the REST controller logic simple
+An established pattern for REST services in Spring Boot is to keep the REST controller logic simple
 and focused on translating from REST protocols to Javascript. The business logic for the components
 should be placed in a component that is given a `@Service` annotation.
 
@@ -573,7 +578,7 @@ public class StockItem implements Serializable {
 ```
 
 - Provide an implementation of the service that just returns a couple of hard-coded data values, for now. Services are
-denoted in SpringBoot with the `@Service` annotation
+denoted in Spring Boot with the `@Service` annotation
 
 ```java path=src/java/main/com/ibm/inventory_management/services/StockItemService.java
 package com.ibm.inventory_management.services;
@@ -642,7 +647,7 @@ public class StockItemService implements StockItemApi {
 
 - Open a browser to `http://localhost:9080/swagger-ui.html` to see the Swagger page
 
-- Run the service by selecting `Try it now` then `Execute`
+- Run the service by selecting `Try it out` then `Execute`
 
 - You should see the data we defined in the service in the previous section
 
@@ -650,7 +655,7 @@ public class StockItemService implements StockItemApi {
 
 ```bash
 git add .
-git commit -m "Adds StockItem service implementation
+git commit -m "Adds StockItem service implementation"
 git push
 ```
 
