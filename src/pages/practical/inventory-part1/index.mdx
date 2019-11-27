@@ -62,15 +62,9 @@ The Micro App should adhere to the following technical requirements:
 
 You will approach creating the Micro App bottom up, meaning you will start by creating the backend microservice that manages integration with the data persistence and then build out the digital channel using a backend for frontend pattern. Finally, you will add a web UI to the solution.
 
-### Solution Links
+### Prebuilt Solution
 
-If you want to skip the guide and just get the components running, here are the Git repositories for the solution. You can clone these and register them with a CI pipeline (use `igc pipeline`). The **README.md** may include additional setup for populating test data, etc.
-
-<AnchorLinks>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-ui">Inventory Management User Interface</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-bff">Inventory Management Backend for Frontend</AnchorLink>
-  <AnchorLink to="https://github.com/ibm-garage-cloud/inventory-management-service">Inventory Management Microservice</AnchorLink>
-</AnchorLinks>
+If you want to skip the guide and just get the components running, see [Deploy the Inventory App solution](#deploy-the-inventory-app-solution).
 
 ### Inventory Service
 
@@ -1754,5 +1748,86 @@ git push
 
 You have now completed the Micro App Guide demonstrating the _Inventory_ solution.
 
+
+## Deploy the Inventory App solution
+
+If you were unable to get everything working, you can deploy the Inventory App solution. You may want to do this before continuing to [Inventory Micro App - Part 2](/practical/inventory-part2).
+
+
+### Inventory Services
+
+- Create a new project from the [Inventory Management Service solution template](https://github.com/ibm-garage-cloud/inventory-management-svc-solution/generate)
+named `inventory-management-svc-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   - replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+### Inventory BFF
+
+- Create a new project from the [Inventory Management BFF solution template](https://github.com/ibm-garage-cloud/inventory-management-bff-solution/generate)
+named `inventory-management-bff-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   - replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+- Update the `serviceUrl` value in `charts/template-graphql-typescript/values.yaml` to point to the kubernetes
+service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
+
+- Commit and push the changes
+    ```bash
+    git add .
+    git commit -m "Update the serviceUrl"
+    git push
+    ```
+
+### Inventory UI
+
+- Create a new project from the [Inventory Management UI solution template](https://github.com/ibm-garage-cloud/inventory-management-ui-solution/generate)
+named `inventory-management-ui-{initials}`
+
+- Clone the repository to your local machine
+
+- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
+    ```
+    igc pipeline -n dev-{your initials}
+    ```
+
+   - replacing `{your initials}` with your actual initials
+
+- Run `igc credentials` to get the credentials for the Jenkins instance.
+
+- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
+
+- Update the `hostApi` value in `charts/template-node-react/values.yaml` to point to the kubernetes
+service of the BFF. The value most likely will be `inventory-management-bff-{initials}:80`.
+
+- Commit and push the changes
+    ```bash
+    git add .
+    git commit -m "Update the hostApi"
+    git push
+    ```
+
+- Verify that the application is running
 
 
