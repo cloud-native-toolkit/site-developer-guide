@@ -21,11 +21,11 @@ There are 4000+ existing traditional WebSphere ND customers and they all have le
 
 ## [MVP Statement](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/)
 
-- **Who** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and don't have access to developers for the majority of the legacy Java portfolio.
+- **Who:** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and don't have access to developers for the majority of the legacy Java portfolio.
 
-- **What** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
+- **What:** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
 
-- **Wow** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over in a factory type engagement.
+- **Wow:** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over in a factory type engagement.
 
 ## [Architecture]()
 
@@ -73,7 +73,7 @@ In order to simulate a real traditional WebSphere ND customer environment on you
 
     ```bash
     git clone https://github.com/ibm-cloud-architecture/icp-dev-workshop.git
-    cd lab4/CreatePreConfiguredWASContainer
+    cd icp-dev-workshop/lab4/CreatePreConfiguredtWASContainer
     ```
 
 - Review the `Dockerfile`. Note that the DB2 JDBC drivers, compiled application EAR files and the IBM Cloud Transformation Advisor Data Collector (this was split in to 50mb chunks so it could easily be stored in GIT) are copied on to the image as well as `wsadmin` scripts which are executed at the end of the build. The `wsadmin` scripts are used to configure the WebSphere application server ready for the PlantsByWebSphere application.
@@ -139,6 +139,8 @@ In order to simulate a real traditional WebSphere ND customer environment on you
 
     https://localhost:9043/ibm/console
 
+    NOTE: Chrome & Safari blocks https://localhost and doesn't allow exceptions recently.  You may need to install firefox to login to the console. Firefox blocks, but gives you the option to proceed anyways.
+
     username: ```wsadmin``` password: ```passw0rd```
 
 - Navigate to `Applications --> Application Types --> WebSphere enterprise applications` and validate that you see `HelloWorld` and `PlantsByWebsphere8`
@@ -195,7 +197,7 @@ Now that you have validated that the PlantsByWebSphere application is running in
 
 - Use CTRL+D to exit from the Docker container
 
-- Download the `AppSrv01.zip` file from the Docker container
+- Copy the `AppSrv01.zip` file from within the Docker container to your local disk.
 
     ```
     docker cp twas-plantsbywebsphere:/demo/transformationadvisor-2.0.1/AppSrv01.zip .
@@ -241,7 +243,7 @@ Scroll down and note the `External Dependencies` that have been detected to be r
 
 - Scroll to the bottom of the page and review the `Technology Report`, `Inventory Report` and `Analysis Report`
 
-- Note that at the top of each report the `command line parameters` are shown. This helps to validate that your settings in `customCmd.properties` have been deteceted
+- Note that at the top of each report the `command line parameters` are shown. This helps to validate that your settings in `customCmd.properties` have been detected
 
     ![pbw](images/ta-params.jpg)
 
@@ -271,7 +273,7 @@ Let's go ahead and move this application to Liberty.
 ### Configure WebSphere Liberty
 IBM Cloud Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section you will modify those files for PlantsByWebSphere.
 
-- Click the `...` link on the `PlantsByWebSphere8.ear` line and select `view migration plan`
+- From the main recommendations page, click the `...` link on the right for the `PlantsByWebSphere8.ear` and select `view migration plan`
 
   ![pbw](images/ta-assets.jpg)
 
@@ -289,6 +291,8 @@ IBM Cloud Transformation Advisor creates some accelerators to speed up the proce
     ```
 
 - Download `server.xml` and `Dockerfile` from IBM Cloud Transformation Advisor and place them in `lab4/liberty`
+
+- If Dockerfile gets renamed to `Dockerfile.txt` during the download, rename it to `Dockerfile` without the `.txt` extension
 
 - Copy `plantsbywebspherev8.ear` from `lab4/binary/application` and place it in `liberty/binary/application`
 
