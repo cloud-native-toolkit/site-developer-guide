@@ -9,118 +9,32 @@ Extending Part 1 of your 3 tier app to include Continuous Delivery to Test, Secu
 </PageDescription>
 
 <AnchorLinks>
-  <AnchorLink to="#using-cd-to-deliver-to-test">Using CD to deliver to Test</AnchorLink>
+  <AnchorLink to="#using-cd-to-deploy-to-test">Using CD to deliver to Test</AnchorLink>
   <AnchorLink to="#securing-the-solution-with-app-id">Securing the solution with AppID</AnchorLink>
   <AnchorLink to="#add-a-cloudant-integration-to-your-backend-service">Integrating with Cloudant NoSQL Database</AnchorLink>
 </AnchorLinks>
 
 ## Guide
 
-This Micro App guidance continues to build upon the microserivces that were built in the [Inventory Micro App Part 1](/practical/inventory-part1) guide. Make sure you have complete [Part 1](/practical/inventory-part1) or deployed the working [Inventory Solution](/practical/inventory-part1#solution-links)
+This Micro App guidance continues to build upon the microserivces that were built in the Inventory Micro App Part 1 guide. Make sure you have complete [Part 1](/practical/inventory-part1) or deployed the working [Inventory Solution](/practical/inventory-part1#deploy-the-inventory-app-solution).
 
-Part 2 of the Inventory MicoApp guide is a follow on from Part 1 and will concentrate on building out the following areas:
+In part 1, we implemented the three tiers in the Inventory Mico App and deployed the app to the `dev` namespace/project. In Part 2, we will take that app and make these additions:
 
-- Delivering the solution images into the `test` namespace/project using CD techniques and ArgoCD
-- Enabling application security with **App ID**
-- Adding **Cloudant** database and populating it with data
+- Deploy the app to the `test` namespace/project using CD techniques and ArgoCD
+- Add application security using IBM Cloud App ID
+- Add database persistence using IBM Cloudant
 
-## Using CD to deliver to Test
+## Using CD to deploy to Test
 
-ArgoCD is a tool that provides Continuous Delivery for projects and applications. If you haven't already, be sure to read
-through the [Continuous Delivery with ArgoCD Guide](/guides/continuous-delivery).
+ArgoCD is a tool that provides continuous delivery for projects and applications. If you haven't already, be sure to read
+through the [Continuous Delivery with ArgoCD guide](/guides/continuous-delivery).
 
-For this exercise, we are going to use ArgoCD to push the Inventory app from `dev` to `test` (and possibly `staging` as well).
-If you have already completed the Inventory MicroApp then it can be used for the ArgoCD process (although perhaps with
-some minor pipeline updates).
+For this exercise, we are going to use ArgoCD to push the Inventory app from `dev` to `test` (and possibly `staging` as well). If you have already completed the Inventory Micro App (see [Part 1](/practical/inventory-part1)), then it can be used for the ArgoCD process (although perhaps with some minor pipeline updates). If you haven't completed the exercise, you can start from the [solution repositories](/practical/inventory-part1#deploy-the-inventory-app-solution) to perform the ArgoCD steps.
 
-If you haven't completed the exercise you can start from the solution repositories to perform the ArgoCD steps.
 
-#### Deploy the Inventory App solution
+### Set up the GitOps repo
 
-To make sure you are starting from a common solution foundation, use the solution templates create your Inventory App
-
-##### Inventory Services
-
-- Create a new project from the [Inventory Management Service solution template](https://github.com/ibm-garage-cloud/inventory-management-svc-solution/generate)
-named `inventory-management-svc-{initials}`
-
-- Clone the repository to your local machine
-
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-    ```
-    igc pipeline -n dev-{your initials}
-    ```
-
-   - replacing `{your initials}` with your actual initials
-
-- Run `igc credentials` to get the credentials for the Jenkins instance.
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-##### Inventory BFF
-
-- Create a new project from the [Inventory Management BFF solution template](https://github.com/ibm-garage-cloud/inventory-management-bff-solution/generate)
-named `inventory-management-bff-{initials}`
-
-- Clone the repository to your local machine
-
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-    ```
-    igc pipeline -n dev-{your initials}
-    ```
-
-   - replacing `{your initials}` with your actual initials
-
-- Run `igc credentials` to get the credentials for the Jenkins instance.
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-- Update the `serviceUrl` value in `charts/template-graphql-typescript/values.yaml` to point to the kubernetes 
-service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
-
-- Commit and push the changes
-    ```bash
-    git add .
-    git commit -m "Update the serviceUrl"
-    git push
-    ```
-
-##### Inventory UI
-
-- Create a new project from the [Inventory Management UI solution template](https://github.com/ibm-garage-cloud/inventory-management-ui-solution/generate)
-named `inventory-management-ui-{initials}`
-
-- Clone the repository to your local machine
-
-- Log into the cluster from the command-line then [register the pipeline](/getting-started/deploy-app#register-the-app-in-a-devops-pipeline)
-    ```
-    igc pipeline -n dev-{your initials}
-    ```
-
-   - replacing `{your initials}` with your actual initials
-
-- Run `igc credentials` to get the credentials for the Jenkins instance.
-
-- Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
-
-- Update the `hostApi` value in `charts/template-node-react/values.yaml` to point to the kubernetes 
-service of the BFF. The value most likely will be `inventory-management-bff-{initials}:80`.
-
-- Commit and push the changes
-    ```bash
-    git add .
-    git commit -m "Update the hostApi"
-    git push
-    ```
-
-- Verify that the application is running
-
-#### Setup the GitOps repo
-
-ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
-represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
-folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
-applications. Git offers a number of benefits for a development team with GitOps. It has an audit log of change whole releases can be managed from a pull request and git enables changes to be rollback quickly if there is an issue with a new release.
+Let's get started with using Argo CD.
 
 - Create a new repo from the [ArgoCD Starter Kit template](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
 
@@ -138,7 +52,7 @@ applications. Git offers a number of benefits for a development team with GitOps
   
 - Create the test namespace with the CLI by running `igc namespace test-{initials}`
 
-#### Register the GitOps repo in ArgoCD
+### Register the GitOps repo in ArgoCD
 
 Now that the repository has been created, we need to tell ArgoCD where it is.
 
@@ -159,7 +73,7 @@ Now that the repository has been created, we need to tell ArgoCD where it is.
 - Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
 for the GitOps repo you just created.
 
-#### Create a project in ArgoCD (Optional)
+### Create a project in ArgoCD (Optional)
 
 In ArgoCD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not 
 required for ArgoCD to be able to deploy applications but it helps to organize applications and provide some restrictions
@@ -190,7 +104,7 @@ To create a project, do the following:
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
     to both the `test-{initials}` and `staging-{initials}` namespaces within the current cluster.
 
-#### Configure the GitOps repo for Inventory Management service
+### Configure the GitOps repo for Inventory Management service
 
 - Copy the `app-artifactory` folder and give it a name that matches the Inventory Management service component 
 (e.g. `inventory-management-svc-{initials}`)
@@ -238,7 +152,7 @@ for the cluster
     git push
     ```
 
-#### Add an application in ArgoCD for the Inventory Management service 
+### Add an application in ArgoCD for the Inventory Management service
 
 The last step in the process is to define the application(s) within ArgoCD that should be managed. This consists of
 connecting the config within the Git repo to the cluster and namespace.
@@ -262,7 +176,7 @@ connecting the config within the Git repo to the cluster and namespace.
 - Click on the newly created application. A graph of kubernetes resources should be shown
 if everything is configured correctly.
 
-#### Make a change in the GitOps repo
+### Make a change in the GitOps repo
 
 In order to trigger a (re-)deployment we can make an update to a value in the GitOps repo and
 watch ArgoCD apply the change.
@@ -297,7 +211,7 @@ watch ArgoCD apply the change.
 - Log into the ArgoCD UI and look at the state of the application. It should say `Synchronizing`.
 If you don't want to wait you can manually by pressing the `Synchronize` button.
 
-#### Hook the CI pipeline to the CD pipeline
+### Hook the CI pipeline to the CD pipeline
 
 The last stage in the CI pipeline updates the version number in the `requirements.yaml` to the version of the helm chart
 that was just built. Through a couple naming conventions the only thing the pipeline needs in order to interact
@@ -314,7 +228,7 @@ with git credentials very easy.
 - Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
 
-#### What just happened?
+### What just happened?
     
 - The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running:
     ```bash
@@ -330,7 +244,7 @@ the CD pipeline. `test` is the recommended value for the branch field.
 - Trigger the pipeline for the Inventory Management service to build by making a change
 to the Inventory Management Service code and push the changes to Git.
 
-#### Repeat for BFF and UI components
+### Repeat for BFF and UI components
 
 Starting from [Configure the GitOps repo for Inventory Management service](#Configure-the-gitops-repo-for-inventory-management-service),
 the steps need to be repeated for each application within the project.
@@ -342,7 +256,7 @@ a simple annotation on the ingress to enable integration with AppId. The starter
 set up to use this feature and all that is required is update the configuration within the `values.yaml`
 file of the helm chart.
 
-#### Inventory Management UI
+### Inventory Management UI
 
 - Find the app id binding secret by running the following command from a terminal where the kubernetes context has been set up (i.e. `oc login` has been done)
     ```bash
@@ -366,7 +280,7 @@ file of the helm chart.
         ...
     ```
 
-#### AppId redirect url config
+### AppId redirect url config
 
 - Get the ingress for the UI component by running `igc ingress -n dev-{initials}`.
 
@@ -383,7 +297,7 @@ the following form:
     
     e.g. `https://inventory-manangement-ui-dev.sms-test-oc-cluster.us-east.containers.appdomain.cloud/appid_callback`
 
-#### Add users to AppId
+### Add users to AppId
 
 - Open the AppId instance to `Cloud Directory` -> `Users`
 
@@ -391,7 +305,7 @@ the following form:
 
 - Add yourself as a user with an email address, name, and password
 
-#### Access the UI
+### Access the UI
 
 - Open a browser to the UI ingress
 
