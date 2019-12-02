@@ -75,6 +75,10 @@
       path: /practical/inventory-part2
     - title: Cloud Pak for Applications 1
       path: /practical/cp4apps
+    - title: AppMod - Exercise 1
+      path: /practical/appmod-exercise1
+    - title: AppMod - Exercise 2
+      path: /practical/appmod-exercise2
 
 - title: Administrator Guide
   pages:
@@ -111,3 +115,5 @@
       path: /homework/tasks-week2
     - title: Session 2, Week 3
       path: /homework/tasks-week3
+    - title: Session 3, Week 4
+      path: /homework/tasks-week4

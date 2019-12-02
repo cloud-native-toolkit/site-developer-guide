@@ -1,0 +1,67 @@
+---
+title: MOOC Homework Session 3
+---
+
+<PageDescription>
+
+Homework for students in the MOOC Session 3
+
+</PageDescription>
+
+This is the homework tasks for the [Garage OpenShift and Cloud Pak MOOC](https://www.onlinedigitallearning.com/course/view.php?id=5631).
+
+## Session 3 -- Application Modernization
+
+<InlineNotification>
+
+Before you proceed, make sure you have signed up for the MOOC development environment. It is a paid IBM Cloud account with the [Developer Tools environment](/overview) already installed and ready for you to use, including both a Kubernetes cluster and an OpenShift cluster. (The environment is locked down to prevent creating any new services.) Also, before proceeding:
+- Be sure you have already done the [Welcome to your MOOC team](/homework/teams) tasks
+- Install the [IBM Garage for Cloud CLI](/getting-started/cli) (again) to ensure you have the latest version
+
+</InlineNotification>
+
+Session 3 of the MOOC focuses on Application Modernization: How to assess and modernize existing Java application using the tools in the CloudPak for Applications.
+
+This homework assumes that you have:
+ - Reviewed the Playback from the Session 3 Monday session
+ - Seen a demo of each of the homework tasks below
+ - Seen demos and discussion about what is expected from the homework
+
+<InlineNotification>
+
+**Note**: Support is provided in the `#catalyst-project` Slack channel (in the [IBM Garage for Cloud Slack Org](http://ibm-garage.slack.com) team). This channel will also be used to share any common issues found.
+
+</InlineNotification>
+
+### Homework tasks
+
+The homework for Session 3 helps you understand the tasks related to Application Modernization for existing Java applications. As discussed in the Monday session, "Application Modernization doesn't always mean modernization to Microservices".
+
+There are 4000+ existing WebSphere Application Server customers and the majority of them have a significant number of legacy monoliths and no desire to make any code changes to them to move to a Cloud envionment. Traditional WebSphere ND is a monolithic runtime that requires periodic maintenance and constant administration. While IBM would like for the customers to invest money in rethinking and redesigning their entire portfolio of applications off of traditional WebSphere, in reality this only happens for a small number of applications that are critical to the business. The remaining applications have little to no money for development but may still be expected to run for many years. For these legacy monoliths we can reduce the maintenance overhead by moving to WebSphere Liberty and running on Red Hat OpenShift. We can also reduce the adminstrative overhead by implementing a common CI/CD and SRE practices.
+
+This week's homework starts with some background reading.
+
+This week's homework involves a number of tasks that are more advanced than those from week 1, so take your time and do some research on the topic before jumping into the task.
+
+| Task                            | Description         | Link        | Time    |
+| --------------------------------| ------------------  |:----------- |---------|
+| Watch Kyle Brown present App Mod Use Cases| Where Do I Start? Approaches and Case Studies for Application Modernization | [Video](https://www.ustream.tv/recorded/124074109) | 60 min |
+| Read Roland's Medium Post | It’s time to stop making “Microservices” the goal of modernization |[Medium](https://medium.com/ibm-garage/its-time-to-stop-making-microservices-the-goal-of-modernization-71758b400287) | 5 mins |
+| Read Kyle and Yaro's App Mod Medium Article (Part 1) | Where does Modernization start? |[Medium](https://medium.com/ibm-garage/the-steps-to-application-modernization-for-the-cloud-part-1-7ac07515dc16) | 15 mins |
+| Read Kyle and Yaro's App Mod Medium Article (Part 2) | Maps for the Journey | [Medium](https://medium.com/ibm-garage/maps-for-the-journey-950153ed39ce) | 15 mins |
+| Review the GSE team assets for AppMod | The GSE team has created a Reference Architecture and a set of working solutions | [GSE assets](https://ibm-cloud-architecture.github.io/cloudpak-for-applications/) | 30 min |
+| Watch the GSE AppMod Video | This Runtime Modernization video demonstrates Transformation Advisor and deployment to Red Hat OpenShift | [GSE video](https://mediacenter.ibm.com/media/Cloud+Pak+for+Applications+-+WebSphere+Runtime+Modernization/1_x1xntvmz) | 20 min |
+| AppMod Exercise 1 | A simple `runtime modernization` exercise with no code changes | [AppMod Exercise 1](/practical/appmod-exercise1) | 1 hour |
+| AppMod Exercise 2 | A `runtime modernization` exercise with some simple code changes | [AppMod Exercise 2](/practical/appmod-exercise2) | 2 hours |
+
+Once you have completed these tasks, you will have completed the homework for Session 3. You will have heard about the Application Modernization use cases from Kyle, Roland and Yaro and now will understand the IBM Cloud Garage approach to assessing and modernizing existing WebSphere Java applications using IBM Cloud Transformation Advisor.
+
+### Homework Review Week 2
+
+The homework review will take the form of a show-and-tell and a retrospective. The show-and-tell includes a description of tasks that didn't go so well. It will close with a retrospective for the attendees who have completed the homework tasks. We are looking for feedback from three perspectives:
+
+- **What went well?**
+- **What needs improvement?**
+- **Next steps?**
+
+Please use the [online retrospective](https://reetro-io.herokuapp.com/board/5dc4fca0074a5400170d9c93/5dc4fca0074a5400170d9c95) board during the live Homework session to evaluate the session. As students enter feedback, we'll all be able to see it on this shared screen.
