@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "gatsby": "^2.13.39",
+    "gatsby-plugin-google-analytics": "^2.1.29",
+    "gatsby-source-filesystem": "^2.1.39",
     "gatsby-theme-carbon": "^1.6.1",
+    "gatsby-transformer-json": "^2.2.20",
+    "lodash": "latest",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

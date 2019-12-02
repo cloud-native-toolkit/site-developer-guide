@@ -2,6 +2,15 @@
   pages:
     - path: /overview
 
+- title: Activation
+  pages:
+    - title: Garage Method Development
+      path: /activation/garage-development
+    - title: Cloud Native Development
+      path: /activation/cloudnative-development
+    - title: Cloud Native Deployment
+      path: /activation/cloudnative-deployment
+
 - title: Getting Started
   pages:
     - title: Overview
@@ -64,11 +73,12 @@
       path: /practical/inventory-part1
     - title: Inventory Micro App - Part 2
       path: /practical/inventory-part2
+    - title: Cloud Pak for Applications 1
+      path: /practical/cp4apps
     - title: AppMod - Exercise 1
       path: /practical/appmod-exercise1
     - title: AppMod - Exercise 2
       path: /practical/appmod-exercise2
-
 
 - title: Administrator Guide
   pages:
@@ -97,9 +107,13 @@
 
 - title: MOOC Homework
   pages:
+    - title: Welcome
+      path: /homework/teams
     - title: Session 1, Week 1
       path: /homework/tasks
     - title: Session 1, Week 2
       path: /homework/tasks-week2
-    - title: Session 3
+    - title: Session 2, Week 3
+      path: /homework/tasks-week3
+    - title: Session 3, Week 4
       path: /homework/tasks-week4

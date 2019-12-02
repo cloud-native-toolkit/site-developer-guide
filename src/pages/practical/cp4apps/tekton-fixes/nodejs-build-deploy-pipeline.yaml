@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: nodejs-build-deploy-pipeline-fix
+  namespace: "kabanero"
+spec:
+  resources:
+    - name: git-source
+      type: git
+    - name: docker-image
+      type: image
+  tasks:
+    - name: build-task
+      resources:
+        inputs:
+          - name: git-source
+            resource: git-source
+        outputs:
+          - name: docker-image
+            resource: docker-image
+      taskRef:
+        name: nodejs-build-task-fix
+    - name: deploy-task
+      resources:
+        inputs:
+          - name: git-source
+            resource: git-source
+          - name: docker-image
+            resource: docker-image
+      runAfter:
+        - build-task
+      taskRef:
+        name: nodejs-deploy-task

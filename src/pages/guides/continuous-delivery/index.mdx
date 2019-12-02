@@ -4,61 +4,59 @@ title: Continuous Delivery
 
 <PageDescription>
 
-Use ArgoCD to continuously deliver application changes into the runtime environment
+Use Argo CD to continuously deliver application changes into the runtime environment
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/).
-The Developer Tools environment uses an ArgoCD pipeline to automate continuous delivery.
+In IBM Garage Method, one of the Develop practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). The Developer Tools environment uses an Argo CD pipeline to automate continuous delivery.
 
 ## What is continuous delivery
 
-Continuous delivery is the DevOps approach of continuously making new versions of a application components available
+Continuous delivery is the DevOps approach of continuously making new versions of an application's components available
 for deployment to an environment. The process involves automation of the build and validation process and concludes with
 a new version of the application that is available for promotion to another environment.
 
-Continuous Delivery is closely related to Continuous Deployment with the only distinction being that in 
-Continuous Deployment the new versions are automatically deployed into the next environment. In Continuous
-Delivery the automated deployment requires the deployment to be manually triggered.
+Continuous delivery is closely related to continuous deployment. The distinction is:
+- Continuous delivery deploys an application when a user manually triggers deployment
+- Continuous deployment deploys an application automatically when it is ready
 
-## What is Git Ops
+An application is ready for deployment when it passes a set of tests that prove it doesn't contain any significant problems. These tests must be automated so that deployment can be automated. Until you have this set of automated tests and trust them sufficiently, stick with continuous delivery.
 
-[GitOps](https://www.weave.works/technologies/gitops/) is the operational pattern of using Git repositories as the source of truth for
-defining the configuration that makes up the desired state of the application.
+### What is GitOps
 
-## Common tools
+[*GitOps*](https://www.weave.works/technologies/gitops/) is the operational pattern of using Git repositories as the source of truth for defining the configuration that makes up the desired state of the application. It uses Git repositories to declaratively represent the desired state of applications in deployment environments.
 
-### What is ArgoCD
+GitOps takes advantage of several Git features:
+- Git has an audit log of changes
+- Whole releases can be managed from a pull request
+- Git enables changes to be rollback quickly if there is an issue with a new release
 
-"ArgoCD is a delarative, GitOps continuous delivery tools for Kubernetes"
+### CI/CD integration
 
-It supports defining kubernetes manifests in a number of ways:
+For the full end-to-end build and delivery process, both the CI and CD pipelines are required. For this to work, a Git repo is used to convey the configuration values. Within the Developer Tools environment, we have used certain naming conventions to streamline and simplify the untegration between the various components.
 
+![Argo CD config](/images/CI_CD-pipelines.png)
+
+## What is Argo CD
+
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a Kubernetes cluster or namespace, which also works for an OpenShift cluster or project. Argo CD models a collection of applications as a [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/) and uses a Git repository to store the project's desired state. Each application is stored as a folder in the repository, and each deployment environment is stored as a branch in the repository.
+
+Argo CD supports defining Kubernetes manifests in a number of ways:
 - helm charts
 - kustomize
 - ksonnet
 - jsonnet
 - plain directory of yaml/json manifests
 
-ArgoCD synchronizes the application state with the desired state defined in Git and
-automates the deployment of kubernetes resources to ensure they match.
+Argo CD synchronizes the application state with the desired state defined in Git and automates the deployment of Kubernetes resources to ensure they match.
 
-### CI/CD integration
+## Configuring GitOps with Argo CD
 
-For the full end-to-end build and delivery process, both the CI and CD pipelines are required.
-For this to work, a Git repo is used to convey the configuration values. Within the Garage
-Development Tools we have used certain naming conventions to streamline and simplify the untegration
-between the various components.
-
-![ArgoCD config](/images/CI_CD-pipelines.png)
-
-### Configuring GitOps with ArgoCD
-
-You must have completed the [ArgoCD Setup](/getting-started/argocd-setup) before continuing.
+You must have completed the [Argo CD Setup](/getting-started/argocd-setup) before continuing.
 
 **Terminology:**
 
-ArgoCD uses a number of terms to refer to the components
+Argo CD uses a number of terms to refer to the components
 
 - `Application` - a deployable unit
 
@@ -69,14 +67,14 @@ ArgoCD uses a number of terms to refer to the components
     
 - `Project` - a collection of applications that make up a solution
 
-#### Setup the GitOps repo
+### Setup the GitOps repo
 
-ArgoCD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
 represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
 folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
 applications.
 
-1. Create a new repo from the ArgoCD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
+1. Create a new repo from the Argo CD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
 
 1. Clone the project to your machine
 
@@ -100,10 +98,10 @@ the application names in your project.
 
     - `name` - the name of helm chart/image. This should match your git repo name
     - `version` - the version number of the helm chart
-    - `repository` - the url to the helm repository
-    
+    - `repository` - the url to the helm repository including the folder where the helm charts are being stored.
+
     The url of the Artifactory helm repository can be determines by following the steps described in
-    [Administrator Guide - ArgoCD setup](/admin/argocd-setup/#get-the-helm-repository-location)
+    [Administrator Guide - Argo CD setup](/admin/argocd-setup/#get-the-helm-repository-location)
 
 1. Update `values.yaml`
  
@@ -122,38 +120,38 @@ the application names in your project.
 
 1. Repeat steps 4-7 for each application in the project
 
-#### Register the git repo in ArgoCD
+### Register the git repo in Argo CD
 
-Now that the repository has been created, we need to tell ArgoCD where it is.
+Now that the repository has been created, we need to tell Argo CD where it is.
 
-1. Get the ArgoCD login information from the `igc credentials` cli command
+1. Get the Argo CD login information from the `igc credentials` cli command
 
     **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
 
-1. Log into ArgoCD
+1. Log into Argo CD
 
 1. Click on the gear icon on the left menu to access the Settings options
 
-    ![ArgoCD config](/images/argocd-config.png)
+    ![Argo CD config](/images/argocd-config.png)
 
 1. Select the `Repositories` option
 
 1. Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
 for the Git repo.
 
-#### Create a project in ArgoCD (Optional)
+### Create a project in Argo CD (Optional)
 
-In ArgoCD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not 
-required for ArgoCD to be able to deploy applications but it helps to organize applications and provide some restrictions
+In Argo CD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not
+required for Argo CD to be able to deploy applications but it helps to organize applications and provide some restrictions
 on what can be done for applications that make up a project.
 
 To create a project, do the following:
 
-1. Log into ArgoCD
+1. Log into Argo CD
 
 1. Click on the gear icon on the left menu to access the Settings options
 
-    ![ArgoCD config](/images/argocd-config.png)
+    ![Argo CD config](/images/argocd-config.png)
 
 1. Select the `Projects` option
 
@@ -168,22 +166,22 @@ To create a project, do the following:
         - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
         - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
 
-    **Note:** Initially, the only cluster that is available is the one in which ArgoCD is - 
+    **Note:** Initially, the only cluster that is available is the one in which Argo CD is -
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
     to both the `test` and `staging` namespaces within the current cluster.
 
-#### Add an application in ArgoCD for each application component (helm chart) 
+### Add an application in Argo CD for each application component (helm chart)
 
-The last step in the process is to define the application(s) within ArgoCD that should be managed. This consists of
+The last step in the process is to define the application(s) within Argo CD that should be managed. This consists of
 connecting the config within the Git repo to the cluster and namespace.
 
-1. Log into ArgoCD
+1. Log into Argo CD
 
 1. Click `New Application` and provide the following values:
 
     - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
     - `project` - The project with which the application should be included
-    - `sync-policy` - The manner with which ArgoCD will use to manage the deployed artifacts. `Automatic` is 
+    - `sync-policy` - The manner with which Argo CD will use to manage the deployed artifacts. `Automatic` is
     recommended
     - `repository url` - The Git url where the configuration is stored
     - `revision` - The branch where the configuration for this instance is stored
@@ -197,24 +195,24 @@ connecting the config within the Git repo to the cluster and namespace.
 
 The last stage in the CI pipeline updates the version number in the `requirements.yaml` to the version of the helm chart
 that was just built. Through a couple naming conventions the only thing the pipeline needs in order to interact
-with the CD process is a kubernetes secret named `gitops-cd-secret` that provides the details needed
+with the CD process is a Kubernetes secret named `gitops-cd-secret` that provides the details needed
 to connect to the git repo to push updates.
 
-Fortunately, a CLI command provides a simple way to create a kubernetes secret
+Fortunately, a CLI command provides a simple way to create a Kubernetes secret
 that contains git credentials.
 
-#### Create the `gitops-cd-secret`
+Create the `gitops-cd-secret`:
 
 1. Log into the cluster on the command-line.
 
-1. Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
+1. Change the directory to the root of the Argo CD Starter Kit repo that was cloned previously.
 
 1. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
 
     **What just happened?**
     
-    The `git-secret` command creates a secret in a kubernetes namespace containing the url, username, password, and branch information
+    The `git-secret` command creates a secret in a Kubernetes namespace containing the url, username, password, and branch information
     for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
     secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
     
