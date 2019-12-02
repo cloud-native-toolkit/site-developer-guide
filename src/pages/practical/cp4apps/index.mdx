@@ -1,14 +1,14 @@
 ---
-title: New Cloud Native Apps with IBM Cloud for Applications
+title: New Cloud-Native Apps with IBM Cloud for Applications
 ---
 
 <PageDescription>
 
-Use IBM Cloud Pak for Applications for build new cloud-native applications
+Use IBM Cloud Pak for Applications to build new cloud-native applications
 
 </PageDescription>
 
-This guide assumes that the environment is already setup for your cluster.
+This guide assumes you are using a Developer Tools environment that has already been installed, and that Cloud Pack for Applications has already been installed in the environment.
 
 <AnchorLinks>
   <AnchorLink to="#cp4apps-dashboard">CP4Apps Dashboard</AnchorLink>
@@ -55,6 +55,8 @@ Install Codewind and Appsody.
 
 - Install the [Appsody CLI](https://appsody.dev/docs/getting-started/installation)
 
+We've installed both Codewind and Appsody to show you how to use both. As you'll see, they have many features in common.
+
 
 ## Create a new app using the Appsody CLI
 
@@ -93,7 +95,7 @@ Make the repo in Kabanero Enterprise the default, as shown by the astrix (`*`) i
     incubator               https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
     ```
 
-- List the application stack included in the repo
+- List the technology stacks included in the repo
 
     ```bash
     $ appsody list kabanero-0.2.1
@@ -106,7 +108,7 @@ Make the repo in Kabanero Enterprise the default, as shown by the astrix (`*`) i
     kabanero-0.2.1  nodejs-loopback         0.1.5           *scaffold               LoopBack 4 API Framework for Node.js
     ```
 
-    Notice that the applications listed are the same as the list of Collections back on the Instance page.
+    Notice that the stacks listed are the same as the list of Collections back on the Instance page.
 
 
 ### Create an application
@@ -157,6 +159,8 @@ Each Appsody stack comes with instrumentation that you can access with the follo
 While the application is running, experiment with using its instrumentation endpoints.
 
 When you're through with the application, stop it.
+
+- Open another shell and switch to the same application directory (e.g. ``~/projects/nodejs-express-{initials}`)`
 
 - Stop the application
     ```bash
