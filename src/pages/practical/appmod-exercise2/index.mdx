@@ -114,12 +114,12 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
   ![import](images/serverInstallFromArchive.jpg)
 
-- Enter the desired destination path, and point to the liberty zip you downloaded earlier in the `Install a new runtime environment from an archive:` section and click next. 
+- Enter the desired destination path, and point to the liberty zip you downloaded earlier in the `Install a new runtime environment from an archive:` section and click next.
 (you can also select `Download and install a new runtme environment from ibm.com` and select `WAS Liberty with Java EE 8 Full Platform` if you have not downloaded the Liberty zip yet)
 
   ![import](images/serverDestinationPath.jpg)
 
-- In the Install Additional Content page, select the `Java EE 8 Full Platform Bundle` and click Next 
+- In the Install Additional Content page, select the `Java EE 8 Full Platform Bundle` and click Next
 
   ![import](images/serverBundle.jpg)
 
@@ -348,7 +348,7 @@ In this task, you configure the Software Analyzer that is part of the WebSphere 
     </jdbcDriver>
 
     <dataSource id="OrderDS" jdbcDriverRef="DB2_XA" jndiName="jdbc/orderds" transactional="true">
-    <properties.db2.jcc databaseName="ORDERDB" serverName="52.117.164.118" portNumber="30605" user="db2inst1" password="db2inst1" />
+    <properties.db2.jcc databaseName="ORDERDB" serverName="169.62.108.167" portNumber="31955" user="db2inst1" password="db2inst1" />
     <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
     </dataSource>
 
@@ -366,7 +366,13 @@ In this task, you configure the Software Analyzer that is part of the WebSphere 
     </server>
     ```
 
-- Review the `featureList`, `classLoader`, `basicRegistry` and `dataSource` configuration
+- Review the `featureList`, `classLoader`, `basicRegistry` and `dataSource` configuration.
+
+<InlineNotification kind="info">
+
+**Note:** The DB2 database used by this application is at `169.62.108.167` on port `31955`
+
+</InlineNotification>
 
 - Save the new `server.xml` file.
 
