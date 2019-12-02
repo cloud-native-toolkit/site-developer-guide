@@ -21,11 +21,11 @@ Just as with Application Modernization Exercise 1, Exercise 2 is an example of `
 
 ## [MVP Statement](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/)
 
-- **Who** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and have access to developers to make some minor changes to legacy Java applications to move them to the Cloud.
+- **Who:** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and have access to developers to make some minor changes to legacy Java applications to move them to the Cloud.
 
-- **What** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
+- **What:** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
 
-- **Wow** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container with some minor code changes. This is something that can be repeated over and over in a factory type engagement.
+- **Wow:** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container with some minor code changes. This is something that can be repeated over and over in a factory type engagement.
 
 ## [Architecture]()
 
@@ -58,7 +58,7 @@ Customer Order Services is a simple legacy monolith with a backend database (DB2
 
     - If you don't have JDK 8 you can get it from here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-- Download and unzip Liberty from here: https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8
+- Download Liberty from here: https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8
 
 - Install Eclipse from here: https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-macosx-cocoa-x86_64.dmg
 
@@ -110,11 +110,20 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
   ![import](images/server.jpg)
 
-- Set the `installation path` to the location where you unzipped the Liberty download earlier and then select a `JDK 8` for the `JRE`
+- Select `install from an archive or a repository` and then select a `JDK 8` for the `JRE` and click Next.
 
-  ![import](images/server1.jpg)
+  ![import](images/serverInstallFromArchive.jpg)
 
-- Change the `Server Name` to `Lab5` and then click Finish
+- Enter the desired destination path, and point to the liberty zip you downloaded earlier in the `Install a new runtime environment from an archive:` section and click next. 
+(you can also select `Download and install a new runtme environment from ibm.com` and select `WAS Liberty with Java EE 8 Full Platform` if you have not downloaded the Liberty zip yet)
+
+  ![import](images/serverDestinationPath.jpg)
+
+- In the Install Additional Content page, select the `Java EE 8 Full Platform Bundle` and click Next 
+
+  ![import](images/serverBundle.jpg)
+
+- Click 'New...` to create a new server and change the `Server Name` to `Lab5` and then click Finish
 
   ![import](images/server2.jpg)
 
@@ -173,30 +182,6 @@ Errors are shown for each of the projects that are related to the build path. In
 - Clean and rebuild the entire workspace
 
 - Look at the Problems view again:
-
-    ![libraries](images/problems1.jpg)
-
-- Java build errors are caused by missing Jackson JARs.  Download missing JARs from Maven:
-
-    * jackson-core-asl-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl/1.9.13)
-
-    * jackson-jaxrs-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-jaxrs/1.9.13)
-
-    * jackson-mapper-asl-1.9.13.jar (https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl/1.9.13)
-
-- Import Jackson jars into the EAR/lib (CustomerOrderServicesApp/lib) directory:
-
-    ![jackson](images/jackson1.jpg)
-
-- Java build errors are also in the CustomerOrderServiceTest project due to missing Apache Wink dependency.
-
-    * Download the Apache Wink 1.4 zip file from http://archive.apache.org/dist/wink/1.4.0/
-
-    * unzip the zip file
-
-    * import wink-1.4.jar from apache-wink-1.4/dist into CustomerOrderServiceTest/WebContent/WEB-INF/lib
-
-    ![wink](images/wink.jpg)
 
 - Now the projects have built without problems.
 
