@@ -15,7 +15,7 @@ This guide assumes that the environment is already setup for your cluster.
   <AnchorLink to="#cp4apps-dev-tools">CP4Apps Dev Tools</AnchorLink>
   <AnchorLink to="#create-a-new-app-using-the-appsody-cli">Create a new app using the Appsody CLI</AnchorLink>
   <AnchorLink to="#create-a-new-app-using-codewind">Create a new app using Codewind</AnchorLink>
-  <AnchorLink to="#build-apps-with-tekton-pipelines">Build Apps with Tekton Pipelines</AnchorLink>
+  <AnchorLink to="#build-an-app-with-a-tekton-pipeline">Build an app with a Tekton pipeline</AnchorLink>
   <AnchorLink to="#scale-to-zero-serverless">Scale to zero with Serverless</AnchorLink>
 </AnchorLinks>
 
@@ -144,7 +144,7 @@ Notice that the change is detected and the application automatically restarted.
 
 <InlineNotification>
 
-Each Appsody stack comes with a set of instrumentation that you can access with these following endpoints:
+Each Appsody stack comes with instrumentation that you can access with the following endpoints:
 - Application endpoint: http://localhost:3000/
 - Health endpoint: http://localhost:3000/health
 - Liveness endpoint: http://localhost:3000/live
@@ -188,7 +188,7 @@ Create an application named `nodejs-express-{initials}` using Codewind and the K
 
 - Select the "Kabanero Node.js Express simple template (Appsody Stacks - kabanero-0.2.1)" template from the list
 
-- Specify a name, such as `nodejs-express-$initials`
+- Specify a name, such as `nodejs-express-{initials}`
 
 The application will start.
 
@@ -208,108 +208,168 @@ Experiment with using Codewind to perform actions on your running application.
     - Open Performance Dashboard and run a load test, see the traffic metrics
     - Restart in Debug mode, insert a break point in `app.js` and run the app to stop the application in debug view
 
-## Build Apps with Tekton Pipelines
+
+## Build an app with a Tekton pipeline
+
+To deploy an app using Tekton, we'll need:
+- a project in OpenShift to deploy the app to
+- a Git repo for the app's code with a webhook that triggers the Tekton pipeline
+- the code for the app that goes in the Git repo
+
+When the code is pushed to the server repo, the pipeline will get triggered.
 
 
-### Setup namespace
+### Create OpenShift project
 
-Creat a new namespace `dev-$initials` if not already created
-```
-oc new-project dev-$initials
-```
+Create a project or use an existing one. Set the OpenShift Container Platform CLI to use the project.
 
-Change context to your namespace
-```
-oc project dev-$intials
-```
+- Find your project, `dev-{initials}`
 
-Verify namespace context
-```
-oc projet -q
-```
+    - If it doesn't already exist, create it
+        ```bash
+        oc new-project dev-{initials}
+        ```
+
+- Change context to your project
+    ```bash
+    oc project dev-{initials}
+    ```
+
+- Verify project context
+    ```bash
+    oc projet -q
+    ```
 
 
-### Create the Git Webhook
+### Connect the pipeline to Git
 
-Create a Github repository using your corresponding mooc organization and use your initials to make your repository unique.
-For example `https://github.com/mooc-team-one/nodejs-express-cs.git`
+Create a Git repository for your app and connect it to the Tekton pipeline.
 
-Create a Git Webhook, open the Tekton Dashboard from the Instance view in the ICP4Apps Dashboard.
+First, create the Git repo.
 
-Then click on Webhooks menu on the Tekton Dashboard.
+- In your MOOC team's GitHub organization, create a Git repo named `nodejs-express-{initials}`
 
-Then click `Add Webhook`
+    - For example, `https://github.com/mooc-team-one/nodejs-express-cs.git`
 
-Enter the following values on the form.
+Second, open the Tekton dashboard.
 
-- Name: `nodejs-express-$intials` like `nodejs-express-cs`
-- Repository URL: `https://github.com/mooc-team-$id/nodejs-express-$initials.git` like `https://github.com/mooc-team-one/nodejs-express-cs.git`
-- Access Token: 
-  - Select from the list: `github.com-mooc-access-token` no need to create a new access token.
-- Namespace: 
-  - Select `kabanero`, not your own namespace.
-- Pipeline: `nodejs-express-build-deploy-pipeline-fix` the one with prefix `-fix`
-- Service Account: `kabanero-operator`
-- Docker Registry: `docker-registry.default.svc:5000/dev-$initials` the `dev-$initials` is your namespace, like `docker-registry.default.svc:5000/dev-cs` 
+- In the CP4Apps dashboard, go to the Instance page
+
+- In the Tools section, click on the Tekton URL to open the Tekton dashboard
+
+    - If prompted, log in using OpenShift
+
+    - If prompted, allow access
+
+<InlineNotification>
+
+- In the Tekton dashboard, select the Pipelines page
+
+Notice that Kabanero Enterprise includes pipelines for building apps based on different technologies: MicroProfile, Spring Boot, Node.js, and Express.js. When a pipeline runs, it'll run in a certain Kubernetes namespace (a.k.a. OpenShift project). Each of the pipeline's tasks will run in a new container and pod. A task's steps all run in the same container.
+
+</InlineNotification>
+
+Third, create the webhook. The Kabanero Enterprise instance already includes several pipelines. Create a webhook in the Git repo that triggers the proper pipeline.
+
+- In the Tekton dashboard, select the Webhooks page
+
+- Press Add Webhook
+
+- In the Create Webhook form, enter the following values:
 
     ![Create Webhook](images/create-webhook2.png)
 
-### Setup git repository for deployment
+    - **Name**: `nodejs-express-{initials}`, such as `nodejs-express-cs`
+    - **Repository URL**: `https://github.com/mooc-team-{name}/nodejs-express-{initials}.git`, such as `https://github.com/mooc-team-one/nodejs-express-cs.git`
+    - **Access Token**: Select `github.com-mooc-access-token` (no need to create a new access token)
+    - **Namespace**: Select `kabanero` (not your own namespace)
+    - **Pipeline**: Select `nodejs-express-build-deploy-pipeline-fix` (the one with the `-fix` suffix)
+    - **Service Account**: Select `kabanero-operator`
+    - **Docker Registry**: `docker-registry.default.svc:5000/dev-{initials}`, such as `docker-registry.default.svc:5000/dev-cs`
 
-Run the following command, to generate the manifest
-```
-appsody deploy --generate-only 
-```
-This command generated the following file `app-deploy.yaml`
+<InlineNotification>
 
-Edit the file `app-deploy.yaml`.
+The webhook doesn't just notify Tekton when the Git repo's contents have changed. The webhook also specifies what pipeline to run, what namespace to run it in, the [Kubernetes service account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) to use to run it, and the registry for the tasks' container images.
 
-Specify namespace to deploy application in your case `dev-$initials`
-```
-metadata:
-  namespace: dev-$initials
-```
+</InlineNotification>
 
-Checking all the files:
-```
-git init
-git add .
-git commit -m "first commit"
-```
+- Press Create to close the form and create the webhook
 
-Add the remote repo url and push
-```
-git remote add origin git@github.com:mooc-team-$id/nodejs-express-$initials.git
-git push -u origin master
-```
+### Create an application
 
-Select `PipelineRuns` in the Tekton UI to see the progress on the pipelines
+Add some code to the local repo.
 
-![PipelineRuns](images/pipelinerun-starts.png)
+- Generate the Appsody manifest
+    ```bash
+    appsody deploy --generate-only
+    ```
+
+- Edit the generated file, `app-deploy.yaml`
+
+    - Specify the namespace to deploy the application into
+    ```yaml
+    metadata:
+      namespace: dev-{initials}
+    ```
+
+- Check the files into Git
+    ```bash
+    git init
+    git add .
+    git commit -m "first commit"
+    ```
+
+
+### Push the app and trigger the pipeline
+
+Configure the local repo to map to the server repo you created earlier and sync them.
+
+- Add the remote repo URL and push
+    ```bash
+    git remote add origin git@github.com:mooc-team-$id/nodejs-express-{initials}.git
+    git push -u origin master
+    ```
+
+When you push the changes to the server, that triggers the Tekton pipeline.
+
+- In the Tekton dashboard, select the PipelineRuns page
+
+    ![PipelineRuns](images/pipelinerun-starts.png)
+
+    The page shows the pipeline running.
+
+<InlineNotification>
+
+Click on the PipelineRun to see its details. In its list of Tasks, expand one to see its steps. Select a step to see its details: logs, status, and details.
+
+</InlineNotification>
+
 
 ## Scale to zero (Serverless)
 
-Edit the `app-deploy.yaml` and set the variable `createKnativeService` to `true`
+Use the Git repo created for Tekton to deploy the app using Knative.
 
-```yaml
-spec:
-  createKnativeService: true
-```
+- Edit the generated file, `app-deploy.yaml`
 
-Push the change to git:
-```
-git add app-deploy.yaml
-git commit -m "make it serverless"
-git push origin
-```
+    - Set the variable `createKnativeService` to `true`
+    ```yaml
+    spec:
+      createKnativeService: true
+    ```
 
-When the tekton pipeline is done, get the URL of the Knative Service with the following command:
-```
-oc get ksvc
-```
+- Push the change to git
+    ```bash
+    git add app-deploy.yaml
+    git commit -m "make it serverless"
+    git push origin
+    ```
 
-The output should look like this:
-```
-NAME                URL                                                                                                                               LATESTCREATED             LATESTREADY               READY   REASON
-nodejs-express-cs   http://nodejs-express-cs.dev-cs.mooc-surge-ocp-cluster-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud   nodejs-express-cs-gfvfz   nodejs-express-cs-gfvfz   True    
-```
+Watch the pipeline run in the Tekton dashboard.
+
+- When the tekton pipeline is done, get the URL of the Knative service
+    ```bash
+    $ oc get ksvc
+
+    NAME                URL                                                                                                                               LATESTCREATED             LATESTREADY               READY   REASON
+    nodejs-express-cs   http://nodejs-express-cs.dev-cs.mooc-surge-ocp-cluster-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud   nodejs-express-cs-gfvfz   nodejs-express-cs-gfvfz   True
+    ```
