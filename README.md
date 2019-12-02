@@ -29,9 +29,11 @@ Most notably, this project depends on the following
 
 - gatsby
 - gh-pages
+- gatsby-transformer-json
 
 ```
 npm install -g gatsby-cli
+npm install --save gatsby-transformer-json
 ```
 
 ### Write content
