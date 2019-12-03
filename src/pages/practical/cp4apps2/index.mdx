@@ -119,13 +119,16 @@ Second, set up the cloned template with Appsody and connect it to the backend.
 
 - Repeat the steps above to add the Appsody deployment manifest and edit its namespace to `dev-{initials}`
 
-- Also in `app-deploy.yaml`, add an environment variable to link the frontend service to the backend service on port 3001
+- Also in `app-deploy.yaml`, add an environment variable to link the frontend service to the backend service
+
     ```yaml
     spec:
       env:
         - name: APPSODY_BACKEND_DEFAULT_URL
-          value: http://appsody-backend-{initials}:3001/
+          value: http://appsody-backend-{initials}:3000/
     ```
+
+    (On the server, the frontend and backend will both listen on port 3000 (in different pods).)
 
 - Commit and push your changes to Git
 
