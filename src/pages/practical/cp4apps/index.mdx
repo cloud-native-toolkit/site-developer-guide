@@ -8,7 +8,12 @@ Use IBM Cloud Pak for Applications to build new cloud-native applications
 
 </PageDescription>
 
-This guide assumes you are using a Developer Tools environment that has already been installed, and that Cloud Pack for Applications has already been installed in the environment.
+This guide assumes the following:
+
+1. You are using a Developer Tools environment that has already been installed.
+1. Cloud Pack for Applications has already been installed in the environment.
+
+This guide consists of the following sections:
 
 <AnchorLinks>
   <AnchorLink to="#cp4apps-dashboard">CP4Apps Dashboard</AnchorLink>
@@ -227,7 +232,7 @@ When the code is pushed to the git repo, the pipeline will get triggered.
 
 Create a project or use an existing one. Set the OpenShift Container Platform CLI to use the project.
 
-- Find your project, `dev-{initials}`
+- Find your project in OpenShift named `dev-{initials}`
 
     - If it doesn't already exist, create it
         ```bash
@@ -344,7 +349,7 @@ When you push the changes to the server, that triggers the Tekton pipeline.
 
 <InlineNotification>
 
-Click on the PipelineRun to see its details. In its list of Tasks, expand one to see its steps. Select a step to see its details: logs, status, and details.
+Click on a PipelineRun to see its details. In its list of Tasks, expand one to see its steps. Select a step to see its details: logs, status, and details.
 
 </InlineNotification>
 
@@ -361,7 +366,7 @@ Use the Git repo created for Tekton to deploy the app using Knative.
       createKnativeService: true
     ```
 
-- Push the change to git
+- Push the change to Git
     ```bash
     git add app-deploy.yaml
     git commit -m "make it serverless"
@@ -370,12 +375,10 @@ Use the Git repo created for Tekton to deploy the app using Knative.
 
 Watch the pipeline run in the Tekton dashboard.
 
-- When the tekton pipeline is done, get the URL of the Knative service using the `oc` CLI
+- When the Tekton pipeline is finished, get the URL of the Knative service
     ```bash
     $ oc get ksvc
-    ```
-    The output will have the URL for the app
-    ```bash
+
     NAME                URL                                                                                                                               LATESTCREATED             LATESTREADY               READY   REASON
     nodejs-express-cs   http://nodejs-express-cs.dev-cs.mooc-surge-ocp-cluster-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud   nodejs-express-cs-gfvfz   nodejs-express-cs-gfvfz   True
     ```
