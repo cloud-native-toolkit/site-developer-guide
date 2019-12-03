@@ -1,0 +1,105 @@
+---
+title: IBM Cloud Pak for Applications - Microservices
+---
+
+<PageDescription>
+
+Use IBM Cloud Pak for Applications to integrate microservices.
+
+For this homework you will use two existing applications and deploy them as a set of microservices using the CP4Apps workflow.
+
+![Frontend Backend Demo](images/cp4apps-front-back.png)
+
+</PageDescription>
+
+This guide assumes the following:
+
+1. You are using a Developer Tools environment that has already been installed
+1. Cloud Pack for Applications has already been installed in the environment.
+1. You already completed [CP4Apps homeworks](/practical/cp4apps)
+
+
+## Deploy existing Backend as Appsody App
+
+- Create the backend project using the following template https://github.com/kabanero-demo/appsody-backend
+
+- Click on `Use this template` and use your assigned MOOC github organization `https://github.com/mooc-team-{id}/appsody-backend-{initials}` for example: `https://github.com/mooc-team-one/appsody-backend-cs`
+
+- Clone the new Github repo locally
+
+- Initialize existing App with appsody CLI
+    ```bash
+    appsody init kabanero-0.2.1/nodejs-express none
+    ```
+- Run the App with appsody locally and access on http://localhost:3001 (port 3000 will be use later for frontend)
+    ```bash
+    appsody run -p 3001:3000 -p 9230:9229 -p 8081:8080
+    ``` 
+- Add deployment manifest
+    ```bash
+    appsody deploy --generate-only
+    ```
+- Add the namespace to deploy the App, edit `app-deploy.yaml`
+    ```yaml
+    metadata:
+      namespace: dev-{initials}
+    ```
+- Commit and push the new appsody related files
+    ```bash
+    git add .
+    git commit -m "Add appsody files"
+    git push
+    ``` 
+- Create a Webhook on your Github repo to trigger the Tekton Pipeline following the instructions from [Tekton Pipelines Homework](/practical/cp4apps#build-an-app-with-a-tekton-pipeline)
+
+## Deploy existing Frontend as Appsody App
+
+- Create the frontend project using the following template https://github.com/kabanero-demo/appsody-frontend
+
+- Click on `Use this template` and use your assigned MOOC github organization `https://github.com/mooc-team-{id}/appsody-frontend-{initials}` for example: `https://github.com/mooc-team-one/appsody-frontend-cs`
+
+- Clone the new Github repo locally
+
+- Initialize existing App with appsody CLI
+    ```bash
+    appsody init kabanero-0.2.1/nodejs-express none
+    ```
+- Run the App with appsody locally and access on http://localhost:3000 (port 3001 is used by the backend)
+    ```bash
+    appsody run
+    ```
+- Test the app by adding a new user, make sure the backend is running with appsody and exposed on port 3001
+- Add deployment manifest
+    ```bash
+    appsody deploy --generate-only
+    ```
+- Add the namespace to deploy the App, edit `app-deploy.yaml`
+    ```yaml
+    metadata:
+      namespace: dev-{initials}
+    ```
+- Add environment variable to link backend service on port 3000 to frontend service, edit `app-deploy.yaml`
+    ```yaml
+    spec:
+      env:
+        - name: APPSODY_BACKEND_DEFAULT_URL
+          value: http://appsody-backend-{initials}:3000/
+    ```
+- Commit and push the new appsody related files
+    ```bash
+    git add .
+    git commit -m "Add appsody files"
+    git push
+    ``` 
+- Create a Webhook on your Github repo to trigger the Tekton Pipeline following the instructions from [Tekton Pipelines Homework](/practical/cp4apps#build-an-app-with-a-tekton-pipeline)
+
+## Verify deployed Microservices
+
+- Open your project using the OpenShift Console
+- Verify there are two applications corresponding to the frontend and backend services
+
+![Frontend Backend Console](images/ocp-console-front-back.png)
+
+- Access the route for the frontend service and register a new user
+
+![Frontend Route](images/frontend-running.png)
