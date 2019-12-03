@@ -4,9 +4,18 @@ title: Application Modernization - Exercise 1
 
 <PageDescription>
 
-An example of a "no code changes required" modernization of an existing traditional WebSphere ND application to Liberty running in a Docker Container.
+Migrate a Java EE app that requires no code changes
 
 </PageDescription>
+
+This exercise shows how to handle a "no code changes required" modernization of an existing traditional WebSphere Application Server Network Deployment (WebSphere ND) application to WebSphere Liberty running in a Docker container. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor).
+
+This exercise assumes the following:
+
+1. You are using a Developer Tools environment that has already been installed.
+1. Cloud Pak for Applications has already been installed in the environment.
+
+This exercise consists of the following sections:
 
 <AnchorLinks>
   <AnchorLink to="#scan-the-existing-application">Scan the Existing Application</AnchorLink>
@@ -15,57 +24,62 @@ An example of a "no code changes required" modernization of an existing traditio
   <AnchorLink to="#run-plantsbywebsphere-on-liberty">Run PlantsByWebSphere on Liberty</AnchorLink>
 </AnchorLinks>
 
-## Business Need
+## Business need
 
-There are 4000+ existing traditional WebSphere ND customers and they all have legacy monolithic applications that the business has no desire to invest money or time in but wants to move to "the Cloud". In this exercise you will learn the skills to be able to demonstrate to these customers how **some** applications can be moved to Liberty in a Docker container and then be deployed to any Cloud without the need to make code changes. While this isn't the typical way that the Garage wants to engage with customers, it is going to be part of the overall modernization of their legacy Java portfolio and an important skill for you to have. This is known as a `runtime modernization` which doesn't address the technical debt in the application but does remove the technical debt provided by the Application Server itself.
+This WebSphere Application Server customer finds itself in a common situation: They have a bunch of legacy monolithic applications running in WebSphere Application Server Network Deployment (WebSphere ND) on traditional IT. This was state-of-the-art back when the applications were first deployed, but the runtime requires periodic maintenance and constant administration. Now the customer would like to host the application in a cloud environment, but they have no desire to make any code changes to move the apps. While it might be beneficial for the customer to invest money in rethinking and redesigning their entire portfolio of applications to move off of traditional WebSphere, in reality this is overkill for applications that still provide the proper business functionality just fine. For these legacy monoliths, we can reduce the maintenance overhead by moving to WebSphere Liberty and running on Red Hat OpenShift. We can also reduce the administrative overhead by implementing a common CI/CD and SRE practices.
 
-## [MVP Statement](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/)
+In this exercise, you will learn the skills to be able to demonstrate to these customers how *some* applications can be moved to Liberty in a Docker container without the need to make code changes. This approach known as [runtime modernization](https://www.ibm.com/cloud/garage/architectures/runtime-modernization-solution/), which doesn't address the technical debt in the application but does remove the technical debt created by the application server runtime. This approach is one strategy for the overall modernization of a customer's legacy Java application portfolio and an important skill to have.
 
-- **Who:** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and don't have access to developers for the majority of the legacy Java portfolio.
+### Project hill
 
-- **What:** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
+Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/practice_hills/) describing the desired outcome of this migration:
 
-- **Wow:** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over in a factory type engagement.
+- **Who**: Operations teams are tasked with moving existing Java applications from traditional WebSphere ND to "the Cloud" and don't have access to developers for the majority of the legacy Java portfolio.
 
-## [Architecture]()
+- **What**: This is an application that users still need. They consider it fine as-is: Either it doesn't require bug fixes and new features, or that maintenance isn't worth the expense. The operations team needs to move to "the Cloud" and wants to standardize on Docker containers that they can run anywhere.
 
-PlantsByWebSphere is a simple legacy monolith with a backend database (DB2).
+- **Wow**: With a few simple steps, you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over in a factory type engagement.
+
+## Architecture
+
+PlantsByWebSphere is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2).
 
 ## Technical Requirements
-- This modernization exercise has the following requirements:
 
-    - No code changes (you don't even have access to source code)
-    - The target is to get the application running on Liberty in a Docker container on your laptop
-    - The DB2 database will remain in it's current location (it is deployed in a container in the MOOC4 cluster exposed with a NodePort)
+This modernization exercise has the following requirements:
+- No code changes -- You don't even have access to source code
+- The target is to get the application running on Liberty in a Docker container on your laptop
+- The DB2 database will remain in its current location -- It is deployed in a container in the MOOC4 environment, exposed with a NodePort
 
 ## Guide
-- This exercise has the following steps
+This exercise has the following steps:
+- Run a pre-configured instance of traditional WebSphere in a Docker container on your laptop to simulate the existing customer environment
+- Use the data collector in Transformation Advisor to scan the WebSphere runtime and the PlantsByWebSphere application
+- Load the scan results in to Transformation Advisor running in your MOOC environment's Red Hat OpenShift cluster
+- Review the Transformation Advisor analysis
+- Use the accelerators to build a Docker image with Liberty and the application
+- Run the newly created Docker image with application on Liberty on your laptop to demonstrate success
 
-    - Run a pre-configured instance of traditional WebSphere in a Docker container on your laptop to simulate the existing customer envionment
-    - Use the IBM Cloud Transformation Advisor Data Collector to scan the WebSphere runtime and the PlantsByWebSphere application
-    - Load the scan results in to IBM Cloud Transformation Advisor running in your MOOC Red Hat OpenShift cluster.
-    - Review the IBM Cloud Transformation Advisor analysis
-    - Use the accelerators to build a Docker image with Liberty and the application
-    - Run the newly created Docker image with application on Liberty on your laptop to demonstrate success
+### Solution Links
 
-## Solution Links
-
-
+TBD
 
 ### Scan the Existing Application
 
+We need to first have the application installed and running so that we can scan it.
+
 #### Setup
-In order to simulate a real traditional WebSphere ND customer environment on your laptop we have provided you with a `Dockerfile` that will create a Docker image that you can run locally. This image will contain `traditional WebSphere`, the `PlantsByWebSphere` application as well as the `IBM Cloud Transformation Advisor Data Collector`.
+In order to simulate a real traditional WebSphere ND customer environment on your laptop, we have provided you with a Dockerfile that creates a Docker image that you can run locally. This image will contain traditional WebSphere, the PlantsByWebSphere application, and the data collector in Transformation Advisor. The end result will be a container running the application which accesses the shared database.
 
 <InlineNotification kind="info">
 
-**Note:** In the real world you would work with the client WebSphere Administrators to execute the IBM Cloud Transformation Advisor Data Collector in their environment, but for this exercise it is easier to run this Docker image on your laptop.
+**Note:** In the real world, you would work with the client's WebSphere administrators to execute the data collector in their environment. For this exercise, we simulate that production environment as a Docker image running on your laptop.
 
 </InlineNotification>
 
 <InlineNotification kind="info">
 
-**Note:** The DB2 database used by this application is at `169.62.108.167` on port `30866`
+**Note:** The DB2 database used for this exercise is at `169.62.108.167` on port `30866`.
 
 </InlineNotification>
 
@@ -76,11 +90,17 @@ In order to simulate a real traditional WebSphere ND customer environment on you
     cd icp-dev-workshop/lab4/CreatePreConfiguredtWASContainer
     ```
 
-- Review the `Dockerfile`. Note that the DB2 JDBC drivers, compiled application EAR files and the IBM Cloud Transformation Advisor Data Collector (this was split in to 50mb chunks so it could easily be stored in GIT) are copied on to the image as well as `wsadmin` scripts which are executed at the end of the build. The `wsadmin` scripts are used to configure the WebSphere application server ready for the PlantsByWebSphere application.
+- Review the Dockerfile, see that the Docker image will contain:
+    - The DB2 JDBC drivers
+    - wsadmin scripts -- Used to configure the WebSphere application server for the PlantsByWebSphere application
+    - Compiled application EAR files
+    - The data collector in Transformation Advisor -- This was split in to 50mb chunks so it could easily be stored in GIT
 
-- Review the `customCmd.properties` file. This file is used to ensure that the IBM Cloud Transformation Advisor Data Collector scans all of the files in the application. By default the IBM Cloud Transformation Advisor Data Collector ignores Java classes in the `com.ibm.websphere`, `net`, `org` packages and other packages that are typically used by open-source JARs. These packages are ignored as they are typically outside of the scope of what a client owns and create `false-positive` results in Transformation Advisor. This becomes a problem when the client's code is in a package such as `net.` or `org.` as their Java code will be ignored by the scanner.
+- Review the `customCmd.properties` file
 
-    ```
+    This file is used to ensure that the data collector scans all of the files in the application. By default, the data collector ignores Java classes in the `com.ibm.websphere` packages, as well as packages that are typically used by open-source JARs such as `net` and `org` packages. These packages are ignored because they typically contain code that the client doesn't own, so any issues found by Transformation Advisor would be false positives. This becomes a problem when the client's code is in a package such as `net` or `org` because the scanner will ignore their Java code.
+
+    ```java
     evaluation=--evaluate --excludePackages=com.informix,com.microsoft,com.sybase,com.sun,java,javax,net,org,oracle,sqlj,_ibmjsp --includePackages=com.ibm
     migration_liberty=--analyze --sourceAppServer=was855 --targetAppServer=liberty --targetCloud=dockerIBMCloud --includePackages=com.ibm --excludePackages=com.informix,com.microsoft,com.sybase,com.sun,java,javax,net,org,oracle,sqlj,_ibmjsp
     migration_was=--analyze --sourceAppServer=was855 --targetAppServer=was90 --targetCloud=vmIBMCloud --includePackages=com.ibm --excludePackages=com.informix,com.microsoft,com.sybase,com.sun,java,javax,net,org,oracle,sqlj,_ibmjsp
@@ -88,22 +108,31 @@ In order to simulate a real traditional WebSphere ND customer environment on you
     #featureList=--featureList --excludeFiles=".*/directory/LargeXMLFileName.xml"
     #java_opt=-Xmx2g
     ```
-- Review the `wsadmin.py` file and ensure that the `serverName` and `port` for the DataSources match the values of your DB2 database (above).
+- Review the `wsadmin.py` file
+    - Ensure that the `serverName` and `port` for the DataSources match the values of your DB2 database (above)
 
-- Build the Docker image:
+- Build the Docker image
 
     ```bash
     docker build -t twas-plantsbywebsphere .
     ```
 
-- Use `docker images` to check the size of the IBM provided traditional WebSphere image. If you happened to be wondering if traditional WebSphere runs in a Docker container then why are we moving to Liberty? **1.75GB** is one of the reasons... Having to hard code configuration values in configuration files like in the previous step is another reason (is traditional WebSphere can't read configuration from Environment Variables)
+- Review the Docker image for traditional WebSphere Application Server
 
     ```bash
-    docker images | grep websphere
-    ibmcom/websphere-traditional profile 67b52a4c08ad 12 months ago 1.75GB
+    $ docker images | grep websphere
+
+    REPOSITORY                      TAG        IMAGE ID        CREATED          SIZE
+    ibmcom/websphere-traditional    profile    67b52a4c08ad    12 months ago    1.75GB
     ```
 
-- Start an instance of the Docker Image
+    You may be wondering: If traditional WebSphere runs in a Docker container, then why are we moving to Liberty?
+
+    - One reason: **1.75GB**!!
+
+    - Another reason: Having to hardcode configuration values in configuration files (like in the previous step) because traditional WebSphere can't read [configuration from environment variables](https://12factor.net/config)
+
+- Start an instance of the Docker image
 
     ```bash
     docker run -d -p 9080:9080 -p 9443:9443 -p 9060:9060 -p 9043:9043 -v "$(pwd)":/data --name twas-plantsbywebsphere twas-plantsbywebsphere:latest
@@ -112,8 +141,7 @@ In order to simulate a real traditional WebSphere ND customer environment on you
 - Tail the logs for the Docker container and wait for the message shown below:
 
     ```
-    docker logs -f twas-plantsbywebsphere
-
+    $ docker logs -f twas-plantsbywebsphere
     ...
 
     *** CERTIFICATES THAT ARE EXPIRED OR BEYOND THE EXPIRATION THRESHOLD AND HAVE BEEN REPLACED ***;
@@ -122,9 +150,11 @@ In order to simulate a real traditional WebSphere ND customer environment on you
     CWPKI0645I: Personal certificate alias "default" in KeyStore "NodeRSATokenKeyStore((cell):DefaultCell01:(node):DefaultNode01)" was REPLACED.
     ```
 
-- This message is expected as this version of the traditional WebSphere Docker image is over 12 months old and the SSL certificates have expired. We will have to `stop` and `start` the container again to refresh these SSL certificates.
+    This message is expected because this version of the traditional WebSphere Docker image is over 12 months old and the SSL certificates have expired.
 
-    ```
+- Restart the container to refresh these SSL certificates
+
+    ```bash
     docker stop twas-plantsbywebsphere
     docker start twas-plantsbywebsphere
     ```
@@ -132,153 +162,187 @@ In order to simulate a real traditional WebSphere ND customer environment on you
 - Tail the logs for the Docker container and wait for the message shown below:
 
     ```
+    $ docker logs -f twas-plantsbywebsphere
+    ...
+
     WSVR0001I: Server server1 open for e-business
     ```
 
-- Login to the traditional WebSphere Administrative Console
+- Log in to the Administrative Console
 
     https://localhost:9043/ibm/console
 
-    NOTE: Chrome & Safari blocks https://localhost and doesn't allow exceptions recently.  You may need to install firefox to login to the console. Firefox blocks, but gives you the option to proceed anyways.
+    NOTE: The console requires secure HTTP. Chrome and Safari block https://localhost and recently don't allow exceptions. You may need to use Firefox to log in to the console. Firefox blocks, but gives you the option to proceed anyways.
 
-    username: ```wsadmin``` password: ```passw0rd```
+    username: `wsadmin` password: `passw0rd`
 
-- Navigate to `Applications --> Application Types --> WebSphere enterprise applications` and validate that you see `HelloWorld` and `PlantsByWebsphere8`
+- Navigate to `Applications --> Application Types --> WebSphere enterprise applications` and verify that you see `HelloWorld` and `PlantsByWebsphere8`
 
     ![apps](images/twas-apps.jpg)
 
-- Navigate to `Resources --> JDBC --> DataSources` and validate that you see `PlantsByWebSphereDataSource` and `PlantsByWebSphereDataSourceNONJTA`. These are the two DataSources that will be detected by the IBM Cloud Transformation Advisor Data Collector
+- Navigate to `Resources --> JDBC --> DataSources` and verify that you see `PlantsByWebSphereDataSource` and `PlantsByWebSphereDataSourceNONJTA`. These are the two DataSources that will be detected by the data collector.
 
     ![apps](images/twas-ds.jpg)
 
-- Log out of the traditional WebSphere Administrative Console
+- Log out of the Administrative Console
 
 - Access PlantsByWebSphere using http://localhost:9080/PlantsByWebSphere
 
     ![apps](images/twas-pbw.jpg)
 
-- Click on one of the Specials such as the `Bonsai Tree`. If the screen shown below is displayed, the connection to the Database is working correctly.
+- Click on one of the Specials such as the "Bonsai Tree". If the screen shown below is displayed, the connection to the Database is working correctly.
 
     ![apps](images/twas-tree.jpg)
 
-#### Run the IBM Cloud Transformation Advisor Data Collector
-Now that you have validated that the PlantsByWebSphere application is running in the Docker container, it is time to run the IBM Cloud Transformation Advisor Data Collector.
+
+#### Run the data collector
+
+Now that you have validated that the PlantsByWebSphere application is running in the Docker container, it is time to run the data collector.
 
 - Enter the twas-plantsbywebsphere Docker container
 
-    ```
+    ```bash
     docker exec -it twas-plantsbywebsphere bash
     ```
 
-- Navigate to the IBM Cloud Transformation Advisor Data Collector directory
+- Navigate to the data collector directory
 
-    ```
+    ```bash
     cd /demo/transformationadvisor-2.0.1
     ```
 
-- Execute the IBM Cloud Transformation Advisor Data Collector
+- Execute the data collector
 
-    ```
+    ```bash
     ./bin/transformationadvisor -w /opt/IBM/WebSphere/AppServer -p AppSrv01 wsadmin passw0rd
     ```
 
-- When prompted, accept the `License` agreement
+- When prompted, accept the License agreement
 
-- After a few minutes you will either see a `Thank you for uploading your data. You can proceed to the application UI for doing further analysis.` message or an error related to `unable to upload the data` which will occur if the IBM Cloud Transformation Advisor Data Collector can't access the IBM Cloud Transformation Advisor UI which is running in Red Hat OpenShift.
+- After a few minutes, you will either see a "Thank you for uploading your data. You can proceed to the application UI for doing further analysis." message or an error related to "unable to upload the data" which will occur if the data collector can't access the Transformation Advisor UI which is running in Red Hat OpenShift.
 
     ![apps](images/ta-upload.jpg)
 
-- Validate that the results zip file has been created.
+- Verify that the results zip file has been created
 
-    ```
-    ls -la AppSrv01.zip
+    ```bash
+    $ ls -la AppSrv01.zip
     -rw-r--r-- 1 was was 340860 Nov 22 15:32 AppSrv01.zip
     ```
 
 - Use CTRL+D to exit from the Docker container
 
-- Copy the `AppSrv01.zip` file from within the Docker container to your local disk.
+- Copy the `AppSrv01.zip` file from within the Docker container to your local disk
 
-    ```
+    ```bash
     docker cp twas-plantsbywebsphere:/demo/transformationadvisor-2.0.1/AppSrv01.zip .
     ```
 
 - Stop and remove the Docker container
 
-    ```
+    ```bash
     docker stop twas-plantsbywebsphere
     docker rm twas-plantsbywebsphere
     ```
 
-### Analyze the Scan Results
-In this section you will upload the results from the IBM Cloud Transformation Advisor Data Collector to the IBM Cloud Transformation Advisor UI and analyze the findings.
+### Analyze the scan results
 
-- Using your `IBM Garage for Cloud - Development Cluster Dashboard`, navigate to `Transformation Advisor`
+In this section, you will upload the results from the data collector to the Transformation Advisor UI and analyze the findings.
+
+- Use the [Developer Tools Dashboard](/getting-started/dashboard) to open the Transformation Advisor dashboard
 
     ![apps](images/ta-dashboard.jpg)
 
-- You may receive an `Authentication endpoint is broken at the moment.` message. Copy the `URL` to a new `incognito` browser session to solve the problem
+    - The browser may display the message "Authentication endpoint is broken at the moment."  To solve the problem, open the URL in a new incognito browser tab.
 
-- Add a new Workspace named `AppMod_{your initials}`
+- Add a new Workspace named `AppMod-{initials}`
 
 - Add a new Collection named `Lab1`
 
-- Click `Upload data` and provide `AppSrv01.zip` from the previous section. After a few moments the results will be displayed as shown below:
+- Click `Upload data` and specify the `AppSrv01.zip` file you created from scanning the app
+
+    After a few moments, the UI will display the Results page.
 
     ![apps](images/ta-page1.jpg)
 
-Take a moment to review the results. IBM Cloud Transformation Advisor has determined this application is `simple` to move to `Liberty to Private Cloud`.
+#### Review the results
 
-- What happens if you change the `Preferred migration` target to `Liberty on Public Cloud`? Why did the **complexity** change?
+Take a moment to review the results. Transformation Advisor has determined this application is "simple" to move to Liberty on Private Cloud.
 
-- Hold your mouse over the `Complex` box. Why does IBM Cloud Transformation Advisor think you need a VPN?
+- What happens if you change the Preferred migration target to Liberty on Public Cloud? Why did the *complexity* change?
 
-- Click on the the `PlantsByWebSphere8.ear` and read the `Public Cloud to Private Cloud Network Connection` result.
+- Hold your mouse over the "Complex" box. Why does Transformation Advisor think you need a VPN?
 
-Scroll down and note the `External Dependencies` that have been detected to be required by this application. Remember the DB2 database? IBM Cloud Transformation Advisor detected that the application used the database and is making sure that you are aware that if the move this application to the public cloud you'll either need to move the database or provide some type of connection back to it on-prem.
+- Click on the the `PlantsByWebSphere8.ear` and read the Public Cloud to Private Cloud Network Connection result.
 
-- Click the `<-- Recommendations` link at the top of the page and return to the reset the `Preferred migration` target to `Liberty on Private Cloud`
+Scroll down and note the External Dependencies that have been detected to be required by this application. Remember the DB2 database? Transformation Advisor detected that the application uses the database. It is telling you that either you will need to move the database to the public cloud or the application in the pubic cloud will need a network connection--probably a VPN--to the database in the private data center.
 
-- Click on the the `PlantsByWebSphere8.ear` again and review the `Technology Issues` section.
+- Click the `<-- Recommendations` link at the top of the page to return to the Recommendations page, then set the Preferred migration target to Liberty on Private Cloud once again
 
-- Scroll to the bottom of the page and review the `Technology Report`, `Inventory Report` and `Analysis Report`
+#### Review the reports
 
-- Note that at the top of each report the `command line parameters` are shown. This helps to validate that your settings in `customCmd.properties` have been detected
+Take a moment to review the reports. Make sure the Transformation Advisor UI is displaying the Results page and that the Preferred migration target is set to Liberty on Private Cloud.
 
-    ![pbw](images/ta-params.jpg)
+- Click on the the `PlantsByWebSphere8.ear` again and review the Technology Issues section
 
-- **Technology Report** provides a listing of the JEE features used by the application and maps them to the capabilities of the various WebSphere editions. This is a useful first step to determining whether this application will run on Liberty.
+- Scroll to the bottom of the page and review the Technology Report, Inventory Report, and Analysis Report
+
+Note that at the top of each report, the command line parameters are shown. This helps to validate that your settings in `customCmd.properties` have been detected.
+
+![pbw](images/ta-params.jpg)
+
+Review each of the reports:
+
+- **Technology Report**
+    - Lists the Java EE features used by the application and
+    - Maps these features to the capabilities of the various WebSphere editions
+
+    This is a useful first step to determining whether this application will run on Liberty.
 
     ![pbw](images/ta-tech.jpg)
 
-- **Inventory Report** provides:
+- **Inventory Report**
 
-    - a breakdown of the JEE components in the application which helps to give an idea of the size of the monolith and identify the number of EJBs and Web Services.
+    - Lists the Java EE components in the application
+
+    This helps give an idea of the size of the monolith and identify the number of EJBs and web services.
+
     ![pbw](images/ta-inventory.jpg)
 
-    - a graphical representation of the application structure can also be used to see which JARs are included in the application which helps identify technical debt such as old versions of Struts, Spring, Hibernate and whether the application packages IBM or JEE JARs that can cause classloading issues later.
+    - Shows the application structure
+
+    This shows which JARs are included in the application, which helps identify technical debt such as old versions of Struts, Spring, Hibernate and whether the application packages IBM or JEE JARs that can cause classloading issues later.
+
     ![pbw](images/ta-inventory2.jpg)
 
-    - a `Utility JAR` listing at the bottom which can be used to see which packages are in each JAR which is especially useful if the client doesn't know which Java packages to scan. If you find client code in packages such as `org.` and `net.` listed in this part of the report it will be necessary to modify the `customCmd.properties` file and re-run the scan
+    - Lists the Utility JAR files
+
+    This shows which packages are in each JAR, which is especially useful if the client doesn't know which Java packages to scan. If you find this part of the report lists client code in packages that the scanner ignored such as `org` and `net`, you will need to update the `customCmd.properties` file to include these packages and re-run the scan.
+
     ![pbw](images/ta-inventory3.jpg)
 
-- **Analysis Report** provides a breakdown of the issues found during the scan of the application. Review the `Severe` and `Warning` results using the `show rule help` and `show results` links. Note that the one severe result for this application is related to the user of `sendRedirect` and that the solution if problems are encountered during testing is to set a JVM property.
+- **Analysis Report**
+
+    - Lists the issues found during the scan of the application
+
+    Review the Severe and Warning results using the `show rule help` and `show results` links. Note that the one severe result for this application is related to the user of `sendRedirect`; if problems are encountered during testing, the solution is to set a JVM property.
 
     ![pbw](images/ta-severe.jpg)
 
-- Close the open report tabs and return to the `Recommendations` page
+- Close the open report tabs and return to the Recommendations page
 
 Let's go ahead and move this application to Liberty.
 
 ### Configure WebSphere Liberty
-IBM Cloud Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section you will modify those files for PlantsByWebSphere.
+
+Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section you will modify those files for PlantsByWebSphere.
 
 - From the main recommendations page, click the `...` link on the right for the `PlantsByWebSphere8.ear` and select `view migration plan`
 
   ![pbw](images/ta-assets.jpg)
 
-  * ```server.xml``` - IBM Cloud Transformation Advisor extracts most of the configuration from traditional WebSphere and generates a server.xml for Liberty to use.
-  * ```Dockerfile``` - Used to create the docker image which includes the application, and configuration for Liberty.
+  * ```server.xml``` - Transformation Advisor extracts most of the configuration from traditional WebSphere and generates a server.xml for Liberty to use.
+  * ```Dockerfile``` - Used to create the Docker image which includes the application, and configuration for Liberty.
   * ```Operator resources``` - Used in Red Hat OpenShift to deploy the application using the OpenLiberty operator.
   * ```pom.xml``` - Used for maven builds, particularly useful if the application does not already employ build scripts.
 
@@ -290,7 +354,7 @@ IBM Cloud Transformation Advisor creates some accelerators to speed up the proce
     cd liberty
     ```
 
-- Download `server.xml` and `Dockerfile` from IBM Cloud Transformation Advisor and place them in `lab4/liberty`
+- Download `server.xml` and `Dockerfile` from Transformation Advisor and place them in `lab4/liberty`
 
 - If Dockerfile gets renamed to `Dockerfile.txt` during the download, rename it to `Dockerfile` without the `.txt` extension
 
@@ -423,7 +487,7 @@ Now you are ready to build and run the Docker image that contains WebSphere Libe
     docker run -d -p 9080:9080 -p 9443:9443 --name plantsbyliberty plantsbyliberty
     ```
 
-- Tail the logs for the docker container and wait for the `CWWKT0016I: Web application available (default_host): http://0c59e31137ff:9080/PlantsByWebSphere/` message to be displayed
+- Tail the logs for the Docker container and wait for the `CWWKT0016I: Web application available (default_host): http://0c59e31137ff:9080/PlantsByWebSphere/` message to be displayed
 
 - Open browser to http://localhost:9080/PlantsByWebSphere and confirm the app working as expected with the DB2 data by clicking the `Flowers` link.
 
