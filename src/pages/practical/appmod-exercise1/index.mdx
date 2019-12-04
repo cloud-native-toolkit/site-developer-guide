@@ -8,7 +8,7 @@ Migrate a Java EE app that requires no code changes
 
 </PageDescription>
 
-This exercise shows how to handle a "no code changes required" modernization of an existing traditional WebSphere Application Server Network Deployment (WebSphere ND) application to WebSphere Liberty running in a Docker container. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor).
+This exercise shows how to handle a "no code changes required" modernization of an existing traditional WebSphere Application Server Network Deployment (WebSphere ND) application to WebSphere Liberty running in a Docker container.
 
 This exercise assumes the following:
 
@@ -21,7 +21,7 @@ This exercise consists of the following sections:
 <AnchorLinks>
   <AnchorLink to="#scan-the-existing-application">Scan the existing application</AnchorLink>
   <AnchorLink to="#analyze-the-scan-results">Analyze the scan results</AnchorLink>
-  <AnchorLink to="#configure-websphere-liberty">Configure WebSphere Liberty</AnchorLink>
+  <AnchorLink to="#migrate-to-websphere-liberty">Migrate to WebSphere Liberty</AnchorLink>
   <AnchorLink to="#run-the-application-on-liberty">Run the application on Liberty</AnchorLink>
 </AnchorLinks>
 
@@ -29,7 +29,7 @@ This exercise consists of the following sections:
 
 This WebSphere Application Server customer finds itself in a common situation: They have a bunch of legacy monolithic applications running in WebSphere Application Server Network Deployment (WebSphere ND) on traditional IT. This was state-of-the-art back when the applications were first deployed, but the runtime requires periodic maintenance and constant administration. Now the customer would like to host the application in a cloud environment, but they have no desire to make any code changes to move the apps. While it might be beneficial for the customer to invest money in rethinking and redesigning their entire portfolio of applications to move off of traditional WebSphere, in reality this is overkill for applications that still provide the proper business functionality just fine. For these legacy monoliths, we can reduce the maintenance overhead by moving to WebSphere Liberty and running on Red Hat OpenShift. We can also reduce the administrative overhead by implementing a common CI/CD and SRE practices.
 
-In this exercise, you will learn the skills to be able to demonstrate to these customers how *some* applications can be moved to Liberty in a Docker container without the need to make code changes. This approach known as [runtime modernization](https://www.ibm.com/cloud/garage/architectures/runtime-modernization-solution/), which doesn't address the technical debt in the application but does remove the technical debt created by the application server runtime. This approach is one strategy for the overall modernization of a customer's legacy Java application portfolio and an important skill to have.
+In this exercise, you will learn the skills to be able to demonstrate how *some* applications can be moved to Liberty in a Docker container without the need to make code changes. This approach known as [runtime modernization](https://www.ibm.com/cloud/garage/architectures/runtime-modernization-solution/), which doesn't address the technical debt in the application but does remove the technical debt created by the WebSphere Application Server runtime. This approach can also be used to migrate applications running in other Java EE servers like Oracle WebLogic Server or Apache Tomcat. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor). This approach is one strategy for the overall modernization of a legacy Java application portfolio and an important skill to have.
 
 ### Project hill
 
@@ -334,7 +334,7 @@ Review each of the reports:
 Let's go ahead and move this application to Liberty.
 
 
-### Configure WebSphere Liberty
+### Migrate to WebSphere Liberty
 
 Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section, you will modify those files for PlantsByWebSphere.
 
