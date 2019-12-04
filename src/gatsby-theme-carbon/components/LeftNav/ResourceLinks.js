@@ -14,9 +14,11 @@ const links = [
   {
     title: 'Github Org',
     href: 'https://github.com/ibm-garage-cloud',
+  },
+  {
+    title: 'IBM Cloud Terraform Provider',
+    href: 'https://ibm-cloud.github.io/tf-ibm-docs/',
   }
-
-
 
 ];
 
