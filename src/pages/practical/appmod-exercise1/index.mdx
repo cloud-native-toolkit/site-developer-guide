@@ -14,14 +14,15 @@ This exercise assumes the following:
 
 1. You are using a Developer Tools environment that has already been installed.
 1. Cloud Pak for Applications has already been installed in the environment.
+1. You have Docker Desktop running on your laptop (one of the [prerequisites](/getting-started/prereqs)).
 
 This exercise consists of the following sections:
 
 <AnchorLinks>
-  <AnchorLink to="#scan-the-existing-application">Scan the Existing Application</AnchorLink>
-  <AnchorLink to="#analyze-the-scan-results">Analyze the Scan Results</AnchorLink>
+  <AnchorLink to="#scan-the-existing-application">Scan the existing application</AnchorLink>
+  <AnchorLink to="#analyze-the-scan-results">Analyze the scan results</AnchorLink>
   <AnchorLink to="#configure-websphere-liberty">Configure WebSphere Liberty</AnchorLink>
-  <AnchorLink to="#run-plantsbywebsphere-on-liberty">Run PlantsByWebSphere on Liberty</AnchorLink>
+  <AnchorLink to="#run-the-application-on-liberty">Run the application on Liberty</AnchorLink>
 </AnchorLinks>
 
 ## Business need
@@ -36,9 +37,9 @@ Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/pr
 
 - **Who**: Operations teams are tasked with moving existing Java applications from traditional WebSphere ND to "the Cloud" and don't have access to developers for the majority of the legacy Java portfolio.
 
-- **What**: This is an application that users still need. They consider it fine as-is: Either it doesn't require bug fixes and new features, or that maintenance isn't worth the expense. The operations team needs to move to "the Cloud" and wants to standardize on Docker containers that they can run anywhere.
+- **What**: This is an application that users still need. They consider it good enough as-is: While bug fixes and new features might be desirable, the aren't worth the expense. Or step 1 for making the app more maintainable is moving it to the cloud where it'll be easier to improve it using modern development techniques like continuous deployment. The operations team needs to move to "the Cloud" and wants to standardize on Docker containers that they can run anywhere.
 
-- **Wow**: With a few simple steps, you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over in a factory type engagement.
+- **Wow**: With a few simple steps, you can move an application and the associated configuration to a Liberty runtime in a Docker container without changing code. This is something that can be repeated over and over on many apps in the portfolio in a factory type engagement.
 
 ## Architecture
 
@@ -60,11 +61,7 @@ This exercise has the following steps:
 - Use the accelerators to build a Docker image with Liberty and the application
 - Run the newly created Docker image with application on Liberty on your laptop to demonstrate success
 
-### Solution Links
-
-TBD
-
-### Scan the Existing Application
+### Scan the existing application
 
 We need to first have the application installed and running so that we can scan it.
 
@@ -122,13 +119,16 @@ In order to simulate a real traditional WebSphere ND customer environment on you
     ```bash
     $ docker images | grep websphere
 
-    REPOSITORY                      TAG        IMAGE ID        CREATED          SIZE
-    ibmcom/websphere-traditional    profile    67b52a4c08ad    12 months ago    1.75GB
+    REPOSITORY                      TAG                         IMAGE ID        CREATED          SIZE
+    ibmcom/websphere-traditional    profile                     67b52a4c08ad    12 months ago    1.75GB
+    ibmcom/websphere-liberty        webProfile7-ubi-min-amd64   34544a83c068     3 weeks ago      446MB
     ```
+
+    (The `websphere-liberty` image is shown here for comparison. You may not see it in your registry (yet).)
 
     You may be wondering: If traditional WebSphere runs in a Docker container, then why are we moving to Liberty?
 
-    - One reason: **1.75GB**!!
+    - One reason: **1.75GB**!! (The Liberty image is 446MB, one-quarter the size.)
 
     - Another reason: Having to hardcode configuration values in configuration files (like in the previous step) because traditional WebSphere can't read [configuration from environment variables](https://12factor.net/config)
 
@@ -294,7 +294,7 @@ Note that at the top of each report, the command line parameters are shown. This
 Review each of the reports:
 
 - **Technology Report**
-    - Lists the Java EE features used by the application and
+    - Lists the Java EE features used by the application
     - Maps these features to the capabilities of the various WebSphere editions
 
     This is a useful first step to determining whether this application will run on Liberty.
@@ -311,7 +311,7 @@ Review each of the reports:
 
     - Shows the application structure
 
-    This shows which JARs are included in the application, which helps identify technical debt such as old versions of Struts, Spring, Hibernate and whether the application packages IBM or JEE JARs that can cause classloading issues later.
+    This shows which JARs are included in the application, which helps identify technical debt such as old versions of Struts, Spring, and Hibernate, and whether the application packages IBM or JEE JARs that can cause classloading issues later.
 
     ![pbw](images/ta-inventory2.jpg)
 
@@ -333,20 +333,24 @@ Review each of the reports:
 
 Let's go ahead and move this application to Liberty.
 
+
 ### Configure WebSphere Liberty
 
-Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section you will modify those files for PlantsByWebSphere.
+Transformation Advisor creates some accelerators to speed up the process of migrating an application. These files are a starting point for most modernization journeys and require modification. In this section, you will modify those files for PlantsByWebSphere.
 
-- From the main recommendations page, click the `...` link on the right for the `PlantsByWebSphere8.ear` and select `view migration plan`
+- From the main recommendations page, click the `...` link on the right for the `PlantsByWebSphere8.ear` and select View migration plan
 
-  ![pbw](images/ta-assets.jpg)
+    ![pbw](images/ta-assets.jpg)
 
-  * ```server.xml``` - Transformation Advisor extracts most of the configuration from traditional WebSphere and generates a server.xml for Liberty to use.
-  * ```Dockerfile``` - Used to create the Docker image which includes the application, and configuration for Liberty.
-  * ```Operator resources``` - Used in Red Hat OpenShift to deploy the application using the OpenLiberty operator.
-  * ```pom.xml``` - Used for maven builds, particularly useful if the application does not already employ build scripts.
+    The migration plan shows the files that Transformation Advisor has generated:
+    - **server.xml** - Transformation Advisor extracts most of the configuration from traditional WebSphere and generates a server.xml for Liberty to use
+    - **Dockerfile** - Used to create the Docker image, which includes the application and configuration for Liberty
+    - **Operator resources** - Used in Red Hat OpenShift to deploy the application using the [Open Liberty operator](https://operatorhub.io/operator/open-liberty)
+    - **pom.xml** - Used for Maven builds, particularly useful if the application does not already employ build scripts
 
-- Create a new directory in the lab4 folder
+We need to download these files and put them in the correct directory structure.
+
+- In the `lab4` folder, create a `liberty` subdirectory
 
     ```bash
     cd ..
@@ -356,86 +360,95 @@ Transformation Advisor creates some accelerators to speed up the process of migr
 
 - Download `server.xml` and `Dockerfile` from Transformation Advisor and place them in `lab4/liberty`
 
-- If Dockerfile gets renamed to `Dockerfile.txt` during the download, rename it to `Dockerfile` without the `.txt` extension
+    - If Dockerfile gets renamed to `Dockerfile.txt` during the download, rename it to `Dockerfile` without the `.txt` extension
+
+The original application is in the directory `lab4/binary`. We will copy the Ear file and DB2 driver files from the original application to the new Liberty application. Notice that we simply copy the Ear file, that we don't make any changes to the Java code or otherwise recompile the Ear. Also notice that Liberty uses the same DB2 drivers that WebSphere Application Server does.
 
 - Copy `plantsbywebspherev8.ear` from `lab4/binary/application` and place it in `liberty/binary/application`
 
-- Copy `db2jcc.jar` and `db2jcc_licence_cu.jar` from
-`lab4/binary/lib` and place them in `lab4/liberty/binary/lib`
+- Copy `db2jcc.jar` and `db2jcc_licence_cu.jar` from `lab4/binary/lib` and place them in `lab4/liberty/binary/lib`
+
+Now let's make sure we have all of the right files in all of the right directories.
 
 - Issue the command `ls -laR` in the `liberty` folder and validate your structure is as shown below:
 
     ![liberty](images/liberty-ls.jpg)
 
-- Open the `server.xml` file in your favorite editor and make the following changes:
+Ideally, Transformation Advisor could figure out enough from the original application so that the generated files contain exactly what's needed and we could use these files as-is. Unfortunately, there are some details Transformation Advisor cannot discern, so we'll need to add those into the files manually.
 
-  * change the `jpa-2.1` feature to `jpa-2.0`
+- Edit the `server.xml` file using your favorite editor to make the following changes:
 
-  * uncomment the `dataSources` and `jdbcDrivers`
+    - Change the `jpa-2.1` feature to `jpa-2.0`
 
-  * change the DB2 driver locations to be `/config/lib/db2jcc.jar` and `/config/lib/db2jcc_licence_cu.jar` for the `DB2_Universal_JDBC_Driver_Provider` and the `DB2_Universal_JDBC_Driver_Provider_(XA)` jdbcDrivers. (THERE ARE TWO SETS OF FILE NAMES THAT MUST BE CHANGED)
+    - Uncomment the `dataSources` and `jdbcDrivers`
 
-  * add `user="db2inst1" password="db2Pa2359w0rd123" transactional="false"` to the `properties.db2.jcc` line of the `PlantsByWebSphereDataSourceNONJTA` datasource
+    - In the dataSources, for the jdbcDriverRefs `DB2_Universal_JDBC_Driver_Provider` and `DB2_Universal_JDBC_Driver_Provider_(XA)`, change the DB2 driver locations to be `/config/lib/db2jcc.jar` and `/config/lib/db2jcc_licence_cu.jar`. (THERE ARE TWO SETS OF FILE NAMES THAT MUST BE CHANGED)
 
-  * add `user="db2inst1" password="db2Pa2359w0rd123" transactional="true"` to the `properties.db2.jcc` line of the `PlantsByWebSphereDataSource` datasource
+    - In the `PlantsByWebSphereDataSourceNONJTA` datasource, in the `properties.db2.jcc` line, add `user="db2inst1" password="db2Pa2359w0rd123" transactional="false"`
 
-  * change `location="plantsbywebsphere8-1.0.0.war" name="PlantsByWebSphere8" type="war"/>` to the `location="plantsbywebsphere8.ear" name="PlantsByWebSphere8" type="ear"/>`
+    - In the `PlantsByWebSphereDataSource` datasource, in the `properties.db2.jcc` line, add `user="db2inst1" password="db2Pa2359w0rd123" transactional="true"`
 
-  * save your changes
+    - Change `location="plantsbywebsphere8-1.0.0.war" name="PlantsByWebSphere8" type="war"/>` to `location="plantsbywebsphere8.ear" name="PlantsByWebSphere8" type="ear"/>`
 
-  The modified `server.xml` should look like the one shown below:
+    - Save your changes
 
-    ```
-    <?xml version="1.0" encoding="UTF-8"?><!--Generated by IBM TransformationAdvisor
-    Thu Nov 21 20:49:39 GMT 2019--><server>
-    <!--These elements have been identified from this application's configuration.-->
-      <featureManager>
-        <feature>beanValidation-1.1</feature>
-        <feature>cdi-1.2</feature>
-        <feature>ejbLite-3.2</feature>
-        <feature>el-3.0</feature>
-        <feature>javaMail-1.5</feature>
-        <feature>jndi-1.0</feature>
-        <feature>jpa-2.0</feature>
-        <feature>jsf-2.2</feature>
-        <feature>jsp-2.3</feature>
-        <feature>servlet-3.1</feature>
-      </featureManager>
-      <!-- <variable name="DERBY_JDBC_DRIVER_PATH" value="${WAS_INSTALL_ROOT}/derby/lib"/> -->
-      <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
-      <!-- <variable name="DB2UNIVERSAL_JDBC_DRIVER_NATIVEPATH" value=""/> -->
-      <variable name="DERBY_JDBC_DRIVER_PATH" value="${shared.config.dir}/lib/global"/>
-      <variable name="DB2UNIVERSAL_JDBC_DRIVER_NATIVEPATH" value="${shared.config.dir}/lib/global"/>
-      <applicationManager autoExpand="true"/>
-      <!--These elements are from the profile level configuration. Not all of them may be necessary for your application.-->
-      <dataSource containerAuthDataRef="DefaultNode01/PlantsAuthAlias" id="PlantsByWebSphereDataSourceNONJTA" jdbcDriverRef="DB2_Universal_JDBC_Driver_Provider" jndiName="jdbc/PlantsByWebSphereDataSourceNONJTA">
-        <properties.db2.jcc user="db2inst1" password="db2Pa2359w0rd123" transactional="false" beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="PLANTSDB" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" jmsOnePhaseOptimization="false" name="PlantsByWebSphereDataSourceNONJTA" nonTransactionalDataSource="false" portNumber="30465" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" propagateClientIdentityUsingTrustedContext="false" reauthentication="false" retrieveMessagesFromServerOnGetMessage="true" serverName="52.117.164.118" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3"/>
-        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
-      </dataSource>
-      <dataSource containerAuthDataRef="DefaultNode01/PlantsAuthAlias" id="PlantsByWebSphereDataSource" jdbcDriverRef="DB2_Universal_JDBC_Driver_Provider_(XA)" jndiName="jdbc/PlantsByWebSphereDataSource">
-        <properties.db2.jcc user="db2inst1" password="db2Pa2359w0rd123" transactional="true" beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="PLANTSDB" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" name="PlantsByWebSphereDataSource" nonTransactionalDataSource="false" portNumber="30465" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" propagateClientIdentityUsingTrustedContext="false" reauthentication="false" retrieveMessagesFromServerOnGetMessage="false" serverName="52.117.164.118" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3"/>
-        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
-      </dataSource>
-      <jdbcDriver id="DB2_Universal_JDBC_Driver_Provider" javax.sql.DataSource="com.ibm.db2.jcc.DB2ConnectionPoolDataSource">
-          <library>
-              <file name="/config/lib/db2jcc.jar"/>
-              <file name="/config/lib/db2jcc_license_cu.jar"/>
-          </library>
-      </jdbcDriver>
-      <jdbcDriver id="DB2_Universal_JDBC_Driver_Provider_(XA)" javax.sql.DataSource="com.ibm.db2.jcc.DB2XADataSource">
-          <library>
-              <file name="/config/lib/db2jcc.jar"/>
-              <file name="/config/lib/db2jcc_license_cu.jar"/>
-          </library>
-      </jdbcDriver>
-      <authData id="DefaultNode01/PlantsAuthAlias" password="???" user="db2inst1"/>
-      <application id="PlantsByWebSphere8" location="plantsbywebsphere8.ear" name="PlantsByWebSphere8" type="ear"/>
-    </server>
-    ```
+The modified `server.xml` should look like this:
 
-- Review the generated Dockerfile `liberty/Dockerfile` in your favorite editor. Note that this Dockerfile expects the maven build to be triggered as part of this Docker build and then the generated war is copied to the Liberty runtime.
+```
+<?xml version="1.0" encoding="UTF-8"?><!--Generated by IBM TransformationAdvisor
+Thu Nov 21 20:49:39 GMT 2019--><server>
+<!--These elements have been identified from this application's configuration.-->
+  <featureManager>
+    <feature>beanValidation-1.1</feature>
+    <feature>cdi-1.2</feature>
+    <feature>ejbLite-3.2</feature>
+    <feature>el-3.0</feature>
+    <feature>javaMail-1.5</feature>
+    <feature>jndi-1.0</feature>
+    <feature>jpa-2.0</feature>
+    <feature>jsf-2.2</feature>
+    <feature>jsp-2.3</feature>
+    <feature>servlet-3.1</feature>
+  </featureManager>
+  <!-- <variable name="DERBY_JDBC_DRIVER_PATH" value="${WAS_INSTALL_ROOT}/derby/lib"/> -->
+  <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+  <!-- <variable name="DB2UNIVERSAL_JDBC_DRIVER_NATIVEPATH" value=""/> -->
+  <variable name="DERBY_JDBC_DRIVER_PATH" value="${shared.config.dir}/lib/global"/>
+  <variable name="DB2UNIVERSAL_JDBC_DRIVER_NATIVEPATH" value="${shared.config.dir}/lib/global"/>
+  <applicationManager autoExpand="true"/>
+  <!--These elements are from the profile level configuration. Not all of them may be necessary for your application.-->
+  <dataSource containerAuthDataRef="DefaultNode01/PlantsAuthAlias" id="PlantsByWebSphereDataSourceNONJTA" jdbcDriverRef="DB2_Universal_JDBC_Driver_Provider" jndiName="jdbc/PlantsByWebSphereDataSourceNONJTA">
+    <properties.db2.jcc user="db2inst1" password="db2Pa2359w0rd123" transactional="false" beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="PLANTSDB" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" jmsOnePhaseOptimization="false" name="PlantsByWebSphereDataSourceNONJTA" nonTransactionalDataSource="false" portNumber="30866" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" propagateClientIdentityUsingTrustedContext="false" reauthentication="false" retrieveMessagesFromServerOnGetMessage="true" serverName="169.62.108.167" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3"/>
+    <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
+  </dataSource>
+  <dataSource containerAuthDataRef="DefaultNode01/PlantsAuthAlias" id="PlantsByWebSphereDataSource" jdbcDriverRef="DB2_Universal_JDBC_Driver_Provider_(XA)" jndiName="jdbc/PlantsByWebSphereDataSource">
+    <properties.db2.jcc user="db2inst1" password="db2Pa2359w0rd123" transactional="true" beginTranForResultSetScrollingAPIs="false" beginTranForVendorAPIs="false" connectionSharing="1" databaseName="PLANTSDB" enableClientInformation="false" enableMultithreadedAccessDetection="false" errorDetectionModel="ExceptionMapping" name="PlantsByWebSphereDataSource" nonTransactionalDataSource="false" portNumber="30866" preTestSQLString="SELECT CURRENT SQLID FROM SYSIBM.SYSDUMMY1" propagateClientIdentityUsingTrustedContext="false" reauthentication="false" retrieveMessagesFromServerOnGetMessage="false" serverName="169.62.108.167" traceLevel="-1" unbindClientRerouteListFromJndi="false" useTransactionRedirect="false" validateNewConnection="false" validateNewConnectionRetryCount="100" validateNewConnectionRetryInterval="3"/>
+    <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="0" reapTime="180"/>
+  </dataSource>
+  <jdbcDriver id="DB2_Universal_JDBC_Driver_Provider" javax.sql.DataSource="com.ibm.db2.jcc.DB2ConnectionPoolDataSource">
+      <library>
+          <file name="/config/lib/db2jcc.jar"/>
+          <file name="/config/lib/db2jcc_license_cu.jar"/>
+      </library>
+  </jdbcDriver>
+  <jdbcDriver id="DB2_Universal_JDBC_Driver_Provider_(XA)" javax.sql.DataSource="com.ibm.db2.jcc.DB2XADataSource">
+      <library>
+          <file name="/config/lib/db2jcc.jar"/>
+          <file name="/config/lib/db2jcc_license_cu.jar"/>
+      </library>
+  </jdbcDriver>
+  <authData id="DefaultNode01/PlantsAuthAlias" password="???" user="db2inst1"/>
+  <application id="PlantsByWebSphere8" location="plantsbywebsphere8.ear" name="PlantsByWebSphere8" type="ear"/>
+</server>
+```
 
-- Given that we aren't going to build the application in this way we are going to replace the entire contents of the Dockerfile as shown below:
+Since we want the migrated application to run in a Docker container, we need a script that creates the Docker image.
+
+- Review the generated Dockerfile, `liberty/Dockerfile`
+
+    Note that this Dockerfile expects the Maven build to be triggered as part of this Docker build and then the generated War is copied to the Liberty runtime. This is NOT how we want to build the application.
+
+- Replace the entire contents of the Dockerfile with this:
 
     ```
     FROM ibmcom/websphere-liberty:webProfile7-ubi-min-amd64
@@ -465,43 +478,58 @@ Transformation Advisor creates some accelerators to speed up the process of migr
 
     ```
 
-### Run PlantsByWebSphere on Liberty
+Now that we've configured Liberty and the application, let's run it.
+
+
+### Run the application on Liberty
+
 Now you are ready to build and run the Docker image that contains WebSphere Liberty and the PlantsByWebSphere application.
 
-- Build the image using the following command
+- Build the Docker image
 
-    ```
+    ```bash
     docker build -t plantsbyliberty .
     ```
 
-- Check the size of the newly created image and note that it is much smaller that the traditional WebSphere image and more `cloud-ready`
+- Check the size of the newly created image
 
+    Note that it is much smaller (one-quarter size) than the traditional WebSphere image and therefore more cloud ready.
+
+    ```bash
+    $ docker images | grep plantsby
+
+    REPOSITORY                TAG       IMAGE ID        CREATED          SIZE
+    plantsbyliberty           latest    b26439433e5a     2 days ago       609MB
+    twas-plantsbywebsphere    latest    12705d97f4b4    12 days ago      2.44GB
     ```
-    docker images | grep plantsbyliberty
 
-    ```
+- Run an instance of the new container
 
-- Run an instance of the new container using the following command:
-
-    ```
+    ```bash
     docker run -d -p 9080:9080 -p 9443:9443 --name plantsbyliberty plantsbyliberty
     ```
 
-- Tail the logs for the Docker container and wait for the `CWWKT0016I: Web application available (default_host): http://0c59e31137ff:9080/PlantsByWebSphere/` message to be displayed
+- Tail the logs for the Docker container
 
-- Open browser to http://localhost:9080/PlantsByWebSphere and confirm the app working as expected with the DB2 data by clicking the `Flowers` link.
+    - Wait for the message `CWWKT0016I: Web application available (default_host): http://0c59e31137ff:9080/PlantsByWebSphere/` to be displayed
 
-    ![pbw](images/lab4/pbwflowers.jpg)
+- Test the app
 
-- Stop and remove the Docker container using the following commands:
+    - Open browser to http://localhost:9080/PlantsByWebSphere
+
+    - Confirm the app is working as expected with the DB2 data by clicking the `Flowers` link
+
+    ![PlantsByLiberty](images/liberty-pbw.jpg)
+
+- Stop the Docker container and remove it
 
     ```bash
     docker stop plantsbyliberty
     docker rm plantsbyliberty
     ```
 
-That's it. You now have this application running on Liberty in a Container. For next steps you would likely push this image to a Red Hat OpenShift Image Repository and deploy the application using the OpenLiberty Operator. If the client was interested in adding CI/CD automation you may also go back to the source code and automate CI and then automate deployment using CD.
+That's it. You now have this application running on Liberty in a Docker container. For next steps, you would likely push this image to a Red Hat OpenShift image registry and deploy the application using the Open Liberty operator. If the client is interested in adding CI/CD automation, you may also go back to the source code and automate CI and then automate deployment using CD.
 
 ## Summary
 
-You have now completed the first of two AppMod exercises. This exercise demonstrated a simple `runtime` modernization scenario.
+You have now completed the first of two AppMod exercises. This exercise demonstrated a simple runtime modernization scenario.
