@@ -350,46 +350,15 @@ the following form:
     ```
 - Save the documents that will be loaded into Cloudant
 
-- Using a code editor create a shell script called `load.sh` that will load data into the database using a `curl` command. Use the contents from below for the script.
+- Download the `dataload.sh` script from the Iteration Zero repository - https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/terraform/scripts/dataload.sh
+
+- Add the `username` and `password` to `CLOUDANT_USERNAME` and `CLOUDANT_PASSWORD` variables in the `dataload.sh` script.
+You can get the credentials from the Cloudant credentials view in the IBM Cloud console.
+- Add `DATABASE` value to be `inventory-<replace with namespace>` using the dev namespace/project name you have been using.
+- Save the script, make it executable, and then run it by passing in the filename
     ```bash
-    #!/bin/sh
-    # Cloudant Database Data Load Utility
-
-    # Credentials from IBM Cloud
-    CLOUDANT_USERNAME=
-    CLOUDANT_PASSWORD=
-
-    # name of database
-    DATABASE=inventor-<replace with namespace>
-
-    # input validation
-    if [ -z "${CLOUDANT_USERNAME}" ]; then
-        echo "Please provide your CLOUDANT_USERNAME."
-        exit
-    fi
-    if [ -z "${CLOUDANT_PASSWORD}" ]; then
-        echo "Please provide your CLOUDANT_PASSWORD."
-        exit
-    fi
-
-    # credentials to post data to cloudant
-    AUTH="$(python -c 'import base64; print base64.urlsafe_b64encode("'${CLOUDANT_USERNAME}':'${CLOUDANT_PASSWORD}'")')"
-    ACURL="curl -s --proto '=https' -iv -g -H 'Authorization: Basic ${AUTH}'"
-    HOST="https://${CLOUDANT_USERNAME}.cloudant.com"
-
-    # Inventory
-    eval ${ACURL} -X DELETE '${HOST}/${DATABASE}'
-    eval ${ACURL} -X PUT '${HOST}/${DATABASE}'
-    eval ${ACURL} -H "Content-Type:application/json" -d @inventory.json -vX POST '${HOST}/${DATABASE}/_bulk_docs'
-
-    ```
-
-- Add the `username` and `password` to `CLOUDANT_USERNAME` and `CLOUDANT_PASSWORD variables in the `load.sh` script. You can get the credentals from the Cloudant credentials view in the IBM Cloud console.
-- Add database name `inventor-<replace with namespace>` using the dev namespace/project name you have been using.
-- Save the script, make it executable, and then run it.
-    ```bash
-    chmod +x ./load.sh
-    ./load.sh
+    chmod +x ./dataload.sh
+    ./dataload.sh inventory.json
     ```
 - The data from the `inventory.json` file will then be used to populate the database, to confirm this on the Dashboard click on Manage menu on the left and then Launch button to see the Cloudant dashboard.
 - Click on the Left icon that looks like a Database and you will see the `inventory-<namespace>` database created.
