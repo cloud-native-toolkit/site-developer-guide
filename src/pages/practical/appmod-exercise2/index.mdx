@@ -4,67 +4,90 @@ title: Application Modernization - Exercise 2
 
 <PageDescription>
 
-An example of a "minimum code changes" modernization of an existing traditional WebSphere ND application to Liberty running in a Docker Container.
+Migrate a Java EE app that requires minimum code changes
 
 </PageDescription>
 
+This exercise shows how to handle a "minimum code changes required" modernization of an existing traditional WebSphere Application Server Network Deployment (WebSphere ND) application to WebSphere Liberty running in a Docker container.
+
+This exercise assumes the following:
+
+1. You are using a Developer Tools environment that has already been installed.
+1. Cloud Pak for Applications has already been installed in the environment.
+1. You have Docker Desktop running on your laptop (one of the [prerequisites](/getting-started/prereqs)).
+
+This exercise consists of the following sections:
+
 <AnchorLinks>
-  <AnchorLink to="#environment-setup">Environment Setup</AnchorLink>
-  <AnchorLink to="#analyze-the-scan-results">Analyze the Scan Results</AnchorLink>
-  <AnchorLink to="#make-the-code-changes">Make the code changes</AnchorLink>
-  <AnchorLink to="#run-the-modified-application">Run the modified Application</AnchorLink>
+  <AnchorLink to="#environment-setup">Environment setup</AnchorLink>
+  <AnchorLink to="#analyze-the-scan-results">Analyze the scan results</AnchorLink>
+  <AnchorLink to="#migrate-to-websphere-liberty">Migrate to WebSphere Liberty</AnchorLink>
+  <AnchorLink to="#run-the-application-on-liberty">Run the application on Liberty</AnchorLink>
 </AnchorLinks>
 
 ## Business Need
 
-Just as with Application Modernization Exercise 1, Exercise 2 is an example of `runtime modernization` which doesn't address the technical debt in the application but does remove the technical debt provided by the Application Server itself. In this exercise you will learn the skills to make minor code changes to applications to move them from traditional WebSphere ND to "the Cloud". While this isn't the typical way that the Garage wants to engage with customers, it is going to be part of the overall modernization of their legacy Java portfolio and an important skill for you to have. You will use tools such as IBM Cloud Transformation Advisor and the Eclipse based WebSphere Migration Toolkit.
+Just as with [Application Modernization - Exercise 1](/practical/appmod-exercise1/), Exercise 2 is an example of [runtime modernization](https://www.ibm.com/cloud/garage/architectures/runtime-modernization-solution/) which doesn't address the technical debt in the application but does remove the technical debt provided by the WebSphere Application Server itself.
 
-## [MVP Statement](https://www.ibm.com/garage/method/practices/think/practice_minimum_viable_product/)
+In this exercise, you will learn the skills to be able to demonstrate how *some* applications can be moved to Liberty in a Docker container with only minor code changes to the application. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor) and the Eclipse-based [IBM WebSphere Application Server Migration Toolkit](https://www.ibm.com/developerworks/library/mw-1701-was-migration/index.html). This approach is another strategy for the overall modernization of a legacy Java application portfolio and an important skill to have.
 
-- **Who:** Operations teams are tasked with moving from traditional WebSphere ND to "the Cloud" and have access to developers to make some minor changes to legacy Java applications to move them to the Cloud.
+### Project hill
 
-- **What:** This application is used by a small number of customers and will be replaced in 18 months with a new version. The operations team needs to move to "the Cloud" now and wants to standardize on Docker containers that they can run anywhere.
+Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/practice_hills/) describing the desired outcome of this migration:
 
-- **Wow:** With a few simple steps you can move an application and the associated configuration to a Liberty runtime in a Docker container with some minor code changes. This is something that can be repeated over and over in a factory type engagement.
+- **Who**: Operations teams are tasked with moving existing Java applications from traditional WebSphere ND to "the Cloud" and have access to developers to make some minor changes to legacy Java applications to move them to the cloud.
 
-## [Architecture]()
+- **What**: This is an application that users still need. They consider it good enough as-is: While bug fixes and new features might be desirable, the aren't worth the expense. Or step 1 for making the app more maintainable is moving it to the cloud where it'll be easier to improve it using modern development techniques like continuous deployment. The operations team needs to move to "the Cloud" and wants to standardize on Docker containers that they can run anywhere.
+
+- **Wow**: With a few simple steps, you can move an application and the associated configuration to a Liberty runtime in a Docker container with some minor code changes. This is something that can be repeated over and over on many apps in the portfolio in a factory type engagement.
+
+
+## Architecture
 
 Customer Order Services is a simple legacy monolith with a backend database (DB2).
 
 ## Technical Requirements
-- This modernization exercise has the following requirements:
 
-    - Minor code changes
-    - The target is to get the application running on Liberty in a Docker container on your laptop
-    - The DB2 database will remain in it's current location (it is deployed in a container in the MOOC4 cluster exposed with a NodePort)
+This modernization exercise has the following requirements:
+- Minor code changes
+- The target is to get the application running on Liberty in a Docker container on your laptop
+- The DB2 database will remain in its current location -- It is deployed in a container in the MOOC4 environment, exposed with a NodePort
 
 ## Guide
-- This exercise has the following steps
+This exercise has the following steps:
+- Import provided scan results into IBM Cloud Transformation Advisor running in your MOOC Red Hat OpenShift cluster
+- Review the IBM Cloud Transformation Advisor analysis
+- Load the application source code into Eclipse
+- Use the WebSphere Migration Toolkit to perform simple code changes
+- Configure WebSphere Liberty to run the application
+- Unit test and fix the application
 
-    - Import provided scan results in to IBM Cloud Transformation Advisor running in your MOOC Red Hat OpenShift cluster.
-    - Review the IBM Cloud Transformation Advisor analysis
-    - Load the application source code in to Eclipse
-    - Use the WebSphere Migration Toolkit to support simple code changes
-    - Configure WebSphere Liberty to run the Application
-    - Unit Test and fix the Application
 
-## Solution Links
+### Environment setup
 
-### Environment Setup
+For setup, we need to install the WebSphere Liberty development tools.
 
-#### Install WebSphere Liberty Tools
+- Verify that you have JDK 8 installed on your laptop
+    - It's typically installed in `/Library/Java/JavaVirtualMachines/` (Mac)
+    - Run `echo $JAVA_HOME` to find it
+    - Run `java -version` to see the default
+    - Run `/usr/libexec/java_home -V` to see all versions installed on your laptop
+    - If you don't have JDK 8, you can get it from [Java SE Development Kit 8 Downloads](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-- Validate that you have JDK 8 (which is typically found in `/Library/Java/JavaVirtualMachines/`)
+- Download Liberty from [WAS Liberty with Java EE 8 Full Platform](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8)
+    - You can unzip it wherever you put your development stuff, such as `~/tools` or `~/dev`
+    - We'll refer to the directory you unzip it in as `<wlp>`
 
-    - If you don't have JDK 8 you can get it from here: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+- Install the latest version of Eclipse from [Eclipse Packages](https://www.eclipse.org/downloads/packages/) > Eclipse IDE for Enterprise Java Developers
 
-- Download Liberty from here: https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8
+- Start Eclipse and use the [Eclipse Marketplace Client](https://marketplace.eclipse.org/marketplace-client-intro) (Help > Eclipse Marketplace) to install:
+    - [IBM WebSphere Application Server Migration Toolkit - WAS Liberty](https://marketplace.eclipse.org/content/ibm-websphere-application-server-migration-toolkit-was-liberty)
+    - [IBM Liberty Developer Tools](https://marketplace.eclipse.org/content/ibm-liberty-developer-tools)
 
-- Install Eclipse from here: https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-macosx-cocoa-x86_64.dmg
+- Restart Eclipse
 
-- Use the `Eclipse Marketplace` to install `IBM WebSphere Application Server Migration Toolkit` and `IBM Liberty Development Tools 19.0.0.9` and restart Eclipse
 
-### Analyze the Scan Results
+### Analyze the scan results
 In this section you will upload the results from the IBM Cloud Transformation Advisor Data Collector to the IBM Cloud Transformation Advisor UI and analyze the findings.
 
 - Using your `IBM Garage for Cloud - Development Cluster Dashboard`, navigate to `Transformation Advisor`
@@ -85,7 +108,8 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
 - Click on the `CustomerOrderServicesApp.ear` and review the detailed results. Review the `severe` results and use the `Analysis` report to locate the files you'll need to change.
 
-### Make the code changes
+
+### Migrate to WebSphere Liberty
 
 #### Download the application code and import it into Eclipse
 
@@ -292,7 +316,8 @@ In this task, you configure the Software Analyzer that is part of the WebSphere 
 
   ![ejb](images/analysis2.jpg)
 
-### Run the modified Application
+
+### Run the application on Liberty
 
 #### Configure the WebSphere Liberty Server
 - Open the default `server.xml` file that was created when you created the `Lab5` server earlier.
