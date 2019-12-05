@@ -14,7 +14,8 @@ This exercise assumes the following:
 
 1. You are using a Developer Tools environment that has already been installed.
 1. Cloud Pak for Applications has already been installed in the environment.
-1. You have Docker Desktop running on your laptop (one of the [prerequisites](/getting-started/prereqs)).
+1. You have Java installed on your laptop, one of the optional [prerequisites](/getting-started/prereqs).
+1. You will also install Eclipse on your laptop.
 
 This exercise consists of the following sections:
 
@@ -29,7 +30,7 @@ This exercise consists of the following sections:
 
 Just as with [Application Modernization - Exercise 1](/practical/appmod-exercise1/), Exercise 2 is an example of [runtime modernization](https://www.ibm.com/cloud/garage/architectures/runtime-modernization-solution/) which doesn't address the technical debt in the application but does remove the technical debt provided by the WebSphere Application Server itself.
 
-In this exercise, you will learn the skills to be able to demonstrate how *some* applications can be moved to Liberty in a Docker container with only minor code changes to the application. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor) and the Eclipse-based [IBM WebSphere Application Server Migration Toolkit](https://www.ibm.com/developerworks/library/mw-1701-was-migration/index.html). This approach is another strategy for the overall modernization of a legacy Java application portfolio and an important skill to have.
+In this exercise, you will learn the skills to be able to demonstrate how *some* applications can be moved to Liberty in a Docker container with only minor code changes to the application. We will migrate the application using [IBM Cloud Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor) and the Eclipse-based [IBM WebSphere Application Server Migration Toolkit](https://www.ibm.com/developerworks/library/mw-1701-was-migration/index.html) (WAMT). This approach is another strategy for the overall modernization of a legacy Java application portfolio and an important skill to have.
 
 ### Project hill
 
@@ -44,15 +45,17 @@ Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/pr
 
 ## Architecture
 
-Customer Order Services is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2). The diagram below shows a typical customer environment with IBM HTTP Server and WebSphere Application Server Network Deployment (WebSphere ND) running on Traditional IT along with the application Database:
+The original and target architectures for this exercise are the same as they were in the first Application Modernization exercise, but the lab architecture is different.
+
+Customer Order Services is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2). The diagram below shows a typical customer environment with IBM HTTP Server and WebSphere Application Server Network Deployment (WebSphere ND) running on Traditional IT along with the application database.
 
   ![twasarch](/images/twas-arch.jpg)
 
-The target for the runtime modernization is shown below with the containerized application running on Liberty on OpenShift Container Platform and the application Database remaining on Traditional IT.
+The target for the runtime modernization is shown below with the containerized application running on Liberty on OpenShift Container Platform and the application database remaining on traditional IT.
 
   ![twasarch](/images/kube-arch.jpg)
 
-For the purposes of this lab exercise you have been provided the results from the IBM Cloud Transformation Advisor Data Collector which you will load in to the IBM Cloud Transformation Advisor and then analyze. You will modify application code in Eclipse using the WebSphere Migration Toolkit and run the application locally on Liberty on your laptop. Once the application is running without error you will containerize the application.
+For the purposes of this lab exercise, you have been provided the data collector result data from IBM Cloud Transformation Advisor. You will load that into the Transformation Advisor and then analyze it. You will use the WebSphere Migration Toolkit in Eclipse to modify application code until you can run the application without error in a local Liberty environment installed on your laptop.
 
   ![labarch](images/lab-arch.jpg)
 
@@ -60,15 +63,15 @@ For the purposes of this lab exercise you have been provided the results from th
 
 This modernization exercise has the following requirements:
 - Minor code changes
-- The target is to get the application running on Liberty in a Docker container on your laptop
+- The target is to get the application running on Liberty on your laptop
 - The DB2 database will remain in its current location -- It is deployed in a container in the MOOC4 environment, exposed with a NodePort
 
 ## Guide
 This exercise has the following steps:
-- Import provided scan results into IBM Cloud Transformation Advisor running in your MOOC Red Hat OpenShift cluster
-- Review the IBM Cloud Transformation Advisor analysis
+- Import provided scan results into IBM Cloud Transformation Advisor running in your team's Developer Tools environment
+- Review the Transformation Advisor analysis
 - Load the application source code into Eclipse
-- Use the WebSphere Migration Toolkit to perform simple code changes
+- Use the WebSphere Application Server Migration Toolkit (WAMT) to perform simple code changes
 - Configure WebSphere Liberty to run the application
 - Unit test and fix the application
 
@@ -85,94 +88,163 @@ For setup, we need to install the WebSphere Liberty development tools.
     - If you don't have JDK 8, you can get it from [Java SE Development Kit 8 Downloads](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 - Download Liberty from [WAS Liberty with Java EE 8 Full Platform](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8)
-    - You can unzip it wherever you put your development stuff, such as `~/tools` or `~/dev`
-    - We'll refer to the directory you unzip it in as `<wlp>`
+    - This file is named something like `wlp-javaee8-19.0.0.11.zip`
+    - We'll refer to this file later as ``{wlp.zip}``
 
 - Install the latest version of Eclipse from [Eclipse Packages](https://www.eclipse.org/downloads/packages/) > Eclipse IDE for Enterprise Java Developers
 
-- Start Eclipse and use the [Eclipse Marketplace Client](https://marketplace.eclipse.org/marketplace-client-intro) (Help > Eclipse Marketplace) to install:
-    - [IBM WebSphere Application Server Migration Toolkit - WAS Liberty](https://marketplace.eclipse.org/content/ibm-websphere-application-server-migration-toolkit-was-liberty)
-    - [IBM Liberty Developer Tools](https://marketplace.eclipse.org/content/ibm-liberty-developer-tools)
+- Add plugins to Eclipse
 
-- Restart Eclipse
+    - Start Eclipse, create or select a workspace, and close the Welcome screen
+
+    - In Eclipse, use the [Eclipse Marketplace Client](https://marketplace.eclipse.org/marketplace-client-intro) (Help > Eclipse Marketplace) to install these plugins:
+        - [IBM WebSphere Application Server Migration Toolkit](https://marketplace.eclipse.org/content/ibm-websphere-application-server-migration-toolkit)
+        - [IBM Liberty Developer Tools](https://marketplace.eclipse.org/content/ibm-liberty-developer-tools) (latest, such as 19.0.0.9)
+
+    - Restart Eclipse
 
 
 ### Analyze the scan results
-In this section you will upload the results from the IBM Cloud Transformation Advisor Data Collector to the IBM Cloud Transformation Advisor UI and analyze the findings.
 
-- Using your `IBM Garage for Cloud - Development Cluster Dashboard`, navigate to `Transformation Advisor`
+In this section, you will upload the data collector results to the Transformation Advisor UI and analyze the findings.
+
+- Use the [Developer Tools Dashboard](/getting-started/dashboard) to open the Transformation Advisor dashboard
 
     ![apps](images/ta-dashboard.jpg)
 
-- You may receive an `Authentication endpoint is broken at the moment.` message. Copy the `URL` to a new `incognito` browser session to solve the problem
+    - The browser may display the message "Authentication endpoint is broken at the moment."  To solve the problem, open the URL in a new incognito browser tab.
 
-- Use your existing workspace named `AppMod_{your initials}`
+- Use your existing workspace named `AppMod-{initials}`
 
-- Add a new Collection named `Lab2`
+- Add a new collection named `Lab2`
 
-In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `lab5.zip` file that contains the IBM Cloud Transformation Advisor Data Collector results.
+In AppMod Exercise 1, you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. Import the collector data from that repo.
 
-- Click `Upload data` and provide `lab5.zip`. After a few moments the results will be displayed as shown below:
+- Click `Upload data` and specify the `icp-dev-workshop/lab5/Lab5.zip` file
 
-    ![ta](images/ta1.jpg)
+    After a few moments, the UI will display the Results page.
 
-- Click on the `CustomerOrderServicesApp.ear` and review the detailed results. Review the `severe` results and use the `Analysis` report to locate the files you'll need to change.
+    ![apps](images/ta1.jpg)
+
+- Click on the `CustomerOrderServicesApp.ear` and review the detailed results
+
+    - Review the Severe results
+
+    - Use the Analysis report to locate the files you'll need to change
 
 
 ### Migrate to WebSphere Liberty
 
-#### Download the application code and import it into Eclipse
+To figure out what we need to do to migrate the app, we need to load the code into Eclipse and run the WMAT analyzer on it.
 
-- Clone the repository to your machine
+#### Load the application into Eclipse
+
+Download the application code and import it into Eclipse.
+
+- Start Eclipse, create or select a workspace, and close the Welcome screen
+
+Create a Liberty server in Eclipse named Lab5
+
+- In the Servers view, select New > Server
+
+    - Define a new server
+
+        - Select IBM > Liberty Server as the server type
+
+            ![import](images/server.jpg)
+
+        - Press Next
+
+    - Liberty runtime environment
+
+        - Select Install from an archive or a repository
+
+        - Select a JDK 8 for the JRE
+
+            ![import](images/serverInstallFromArchive.jpg)
+
+        - Press Next
+
+    - Install runtime environment
+
+        - Specify a destination path where you like Liberty installed, often in a path like `~/tools` or `~/dev`
+
+            We'll refer to this path later as `{wlp}`
+
+        - Select Install a new runtime environment from an archive
+
+        - Specify the `{wlp.zip}` file you downloaded earlier
+
+        ![import](images/serverDestinationPath.jpg)
+
+        - (Or, if you have not downloaded the Liberty zip yet, you can:
+
+            - Select Download and install a new runtme environment from ibm.com
+
+            - Select WAS Liberty with Java EE 8 Full Platform)
+
+        - Press Next
+
+    - Install additional content
+
+        - Select the Java EE 8 Full Platform Bundle
+
+            ![import](images/serverBundle.jpg)
+
+        - Press Next
+
+    - Accept the license and press Next
+
+    - New Liberty server
+
+        - Change the server name to `Lab5`
+
+            ![import](images/server2.jpg)
+
+        - Press Finish
+
+Clone the Customer Order Services application and import it into Eclipse.
+
+- Clone the Customer Order Services repository to your machine
+
+    It's https://github.com/ibm-cloud-architecture/refarch-jee-customerorder
 
     ```bash
     git clone https://github.com/ibm-cloud-architecture/refarch-jee-customerorder.git
+    cd refarch-jee-customerorder
     ```
 
-- Checkout the source code:
+- Create a branch for modifying the source code
+
+    The master branch doesn't contain the app. The was70-dev branch contains the version of the app for this exercise.
 
     ```bash
-    cd refarch-jee-customerorder
     git checkout was70-dev
     ```
 
-- Open eclipse, create a workspace and close the `Welcome` screen
+- From the menu bar, select File > Import
 
-- In the `Servers` view, create a new Server
+    - Select
 
-- Select `IBM --> Liberty Server` and click Next
+        - Select General > Existing Projects into Workspace and press Next
 
-  ![import](images/server.jpg)
+    -  Import projects
 
-- Select `install from an archive or a repository` and then select a `JDK 8` for the `JRE` and click Next.
+        - For the root directory, browse to your cloned repository `refarch-jee-customerorder` (in the was70-dev branch)
 
-  ![import](images/serverInstallFromArchive.jpg)
+            Eclipse finds four projects and will import them.
 
-- Enter the desired destination path, and point to the liberty zip you downloaded earlier in the `Install a new runtime environment from an archive:` section and click next.
-(you can also select `Download and install a new runtme environment from ibm.com` and select `WAS Liberty with Java EE 8 Full Platform` if you have not downloaded the Liberty zip yet)
+            ![import](images/import.jpg)
 
-  ![import](images/serverDestinationPath.jpg)
+        - Press Finish
 
-- In the Install Additional Content page, select the `Java EE 8 Full Platform Bundle` and click Next
+    -  Workspace Migration
 
-  ![import](images/serverBundle.jpg)
+       - Press Cancel and confirm OK
 
-- Click 'New...` to create a new server and change the `Server Name` to `Lab5` and then click Finish
-
-  ![import](images/server2.jpg)
-
-- Import the existing projects by:
-   * Clicking `File > Import`.
-   * In the `General folder`, click `Existing Projects into Workspace`.
-   * Click `Next`.
-   * In the `Select root directory field`, enter the location that you cloned the repository to such as `/lab5/refarch-jee-customerorder` and click `Browse`.
-   * Click `Finish`
-
-   ![import](images/import.jpg)
-
-   * In the Workspace Migration window, click `Cancel`. In the migration cancel window, click `OK`.
 
 #### Clean up the development environment
+
 When you create a Liberty development environment, you might need to fix installation paths and development tool versions that differ from the original development environment. When you imported the project to Eclipse, any errors were highlighted with red error marks.
 
 ![import](images/eclipse1.jpg)
@@ -219,8 +291,10 @@ Errors are shown for each of the projects that are related to the build path. In
 
 - Now the projects have built without problems.
 
+
 #### Configure the Software Analyzer
-In this task, you configure the Software Analyzer that is part of the WebSphere Application Server Migration Toolkit.
+
+In this task, you configure the WAMT Software Analyzer.
 
 - In your Eclipse environment, click Run > Analysis. The Software Analyzer opens.
 
@@ -413,9 +487,9 @@ In this task, you configure the Software Analyzer that is part of the WebSphere 
 
 In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `libs` folder that contains the DB2 drivers.
 
-- Copy the `lib` folder from the `lab5` repo to `<wlp>/usr/shared/resources/lib` (where `<wlp>` is the location that you unzipped Liberty)
+- Copy the `lib` folder from the `lab5` repo to `{wlp}/usr/shared/resources/lib` (where `{wlp}` is the directory that you unzipped the Liberty download into)
 
-  This should create `<wlp>/usr/shared/resources/lib/db2jcc.jar` and `<wlp>/usr/shared/resources/lib/db2jcc_license_cu.jar`
+  This should create `{wlp}/usr/shared/resources/lib/db2jcc.jar` and `{wlp}/usr/shared/resources/lib/db2jcc_license_cu.jar`
 
 - Export the EAR file from eclipse (we are doing this as there are known issues with running EAR files directly from the Eclipse Workspace)
 
@@ -443,7 +517,7 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
     - Stop the `Lab5` server
 
-    - At the command line, navigate to the `<wlp>/bin` folder and issue the following command:
+    - At the command line, navigate to the `{wlp}/bin` folder and issue the following command:
 
     ```bash
     ./installUtility install Lab5
