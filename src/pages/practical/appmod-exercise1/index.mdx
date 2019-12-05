@@ -43,15 +43,15 @@ Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/pr
 
 ## Architecture
 
-PlantsByWebSphere is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2). The diagram below shows a typical customer environment with IBM HTTP Server and WebSphere Application Server Network Deployment (WebSphere ND) running on Traditional IT along with the application Database:
+PlantsByWebSphere is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2). The diagram below shows a typical customer environment with IBM HTTP Server and WebSphere Application Server Network Deployment (WebSphere ND) running on traditional IT along with the application database.
 
   ![twasarch](/images/twas-arch.jpg)
 
-The target for the runtime modernization is shown below with the containerized application running on Liberty on OpenShift Container Platform and the application Database remaining on Traditional IT.
+The target for the runtime modernization is shown below with the containerized application running on Liberty on OpenShift Container Platform and the application database remaining on traditional IT.
 
   ![twasarch](/images/kube-arch.jpg)
 
-For the purposes of this lab exercise you will run a simulation of the WebSphere ND environment on your laptop using a pre-configured Docker image that contains PlantsByWebSphere. You will then use IBM Cloud Transformation Advisor that we have deployed for you in your MOOC OCP Cluster to create a IBM Cloud Transformation Advisor Data Collector to analyze the WebSphere ND environment and create the artifacts you need to run the same PlantsByWebSphere application on Liberty in a Docker container on your laptop.
+For the purposes of this lab exercise, you will run a simulation of the WebSphere ND environment on your laptop using a Docker container that contains PlantsByWebSphere, WebSphere Application Server, and a data collector. You will then use IBM Cloud Transformation Advisor--part of the Cloud Pak for Applications installed in your team's Developer Tools environment--to analyze the WebSphere ND environment and create the artifacts you need to run the same PlantsByWebSphere application on Liberty in a Docker container on your laptop.
 
   ![labarch](images/lab-arch.jpg)
 
@@ -538,12 +538,17 @@ Now you are ready to build and run the Docker image that contains WebSphere Libe
     docker rm plantsbyliberty
     ```
 
-That's it. You now have this application running on Liberty in a Docker container which is sufficient for this exercise. In a real MVP you would now need to perform the following tasks which are out of scope for this exercise:
-- Automate the build process for the application code. This would require you to load the source code in to Git and configure a build tool such as Maven to compile the application and create the EAR/WAR file. The steps to achieve this are documented [here](https://medium.com/@davemulley/modernizing-the-build-process-of-existing-java-ee-applications-with-maven-c8e9b43b6876)
+That's it. You now have this application running on Liberty in a Docker container which is sufficient for this exercise.
 
-- Externalize configuration parameters such as the database IP, Port and UserID/Password to allow the same image to be deployed in different environments. Refer to the list of minimum changes in [this article](https://medium.com/@davemulley/what-are-the-minimum-changes-i-should-make-to-my-websphere-application-before-deploying-to-a8418ca8f871)
+#### Deployment
 
-- Configure a CI/CD pipeline to automate the build, test and deployment process for the application.
+Deployment to OpenShift is out of scope for this exercise. In a real MVP, here's the tasks you would perform to deploy the app using the Docker image:
+
+- Automate the build process for the application code. This would require you to load the source code in to Git and configure a build tool such as Maven to compile the application and create the EAR/WAR file. The steps to achieve this are documented in [Modernizing the build process of existing Java EE applications with Maven](https://medium.com/@davemulley/modernizing-the-build-process-of-existing-java-ee-applications-with-maven-c8e9b43b6876).
+
+- Externalize configuration parameters such as the database IP, port, and username/password to enable the same image to be deployed in different environments. Refer to the list of minimum changes in [What are the minimum changes I should make to my WebSphere application before deploying to Kubernetes?](https://medium.com/@davemulley/what-are-the-minimum-changes-i-should-make-to-my-websphere-application-before-deploying-to-a8418ca8f871)
+
+- Configure a CI/CD pipeline to automate the build, test, and deployment process for the application.
 
 ## Summary
 
