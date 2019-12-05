@@ -4,15 +4,15 @@ import ResourceLinks from 'gatsby-theme-carbon/src/components/LeftNav/ResourceLi
 const links = [
 
   {
-    title: 'Garage Method',
-    href: 'https://www.ibm.com/garage/method',
-  },
-  {
     title: 'IBM Cloud',
     href: 'https://www.ibm.com/cloud',
   },
   {
-    title: 'Github Org',
+    title: 'Garage Method',
+    href: 'https://www.ibm.com/garage/method',
+  },
+  {
+    title: 'Dev Tools Github Org',
     href: 'https://github.com/ibm-garage-cloud',
   },
   {
