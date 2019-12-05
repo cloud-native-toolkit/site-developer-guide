@@ -44,7 +44,17 @@ Here's the [hill statement](https://www.ibm.com/garage/method/practices/think/pr
 
 ## Architecture
 
-Customer Order Services is a simple legacy monolith with a backend database (DB2).
+Customer Order Services is a simple legacy monolith that runs in WebSphere Application Server with a backend database (DB2). The diagram below shows a typical customer environment with IBM HTTP Server and WebSphere Application Server Network Deployment (WebSphere ND) running on Traditional IT along with the application Database:
+
+  ![twasarch](/images/twas-arch.jpg)
+
+The target for the runtime modernization is shown below with the containerized application running on Liberty on OpenShift Container Platform and the application Database remaining on Traditional IT.
+
+  ![twasarch](/images/kube-arch.jpg)
+
+For the purposes of this lab exercise you have been provided the results from the IBM Cloud Transformation Advisor Data Collector which you will load in to the IBM Cloud Transformation Advisor and then analyze. You will modify application code in Eclipse using the WebSphere Migration Toolkit and run the application locally on Liberty on your laptop. Once the application is running without error you will containerize the application.
+
+  ![labarch](images/lab-arch.jpg)
 
 ## Technical Requirements
 
@@ -477,7 +487,15 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
 - Stop the WebSphere Liberty server.
 
-That's it. You now have this application running on Liberty in a Container. For next steps you would likely push this image to a Red Hat OpenShift Image Repository and deploy the application using the OpenLiberty Operator. If the client was interested in adding CI/CD automation you may also go back to the source code and automate CI and then automate deployment using CD.
+### Extra credit
+
+This extra credit section is deliberately vague and requires that you use the skills that you have acquired in Lab 1 and in previous parts of the MOOC
+
+- Containerize the application. Use your experience from Lab 1 to build a Dockerfile with the application, server.xml and DB2 drivers. You may want to move the application and DB2 drivers from the `shared` folders to the same locations that you used in Lab 1 and update your server.xml accordingly
+
+- Expose the DB2 URL, Port, UserID and Password as Environment Variables and inject them in to the container at start up. See the example in the "Environment specific configuration" section in [this article](https://medium.com/@davemulley/what-are-the-minimum-changes-i-should-make-to-my-websphere-application-before-deploying-to-a8418ca8f871)
+
+- Configure a CI/CD pipeline to automate the build, test and deployment process for the application.
 
 ## Summary
 
