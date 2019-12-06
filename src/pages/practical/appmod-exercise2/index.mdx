@@ -444,15 +444,15 @@ In this task, you configure the WAMT Software Analyzer.
 
     <jdbcDriver id="DB2" javax.sql.DataSource="com.ibm.db2.jcc.DB2ConnectionPoolDataSource">
     <library>
-        <file name="${shared.resource.dir}/lib/db2jcc.jar"/>
-        <file name="${shared.resource.dir}/lib/db2jcc_license_cu.jar"/>
+        <file name="${shared.resource.dir}/libs/db2jcc.jar"/>
+        <file name="${shared.resource.dir}/libs/db2jcc_license_cu.jar"/>
     </library>
     </jdbcDriver>
 
     <jdbcDriver id="DB2_XA" javax.sql.DataSource="com.ibm.db2.jcc.DB2XADataSource">
     <library>
-        <file name="${shared.resource.dir}/lib/db2jcc.jar"/>
-        <file name="${shared.resource.dir}/lib/db2jcc_license_cu.jar"/>
+        <file name="${shared.resource.dir}/libs/db2jcc.jar"/>
+        <file name="${shared.resource.dir}/libs/db2jcc_license_cu.jar"/>
     </library>
     </jdbcDriver>
 
@@ -487,9 +487,9 @@ In this task, you configure the WAMT Software Analyzer.
 
 In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `libs` folder that contains the DB2 drivers.
 
-- Copy the `lib` folder from the `lab5` repo to `{wlp}/usr/shared/resources/lib` (where `{wlp}` is the directory that you unzipped the Liberty download into)
+- Copy the `libs` folder from the `lab5` repo to `<wlp>/usr/shared/resources/libs` (where `<wlp>` is the location that you unzipped Liberty)
 
-  This should create `{wlp}/usr/shared/resources/lib/db2jcc.jar` and `{wlp}/usr/shared/resources/lib/db2jcc_license_cu.jar`
+  This should create `<wlp>/usr/shared/resources/libs/db2jcc.jar` and `<wlp>/usr/shared/resources/libs/db2jcc_license_cu.jar`
 
 - Export the EAR file from eclipse (we are doing this as there are known issues with running EAR files directly from the Eclipse Workspace)
 
@@ -499,7 +499,7 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
     - For the name of the EAR project, type CustomerOrderServicesApp.
 
-    - For the destination, browse to `/opt/liberty/wlp/usr/shared/apps/CustomerOrderServicesApp.ear`.
+    - For the destination, browse to `<wlp>/usr/shared/apps/CustomerOrderServicesApp.ear`.
 
     - Select the Optimize for a specific server runtime check box and select WebSphere Application Server Liberty from the list.
 
@@ -509,7 +509,7 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
 - Click the Servers tab. Right-click the `Lab5` server and click Start. The Console tab opens, where you can see the WebSphere Liberty output.
 
-- Note that the server failed to start due to missing older features.
+- Note that the server contained error messages at startup time due to missing older features.
 
   ![failure](images/failure1.jpg)
 
