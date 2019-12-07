@@ -1,11 +1,11 @@
-# IBM Garage for Cloud 
+# IBM Garage for Cloud
 
 ## Developer Tools Developer Guide
 
-The developer guide has been written to help developers get familiar with how to use to the tools to manage the full 
-lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud. 
+The developer guide has been written to help developers get familiar with how to use to the tools to manage the full
+lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud.
 
-The rendered Developer Guide can be viewed here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)   
+The rendered Developer Guide can be viewed here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)
 
 To update and manage the Developer Guide follow these steps.
 
@@ -22,19 +22,15 @@ npm install
 ```
 
 This will install all the dependencies necessary to run the environment in development mode
-and to build and publish the content. 
+and to build and publish the content.
 
-Most notably, this project depends on the following
+Most notably, this project depends on the following:
 (documented in `package.json`):
 
 - gatsby
 - gh-pages
 - gatsby-transformer-json
 
-```
-npm install -g gatsby-cli
-npm install --save gatsby-transformer-json
-```
 
 ### Write content
 
@@ -60,12 +56,12 @@ npm run deploy
 
 The result of the `deploy` can be viewed here - https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/
 
-**Note:** There is a time delay between when the deploy process completes and when the 
-content is available on the published site. 
+**Note:** There is a time delay between when the deploy process completes and when the
+content is available on the published site.
 
 ### Gatsby and Carbon
 
-Get started using with the Gatsby Carbon theme which includes all configuration you might need to build a 
+Get started using with the Gatsby Carbon theme which includes all configuration you might need to build a
 beautiful site inspired by the [Carbon Design System](https://www.carbondesignsystem.com).
 
 ## Resources
