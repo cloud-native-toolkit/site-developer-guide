@@ -23,7 +23,7 @@ This guide consists of the following sections:
 <AnchorLinks>
   <AnchorLink to="#deploy-existing-backend-as-appsody-app">Deploy existing backend as Appsody app</AnchorLink>
   <AnchorLink to="#deploy-existing-frontend-as-appsody-app">Deploy existing frontend as Appsody app</AnchorLink>
-  <AnchorLink to="#verify-deployed-microservice-app">Verify deployed microservice app</AnchorLink>
+  <AnchorLink to="#verify-deployed-microservice-solution">Verify deployed microservice solution</AnchorLink>
 </AnchorLinks>
 
 
@@ -77,7 +77,7 @@ Second, set up the cloned template with Appsody.
     git add .
     git commit -m "Add appsody files"
     git push
-    ``` 
+    ```
 
 Third, connect the repo to the Tekton pipeline.
 
@@ -117,7 +117,7 @@ Second, set up the cloned template with Appsody and connect it to the backend.
 
     - Test the app by adding a new user
 
-- Repeat the steps above to add the Appsody deployment manifest and edit its namespace to `dev-{initials}`
+- Repeat the steps above from the backend using the command `appsody deploy --generate-only` to add the Appsody deployment manifest file `app-deploy.yaml` and set the target namespace to `dev-{initials}`
 
 - Also in `app-deploy.yaml`, add an environment variable to link the frontend service to the backend service
 
@@ -134,9 +134,10 @@ Second, set up the cloned template with Appsody and connect it to the backend.
 
 Third, connect the repo to the Tekton pipeline.
 
-- Create a webhook
+- Create a webhook for your GitHub repo to trigger a Tekton pipeline, as described in [Tekton Pipelines Homework](/practical/cp4apps#build-an-app-with-a-tekton-pipeline)
 
-## Verify deployed microservice app
+
+## Verify deployed microservice solution
 
 The webhooks should have triggered the pipelines to deploy the frontend and backend to your OpenShift project. Let's verify the apps are in OpenShift and running correctly.
 
