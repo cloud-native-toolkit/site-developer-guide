@@ -8,9 +8,8 @@ h1[id*='page-title'] {
 }
 
 h3[class*='Markdown-module--h3'] {
-    margin-top: 0;
+    margin-top: 1em;
 }
-
 
 ul[class*='Markdown-module--list']  {
     padding-left: 2em;
