@@ -135,26 +135,27 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
 <InlineNotification kind="warning">
 
   **Warning:** If you are working on a shared education cluster, please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
-  -----
-
-  If working on **OpenShift** create your project namespace first
-  ```bash
-  oc new-project dev-{initials}
-  ```
-  Do not run `igc pipeline` without a namespace , this will cause your pipeline to be created in the default `dev` namespace:
-  ```bash
-  igc pipeline
-  ```
-  Instead, include the namespace parameter:
-  ```bash
-  igc pipeline -n dev-{your initials}
-  ```
-  For example:
-  ```bash
-  igc pipeline -n dev-mjp
-  ```
-
+  
 </InlineNotification>
+  
+
+  - If working on **OpenShift** create your project namespace first
+      ```bash
+      oc new-project dev-{initials}
+      ```
+  - Do not run `igc pipeline` without a namespace , this will cause your
+   pipeline to be created in the default `dev` namespace:
+      ```bash
+      igc pipeline
+      ```
+  - Instead, include the namespace parameter:
+      ```bash
+      igc pipeline -n dev-{your initials}
+      ```
+  - For example:
+      ```bash
+      igc pipeline -n dev-mjp
+      ```
 
 - Register your repo using the `igc pipeline` command. The CLI will ask for your github userid, it can be found in your github settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
