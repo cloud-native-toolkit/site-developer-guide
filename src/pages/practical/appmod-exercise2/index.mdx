@@ -228,7 +228,7 @@ Clone the Customer Order Services application and import it into Eclipse.
 
             Eclipse finds four projects and will import them.
 
-            ![import](images/import.jpg)
+            ![import](images/import1.jpg)
 
         - Press Finish
 
@@ -335,7 +335,11 @@ Now that we've configured a new analysis, run it.
 
     When the analyzer finishes running, the Software Analyzer Results tab opens in the main Eclipse window.
 
-    ![wink](images/analysis1a.jpg)
+    ![wink](images/analysis1b.jpg)
+
+  <InlineNotification kind="info">
+  Note: The boxes in the Software Analyzer Results will sometimes not resize correctly. In order to fix this, simply click on another one of the results tabs and then go back to your desired tab and the results box will resize.
+  </InlineNotification>
 
     The Software Analyzer rules and any errors and warnings are sorted in four categories:
     - Java Code Review
@@ -367,27 +371,19 @@ Review each of the categories to determine whether code or configuration changes
 
     - Behavior change in JPA cascade strategy (1 result)
 
-  ![javacode](images/javacode.jpg)
+  ![javacode](images/javacode1.jpg)
 
-  Let's start with the warning about the default initalContext JNDI properties. View the information about the rule that flagged each error or warning by clicking Help > Show Contextual Help.
+  Let's start with the result in the JAX RS 1.1 section regarding system-provided third-party APIs. View the information about the rule that flagged each error or warning by clicking Help > Show Contextual Help.
+
+  ![winkresult](images/winkresult1.jpg)
 
   To understand more about the problem, click it and read the Help information.
 
   Tip: If you need more information, click the detailed help link:
 
-  ![help](images/help.jpg)
+  ![help](images/help1.jpg)
 
-- When you understand what the problem is, double-click the file that the Software Analyzer mentions. Inspect the code and determine whether the warning affects your application.
-
-  ![context](images/context.jpg)
-
-  As you can see from the code, you're not using either of the two default initialContext JNDI properties that this warning mentions. You can ignore this warning and move to the next one.
-
-- Move to the Java Code Review section, which contains information about the use of system-provided third-party APIs.
-
-  ![winkresult](images/winkresult.jpg)
-
-- Click the detailed help and review the information.
+- When you understand what the problem is, click the detailed help and review the information.
 
   ![winkhelp](images/winkhelp.jpg)
 
@@ -407,9 +403,11 @@ Review each of the categories to determine whether code or configuration changes
 
 - Examime the results related to the behavior change for lookups on Enterprise JavaBeans.
 
-  ![jpa](images/ejb3.jpg)
+  ![jpa](images/ejb3a.jpg)
 
 - Review the Detailed Help describing the issue.
+
+- Double click on the `CategoryResource.java` result in the Software Analyzer Results view to go to the line in the file that is causing the issue.
 
 - Replace the `ejblocal` lookup for `ProductSearchService` with the lookup below and save your changes:
 
@@ -438,7 +436,10 @@ Review each of the categories to determine whether code or configuration changes
   ![ejb](images/ejb.jpg)
 
   You need to change the EJB binding as follows:
-  `java:app/CustomerOrderServices/ProductSearchServiceImpl!org.pwte.example.service.ProductSearchService`
+
+  ```bash
+  java:app/CustomerOrderServices/ProductSearchServiceImpl!org.pwte.example.service.ProductSearchService
+  ```
 
   ![ejb](images/ejb2.jpg)
 
@@ -446,7 +447,7 @@ Review each of the categories to determine whether code or configuration changes
 
 - Rerun the Software Analysis and ensure that the severe results have been addressed and no longer show in the analysis results.
 
-  ![ejb](images/analysis2.jpg)
+  ![ejb](images/analysis2b.jpg)
 
 
 ### Run the application on Liberty
