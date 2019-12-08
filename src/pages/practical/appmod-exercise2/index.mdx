@@ -85,7 +85,7 @@ For setup, we need to install the WebSphere Liberty development tools.
     - Run `echo $JAVA_HOME` to find it
     - Run `java -version` to see the default
     - Run `/usr/libexec/java_home -V` to see all versions installed on your laptop
-    - If you don't have JDK 8, you can get it from [Java SE Development Kit 8 Downloads](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+    - If you don't have JDK 8, install it from [Java SE Development Kit 8 Downloads](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 - Download Liberty from [WAS Liberty with Java EE 8 Full Platform](https://developer.ibm.com/wasdev/downloads/#asset/runtimes-wlp-javaee8)
     - This file is named something like `wlp-javaee8-19.0.0.11.zip`
@@ -171,17 +171,11 @@ Create a Liberty server in Eclipse named Lab5
 
             We'll refer to this path later as `{wlp}`
 
-        - Select Install a new runtime environment from an archive
-
-        - Specify the `{wlp.zip}` file you downloaded earlier
+        - Select Install a new runtime environment from an archive, and specify the `{wlp.zip}` file you downloaded earlier
 
         ![import](images/serverDestinationPath.jpg)
 
-        - (Or, if you have not downloaded the Liberty zip yet, you can:
-
-            - Select Download and install a new runtme environment from ibm.com
-
-            - Select WAS Liberty with Java EE 8 Full Platform)
+        - (Or, if you have not downloaded the Liberty zip yet, you can: Select Download and install a new runtme environment from ibm.com, and select WAS Liberty with Java EE 8 Full Platform)
 
         - Press Next
 
@@ -214,7 +208,7 @@ Clone the Customer Order Services application and import it into Eclipse.
     cd refarch-jee-customerorder
     ```
 
-- Create a branch for modifying the source code
+- Checkout the existing branch, was70-dev, that contains the source code
 
     The master branch doesn't contain the app. The was70-dev branch contains the version of the app for this exercise.
 
@@ -240,7 +234,9 @@ Clone the Customer Order Services application and import it into Eclipse.
 
     -  Workspace Migration
 
-       - Press Cancel and confirm OK
+        We don't want the tool to do the migration, we're going to do the migration manually.
+
+        - Press Cancel and confirm OK
 
 
 #### Clean up the development environment
@@ -249,75 +245,127 @@ When you create a Liberty development environment, you might need to fix install
 
 ![import](images/eclipse1.jpg)
 
-- To view the problems in your workspace, click `Window > Show View > Other > General > Problems`. Click `OK`.
+- To view the problems in your workspace, select Window > Show View > Other, select General > Problems, and press Open
 
-Errors are shown for each of the projects that are related to the build path. In the projects for the new development environment, you need to update the references to the Java and WebSphere libraries which can be done automatically by setting the `Target Runtime`
+Errors are shown for each of the projects that are related to the build path. In the projects for the new development environment, you need to update the references to the Java and WebSphere libraries which can be done automatically by setting the Target Runtime.
 
-- Fix the targeted runtime for the application using these steps:
+- Fix the targeted runtime for the application
 
-    * Right-click on `CustomerOrderServicesApp` and click Properties.
+    - Right-click on the CustomerOrderServicesApp project and select Properties
 
-    * In the Properties window, click `Targeted Runtimes`
+    - In the Properties window, select Targeted Runtimes
 
-    * De-select `WebSphere Application Server traditional V7.0`
+    - Deselect WebSphere Application Server traditional V7.0
 
-    * Select `Liberty Runtime`
+    - Select Liberty Runtime
 
-    * Click `Apply and Close`
+    ![libraries](images/targetruntime.jpg)
 
-  ![libraries](images/targetruntime.jpg)
+    - Press Apply and Close
 
-- After updating the target runtime, clean and rebuild the entire workspace by clicking `Project > Clean`. Make sure that Clean all projects is selected and click `OK`.
+After updating the target runtime, clean and rebuild the entire workspace.
 
-- Look at the Problems view again:
+- Clean the projects
+
+    - Select Project > Clean
+
+    - Make sure that Clean all projects is selected
+
+    - Press Clean
+
+- Look at the Problems view again
 
     ![libraries](images/problems1.jpg)
 
-- You resolved several problems, but a few problems still exist. In this case, you want to fix the Xpath is invalid error. To fix that error:
+You resolved several problems, but a few problems still exist. In this case, you want to fix the Xpath is invalid error.
 
-    * Right-click the `CustomerOrderServicesWeb` project and click `Properties`.
+- Fix the Xpath
 
-    * In the properties window, click `Validation`
+    - Right-click on the CustomerOrderServicesWeb project and select Properties
 
-    * Scroll to the `XSL Validator` and clear the `Manual` and `Build` options.
+    - In the properties window, select Validation
 
-    * Click `Apply and Close`.
+    - In the list of validators, in the XSL Validator, clear the Manual and Build options
 
     ![validation](images/validation.jpg)
 
-- Clean and rebuild the entire workspace
+    - Press Apply and Close
 
-- Look at the Problems view again:
+- Clean and rebuild all projects in the workspace
 
-- Now the projects have built without problems.
+- Look at the Problems view again
+
+Now the projects build without problems.
 
 
 #### Configure the Software Analyzer
 
 In this task, you configure the WAMT Software Analyzer.
 
-- In your Eclipse environment, click Run > Analysis. The Software Analyzer opens.
+- In the Eclipse menu bar, select Run > Analysis... to open the Software Analyzer Configurations dialog
 
-- Right-click Software Analyzer and select New. Type a name for the new configuration and click the Rules tab for the configuration.
+- Right-click on Software Analyzer and select New Configuration
 
-- From the Rule Set menu, select WebSphere Application Server Version Migration and click Set. The "Rule set configuration" window opens.
+- Type a name for the new configuration such as "CustomerOrderServices"
+
+- On the Rules tab for the new configuration, select the rule set WebSphere Application Server Version Migration and press Set
 
     ![wink](images/analyzer1.jpg)
 
-- Configure the settings so that the appropriate rules, based on your migration requirements, are applied when your applications are analyzed.
+- In the Rule set configuration dialog, select these settings:
+
+    - Source application server:    **WebSphere Application Server V7.0**
+    - Target application server:    **Liberty**
+    - Target Java EE version:       **Java EE 6**
+    - Target cloud runtime:         **None**
+    - Source Java version:          **IBM Java 6**
+    - Target Java version:          **IBM Java 8**
 
     ![wink](images/analyzer2.jpg)
 
-- When you're finished, click OK.
+    - Press OK
+
+- Press Apply to finish creating the new configuration
 
 #### Run the Software Analyzer
-- Click Analyze. After you run the Software Analyzer, the Software Analyzer Results tab is shown. The Software Analyzer rules and any errors and warnings are sorted in four categories: Java Code Review, XML File Review, JSP Code Review and File Review. Review each of the categories to determine whether code or configuration changes might be needed.
 
-  ![wink](images/analysis1a.jpg)
+Now that we've configured a new analysis, run it.
 
-- Click the File Review tab. The tab is empty
+- Still in the Software Analyzer Configurations dialog, select the new configuration and press Analyze
 
-- Click the Java Code Review tab. Warnings are shown for these aspects the WebSphere Application Migration Toolkit:
+    When the analyzer finishes running, the Software Analyzer Results tab opens in the main Eclipse window.
+
+    ![wink](images/analysis1a.jpg)
+
+    The Software Analyzer rules and any errors and warnings are sorted in four categories:
+    - Java Code Review
+    - XML File Review
+    - JSP Code Review
+    - File Review
+
+Open the Help view for contextual help
+
+- From the Eclipse menu bar, select Help > Show Contextual Help
+
+Review each of the categories to determine whether code or configuration changes might be needed.
+
+- File Review
+
+    The results are empty.
+
+- JSP Code Review
+
+    The results are empty.
+
+- Java Code Review
+
+    Warnings are shown for these aspects the WebSphere Application Migration Toolkit:
+
+    - Behavior change on lookups for Enterprise JavaBeans (3 results)
+
+    - Use of system-provided third-party APIs in JAX-RS (3 results)
+
+    - Behavior change in JPA cascade strategy (1 result)
 
   ![javacode](images/javacode.jpg)
 
@@ -487,9 +535,9 @@ In this task, you configure the WAMT Software Analyzer.
 
 In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/icp-dev-workshop.git repository. In the `lab5` folder you will find a `libs` folder that contains the DB2 drivers.
 
-- Copy the `libs` folder from the `lab5` repo to `<wlp>/usr/shared/resources/libs` (where `<wlp>` is the location that you unzipped Liberty)
+- Copy the `libs` folder from the `lab5` repo to `{wlp}/usr/shared/resources/libs` (where `{wlp}` is the location that you unzipped Liberty)
 
-  This should create `<wlp>/usr/shared/resources/libs/db2jcc.jar` and `<wlp>/usr/shared/resources/libs/db2jcc_license_cu.jar`
+  This should create `{wlp}/usr/shared/resources/libs/db2jcc.jar` and `{wlp}/usr/shared/resources/libs/db2jcc_license_cu.jar`
 
 - Export the EAR file from eclipse (we are doing this as there are known issues with running EAR files directly from the Eclipse Workspace)
 
@@ -499,7 +547,7 @@ In AppMod Exercise 1 you cloned the https://github.com/ibm-cloud-architecture/ic
 
     - For the name of the EAR project, type CustomerOrderServicesApp.
 
-    - For the destination, browse to `<wlp>/usr/shared/apps/CustomerOrderServicesApp.ear`.
+    - For the destination, browse to `{wlp}/usr/shared/apps/CustomerOrderServicesApp.ear`.
 
     - Select the Optimize for a specific server runtime check box and select WebSphere Application Server Liberty from the list.
 
