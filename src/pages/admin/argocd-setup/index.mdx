@@ -51,45 +51,21 @@ The Helm repository is in Artifactory. ArgoCD will need the URL to that reposito
 The repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
 and deploy it to your Developer Tools environment.
 
-- In your local copy of the `template-argocd-test` repo, open the `config/argocd-helm-repo.yaml` file in an editor
-
-- Edit the `data.helm.url` property to replace the value `<artifactory helm repository location>` 
-with the URL of the Helm repository location in Artifactory
-
-  ```yaml
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: argocd-cm
-    namespace: tools
-  data:
-    helm.repositories: |
-      - url: <artifactory helm repository location>
-        name: helm-repository-location
-  ```
-
-Use the kubectl CLI to deploy the edited configuration file.
-
 - Test to confirm that your shell is logged into your cluster
 
-  ```bash 
+  ```bash
   kubectl version --short
   ```
 
-- Apply the configuration file to the cluster in the `tools` namespace
+- In your local copy of the `template-argocd-test` repo, run `./config/addhelmrepository.sh [artifact-helm-repository-location]`
 
-  ```bash 
-  kubectl apply -f argocd-helm-repo.yaml -n tools
-  ```
-
-  You can also apply the file using the `config/addconfigmap.sh` script in the `template-argocd-test` repo.
+    where `[artifact-helm-repository-location]` URL of the Helm repository location in Artifactory
 
 Verify that the new configuration has deployed
 
 - In the Kubernetes dashboard or OpenShift console, navigate to the Config Maps in the `tools` namespace
 
-- Select the `argocd-cm` config map and confirm that its `helm.repositories` property specifies the
-Artifactory URL
+- Select the `argocd-cm` config map and confirm that its `helm.repositories` property specifies the Artifactory URL
 
 ## Conclusion
 
