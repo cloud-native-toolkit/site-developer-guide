@@ -12,7 +12,7 @@ In IBM Garage Method, one of the Develop practices is [continuous delivery](http
 
 ## What is continuous delivery
 
-Continuous delivery is the DevOps approach of continuously making new versions of an application's components available
+Continuous delivery is the DevOps approach of frequently making new versions of an application's components available
 for deployment to an environment. The process involves automation of the build and validation process and concludes with
 a new version of the application that is available for promotion to another environment.
 
@@ -29,7 +29,7 @@ An application is ready for deployment when it passes a set of tests that prove 
 GitOps takes advantage of several Git features:
 - Git has an audit log of changes
 - Whole releases can be managed from a pull request
-- Git enables changes to be rollback quickly if there is an issue with a new release
+- Git enables changes to be rolled back quickly if there is an issue with a new release
 
 ### CI/CD integration
 
@@ -37,9 +37,24 @@ For the full end-to-end build and delivery process, both the CI and CD pipelines
 
 ![Argo CD config](/images/CI_CD-pipelines.png)
 
+The naming components are:
+- `app repo` - The name of the Git repository for the application
+- `git org` - The name of the GitHub organization for the application's repo
+- `tag` - The build version
+- `chart version` - The version of the Helm chart
+- `region` - The geographic location in IBM Cloud
+
+The derived names are:
+- GitHub application path: `github.com/{git org}/{app repo}`
+- CI Pipeline name: `{git org}.{app repo}`
+- Docker image's path: `{region}.icr.io/{git org}/{app repo}:{tag}` in the [Image Registry](/guides/image-registry)
+- Helm chart's path: `generic-local/{git org}/{app repo}-{tag}-{chart version}.tgz` in the [Helm Repository](/guides/artifact-management)
+- Dependencies filename: `{app repo}/requirements.yaml` in the GitOps repo
+- CD Pipeline name: `{app repo}`
+
 ## What is Argo CD
 
-[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a Kubernetes cluster or namespace, which also works for an OpenShift cluster or project. Argo CD models a collection of applications as a [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/) and uses a Git repository to store the project's desired state. Each application is stored as a folder in the repository, and each deployment environment is stored as a branch in the repository.
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a Kubernetes cluster or namespace, which also works for an OpenShift cluster or project. Argo CD models a collection of applications as a project and uses a Git repository to store the project's desired state. Each application is stored as a folder in the repository, and each deployment environment is stored as a branch in the repository.
 
 Argo CD supports defining Kubernetes manifests in a number of ways:
 - helm charts
@@ -58,65 +73,54 @@ You must have completed the [Argo CD Setup](/getting-started/argocd-setup) befor
 
 Argo CD uses a number of terms to refer to the components
 
-- `Application` - a deployable unit
+- Application - A deployable unit
 
-    In the context of the Dev Tools, that will map to one helm chart that contains one container image 
-    that was produced by one CI pipeline. While helm charts and images could certainly be combined to
-    make more sophisticated applications in more advanced scenarios, we will be using this simple definition
-    here.
+    In the context of the Developer Tools environment, an application is one Helm chart that contains one container image that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more sophisticated applications in more advanced scenarios, we will be using this simple definition here.
     
-- `Project` - a collection of applications that make up a solution
+- Project - A collection of applications that make up a solution
 
-### Setup the GitOps repo
+### Set up the GitOps repo
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to
-represent one `project`. Within that repository, each `application` that makes up the project will be described in its own
-folder. The repository will also contain a branch for each environment/namespace into which we want to deploy the 
-applications.
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
-1. Create a new repo from the Argo CD Starter Kit template - https://github.com/ibm-garage-cloud/template-argocd-test/generate
+1. Create a new repo from the [Argo CD Starter Kit template](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
 
 1. Clone the project to your machine
 
-1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the `test` environment)
+1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the testing environment)
 
     ```bash
     git checkout -b test
     ```
 
-1. The repository contains a template helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of 
-the application names in your project.
+1. The repository contains a template Helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of
+the application names in your project, i.e. `{app repo}`.
 
-   The application name should match the repository name if the CI pipeline is going push changes to the 
-   CD pipeline.
+   The application name should match the repository name if the CI pipeline is going push changes to the CD pipeline.
 
 1. Update `Chart.yaml`
 
-   - `name` - the name of the application (should match the folder from the previous step)
+   - `name` - The name of the application, should match the folder from the previous step
 
 1. Update `requirements.yaml`
 
-    - `name` - the name of helm chart/image. This should match your git repo name
-    - `version` - the version number of the helm chart
-    - `repository` - the url to the helm repository including the folder where the helm charts are being stored.
+    - `name` - The name of Helm chart and Docker image, should match your Git repo name, i.e. `{app repo}`
+    - `version` - The version number of the Helm chart, i.e. `{chart version}`
+    - `repository` - The url to the Helm repository including the folder where the Helm charts are being stored, i.e. `http://artifactory.{ingress subdomain}/artifactory/generic-local/`
 
-    The url of the Artifactory helm repository can be determines by following the steps described in
-    [Administrator Guide - Argo CD setup](/admin/argocd-setup/#get-the-helm-repository-location)
+        The url of the Helm repository in Artifactory can be determined by following the steps described in [Administrator Guide - Argo CD setup](/admin/argocd-setup/#get-the-helm-repository-location).
 
 1. Update `values.yaml`
  
     - Replace `<app-chart-name>` with the name of application
-    - Provide configuration values specific to the helm chart under the `<app-chart-name>` prefix
+    - Provide configuration values specific to the Helm chart under the `<app-chart-name>` prefix
 
-    **Note:** The helm values will need to be prefixed with the helm chart name that was provided in the 
-    previous step. For example, assuming the helm chart is `message-logger` the values.yaml file would look like the following:
+    **Note:** The Helm values will need to be prefixed with the Helm chart name that was provided in the previous step. For example, assuming the helm chart is `message-logger`, the values.yaml file would look like the following:
     ```yaml
     message-logger:
       replicaCount: 3
     ``` 
-   **Note:** The specific values that should be configured are dependent on the helm chart that is referenced
-   in the `requirements.yaml`. For the Starter Kits you can see those details and customize the chart by 
-   looking in the `chart/{chart name}` of the repository.
+   **Note:** The specific values that should be configured are dependent on the Helm chart that is referenced in the `requirements.yaml`. For the Starter Kits, you can see those details and customize the chart by looking in the `chart/{chart name}` of the repository.
 
 1. Repeat steps 4-7 for each application in the project
 
@@ -124,11 +128,11 @@ the application names in your project.
 
 Now that the repository has been created, we need to tell Argo CD where it is.
 
-1. Get the Argo CD login information from the `igc credentials` cli command
+1. Get the Argo CD login information from the `igc credentials` CLI command
 
     **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
 
-1. Log into Argo CD
+1. Log in to Argo CD
 
 1. Click on the gear icon on the left menu to access the Settings options
 
@@ -136,16 +140,16 @@ Now that the repository has been created, we need to tell Argo CD where it is.
 
 1. Select the `Repositories` option
 
-1. Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
-for the Git repo.
+1. Press either the Connect Repo using HTTPS or Connect Repo using SSH button at the top and provide the information
+for the Git repo
 
 ### Create a project in Argo CD (Optional)
 
-In Argo CD terms, each deployable component is an `Application` and applications are grouped into `Projects`. Projects are not
-required for Argo CD to be able to deploy applications but it helps to organize applications and provide some restrictions
+In Argo CD terms, each deployable component is an application and applications are grouped into projects. Projects are not
+required for Argo CD to be able to deploy applications, but it helps to organize applications and provide some restrictions
 on what can be done for applications that make up a project.
 
-To create a project, do the following:
+To create a project:
 
 1. Log into Argo CD
 
@@ -153,31 +157,32 @@ To create a project, do the following:
 
     ![Argo CD config](/images/argocd-config.png)
 
-1. Select the `Projects` option
+1. Select the Projects option
 
-1. Click the `New Project` button at the top of the page.
+1. Press the New Project button at the top of the page
 
-1. Provide the following values then press `Create`:
+1. Specify the properties for the new project
 
-    - `name` - provide the name for the project
-    - `description` - a brief description of the project
-    - `sources` - click `add source` and pick the Git repository from the list that was added previously
-    - `destinations` 
+    - name - Provide the name for the project
+    - description - A brief description of the project
+    - source - Press Add source and pick the Git repository from the list that was added previously
+    - destinations
         - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
         - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
+    - Press Create
 
     **Note:** Initially, the only cluster that is available is the one in which Argo CD is -
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
     to both the `test` and `staging` namespaces within the current cluster.
 
-### Add an application in Argo CD for each application component (helm chart)
+### Add an application in Argo CD for each application component (Helm chart)
 
 The last step in the process is to define the application(s) within Argo CD that should be managed. This consists of
 connecting the config within the Git repo to the cluster and namespace.
 
 1. Log into Argo CD
 
-1. Click `New Application` and provide the following values:
+1. Press `New Application` and provide the following values:
 
     - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
     - `project` - The project with which the application should be included
