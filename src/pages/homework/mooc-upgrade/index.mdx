@@ -62,7 +62,8 @@ To prevent the build from not starting on the new Jenkins instances. Replace
  `    return "a.${jobName}.${buildNumber}".replace('_', '-').replace('/', '-').replace('-.', '.');	` with     `return "a.${jobName}${buildNumber}".replace('_', '-').replace('/', '-').replace('-.', '.');`
 
 This is generic for all Starter Kit Templates, the templates themselves have
- been updated so any new apps created based on them will be work fine. 
+ been updated so any new apps created based on them will will work without
+  issue. 
 
 ### Registering you pipeline
 
