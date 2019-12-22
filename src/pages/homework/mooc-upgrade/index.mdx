@@ -28,13 +28,21 @@ The good news is all your apps are stored in your teams Git Organization so will
 
 ### Dashboard
 
-The Dashboard now support OpenShift single sign on and uses the OAuth
+The Dashboard now supports OpenShift single sign on and uses the OAuth
  Challenge.
  
- ### CLI
+ - Approve the Authentication by clicking **Log in with OpenShift**
+    ![Approve](approve.png)
+ - Select the Authorize Access click on **Allow selected permissions**
+    ![Select](select.png)
+ - You will now see the Dashboard in Authorised mode
+    ![Dashboard](dashboard.png)
+   
+### CLI
  
 -  Install the latest IBM Garage for Cloud Developer Tools CLI, there has been
- some minor bug fixes to address issues seem from the first phase of the MOOC.   
+ some minor bug fixes to address issues seen from the first phase of the MOOC
+ .   
     ```$bash
     npm i -g @garage-catalyst/ibm-garage-cloud-cli
     ```
@@ -53,11 +61,12 @@ This change is required to enable support for the newer version of Jenkins that 
 To prevent the build from not starting on the new Jenkins instances. Replace
  `    return "a.${jobName}.${buildNumber}".replace('_', '-').replace('/', '-').replace('-.', '.');	` with     `return "a.${jobName}${buildNumber}".replace('_', '-').replace('/', '-').replace('-.', '.');`
 
-This is generic for all Starter Kit Templates, the templates themselves have been updated so any new apps being based on them will be work fine. 
+This is generic for all Starter Kit Templates, the templates themselves have
+ been updated so any new apps created based on them will be work fine. 
 
 ### Registering you pipeline
 
-- Run the following commands for each app that you deployed. 
+- Run the following commands for each app that you have previously deployed. 
     ```bash
     oc new-project dev-{initials}
     igc namespace dev-{initials}
@@ -68,23 +77,31 @@ This is generic for all Starter Kit Templates, the templates themselves have bee
 
 You will need to complete this section of the Session 1,Week 2 material.
 
-https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#using-cd-to-deploy-to-test
+[Argo CD Setup](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#using-cd-to-deploy-to-test)
 
 ### AppID Enabling Authentication
 
 You will need to complete this section of the Session 1, Week 2 material, the section where you configure AppID
 
-https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#securing-the-solution-with-app-id
+[AppID setup](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#securing-the-solution-with-app-id)
 
 ### Data in Cloudant
 
-You will need to complete this section of the Session 1, Week 2 material to repopulate your database.
+You will need to complete this section of the Session 1, Week 2 material to
+ repopulate your database.
 
-https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#add-a-cloudant-integration-to-your-backend-service
+[Populate Cloudant Database](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/inventory-part2#add-a-cloudant-integration-to-your-backend-service)
 
 You will need to update the `mappings.json` with the new Cloudant Instance
  credentials
+ 
+ ### WebHook for CP4Apps
+ 
+ You will need to configure a web hook for Cloud Pak for Applications 
+ 
+ [Configure Web Hook](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/practical/cp4apps#connect-the-pipeline-to-git)
 
-Thanks for all the help and support during the Live Sessions. You can continue to return to the MOOC and walk through the self paced material.
+Thank you for all the help and support during the Live Sessions. You can
+ continue to return to the MOOC and walk through the self paced material.
     
-**MOOC Admin Team**
+**MOOC Enablement Team**
