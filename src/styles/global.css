@@ -7,6 +7,13 @@ h1[id*='page-title'] {
     font-size: 2em;
 }
 
+@media only screen and (max-width: 450px) {
+    h1[id*='page-title'] {
+        font-size: 1.5em;
+    }
+}
+
+
 h3[class*='Markdown-module--h3'] {
     margin-top: 1em;
 }
