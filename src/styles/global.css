@@ -19,6 +19,14 @@ ol[class*='Markdown-module--list']  {
     padding-left: 2em;
 }
 
+div[class*='Tabs-module--tab-container'] {
+    margin-left: -0rem;
+}
+
+div[class*='Tabs-module--tab-contents'] {
+    margin-left: 0rem;
+}
+
 h2[class*='Markdown-module--h2'] {
     margin-top: 1em;
 }

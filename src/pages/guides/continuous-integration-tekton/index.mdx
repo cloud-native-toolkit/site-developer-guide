@@ -19,14 +19,15 @@ Tekton is a powerful yet flexible Kubernetes-native open-source framework for cr
 
 Tekton provides open-source components to help you standardize your CI/CD tooling and processes across vendors, languages, and deployment environments. Industry specifications around pipelines, releases, workflows, and other CI/CD components available with Tekton will work well with existing CI/CD tools such as Jenkins, Jenkins X, Skaffold, and Knative, among others.
 
-For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+- Read the this this [Overview of Tekton](/guides/continuous-integration-tekton-crc#what-is-tekton)
 
-- Read the this this [Overview of Tekton](/guides/continuous-integration
--tekton-crc#what-is-tekton)
+- For more information read up about it [Tekton Tutorial](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
 
-- For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+- For more information read up about it [App Build Tutorial with Tekton](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
 
-The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively support it.
+The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps
+ service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively
+  support it.
 
 This guide will focus on using Tekton when the Development tools have been
  installed in Redhat OpenShift, IBM Kubernetes Managed services and **Red Hat
@@ -128,11 +129,11 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
  instructions in the repository [ibm-garage-tekton-tasks](https://github.com/ibm-garage-cloud/ibm-garage-tekton-tasks/blob/master/README.md)
 - Install the `Tasks`
     ```bash
-
+    kubectl create -f ibm-garage-tekton-tasks/tasks/ -n dev
     ```
 - Install the `Pipelines`
     ```bash
-  
+    kubectl create -f ibm-garage-tekton-tasks/pipelines/ -n dev  
     ```
   
 ### Configure namespace for development
@@ -149,7 +150,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
   ```
 
 - The template `Pipelines` provided support for `Java` or `Node.js` based
- apps. You can configure your own customer `Tasks` for other runtimes. There
+ apps. You can configure your own custom `Tasks` for other runtimes. There
   are a number of default `Tasks` to get you started they are detailed above. To
   create an application use one of the provided [Starter Kit Templates
   ](/starterkits/starterkittemplates) these templates work seamlessly with
@@ -157,24 +158,32 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
 
 ### Register the App with Tekton
 
+With Tetkon enabled and your default `Tasks` and and `Pipelines` installed in
+ to the `dev` namespace. You can now configure you applications to be built, packaged, tested and deployed to your OpenShift or Kubernetes development cluster.
+
 <Tabs>
 
 <Tab label="IGC Steps">
 
-One of the objectives of the IBM Garage for Cloud Developer tools CLI is to
+One of the objectives of the **IBM Garage for Cloud Developer tools CLI** is to
  remove complexity from the steps of configuring apps with OpenShift and
-  Kubernetes managed services. 
-  
-  The `IBM Garage CLI` has been created to automate manual steps where it is
-   deemed necessary. When it comes to configuring **Tekton** there are a
-    number of key steps that if developers
-     are performing these manually and ofter,  the chances of developer error
-      will increase. If you are happy to perform the manual steps switch over
-       to the **Manual Steps** tap above to understand what is required to
-        configure a **Tekton** Pipeline in Openshift or Kubernetes managed
-         services.
-      
-- The CLI has support for tekton by adding a `--tekton` parameter to the `igc
+  Kubernetes managed service. 
+<br></br>  
+
+The `IBM Garage CLI` has been created to automate manual steps where it is
+ deemed necessary. When it comes to configuring **Tekton** there are a number
+  of key steps that developers can performing manually,  often with complex
+   manual steps the developer can introduce errors caused by mistakes. This
+    is a perfect problem to be solved with simple automation.
+<br></br>
+
+If you are happy to perform the manual steps switch over to the **Manual
+ Steps** tab above to understand what is required to configure a **Tekton** Pipeline in Openshift or Kubernetes managed services manually.
+<br></br>      
+
+
+- The CLI has support for **Tekton** by adding a `--tekton` parameter to
+ the `igc
  pipeline` command.    
     ```bash
     igc pipeline -n dev-mjp --tekton
@@ -209,6 +218,11 @@ One of the objectives of the IBM Garage for Cloud Developer tools CLI is to
 </Tab>
 
 <Tab label="Manual Steps">
+
+The following is the list of steps required to manually configure a **Tekton
+** pipeline with your development cluster.
+<br></br>
+
 
 - Configure the service account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
   ```
