@@ -17,21 +17,22 @@ Tekton is a powerful yet flexible Kubernetes-native open-source framework for cr
 
 <iframe width="80%" height="315" src="https://www.youtube.com/embed/TWxKD9dLpmk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p></p>
-<p></p>
-<p></p>
-
 Tekton provides open-source components to help you standardize your CI/CD tooling and processes across vendors, languages, and deployment environments. Industry specifications around pipelines, releases, workflows, and other CI/CD components available with Tekton will work well with existing CI/CD tools such as Jenkins, Jenkins X, Skaffold, and Knative, among others.
 
-For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+- Read the this this [Overview of Tekton](/guides/continuous-integration-tekton-crc#what-is-tekton)
 
-- Read the this this [overview of Tekton](/guides/continuous-integration-tekton-crc#what-is-tekton)
+- For more information read up about it [Tekton Tutorial](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
 
-- For more information read up about it [here](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
+- For more information read up about it [App Build Tutorial with Tekton](https://developer.ibm.com/tutorials/knative-build-app-development-with-tekton/)
 
-The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively support it.
+The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps
+ service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively
+  support it.
 
-This guide will focus on using Tekton when the Development tools have been installed along side **Red Hat Code Ready Containers** to give you choice for you Continuous Integrationud native development toolset.
+This guide will focus on using Tekton when the Development tools have been
+ installed in Redhat OpenShift, IBM Kubernetes Managed services and **Red Hat
+  Code Ready Containers** to give you choice for you Continuous Integration
+   cloud native development toolset.
 
 <InlineNotification>
 
@@ -41,7 +42,8 @@ This guide will focus on using Tekton when the Development tools have been insta
 
 ### Common App Tasks
 
-The following gives a description of what each task in a the pipeline does. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
+The following gives a description of each `Task` that is commonly used in a
+ `Pipeline`. The *Optional* stages can be deleted or ignored if the tool support it is not installed. These stages represent a typical production pipeline flow for a Cloud Native application.
 
 - **Setup** clones the code into the pipeline
 - **Build** runs the build commands for the code
@@ -53,27 +55,95 @@ The following gives a description of what each task in a the pipeline does. The 
 - **Deploy to DEV env**	Deploys the Docker image tagged version to `dev` namespace using Helm Chart
 - **Health Check** Validates the Health Endpoint of the deployed application
 - **Package Helm Chart** (*optional*) Stores the tagged version of the Helm chart into Artifactory
-- **Trigger CD Pipeline** (*optional*) This is a GitOps stage that will update the build number in designated git repo and trigger ArgoCD for deployment to **test**
+- **Trigger CD Pipeline** (*optional*) This is a GitOps stage that will
+ update the build number in designated git repo and trigger ArgoCD for
+  deployment to **test** namespace
 
 ### Install Tekton
 
-- Install [IBM Garage for Cloud Developer Tools](/admin/overview) on your managed OpenShift or IKS development cluster on the IBM Cloud
+Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
+ service and RedHat Code Ready Containers. To install the necessary
+  components follow the steps below.
+  
+- Install [IBM Garage for Cloud Developer Tools](/admin/overview) on your
+ managed OpenShift,CRC or IKS development cluster on the IBM Cloud. This will
+  help configure the tools and `secrets` and `configMap` to make working with
+   IBM Cloud so much easier.
+    
+<Tabs>
+
+<Tab label="OpenShift 3.11">
+
+### IBM Cloud Pak for Applications 3.0.1
+
 - Install Tekton on OpenShift 3.11
-    - Install [IBM Cloud Paks for Applications](https://cloud.ibm.com/catalog/content/ibm-cp-applications) on the OpenShift Cluster from the IBM Cloud Catalog
+    - Install [IBM Cloud Paks for Applications 3.0.1](https://cloud.ibm.com/catalog/content/ibm-cp-applications) on the OpenShift Cluster from the
+     IBM Cloud Catalog Software tab
+
+</Tab>
+
+<Tab label="OpenShift 4.x">
+
+### Install on OpenShift 4.x
+
+- If you have installed the IBM Garage for Cloud Developer Tools into your
+ cluster this will automatically install the operator for you.
+
 - Install Tekton on OpenShift 4 including CodeReady Containers (CRC)
-    - Install via operator hub Administrator perpective view, click Operator Hub search for "OpenShift Pipelines" and install operator
-- Install Tekton on IKS
-    - Install Tekton via Knative add-on, it includes tekton 
-    - Install Tekton Dashboard https://github.com/tektoncd/dashboard#install-dashboard
-    - Install Tekton Webhook Extension https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension 
+    - Install via operator hub Administrator perspective view, click
+     **Operator Hub** search for `OpenShift Pipelines` and install operator
+
+</Tab>
+
+<Tab label="Kubernetes">
+
+### Install Tekton on IBM Kubernetes Managed Service
+- Install Tekton via Knative add-on (can be found in the **Add On** tab in
+ the Kubernetes managed service dashboard)
+, it includes
+ Tekton support by default and the Webhook extension. 
+- Install [Tekton Dashboard](https://github.com/tektoncd/dashboard#install-dashboard) follow the instructions in the `README.md`
+- Add Ingress endpoint for the **Tekton Dashboard** add a host name that uses
+ the IKS cluster subdomain     
+    ```yaml
+      apiVersion: extensions/v1beta1
+      kind: Ingress
+      metadata:
+        name: tekton-dashboard
+        namespace: tekton-pipelines
+      spec:
+        rules:
+        - host: tekton-dashboard.showcase-dev-iks-cluster.us-south.containers.appdomain.cloud
+          http:
+            paths:
+            - backend:
+                serviceName: tekton-dashboard
+                servicePort: 9097
+    ```
+- Install [Tekton Webhook Extension](https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension) 
+
+</Tab>
+
+</Tabs> 
 
 ### Setup Tekton
 
-- Install tekton pipelines and tasks in the `tools` namespace follow the instructions in the repository [ibm-garage-tekton-tasks/](https://github.com/ibm-garage-cloud/ibm-garage-tekton-tasks/blob/master/README.md)
-
+- Install Tekton pipelines and tasks into the `dev` namespace following the
+ instructions in the repository [ibm-garage-tekton-tasks](https://github.com/ibm-garage-cloud/ibm-garage-tekton-tasks/blob/master/README.md)
+- Install the `Tasks`
+    ```bash
+    kubectl create -f ibm-garage-tekton-tasks/tasks/ -n dev
+    ```
+- Install the `Pipelines`
+    ```bash
+    kubectl create -f ibm-garage-tekton-tasks/pipelines/ -n dev  
+    ```
+  
 ### Configure namespace for development
 
-- Create a new namespace (ie `dev`) and copy all config and secrets
+- Install the Tekton CLI `tkn` https://github.com/tektoncd/cli
+
+- Create a new namespace (ie `dev-{initials}`) and copy all config and secrets
   ```
   igc namespace -n {new-namespace}
   ```
@@ -81,7 +151,87 @@ The following gives a description of what each task in a the pipeline does. The 
   ```
   oc project {new-namespace}
   ```
-- Configure the sevice account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
+
+- The template `Pipelines` provided support for `Java` or `Node.js` based
+ apps. You can configure your own custom `Tasks` for other runtimes. There
+  are a number of default `Tasks` to get you started they are detailed above. To
+  create an application use one of the provided [Starter Kit Templates
+  ](/starterkits/starterkittemplates) these templates work seamlessly with
+   the `Tasks` and `Pipelines` provided.
+
+### Register the App with Tekton
+
+With Tetkon enabled and your default `Tasks` and `Pipelines` installed into
+ the `dev` namespace. You can now configure your applications to be built, packaged, tested and deployed to your OpenShift or Kubernetes development cluster.
+
+<Tabs>
+
+<Tab label="IGC Steps">
+
+One of the objectives of the **IBM Garage for Cloud Developer tools CLI** is to
+ remove complexity from the steps of configuring apps with OpenShift and
+  Kubernetes managed service. 
+<br></br>  
+
+The `IBM Garage CLI` has been created to automate manual steps where it is
+ deemed necessary. When it comes to configuring **Tekton** there are a number
+  of key steps that developers can performing manually,  often with complex
+   manual steps the developer can introduce errors causing mistakes that are
+    hard to debug. This
+    is a perfect problem to be solved with simple automation.
+<br></br>
+
+If you are happy to perform the manual steps switch over to the **Manual
+ Steps** tab above to understand what is required to configure a **Tekton** Pipeline in Openshift or Kubernetes managed services manually.
+<br></br>      
+
+- The CLI has support for **Tekton** by adding a `--tekton` parameter to
+ the `igc
+ pipeline` command.    
+    ```bash
+    igc pipeline -n dev-{initials} --tekton
+    ```
+
+- This will prepare the namespace/project with the necessary `Tasks`, `Pipelines`, `Secrets` and `configMaps` needed for the `Pipelines` to
+ execute inside the Tekton CI environment.  
+    ```bash
+    Getting git parameters
+      Project git repo: https://github.com/mooc-team-one/hello-world-one.git
+    ? Provide the username: {git userid}
+    ? Provide your password/personal access token: [hidden]
+    ? Provide the branch the pipeline should use: master
+    Setting up dev-mjp namespace
+    Checking for existing namespace: dev-mjp
+    Setting up pull secrets
+    Setting up tls secrets
+    Adding pull secrets to serviceAccount
+    Copying ConfigMaps
+    Copying Secrets
+    Copying Tekton tasks
+    Copying Tekton pipelines
+    Copying Jenkins credentials
+    Creating service account: pipeline
+    Creating Git PipelineResource
+    Creating Image PipelineResource
+    ? Select the Pipeline to use in the PipelineRun: igc-nodejs
+    Creating PipelineRun for pipeline: igc-nodejs
+    ```
+
+- Once the App has been configured to be built and managed by **Tekton** you
+ can now view the `Pipeline` progress using the various Tekton Dashboards or
+  `tkn` CLI. 
+
+
+</Tab>
+
+<Tab label="Manual Steps">
+
+The following is the list of steps required to manually configure a **Tekton
+** pipeline with your development cluster.
+<br></br>
+
+
+- Configure the service account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
   ```
   oc create serviceaccount pipeline
   oc adm policy add-scc-to-user privileged -z pipeline
@@ -98,9 +248,7 @@ The following gives a description of what each task in a the pipeline does. The 
 
 ### Manually trigger a Pipeline
 
-- Install the Tekton CLI `tkn` https://github.com/tektoncd/cli
-
-- Create a new repository using java or nodejs templates applications github repositories select one from the [Starter Kit Templates](/starterkits/starterkittemplates) page.
+### Pipeline Resource
 
 - Create a Pipeline resource for the git repository, replace with the correct github url for your repository
   Use the `tkn` CLI to create `git` resource input the github repo url for `url` and branch for `revision`
@@ -187,13 +335,20 @@ The following gives a description of what each task in a the pipeline does. The 
 - Make a change to the git repo and push the change to remote git repository or click on **Pipelines**
 and manually kick of a pipeline build
 
+</Tab>
+</Tabs>
 
 ### Verify the pipeline
 
-<Tabs>
-<Tab label="OpenShift CodeReady Containers">
+To validate your pipeline have been correctly configured, and has triggered a
+ `PipelineRun`
+ use the following **Tekton** dashboards or `tkn` CLI to validate it ran
+  correctly without errors.
 
-- Review you **Pipeline** in the OpenShift CRC Console
+<Tabs>
+<Tab label="OpenShift 4.x">
+
+- Review you **Pipeline** in the OpenShift 4.x Console
     ![Pipelinerun](/images/pipeline.png)
 
 - Review your **Tasks**
@@ -205,13 +360,35 @@ and manually kick of a pipeline build
 </Tab>
 <Tab label="Opensource Tekton Dashboard">
 
+If you are running Tekton with IBM Cloud Pak for Applications or Knative with
+ Kubernetes managed service your dashboard view will look similar to below.
+
 - Review your **Pipeline**
     ![PipelineRun](/images/pipeline-os.png)
 
 </Tab>
+
+<Tab label="Tekton CLI">
+
+If you are running **Tekton** with IBM Cloud Pak for Applications or Knative
+ with Kubernetes managed service your dashboard view will look similar to below.
+
+- Review your **Pipeline**
+    ```bash
+    tkn pipelinerun list              
+    ```
+- Review **Pipeline** details
+    ```bash
+    tkn pipelinerun describe {pipeline-name}              
+    ```
+
+</Tab>
 </Tabs>
 
-## Running Application
+### Running Application
+
+Once the **Tekton** pipeline has successfully completed you can validate your
+ app has been successfully deployed.
 
 - Open the OpenShift Console and select the {new-namespace} project and click on **Workloads**
     ![OpenShift](/images/openshiftconsole.png)
@@ -227,14 +404,15 @@ and manually kick of a pipeline build
 
 - Use the application URL to open it your browser for testing
 
-Once you become familiar with deploying code into OpenShift using Tekton, read up about how you can manage code deployment with `Continuous Delivery` with `Artiactory` and `ArgoCD`
+Once you become familiar with deploying code into OpenShift using **Tekton
+**, read up about how you can manage code deployment with `Continuous
+ Delivery` with `ArgoCD` and `Artifactory`
 
-<AnchorLinks small>
+<AnchorLinks>
   <AnchorLink to="../../guides/artifact-management">Artifact Management with Artifactory</AnchorLink>
   <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery with ArgoCD</AnchorLink>
 </AnchorLinks>
 
-You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
 
 
 

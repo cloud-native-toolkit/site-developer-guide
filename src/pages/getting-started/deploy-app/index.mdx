@@ -128,7 +128,9 @@ Most developers like to run the code natively in local development environment. 
 
 You now have the code in a GitHub repository and have cloned it to you local development environment. You now need to register the repository with the continuous integration pipeline technology.
 
-The default continuous integration tool currently is [Jenkins](/guides/continuous-integration). [Tekton](/guides/continuous-integration-tekton) is also supported.
+The default continuous integration tool currently is [Jenkins](/guides
+/continuous-integration). [Tekton](/guides/continuous-integration-tekton) is
+ also enabled.
 
 You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins.
 
@@ -150,28 +152,34 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
       ```
   - Instead, include the namespace parameter:
       ```bash
-      igc pipeline -n dev-{your initials}
+      igc pipeline -n dev-{initials}
       ```
   - For example:
       ```bash
       igc pipeline -n dev-mjp
       ```
 
+  - You can alternatively configure your app to use **Tekton** for CI. For
+   more details review the [Continuous Integration with Tekton Guide](/guides/continuous-integration-tekton)   
+      ```bash
+      igc pipeline -n dev-mjp --tekton  
+      ```  
+  
 - Register your repo using the `igc pipeline` command. The CLI will ask for your github userid, it can be found in your github settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
     - **Password**: Paste your github personal access token
     - **Branch**: Press enter for the default git branch or type in another branch you want to register
-    ```bash
-    $ oc new-project -n dev-{initials}
-    $ igc pipeline -n dev-{intials}
-    Project git repo: https://github.com/mjperrins/stockbffnode.git
-    ? Provide the username: mperrins
-    ? Please provide your password/personal access token: [hidden]
-    ? Please provide the branch the pipeline should use: master
-    Creating secret with git credentials
-    Registering pipeline
-    Creating git webhook
-    ```
+        ```bash
+        $ oc new-project -n dev-{initials}
+        $ igc pipeline -n dev-{intials}
+        Project git repo: https://github.com/mjperrins/stockbffnode.git
+        ? Provide the username: mperrins
+        ? Please provide your password/personal access token: [hidden]
+        ? Please provide the branch the pipeline should use: master
+        Creating secret with git credentials
+        Registering pipeline
+        Creating git webhook
+        ```
 
 - The pipeline will be registered in your development cluster.
 
@@ -242,7 +250,7 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 <Tab label="OpenShift">
 
 - Open the **OpenShift web console**
-- Change to the **Application Console***
+- Change to the **Application Console**
 - Select you project either `dev` or the namespace you used to deploy your app
 - Click on **Deployments**
 - You should see the deployment of your application

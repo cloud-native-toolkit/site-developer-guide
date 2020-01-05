@@ -7,6 +7,13 @@ h1[id*='page-title'] {
     font-size: 2em;
 }
 
+@media only screen and (max-width: 450px) {
+    h1[id*='page-title'] {
+        font-size: 1.5em;
+    }
+}
+
+
 h3[class*='Markdown-module--h3'] {
     margin-top: 1em;
 }
@@ -19,12 +26,21 @@ ol[class*='Markdown-module--list']  {
     padding-left: 2em;
 }
 
+div[class*='Tabs-module--tab-container'] {
+    margin-left: -0rem;
+}
+
+div[class*='Tabs-module--tab-contents'] {
+    margin-left: 0rem;
+}
+
 h2[class*='Markdown-module--h2'] {
     margin-top: 1em;
 }
 
 p[class*='paragraph--responsive']{
-    width:90%
+    width:90%;
+    padding-bottom: .5em;
 }
 
 ul[class*='module--list'] {
