@@ -2,9 +2,9 @@ import React from 'react';
 import Footer from 'gatsby-theme-carbon/src/components/Footer';
 
 const currentYear = new Date().getFullYear();
-const lastUpdated = "Autumn 2019";
+const lastUpdated = "January 2020";
 
-const version = "1.0.1";
+const version = "1.1.2";
 
 const Content = () => (
     <>

@@ -340,9 +340,10 @@ and manually kick of a pipeline build
 
 ### Verify the pipeline
 
-To validate you pipelines have been correctly configured and triggered to run
- use the following dashboards or `tkn` CLI to validate it ran correctlu
-  without errors.
+To validate your pipeline have been correctly configured, and has triggered a
+ `PipelineRun`
+ use the following **Tekton** dashboards or `tkn` CLI to validate it ran
+  correctly without errors.
 
 <Tabs>
 <Tab label="OpenShift 4.x">
@@ -369,8 +370,8 @@ If you are running Tekton with IBM Cloud Pak for Applications or Knative with
 
 <Tab label="Tekton CLI">
 
-If you are running Tekton with IBM Cloud Pak for Applications or Knative with
- Kubernetes managed service your dashboard view will look similar to below.
+If you are running **Tekton** with IBM Cloud Pak for Applications or Knative
+ with Kubernetes managed service your dashboard view will look similar to below.
 
 - Review your **Pipeline**
     ```bash
@@ -403,14 +404,15 @@ Once the **Tekton** pipeline has successfully completed you can validate your
 
 - Use the application URL to open it your browser for testing
 
-Once you become familiar with deploying code into OpenShift using Tekton, read up about how you can manage code deployment with `Continuous Delivery` with `Artiactory` and `ArgoCD`
+Once you become familiar with deploying code into OpenShift using **Tekton
+**, read up about how you can manage code deployment with `Continuous
+ Delivery` with `ArgoCD` and `Artifactory`
 
-<AnchorLinks small>
+<AnchorLinks>
   <AnchorLink to="../../guides/artifact-management">Artifact Management with Artifactory</AnchorLink>
   <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery with ArgoCD</AnchorLink>
 </AnchorLinks>
 
-You can use the [Argo CD Template](/starterkits/argocd) to help define a deployment configuration for `test` and `staging` namespaces.
 
 
 

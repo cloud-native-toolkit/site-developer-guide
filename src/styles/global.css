@@ -39,7 +39,8 @@ h2[class*='Markdown-module--h2'] {
 }
 
 p[class*='paragraph--responsive']{
-    width:90%
+    width:90%;
+    padding-bottom: .5em;
 }
 
 ul[class*='module--list'] {
