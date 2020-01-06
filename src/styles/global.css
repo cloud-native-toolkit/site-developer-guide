@@ -59,7 +59,7 @@ div[class*='module--notification']{
 }
 
 div[class*='module--container']{
-    overflow-y: auto;
+    overflow-y: visible;
     max-height: 900px;
 }
 
