@@ -260,7 +260,7 @@ file of the helm chart.
 
 - Find the app id binding secret by running the following command from a terminal where the kubernetes context has been set up (i.e. `oc login` has been done)
     ```bash
-    kubectl get -n dev secrets | grep -E "binding.*appid"
+     kubectl get -n tools secrets | grep -E "binding.*appid"
     ```
 
 - Update the `values.yaml` file in the Inventory Management UI chart to set `ingress.appId.enabled=true` and to 
