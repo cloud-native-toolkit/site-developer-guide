@@ -386,7 +386,7 @@ If you are starting from the solution, use the following steps to enable the Clo
 
 - Click on service credentials and expand the listed credentials
 
-- Copy the json contents from the credentials into `mappings.json` under the `CLOUDANT_CONFIG` object
+- Copy the json contents from the credentials into `mappings.json` under the `CLOUDANT_CONFIG` object (note that CLOUDANT_CONFIG value must be a string type not a json type, so you must use escaping characters for this value)
     ```json path=src/main/resources/mappings.json
     {
       "DATABASE_NAME": "inventory-{namespace}",
