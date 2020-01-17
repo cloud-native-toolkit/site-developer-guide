@@ -44,6 +44,12 @@ To render the content within your local development environment, run the followi
 npm run dev
 ```
 
+View your locally rendered content:
+
+```
+http://localhost:8000/
+```
+
 ### Publish Content
 
 Currently, the content is published to the GitHub pages site through the `gh-pages` branch
