@@ -77,26 +77,27 @@ The following IBM Cloud services are created and bound to the cluster:
 
 | Capability                | Service        |Description |
 | -----------------------   |:-------------- |------------|
-| Logging                   | [LogDNA Logging](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started)  | Manage app logging LogDNA  |
-| Monitoring                | [SysDig Monitoring](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started) | Manage monitoring of apps with SysDig |
-| AppID                     | [AppID Application Authentication](https://cloud.ibm.com/docs/services/appid?topic=appid-service-access-management) | Secure your apps, APIs and Kubernetes Ingress end points |
-| Cloudant                  | [Cloudant NoSQL Database](https://cloud.ibm.com/docs/services/Cloudant?topic=cloudant-getting-started) | NoSQL Database commonly used for data persistence |
-| Cloud Object Storage      | [Cloud Object Storage Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started) | Storage service commonly used for binary content |
-| PostreSQL                 | [PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql?topic=databases-for-postgresql-about) (used by SonarQube) | SQL Database used for structure data persistence |
+| Log Management            | [Log Analysis with LogDNA](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-getting-started)  | Manage and analyze app logs  |
+| Monitoring                | [Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started) | Monitor app and platform resources |
+| User Authentication       | [App ID](https://cloud.ibm.com/docs/services/appid) | Verify identities of clients accessing app end points |
+| Relational Data Storage   | [Databases For PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql) (used by SonarQube) | Stores relational data structured as schemas for SQL querying |
+| Schemaless Data Storage   | [Cloudant](https://cloud.ibm.com/docs/services/Cloudant) | NoSQL database for JSON documents |
+| Binary Data Storage       | [Cloud Object Storage](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-getting-started) | Storage service commonly used for binary content |
 
 #### Continuous delivery tools
 
 The following best-of-breed open source software tools are installed in the cluster's *tools* namespace:
 
-| Capability                  | Tool                                         | Bitnami   |Description |
-| --------------------------- |:--------------                               | -------   |------------|
-| Continuous Integration      | [Jenkins CI](https://jenkins.io/)            |  Yes      | Jenkins is a common tool for Continuous Integration   |
-| Continuous Integration      | [Tekton CI](https://tekton.dev/)             |           | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
-| Code Analysis               | [SonarQube](https://www.sonarqube.org/)      |  Yes      | SonarQube can scan code and display the results in a dashboard |
-| Artifact and Helm Storage   | [Artifactory](https://jfrog.com/open-source/)|  Yes      | Artifactory is an artifact storage and Helm chart repository  |
-| Continuous Deployment       | [ArgoCD](https://argoproj.github.io/argo-cd/)|           | ArgoCD support Continuous Delivery with GitOps |
-| Contract API Testing        | [Pact](https://docs.pact.io/)                |           | Pact enables API contract testing |
-| Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)  |           | IDE for editing and managing code in a web browser |
+| Capability                  | Tool           | Bitnami |Description |
+| --------------------------- |:-------------- | ------- |------------|
+| Continuous Integration      | [Jenkins CI](/guides/continuous-integration/)            |  Yes    | Jenkins is a common tool for Continuous Integration   |
+| Continuous Integration      | [Tekton CI](/guides/continuous-integration-tekton)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
+| API Contract Testing        | [Pact](/guides/contract-testing/)                        |         | Pact enables API contract testing |
+| Code Analysis               | [SonarQube](/guides/code-analysis)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
+| Container Image Registry    | [Developer Tools Image Registry](/guides/image-registry) |         | Stores container images to be deployed |
+| Artifact Management         | [Artifactory](/guides/artifact-management/)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
+| Continuous Delivery         | [ArgoCD](/guides/continuous-delivery/)                   |         | ArgoCD support Continuous Delivery with GitOps |
+| Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)              |         | IDE for editing and managing code in a web browser |
 
 ## Getting Started
 
