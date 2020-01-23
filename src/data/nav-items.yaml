@@ -77,6 +77,8 @@
   pages:
     - title: Overview
       path: /admin/overview
+    - title: Plan Installation
+      path: /admin/plan-installation
     - title: Install with new cluster
       path: /admin/installation-ibm-cloud
     - title: Install into existing cluster
