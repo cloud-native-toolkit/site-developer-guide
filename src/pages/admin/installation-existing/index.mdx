@@ -67,27 +67,29 @@ Configure the key the CLI uses to create cloud services
 
 </PageDescription>
 
-- The installation scripts need an API key to authenticate to IBM Cloud.
+The installation scripts need an API key to authenticate to IBM Cloud.
 The following steps create the required API key and put them into a properties file.
 
-- The `credentials.properties` property file:
-    ```bash
-    classic.username=<CLASSIC_USERNAME>
-    classic.api.key=<CLASSIC_API_KEY>
-    ibmcloud.api.key=<IBMCLOUD_API_KEY>
-    ```
+The `credentials.properties` property file:
 
-- Since the cluster already exists, we'll only need to set the `ibmcloud.api.key` property.
+```bash
+classic.username=<CLASSIC_USERNAME>
+classic.api.key=<CLASSIC_API_KEY>
+ibmcloud.api.key=<IBMCLOUD_API_KEY>
+```
+
+Since the cluster already exists, we'll only need to set the `ibmcloud.api.key` property.
 
 ### Step A. Create the credentials.properties file
 
-- Inside the `iteration-zero-ibmcloud` folder, copy `credentials.template` to a file named `credentials.properties`.
-    ```bash
-    cd iteration-zero-ibmcloud
-    cp credentials.template credentials.properties
-    ```
+- Inside the `ibm-garage-iteration-zero` folder, copy `credentials.template` to a file named `credentials.properties`.
 
-- The `credentials.properties` file is already listed in the `.gitignore` file so that the file containing
+  ```bash
+  cd ibm-garage-iteration-zero
+  cp credentials.template credentials.properties
+  ```
+
+  The `credentials.properties` file is already listed in the `.gitignore` file so that the file containing
 your private API key will not be pushed to the server repository.
 
 ### Step B. Set the IBM Cloud API key
