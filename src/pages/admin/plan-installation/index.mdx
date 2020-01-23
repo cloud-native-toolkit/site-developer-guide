@@ -1,0 +1,46 @@
+---
+title: Plan Installation
+---
+
+<PageDescription>
+
+When you are creating Development environments for teams there are a number of element to consider when 
+giving access on the IBM Cloud.
+
+</PageDescription>
+
+## Overview
+
+### Dev Tools inside
+
+### Ops Tools outside
+
+### Teams for Developers 
+
+## Planning Team Topology
+    - Cluster per team
+    - Big Cluster with Namespace per team contributing into common TEST and PREPROD namespaces with ArgoCD
+
+## Preparing IBM Cloud
+
+## Cloud Preqs
+
+## Setup steps
+
+- Create Resource Group
+- Create access group (capatilised )
+- Create Cluster in the resource group name it `<team>-iks|ocp-cluster`
+    - 3 Node and 8cpu and 33gb memory (typically for a sensibel team)
+- Install Developer Tools into cluster following install existing guide
+- run `terraform/scripts/Usage: acp <ACCESS_GROUP> <RESOURCE_GROUP> <PREFIX> <REGION>`
+- apply RBAC Rules`terraform/scripts/rbac.sh <ACCESS-GROUP>`
+- Test `igc dashboard`
+- Complete setup of LogDNA
+- Complete setup of SysDig
+- Deploy a first app, test end to end
+- Complete Artifactory Setup
+- Complete ArgoCD Setup
+- Rerun pipeline to check app helm chart is added to Artifactory
+- Setup a GitOps repo to validate ArgoCD setup and configuration
+
+
