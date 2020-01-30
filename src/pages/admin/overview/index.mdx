@@ -10,9 +10,19 @@ Options for installing the Developer Tools environment
 
 ## Paths to Installation
 
-The IBM Garage for Cloud Developer Tools environment can be hosted in any Kubernetes or Red Hat OpenShift cluster, including those managed by the IBM Cloud. The environment is provisioned using [infrastructure-as-code](/admin/iasc) scripting that makes the process declaritive, automated, and repeatable. The provisioning code is implemented as Terraform scripts.
+The IBM Garage for Cloud Developer Tools environment can be hosted in any Kubernetes or Red Hat OpenShift cluster,
+including those managed by the IBM Cloud. The environment is provisioned using [infrastructure-as-code](/admin/iasc)
+scripting that makes the process declarative, automated, and repeatable. The provisioning code is implemented as
+Terraform scripts.
 
 - Before starting any of the installations paths, first install and configure the [prerequisite tools](/getting-started/prereqs).
+
+The scripts are organized in a number of stages. When an IBM Cloud managed cluster is used, the first stage will either
+provision a new cluster or connect to an existing cluster on IBM Cloud. If a managed IBM Cloud cluster is not used then
+the cluster can be provisioned by other means and the first stage will just expose the cluster configuration values. In
+this case, we would highly recommend provisioning the cluster using other Terraform scripts.
+
+![](/images/install.png)
 
 
 Select the approach that best suites your requirement:
