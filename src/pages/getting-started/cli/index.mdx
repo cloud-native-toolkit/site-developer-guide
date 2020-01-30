@@ -136,5 +136,14 @@ terminal. This image provides commonly used infrastructure tools like,
 repo and applies the selected pipeline. This command is intended to be run within the repository directory of a project for
 which a pipeline should be enabled.
 
+The `enable` command adds a number of files to the local filesystem, including but not limited to:
+
+- Helm chart
+- Dockerfile
+- Jenkinsfile
+
+After `enable` is called, the generated files should be committed and pushed to the git repository.
+
 The default pipeline repo is `https://ibm-garage-cloud.github.io/garage-pipelines/` but a different one can be used by
 providing the `--repo` argument.  The source for the provided pipeline repo can be found at `https://github.com/ibm-garage-cloud/garage-pipelines`
+to use as a template.
