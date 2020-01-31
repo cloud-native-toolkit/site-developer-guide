@@ -28,7 +28,7 @@ First, decide which data center will host the Developer Tools environment. That 
 - Region -- A geography such as *us-south* or *eu-gb*
 - Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
 
-Second, an account administrator must create or provide a [resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs). This resource group will control access to the environment's cluster and service instances. This resource group should typically be named after the development team, its project, or the application it is implementing.
+Second, an account administrator must create or provide a [resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs). This resource group will control access to the environment's cluster and service instances. This resource group should typically be named after the development team, its project, or the application it is implementing. *Because of a current limitation in the installation scripts, **the resource group's name should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters and the separators should be dashes.*
 - [Create the resource group](https://cloud.ibm.com/account/resource-groups)
 - To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure
     - A separate API key is needed for each region and resource group
