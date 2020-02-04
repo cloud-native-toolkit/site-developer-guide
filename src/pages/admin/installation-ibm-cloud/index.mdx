@@ -20,17 +20,76 @@ In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service]
 These instructions explain how to configure and run the Terraform infrastructure-as-code (IasC) scripts 
 to create the Developer Tools environment.
 
-The following prerequisites are required before following the setup instructions:
+### Step A. Prep the infrastructure
 
-- An IBM Cloud account with:
-    - the ability to provision resources including support for provisioning [Kubernetes](https://cloud.ibm.com/kubernetes/clusters) and [OpenShift](https://cloud.ibm.com/kubernetes/clusters?platformType=openshift) clusters.
-    - the ability to create a [Resource Group](https://cloud.ibm.com/account/resource-groups) for your development resources and admin rights to this resource group
-    - a region and zone containing [a pair of public and private VLANs](https://cloud.ibm.com/classic/network/vlans)
+The account must provide a resource group and a public/private pair of VLANs in the data center that will host the Developer Tools environment. These will be created by an account administrator, either the owner of the account or a user in the account with Administrator roles.
 
+First, decide which data center will host the Developer Tools environment. That will be specified with two settings:
+- Region -- A geography such as *us-south* or *eu-gb*
+- Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
 
-- Install the [Prerequisites](/getting-started/prereqs) listed before continuing
+Second, an account administrator must create or provide a [resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs). This resource group will control access to the environment's cluster and service instances. This resource group should typically be named after the development team, its project, or the application it is implementing. *Because of a current limitation in the installation scripts, **the resource group's name should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters and the separators should be dashes.*
+- [Create the resource group](https://cloud.ibm.com/account/resource-groups)
+- To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure
+    - A separate API key is needed for each region and resource group
+    - [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the infrastructure permissions the cluster service needs
+    - Perform the steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+    - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
+
+Third, an account administrator must create or provide a pair of public and private VLANs. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster.
+- Public and private VLANs -- [List existing VLANs](https://cloud.ibm.com/classic/network/vlans)
+    - [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
+    - [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
+    - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
+
+Fourth, the account administrator must grant the necessary permissions to the environment administrator, who is the user described in Part B who will run the scripts to create the environment. Ideally, the account administrator should create an access group, assign these permissions to the group, and add the environment administrator(s) to the group. Those permissions are:
+- Permission to create clusters
+    - The environment administrator must have the **Administrator** platform role and **Manager** service role at the account level for the IBM Cloud Kubernetes Service for the selected region and resource group, as described here: [Prepare to create clusters at the account level](https://cloud.ibm.com/docs/containers?topic=containers-clusters#cluster_prepare) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Creating clusters](https://cloud.ibm.com/docs/containers?topic=containers-clusters).)
+- Permission to admin the IBM Cloud Container Registry
+    - The environment administrator must have the **Administrator** platform role at the account level for the Container Registry *for all regions and resource groups*, as described here: [Updating existing clusters to use the API key image pull secret](https://cloud.ibm.com/docs/containers?topic=containers-images#imagePullSecret_migrate_api_key) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Building containers from images](https://cloud.ibm.com/docs/containers?topic=containers-images).)
+- Permission to create service instances
+    - The environment administrator must have the **Administrator** platform role and **Manager** service role at the account level for all IAM enabled services
+    - To grant the environment administrator access to the services, [Access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser#resourceaccess) (Navigate to [Managing identity and access](https://cloud.ibm.com/docs/iam) > [Managing access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser).) explains how to navigate to the **Assign access to &lt;user>** page
+    - On the the **Assign access to &lt;user>** page, set this access:
+        - Expand the **Assign users additional access** section
+        - Select **IAM services**
+        - Set the type of access to **All Identity and Access enabled services** in **Account**
+        - Set the region to **All regions**
+        - Set Platform access to **Administrator**
+        - Set Service access to **Manager**
+
+        ![Assign Access](/images/assign-access-all-services.png)
+
+Fifth, the account administrator must create an access group to enable developers to access the Developer Tools environment. This can be done later, after the environment is created.
+- Create an [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), typically named after the development team
+- Users: Add the the developers to the group
+- Access policies: Grant the group:
+    - Viewer access to the resource group
+    - Editor and Writer access to all services in the resource group
+
+### Step B. Prepare to run scripts
+
+An environment administrator will run the scripts to create the Developer Tools environment in the data center. The scripts will run as the environment administrator's user, so the user needs the permissions described in Step A.
+
+To run the scripts, install the client tools needed to use the Developer Tools environment:
+- Install the [Prerequisites](/getting-started/prereqs)
+
+The environment administrator must be able to log into IBM Cloud, specifying the region and resource group. That is effectively what the scripts will do when they run.
+
+Optional: Once logged in, check that the resource group and VLANs exist:
+- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
+- [Existing VLANs](https://cloud.ibm.com/classic/network/vlans) -- Verify that the two VLANs specified are in the list and that they are defined in the proper data center
+- [Existing Kubernetes clusters](https://cloud.ibm.com/kubernetes/clusters) -- See what clusters (Kubernetes and OpenShift) already exist in the resource group and confirm one does not already exist for the environment you want to create
+
+Optional: Once logged in, test creating a couple of resources to confirm that this user has the permissions to do so:
+- [Create a cluster](https://cloud.ibm.com/kubernetes/catalog/cluster/create) -- Make it single-zone, and specify the proper data center and resource group
+- [Create an instance of Cloudant](https://cloud.ibm.com/catalog/services/cloudant) -- Select a paid plan and specify the proper region and resource group
+- [Create an instance of Sysdig](https://cloud.ibm.com/observe/monitoring/create) -- Select a paid plan and specify the proper region and resource group
+
+As long as the user can create these resources successfully, the scripts should be able to as well. You can delete these test resources.
 
 </Tab>
+
 
 <Tab label="Download">
 
@@ -51,6 +110,7 @@ Obtain the Terraform infrastructure-as-code (IasC) scripts that will create the 
     ```
 
 </Tab>
+
 
 <Tab label="API keys">
 
@@ -97,11 +157,11 @@ your private API keys will not be pushed to the server repository.
 
     - If your account already has a classic infrastructure API key, it will appear in the list of keys as **Classic infrastructure API key**. Otherwise, the page will have a **Create a classic infrastructure API key** button on the top. To crate the key, press that button and close the dialog.
 
-    ![API Keys](apikeys.png)
+    ![API Keys](/images/apikeys.png)
 
     - Find **Classic infrastructure API key** in the list and open its details.
 
-    ![Classic Keys](classickeys.png)
+    ![Classic Keys](/images/classickeys.png)
 
 - Edit the `credentials.properties` file to set the values for the `classic.username` and `classic.api.key` properties.
 
@@ -114,6 +174,7 @@ your private API keys will not be pushed to the server repository.
 - Edit the `credentials.properties` file to set the value for the `ibmcloud.api.key` property.
 
 </Tab>
+
 
 <Tab label="Configuration">
 
@@ -257,8 +318,6 @@ in a format that is easy to cut/paste into the `vlan.tfvars` properties file.
 Note: that you need to log into your account using the IBM Cloud CLI to use this this approach.
 
 </InlineNotification>
-
-
 
 </Tab>
 

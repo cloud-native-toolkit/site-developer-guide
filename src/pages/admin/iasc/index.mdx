@@ -9,7 +9,7 @@ title: Infrastructure as Code
 
 ## Overview
 
-`Infrastruture as Code` is the practice of defining and managing the logic used to provision infrastructure as versioned
+`Infrastructure as Code` is the practice of defining and managing the logic used to provision infrastructure as versioned
 artifacts in the same way that code artifacts have traditionally been handled. There are a number of different tools and
 frameworks available that enable this type of approach. The IBM Garage for Cloud Developer Tools currently leverage 
 Terraform as the technology used to implement the Infrastructure as Code strategy.
@@ -34,66 +34,8 @@ scripts.
 
 ## Iteration Zero terraform scripts
 
-The Iteration Zero terraform scripts make use of the modules to provision and prepare an environment. A listing of
-the files within the repository is shown below.
-
-```
-.
-├── LICENSE
-├── README.md
-├── credentials.template
-├── launch.sh
-├── docs
-│   ├── APIKEYS.md
-│   ├── VLAN.md
-│   └── images
-│       ├── apikeys.png
-│       ├── catalyst-provisioned-environment.drawio
-│       ├── catalyst-provisioned-environment.png
-│       ├── classickeys.png
-│       └── devcluster.png
-└── terraform
-    ├── runTerraform.sh
-    ├── scripts
-    │   ├── apply.sh
-    │   ├── destroy-cluster.sh
-    │   ├── destroy-services.sh
-    ├── settings
-    │   ├── environment.tfvars
-    │   └── vlan.tfvars
-    ├── stages
-    │   ├── stage0.tf
-    │   ├── stage1-cluster.tf
-    │   ├── stage1-namespaces.tf
-    │   ├── stage1-postgres.tf
-    │   ├── stage2-argocd.tf
-    │   ├── stage2-artifactory.tf
-    │   ├── stage2-catalystdashboard.tf
-    │   ├── stage2-jenkins.tf
-    │   ├── stage2-pactbroker.tf
-    │   ├── stage2-sonarqube.tf
-    │   ├── stage3-appid.tf
-    │   ├── stage3-cloud_object_storage.tf
-    │   ├── stage3-cloudant.tf
-    │   ├── stage3-logdna.tf
-    │   ├── stage3-sysdig.tf
-    │   └── variables.tf
-    ├── stages-crc
-    │   ├── stage0.tf
-    │   ├── stage1-cluster.tf
-    │   ├── stage1-namespaces.tf
-    │   ├── stage1-postgres.tf
-    │   ├── stage2-argocd.tf
-    │   ├── stage2-artifactory.tf
-    │   ├── stage2-catalystdashboard.tf
-    │   ├── stage2-jenkins.tf
-    │   ├── stage2-pactbroker.tf
-    │   ├── stage2-sonarqube.tf
-    │   └── variables.tf
-    └── templates
-        └── stage0
-            └── backend-postgres.tf
-```
+The Iteration Zero terraform scripts make use of the modules to provision and prepare an environment. The logic is
+provided as `stages` that can be removed and added as needed.
 
 ### Stages
 
@@ -193,35 +135,6 @@ provisioned environment. The modules are organized into one of three major categ
     Modules that can be applied independent of the environment (e.g. software that is installed
     into a running kubernetes environment)
 
-```
-.
-├── README.md
-├── developer_contribution.md
-├── governance.md
-├── cloud-managed
-│   ├── cluster
-│   │   └── ibmcloud
-│   └── services
-│       ├── appid
-│       ├── cloud_object_storage
-│       ├── cloudant
-│       ├── logdna
-│       ├── postgres
-│       └── sysdig
-├── generic
-│   ├── cluster
-│   │   ├── namespaces
-│   │   └── serviceaccount
-│   └── tools
-│       ├── argocd_release
-│       ├── artifactory_release
-│       ├── catalystdashboard_release
-│       ├── jenkins_release
-│       ├── pactbroker_release
-│       └── sonarqube_release
-└── self-managed
-    ├── cluster
-    │   └── openshift_cluster
-    └── software
-        └── postgres
-```
+A listing of the modules is shown below:
+
+![](/images/modules.png)

@@ -116,6 +116,9 @@ which a pipeline should be generated. You can supply a new namespace for your pi
 igc pipeline -n team-a
 ```
 
+The pipeline command supports both `jenkins` and `tekton` pipelines using the flags `--jenkins` or `--tekton`,
+respectively.  Jenkins is the default if no value is provided.
+
 ### namespace
 
 Creates a new namespace/project in your cluster and copies the necessary `configMaps` and `secrets` from the `tools` namespace.
@@ -126,3 +129,21 @@ This enables new pipelines to be registered and run and for them to have access 
 Launches the `ibm-garage-cli-tools` docker image in an interactive
 terminal. This image provides commonly used infrastructure tools like,
 `terraform`, `kubectl`, `oc` etc.
+
+### enable
+
+"Enables" an existing project with the DevOps infrastructure. The CLI reads the available pipelines from a pipeline
+repo and applies the selected pipeline. This command is intended to be run within the repository directory of a project for
+which a pipeline should be enabled.
+
+The `enable` command adds a number of files to the local filesystem, including but not limited to:
+
+- Helm chart
+- Dockerfile
+- Jenkinsfile
+
+After `enable` is called, the generated files should be committed and pushed to the git repository.
+
+The default pipeline repo is `https://ibm-garage-cloud.github.io/garage-pipelines/` but a different one can be used by
+providing the `--repo` argument.  The source for the provided pipeline repo can be found at `https://github.com/ibm-garage-cloud/garage-pipelines`
+to use as a template.
