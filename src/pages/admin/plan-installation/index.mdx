@@ -67,46 +67,57 @@ Third, an account administrator must create or provide a pair of public and priv
 
 Fourth, the account administrator must grant the necessary permissions to the environment administrator, who is the user who will run the scripts to create the environment. Ideally, the account administrator should create an access group, assign these policies to the group, and add the environment administrator(s) to the group. The account administrator can perform this by running a script or using the console.
 
-- Use the admin policies script
+### Admin policies script
 
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-ADMIN`
-    - Run the script `./terraform/scripts/acp-admin`, which will add the necessary policies to the access group
-    - Add the environment administrator(s) to the group
+Use the admin policies script
 
-- Or instead of using the script, manually add the policies to the user or access group
-    - Permission to create clusters
-        - The environment administrator must have the **Administrator** platform role and **Manager** service role at the account level for the IBM Cloud Kubernetes Service for the selected region and resource group, as described here: [Prepare to create clusters at the account level](https://cloud.ibm.com/docs/containers?topic=containers-clusters#cluster_prepare) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Creating clusters](https://cloud.ibm.com/docs/containers?topic=containers-clusters).)
-    - Permission to admin the IBM Cloud Container Registry
-        - The environment administrator must have the **Administrator** platform role at the account level for the Container Registry *for all regions and resource groups*, as described here: [Updating existing clusters to use the API key image pull secret](https://cloud.ibm.com/docs/containers?topic=containers-images#imagePullSecret_migrate_api_key) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Building containers from images](https://cloud.ibm.com/docs/containers?topic=containers-images).)
-    - Permission to create service instances
-        - The environment administrator must have the **Administrator** platform role and **Manager** service role for the resource group for all IAM enabled services
-        - To grant the environment administrator access to the services, [Access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser#resourceaccess) (Navigate to [Managing identity and access](https://cloud.ibm.com/docs/iam) > [Managing access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser).) explains how to navigate to the **Assign access to &lt;user>** page
-        - On the the **Assign access to &lt;user>** page, set this access:
-            - Expand the **Assign users additional access** section
-            - Select **IAM services**
-            - Set the type of access to **All Identity and Access enabled services**
-            - Set the in field to your resource group
-            - Set the region to **All regions**
-            - Set Platform access to **Administrator**
-            - Set Service access to **Manager**
-            - Set Resource group access to **Viewer**
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-ADMIN`
+- Run the script `./terraform/scripts/acp-admin`, which will add the necessary policies to the access group
+- Add the environment administrator(s) to the group
 
-            ![Assign Access](/images/assign-access-all-services.png)
+### Console
+
+Or instead of using the script, manually add the policies to the user or access group
+
+#### Permission to create clusters
+- The environment administrator must have the **Administrator** platform role and **Manager** service role at the account level for the IBM Cloud Kubernetes Service for the selected region and resource group, as described here: [Prepare to create clusters at the account level](https://cloud.ibm.com/docs/containers?topic=containers-clusters#cluster_prepare) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Creating clusters](https://cloud.ibm.com/docs/containers?topic=containers-clusters).)
+
+#### Permission to admin the IBM Cloud Container Registry
+- The environment administrator must have the **Administrator** platform role at the account level for the Container Registry *for all regions and resource groups*, as described here: [Updating existing clusters to use the API key image pull secret](https://cloud.ibm.com/docs/containers?topic=containers-images#imagePullSecret_migrate_api_key) (Navigate to [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-getting-started) > [Building containers from images](https://cloud.ibm.com/docs/containers?topic=containers-images).)
+
+#### Permission to create service instances
+- The environment administrator must have the **Administrator** platform role and **Manager** service role for the resource group for all IAM enabled services
+- To grant the environment administrator access to the services, [Access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser#resourceaccess) (Navigate to [Managing identity and access](https://cloud.ibm.com/docs/iam) > [Managing access to resources](https://cloud.ibm.com/docs/iam?topic=iam-iammanidaccser).) explains how to navigate to the **Assign access to &lt;user>** page
+- On the the **Assign access to &lt;user>** page, set this access:
+    - Expand the **Assign users additional access** section
+    - Select **IAM services**
+    - Set the type of access to **All Identity and Access enabled services**
+    - Set the in field to your resource group
+    - Set the region to **All regions**
+    - Set Platform access to **Administrator**
+    - Set Service access to **Manager**
+    - Set Resource group access to **Viewer**
+
+    ![Assign Access](/images/assign-access-all-services.png)
 
 Fifth, the account administrator must create an access group to enable developers to access the Developer Tools environment. This can be done later, after the environment is created.
 
-- Use the dev policies script
+### Admin policies script
 
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-DEV`
-    - Run the script `./terraform/scripts/acp-dev`, which will add the necessary policies to the access group
-    - Add the developers to the group
+Use the dev policies script
 
-- Or instead of using the script, manually add the policies to the access group
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-DEV`
-     - Access policies: Grant the group:
-         - Access to the resource group
-         - Access to the cluster
-         - Access to the image registry
-         - Editor and Manager (but not Administrator) access to each of the services in the resource group
-   - Users: Add the the developers to the group
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-DEV`
+- Run the script `./terraform/scripts/acp-dev`, which will add the necessary policies to the access group
+- Add the developers to the group
+
+### Console
+
+Or instead of using the script, manually add the policies to the access group
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<project>-DEV`
+ - Access policies: Grant the group:
+     - Access to the resource group
+     - Access to the cluster
+     - Access to the image registry
+     - Editor and Manager (but not Administrator) access to each of the services in the resource group
+- Users: Add the the developers to the group
 
