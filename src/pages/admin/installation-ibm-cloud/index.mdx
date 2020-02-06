@@ -14,17 +14,30 @@ Prepare to run Terraform to create a new cluster and install the Developer Tools
 
 The Developer Tools environment is installed by an environment administrator, who will run the scripts to create the environment in an IBM Cloud account. The scripts will run as the environment administrator's user, so the user needs the permissions described in [Plan Installation](/admin/plan-installation). These instructions explain how to configure and run the Terraform [infrastructure-as-code](/admin/iasc) (IasC) scripts to create the Developer Tools environment.
 
+### Prepare local system
+
 To run the scripts, install the client tools needed to use the Developer Tools environment:
 - Install the [Prerequisites](/getting-started/prereqs)
 
-The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
+### Test login
 
-Optional: To help confirm that the account has the resources the scripts will require, the environment administrator may  log into the account view the resources:
-- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
+Optional: The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
+
+- Log in to the IBM Cloud CLI
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
+    ```
+
+### Confirm resources
+
+Optional: To help confirm that the account has the resources the scripts will require (see [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account view the resources:
 - [Existing VLANs](https://cloud.ibm.com/classic/network/vlans) -- Verify that the two VLANs specified are in the list and that they are defined in the proper data center
+- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
 - [Existing Kubernetes clusters](https://cloud.ibm.com/kubernetes/clusters) -- See what clusters (Kubernetes and OpenShift) already exist in the resource group and confirm one does not already exist for the environment you want to create
 
-Optional: To help confirm that the scripts will have the permissions they'll require, the environment administrator may  log into the account and test creating a couple of resources:
+### Confirm permissions
+
+Optional: To help confirm that the scripts will have the permissions they'll require (see the administrators access group in [Plan Installation](/admin/plan-installation)), the environment administrator may  log into the account and test creating a couple of resources:
 - [Create a cluster](https://cloud.ibm.com/kubernetes/catalog/cluster/create) -- Make it single-zone, and specify the proper data center and resource group
 - Create a namespace in the image registry
 - [Create an instance of Cloudant](https://cloud.ibm.com/catalog/services/cloudant) -- Select a paid plan and specify the proper region and resource group
@@ -141,7 +154,7 @@ There is a tool for optionally generating the VLAN variables.
 
 ### Environment variables
 
-The `environment.tfvars` properties will be used to install the Development Tools.
+The `environment.tfvars` properties will be used to install the Development Tools environment.
 
 - Typical values look like this:
     ```bash
@@ -152,21 +165,21 @@ The `environment.tfvars` properties will be used to install the Development Tool
 
     # The cluster name can be provided (particularly if using existing cluster) or it will
     # default to '${resource_group_name}-cluster'
-    cluster_name="catalyst-team-cluster"
+    #cluster_name="catalyst-team-cluster"
 
     resource_group_name="catalyst-team"
+    vlan_region="us-south"
+
+    # Flag indicating if we are using an existing postgres server or creating a new one
+    postgres_server_exists="true"
     ```
 
-- In `environment.tfvars`, you must set `resource_group_name` and `cluster_name`.
+- You must set `resource_group_name` and `vlan_region`, using the values provided by the account administrator
 
-- Set the `resource_group_name` property to specify the resource group for the environment's resources.
-This resource group enables all of the resources to work together
-and will help distinguish the Developer Tools resources from the other resources in the same IBM Cloud account.
-The resource group can be a new one--see the instructions below.
-
-The others have reasonable defaults that you can change if desired: 
-- Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**.
-- Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance.
+The other variables have reasonable defaults that you can change if desired:
+- Set `cluster_name` to specify any valid cluster name that is not already in use or leave unset
+- Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**
+- Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance
 
 <InlineNotification>
 
@@ -174,31 +187,6 @@ Note: **PostgreSQL** can take some time to provision, so in some cases it is wor
 to be in the same region and names `<resource-group>-postgresql`.
 
 </InlineNotification>
-
-### Resource group
-
-The Developer Tools environment needs to be organized in a resource group.
-The environment consists of several IBM Cloud resources--a Kubernetes or OpenShift cluster,
-some cloud service instances, etc.
-[IBM Cloud Identity and Access Management](https://cloud.ibm.com/docs/iam "Managing identity and access")
-manages access to resources by organizing them into resource groups, so that one access policy can easily be applied
-to all of the resources in a group.
-
-- Either choose a resource group that already exists in your account or create a new one. To create a resource group:
-
-    - [Creating a resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs#create_rgs "Creating and managing resource groups")
-
-### Cluster name
-
-The heart of the Developer Tools environment is a cluster, either Kubernetes or OpenShift (as specified in the `cluster_type` property).
-In `environment.tfvars`, set the `cluster_name` property to any valid cluster name that is not already in use.
-
-<InlineNotification>
-
-Note: You can leave the `customer_name` property commented out and Terraform will auto generate a name for you
-
-</InlineNotification>
-
 
 ### VLANs
 
@@ -212,56 +200,31 @@ The `vlan.tfvars` properties will be used to create the cluster that the Develop
     private_vlan_id="2366012"
     ```
 
-You must set all of these specifically for your cluster. The IGC CLI can be used to determine these values (see below).
-
-A cluster is [managed in a particular zone in a particular region](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment").
-If the account you're using has multiple regions and zones, you need to decide what region and zone you'll want the cluster created in.
+You must set all of these specifically for your cluster. Use the values provided by the account administrator.
 
 - In `vlan.tfvars`, set the following properties:
    - `vlan_region` -- The region that the cluster will be in
    - `vlan_datacenter` -- The zone in that region that the cluster will be in
-
-- The [networking in a Kubernetes or OpenShift cluster](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics "Understanding network basics of classic clusters")
-consists of (at a minimum) two VLANs, a public VLAN and a private VLAN.
-Specify a pair of VLANs in the desired region and zone.
-
-- In `vlan.tfvars`, set the following properties:
     - `public_vlan_id` -- The public VLAN that the cluster will use
     - `private_vlan_id` -- The private VLAN that the cluster will use
 
-Advanced users who want to specifiy the settings can determine the VLAN info manually:
-[Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans "VLANs") explains how to open the
-VLAN List page in the console. Choose the public and private VLANs for the region and zone you want to
-host the Developer Tools environment. If suitable VLANs don't already exist, you will need to create them here.
+#### Optional: Generate the properties
 
-### Optional: Generate the VLAN properties for you to make the configuration as simple as possible.
+The IGC CLI can be used to generate these settings, to make the configuration as simple as possible.
 
-The IGC CLI can be used to generate these settings.
+If your account has numerous VLANs and you want your Developer Tools cluster to use specific ones, then skip this step. This tool is for users who don't know what these required settings should be and want a simple way to gather reasonable defaults for their particular account.
 
-If your account has numerous VLANs and you want your Developer Tools cluster to use specific ones, then skip this step. 
-This tool is for users who don't know what these required settings should be and want a simple way 
-to gather reasonable defaults for their particular account.
+The [IGC CLI](/getting-started/cli) has a command to gather this information for you, in a format that is easy to cut/paste into the `vlan.tfvars` properties file.
 
-The [IGC CLI](cli) has a command to gather this information for you, 
-in a format that is easy to cut/paste into the `vlan.tfvars` properties file. 
+- Install the IGC CLI
 
-- Install the CLI
-    ```bash
-    npm i -g @garage-catalyst/ibm-garage-cloud-cli
-    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
-    ```
+- Log in to IBM Cloud using its CLI
 
 - Run the VLAN command
     ```bash
     igc vlan
     ```
-- Copy the output values from the CLI Command into your `vlan.tfvars` files and **Save** and continue.
-
-<InlineNotification>
-
-Note: that you need to log into your account using the IBM Cloud CLI to use this this approach.
-
-</InlineNotification>
+- Copy the output values from the CLI Command into your `vlan.tfvars` files and **Save** and continue
 
 </Tab>
 

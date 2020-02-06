@@ -13,23 +13,26 @@ giving access on the IBM Cloud.
 
 TBD
 
+
 ## Prepare account
 
 The account must provide a few resources that will be needed to install the Developer Tools environment: a public/private pair of VLANs, a resource group, and a pair of access groups for the admin and developers. These will be created by an account administrator, either the owner of the account or a user in the account with Administrator roles.
 
+
 ### Data center
 
-First, decide which data center will host the Developer Tools environment. That will be specified with two settings:
+First, decide which [IBM Cloud location](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") will host the Developer Tools environment. That will be specified with two settings:
 - Region -- A geography such as *us-south* or *eu-gb*
 - Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
 
+
 ### Public and private VLANs
 
-Second, create or provide a pair of public and private VLANs. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster.
+Second, create or provide a pair of public and private VLANs for the selected region and zone. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster.
 
 <InlineNotification>
 
-Note: An account typically automatically has a pair of VLANs for each region. If so, you can use those.
+Note: An account typically automatically has a pair of VLANs for each region and zone. If so, you can use those.
 
 </InlineNotification>
 
@@ -38,6 +41,7 @@ Note: An account typically automatically has a pair of VLANs for each region. If
     - [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
     - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
 - Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to verify it can find two VLANs to use
+
 
 ### Resource group
 
@@ -57,9 +61,34 @@ To create clusters in the resource group, the account will need API keys for the
     - Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
     - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
 
+
+### Prepare to run scripts
+
+Fourth, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
+
+Clone the Git repository with the scripts. (This repo also has the scripts for installing the Developer Tools environment.)
+
+- Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
+    ```bash
+    git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+    ```
+
+- Switch to the cloned directory
+    ```bash
+    cd ibm-garage-iteration-zero
+    ```
+
+The scripts need you to log into IBM Cloud first. In the terminal you'll use to run the scripts, log in to IBM Cloud.
+
+- Log in to the IBM Cloud CLI
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
+    ```
+
+
 ### Access group for administrators
 
-Fourth, create an access group to grant the necessary permissions to the environment administrator (who is the user who will run the scripts to create the environment). Do this by running a script or using the console.
+Fifth, create an access group to grant the necessary permissions for installing a Developer Tools environment. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
 - Use the admin policies script
 
@@ -93,9 +122,10 @@ RESOURCE_GROUP_NAME resource group
 resourceType string equals resource-group, resource string equals RESOURCE_GROUP_NAME
 ```
 
+
 ### Access group for developers
 
-Fifth, create an access group to enable developers to access the Developer Tools environment. This can be done later, after the environment is created, either by running a script or using the console.
+Sixth, create an access group to enable developers to access the Developer Tools environment. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
 
 - Use the dev policies script
 
@@ -109,3 +139,8 @@ Fifth, create an access group to enable developers to access the Developer Tools
     - Access to the image registry
     - Editor and Manager (but not Administrator) access to each of the services in the resource group
 
+<InlineNotification kind="warning">
+
+**Warning**: Like you did for the administrators' access group, if you use the script to populate the policies in this access group, use the console to manually add a second resource Viewer policy.
+
+</InlineNotification>
