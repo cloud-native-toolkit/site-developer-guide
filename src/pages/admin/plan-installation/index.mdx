@@ -51,14 +51,11 @@ Note: Because of a current limitation in the installation scripts, **the resourc
 
 - [Create the resource group](https://cloud.ibm.com/account/resource-groups)
 
-<InlineNotification>
+To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure. A separate API key is needed for each region and resource group. [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the classic infrastructure permissions the cluster service needs. This key grants these permissions to the cluster service, so that any user with permissions to create a cluster can do so without requiring any classic infrastructure permissions.
 
-Note: To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure. A separate API key is needed for each region and resource group. [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the classic infrastructure permissions the cluster service needs. This key grants these permissions to the cluster service, so that any user with permissions to create a cluster can do so without requiring any classic infrastructure permissions.
-
-- Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
-- The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
-
-</InlineNotification>
+- Create an API key for the resource group and the data center's region
+    - Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+    - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
 
 ### Access group for administrators
 
