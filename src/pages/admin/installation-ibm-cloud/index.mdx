@@ -23,7 +23,7 @@ To run the scripts, install the client tools needed to use the Developer Tools e
 
 Optional: The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
 
-- Log in to the IBM Cloud CLI
+- Log in to IBM Cloud using the CLI
     ```bash
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
     ```
@@ -37,7 +37,7 @@ Optional: To help confirm that the account has the resources the scripts will re
 
 ### Confirm permissions
 
-Optional: To help confirm that the scripts will have the permissions they'll require (see the administrators access group in [Plan Installation](/admin/plan-installation)), the environment administrator may  log into the account and test creating a couple of resources:
+Optional: To help confirm that the scripts will have the permissions they'll require (see the administrators access group in [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account and test creating a couple of resources:
 - [Create a cluster](https://cloud.ibm.com/kubernetes/catalog/cluster/create) -- Make it single-zone, and specify the proper data center and resource group
 - Create a namespace in the image registry
 - [Create an instance of Cloudant](https://cloud.ibm.com/catalog/services/cloudant) -- Select a paid plan and specify the proper region and resource group
@@ -157,6 +157,7 @@ There is a tool for optionally generating the VLAN variables.
 The `environment.tfvars` properties will be used to install the Development Tools environment.
 
 - Typical values look like this:
+
     ```bash
     # The type of cluster that will be created/used (kubernetes or openshift)
     cluster_type="kubernetes"

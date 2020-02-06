@@ -25,17 +25,30 @@ to remove all the services beside **PostgreSQL** `./destroy-services.sh postgres
 
 </InlineNotification>
 
+### Prepare local system
+
 To run the scripts, install the client tools needed to use the Developer Tools environment:
 - Install the [Prerequisites](/getting-started/prereqs)
 
-The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
+### Test login
 
-Optional: To help confirm that the account has the resources the scripts will require, the environment administrator may  log into the account view the resources:
-- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
+Optional: The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
+
+- Log in to IBM Cloud using the CLI
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
+    ```
+
+### Confirm resources
+
+Optional: To help confirm that the account has the resources the scripts will require (see [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account view the resources:
 - [Existing VLANs](https://cloud.ibm.com/classic/network/vlans) -- Verify that the two VLANs specified are in the list and that they are defined in the proper data center
+- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
 - [Existing Kubernetes clusters](https://cloud.ibm.com/kubernetes/clusters) -- See what clusters (Kubernetes and OpenShift) already exist in the resource group and confirm one does not already exist for the environment you want to create
 
-Optional: To help confirm that the scripts will have the permissions they'll require, the environment administrator may  log into the account and test creating a couple of resources:
+### Confirm permissions
+
+Optional: To help confirm that the scripts will have the permissions they'll require (see the administrators access group in [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account and test creating a couple of resources:
 - [Create a cluster](https://cloud.ibm.com/kubernetes/catalog/cluster/create) -- Make it single-zone, and specify the proper data center and resource group
 - Create a namespace in the image registry
 - [Create an instance of Cloudant](https://cloud.ibm.com/catalog/services/cloudant) -- Select a paid plan and specify the proper region and resource group
@@ -133,16 +146,21 @@ The `environment.tfvars` properties will be used to install the Development Tool
     # The type of cluster that will be created/used (kubernetes or openshift)
     cluster_type="kubernetes"
     # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="true"
+    cluster_exists="false"
 
     # The cluster name can be provided (particularly if using existing cluster) or it will
     # default to '${resource_group_name}-cluster'
-    cluster_name="catalyst-team-cluster"
+    #cluster_name="catalyst-team-cluster"
 
     resource_group_name="catalyst-team"
+    vlan_region="us-south"
+
+    # Flag indicating if we are using an existing postgres server or creating a new one
+    postgres_server_exists="true"
     ```
 
 - Set them based on the existing cluster:
+    - `vlan_region` -- The existing cluster's region
     - `resource_group_name` -- The existing cluster's resource group
     - `cluster_name` -- The existing cluster's name
     - `cluster_exists` -- Set to `"true"` for the existing cluster
