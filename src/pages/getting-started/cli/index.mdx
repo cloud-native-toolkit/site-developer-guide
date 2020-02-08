@@ -139,9 +139,7 @@ is provided, `dev` is used.
 ### namespace
 
 Creates a new namespace/project in your cluster and copies the necessary `configMaps` and `secrets` from the `tools` namespace.
-This enables new pipelines to be registered and run and for them to have
- access to all the essential data needed to access the tools and the IBM
-  Cloud platform.
+This enables new pipelines to be registered and run and for them to have access to all the essential data needed to access the tools and the IBM Cloud platfrom.
 
 ```bash
 igc namespace dev-team-a
@@ -157,6 +155,7 @@ which a pipeline should be generated. You can supply a new namespace for your pi
 ```
 igc pipeline -n dev-team-a
 ```
+
 
 The pipeline command supports both `jenkins` and `tekton` pipelines using the flags `--jenkins` or `--tekton`,
 respectively.  Jenkins is the default if no value is provided.
