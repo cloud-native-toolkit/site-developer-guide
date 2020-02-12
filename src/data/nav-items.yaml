@@ -47,7 +47,7 @@
     - title: Overview
       path: /codepatterns/overview
     - title: Git Repos
-      path: /codepatterns/codepatterns
+      path: /codepatterns/gitrepos
 
 - title: Programming Guide
   pages:
@@ -70,7 +70,7 @@
       path: /practical/cp4apps2
     - title: App Modernization -  1
       path: /practical/appmod-exercise1
-    - title: App Mdernization - 2
+    - title: App Modernization - 2
       path: /practical/appmod-exercise2
 
 - title: Administrator Guide

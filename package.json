@@ -8,19 +8,37 @@
     "build": "gatsby build --prefix-paths",
     "dev": "gatsby develop",
     "dev:clean": "gatsby clean && gatsby develop",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run dev",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+<<<<<<< HEAD
     "gatsby": "^2.19.22",
     "gatsby-plugin-google-analytics": "^2.1.29",
     "gatsby-source-filesystem": "^2.1.39",
     "gatsby-theme-carbon": "^1.21.1",
+=======
+    "gatsby": "^2.19.0",
+    "gatsby-theme-carbon": "^1.20.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "gatsby-plugin-global-context": "^1.0.0",
+    "gatsby-plugin-google-analytics": "^2.1.29",
+>>>>>>> Updates for naming
     "gatsby-transformer-json": "^2.2.20",
     "lodash": "latest",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby-image": "^2.2.39",
+    "gatsby-plugin-manifest": "^2.2.39",
+    "gatsby-plugin-offline": "^3.0.32",
+    "gatsby-source-filesystem": "^2.1.46",
+    "prop-types": "^15.7.2",
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^2.1.1",
+    "prettier": "^1.19.1"
   }
 }
