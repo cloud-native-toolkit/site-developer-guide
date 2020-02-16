@@ -2,6 +2,8 @@
 title: Installation Overview
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Options for installing the Developer Tools environment
@@ -10,7 +12,7 @@ Options for installing the Developer Tools environment
 
 ## Paths to Installation
 
-The IBM Garage for Cloud Developer Tools environment facilitates development and deployment of cloud-native applications.
+The <Globals string="longName"/> environment facilitates development and deployment of cloud-native applications.
 It can be hosted in any Kubernetes or Red Hat OpenShift cluster, including those managed by the IBM Cloud. In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
 [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift).
 
@@ -20,7 +22,7 @@ The environment is provisioned using [infrastructure-as-code](/admin/iasc) scrip
 
 The scripts are organized in a number of stages. When an IBM Cloud managed cluster is used, the first stage will either
 provision a new cluster or connect to an existing cluster on IBM Cloud. If a managed IBM Cloud cluster is not used then
-the cluster can be provisioned by other means and the first stage will just expose the cluster configuration values. In
+the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration values. In
 this case, we would highly recommend provisioning the cluster using other Terraform scripts.
 
 ![](/images/install.png)

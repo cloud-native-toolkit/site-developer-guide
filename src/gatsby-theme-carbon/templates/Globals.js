@@ -1,12 +1,15 @@
 import React from 'react';
 
-const longName = "IBM Garage Cloud Native Toolkit";
-const shortName  = "Cloud Native Toolkit";
+const globals = {};
+globals.longName   = "IBM Garage Cloud Native Toolkit";
+globals.shortName  = "Cloud Native Toolkit";
+globals.env  = "Developer Environment";
 
-export default ({content}) => {
+export default ({string}) => {
 
     return (
         <>
+            {globals[string]}
         </>
     )
 }

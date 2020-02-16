@@ -1,20 +1,20 @@
 ---
 title: Overview
 ---
-import Globals from 'gatsby-theme-carbon/src/templates/Globals';
-
+import Globals from '/gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Get familiar with using the {longName}
+Get familiar with using the <Globals string="longName" />
 
 </PageDescription>
 
-## Developer Tools
+## Developer Environment
 
-The IBM Garage for Cloud Developer Tools is an environment for developing cloud-native applications for deployment 
-to Kubernetes and Red Hat OpenShift. It embodies IBM Garage Method principles and practices for consistently developed 
-applications incorporating best practices that increase developer velocity for efficient delivery of business value.
+<Globals string="longName" /> provides an environment for developing cloud
+-native applications for deployment within Kubernetes and Red Hat OpenShift. 
+It embodies IBM Garage Method principles and practices for consistently
+ developed applications incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 ### Overview
 
@@ -23,10 +23,10 @@ A short video introducing the concepts of DevOps with Red Hat OpenShift
 
 <p></p>
 
-Each development team installs its own copy of the Developer Tools environment into the team's account. 
-The environment includes several features that support IBM Garage Method best practices for consistent and rapid development of cloud-native applications:
+Each development team installs its own copy of the into the team's account. The environment includes several features that support IBM Garage Method best practices for consistent and rapid development of cloud-native applications:
 
-- **Installation**: The Developer Tools are able to install themselves as a new environment 
+- **Installation**: The <Globals string="shortName"/> are able to install
+ themselves as a new environment 
 - **Cluster**: A Kubernetes or OpenShift cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
 - **Backend services**: Cloud services commonly required by cloud-native applications for monitoring, security, and persistence
@@ -35,7 +35,8 @@ The environment includes several features that support IBM Garage Method best pr
 - **Dashboard**: A centralized tool to help developers use the environment's other tools, Starter Kits, and so on
 - **Red Hat CRC**: The tools can be installed into the RedHat CodeReady Containers environment
 
-Some of the tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the IBM Cloud. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with IBM Cloud's managed container services.
+A core set of tools are sourced from the [IBM Bitnami Software Catalog
+](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the IBM Cloud. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with IBM Cloud's managed container services.
 
 Typically a [Cloud System Admin](/admin/overview) or [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/) installs and sets up a new Developer Tools environment after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
 providing a place for the developers to start developing the
@@ -103,12 +104,12 @@ The following best-of-breed open source software tools are installed in the clus
 
 ## Getting Started
 
-Get to know the Developer Tools environment:
+Get to know the <Globals string="shortName" />:
 
-<AnchorLinks>
+<AnchorLinks small>
       <AnchorLink to="../getting-started/overview">Getting Started</AnchorLink>
       <AnchorLink to="../getting-started/deploy-app">Deploy Your First App</AnchorLink>
       <AnchorLink to="../guides/overview">Guides</AnchorLink>
-      <AnchorLink to="../starterkits/overview">Starter Kit Templates</AnchorLink>
-      <AnchorLink to="../admin/overview">Installation</AnchorLink>
+      <AnchorLink to="../codepatterns/overview">Code Pattern Git Repos</AnchorLink>
+      <AnchorLink to="../admin/overview">Installation</AnchorLink>      
 </AnchorLinks>
