@@ -79,12 +79,16 @@
       path: /admin/overview
     - title: Plan Installation
       path: /admin/plan-installation
+    - title: Configure Account
+      path: /admin/config-account
     - title: Install with new cluster
       path: /admin/installation-ibm-cloud
     - title: Install into existing cluster
       path: /admin/installation-existing
     - title: Install into OpenShift CRC
       path: /admin/installation-crc
+    - title: Configure Installation
+      path: /admin/config-install
     - title: Artifactory Setup
       path: /admin/artifactory-setup
     - title: ArgoCD Setup
@@ -95,6 +99,15 @@
       path: /admin/cluster-configuration
     - title: Destroying
       path: /admin/destroying
+
+- title: Architecture Guide
+  pages:
+    - title: Environment Architecture
+      path: /arch/environment
+    - title: Development Teams
+      path: /arch/teams
+    - title: Application Architecture
+      path: /arch/application
 
 - title: Activation
   pages:

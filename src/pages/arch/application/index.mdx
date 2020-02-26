@@ -1,0 +1,15 @@
+---
+title: Application Architecture
+---
+
+<PageDescription>
+
+The environment supports a cloud-native architecture for applications
+
+</PageDescription>
+
+The Developer Tools environment is designed to support best practices for developing cloud-native applications, and as such assumes a typical application architecture:
+- **Microservices architecture**: The application is composed of a set of coordinating microservices that are each developed by a separate team and deployed to run in separate processes
+- **Stateless services**: The application processes (typically microservices) are stateless, so state is stored in externally in backend services that host databases and storage
+- **RESTful APIs**: Clients access the application processes via REST endpoints
+- [**Built to manage**](https://www.ibm.com/garage/method/practices/code/build-to-manage): The application components are designed to expose their status and metrics so that backend services for monitoring and logging can be used to manage them
