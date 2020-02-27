@@ -1,9 +1,11 @@
 import React from 'react';
 
 const globals = {};
-globals.longName   = "IBM Garage Cloud-native Toolkit";
-globals.shortName  = "Cloud Native Toolkit";
+globals.longName   = "IBM Garage Cloud-Native Toolkit";
+globals.shortName  = "Cloud-Native Toolkit";
 globals.env  = "Developer Environment";
+globals.ocp = "Red Hat OpenShift";
+globals.template = "Code Pattern";
 
 const Globals = ({name}) => {
 
