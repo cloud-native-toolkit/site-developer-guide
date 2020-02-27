@@ -1,15 +1,19 @@
 ---
 title: CLI
 ---
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-The Developer Tools include the IBM Garage for Cloud (IGC) Developer Tools Command Line Interface (CLI)
+<Globals string="longName" /> include the IBM Garage for Cloud (IGC) <Globals
+ string="shortName" /> Command Line Interface (CLI)
 
 </PageDescription>
 
 The [IGC CLI](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) 
-provides a set of helpful utilities that can be invoked from the command line. Its key objective is to make complicated CLI tasks and `YAML`,`configMap` and `secret` configuration easier for a developer.
+provides a set of helpful utilities that can be invoked from the command line
+. They key objective is to make complicated CLI tasks and `YAML`,`configMap
+` and `secret` configuration easier for a developer.
 
 These utilities include:
 - Register your application's git repo into a CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
@@ -17,14 +21,15 @@ These utilities include:
 - List the user names and passwords for the tools installed in the environment
 - Build and deploy images to the environment using the IBM Cloud Image Registry
 - Help copy `configMaps` and `secrets` into new projects/namespace in Kubernetes or OpenShift
-- Enable existing Starter Kits with the necessary artifacts to be integrated
- easily into the Developer Tools environment
+- Enable existing code patterns with the necessary artifacts to allow them to
+ be integrated easily into the <Globals string="longName" /> environment
 
 To use the IGC CLI, it must be installed and your terminal and you are logged into IBM Cloud with the IBM Cloud CLI.
 
 ## Installation
 
 <InlineNotification kind="warning">
+<<<<<<< HEAD
 
 **Warning**: If you have installed the **IGC CLI** prior to `v0.4.0`, you
  must uninstall it and follow the installation steps below. The uninstall command: `npm rm -g @garage-catalyst/ibm-garage-cloud-cli`
@@ -33,6 +38,17 @@ To use the IGC CLI, it must be installed and your terminal and you are logged in
 
 Follow these steps to install the IGC CLI:
 
+=======
+**Warning:** If you have installed the **IGC** CLI up to `v0.4.0` you must
+ uninstall it and follow the installation steps below
+`npm rm -g
+ @garage
+-catalyst/ibm-garage
+-cloud-cli`
+</InlineNotification>
+
+Follow these steps to use the IGC CLI:
+>>>>>>> Updates for 43 release
 - Install the CLI:
     ```bash
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli

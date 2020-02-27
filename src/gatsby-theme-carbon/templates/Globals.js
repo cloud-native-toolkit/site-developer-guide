@@ -1,16 +1,30 @@
 import React from 'react';
 
 const globals = {};
-globals.longName   = "IBM Garage Cloud Native Toolkit";
+globals.longName   = "IBM Garage Cloud-native Toolkit";
 globals.shortName  = "Cloud Native Toolkit";
 globals.env  = "Developer Environment";
 
-export default ({string}) => {
+const Globals = ({name}) => {
 
     return (
         <>
-            {globals[string]}
+            {globals[name]}
         </>
     )
+};
+
+Globals.get = (key) => {
+    return globals[key];
+};
+
+
+
+Globals.set = (key, value) => {
+    globals[key] = value;
 }
+
+Object.assign(Globals,globals);
+
+export default Globals;
 

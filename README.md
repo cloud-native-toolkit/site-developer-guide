@@ -1,6 +1,6 @@
 # IBM Garage for Cloud
 
-## Developer Tools Developer Guide
+## Cloud Native Toolkit - Developer Guide
 
 The developer guide has been written to help developers get familiar with how to use to the tools to manage the full
 lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud.
@@ -27,10 +27,9 @@ and to build and publish the content.
 Most notably, this project depends on the following:
 (documented in `package.json`):
 
-- gatsby
-- gh-pages
-- gatsby-transformer-json
-
+```bash
+np install -g gatsby
+```
 
 ### Write content
 
@@ -53,8 +52,8 @@ http://localhost:8000/
 ### Publish Content
 
 Currently, the content is published to the GitHub pages site through the `gh-pages` branch
-using the `gh-pages` npm module. All of the details for handling the publishing are covered within
-the deploy script. The deploy can be run using the following:
+using the `gh-pages` npm module. All the details for handling the publishing are covered within
+deploy script. Deploy can be run using the following:
 
 ```
 npm run deploy
@@ -62,7 +61,7 @@ npm run deploy
 
 The result of the `deploy` can be viewed here - https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/
 
-**Note:** There is a time delay between when the deploy process completes and when the
+**Note:** There is a time delay between when deploy process completes and when the
 content is available on the published site.
 
 ### Gatsby and Carbon

@@ -1,16 +1,16 @@
 import React from 'react';
 import { HomepageBanner, HomepageCallout } from 'gatsby-theme-carbon';
 import HomepageTemplate from 'gatsby-theme-carbon/src/templates/Homepage';
+import g from "./Globals";
 import { calloutLink } from './Homepage.module.scss';
 
 import Carbon from '../../images/catalyst.svg';
 
-const FirstLeftText = () => <p>IBM Garage for Cloud Developer Tools</p>;
+const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the IBM Garage for Cloud Developer Tools. The Developer Tools environment 
-      empowers cloud-native application development teams to deliver business value quickly 
+      This is the developer guide for the {g.longName}. The {g.env} empowers cloud-native application development teams to deliver business value quickly
       using Red Hat OpenShift and IBM Kubernetes Service on IBM Cloud.
     <a
       className={calloutLink}
@@ -25,7 +25,7 @@ const SecondLeftText = () => <p>Garage Method</p>;
 
 const SecondRightText = () => (
   <p>
-      The Developer Tools environment automates and supports developing cloud-native applications 
+      The {g.longName} environment automates and supports developing cloud-native applications
       using the IBM Garage Method principles and practices. 
     <a
       className={calloutLink}
@@ -36,7 +36,7 @@ const SecondRightText = () => (
   </p>
 );
 
-const BannerText = () => <h1>IBM Garage for Cloud Developer Tools <br/>Developer Guide</h1>;
+const BannerText = () => <h1>{g.shortName}<br/>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,
