@@ -108,6 +108,8 @@
       path: /arch/teams
     - title: Application Architecture
       path: /arch/application
+    - title: Build to Manage
+      path: /arch/manageable
 
 - title: Activation
   pages:

@@ -1,0 +1,23 @@
+---
+title: Build to Manage
+---
+
+<PageDescription>
+
+Develop applications that can be managed well in production
+
+</PageDescription>
+
+The Developer Tools environment is designed to support best practices for developing cloud-native applications that can be managed well in production, known as [built to manage](https://www.ibm.com/garage/method/practices/code/build-to-manage). Such components implement endpoints to make them manageable:
+- **Health**: The component provides a `/health` endpoint that answers whether it's running successfully, `UP` or `DOWN`.
+- **Metrics**: The component provides a `/metrics` endpoint that answers measurements of both the system and application.
+- **Readiness**: Kubernetes verifies whether a pod is ready to start receiving traffic, typically by probing the component's `/health` endpoint.
+- **Liveness**: Kubernetes verifies whether a pod should be restarted, typically by probing the component's `/health` endpoint.
+Kubernetes and the environment's Ops tools for monitoring use these endpoints to report the status of the application's components, which can be used to make the applications self-healing.
+
+Another important feature is for components to log a history of their significant actions:
+- **Logging**: Log status to `stdout` indicating level of severity (such as `info`, `debug`, `warn`, `error`, and `fatal`).
+
+The environment's Ops tools for logging will gather and display this history.
+
+An easy way to get started with this architecture is by using one of the [Starter Kit Templates](/starterkits/overview) to create the skeleton for each microservice.
