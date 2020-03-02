@@ -1,0 +1,29 @@
+---
+title: Development Teams
+---
+
+<PageDescription>
+
+Plan environments for multiple teams
+
+</PageDescription>
+
+While separate development teams can each have a separate Developer Tools environment, how many environments does a set of teams need? There are two approaches.
+
+**Environment per team**: As described in [Environment Architecture](/arch/environment), each development team gets its own Developer Tools environment. This approach has several consequences:
+- Each team's environment is built of independent resources that can be managed and even billed separately
+- Each team can customize the size of its environment, its backend services, and its CI/CD tools
+- For teams in different geographies, each team's environment can be located in the IBM Cloud region closest to the team's geography
+- If the client paying for the application's development wants the development environment located in the client's geography, the environment can be installed in the region in that geography
+- Several small development teams will each require its own environment, which can lead to higher expense for envrionments with low utilization
+
+**Shared environment**: An alternative approach is for multiple development teams to share a single Developer Tools environment. This approach has several consequences:
+- Resources are shared, including their cost and management duties
+- Shared resources tend to be more highly utilized, although resource contention will occur between the teams
+- Teams can more easily coordinate on applications and microservices that must work together in production
+- Teams must share a single set of CI/CD tools and pipeline configurations that can be managed by a single adminstration team
+- Teams share a single *test* namespace and *staging* namespace, and must coordinate accordingly
+
+Teams that do no wish to use the same CI/CD tools or otherwise want to avoid having to coordinate with each other should use separate development environments. Teams that want to economize, share a set of CI/CD tools, and need to coordinate on application development may find a shared environment easier to use.
+
+To create a shared environment, first install a single environment. Then create a *dev* namespace for each team, such as *dev-team1*, *dev-team2*, etc. (The original *dev* namespace can be renamed for the first team, *dev-team1*.) The multiple developer namespaces all share a single *tools* namespace and the CI/CD tools installed in it. They all use Argo CD--one of the Developer Tools--to deploy to shared *test* and *staging* namespaces. Use [Kubernetes RBAC](/admin/config-install) to control which developers can access which dev namespaces.

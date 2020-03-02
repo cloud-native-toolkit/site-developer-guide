@@ -77,12 +77,18 @@
   pages:
     - title: Overview
       path: /admin/overview
+    - title: Plan Installation
+      path: /admin/plan-installation
+    - title: Configure Account
+      path: /admin/config-account
     - title: Install with new cluster
       path: /admin/installation-ibm-cloud
     - title: Install into existing cluster
       path: /admin/installation-existing
     - title: Install into OpenShift CRC
       path: /admin/installation-crc
+    - title: Configure Installation
+      path: /admin/config-install
     - title: Artifactory Setup
       path: /admin/artifactory-setup
     - title: ArgoCD Setup
@@ -94,6 +100,17 @@
     - title: Destroying
       path: /admin/destroying
 
+- title: Architecture Guide
+  pages:
+    - title: Environment Architecture
+      path: /arch/environment
+    - title: Development Teams
+      path: /arch/teams
+    - title: Application Architecture
+      path: /arch/application
+    - title: Build to Manage
+      path: /arch/manageable
+
 - title: Activation
   pages:
     - title: Garage Method Development
@@ -102,18 +119,3 @@
       path: /activation/cloudnative-development
     - title: Cloud Native Deployment
       path: /activation/cloudnative-deployment
-
-- title: MOOC Homework
-  pages:
-    - title: Welcome
-      path: /homework/teams
-    - title: Session 1, Week 1
-      path: /homework/tasks
-    - title: Session 1, Week 2
-      path: /homework/tasks-week2
-    - title: Session 2, Week 3
-      path: /homework/tasks-week3
-    - title: Session 3, Week 4
-      path: /homework/tasks-week4
-    - title: Session 4, Week 5
-      path: /homework/tasks-week5

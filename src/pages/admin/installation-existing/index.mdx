@@ -12,13 +12,7 @@ Prepare to run Terraform to install the Development Tools into an existing IBM C
 
 </PageDescription>
 
-The IBM Garage for Cloud Developer Tools facilitate development and deployment of cloud-native applications. 
-They can be hosted in any Kubernetes or OpenShift cluster, including those managed by the IBM Cloud.
-
-In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
-[Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift). 
-These instructions assume that the cluster has already been created and explain 
-how to configure and run the Terraform infrastructure-as-code (IasC) scripts to install the Developer Tools into that existing cluster.
+The Developer Tools environment is installed by an environment administrator, who will run the scripts to create the environment in an IBM Cloud account. The scripts will run as the environment administrator's user, so the user needs the permissions described in [Plan Installation](/admin/plan-installation). These instructions explain how to configure and run the Terraform [infrastructure-as-code](/admin/iasc) (IasC) scripts to create the Developer Tools environment.
 
 <InlineNotification>
 
@@ -31,13 +25,39 @@ to remove all the services beside **PostgreSQL** `./destroy-services.sh postgres
 
 </InlineNotification>
 
-The following prerequisites are required before following the setup instructions:
+### Prepare local system
 
-- Install the [Prerequisites](/getting-started/prereqs) listed before continuing
+To run the scripts, install the client tools needed to use the Developer Tools environment:
+- Install the [Prerequisites](/getting-started/prereqs)
 
-- An IBM Cloud account with the ability to provision cloud service instances in the same region and zone as the existing cluster
+### Test login
+
+Optional: The environment administrator must be able to log into IBM Cloud, specifying the account, region, and resource group. That is effectively what the scripts will do when they run, using the environment administrator's API key.
+
+- Log in to IBM Cloud using the CLI
+    ```bash
+    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
+    ```
+
+### Confirm resources
+
+Optional: To help confirm that the account has the resources the scripts will require (see [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account view the resources:
+- [Existing VLANs](https://cloud.ibm.com/classic/network/vlans) -- Verify that the two VLANs specified are in the list and that they are defined in the proper data center
+- [Existing resource groups](https://cloud.ibm.com/account/resource-groups) -- Having logged in using the environment's resource group, it should certainly be in the list
+- [Existing Kubernetes clusters](https://cloud.ibm.com/kubernetes/clusters) -- See what clusters (Kubernetes and OpenShift) already exist in the resource group and confirm one does not already exist for the environment you want to create
+
+### Confirm permissions
+
+Optional: To help confirm that the scripts will have the permissions they'll require (see the administrators access group in [Plan Installation](/admin/plan-installation)), the environment administrator may log into the account and test creating a couple of resources:
+- [Create a cluster](https://cloud.ibm.com/kubernetes/catalog/cluster/create) -- Make it single-zone, and specify the proper data center and resource group
+- Create a namespace in the image registry
+- [Create an instance of Cloudant](https://cloud.ibm.com/catalog/services/cloudant) -- Select a paid plan and specify the proper region and resource group
+- [Create an instance of Sysdig](https://cloud.ibm.com/observe/monitoring/create) -- Select a paid plan and specify the proper region and resource group
+
+As long as the user can create these resources successfully, the scripts should be able to as well. You may delete these test resources.
 
 </Tab>
+
 
 <Tab label="Download">
 
@@ -126,16 +146,21 @@ The `environment.tfvars` properties will be used to install the Development Tool
     # The type of cluster that will be created/used (kubernetes or openshift)
     cluster_type="kubernetes"
     # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="true"
+    cluster_exists="false"
 
     # The cluster name can be provided (particularly if using existing cluster) or it will
     # default to '${resource_group_name}-cluster'
-    cluster_name="catalyst-team-cluster"
+    #cluster_name="catalyst-team-cluster"
 
     resource_group_name="catalyst-team"
+    vlan_region="us-south"
+
+    # Flag indicating if we are using an existing postgres server or creating a new one
+    postgres_server_exists="true"
     ```
 
 - Set them based on the existing cluster:
+    - `vlan_region` -- The existing cluster's region
     - `resource_group_name` -- The existing cluster's resource group
     - `cluster_name` -- The existing cluster's name
     - `cluster_exists` -- Set to `"true"` for the existing cluster
@@ -187,7 +212,7 @@ Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/
 
 <InlineNotification>
 
-Note: If you run this approach multiple times remember to delete any pre existing cloud services that were created previously
+**Note**: If you run this approach multiple times remember to delete any pre existing cloud services that were created previously
 
 </InlineNotification>
 

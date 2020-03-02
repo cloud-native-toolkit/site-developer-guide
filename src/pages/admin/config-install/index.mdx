@@ -1,0 +1,23 @@
+---
+title: Configure Installation
+---
+
+<PageDescription>
+
+Configure the environment after installing it
+
+</PageDescription>
+
+- Configure RBAC security in the cluster
+    - Run `./terraform/scripts/rbac.sh <ACCESS-GROUP>`
+- Test opening the [Developer Tools Dashboard](/getting-started/dashboard)
+    - Run `igc dashboard`
+- Complete setup of LogDNA
+- Complete setup of SysDig
+- Test the pipeline by [deploying a first app](/getting-started/deploy-app)
+- Complete the [Artifactory setup](/admin/artifactory-setup)
+- Complete the [Argo CD Setup](/admin/argocd-setup)
+- Rerun the pipeline and confirm that the app's Helm chart is added to Artifactory
+    - Make any change to the code and push it to the GitHub repo to kick off a pipeline run
+    - Confirm the Artifactory repo now contains a Helm chart for your app
+- [Set up a GitOps repo](/practical/inventory-part2#using-cd-to-deploy-to-test) to validate ArgoCD setup and configuration
