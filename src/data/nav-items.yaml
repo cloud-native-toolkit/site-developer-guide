@@ -119,18 +119,3 @@
       path: /activation/cloudnative-development
     - title: Cloud Native Deployment
       path: /activation/cloudnative-deployment
-
-- title: MOOC Homework
-  pages:
-    - title: Welcome
-      path: /homework/teams
-    - title: Session 1, Week 1
-      path: /homework/tasks
-    - title: Session 1, Week 2
-      path: /homework/tasks-week2
-    - title: Session 2, Week 3
-      path: /homework/tasks-week3
-    - title: Session 3, Week 4
-      path: /homework/tasks-week4
-    - title: Session 4, Week 5
-      path: /homework/tasks-week5
