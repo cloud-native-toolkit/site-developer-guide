@@ -6,8 +6,9 @@ globals.shortName  = "Cloud-Native Toolkit";
 globals.env        = "Developer Environment";
 globals.ic         = "IBM Cloud";
 globals.kube       = "Kubernetes";
-globals.iks        = "IBM Kubernetes Service";
+globals.iks        = "IBM Cloud Kubernetes Service";
 globals.ocp        = "Red Hat OpenShift";
+globals.roks       = "Red Hat OpenShift on IBM Cloud";
 globals.template   = "Code Pattern";
 globals.method     = "IBM Garage Method";
 
