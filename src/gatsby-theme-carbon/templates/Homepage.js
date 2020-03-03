@@ -10,13 +10,13 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the {g.longName}. The {g.env} empowers cloud-native application development teams to deliver business value quickly
-      using Red Hat OpenShift and IBM Kubernetes Service on IBM Cloud.
+      This is the developer guide for the {g.longName}. The {g.shortName} creates a {g.env} that empowers cloud-native application development teams to deliver business value quickly
+      using {g.ocp} and {g.iks} on {g.ic}.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
     >
-      IBM Cloud →
+        {g.ic} →
     </a>
   </p>
 );
@@ -26,17 +26,17 @@ const SecondLeftText = () => <p>Garage Method</p>;
 const SecondRightText = () => (
   <p>
       The {g.longName} environment automates and supports developing cloud-native applications
-      using the IBM Garage Method principles and practices. 
+      using the {g.method} principles and practices.
     <a
       className={calloutLink}
       href="https://www.ibm.com/garage/method"
     >
-      IBM Garage Method →
+        {g.method} →
     </a>
   </p>
 );
 
-const BannerText = () => <h1>{g.shortName}<br/>Developer Guide</h1>;
+const BannerText = () => <h1>{g.longName}<br/>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,
