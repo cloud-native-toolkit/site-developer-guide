@@ -9,8 +9,10 @@ globals.kube       = "Kubernetes";
 globals.iks        = "IBM Cloud Kubernetes Service";
 globals.ocp        = "Red Hat OpenShift";
 globals.roks       = "Red Hat OpenShift on IBM Cloud";
-globals.template   = "Code Pattern";
 globals.method     = "IBM Garage Method";
+globals.template   = "Code Pattern";
+globals.dashboard  = "Developer Tools Dashboard";
+globals.cli        = "IGC CLI";
 
 const Globals = ({name}) => {
 

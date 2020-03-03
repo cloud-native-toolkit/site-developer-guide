@@ -115,7 +115,7 @@
   pages:
     - title: Garage Method Development
       path: /activation/garage-development
-    - title: Cloud Native Development
+    - title: Cloud-Native Development
       path: /activation/cloudnative-development
-    - title: Cloud Native Deployment
+    - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
