@@ -36,16 +36,16 @@
 
   ],
   "starterkits" : [
-  {"title":"React UI Patterns", "subtitle":"Carbon based UI to help with common patterns using React framework","language":"React","href":"https://github.com/ibm-garage-cloud/template-node-react","color":"light"},
-  {"title":"Angular UI Patterns", "subtitle":"Carbon based UI to help with common patterns using Angular framework","language":"Angular","href":"https://github.com/ibm-garage-cloud/template-node-angular","color":"light"},
-  {"title":"Typescript GraphQL", "subtitle":"Node.js TypeScript GraphQL Backend for Frontend","language":"TypeScript","href":"https://github.com/ibm-garage-cloud/template-graphql-typescript","color":"light"},
-  {"title":"Typescript Microservice", "subtitle":"Node.js TypeScript Microservice offering OpenAPI endpoints","language":"TypeScript","href":"https://github.com/ibm-garage-cloud/template-node-typescript","color":"light"},
-  {"title":"Spring Boot Microservice", "subtitle":"Spring Boot Java Microservices","language":"Java","href":"https://github.com/ibm-garage-cloud/template-java-spring","color":"light"}
+    {"title":"React UI Patterns", "subtitle":"Carbon based UI to help with common patterns using React framework","language":"React","href":"https://github.com/IBM/template-node-react","color":"light"},
+    {"title":"Angular UI Patterns", "subtitle":"Carbon based UI to help with common patterns using Angular framework","language":"Angular","href":"https://github.com/IBM/template-node-angular","color":"light"},
+    {"title":"Typescript GraphQL", "subtitle":"Node.js TypeScript GraphQL Backend for Frontend","language":"TypeScript","href":"https://github.com/IBM/template-graphql-typescript","color":"light"},
+    {"title":"Typescript Microservice", "subtitle":"Node.js TypeScript Microservice offering OpenAPI endpoints","language":"TypeScript","href":"https://github.com/IBM/template-node-typescript","color":"light"},
+    {"title":"Spring Boot Microservice", "subtitle":"Spring Boot Java Microservices","language":"Java","href":"https://github.com/IBM/template-java-spring","color":"light"}
   ],
   "argocd" : [
-    {"title":"Argo CD Test", "subtitle":"ArgoCD Test Template to help setup your CD pipeline","language":"YAML","href":"https://github.com/ibm-garage-cloud/template-argocd-test","color":"grey"},
-    {"title":"Tekton Tasks", "subtitle":"Tekton common Tasks that can be used with Tekton CI tool","language":"YAML","href":"https://github.com/ibm-garage-cloud/ibm-garage-tekton-tasks","color":"grey"},
-    {"title":"IBM Cloud Services", "subtitle":"Code snippets to help with the integration of IBM Cloud Services","language":"Java/Typescript","href":"https://github.com/ibm-garage-cloud/template-ibmcloud-services","color":"grey"}
+    {"title":"ArgoCD GitOps", "subtitle":"ArgoCD GitOps Template to help set up your CD pipeline","language":"YAML","href":"https://github.com/IBM/template-argocd-gitops","color":"grey"},
+    {"title":"Tekton Tasks", "subtitle":"Tekton common Tasks that can be used with Tekton CI tool","language":"YAML","href":"https://github.com/IBM/ibm-garage-tekton-tasks","color":"grey"},
+    {"title":"IBM Cloud Services", "subtitle":"Code snippets to help with the integration of IBM Cloud Services","language":"Java/Typescript","href":"https://github.com/IBM/template-ibmcloud-services","color":"grey"}
 
   ]
 }
