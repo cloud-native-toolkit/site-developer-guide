@@ -21,7 +21,6 @@ Globals.get = (key) => {
 };
 
 
-
 Globals.set = (key, value) => {
     globals[key] = value;
 }
