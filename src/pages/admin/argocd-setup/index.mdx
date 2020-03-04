@@ -4,22 +4,24 @@ title: ArgoCD Setup
 
 <PageDescription>
 
-Complete the steps for setting up the ArgoCD tool
+Complete the steps for setting up the ArgoCD tool to support integration with
+ Artifactory as a Helm repository
 
 </PageDescription>
 
 ## Overview
 
 ArgoCD is the [Developer Tools environment's continuous delivery tool](/guides/continuous-delivery).
-Before you can use it as part of the environment, it must first be configured.
+Before you can use it as part of the environment, it must first be configured
+ to integrate with Artifactory.
 
 ## Prerequisites
 
-Before setting up ArgoCD, [set up Artifactory](/getting-started/artifactory-setup) so that ArgoCD can use it.
+Before setting up ArgoCD, [set up Artifactory](/getting-started/artifactory-setup) so that ArgoCD can use it as a Helm repository.
 
 ##  Configuration
 
-Configure ArgoCD to use Artifactory.
+Configure ArgoCD to use Artifactory as a Helm repository.
 
 ### Clone the ArgoCD repository
 
@@ -28,8 +30,8 @@ The ArgoCD repository contains files and samples for configuring ArgoCD.
 - Clone the repository to your development machine
 
   ```bash
-  git clone https://github.com/ibm-garage-cloud/template-argocd-test
-  cd template-argocd-test
+  git clone git@github.com:IBM/template-argocd-gitops.git
+  cd template-argocd-gitops
   ```
 
 ### Get the Helm repository location
@@ -60,7 +62,8 @@ The repo you cloned contains an ArgoCD configuration file. Use the following
 -location]/[helm artifact folder]` this is often the same name as your
  resource group
 
-- In your local copy of the `template-argocd-test` repo, run `./config/addhelmrepository.sh [artifact-helm-repository-location]/[helm artifact
+- In your local copy of the `template-argocd-gitops` repo, run `./config
+/addhelmrepository.sh [artifact-helm-repository-location]/[helm artifact
  folder]`
 
 - where `[artifact-helm-repository-location]/[helm artifact folder]` is
