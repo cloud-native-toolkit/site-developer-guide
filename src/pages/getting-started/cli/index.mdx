@@ -1,5 +1,5 @@
 ---
-title: IBM Garage for Cloud CLI
+title: CLI
 ---
 
 <PageDescription>
@@ -17,16 +17,32 @@ These utilities include:
 - List the user names and passwords for the tools installed in the environment
 - Build and deploy images to the environment using the IBM Cloud Image Registry
 - Help copy `configMaps` and `secrets` into new projects/namespace in Kubernetes or OpenShift
+- Enable existing Starter Kits with the necessary artifacts to be integrated
+ easily into the Developer Tools environment
 
 To use the IGC CLI, it must be installed and your terminal and you are logged into IBM Cloud with the IBM Cloud CLI.
 
 ## Installation
 
-Follow these steps to use the IGC CLI:
+<InlineNotification kind="warning">
+
+**Warning**: If you have installed the **IGC CLI** prior to `v0.4.0`, you
+ must uninstall it and follow the installation steps below. The uninstall command: `npm rm -g @garage-catalyst/ibm-garage-cloud-cli`
+
+</InlineNotification>
+
+Follow these steps to install the IGC CLI:
+
 - Install the CLI:
     ```bash
-    npm i -g @garage-catalyst/ibm-garage-cloud-cli
+    npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ````
+
+- Verify the installed version is greater than `0.4.0`:
+    ```bash
+    $ igc --version
+    ```
+
 - Run the CLI's help command to list the available commands:
     ```bash
     igc --help
@@ -41,48 +57,63 @@ Follow these steps to use the IGC CLI:
     Usage: igc <command> [args]
 
     Commands:
-      igc jenkins-auth           Generate a Jenkins api token and register it as
-                                 kubernetes secret
-      igc gen-token              Generate a Jenkins api token
-      igc pipeline               Register a pipeline for the current code repository
-                                 in Jenkins                      [aliases: register]
-      igc git-webhook            Create a git webhook for a given Jenkins pipeline
-      igc dashboard              Open the dashboard url in the default browser
-      igc build                  Build the image and push it into the IBM Cloud
-                                 registry
-      igc deploy                 Deploy an image from the IBM Cloud registry into a
-                                 kubernetes cluster
-      igc tools                  Launch the IBM Garage for Cloud tools image
-                                 connected to the current directory
-      igc vlan                   Print out the vlan values
-      igc credentials            Lists the urls and credentials for the tools
-                                 deployed to the cluster
-      igc ingress                List the current ingress hosts for deployed apps in
-                                 a namespace
-      igc tool-config            Create the config map and secret for a tool
-                                 configured in the environment
-      igc namespace <namespace>  Create a namespace (if it doesn't exist) and
-                                 prepare it with the necessary configuration
+      igc build              Build the image and push it into the IBM Cloud registry
+      igc create-webhook     Create a git webhook for a given Jenkins pipeline
+      igc credentials        Lists the urls and credentials for the tools deployed
+                             to the cluster
+      igc dashboard          Open the dashboard url in the default browser
+      igc deploy             Deploy an image from the IBM Cloud registry into a
+                             kubernetes cluster
+      igc enable             Enable the current repository with pipeline logic
+      igc generate-token     Generate a Jenkins api token
+      igc git-secret [name]  Create a kubernetes secret that contains the url,
+                             username, and personal access token for a git repo
+      igc ingress            List the current ingress hosts for deployed apps in a
+                             namespace
+      igc jenkins-auth       Generate a Jenkins api token and register it as
+                             kubernetes secret
+      igc launch-tools       Launch the IBM Garage for Cloud tools image connected
+                             to the current directory
+      igc login              Log in using the ibmcloud cli, optionally configure the
+                             cluster, and optionally runs a command
+      igc namespace          Create a namespace (if it doesn't exist) and prepare it
+                             with the necessary configuration
+      igc pipeline           Register a pipeline for the current code repository
+      igc tool-config        Create the config map and secret for a tool configured
+                             in the environment
+      igc vlan               Print out the vlan values
+      igc yq <command>
 
     Options:
       --version  Show version number                                       [boolean]
-      --help     Show help
+      --help     Show help                                                 [boolean]
     ```
 
 ## Use the CLI
 
-To use the IGC CLI you must be logged into your
-IBM Cloud account using the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli "IBM Cloud CLI and Developer Tools").
+To use the IGC CLI, you must be logged into your IBM Cloud account and cluster.
 
-- Log into your IBM Cloud account with the correct region and resource group:
+- Log into your IBM Cloud account with the correct region
+ and resource group:
     ```bash
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
     ```
 
 - Once logged in, you can use the CLI commands.
 
-    For example, this command lists the dashboard ingress URLs for all of the install tools in the tools namespace:
+    For Kubernetes:
+    ```bash
+    ibmcloud ks cluster config --cluster CLUSTER
+    ```
 
+    For OpenShift:
+    ```bash
+    oc login --server=<url> --token=<apikey>
+    ```
+
+Once logged in, you can use the CLI commands.
+
+- For example, this command lists the dashboard ingress URLs for all of the install tools in the tools namespace:
     ```bash
     igc ingress -n tools
     ```
@@ -105,6 +136,17 @@ This includes Jenkins, Argo CD, and SonarQube, Pact, Artifactory.
 Lists the ingress urls for the provided namespace. If no namespace
 is provided, `dev` is used.
 
+### namespace
+
+Creates a new namespace/project in your cluster and copies the necessary `configMaps` and `secrets` from the `tools` namespace.
+This enables new pipelines to be registered and run and for them to have
+ access to all the essential data needed to access the tools and the IBM
+  Cloud platform.
+
+```bash
+igc namespace dev-team-a
+```
+
 ### pipeline
 
 Registers a git repository project as a Jenkins pipeline by creating a Kubernetes secret to hold
@@ -113,16 +155,15 @@ This command is intended to be run within the repository directory of a project 
 which a pipeline should be generated. You can supply a new namespace for your pipeline
 
 ```
-igc pipeline -n team-a
+igc pipeline -n dev-team-a
 ```
 
 The pipeline command supports both `jenkins` and `tekton` pipelines using the flags `--jenkins` or `--tekton`,
 respectively.  Jenkins is the default if no value is provided.
 
-### namespace
-
-Creates a new namespace/project in your cluster and copies the necessary `configMaps` and `secrets` from the `tools` namespace.
-This enables new pipelines to be registered and run and for them to have access to all the essential data needed to access the tools and the IBM Cloud platfrom.
+```
+igc pipeline -n dev-team-a --tekton
+```
 
 ### tools
 
@@ -132,9 +173,18 @@ terminal. This image provides commonly used infrastructure tools like,
 
 ### enable
 
-"Enables" an existing project with the DevOps infrastructure. The CLI reads the available pipelines from a pipeline
-repo and applies the selected pipeline. This command is intended to be run within the repository directory of a project for
+"Enables" an existing project with the DevOps artifacts. The CLI reads the
+ list of
+ available pipelines and applies the selected pipeline to your code repo. This
+  command is
+  intended to be run within a git repository directory of a project for
 which a pipeline should be enabled.
+```bash
+igc enable
+```
+
+Once the project has been enabled you will need to run `igc pipeline` to
+ register the git repo as a pipeline with your target development cluster.
 
 The `enable` command adds a number of files to the local filesystem, including but not limited to:
 
@@ -144,6 +194,4 @@ The `enable` command adds a number of files to the local filesystem, including b
 
 After `enable` is called, the generated files should be committed and pushed to the git repository.
 
-The default pipeline repo is `https://ibm-garage-cloud.github.io/garage-pipelines/` but a different one can be used by
-providing the `--repo` argument.  The source for the provided pipeline repo can be found at `https://github.com/ibm-garage-cloud/garage-pipelines`
-to use as a template.
+The default pipeline repo is `https://ibm-garage-cloud.github.io/garage-pipelines/`, but a different one can be used by providing the `--repo` argument.  The source for the provided pipeline repo can be found at `https://github.com/ibm-garage-cloud/garage-pipelines` to use as a template.
