@@ -1,19 +1,19 @@
 ---
+<<<<<<< HEAD
 title: CLI
+=======
+title: <Globals name="shortName" /> CLI
+>>>>>>> Fix using globals
 ---
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-<Globals string="longName" /> include the IBM Garage for Cloud (IGC) <Globals
- string="shortName" /> Command Line Interface (CLI)
+The <Globals name="shortName" /> Command Line Interface (CLI)
 
 </PageDescription>
 
-The [IGC CLI](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) 
-provides a set of helpful utilities that can be invoked from the command line
-. They key objective is to make complicated CLI tasks and `YAML`,`configMap
-` and `secret` configuration easier for a developer.
+The <Globals name="longName" /> includes the IBM Garage for Cloud (IGC) Command Line Interface (CLI). The [<Globals name="igccli" />](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) provides a set of helpful utilities that can be invoked from the command line. The main objective is to make complicated CLI tasks and `YAML`,`configMap`, and `secret` configuration easier for a developer.
 
 These utilities include:
 - Register your application's git repo into a CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
@@ -21,14 +21,19 @@ These utilities include:
 - List the user names and passwords for the tools installed in the environment
 - Build and deploy images to the environment using the IBM Cloud Image Registry
 - Help copy `configMaps` and `secrets` into new projects/namespace in Kubernetes or OpenShift
-- Enable existing code patterns with the necessary artifacts to allow them to
- be integrated easily into the <Globals string="longName" /> environment
+- Enable existing <Globals name="templates" /> with the necessary artifacts to be integrated easily into the <Globals name="env" />
 
-To use the IGC CLI, it must be installed and your terminal and you are logged into IBM Cloud with the IBM Cloud CLI.
+To use the <Globals name="igccli" />, first:
+- Install the <Globals name="igccli" /> in your terminal's path
+- Use the <Globals name="iccli" /> to log your terminal in to <Globals name="ic" />
+- Use the cluster CLI to log your terminal in to the <Globals name="kube" /> or <Globals name="ocp" /> cluster
 
-## Installation
+The <Globals name="iccli" /> uses those logged in sessions to connect to <Globals name="ic" /> and the cluster.
+
+## Install the CLI
 
 <InlineNotification kind="warning">
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 **Warning**: If you have installed the **IGC CLI** prior to `v0.4.0`, you
@@ -49,14 +54,30 @@ Follow these steps to install the IGC CLI:
 
 Follow these steps to use the IGC CLI:
 >>>>>>> Updates for 43 release
+=======
+
+**Warning**: If you have installed the **<Globals name="igccli" />** prior to `v0.4.0`, you must uninstall it and follow the installation steps below. The uninstall command: `npm rm -g @garage-catalyst/ibm-garage-cloud-cli`
+
+</InlineNotification>
+
+Follow these steps to install the <Globals name="igccli" />:
+
+>>>>>>> Fix using globals
 - Install the CLI:
     ```bash
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ````
 
+<<<<<<< HEAD
 - Verify the installed version is greater than `0.4.0`:
     ```bash
     $ igc --version
+=======
+- Verify the version:
+    ```bash
+    $ igc --version
+    0.4.3
+>>>>>>> Fix using globals
     ```
 
 - Run the CLI's help command to list the available commands:
@@ -67,7 +88,7 @@ Follow these steps to use the IGC CLI:
     The help output looks like this:
 
     ```bash
-    % igc --help
+    $ igc --help
     IBM Garage Cloud CLI
 
     Usage: igc <command> [args]
@@ -107,16 +128,42 @@ Follow these steps to use the IGC CLI:
 
 ## Use the CLI
 
+<<<<<<< HEAD
 To use the IGC CLI, you must be logged into your IBM Cloud account and cluster.
 
 - Log into your IBM Cloud account with the correct region
  and resource group:
+=======
+<InlineNotification>
+
+To use the <Globals name="igccli" />, first install the [prerequisite tools](/getting-started/prereqs), which include:
+- The <Globals name="ic" /> CLI
+- The <Globals name="kube" /> CLI
+- The <Globals name="ocp" /> CLI
+
+</InlineNotification>
+
+To use the <Globals name="igccli" />, you must be logged into your <Globals name="ic" /> account and cluster.
+
+- Log into your <Globals name="ic" /> account with the correct region and resource group:
+>>>>>>> Fix using globals
     ```bash
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
     ```
 
-- Once logged in, you can use the CLI commands.
+- Log into your cluster:
 
+    For <Globals name="kube" />:
+    ```bash
+    ibmcloud ks cluster config --cluster CLUSTER
+    ```
+
+    For <Globals name="ocp" />:
+    ```bash
+    oc login --server=<url> --token=<apikey>
+    ```
+
+<<<<<<< HEAD
     For Kubernetes:
     ```bash
     ibmcloud ks cluster config --cluster CLUSTER
@@ -127,6 +174,8 @@ To use the IGC CLI, you must be logged into your IBM Cloud account and cluster.
     oc login --server=<url> --token=<apikey>
     ```
 
+=======
+>>>>>>> Fix using globals
 Once logged in, you can use the CLI commands.
 
 - For example, this command lists the dashboard ingress URLs for all of the install tools in the tools namespace:
@@ -155,7 +204,7 @@ is provided, `dev` is used.
 ### namespace
 
 Creates a new namespace/project in your cluster and copies the necessary `configMaps` and `secrets` from the `tools` namespace.
-This enables new pipelines to be registered and run and for them to have access to all the essential data needed to access the tools and the IBM Cloud platfrom.
+This enables new pipelines to be registered and run and for them to have access to all the essential data needed to access the tools and the <Globals name="ic" /> platfrom.
 
 ```bash
 igc namespace dev-team-a

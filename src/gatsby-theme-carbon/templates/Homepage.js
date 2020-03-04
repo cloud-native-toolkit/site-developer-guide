@@ -11,7 +11,7 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 const FirstRightText = () => (
   <p>
       This is the developer guide for the {g.longName}. The {g.shortName} creates a {g.env} that empowers cloud-native application development teams to deliver business value quickly
-      using {g.ocp} and {g.iks} on {g.ic}.
+      using {g.ocp} and {g.kube} on {g.ic}.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"

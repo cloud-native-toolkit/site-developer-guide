@@ -6,31 +6,29 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Options for installing the Developer Tools environment
+Options for installing the <Globals name="env"/>
 
 </PageDescription>
 
 ## Paths to Installation
 
+<<<<<<< HEAD
 The <Globals string="longName"/> environment facilitates development and deployment of cloud-native applications.
 It can be hosted in any Kubernetes or Red Hat OpenShift cluster, including those managed by the IBM Cloud. In IBM Cloud, the cluster is hosted by either the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) or
 [Red Hat OpenShift on IBM Cloud](https://cloud.ibm.com/docs/openshift).
 
 The environment is provisioned using [infrastructure-as-code](/admin/iasc) scripting that makes the process declarative, automated, and repeatable. The provisioning code is implemented as Terraform scripts.
+=======
+The <Globals name="longName"/> <Globals name="env"/> can be hosted in any <Globals name="kube"/> or <Globals name="ocp"/> cluster, including those managed by <Globals name="ic"/>. The environment is provisioned using [infrastructure-as-code](/admin/iasc) scripting that makes the process declarative, automated, and repeatable. The provisioning code is implemented as Terraform scripts.
+>>>>>>> Fix using globals
 
-- Before starting any of the installations paths, first install and configure the [prerequisite tools](/getting-started/prereqs).
-
-The scripts are organized in a number of stages. When an IBM Cloud managed cluster is used, the first stage will either
-provision a new cluster or connect to an existing cluster on IBM Cloud. If a managed IBM Cloud cluster is not used then
-the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration values. In
-this case, we would highly recommend provisioning the cluster using other Terraform scripts.
+The scripts are organized in a number of stages. When a managed cluster in <Globals name="ic"/> is used, the first stage will either provision a new cluster or connect to an existing cluster on <Globals name="ic"/>. If a managed <Globals name="ic"/> cluster is not used, then the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration values. In this case, we would highly recommend provisioning the cluster using other Terraform scripts.
 
 ![](/images/install.png)
 
-
-Select the approach that best suites your requirement:
-- **Install new**: Create a new environment in IBM Cloud including a new cluster
-- **Install existing**: Create a new environment in IBM Cloud but install it into an existing cluster
+[Plan Installation](/admin/plan-installation) explains the end-to-end process for creating a <Globals name="ic"/>. Within that process, there are three installation options. Select the approach that best suites your requirement:
+- **Install new**: Create a new environment in <Globals name="ic"/> including a new cluster
+- **Install existing**: Create a new environment in <Globals name="ic"/> but install it into an existing cluster
 - **Install Red Hat CRC**: Create a new environment in *Red Hat CodeReady Containers* installed locally on your laptop
 
 <Row>
@@ -38,7 +36,7 @@ Select the approach that best suites your requirement:
 <ArticleCard
     color="dark"
     title="Install New"
-    subTitle="Create a new IBM Cloud managed cluster with all the Developer Tools installed"
+    subTitle="Create a new <Globals name=&quot;ic&quot; /> managed cluster with the <Globals name=&quot;env&quot; /> installed"
     href="/admin/installation-ibm-cloud"
     >
 
@@ -50,7 +48,7 @@ Select the approach that best suites your requirement:
 <ArticleCard
     color="dark"
     title="Install Existing"
-    subTitle="Install the Developer Tools into an existing IBM Cloud managed cluster"
+    subTitle="Install the <Globals name=&quot;env&quot; /> into an existing <Globals name=&quot;ic&quot; /> managed cluster"
     href="/admin/installation-existing"
     >
 
@@ -62,7 +60,7 @@ Select the approach that best suites your requirement:
 <ArticleCard
     color="dark"
     title="Install Red Hat CRC"
-    subTitle="Install the Developer Tools into Red Hat CodeReady Containers"
+    subTitle="Install the <Globals name=&quot;env&quot; /> into Red Hat CodeReady Containers"
     href="/admin/installation-crc"
     >
 
@@ -72,6 +70,4 @@ Select the approach that best suites your requirement:
 </Column>
 </Row>
 
-After installation, remember to complete these setup steps:
-- [Artifactory Setup](/admin/artifactory-setup)
-- [ArgoCD Setup](/admin/argocd-setup)
+After installation, remember to complete the steps in [Configure Installation](/admin/config-install).

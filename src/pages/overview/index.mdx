@@ -12,42 +12,42 @@ Get familiar with using the <Globals name="longName"/>
 
 ## Developer Environment
 
-<Globals key="longName" /> provides an environment for developing cloud-native applications for deployment within <Globals key="kube" /> and <Globals key="ocp" />. It embodies <Globals key="method" /> principles and practices for consistently developed applications incorporating best practices that increase developer velocity for efficient delivery of business value.
+<Globals name="longName" /> provides an environment for developing cloud-native applications for deployment within Kubernetes and Red Hat OpenShift. It embodies IBM Garage Method principles and practices for consistently developed applications incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 ### Overview
 
-A short video introducing the concepts of DevOps with <Globals key="ocp" />:
+This short video introduces the concepts of DevOps with <Globals name="ocp" />:
 <iframe width="80%" height="500" src="https://www.youtube.com/embed/GOPWObjFTsI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p></p>
 
-Each development team installs its own <Globals key="env" /> into the team's account. The environment includes several features that support <Globals key="method" /> best practices for consistent and rapid development of cloud-native applications:
+Each development team installs its own <Globals name="env" /> into the team's account. The environment includes several features that support <Globals name="method" /> best practices for consistent and rapid development of cloud-native applications:
 
-- **Installation**: The <Globals string="shortName"/> is able to install itself as a new environment
-- **Cluster**: A <Globals key="kube" /> or <Globals key="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
+- **Installation**: The <Globals name="shortName"/> is able to install itself as a new <Globals name="env" />
+- **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
 - **Backend services**: Cloud services commonly required by cloud-native applications for monitoring, security, and persistence
 - **CI/CD**: A prebuilt, ready-to-run continuous delivery pipeline incorporating best-of-breed open source software tools
-- **<Globals key="template" />s**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
-- **Dashboard**: A centralized tool to help developers use the environment's other tools, Starter Kits, and so on
+- **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
+- **Dashboard**: A centralized console to help developers use the environment's capabilities
 - **Red Hat CRC**: The tools can be installed into the RedHat CodeReady Containers environment
 
-A core set of tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the <Globals key="ic" />. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with <Globals key="ic" />'s managed container orchestration services.
+A core set of tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the <Globals name="ic" />. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with <Globals name="ic" />'s managed container orchestration services.
 
-Typically a [Cloud System Admin](/admin/overview) or [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/) installs and sets up a new <Globals key="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception), providing a place for the developers to start developing the [minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). The objective is to reduce the time required for a team to configure and prepare their development environment. The key benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) consistent across each platform and make the out-of-the-box developer experience as simple as possible.
+Typically a [Cloud System Admin](/admin/overview) (such as a [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets up a new <Globals name="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception), providing a place for the developers to start developing the [minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). The objective is to reduce the time required for a team to configure and prepare their development environment. The key benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the industry to deliver real value for modern cloud-native development.
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the industry to deliver real value for modern cloud-native development.
 
 [Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach to how they deliver success with OpenShift.
 
 ### Environment components
 
-After installation, the <Globals key="env" /> consists of the following components and developer tools:
+After installation, the <Globals name="env" /> consists of the following components and developer tools:
 - A development cluster
 - A set of backend services
 - A set of continuous delivery tools
 
-This diagram illustrates the <Globals key="env" />:
+This diagram illustrates the <Globals name="env" />:
 
 ![Provisioned environment](../images/catalyst-provisioned-environment.png)
 
@@ -98,7 +98,7 @@ Get to know the <Globals string="shortName" />:
       <AnchorLink to="../getting-started/overview">Getting Started</AnchorLink>
       <AnchorLink to="../getting-started/deploy-app">Deploy Your First App</AnchorLink>
       <AnchorLink to="../guides/overview">Tools Guides</AnchorLink>
-      <AnchorLink to="../codepatterns/overview"><Globals key="template" />s</AnchorLink>
+      <AnchorLink to="../codepatterns/overview"><Globals name="templates" /></AnchorLink>
       <AnchorLink to="../admin/overview">Installation</AnchorLink>      
       <AnchorLink to="../arch/environment">Architectures</AnchorLink>
 </AnchorLinks>
