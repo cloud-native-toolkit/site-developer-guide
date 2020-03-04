@@ -19,10 +19,10 @@
   pages:
     - title: Overview
       path: /guides/overview
-    - title: CI with Jenkins
-      path: /guides/continuous-integration
     - title: CI with Tekton
       path: /guides/continuous-integration-tekton
+    - title: CI with Jenkins
+      path: /guides/continuous-integration
     - title: Image Registry
       path: /guides/image-registry
     - title: Artifact Management
