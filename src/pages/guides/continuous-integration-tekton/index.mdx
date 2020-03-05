@@ -2,6 +2,8 @@
 title: Continuous Integration with Tekton
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Tekton to automate your continuous integration process
@@ -41,7 +43,7 @@ This guide will focus on using Tekton when the Development tools have been
 
 <InlineNotification>
 
-**Note:** This guide will help you setup the `Starter Kit Templates` with  **Tekton** and requires that you have installed Tekton with **Red Hat Code Ready Containers 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
+**Note:** This guide will help you set up the [<Globals name="templates" />](/codepatterns/overview) with  **Tekton** and requires that you have installed Tekton with **Red Hat Code Ready Containers 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
 
 </InlineNotification>
 
@@ -157,12 +159,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
   oc project {new-namespace}
   ```
 
-- The template `Pipelines` provided support for `Java` or `Node.js` based
- apps. You can configure your own custom `Tasks` for other runtimes. There
-  are a number of default `Tasks` to get you started they are detailed above. To
-  create an application use one of the provided [Starter Kit Templates
-  ](/starterkits/starterkittemplates) these templates work seamlessly with
-   the `Tasks` and `Pipelines` provided.
+- The template `Pipelines` provided support for `Java` or `Node.js` based apps. You can configure your own custom `Tasks` for other runtimes. There are a number of default `Tasks` to get you started they are detailed above. To create an application use one of the provided [<Globals name="templates" />](/codepatterns/overview) these templates work seamlessly with the `Tasks` and `Pipelines` provided.
 
 ### Register the App with Tekton
 

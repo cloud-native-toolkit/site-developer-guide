@@ -83,7 +83,7 @@ Argo CD uses a number of terms to refer to the components
 
 Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
-1. Create a new repo from the [Argo CD Starter Kit template](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
+1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
 
 1. Clone the project to your machine
 
@@ -120,7 +120,7 @@ the application names in your project, i.e. `{app repo}`.
     message-logger:
       replicaCount: 3
     ``` 
-   **Note:** The specific values that should be configured are dependent on the Helm chart that is referenced in the `requirements.yaml`. For the Starter Kits, you can see those details and customize the chart by looking in the `chart/{chart name}` of the repository.
+   **Note:** The specific values that should be configured are dependent on the Helm chart that is referenced in the `requirements.yaml`. For the <Globals name="templates" />, you can see those details and customize the chart by looking in the `chart/{chart name}` of the repository.
 
 1. Repeat steps 4-7 for each application in the project
 
@@ -210,7 +210,7 @@ Create the `gitops-cd-secret`:
 
 1. Log into the cluster on the command-line.
 
-1. Change the directory to the root of the Argo CD Starter Kit repo that was cloned previously.
+1. Change the directory to the root of the Argo CD <Globals name="template" /> repo that was cloned previously.
 
 1. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.

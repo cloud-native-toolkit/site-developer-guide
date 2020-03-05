@@ -19,7 +19,7 @@ a provider) have a shared understanding of the interactions or the _contract_ be
 
 The Pact framework has been selected for the provided tool set. Pact is a 
 consumer-driven contract testing framework. More details can be found here -
-[Pact overview](https://docs.pact.io/). The framework has been built into the Starter Kits 
+[Pact overview](https://docs.pact.io/). The framework has been built into the <Globals name="templates" />
 and a Pact Broker instance is provisioned in the cluster along with the other tools.
 
 In `consumer-driven contract testing` it is the consumer who defines the `contract` in terms of the 
@@ -194,9 +194,9 @@ process when the pact definition changes and a way record and visualise the resu
 verification process. The high-level interaction is shown below:
 ![Pact broker interactions](./PactFramework-pactbroker.png)
 
-## Starter kits
+## <Globals name="templates" />
 
-The Starter kits have been built with the frameworks necessary to generate and publish pacts for 
+The <Globals name="templates" /> have been built with the frameworks necessary to generate and publish pacts for
 api consumers and verify against pacts and publish the results for api providers. The pipelines 
 will do all the publishing and verification against Pact Broker if an instance of Pact Broker has
 been configured within the cluster.

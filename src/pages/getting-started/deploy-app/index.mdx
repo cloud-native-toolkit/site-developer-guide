@@ -2,15 +2,17 @@
 title: Deploying an App
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-Create a sample application and register Jenkins build pipeline to deploy your application into your development cluster
+Create a sample application and deploy it with the Jenkins pipeline
 
 </PageDescription>
 
 ## Overview
 
-You can create a new app using one of the [Starter Kit Templates](/starterkits/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
+You can create a new app using one of the [<Globals name="templates" />](/codepatterns/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
 
 This video will demonstrate how to work through the steps to create an application that uses a deployment pipeline to install it into your development cluster.
 
@@ -64,7 +66,7 @@ Clone your code
 
 
 
-The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [Starter Kit Templates](/starterkits/overview) that make seeding your development project very easy.
+The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [<Globals name="templates" />](/codepatterns/overview) that make seeding your development project very easy.
 
 - Open a browser and make sure you are logged into [Github](https://github.com)
 - Open the [Developer Tools Dashboard](/getting-started/dashboard) by running the following command:
@@ -80,9 +82,9 @@ The Developer Tools Dashboard makes it easy for you to navigate to the tools, in
 </InlineNotification>
 
 - Open the Developer Tools Dashboard
-- Click on **Starter Kits** tab
+- Click on **<Globals name="templates" />** tab
 - Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
-    - Click on a Starter Kit Template **Tile** to create your app github repository from the template repository selected.
+    - Click on a <Globals name="template" /> **Tile** to create your app github repository from the template repository selected.
     - You can also click on the **Git Icon** to browse the source template repository and click on the **Template** to create the template
 
 - Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) process.

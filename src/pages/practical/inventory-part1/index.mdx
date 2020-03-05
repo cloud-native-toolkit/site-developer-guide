@@ -10,7 +10,7 @@ Ddevelop and deploy an example microservices application
 
 </PageDescription>
 
-Develop an example application with a three-tier microservices architecture and deploy it in IBM Cloud Kubernetes Service or Red Hat OpenShift on IBM Cloud using the <Globals name="longName" /> <Globals name="env" /> including its Starter Kit Templates.
+Develop an example application with a three-tier microservices architecture and deploy it in IBM Cloud Kubernetes Service or Red Hat OpenShift on IBM Cloud using the <Globals name="longName" /> <Globals name="env" /> including its <Globals name="templates" />.
 
 <AnchorLinks>
   <AnchorLink to="#inventory-service">Inventory Service</AnchorLink>
@@ -75,7 +75,7 @@ Create the initial project and register it with a pipeline for automated builds.
 
 - Create a new repository from the [Spring Boot Microservice](https://github.com/ibm-garage-cloud/template-java-spring/generate) template
 
-    You can access this template on the Starter Kits page in the [Developer Tools dashboard](/getting-started/dashboard).
+    You can access this template on the <Globals name="templates" /> page in the [Developer Tools dashboard](/getting-started/dashboard).
 
     <InlineNotification kind="warning">
 
@@ -667,7 +667,7 @@ The Inventory solution will use [GraphQL](https://graphql.org/) for its BFF laye
 
 To get the initial BFF project created and registered with a pipeline for automated builds follow these steps.
 
-- Create a new repository from the [Typescript GraphQL Starter Kit template](https://github.com/ibm-garage-cloud/template-graphql-typescript/generate)
+- Create a new repository from the [Typescript GraphQL <Globals name="template" />](https://github.com/ibm-garage-cloud/template-graphql-typescript/generate)
 
     <InlineNotification kind="warning">
 
@@ -697,7 +697,7 @@ for the app we just pushed. Select the entry and hit `Enter` to launch the brows
 
 #### Build the controller for the REST interface
 
-The controller provides the REST interface for our BFF. The starter kit uses the `typescript-rest`
+The controller provides the REST interface for our BFF. The <Globals name="template" /> uses the `typescript-rest`
 package to simplify the tasks required to create a controller.
 
 - Start the tests in tdd mode by running
@@ -1009,7 +1009,7 @@ git push
 
 #### Add a GraphQL implementation of Stock Items
 
-The GraphQL starter kit supports both REST and GraphQL APIs for accessing backend services. We created
+The GraphQL <Globals name="template" /> supports both REST and GraphQL APIs for accessing backend services. We created
 a REST controller to expose the results from the service and now we will do the same
 for GraphQL.
 
@@ -1071,7 +1071,7 @@ resolverManager.registerResolver(StockItemResolver);
 
 <InlineNotification>
 
-**Note:** The Starter Kit includes a `resolverManager` component that simplifies the steps to
+**Note:** The <Globals name="template" /> includes a `resolverManager` component that simplifies the steps to
 make the resolver available. All that is required to use the resolver is to register it, preferably
 at the bottom of the module where it is defined.
 
@@ -1089,7 +1089,7 @@ export * from './stock-item.resolver';
 npm start
 ```
 
-- Verify that the that the resolver is available using the Graph QL browser provided by the Starter Kit
+- Verify that the that the resolver is available using the Graph QL browser provided by the <Globals name="template" />
     - Open GraphQL Playground: `http://localhost:3000`
     - Run the query `query { stockItems { name } }`
 
@@ -1202,7 +1202,7 @@ export * from './stock-items.service';
 ```
 
 - Add a `serviceUrl` property to the values.yaml file of the Helm chart. The value of the property should match the
-Kubernetes service of the microservice. (For Starter Kit projects, the service name is the same as the name of the
+Kubernetes service of the microservice. (For <Globals name="template" /> projects, the service name is the same as the name of the
 application which is that same as the name of the repository.)
 
 ```yaml path=chart/template-graphql-typescript/values.yaml
@@ -1256,7 +1256,7 @@ git push
 Get the initial project created and register the pipeline for automated builds. Detailed instructions for
 each of these steps can be found in the [Deploying an App](/getting-started/deploy-app) guide.
 
-- Create a new repository from the React UI Patterns Starter Kit template into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
+- Create a new repository from the React UI Patterns <Globals name="template" /> into your Git org - https://github.com/ibm-garage-cloud/template-node-react/generate
 
     In order to prevent naming collisions, name the repository `inventory-management-ui-{your initials}` replacing
     `{your initials}` with your actual initials.
@@ -1277,9 +1277,9 @@ each of these steps can be found in the [Deploying an App](/getting-started/depl
 
 #### Create the initial components
 
-The React Starter Kit comes with a set UI components that implement 12 common UI Design Patterns. In the
+The React <Globals name="template" /> comes with a set UI components that implement 12 common UI Design Patterns. In the
 initial UI, all of the components are included to create an interactive example of how they work.
-The first step of building an application with the React Starter Kit is to remove those components
+The first step of building an application with the React <Globals name="template" /> is to remove those components
 from the menu and to create new components built from the pattern components.
 
 Based on the requirements of this first use case, we will create a StockItemList component based on
