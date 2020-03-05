@@ -2,6 +2,8 @@
 title: Configure Account
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Set up the account so the environment can be installed
@@ -10,7 +12,7 @@ Set up the account so the environment can be installed
 
 ## Configure IBM Cloud account
 
-The account must provide a few resources that will be needed to install the Developer Tools environment:
+The account must provide a few resources that will be needed to install the <Globals name="env" />:
 - A public/private pair of VLANs
 - A resource group
 - A pair of access groups for the admin and developers
@@ -20,7 +22,7 @@ These will be created by an account administrator, either the owner of the accou
 
 ### Data center
 
-First, decide which [IBM Cloud location](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") will host the Developer Tools environment. That will be specified with two settings:
+First, decide which [IBM Cloud location](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") will host the <Globals name="env" />. That will be specified with two settings:
 - Region -- A geography such as *us-south* or *eu-gb*
 - Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
 
@@ -67,7 +69,7 @@ To create clusters in the resource group, the account will need API keys for the
 
 Fourth, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
 
-Clone the Git repository with the scripts. (This repo also has the scripts for installing the Developer Tools environment.)
+Clone the Git repository with the scripts. (This repo also has the scripts for installing the <Globals name="env" />.)
 
 - Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
     ```bash
@@ -89,7 +91,7 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
 
 ### Access group for administrators
 
-Fifth, create an access group to grant the necessary permissions for installing a Developer Tools environment. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
+Fifth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
 - Use the admin policies script
 
@@ -126,7 +128,7 @@ resourceType string equals resource-group, resource string equals RESOURCE_GROUP
 
 ### Access group for developers
 
-Sixth, create an access group to enable developers to access the Developer Tools environment. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
+Sixth, create an access group to enable developers to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
 
 - Use the dev policies script
 

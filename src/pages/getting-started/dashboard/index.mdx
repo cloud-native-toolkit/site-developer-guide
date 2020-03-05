@@ -2,24 +2,24 @@
 title: Developer Tools Dashboard
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-The Cloud Developer Tools environment includes the Cloud Developer Tools Dashboard to help you navigate to the installed tools.
+The <Globals name="env" /> includes the Developer Tools Dashboard
 
 </PageDescription>
 
-![Dashboard](devcluster.png)
-
-The Dashboard is installed into your Developer Tools cluster. It is designed to give you a simple way 
-to perform common Developer Tools tasks, such as:
+The Developer Tools Dashboard is one of the tools running in your <Globals name="env" />. It is designed to help you navigate to the installed tools and give you a simple way to perform common developer tasks, such as:
 - **Dashboard**: Navigate to the tools installed in the cluster
-- **Activation**: Links to education to help you learn cloud-native development and deployment 
-using IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud
+- **Activation**: Links to education to help you learn cloud-native development and deployment using IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud
 - **Starter Kits**: Links to templates that will help accelerate your project
+
+![Dashboard](devcluster.png)
 
 <InlineNotification>
 
-If the Developer Tools are installed in an OpenShift cluster that includes the **IBM Cloud Pak for Applications**, 
+If the environment is installed in an OpenShift cluster that includes the **IBM Cloud Pak for Applications**,
 the Developer Tools will compliment the Cloud Pak's **Tekton Pipelines** and **Transformation Advisor**. 
 You can link out to these tools as an alternative pipeline technology to **Jenkins**.
 

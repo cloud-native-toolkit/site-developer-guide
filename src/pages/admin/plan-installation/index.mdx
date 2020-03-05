@@ -2,6 +2,8 @@
 title: Plan Installation
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 When you are creating Development environments for teams there are a number of element to consider when 
@@ -11,7 +13,9 @@ giving access on the IBM Cloud.
 
 ## Overview
 
-### Dev Tools inside
+A <Globals name="env" /> is installed and managed by users acting in two roles:
+- **Account administrator**: Account owner or other user with sufficient [account management permissions](https://cloud.ibm.com/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
+- **Environment administrator**: A user in the account with [the administrator role for all services](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess)
 
 ### Ops Tools outside
 
@@ -37,8 +41,12 @@ giving access on the IBM Cloud.
 - Test `igc dashboard`
 - Complete setup of LogDNA
 - Complete setup of SysDig
-- Deploy a first app, test end to end
-- Complete Artifactory Setup
-- Complete ArgoCD Setup
-- Rerun pipeline to check app helm chart is added to Artifactory
-- Setup a GitOps repo to validate ArgoCD setup and configuration
+- Test the pipeline by deploying a first app
+- Complete setup of Artifactory
+- Complete setup of Argo CD
+- Rerun pipeline and confirm that the app's Helm chart is added to Artifactory
+- Set up a GitOps repo to validate ArgoCD setup and configuration
+
+## Conclusion
+
+Having configured the account, installed the environment, and configured the environment, the administrators have now completed an end-to-end installation of a <Globals name="env" />. It is ready for a development team to begin using for application development.

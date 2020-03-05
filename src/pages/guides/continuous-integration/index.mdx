@@ -2,14 +2,15 @@
 title: Continuous Integration with Jenkins
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Jenkins to automate your continuous integration process
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [continuous integration](https://www.ibm.com/garage/method/practices/code/practice_continuous_integration/).
-The Developer Tools environment uses a Jenkins pipeline to automate continuous integration.
+In IBM Garage Method, one of the Develop practices is [continuous integration](https://www.ibm.com/garage/method/practices/code/practice_continuous_integration/). The <Globals name="env" /> uses a Jenkins pipeline to automate continuous integration.
 
 ## What is continuous integration
 
@@ -89,7 +90,7 @@ This is good if you have various squads, teams, pairs or students working in the
 
 ## Continuous deployment
 
-In addition to continuous integration, the Developer Tools environment also supports continuous delivery
+In addition to continuous integration, the <Globals name="env" /> also supports continuous delivery
 using Artifactory and ArgoCD:
 
 <AnchorLinks small>

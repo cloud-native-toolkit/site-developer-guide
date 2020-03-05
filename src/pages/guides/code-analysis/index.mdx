@@ -2,16 +2,15 @@
 title: Code Analysis
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use SonarQube to analyze your code's quality
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is to [automate tests for continuous delivery](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/), in part by using [static source code analysis tools](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/tool_lint).
-[SonarQube](https://www.sonarqube.org/) automates performing static code analysis and enables it to be added to a continuous integration pipeline.
-The Developer Tools environment's CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a SonarQube stage. 
-Simply by building your app using the pipeline, your code gets analyzed, just open the SonarQube UI to browse the findings.
+In IBM Garage Method, one of the Develop practices is to [automate tests for continuous delivery](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/), in part by using [static source code analysis tools](https://www.ibm.com/garage/method/practices/code/practice_automated_testing/tool_lint). [SonarQube](https://www.sonarqube.org/) automates performing static code analysis and enables it to be added to a continuous integration pipeline. The <Globals name="env" />'s CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a SonarQube stage. Simply by building your app using the pipeline, your code gets analyzed, just open the SonarQube UI to browse the findings.
 
 ## What is code analysis 
 
@@ -283,7 +282,7 @@ public synchronized void reset() throws IOException {
 
 It's a good idea to incorporate code analysis as part of your application development lifecycle,
 so you can use its findings to help enforce and improve your code quality.
-Here, the Developer Tools environment uses SonarQube, but you never had to run SonarQube.
-Just run the Developer Tools environment's build pipeline on your app and it gets scanned automatically.
+Here, the <Globals name="env" /> uses SonarQube, but you never had to run SonarQube.
+Just run the <Globals name="env" />'s build pipeline on your app and it gets scanned automatically.
 After running the pipeline, open the SonarQube UI and browse the findings in your app's project to figure 
 out what code you ought to fix.

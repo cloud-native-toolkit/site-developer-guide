@@ -2,6 +2,8 @@
 title: Application Modernization - Exercise 2
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Migrate a Java EE app that requires minimum code changes
@@ -12,7 +14,7 @@ This exercise shows how to handle a "minimum code changes required" modernizatio
 
 This exercise assumes the following:
 
-1. You are using a Developer Tools environment that has already been installed.
+1. You are using a <Globals name="env" /> that has already been installed.
 1. Cloud Pak for Applications has already been installed in the environment.
 1. You have Java installed on your laptop, one of the optional [prerequisites](/getting-started/prereqs).
 1. You will also install Eclipse on your laptop.
@@ -68,7 +70,7 @@ This modernization exercise has the following requirements:
 
 ## Guide
 This exercise has the following steps:
-- Import provided scan results into IBM Cloud Transformation Advisor running in your team's Developer Tools environment
+- Import provided scan results into IBM Cloud Transformation Advisor running in your team's <Globals name="env" />
 - Review the Transformation Advisor analysis
 - Load the application source code into Eclipse
 - Use the WebSphere Application Server Migration Toolkit (WAMT) to perform simple code changes

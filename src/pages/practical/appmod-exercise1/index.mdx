@@ -2,6 +2,8 @@
 title: Application Modernization - Exercise 1
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Migrate a Java EE app that requires no code changes
@@ -12,7 +14,7 @@ This exercise shows how to handle a "no code changes required" modernization of 
 
 This exercise assumes the following:
 
-1. You are using a Developer Tools environment that has already been installed.
+1. You are using a <Globals name="env" /> that has already been installed.
 1. Cloud Pak for Applications has already been installed in the environment.
 1. You have Docker Desktop running on your laptop (one of the [prerequisites](/getting-started/prereqs)).
 
@@ -51,7 +53,7 @@ The target for the runtime modernization is shown below with the containerized a
 
   ![twasarch](/images/kube-arch.jpg)
 
-For the purposes of this lab exercise, you will run a simulation of the WebSphere ND environment on your laptop using a Docker container that contains PlantsByWebSphere, WebSphere Application Server, and a data collector. You will then use IBM Cloud Transformation Advisor--part of the Cloud Pak for Applications installed in your team's Developer Tools environment--to analyze the WebSphere ND environment and create the artifacts you need to run the same PlantsByWebSphere application on Liberty in a Docker container on your laptop.
+For the purposes of this lab exercise, you will run a simulation of the WebSphere ND environment on your laptop using a Docker container that contains PlantsByWebSphere, WebSphere Application Server, and a data collector. You will then use IBM Cloud Transformation Advisor--part of the Cloud Pak for Applications installed in your team's <Globals name="env" />--to analyze the WebSphere ND environment and create the artifacts you need to run the same PlantsByWebSphere application on Liberty in a Docker container on your laptop.
 
   ![labarch](images/lab-arch.jpg)
 

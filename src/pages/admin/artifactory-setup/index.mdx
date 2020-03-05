@@ -2,6 +2,8 @@
 title: Artifactory Setup
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Complete the steps for setting up the Artifactory tool
@@ -10,14 +12,14 @@ Complete the steps for setting up the Artifactory tool
 
 ## Overview
 
-Artifactory is the [Developer Tools environment's artifact repository manager](/guides/artifact-management).
+Artifactory is the [<Globals name="env" />'s artifact repository manager](/guides/artifact-management).
 Before you can use it as part of the [continious integration pipeline](/guides/continuous-integration), 
 it first must be configured as part of the environment.
 
 ##  Configuration
 
-Set up Artifactory in the Developer Tools environment with a Helm repository.
-Also, set up the Developer Tools environment to access Artifactory.
+Set up Artifactory in the <Globals name="env" /> with a Helm repository.
+Also, set up the <Globals name="env" /> to access Artifactory.
 
 ### Set up Artifactory
 
@@ -170,4 +172,4 @@ You will see a folder named after your resource group containing the tar file fo
 
 ## Conclusion
 
-Artifactory is now set up in your Developer Tools environment and CI pipelines can store Helm charts in Artifactory repository. 
+Artifactory is now set up in your <Globals name="env" /> and CI pipelines can store Helm charts in Artifactory repository.

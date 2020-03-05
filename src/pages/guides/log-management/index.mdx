@@ -2,19 +2,21 @@
 title: Log Management
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-Use LogDNA to manage logging for your running application
+Use LogDNA to manage your running application's logs
 
 </PageDescription>
 
 In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/), including logging. Imagine your application isn't working right in production even though the environment is fine. What information would you want in your logs to help you figure out what's wrong with your application? Build logging messages for that information into your application.
 
-Given that your application is logging, as are lots of other applications and services in your cloud environment, these logs need to be managed and made accessible. LogDNA adds log management capabilities to a Kubernetes cluster and its deployments. The Developer Tools environment includes an IBM Log Analysis with LogDNA service instance configured with a LogDNA agent installed in the environment's cluster. Simply by deploying your application into the Developer Tools environment, LogDNA collects the logs, just open the LogDNA web UI from the IBM Cloud dashboard to browse your application's logs.
+Given that your application is logging, as are lots of other applications and services in your cloud environment, these logs need to be managed and made accessible. LogDNA adds log management capabilities to a Kubernetes cluster and its deployments. The <Globals name="env" /> includes an IBM Log Analysis with LogDNA service instance configured with a LogDNA agent installed in the environment's cluster. Simply by deploying your application into the <Globals name="env" />, LogDNA collects the logs, just open the LogDNA web UI from the IBM Cloud dashboard to browse your application's logs.
 
 ## LogDNA log management
 
-[IBM Log Analysis with LogDNA](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA) explains how to configure and use an instance of the LogDNA service, but the Developer Tools environment has already done this for you. You can skip these steps about provisioning an instance, installing an agent, and user access.
+[IBM Log Analysis with LogDNA](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA) explains how to configure and use an instance of the LogDNA service, but the <Globals name="env" /> has already done this for you. You can skip these steps about provisioning an instance, installing an agent, and user access.
 
 ### LogDNA dashboard
 
@@ -108,4 +110,4 @@ There is lots more information around how to use **LogDNA**, these links will he
 
 ## Conclusion
 
-It's important to be able to manage the logs of your deployed applications to help identify issues and quickly understand how to resolve them. The Developer Tools configures LogDNA directly to you development cluster to make it easy to get the log you data you need as a developer. Just deploy your application into your Developer Tools environment and its logs start appearing automatically, open the LogDNA web UI and browse your logs.
+It's important to be able to manage the logs of your deployed applications to help identify issues and quickly understand how to resolve them. The Developer Tools configures LogDNA directly to you development cluster to make it easy to get the log you data you need as a developer. Just deploy your application into your <Globals name="env" /> and its logs start appearing automatically, open the LogDNA web UI and browse your logs.

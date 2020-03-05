@@ -2,19 +2,19 @@
 title: Continuous Delivery
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-Use Argo CD to continuously deliver application changes into the runtime environment
+Use Argo CD to continuously deliver application changes
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). The Developer Tools environment uses an [Argo CD](https://argoproj.github.io/argo-cd/) pipeline to automate continuous delivery.
+In IBM Garage Method, one of the Develop practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). The <Globals name="env" /> uses an [Argo CD](https://argoproj.github.io/argo-cd/) pipeline to automate continuous delivery.
 
 ## What is continuous delivery
 
-Continuous delivery is the DevOps approach of frequently making new versions of an application's components available
-for deployment to an environment. The process involves automation of the build and validation process and concludes with
-a new version of the application that is available for promotion to another environment.
+Continuous delivery is the DevOps approach of frequently making new versions of an application's components available for deployment to a runtime environment. The process involves automation of the build and validation process and concludes with a new version of the application that is available for promotion to another environment.
 
 Continuous delivery is closely related to continuous deployment. The distinction is:
 - Continuous delivery deploys an application when a user manually triggers deployment
@@ -33,7 +33,7 @@ GitOps takes advantage of several Git features:
 
 ### CI/CD integration
 
-For the full end-to-end build and delivery process, both the CI and CD pipelines are required. For this to work, a Git repo is used to convey the configuration values. Within the Developer Tools environment, we have used certain naming conventions to streamline and simplify the untegration between the various components.
+For the full end-to-end build and delivery process, both the CI and CD pipelines are required. For this to work, a Git repo is used to convey the configuration values. Within the <Globals name="env" />, we have used certain naming conventions to streamline and simplify the untegration between the various components.
 
 ![Argo CD config](/images/CI_CD-pipelines.png)
 
@@ -75,7 +75,7 @@ Argo CD uses a number of terms to refer to the components
 
 - Application - A deployable unit
 
-    In the context of the Developer Tools environment, an application is one Helm chart that contains one container image that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more sophisticated applications in more advanced scenarios, we will be using this simple definition here.
+    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more sophisticated applications in more advanced scenarios, we will be using this simple definition here.
     
 - Project - A collection of applications that make up a solution
 

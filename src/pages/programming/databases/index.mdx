@@ -2,6 +2,8 @@
 title: Cloud Databases
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Cloud Databases to persist application data
@@ -20,14 +22,14 @@ Use Cloud Databases to persist application data
 
 ## Introduction
 
-The IBM Garage for Cloud Developer Tools environment provides a set of database services for persisting applications' data:
+The <Globals name="longName" /> <Globals name="env" /> provides a set of database services for persisting applications' data:
 - [Databases For PostgreSQL](https://cloud.ibm.com/docs/services/databases-for-postgresql) -- A SQL database for persisting relational data that conforms to a schema that can be queryed using SQL
 - [Cloudant](https://cloud.ibm.com/docs/services/Cloudant) -- A NoSQL database for persisting schemaless data structured as JSON documents
 - [Cloud Object Storage](https://cloud.ibm.com/docs/services/cloud-object-storage) -- For persisting binary data, especially huge sets of data
 
 Microservices are stateless, so a cloud-native application will need servcies like these to persist their data. If a particular application does not need all of these services, only the ones it uses need to be created in the production environment.
 
-Each microservice should have its own database (zero or more), such that a particular database is only accessed by replicas of a single microservice. Yet the Developer Tools environment only has these three database service instances for all of the microservices it hosts. Doesn't that violate best practices? No. Each database service is like a database manager, which can host multiple databases. Each microservice should have its own databases, but multiple microservices that want to use the same database technology can use databases hosted by the same database service instance. Any one database in the service is only used by a single microservice.
+Each microservice should have its own database (zero or more), such that a particular database is only accessed by replicas of a single microservice. Yet the <Globals name="env" /> only has these three database service instances for all of the microservices it hosts. Doesn't that violate best practices? No. Each database service is like a database manager, which can host multiple databases. Each microservice should have its own databases, but multiple microservices that want to use the same database technology can use databases hosted by the same database service instance. Any one database in the service is only used by a single microservice.
 
 
 = Introduction to Cloud Databases

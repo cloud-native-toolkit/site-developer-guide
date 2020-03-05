@@ -2,6 +2,8 @@
 title: ArgoCD Setup
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Complete the steps for setting up the ArgoCD tool to support integration with
@@ -11,9 +13,14 @@ Complete the steps for setting up the ArgoCD tool to support integration with
 
 ## Overview
 
+<<<<<<< HEAD
 ArgoCD is the [Developer Tools environment's continuous delivery tool](/guides/continuous-delivery).
 Before you can use it as part of the environment, it must first be configured
  to integrate with Artifactory.
+=======
+ArgoCD is the [<Globals name="env" />'s continuous delivery tool](/guides/continuous-delivery).
+Before you can use it as part of the environment, it must first be configured.
+>>>>>>> Replace Developer Tools environment
 
 ## Prerequisites
 
@@ -50,8 +57,13 @@ The Helm repository is in Artifactory. ArgoCD will need the URL to that reposito
 
 ### Update the ArgoCD configuration file
 
+<<<<<<< HEAD
 The repo you cloned contains an ArgoCD configuration file. Use the following
  steps to register the helm repository with ArgoCD.
+=======
+The repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
+and deploy it to your <Globals name="env" />.
+>>>>>>> Replace Developer Tools environment
 
 - Log into your cluster from the CLI
 
@@ -66,10 +78,14 @@ The repo you cloned contains an ArgoCD configuration file. Use the following
 /addhelmrepository.sh [artifact-helm-repository-location]/[helm artifact
  folder]`
 
+<<<<<<< HEAD
 - where `[artifact-helm-repository-location]/[helm artifact folder]` is
  the URL of
  the location of the `index.yaml` file that is used as the base location
   of your Helm repository
+=======
+    where `[artifact-helm-repository-location]` is the URL of the Helm repository location in Artifactory
+>>>>>>> Replace Developer Tools environment
 
 Verify that the new configuration has deployed
 
@@ -79,4 +95,4 @@ Verify that the new configuration has deployed
 
 ## Conclusion
 
-ArgoCD now has the configuration file in the Developer Tools environment that it needs to access the Helm chart repository in Artifactory.
+ArgoCD now has the configuration file in the <Globals name="env" /> that it needs to access the Helm chart repository in Artifactory.

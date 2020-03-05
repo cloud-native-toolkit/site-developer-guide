@@ -2,16 +2,15 @@
 title: Contract Testing
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Pact to test your code's API
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing).
-[Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline.
-The Developer Tools environment's CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a Pact stage. 
-Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
+In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing). [Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline. The <Globals name="env" />'s CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a Pact stage. Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
 
 ## What is contract testing
 

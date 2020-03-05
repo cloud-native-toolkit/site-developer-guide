@@ -2,17 +2,19 @@
 title: Monitoring
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Sysdig to monitor your running application
 
 </PageDescription>
 
-In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/). Sysdig automates application monitoring, enabling an operator to view stats and collect metrics about a Kubernetes cluster and its deployments. The Developer Tools environment includes an IBM Cloud Monitoring with Sysdig service instance configured with a Sysdig agent installed in the environment's cluster. Simply by deploying your application into the Developer Tools environment, Sysdig monitors it, just open the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
+In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/). Sysdig automates application monitoring, enabling an operator to view stats and collect metrics about a Kubernetes cluster and its deployments. The <Globals name="env" /> includes an IBM Cloud Monitoring with Sysdig service instance configured with a Sysdig agent installed in the environment's cluster. Simply by deploying your application into the <Globals name="env" />, Sysdig monitors it, just open the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
 
 ## Sysdig Monitoring
 
-[IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig) explains how to configure and use an instance of the Sysdig service, but the Developer Tools environment has already done most of this for you. You can skip steps 1-3 about user access, provisioning an instance, and installing an agent.
+[IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig) explains how to configure and use an instance of the Sysdig service, but the <Globals name="env" /> has already done most of this for you. You can skip steps 1-3 about user access, provisioning an instance, and installing an agent.
 
 ### Sysdig dashboard
 
@@ -200,8 +202,8 @@ Alerting will send you one more alert email, subject "{alert} is Acknowledged - 
 ## Conclusion
 
 It's important to be able to monitor your deployed applications. 
-Here, the Developer Tools environment uses Sysdig Monitoring, but you never had to install or run Sysdig.
-Just deploy your application into the Developer Tools environment and it gets moniotored automatically.
+Here, the <Globals name="env" /> uses Sysdig Monitoring, but you never had to install or run Sysdig.
+Just deploy your application into the <Globals name="env" /> and it gets moniotored automatically.
 After deploying your application, open the Sysdig web UI and browse the status, including the status 
 of your cluster as a whole and your deployment in particular.
 
