@@ -65,9 +65,22 @@ To create clusters in the resource group, the account will need API keys for the
     - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
 
 
+### Upgrade the image registry
+
+Fourth, we'll upgrade the service plan for the [image registry](/guides/image-registry) so that is has more capacity.
+
+- Set the registry plan
+
+    ```bash
+    ibmcloud cr plan-upgrade standard
+    ```
+
+Now we can store more container images.
+
+
 ### Prepare to run scripts
 
-Fourth, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
+Fifth, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
 
 Clone the Git repository with the scripts. (This repo also has the scripts for installing the <Globals name="env" />.)
 
@@ -91,7 +104,7 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
 
 ### Access group for administrators
 
-Fifth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
+Sixth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
 - Use the admin policies script
 
@@ -128,7 +141,7 @@ resourceType string equals resource-group, resource string equals RESOURCE_GROUP
 
 ### Access group for developers
 
-Sixth, create an access group to enable developers to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
+Seventh, create an access group to enable developers to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
 
 - Use the dev policies script
 

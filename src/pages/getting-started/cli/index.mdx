@@ -1,6 +1,7 @@
 ---
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 title: CLI
 =======
 title: <Globals name="shortName" /> CLI
@@ -8,6 +9,9 @@ title: <Globals name="shortName" /> CLI
 =======
 title: CLI
 >>>>>>> Updates with for CLI
+=======
+title: Cloud-Native Toolkit CLI
+>>>>>>> Updates to install, CLI, and dashboard
 ---
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
@@ -32,7 +36,7 @@ To use the <Globals name="igccli" />, first:
 - Use the <Globals name="iccli" /> to log your terminal in to <Globals name="ic" />
 - Use the cluster CLI to log your terminal in to the <Globals name="kube" /> or <Globals name="ocp" /> cluster
 
-The <Globals name="iccli" /> uses those logged in sessions to connect to <Globals name="ic" /> and the cluster.
+The <Globals name="igccli" /> uses those logged in sessions to connect to <Globals name="ic" /> and the cluster.
 
 ## Install the CLI
 
@@ -62,7 +66,10 @@ Follow these steps to use the IGC CLI:
 
 **Warning**: If you have installed the **<Globals name="igccli" />** prior to
  `v0.4.0`, you must uninstall it and follow the installation steps below. The
-  uninstall command: `npm rm -g @garage-catalyst/ibm-garage-cloud-cli`
+  uninstall command:
+  ```
+  npm rm -g @garage-catalyst/ibm-garage-cloud-cli
+  ```
 
 </InlineNotification>
 
@@ -88,8 +95,12 @@ Follow these steps to install the <Globals name="igccli" />:
 =======
 - Verify the installed version is greater than `0.4.0`:
     ```bash
+<<<<<<< HEAD
     $ igc --version
 >>>>>>> Updates with for CLI
+=======
+    igc --version
+>>>>>>> Updates to install, CLI, and dashboard
     ```
 
 - Run the CLI's help command to list the available commands:
@@ -114,11 +125,11 @@ Follow these steps to install the <Globals name="igccli" />:
       igc deploy             Deploy an image from the IBM Cloud registry into a
                              kubernetes cluster
       igc enable             Enable the current repository with pipeline logic
+      igc endpoints          List the current ingress hosts for deployed apps in a
+                             namespace       [aliases: ingress, endpoint, ingresses]
       igc generate-token     Generate a Jenkins api token
       igc git-secret [name]  Create a kubernetes secret that contains the url,
                              username, and personal access token for a git repo
-      igc ingress            List the current ingress hosts for deployed apps in a
-                             namespace
       igc jenkins-auth       Generate a Jenkins api token and register it as
                              kubernetes secret
       igc launch-tools       Launch the IBM Garage for Cloud tools image connected
@@ -192,7 +203,7 @@ Once logged in, you can use the CLI commands.
 
 - For example, this command lists the dashboard ingress URLs for all of the install tools in the tools namespace:
     ```bash
-    igc ingress -n tools
+    igc endpoints -n tools
     ```
 
 ## Available commands

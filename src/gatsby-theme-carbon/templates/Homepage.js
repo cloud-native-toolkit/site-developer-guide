@@ -36,7 +36,7 @@ const SecondRightText = () => (
   </p>
 );
 
-const BannerText = () => <h1>{g.longName}<br/>Developer Guide</h1>;
+const BannerText = () => <h1>{g.shortName}<br/>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,

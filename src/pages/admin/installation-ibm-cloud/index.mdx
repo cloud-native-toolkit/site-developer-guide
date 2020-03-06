@@ -158,31 +158,55 @@ There is a tool for optionally generating the VLAN variables.
 
 The `environment.tfvars` properties will be used to install the Development Tools environment.
 
-- Typical values look like this:
+Typical values look like this:
 
-    ```bash
-    # The type of cluster that will be created/used (kubernetes or openshift)
-    cluster_type="kubernetes"
-    # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="false"
+```bash
+# The type of cluster that will be created/used (kubernetes or openshift)
+cluster_type="openshift"
+# Flag indicating if we are using an existing cluster or creating a new one
+cluster_exists="true"
 
-    # The cluster name can be provided (particularly if using existing cluster) or it will
-    # default to '${resource_group_name}-cluster'
-    #cluster_name="catalyst-team-cluster"
+# The prefix that should be applied to the cluster name and service names (if not provided
+# explicitly). If not provided then the resource_group_name will be used as the prefix.
+#name_prefix="<name prefix for cluster and services>"
+#name_prefix="garage-cloud-surge"
 
-    resource_group_name="catalyst-team"
-    vlan_region="us-south"
+# The cluster name can be provided (particularly if using an existing cluster). The value
+# for cluster name used by the scripts will be set in the following order of presidence:
+# - "${cluster_name}"
+# - "${name_prefix}-cluster"
+# - "${resource_group_name}-cluster"
+#cluster_name="<cluster name>"
+cluster_name="garage-cloud-surge-ocp-cluster"
 
-    # Flag indicating if we are using an existing postgres server or creating a new one
-    postgres_server_exists="true"
-    ```
+resource_group_name="garage-cloud-surge"
+vlan_region="us-south"
 
-- You must set `resource_group_name` and `vlan_region`, using the values provided by the account administrator
+# Flag indicating if we are using an existing postgres server or creating a new one
+postgres_server_exists="false"
+```
+
+<p/>
+
+Some of these values are given to you by the account administrator:
+- `resource_group_name` -- The resource group the cluster and environment will be created in
+- `vlan_region` -- The region the cluster and environment will be created in
 
 The other variables have reasonable defaults that you can change if desired:
 - Set `cluster_name` to specify any valid cluster name that is not already in use or leave unset
 - Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**
 - Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance
+
+- `cluster_exists` -- Set to `false` to create a new cluster
+- `cluster_type` -- Specify the new cluster's type
+    - **kubernetes** -- Kubernetes
+    - **openshift** -- OpenShift v3
+    - **ocp3** -- OpenShift v3
+    - **ocp4** -- OpenShift v4
+    - ~~**crc** -- CodeReady Containers~~
+- `cluster_name` -- The name for the new cluster
+- `postgres_server_exists` -- Specify whether the resource group already contains an existing PostgreSQL service instance
+
 
 <InlineNotification>
 

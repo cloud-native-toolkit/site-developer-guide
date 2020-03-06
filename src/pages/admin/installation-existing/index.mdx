@@ -142,41 +142,67 @@ Follow the instructions below to set the existing cluster's details in the `envi
 
 The `environment.tfvars` properties will be used to install the Development Tools.
 
-- Typical values look like this:
+Typical values look like this:
 
-    ```bash
-    # The type of cluster that will be created/used (kubernetes or openshift)
-    cluster_type="kubernetes"
-    # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="false"
+```bash
+# The type of cluster that will be created/used (kubernetes or openshift)
+cluster_type="openshift"
+# Flag indicating if we are using an existing cluster or creating a new one
+cluster_exists="true"
 
-    # The cluster name can be provided (particularly if using existing cluster) or it will
-    # default to '${resource_group_name}-cluster'
-    #cluster_name="catalyst-team-cluster"
+# The prefix that should be applied to the cluster name and service names (if not provided
+# explicitly). If not provided then the resource_group_name will be used as the prefix.
+#name_prefix="<name prefix for cluster and services>"
+#name_prefix="garage-cloud-surge"
 
-    resource_group_name="catalyst-team"
-    vlan_region="us-south"
+# The cluster name can be provided (particularly if using an existing cluster). The value
+# for cluster name used by the scripts will be set in the following order of presidence:
+# - "${cluster_name}"
+# - "${name_prefix}-cluster"
+# - "${resource_group_name}-cluster"
+#cluster_name="<cluster name>"
+cluster_name="garage-cloud-surge-ocp-cluster"
 
-    # Flag indicating if we are using an existing postgres server or creating a new one
-    postgres_server_exists="true"
-    ```
+resource_group_name="garage-cloud-surge"
+vlan_region="us-south"
 
-- Set them based on the existing cluster:
-    - `vlan_region` -- The existing cluster's region
-    - `resource_group_name` -- The existing cluster's resource group
-    - `cluster_name` -- The existing cluster's name
-    - `cluster_exists` -- Set to `"true"` for the existing cluster
-    - `cluster_type` -- Specify whether the existing cluster is **kubernetes** or **openshift**
-    - `postgres_server_exists` -- Specify whether the existing cluster already has an existing PostgreSQL service instance
+# Flag indicating if we are using an existing postgres server or creating a new one
+postgres_server_exists="false"
+```
 
-**Note:** The values for `resource_group_name` and `cluster_name` can be found on the Resource List
-page in the IBM Cloud Console - https://cloud.ibm.com/resources
+<p/>
 
-![](/images/cloud.ibm.com-resources.png)
+Set them based on the existing cluster:
+- `resource_group_name` -- The existing cluster's resource group
+- `vlan_region` -- The existing cluster's region
+- `cluster_exists` -- Set to `true` for an existing cluster
+- `cluster_type` -- Specify the existing cluster's type
+    - **kubernetes** -- Kubernetes
+    - **openshift** -- OpenShift v3
+    - **ocp3** -- OpenShift v3
+    - **ocp4** -- OpenShift v4
+    - **crc** -- CodeReady Containers
+- `cluster_name` -- The existing cluster's name
+- `postgres_server_exists` -- Specify whether the existing cluster already has an existing PostgreSQL service instance
+
+<p/>
 
 <InlineNotification>
 
-Note: **PostgreSQL** can take some time to provision, so in some cases it is worth manually creating an instance. It needs
+**Note**: The values for `resource_group_name` and `cluster_name` can be found on the Resource List
+page in the IBM Cloud Console - https://cloud.ibm.com/resources
+
+</InlineNotification>
+
+<p/>
+
+![Resource list](/images/cloud.ibm.com-resources.png)
+
+<p/>
+
+<InlineNotification>
+
+**Note**: **PostgreSQL** can take some time to provision, so in some cases it is worth manually creating an instance. It needs
 to be in the same region and names `<resource-group>-postgresql`.
 
 </InlineNotification>
