@@ -17,14 +17,6 @@ The Developer Dashboard is one of the tools running in your <Globals name="env" 
 
 ![Developer Dashboard](/images/developer-dashboard.png)
 
-<InlineNotification>
-
-If the environment is installed in an OpenShift cluster that includes the **IBM Cloud Pak for Applications**,
-the Developer Tools will compliment the Cloud Pak's **Tekton Pipelines** and **Transformation Advisor**. 
-You can link out to these tools as an alternative pipeline technology to **Jenkins**.
-
-</InlineNotification>
-
 ### Opening the Dashboard
 
 - Open a terminal
@@ -62,25 +54,24 @@ follow the instructions to login from the command line
 
 - To list the ingress endpoints for all of the installed tools, use the [Developer Tools CLI](../getting-started/cli) to run the following command:
     ```bash
-    igc ingress -n tools
+    igc endpoints -n tools
     ```
 
 - This will return the ingress URLs for all of the tools installed in the Developer Tools cluster.
     ```bash
-    ? Ingresses in the 'tools' namespace. Select an ingress to launch the default browser or 'Exit'.
-
-      1) Exit
-      2) argocd-server - https://grpc.argocd.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-      3) argocd-server - https://argocd.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-      4) artifactory - https://artifactory.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-      5) catalyst-dashboard - https://dashboard.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-      6) pact-broker - https://pact.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-      7) sonarqube - https://sonarqube.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-    (Move up and down to reveal more choices)
-      Answer: 5
+   ? Endpoints in the 'tools' namespace. Select an endpoint to launch the default browser or 'Exit'.
+   
+     1) Exit
+     2) developer-dashboard - http://dashboard.garage-dev-ocp4-c-518489-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud
+     3) argocd-server - https://argocd-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
+     4) artifactory - https://artifactory-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
+     5) dashboard - https://dashboard-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
+     6) developer-dashboard - http://dashboard.garage-dev-ocp4-c-518489-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud
+   (Move up and down to reveal more choices)
+     Answer:
     ```
 
--  You can then select the URL to open the tools dashboard directly.
+-  You can then select the URL to open the tools' dashboard directly.
 
 ### Credentials
 
@@ -100,3 +91,38 @@ If you are using OpenShift, the Jenkins credential
 will be `undefined` because the OpenShift built in Jenkins service uses IBM cloud single sign-on mechanism.
 
 </InlineNotification>
+
+### Customizing the Tools view
+
+The tools dashboard supports a collection of tools links. These links can be
+ added to the <Globals name="env" /> using the `igc` command line. This
+  enables a level of customization for the development. You can use this to
+   link out to your Cloud Pak main dashboards, or you can add a reference to
+    your Github project. 
+    
+- To add a tool follow the syntax below.  
+    ```bash
+    igc tool-config --name <name of tool> --url <url of tool> 
+    ```
+
+The following is a list of supported tools that be configured for displayed.
+ 
+| Tool Name                | Name Parameter  | Description | Pre-Configured |
+| -----------------------  |:-------------- |:------------| :----------- |
+| GitLab | `gitlab`  | IBM Cloud GitLab instance for the region you are using | Yes |
+| Eclipse Che | `che` | Link to Eclipse Che instance | No |  
+| Jenkins | `jenkins` | If IKS configured by default | Yes |
+| Pipeline | `pipeline` | If OCP configured by default | Yes |
+| ArgoCD | `argocd` | Link to ArgoCD instance in cluster | Yes |
+| Artifactory | `artifactory` | Link to Artifactory instance in cluster | Yes |
+| SonarQube | `sonarqube` | Link to SonarQube instance in cluster | Yes |
+| Pact | `pact` | Link to Pact Broker instance in cluster | Yes |
+| Tekton | `tekton` | Link to Tekton Dashboard in cluster | No |
+| Transformation Advisor | `ta` | Link to Transformation Advisor tool in cluster | No |
+| Swagger Editor | `apieditor` | Link to Swagger Editor instance in cluster | Yes |
+| CodeReady Workspaces | `codeready` | Link to CodeReady Workspaces instance in cluster | No |
+| GitHub | `github` | Link to teams GitHub organization | Yes |
+| Cloud Pak for Integration | `integration` | Link to main console for Cloud Pak for Integration | No |
+| Cloud Pak for Multi Cloud Manager | `mcm` | Link to main console for Cloud Pak for Multi Cloud Manager | No |
+| Cloud Pak for Data | `data` | Link to main console for Cloud Pak for Data | No |
+| Cloud Pak for Automation | `automation` | Link to main console for Cloud Pak for Automation | No |

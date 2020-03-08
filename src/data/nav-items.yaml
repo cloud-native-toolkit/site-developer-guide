@@ -121,3 +121,8 @@
       path: /activation/cloudnative-development
     - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
+
+
+- title: How to contribute
+  pages:
+    - path: /contributing
