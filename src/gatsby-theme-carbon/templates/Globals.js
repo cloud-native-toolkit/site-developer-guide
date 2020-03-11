@@ -13,7 +13,7 @@ globals.roks       = "Red Hat OpenShift on IBM Cloud";
 globals.method     = "IBM Garage Method";
 globals.template   = "Code Pattern";
 globals.templates  = "Code Patterns";
-globals.dashboard  = "Developer Tools Dashboard";
+globals.dashboard  = "Developer Dashboard";
 globals.igccli     = "IGC CLI";
 
 const Globals = ({name}) => {

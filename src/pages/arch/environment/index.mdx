@@ -51,6 +51,8 @@ The backend services provide capabilities the applications depend on, which will
 
 **Security**: Applications need to not only provide user functionality, but to do so securely. One important aspect of security is authenticating the users of the application. The <Globals name="env" /> provides this capability using [IBM Cloud App ID](https://cloud.ibm.com/docs/services/appid).
 
+**Source code management** (SCM): The application's codebase should be stored in a code repository that provides revision control. ([The Twelve-Factor App](https://12factor.net/), Factor I. Codebase). The <Globals name="env" /> uses Git repos in [GitHub](https://github.com/), which provides [webhooks](https://developer.github.com/webhooks/) to trigger the environment's CI pipeline (either [Tekton](/guides/continuous-integration-tekton) or [Jenkins](/guides/continuous-integration)). While SCM is not needed in production and does not need to be managed by the operations team, it is an external capability that must be provided to the <Globals name="env" /> and that the development team must agree on (such as each development team having its own [GitHub organization](https://help.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-organizations)).
+
 ### Teams for developers
 
 As [Development Teams](/arch/teams) explains in detail, each development team can get its own <Globals name="env" />, or multiple teams can share an environment. The tradeoff is each team getting an isolated development environment so that they can work independently from each other vs. sharing an environment to increase utilization and facilitate coordinating on assets that form a single application.
