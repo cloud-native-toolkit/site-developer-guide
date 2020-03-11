@@ -31,14 +31,11 @@ These utilities include:
 - Help copy `configMaps` and `secrets` into new projects/namespace in Kubernetes or OpenShift
 - Enable existing <Globals name="templates" /> with the necessary artifacts to be integrated easily into the <Globals name="env" />
 
-To use the <Globals name="igccli" />, first:
-- Install the <Globals name="igccli" /> in your terminal's path
-- Use the <Globals name="iccli" /> to log your terminal in to <Globals name="ic" />
-- Use the cluster CLI to log your terminal in to the <Globals name="kube" /> or <Globals name="ocp" /> cluster
+You can either install the CLI onto your computer or install the Cloud Shell Commands environment.
 
-The <Globals name="igccli" /> uses those logged in sessions to connect to <Globals name="ic" /> and the cluster.
+<Accordion>
 
-## Install the CLI
+<AccordionItem title="Install the CLI">
 
 <InlineNotification kind="warning">
 <<<<<<< HEAD
@@ -64,17 +61,21 @@ Follow these steps to use the IGC CLI:
 >>>>>>> Updates for 43 release
 =======
 
-**Warning**: If you have installed the **<Globals name="igccli" />** prior to
- `v0.4.0`, you must uninstall it and follow the installation steps below. The
-  uninstall command:
-  ```
-  npm rm -g @garage-catalyst/ibm-garage-cloud-cli
-  ```
+**Warning**: If you have installed the **<Globals name="igccli" />** prior to `v0.4.0`, you must uninstall it and follow the installation steps below.
+
+To uninstall the old CLI:
+```
+npm rm -g @garage-catalyst/ibm-garage-cloud-cli
+```
 
 </InlineNotification>
 
-Follow these steps to install the <Globals name="igccli" />:
+Install the CLI:
+```bash
+npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+````
 
+<<<<<<< HEAD
 >>>>>>> Fix using globals
 - Install the CLI:
     ```bash
@@ -102,6 +103,26 @@ Follow these steps to install the <Globals name="igccli" />:
     igc --version
 >>>>>>> Updates to install, CLI, and dashboard
     ```
+=======
+Verify the installed version is greater than `0.4.0`:
+```bash
+igc --version
+```
+
+</AccordionItem>
+
+<AccordionItem title="Install the Cloud Shell">
+
+Follow the instructions in the [cloud-shell-commands readme](https://github.com/ibm-garage-cloud/cloud-shell-commands/blob/master/README.md) to install the Cloud Shell Commands.
+
+</AccordionItem>
+
+</Accordion>
+
+## CLI help
+
+View the CLI's help for the list of commands it provides.
+>>>>>>> Install using Cloud Shell Commands
 
 - Run the CLI's help command to list the available commands:
     ```bash
@@ -176,15 +197,24 @@ To use the <Globals name="igccli" />, you must be logged into your <Globals name
 
 - Log into your cluster:
 
-    For <Globals name="kube" />:
-    ```bash
-    ibmcloud ks cluster config --cluster CLUSTER
-    ```
+<Accordion>
 
-    For <Globals name="ocp" />:
-    ```bash
-    oc login --server=<url> --token=<apikey>
-    ```
+<AccordionItem title="Kubernetes">
+
+```bash
+ibmcloud ks cluster config --cluster <CLUSTER>
+```
+
+</AccordionItem>
+
+<AccordionItem title="OpenShift">
+
+```bash
+oc login --server=<url> --token=<apikey>
+```
+</AccordionItem>
+
+</Accordion>
 
 <<<<<<< HEAD
     For Kubernetes:
