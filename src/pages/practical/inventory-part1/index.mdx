@@ -179,7 +179,7 @@ public class Application extends SpringBootServletInitializer {
 }
 ```
 
-- Delete `com.ibm.hello.app.Application`
+- Delete `application.app`
 
 - Run the service locally. The swagger page should no longer contain the `/hello`
 API endpoint.
@@ -188,7 +188,7 @@ API endpoint.
 
 ```base
 git add .
-git commit -m "Message"
+git commit -m "Adds Application and Removes default Application class"
 git push
 ```
 
@@ -938,7 +938,7 @@ mock data for now.
 
 - Add a `stock-items-mock.service` to services
 
-```typescript path=src/service/stock-items-mock.service.ts
+```typescript path=src/services/stock-items-mock.service.ts
 import {Provides} from 'typescript-ioc';
 
 import {StockItemsApi} from './stock-items.api';
