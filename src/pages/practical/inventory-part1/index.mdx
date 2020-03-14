@@ -1729,7 +1729,7 @@ export default App;
 - The deployment is already configured to use the value of `apiHost` for our proxy service. We need to
 configure the `apiHost` value to point to the Kubernetes service resource of the BFF.
 
-```javascript path=chart/template-node-react/values.yaml
+```javascript path=chart/template/values.yaml
 apiHost: "inventory-management-bff-{your initials}:80"
 ```
 
