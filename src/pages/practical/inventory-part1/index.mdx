@@ -1204,7 +1204,7 @@ export * from './stock-items.service';
 Kubernetes service of the microservice. (For Starter Kit projects, the service name is the same as the name of the
 application which is that same as the name of the repository.)
 
-```yaml path=chart/template-graphql-typescript/values.yaml
+```yaml path=chart/base/template/values.yaml
 global: {}
 
 serviceUrl: "inventory-management-svc-{your initials}:80"
@@ -1221,7 +1221,7 @@ template file to use our new variable.
 this section.) The value of this environment variable should come from the `serviceUrl` value we defined. You can add 
 `| quote` to wrap the value in quotes in case the value is not formatted correctly.
 
-```yaml path=chart/template-graphql-typescript/templates/deployment.yaml
+```yaml path=chart/base/templates/deployment.yaml
   ...
   env:
     - name: INGRESS_HOST
@@ -1729,7 +1729,7 @@ export default App;
 - The deployment is already configured to use the value of `apiHost` for our proxy service. We need to
 configure the `apiHost` value to point to the Kubernetes service resource of the BFF.
 
-```javascript path=chart/template/values.yaml
+```javascript path=chart/base/template/values.yaml
 apiHost: "inventory-management-bff-{your initials}:80"
 ```
 
@@ -1790,7 +1790,7 @@ named `inventory-management-bff-{initials}`
 
 - Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
-- Update the `serviceUrl` value in `charts/template-graphql-typescript/values.yaml` to point to the kubernetes
+- Update the `serviceUrl` value in `charts/base/templates/values.yaml` to point to the kubernetes
 service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
 
 - Commit and push the changes
@@ -1818,7 +1818,7 @@ named `inventory-management-ui-{initials}`
 
 - Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
-- Update the `hostApi` value in `charts/template-node-react/values.yaml` to point to the kubernetes
+- Update the `hostApi` value in `charts/base/templates/values.yaml` to point to the kubernetes
 service of the BFF. The value most likely will be `inventory-management-bff-{initials}:80`.
 
 - Commit and push the changes
