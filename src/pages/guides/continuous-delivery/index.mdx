@@ -212,20 +212,17 @@ Create the `gitops-cd-secret`:
 
 1. Change the directory to the root of the Argo CD <Globals name="template" /> repo that was cloned previously.
 
-1. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
-personal access token, and the branch to put in the secret.
+1. Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username, personal access token, and the branch to put in the secret.
 
-    **What just happened?**
-    
-    The `git-secret` command creates a secret in a Kubernetes namespace containing the url, username, password, and branch information
-    for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the
-    secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running: 
-    
-    ```kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml``` 
+#### What just happened?
 
-    **Note:** 
-    
-    - For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace
-    where the pipeline is running (e.g. `dev-{initials}`).
-    - The value provided for `branch` is the one the pipeline will use to when committing changes to trigger 
-    the CD pipeline. `test` is the recommended value for the branch field.
+The `git-secret` command creates a secret in a Kubernetes namespace containing the url, username, password, and branch information for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running:
+
+```bash
+kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml
+```
+
+**Note:**
+
+- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the pipeline is running (e.g. `dev-{initials}`).
+- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD pipeline. `test` is the recommended value for the branch field.

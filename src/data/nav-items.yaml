@@ -39,7 +39,7 @@
       path: /guides/continuous-delivery
     - title: Architecture as Code with SolSA
       path: /guides/solsa
-    - title: Developer Tools Image
+    - title: CLI Tools Image
       path: /guides/tools-image
 - title: Administrator Guide
   pages:
