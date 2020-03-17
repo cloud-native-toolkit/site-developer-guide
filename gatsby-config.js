@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'IBM Garage for Cloud Developer Tools',
-    description: 'Developer Tools ',
+    title: 'IBM Garage Cloud Native Toolkit',
+    description: 'Cloud Native Toolkit to enable development with IBM Cloud and RedHat',
     keywords: 'gatsby,theme,carbon',
   },
   plugins: ['gatsby-theme-carbon',
