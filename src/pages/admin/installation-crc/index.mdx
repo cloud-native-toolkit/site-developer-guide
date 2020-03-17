@@ -2,6 +2,8 @@
 title: Install into Red Hat CodeReady Containers
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <Tabs>
 
 <Tab label="Prerequisites">
@@ -152,18 +154,18 @@ in the `./terraform/settings` directory:
 
 Use the  `environment.tfvars` properties to configure the installation for the Development Tools.
 
-Set the following properties so they match below, all the other properties will be ignored:
+- Set the following properties so they match below, all the other properties will be ignored:
 
-```bash
-# The type of cluster that will be created/used (kubernetes, openshift, or crc)
-cluster_type="crc"
-# Flag indicating if we are using an existing cluster or creating a new one
-cluster_exists="true"
-# Enter any value for the resource group name
-resource_group_name="crc-resource-group"
-# Flag indicating if we are using an existing postgres server or creating a new one
-postgres_server_exists="false"
-```
+    ```bash
+    # The type of cluster that will be created/used (kubernetes, openshift, or crc)
+    cluster_type="crc"
+    # Flag indicating if we are using an existing cluster or creating a new one
+    cluster_exists="true"
+    # Enter any value for the resource group name
+    resource_group_name="crc-resource-group"
+    # Flag indicating if we are using an existing postgres server or creating a new one
+    postgres_server_exists="false"
+    ```
 
 </Tab>
 
@@ -212,7 +214,7 @@ we are now ready to kick off the installation.
 
     <InlineNotification kind="success">
 
-    You should now have your Developer Tools environment
+    You should now have your <Globals name="env" />
         fully provisioned and configured. Enjoy!
 
     </InlineNotification>

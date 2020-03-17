@@ -2,16 +2,15 @@
 title: Contract Testing
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Pact to test your code's API
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing).
-[Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline.
-The Developer Tools environment's CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a Pact stage. 
-Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
+In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing). [Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline. The <Globals name="env" />'s CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) includes a Pact stage. Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
 
 ## What is contract testing
 
@@ -20,7 +19,7 @@ a provider) have a shared understanding of the interactions or the _contract_ be
 
 The Pact framework has been selected for the provided tool set. Pact is a 
 consumer-driven contract testing framework. More details can be found here -
-[Pact overview](https://docs.pact.io/). The framework has been built into the Starter Kits 
+[Pact overview](https://docs.pact.io/). The framework has been built into the <Globals name="templates" />
 and a Pact Broker instance is provisioned in the cluster along with the other tools.
 
 In `consumer-driven contract testing` it is the consumer who defines the `contract` in terms of the 
@@ -195,15 +194,15 @@ process when the pact definition changes and a way record and visualise the resu
 verification process. The high-level interaction is shown below:
 ![Pact broker interactions](./PactFramework-pactbroker.png)
 
-## Starter kits
+## <Globals name="templates" />
 
-The Starter kits have been built with the frameworks necessary to generate and publish pacts for 
+The <Globals name="templates" /> have been built with the frameworks necessary to generate and publish pacts for
 api consumers and verify against pacts and publish the results for api providers. The pipelines 
 will do all the publishing and verification against Pact Broker if an instance of Pact Broker has
 been configured within the cluster.
 
 - You can review you pact contracts using the **Pact** Dashboard.app
 
-- Use the [Developer Tools Dashboard](/getting-started/dashboard) to open the **Pact** dashboard
+- Use the [<Globals name="dashboard" />](/getting-started/dashboard) to open the **Pact** dashboard
 
 

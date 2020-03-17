@@ -2,36 +2,48 @@
 title: Plan Installation
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-Plan performing an installation end-to-end
+When you are creating Development environments for teams there are a number of element to consider when 
+giving access on the IBM Cloud.
 
 </PageDescription>
 
-## Roles
+## Overview
 
-A Developer Tools environment is installed and managed by users acting in two roles:
+A <Globals name="env" /> is installed and managed by users acting in two roles:
 - **Account administrator**: Account owner or other user with sufficient [account management permissions](https://cloud.ibm.com/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)
 - **Environment administrator**: A user in the account with [the administrator role for all services](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess)
 
-The same user can perform both roles. The separate roles enable some users to focus on managing the account while other users focus on managing the environments in the account. One set of users can manage all environments or a different set of users can manage each environment.
+### Ops Tools outside
 
-The account administrator must decide which role should be used to create clusters:
-- **Environment administrator creates clusters**: The account administrator can grant permission to create clusters to the environment administrator (in addition to permission to create service instances), in which case the environment administrator can run the scripts to create the entire environment.
-- **Account administrator creates clusters**: The account administrator DOES NOT grant the environment administrator permission to create clusters (only service instances), in which case the account administrator will have to create the cluster for an environment so that the environment administrator can install the environment into the existing cluster.
+### Teams for Developers 
 
-## End-to-end installation
+## Planning Team Topology
+    - Cluster per team
+    - Big Cluster with Namespace per team contributing into common TEST and PREPROD namespaces with ArgoCD
 
-This is the overview of everything needed to install a Development Tools environment and get it ready for developers to use it.
+## Preparing IBM Cloud
 
-### Configure IBM Cloud account
+## Cloud Preqs
 
 First, before installing an environment, the account administrator needs to configure the IBM Cloud account for the
   environment. See [Configure Account](/admin/config-account) for detailed instructions, which accomplish this:
 - Decide which data center (region and zone) will host the environment
 - Determine which public/private VLAN pair will comprise the environment's network
-- Determine which resource group will contain the environment's resources
-- Determine which access groups will enable administrators and developers to access to the environment's resources
+- Create the resource group that will contain the environment's resources
+- Upgrade the image registry's service plan
+- Create the access groups that will enable administrators and developers to access to the environment's resources
+- Create Resource Group
+- Create access group (capatilised )
+- Create Cluster in the resource group name it `<team>-iks|ocp-cluster`
+    - 3 Node and 8cpu and 33gb memory (typically for a sensibel team)
+- Install Developer Tools into cluster following install existing guide
+- run `terraform/scripts/Usage: acp <ACCESS_GROUP> <RESOURCE_GROUP> <PREFIX> <REGION>`
+- apply RBAC Rules`terraform/scripts/rbac.sh <ACCESS-GROUP>`
+- Test `igc dashboard`
 
 ### Install environment
 
@@ -51,7 +63,7 @@ Second, once the account administrator has configured the account for installing
 
 Third, after installing the environment, before giving the developers access to the environment, the environment administrator need to finish configuring it. See [Configure Installation](/admin/config-install) for detailed instructions, which accomplish this:
 - Configure RBAC security in the cluster
-- Test opening the Developer Tools Dashboard
+- Test opening the <Globals name="dashboard" />
 - Complete setup of LogDNA
 - Complete setup of SysDig
 - Test the pipeline by deploying a first app
@@ -62,4 +74,4 @@ Third, after installing the environment, before giving the developers access to 
 
 ## Conclusion
 
-Having configured the account, installed the environment, and configured the environment, the administrators have now completed an end-to-end installation of a Developer Tools environment. It is ready for a development team to begin using for application development.
+Having configured the account, installed the environment, and configured the environment, the administrators have now completed an end-to-end installation of a <Globals name="env" />. It is ready for a development team to begin using for application development.

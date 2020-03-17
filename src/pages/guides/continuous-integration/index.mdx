@@ -2,14 +2,15 @@
 title: Continuous Integration with Jenkins
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Jenkins to automate your continuous integration process
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [continuous integration](https://www.ibm.com/garage/method/practices/code/practice_continuous_integration/).
-The Developer Tools environment uses a Jenkins pipeline to automate continuous integration.
+In IBM Garage Method, one of the Develop practices is [continuous integration](https://www.ibm.com/garage/method/practices/code/practice_continuous_integration/). The <Globals name="env" /> uses a Jenkins pipeline to automate continuous integration.
 
 ## What is continuous integration
 
@@ -43,7 +44,7 @@ You can read more information about Jenkins Pipelines [here](https://jenkins.io/
 
 ### Stages
 
-Pipelines are defined in a `Jenkinsfile` that sits in the root of your application code. It defines a number of stages. Each of the `Starter Kit Templates` includes a `Jenkinsfile` that offers a number of stages. The stages have been configured to complete the build, test, package, and deploy of the application code. Each stage can use the defined defined `secrets` and `config maps` that were previously configured during the installation of Development cluster setup.
+Pipelines are defined in a `Jenkinsfile` that sits in the root of your application code. It defines a number of stages. Each of the [<Globals name="templates" />](/codepatterns/overview) includes a `Jenkinsfile` that offers a number of stages. The stages have been configured to complete the build, test, package, and deploy of the application code. Each stage can use the defined defined `secrets` and `config maps` that were previously configured during the installation of Development cluster setup.
 
 ## Developer Tools Pipeline
 
@@ -69,7 +70,7 @@ supporting the stage is not installed. These stages represent a typical producti
 
 ## Registering Pipelines
 
-The [Starter Kit Templates](/starterkits/starterkittemplates/) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register your git repo, use the [IGC CLI](/getting-started/cli). This command automates a number of manual steps you would have to do with Jenkins, including: managing secrets, webhooks, and pipeline registration in the Jenkins tools.
+The [<Globals name="templates" />](/codepatterns/overview) are a good place to start to see how `Jenkinsfile` and `Dockerfile` should be configured for use in a Jenkins CI pipeline. To register your git repo, use the [IGC CLI](/getting-started/cli). This command automates a number of manual steps you would have to do with Jenkins, including: managing secrets, webhooks, and pipeline registration in the Jenkins tools.
 
 ```bash
 igc pipeline
@@ -89,7 +90,7 @@ This is good if you have various squads, teams, pairs or students working in the
 
 ## Continuous deployment
 
-In addition to continuous integration, the Developer Tools environment also supports continuous delivery
+In addition to continuous integration, the <Globals name="env" /> also supports continuous delivery
 using Artifactory and ArgoCD:
 
 <AnchorLinks small>

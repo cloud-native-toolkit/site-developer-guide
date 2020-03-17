@@ -2,6 +2,8 @@
 title: Inventory Micro App - Part 2
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Extending Part 1 of your 3 tier app to include Continuous Delivery to Test, Securing the User Interface and integrating the service to a cloud database
@@ -36,7 +38,7 @@ For this exercise, we are going to use ArgoCD to push the Inventory app from `de
 
 Let's get started with using Argo CD.
 
-- Create a new repo from the [ArgoCD Starter Kit template](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
+- Create a new repo from the [ArgoCD <Globals name="template" />](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
 
 - Clone the project to your machine
 
@@ -223,7 +225,7 @@ with git credentials very easy.
 
 - Log into the cluster on the command-line.
 
-- Change the directory to the root of the ArgoCD Starter Kit repo that was cloned previously.
+- Change the directory to the root of the ArgoCD <Globals name="template" /> repo that was cloned previously.
 
 - Run `igc git-secret gitops-cd-secret -n dev-{initials}` to create the secret. This command will prompt for the username,
 personal access token, and the branch to put in the secret.
@@ -252,7 +254,7 @@ the steps need to be repeated for each application within the project.
 ## Securing the solution with **App ID**
 
 To secure the application we are using the capabilities available within the IBMCloud platform that use
-a simple annotation on the ingress to enable integration with AppId. The starter kits have already been
+a simple annotation on the ingress to enable integration with AppId. The <Globals name="templates" /> have already been
 set up to use this feature and all that is required is update the configuration within the `values.yaml`
 file of the helm chart.
 

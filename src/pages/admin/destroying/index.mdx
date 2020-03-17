@@ -2,29 +2,29 @@
 title: Destroying
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-Use the Cloud Developer Tools environment to delete itself when it's no longer needed.
+Use the <Globals name="env" /> to delete itself
 
 </PageDescription>
 
-The Cloud Developer Tools environment can not only install itself, it can also delete itself. The
-environment is installed using Terraform, which stores the state of the creation in the `workspace` folder.
-Terraform can use that state to delete what it installed.
+Not only can the <Globals name="shortName" /> create the <Globals name="env" />, the environment can also delete itself. The environment is installed using Terraform, which stores the state of the creation in the `workspace` folder. Terraform can use that state to delete what it installed.
 
-It is is possible to destory the development environment following these steps.
+Destroy a <Globals name="env" /> following these steps:
 
-- Run the following command to launch a IBM Garage [Developer Tools CLI Tools Docker container](https://github.ibm.com/garage-catalyst/client-tools-image).
+- Run the following command to launch a [Developer Tools container](/guides/tools-image):
     ```bash
     ./launch.sh
     ```
 
-- In the container, change to the `workspace` directory.
+- In the container, change to the `workspace` directory:
     ```bash
     cd workspace
     ```
 
-- In the container, run the Terraform tool with the `destroy` option.
+- In the container, run the Terraform tool with the `destroy` option:
     ```bash
     terraform destroy
     ```

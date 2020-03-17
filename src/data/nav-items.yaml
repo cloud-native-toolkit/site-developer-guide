@@ -19,10 +19,10 @@
   pages:
     - title: Overview
       path: /guides/overview
-    - title: CI with Jenkins
-      path: /guides/continuous-integration
     - title: CI with Tekton
       path: /guides/continuous-integration-tekton
+    - title: CI with Jenkins
+      path: /guides/continuous-integration
     - title: Image Registry
       path: /guides/image-registry
     - title: Artifact Management
@@ -39,40 +39,8 @@
       path: /guides/continuous-delivery
     - title: Architecture as Code with SolSA
       path: /guides/solsa
-    - title: Developer Tools Image
+    - title: CLI Tools Image
       path: /guides/tools-image
-
-- title: Starter Kit Templates
-  pages:
-    - title: Overview
-      path: /starterkits/overview
-    - title: Templates
-      path: /starterkits/starterkittemplates
-
-- title: Programming Guide
-  pages:
-    - title: Databases
-      path: /programming/databases
-    - title: Securing Applications
-      path: /programming/security
-
-- title: Practical Guides
-  pages:
-    - title: Overview
-      path: /practical/overview
-    - title: Inventory Micro App - Part 1
-      path: /practical/inventory-part1
-    - title: Inventory Micro App - Part 2
-      path: /practical/inventory-part2
-    - title: Cloud Pak for Applications 1
-      path: /practical/cp4apps
-    - title: Cloud Pak for Applications 2
-      path: /practical/cp4apps2
-    - title: AppMod - Exercise 1
-      path: /practical/appmod-exercise1
-    - title: AppMod - Exercise 2
-      path: /practical/appmod-exercise2
-
 - title: Administrator Guide
   pages:
     - title: Overview
@@ -111,11 +79,50 @@
     - title: Build to Manage
       path: /arch/manageable
 
+
+
+- title: Code Patterns
+  pages:
+    - title: Overview
+      path: /codepatterns/overview
+    - title: Git Repos
+      path: /codepatterns/gitrepos
+
+- title: Programming Guide
+  pages:
+    - title: Databases
+      path: /programming/databases
+    - title: Securing Applications
+      path: /programming/security
+
+- title: Practical Guides
+  pages:
+    - title: Overview
+      path: /practical/overview
+    - title: Inventory Code Pattern - 1
+      path: /practical/inventory-part1
+    - title: Inventory Code Pattern - 2
+      path: /practical/inventory-part2
+    - title: Cloud Pak for Applications - 1
+      path: /practical/cp4apps
+    - title: Cloud Pak for Applications - 2
+      path: /practical/cp4apps2
+    - title: App Modernization -  1
+      path: /practical/appmod-exercise1
+    - title: App Modernization - 2
+      path: /practical/appmod-exercise2
+
+
 - title: Activation
   pages:
     - title: Garage Method Development
       path: /activation/garage-development
-    - title: Cloud Native Development
+    - title: Cloud-Native Development
       path: /activation/cloudnative-development
-    - title: Cloud Native Deployment
+    - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
+
+
+- title: How to contribute
+  pages:
+    - path: /contributing

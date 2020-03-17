@@ -1,22 +1,22 @@
 import React from 'react';
 import { HomepageBanner, HomepageCallout } from 'gatsby-theme-carbon';
 import HomepageTemplate from 'gatsby-theme-carbon/src/templates/Homepage';
+import g from "./Globals";
 import { calloutLink } from './Homepage.module.scss';
 
 import Carbon from '../../images/catalyst.svg';
 
-const FirstLeftText = () => <p>IBM Garage for Cloud Developer Tools</p>;
+const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the IBM Garage for Cloud Developer Tools. The Developer Tools environment 
-      empowers cloud-native application development teams to deliver business value quickly 
-      using Red Hat OpenShift and IBM Kubernetes Service on IBM Cloud.
+      This is the developer guide for the {g.longName}. The {g.shortName} creates a {g.env} that empowers cloud-native application development teams to deliver business value quickly
+      using {g.ocp} and {g.kube} on {g.ic}.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
     >
-      IBM Cloud →
+        {g.ic} →
     </a>
   </p>
 );
@@ -25,18 +25,18 @@ const SecondLeftText = () => <p>Garage Method</p>;
 
 const SecondRightText = () => (
   <p>
-      The Developer Tools environment automates and supports developing cloud-native applications 
-      using the IBM Garage Method principles and practices. 
+      The {g.longName} environment automates and supports developing cloud-native applications
+      using the {g.method} principles and practices.
     <a
       className={calloutLink}
       href="https://www.ibm.com/garage/method"
     >
-      IBM Garage Method →
+        {g.method} →
     </a>
   </p>
 );
 
-const BannerText = () => <h1>IBM Garage for Cloud Developer Tools <br/>Developer Guide</h1>;
+const BannerText = () => <h1>{g.shortName}<br/>Developer Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,

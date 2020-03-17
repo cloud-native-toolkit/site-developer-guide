@@ -2,18 +2,19 @@
 title: Artifact Management
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
 Use Artifactory to store artifacts such as Helm charts
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is to [automate continuous delivery through a delivery pipeline](https://www.ibm.com/garage/method/practices/deliver/practice_delivery_pipeline/), in part by using an artifact repository for storing output of the build stage.
-The Developer Tools environment uses Artifactory as an artifact repository manager, which it uses to host its Helm repository.
+In IBM Garage Method, one of the Develop practices is to [automate continuous delivery through a delivery pipeline](https://www.ibm.com/garage/method/practices/deliver/practice_delivery_pipeline/), in part by using an artifact repository for storing output of the build stage. The <Globals name="env" /> uses Artifactory as an artifact repository manager, which it uses to host its Helm repository.
 
 ## What is Artifactory
 
-[Artifactory](https://jfrog.com/artifactory/) is an artifact repository manager.
+[Artifactory](https://jfrog.com/artifactory/) is an artifact management repository.
 
 An artifact repository manager hosts multiple binary repositories, like a database management system for artifacts. The binary repository compliments the source code repository: the code from an SCM is the input to the build process, whereas a binary repository stores the output of the build process, often called artifacts. The artifacts are often individual application components that can later be assembled into a full product.
 
@@ -34,13 +35,13 @@ Note that you do not need a very large team to start reaping benefits from an ar
 
 Note: Be sure to [set up Artifactory](/getting-started/artifactory-setup) before using it in the Development Tools environment.
 
-The Developer Tools environment will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
+The <Globals name="env" /> will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
 - **Docker images**: The [Developer Tools Image Registry](/guides/image-registry)
 - **Helm charts**: A Helm repository in Artifactory
 
-The [Starter Kit Templates](/starterkits/overview) have also been configured to store their Helm charts in Artificatory.
+The [<Globals name="templates" />](/codepatterns/overview) have also been configured to store their Helm charts in Artificatory.
 
-Artifactory is part of the Developer Tools environment's complete CI/CD solution:
+Artifactory is part of the <Globals name="env" />'s complete CI/CD solution:
 
 <AnchorLinks small>
   <AnchorLink to="../../guides/continuous-integration">Continuous Integration</AnchorLink>
@@ -52,7 +53,7 @@ Artifactory is part of the Developer Tools environment's complete CI/CD solution
 Use the Artifactory dashboard to browse the repositories and their artifacts.
 
 Open the Artifactory web UI for your environment.
-- Use the [Developer Tools Dashboard](/getting-started/dashboard) to open the Artifactory dashboard
+- Use the [<Globals name="dashboard" />](/getting-started/dashboard) to open the Artifactory dashboard
 
 Browse the Helm repository.
 - Go to the Artifact Repository Browser page
@@ -74,5 +75,5 @@ Notice that each chart has its own URL in Artifactory, and index lists the URL f
 
 ## Conclusion
 
-The Developer Tools environment includes an artifact repository manager called Artifactory, which it uses to host a Helm repository. 
+The <Globals name="env" /> includes an artifact repository manager called Artifactory, which it uses to host a Helm repository.
 As the CI pipeline builds the Helm chart for an application, it stores the chart in the Artifactory repository. When the ArgoCD pipeline deploys an application, it retrieves the chart from the Artifactory repository.

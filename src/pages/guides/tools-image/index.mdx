@@ -1,16 +1,16 @@
 ---
-title: Developer Tools Image
+title: CLI Tools Image
 ---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-The Developer Tools include the IBM Garage for Cloud (IGC) Developer Tools Docker Image
+The <Globals name="env" /> includes the CLI Tools Docker image
 
 </PageDescription>
 
-The [Tools Image](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "IBM Garage for Cloud Developer Tools Docker image")
-is a Docker image with many useful IBM Cloud CLI tools already installed.
-Rather than installing all of these tools on your local computer, you can simply pull and run this image.
+The [IBM Garage command-line tools](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "IBM Garage for Cloud Developer Tools Docker image") is a Docker image with many useful IBM Cloud CLI tools already installed. Rather than installing all of these tools on your local computer, you can simply pull and run this image.
 
 ## Running the client
 
@@ -25,7 +25,7 @@ Start the client to use it.
 - To run the `icclient` container:
 
     ```bash
-    docker run -itd --name icclient garagecatalyst/ibm-garage-cli-tools
+    docker run -itd --name icclient ibmgaragecloud/cli-tools
     ```
 
     This  assumes the image's default name, `ibm-garage-cli-tools`.
@@ -69,35 +69,36 @@ From a client shell, run `image-help` to get a list of available tools, scripts,
   ```bash
   $ image-help
   Available env properties (can be overridden for individual commands):
-  > BM_API_KEY - the IBM Cloud api key
-  > REGION - the IBM Cloud region (e.g. us-south)
-  > RESOURCE_GROUP - the IBM Cloud resource group
-  > CLUSTER_NAME - the name of the kubernetes cluster in IBM Cloud
-  > SL_USERNAME - the Classic Infrastructure user name or API user name (e.g. 282165_joe@us.ibm.com)
-  > SL_API_KEY - the Classic Infrastructure api key
+   > BM_API_KEY - the IBM Cloud api key
+   > REGION - the IBM Cloud region (e.g. us-south)
+   > RESOURCE_GROUP - the IBM Cloud resource group
+   > CLUSTER_NAME - the name of the kubernetes cluster in IBM Cloud
+   > SL_USERNAME - the Classic Infrastructure user name or API user name (e.g. 282165_joe@us.ibm.com)
+   > SL_API_KEY - the Classic Infrastructure api key
 
   Available tools:
-  > terraform (with helm, kube, and ibm provider plugins)
-  > calicoctl
-  > ibmcloud (with container-service, container-registry, and cloud-databases plugins)
-  > kubectl
-  > kustomize
-  > oc
-  > helm
-  > docker
-  > git
-  > nvm
-  > node (v11.12.0 currently installed)
-  > yo
+   > terraform (with helm, kube, and ibm provider plugins)
+   > calicoctl
+   > ibmcloud (with container-service, container-registry, and cloud-databases plugins)
+   > kubectl
+   > kustomize
+   > oc
+   > helm
+   > docker
+   > git
+   > nvm
+   > node (v11.12.0 currently installed)
+   > solsa
+   > yo
 
   Available scripts:
-  > init.sh {BM_API_KEY} {REGION} {RESOURCE_GROUP} {CLUSTER_NAME}
-  > createNamespaces.sh
-  > deleteNamespace.sh
-  > installHelm.sh
-  > cluster-pull-secret-apply.sh
-  > setup-namespace-pull-secrets.sh
-  > checkPodRunning.sh
-  > copy-secret-to-namespace.sh
-  ```
+   > init.sh {BM_API_KEY} {REGION} {RESOURCE_GROUP} {CLUSTER_NAME}
+   > createNamespaces.sh
+   > deleteNamespace.sh
+   > installHelm.sh
+   > cluster-pull-secret-apply.sh
+   > setup-namespace-pull-secrets.sh
+   > checkPodRunning.sh
+   > copy-secret-to-namespace.sh
+   ```
 

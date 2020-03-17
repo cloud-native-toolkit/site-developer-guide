@@ -2,6 +2,8 @@
 title: Install with new cluster
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <Tabs>
 
 <Tab label="Prerequisites">
@@ -12,11 +14,11 @@ Prepare to run Terraform to create a new cluster and install the Developer Tools
 
 </PageDescription>
 
-The Developer Tools environment is installed by an environment administrator, who will run the scripts to create the environment in an IBM Cloud account. The scripts will run as the environment administrator's user, so the user needs the permissions described in [Plan Installation](/admin/plan-installation). These instructions explain how to configure and run the Terraform [infrastructure-as-code](/admin/iasc) (IasC) scripts to create the Developer Tools environment.
+The <Globals name="env" /> is installed by an environment administrator, who will run the scripts to create the environment in an IBM Cloud account. The scripts will run as the environment administrator's user, so the user needs the permissions described in [Plan Installation](/admin/plan-installation). These instructions explain how to configure and run the Terraform [infrastructure-as-code](/admin/iasc) (IasC) scripts to create the <Globals name="env" />.
 
 ### Prepare local system
 
-To run the scripts, install the client tools needed to use the Developer Tools environment:
+To run the scripts, install the client tools needed to use the <Globals name="env" />:
 - Install the [Prerequisites](/getting-started/prereqs)
 
 ### Test login
@@ -85,11 +87,13 @@ client--such as a Terraform script--to create these resources programmatically. 
 
 The following steps create the required keys and put them into a file called `credentials.properties`.
 
-```bash
-classic.username=<CLASSIC_USERNAME>
-classic.api.key=<CLASSIC_API_KEY>
-ibmcloud.api.key=<IBMCLOUD_API_KEY>
-```
+- The `credentials.properties` property file looks like this:
+
+    ```bash
+    classic.username=<CLASSIC_USERNAME>
+    classic.api.key=<CLASSIC_API_KEY>
+    ibmcloud.api.key=<IBMCLOUD_API_KEY>
+    ```
 
 The installation scripts will use these keys to authenticate to IBM Cloud.
 
@@ -143,9 +147,9 @@ Configure the properties describing your environment
 
 ### Configuring Properties files
 
-The settings for creating the Developer Tools environment go in two properties files
+The settings for creating the <Globals name="env" /> go in two properties files
 in the `./terraform/settings` directory:
-- `environment.tfvars` -- Properties for installing the Developer Tools
+- `environment.tfvars` -- Properties for installing the environment
 - `vlan.tfvars` -- Properties for creating the cluster
 
 The next few steps will find the necessary resources and set them in the `tfvars` files. 
@@ -160,27 +164,51 @@ The `environment.tfvars` properties will be used to install the Development Tool
 
     ```bash
     # The type of cluster that will be created/used (kubernetes or openshift)
-    cluster_type="kubernetes"
+    cluster_type="openshift"
     # Flag indicating if we are using an existing cluster or creating a new one
-    cluster_exists="false"
+    cluster_exists="true"
 
-    # The cluster name can be provided (particularly if using existing cluster) or it will
-    # default to '${resource_group_name}-cluster'
-    #cluster_name="catalyst-team-cluster"
+    # The prefix that should be applied to the cluster name and service names (if not provided
+    # explicitly). If not provided then the resource_group_name will be used as the prefix.
+    #name_prefix="<name prefix for cluster and services>"
+    #name_prefix="garage-cloud-surge"
 
-    resource_group_name="catalyst-team"
+    # The cluster name can be provided (particularly if using an existing cluster). The value
+    # for cluster name used by the scripts will be set in the following order of presidence:
+    # - "${cluster_name}"
+    # - "${name_prefix}-cluster"
+    # - "${resource_group_name}-cluster"
+    #cluster_name="<cluster name>"
+    cluster_name="garage-cloud-surge-ocp-cluster"
+
+    resource_group_name="garage-cloud-surge"
     vlan_region="us-south"
 
     # Flag indicating if we are using an existing postgres server or creating a new one
-    postgres_server_exists="true"
+    postgres_server_exists="false"
     ```
 
-- You must set `resource_group_name` and `vlan_region`, using the values provided by the account administrator
+<p/>
+
+Some of these values are given to you by the account administrator:
+- `resource_group_name` -- The resource group the cluster and environment will be created in
+- `vlan_region` -- The region the cluster and environment will be created in
 
 The other variables have reasonable defaults that you can change if desired:
 - Set `cluster_name` to specify any valid cluster name that is not already in use or leave unset
 - Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**
 - Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance
+
+- `cluster_exists` -- Set to `false` to create a new cluster
+- `cluster_type` -- Specify the new cluster's type
+    - **kubernetes** -- Kubernetes
+    - **openshift** -- OpenShift v3
+    - **ocp3** -- OpenShift v3
+    - **ocp4** -- OpenShift v4
+    - ~~**crc** -- CodeReady Containers~~
+- `cluster_name` -- The name for the new cluster
+- `postgres_server_exists` -- Specify whether the resource group already contains an existing PostgreSQL service instance
+
 
 <InlineNotification>
 
@@ -256,7 +284,7 @@ we are now ready to kick off the installation.
 
     For more information on the **Developer Tools Image** see the following guide link below.
 
-- Create the Developer Tools environment
+- Create the <Globals name="env" />
 
     The supplied Terraform script is ready to run using the settings in the properties files. 
     You optionally can extend or modify the scripts and tailor them for your project's specific needs.
@@ -267,7 +295,7 @@ we are now ready to kick off the installation.
     ./runTerraform.sh
     ```
 
-    This script will create the Developer Tools environment.
+    This script will create the <Globals name="env" />.
 
     The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
     the Terraform Apply process will begin to create the infrastructure and services for your environment.
@@ -277,14 +305,13 @@ we are now ready to kick off the installation.
 
     <InlineNotification kind="success">
 
-    You should now have your Developer Tools environment
-        fully provisioned and configured. Enjoy!
+    You should now have your <Globals name="env" /> fully provisioned and configured. Enjoy!
 
     </InlineNotification>
 
 
 
-### Developer Tools environment
+### <Globals name="env" />
 
 Once the Terraform scripts have finished, you can see the resources that the scripts created in IBM Cloud:
 - In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview "Managing resources in the resource list")

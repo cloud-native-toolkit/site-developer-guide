@@ -1,62 +1,53 @@
 ---
 title: Overview
 ---
+import Globals from 'gatsby-theme-carbon/src/templates/Globals'
+
 
 <PageDescription>
 
-Get familiar with using the IBM Garage for Cloud Developer Tools
+Get familiar with using the <Globals name="longName"/>
 
-</PageDescription>
+</PageDescription> 
 
-## Developer Tools
+## Developer Environment
 
-The IBM Garage for Cloud Developer Tools is an environment for developing cloud-native applications for deployment 
-to Kubernetes and Red Hat OpenShift. It embodies IBM Garage Method principles and practices for consistently developed 
-applications incorporating best practices that increase developer velocity for efficient delivery of business value.
+<Globals name="longName" /> provides an environment for developing cloud-native applications for deployment within Kubernetes and Red Hat OpenShift. It embodies IBM Garage Method principles and practices for consistently developed applications incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 ### Overview
 
-A short video introducing the concepts of DevOps with Red Hat OpenShift
+This short video introduces the concepts of DevOps with <Globals name="ocp" />:
 <iframe width="80%" height="500" src="https://www.youtube.com/embed/GOPWObjFTsI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p></p>
 
-Each development team installs its own copy of the Developer Tools environment into the team's account. 
-The environment includes several features that support IBM Garage Method best practices for consistent and rapid development of cloud-native applications:
+Each development team installs its own <Globals name="env" /> into the team's account. The environment includes several features that support <Globals name="method" /> best practices for consistent and rapid development of cloud-native applications:
 
-- **Installation**: The Developer Tools are able to install themselves as a new environment 
-- **Cluster**: A Kubernetes or OpenShift cluster that both hosts the tools and itself is a deployment target for application builds
+- **Installation**: The <Globals name="shortName"/> is able to install itself as a new <Globals name="env" />
+- **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
 - **Backend services**: Cloud services commonly required by cloud-native applications for monitoring, security, and persistence
 - **CI/CD**: A prebuilt, ready-to-run continuous delivery pipeline incorporating best-of-breed open source software tools
-- **Starter Kits**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
-- **Dashboard**: A centralized tool to help developers use the environment's other tools, Starter Kits, and so on
+- **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
+- **Dashboard**: A centralized console to help developers use the environment's capabilities
 - **Red Hat CRC**: The tools can be installed into the RedHat CodeReady Containers environment
 
-Some of the tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the IBM Cloud. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with IBM Cloud's managed container services.
+A core set of tools are sourced from the [IBM Bitnami Software Catalog](https://cloud.ibm.com/catalog?search=label%3Ahelm#software) that can be found in the <Globals name="ic" />. This approach helps assemble these reliable open source development tools into an end-to-end developer experience that is fully integrated with <Globals name="ic" />'s managed container orchestration services.
 
-Typically a [Cloud System Admin](/admin/overview) or [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/) installs and sets up a new Developer Tools environment after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
-providing a place for the developers to start developing the
-[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
-The objective is to reduce the time required for a team to configure and prepare their development environment.
-The key benefit is to make the end-to-end 
-[CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) 
-consistent across each platform and make the out-of-the-box developer experience as simple as possible.
+Typically a [Cloud System Admin](/admin/overview) (such as a [squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets up a new <Globals name="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception), providing a place for the developers to start developing the [minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). The objective is to reduce the time required for a team to configure and prepare their development environment. The key benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform),
-with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) so unneeded tools can be easily disabled or new tools added.
-The combination of tools selected are proven in the industry to deliver real value for modern cloud-native development.
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the industry to deliver real value for modern cloud-native development.
 
 [Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach to how they deliver success with OpenShift.
 
 ### Environment components
 
-After installation, the Developer Tools environment consists of the following components and developer tools:
+After installation, the <Globals name="env" /> consists of the following components and developer tools:
 - A development cluster
 - A set of backend services
 - A set of continuous delivery tools
 
-This diagram illustrates the Development Tools environment:
+This diagram illustrates the <Globals name="env" />:
 
 ![Provisioned environment](../images/catalyst-provisioned-environment.png)
 
@@ -64,16 +55,16 @@ The diagram shows the components in the environment: the cluster, the deployment
 
 #### Development cluster
 
-The heart of the Developer Tools environment is a cluster:
+The heart of the <Globals key="env" /> is a cluster:
 
-- An [IBM Cloud Kubernetes Service](https://www.ibm.com/cloud/container-service) 
-or [Red Hat OpenShift on IBM Cloud](https://www.ibm.com/cloud/openshift) 3-node cluster
+- An [<Globals key="iks" />](https://www.ibm.com/cloud/container-service)
+or [<Globals key="roks" />](https://www.ibm.com/cloud/openshift) 3-node cluster
 - Cluster namespace that encapsulates the tooling installed in the cluster: *tools*
 - Cluster namespaces for deployment target environments: *dev*, *test*, and *staging*
 
 #### Backend services
 
-The following IBM Cloud services are created and bound to the cluster:
+The following <Globals key="ic" /> services are created and bound to the cluster:
 
 | Capability                | Service        |Description |
 | -----------------------   |:-------------- |------------|
@@ -94,19 +85,20 @@ The following best-of-breed open source software tools are installed in the clus
 | Continuous Integration      | [Tekton CI](/guides/continuous-integration-tekton)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
 | API Contract Testing        | [Pact](/guides/contract-testing/)                        |         | Pact enables API contract testing |
 | Code Analysis               | [SonarQube](/guides/code-analysis)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
-| Container Image Registry    | [Developer Tools Image Registry](/guides/image-registry) |         | Stores container images to be deployed |
+| Container Image Registry    | [IBM Cloud Container Registry](/guides/image-registry)   |         | Stores container images to be deployed |
 | Artifact Management         | [Artifactory](/guides/artifact-management/)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
 | Continuous Delivery         | [ArgoCD](/guides/continuous-delivery/)                   |         | ArgoCD support Continuous Delivery with GitOps |
 | Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)              |         | IDE for editing and managing code in a web browser |
 
 ## Getting Started
 
-Get to know the Developer Tools environment:
+Get to know the <Globals string="shortName" />:
 
-<AnchorLinks>
+<AnchorLinks small>
       <AnchorLink to="../getting-started/overview">Getting Started</AnchorLink>
       <AnchorLink to="../getting-started/deploy-app">Deploy Your First App</AnchorLink>
-      <AnchorLink to="../guides/overview">Guides</AnchorLink>
-      <AnchorLink to="../starterkits/overview">Starter Kit Templates</AnchorLink>
-      <AnchorLink to="../admin/overview">Installation</AnchorLink>
+      <AnchorLink to="../guides/overview">Tools Guides</AnchorLink>
+      <AnchorLink to="../codepatterns/overview"><Globals name="templates" /></AnchorLink>
+      <AnchorLink to="../admin/overview">Installation</AnchorLink>      
+      <AnchorLink to="../arch/environment">Architectures</AnchorLink>
 </AnchorLinks>

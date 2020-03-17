@@ -2,13 +2,15 @@
 title: Developer Tools Image Registry
 ---
 
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
 <PageDescription>
 
-As the CI/CD pipeline builds container images, it stores them in an image registry
+The CI/CD pipeline stores container images in an image registry
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is to [automate continuous delivery through a delivery pipeline](https://www.ibm.com/garage/method/practices/deliver/practice_delivery_pipeline/), in part by using an artifact repository for storing output of the build stage. When hosted in IBM Cloud, the Developer Tools environment uses the IBM Cloud Container Registry for storing container images.
+In IBM Garage Method, one of the Develop practices is to [automate continuous delivery through a delivery pipeline](https://www.ibm.com/garage/method/practices/deliver/practice_delivery_pipeline/), in part by using an artifact repository for storing output of the build stage. When hosted in IBM Cloud, the <Globals name="env" /> uses the IBM Cloud Container Registry for storing container images.
 
 ## What is the IBM Cloud Container Registry
 
@@ -125,7 +127,7 @@ In the CI pipeline, the *Build image* stage creates the Docker image and stores 
 Let's take a look at using the registry.
 
 - If you haven't already, [deploy your first app](/getting-started/deploy-app)
-    - For example, deploy the Starter Kit Template named Typescript Microservice
+    - For example, deploy the <Globals name="template" /> named Typescript Microservice
     - I deployed my in a project named dev-guide-example-bw
 
 - In the IBM Cloud console, navigate to either **Kubernetes** or **OpenShift** and then **Registry**
