@@ -52,18 +52,12 @@ http://localhost:8000/
 
 ### Publish Content
 
-Currently, the content is published to the GitHub pages site through the `gh-pages` branch
-using the `gh-pages` npm module. All of the details for handling the publishing are covered within
-the deploy script. The deploy can be run using the following:
+This repository has been configured to build and publish the changes automatically via travis-ci. There are two builds currently configured:
 
-```
-npm run deploy
-```
+- `dev` branch is automatically published to the `gh-pages` branch in [https://github.com/ibm-garage-cloud/ibm-garage-developer-guide-staging](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide-staging) and is visible as a staging site here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-staging/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-staging/)
+- `master` branch is automatically published to the `gh-pages` branch in this repository which is visible here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)
 
-The result of the `deploy` can be viewed here - https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/
-
-**Note:** There is a time delay between when the deploy process completes and when the
-content is available on the published site.
+The status of the travis-ci build can be seen here - https://travis-ci.org/github/ibm-garage-cloud/ibm-garage-developer-guide
 
 ### Gatsby and Carbon
 
