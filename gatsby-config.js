@@ -23,5 +23,5 @@ module.exports = {
     }
 
   ],
-  pathPrefix: "/ibm-garage-developer-guide-staging",
+  pathPrefix: "/ibm-garage-developer-guide",
 };
