@@ -4,14 +4,13 @@ node_js:
 script: npm run build
 branches:
   only:
-    - dev
+    - master
 deploy:
   provider: pages
   skip_cleanup: true
   github_url: github.com
   github_token: $GITHUB_TOKEN
-  repo: ibm-garage-cloud/ibm-garage-developer-guide-staging
   keep_history: false
   local_dir: public
   on:
-    branch: dev
+    branch: master
