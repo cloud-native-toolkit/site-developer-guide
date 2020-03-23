@@ -4,7 +4,19 @@ module.exports = {
     description: 'Cloud Native Toolkit to enable development with IBM Cloud and RedHat',
     keywords: 'gatsby,theme,carbon',
   },
-  plugins: ['gatsby-theme-carbon',
+  pathPrefix: "/",
+  plugins: [
+    {
+      resolve: 'gatsby-theme-carbon',
+      options: {
+        isSearchEnabled: true,
+        repository: {
+          baseUrl:
+            'https://github.com/ibm-garage-cloud/ibm-garage-developer-guide',
+          subDirectory: '/',
+        },
+      },
+    },
     'gatsby-transformer-json',
     {
       resolve: `gatsby-source-filesystem`,
@@ -22,6 +34,5 @@ module.exports = {
       },
     }
 
-  ],
-  pathPrefix: "/ibm-garage-developer-guide",
+  ]
 };
