@@ -1,4 +1,5 @@
 # IBM Garage for Cloud
+[![Build Status](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide.svg?branch=master)](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide)
 
 ## Cloud Native Toolkit - Developer Guide
 
