@@ -18,20 +18,20 @@
     "gatsby": "^2.19.22",
     "gatsby-image": "^2.2.39",
     "gatsby-plugin-global-context": "^1.0.0",
-    "gatsby-plugin-google-analytics": "^2.1.29",
+    "gatsby-plugin-google-analytics": "^2.2.0",
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-offline": "^3.0.32",
-    "gatsby-source-filesystem": "^2.1.39",
+    "gatsby-source-filesystem": "^2.2.1",
     "gatsby-theme-carbon": "^1.21.1",
-    "gatsby-transformer-json": "^2.2.20",
+    "gatsby-transformer-json": "^2.3.0",
     "lodash": "latest",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1"
   }
 }
