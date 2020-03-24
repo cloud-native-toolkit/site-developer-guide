@@ -108,16 +108,15 @@ Sixth, create an access group to grant the necessary permissions for installing 
 
 - Use the admin policies script
 
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-DEV` (all capital letters)
+    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
     - Run the script `./terraform/scripts/acp-admin`, which will add the necessary policies to the access group
     - Add the environment administrator(s) to the group
 
-- Or instead of using the script, use the console to manually add the policies to the user or access group
-
-    - Permission to create clusters
-    - Permission to admin the IBM Cloud Container Registry
-    - Permission to create service instances (shown below)
-    ![Assign Access](/images/assign-access-all-services.png)
+The script adds policies for this:
+- Permission to create clusters
+- Permission to admin the IBM Cloud Container Registry
+- Permission to create service instances (shown below)
+![Assign Access](/images/assign-access-all-services.png)
 
 <InlineNotification kind="warning">
 
@@ -139,21 +138,21 @@ resourceType string equals resource-group, resource string equals RESOURCE_GROUP
 ```
 
 
-### Access group for developers
+### Access group for users
 
-Seventh, create an access group to enable developers to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the developers (the users who will use the environment) to this group.
+Seventh, create an access group to enable users (e.g. developers, data scientists, etc.) to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
 
-- Use the dev policies script
+- Use the user policies script
 
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-DEV` (all capital letters)
-    - Run the script `./terraform/scripts/acp-dev`, which will add the necessary policies to the access group
-    - Add the developers to the group
+    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
+    - Run the script `./terraform/scripts/acp-user`, which will add the necessary policies to the access group
+    - Add the users to the group
 
-- Or instead of using the script, use the console to manually add the policies to the access group
-    - Access to the resource group
-    - Access to the cluster
-    - Access to the image registry
-    - Editor and Manager (but not Administrator) access to each of the services in the resource group
+The script adds policies for this:
+- Access to the resource group
+- Access to the cluster
+- Access to the image registry
+- Operator and Manager (but not Editor or Administrator) access to each of the services in the resource group
 
 <InlineNotification kind="warning">
 
