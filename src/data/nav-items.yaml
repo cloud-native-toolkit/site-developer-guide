@@ -55,7 +55,7 @@
       path: /admin/installation-existing
     - title: Install into OpenShift CRC
       path: /admin/installation-crc
-    - title: Configure Installation
+    - title: Configure Environment
       path: /admin/config-install
     - title: Artifactory Setup
       path: /admin/artifactory-setup
