@@ -21,9 +21,38 @@ A <Globals name="env" /> is installed and used by users acting in three roles:
 - **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess)
 - **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess) (e.g. developers, data scientists, etc.)
 
+The account owner must create the access group for account administrators (see below). Then, as described in [Configure Account](/admin/config-account), the account administrators can set up the resource groups and access groups needed to install and use the environments.
+
 ### Architecture
 
-[Environment Architecture](/arch/environment) shows the structure of a <Globals name="env" />. Typically, each [development team](/arch/teams) gets its own environment. However, multiple teams can share a single environment. The environment structure is designed to support best practices for a [cloud-native application architecture](/arch/application), including designing applications that are [built to manage](/arch/manageable).
+[Environment Architecture](/arch/environment) shows the structure of the <Globals name="env" /> that will be installed. Typically, each [development team](/arch/teams) gets its own environment. However, multiple teams can share a single environment. The environment structure is designed to support best practices for a [cloud-native application architecture](/arch/application), including designing applications that are [built to manage](/arch/manageable).
+
+## Access group for account administrators
+
+The account owner may want to delegate some of the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account administrators access groups, which will be used to support all environments in the account.
+
+In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account administrators.
+
+The account owner must create an access group to grant the necessary permissions for administering the account. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the account administrator(s) to this group.
+
+- Use the account admin policies script
+
+    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-ADMIN` (all capital letters) (or name it after your account)
+    - Run the script `./terraform/scripts/acp-acct`, which will add the necessary policies to the access group
+    - Add the account administrator(s) to the group
+
+The script adds policies that allow the user to:
+
+- Create resource groups
+- Invite users to the account
+- Create access groups
+
+The script also adds policies an environment administrator has but for all resource groups, with the ability to:
+
+- Create clusters
+- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
+- Create service instances
+
 
 ## Process
 

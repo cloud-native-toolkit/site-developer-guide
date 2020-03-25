@@ -12,12 +12,12 @@ Set up the account so the environment can be installed
 
 ## Configure IBM Cloud account
 
-The account must provide a few resources that will be needed to install the <Globals name="env" />:
+The account must provide a few resources that will be needed to install and use the <Globals name="env" />:
 - A public/private pair of VLANs
 - A resource group
-- A pair of access groups for the admin and developers
+- A pair of access groups for the admin and users
 
-These will be created by an account administrator, either the owner of the account or a user in the account with [Administrator roles]((https://cloud.ibm.com/docs/resources?topic=resources-bp_resourcegroups#bp_resourcegroups)).
+These will be created by an account administrator, the first role described in [Plan Installation](/admin/plan-installation). These are the steps an account administrator should perform to configure the account.
 
 
 ### Data center
@@ -52,9 +52,11 @@ Third, create or provide a [resource group](https://cloud.ibm.com/docs/resources
 
 <InlineNotification kind="warning">
 
-**Warning**: Because of a current limitation in the installation scripts, **the resource group's name should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters, digits, and the separators should be dashes.
+**Warning**: **The resource group name should be 24 characters or fewer, and should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters, digits, and the separators should be dashes. (The <Globals name="shortName" /> installation scripts will name the cluster `<resource-group>-cluster`, and a cluster name is limited to 32 characters.)
 
 </InlineNotification>
+
+We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct-showcase`, etc.
 
 - [Create the resource group](https://cloud.ibm.com/account/resource-groups)
 
@@ -102,45 +104,25 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
     ```
 
 
-### Access group for administrators
+### Access group for environment administrators
 
-Sixth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script or using the console. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
+Sixth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
-- Use the admin policies script
+- Use the environment admin policies script
 
     - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
     - Run the script `./terraform/scripts/acp-admin`, which will add the necessary policies to the access group
     - Add the environment administrator(s) to the group
 
-The script adds policies for this:
+The script adds policies that allow the user to add resources to the resource group:
 - Permission to create clusters
-- Permission to admin the IBM Cloud Container Registry
-- Permission to create service instances (shown below)
-![Assign Access](/images/assign-access-all-services.png)
-
-<InlineNotification kind="warning">
-
-**Warning**: There's currently a bug in one of the ibmcloud commands that the script uses. The command creates the Viewer policy with an extra "All service in" clause and doesn't work.
-
-</InlineNotification>
-
-If the script was used, the resource Viewer policy looks like this:
-
-```
-All service in RESOURCE_GROUP_NAME resource group
-resourceType string equals resource-group, resource string equals RESOURCE_GROUP_NAME
-```
-
-Use the console to manually add a second resource Viewer policy that doesn't contain the extra "All service in" clause. The resulting resource Viewer policy looks like this:
-```
-RESOURCE_GROUP_NAME resource group
-resourceType string equals resource-group, resource string equals RESOURCE_GROUP_NAME
-```
+- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
+- Permission to create service instances
 
 
-### Access group for users
+### Access group for environment users
 
-Seventh, create an access group to enable users (e.g. developers, data scientists, etc.) to access the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
+Seventh, create an access group to enable users (e.g. developers, data scientists, etc.) to access the resources in the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
 
 - Use the user policies script
 
@@ -148,22 +130,16 @@ Seventh, create an access group to enable users (e.g. developers, data scientist
     - Run the script `./terraform/scripts/acp-user`, which will add the necessary policies to the access group
     - Add the users to the group
 
-The script adds policies for this:
+The script adds policies that allow the user to use resources to the resource group:
 - Access to the resource group
 - Access to the cluster
 - Access to the image registry
-- Operator and Manager (but not Editor or Administrator) access to each of the services in the resource group
-
-<InlineNotification kind="warning">
-
-**Warning**: Like you did for the administrators' access group, if you use the script to populate the policies in this access group, use the console to manually add a second resource Viewer policy.
-
-</InlineNotification>
+- Access to each of the services in the resource group
 
 
 ### Cluster for the environment (optional)
 
-If the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then account administrator must create the cluster for the environment administrator.
+If the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then the account administrator must create the cluster for the environment administrator.
 
 Create the cluster that the environment will be installed into. Create either a Kubernetes cluster or Red Hat OpenShift cluster as needed. A typical cluster size is single zone, 3 nodes, each 8 vCPUs 32GB RAM.
 
