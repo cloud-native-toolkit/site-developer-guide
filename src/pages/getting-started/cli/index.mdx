@@ -153,6 +153,18 @@ Lists the `vlans` for a particular `resource group` and `region`. The command
 expects that an `ibmcloud login` has already been performed to set up the
 environment. This information is useful for preparing Terraform cluster creation steps
 
+### dashboard
+
+Opens the Developer Dashboard in the default browser. The namespace where the dashboard has been
+deployed can be provided with the `-n` flag. If not provided, `tools` will be used as the default.
+If a default browser has not been configured then the url to the Dashboard will be printed out.
+
+**Example usage**
+
+```bash
+igc dashboard
+```
+
 ### credentials
 
 Prints the urls and credentials for the Cloud Native Toolkit tools deployed into the cluster. The
