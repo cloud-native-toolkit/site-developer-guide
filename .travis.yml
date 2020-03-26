@@ -10,6 +10,7 @@ deploy:
   skip_cleanup: true
   github_url: github.com
   github_token: $GITHUB_TOKEN
+  repo: ibm-garage-cloud/ibm-garage-developer-guide-staging
   keep_history: false
   local_dir: public
   on:
