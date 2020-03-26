@@ -149,99 +149,96 @@ Once logged in, you can use the CLI commands.
 
 ### vlan
 
-Lists the `vlans` for a particular `resource group` and `region`. The command
-expects that an `ibmcloud login` has already been performed to set up the
-environment. This information is useful for preparing Terraform cluster creation steps
+Lists the VLANs for a particular IBM Cloud region. This information is useful for preparing Terraform cluster creation steps.
+
+The command requires that the terminal is already logged in to the cloud region. It does NOT need to be logged in to a cluster.
+
+**Example usage**
+
+- List a pair of public/private VLANs for a new environment to use
+
+    ```bash
+    igc vlan
+    ```
 
 ### dashboard
 
-Opens the Developer Dashboard in the default browser. The namespace where the dashboard has been
-deployed can be provided with the `-n` flag. If not provided, `tools` will be used as the default.
-If a default browser has not been configured then the url to the Dashboard will be printed out.
+Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. The namespace where the dashboard has been deployed can be provided with the `-n` flag. If not provided, `tools` will be used as the default. If a default browser has not been configured, then the url to the Dashboard will be printed out.
+
+The command requires that the terminal is already logged in to the cluster.
 
 **Example usage**
 
-```bash
-igc dashboard
-```
+- Open the dashboard in the default browser
+
+    ```bash
+    igc dashboard
+    ```
 
 ### credentials
 
-Prints the urls and credentials for the Cloud Native Toolkit tools deployed into the cluster. The
-command works by reading particular `ConfigMaps` and `Secrets` in a template namespace in the cluster
-that identify the tools. The template namespace is provided by using the `-n` flag. If not provided,
-the template namespace defaults to `tools`. The tools reported include Jenkins, SonarQube, ArgoCD, etc.
+Lists the URLs and credentials for the tools running in the <Globals name="env" />. The command identifies the tools by reading particular `ConfigMaps` and `Secrets` in the namespace. The `-n` flag specifies the namespace; the default is `tools``. The tools reported include Jenkins, SonarQube, ArgoCD, etc.
 
-The command expect that the cluster login has already been performed.
+The command requires that the terminal is already logged in to the cluster.
 
 **Example usage**
 
-```bash
-igc credentials -n my-namespace
-```
+- For each tool in the specified namespace (`tools` namespace is the default), list the URL for opening the tool's dashboard and the credentials (e.g. user and password) for logging in.
 
-- lists the tools urls and credentials from the `my-namespace` namespace
+    ```bash
+    igc credentials -n my-namespace
+    ```
 
 ### endpoints
 
-Lists the ingress and/or route urls for the provided namespace. The namespace is provided
-with the `-n` flag. If no namespace is provided, `dev` is used as the default. The results are
-provided in an interactive menu. If one of the endpoints is selected it will display the url and
-launch it in the default browser. Selecting `Exit` will display the full list and exit.
+Lists the ingress and/or route URLs for the specified namespace. The `-n` flag specifies the namespace; the default is `dev`. The results are provided in an interactive menu. If one of the endpoints is selected, it will display the URL and launch it in the default browser. Selecting `Exit` will display the full list and exit.
 
-The command expect that the cluster login has already been performed.
+The command requires that the terminal is already logged in to the cluster.
 
 **Example usage**
 
-```bash
-igc endpoint -n tools
-```
+- List the ingresses and route URLs for the apps running in the `tools` namespace
 
-- lists the ingresses and routes in the `tools` namespace
+    ```bash
+    igc endpoint -n tools
+    ```
 
 ### namespace
 
-Creates a namespace (if it doesn't exist) and prepares it for use by copying in
-pull secrets from the default namespace and config maps and secrets from the
-template namespace (defaults to `tools` if not provided). The template namespace
-can be provided with the `-t` flag. When run against OpenShift, this command will
-actually create a `project` which will result in the creation of a namespace as well.
+Creates a namespace (if it doesn't already exist) in the current cluster and prepares it for use:
+- Copies in pull secrets from the default namespace
+- Copies config maps and secrets from the template namespace
+- Adds pull secrets to a service account
 
-The `namespace` command will also add the pull secrets to a serviceAccount. The name
-of the service account can be provided with the `-z` flag. If not provided then `default`
-will be used.
+Optionally, the namespace command can also set up the Jenkins environment and/or Tekton environment. The command will install Jenkins into the namespace (only available on OpenShift) and set up the Jenkins serviceAccount. Or will copy the available Tasks and Pipelines from the template namespace.
 
-Optionally, the namespace command can also set up the Jenkins environment and/or Tekton
-environment through the use of the `--jenkins` flag and `--tekton` flag. When provided,
-the `--jenkins` flag will install Jenkins into the namespace (only available on OpenShift)
-and set up the Jenkins serviceAccount. The `--tekton` flag will copy the available Tasks
-and Pipelines from the template namespace (defaults to `tools` if not provided).
+Command flags:
+- `-t` -- The template namespace; the default is `tools`. When run against OpenShift, this command will actually create a `project` which  result in the creation of a namespace as well.
+- `-z` -- The name of the service account. The default is `default`.
+- `--jenkins` -- Set up the Jenkins environment.
+- `--tekton` -- Set up the Tekton environment.
 
-The command expect that the cluster login has already been performed.
+The command requires that the terminal is already logged in to the cluster.
 
 **Example usage**
 
-```bash
-igc namespace my-namespace
-```
+- Create the namespace `my-namespace` and update the `default` service account in that namespace
 
-- Creates the namespace `my-namespace` and updates the `default` service account in
-that namespace
+    ```bash
+    igc namespace my-namespace
+    ```
 
-```bash
-igc namespace another-namespace -z my-sa --jenkins
-```
+- Create the namespace `another-namespace` and the service account `my-sa` and configure the Jenkins environment
 
-- Creates the namespace `another-namespace` and the service account `my-sa` as
-well as configuring the Jenkins environment
+    ```bash
+    igc namespace another-namespace -z my-sa --jenkins
+    ```
 
-```bash
-igc namespace last-namespace -t my-tools --tekton
-```
+- Create the namespace `last-namespace` and update the `default` service account and configure the Tekton Tasks and Pipelines using `my-tools` as the template namespace
 
-- Creates the namespace `last-namespace` and updates the `default` service account
-as well as configuring the Tekton Tasks and Pipelines using `my-tools` as the template
-namespace
+    ```bash
+    igc namespace last-namespace -t my-tools --tekton
+    ```
 
 ### pipeline
 
@@ -270,18 +267,17 @@ the secret to access the Git repository. Those values can be provided a the comm
 
 **Example usage**
 
-```bash
-igc pipeline --jenkins
-```
+- Create a Jenkins pipeline in the `dev` namespace and prompt for the git credentials
 
-- Creates a Jenkins pipeline in the `dev` namespace and will prompt for the git credentials.
+    ```bash
+    igc pipeline --jenkins
+    ```
 
-```bash
-igc pipeline -n my-dev -u gituser -p gitpat --tekton
-```
+- Create a Tekton pipeline in the existing `my-dev` namespace, using the git credentials `gituser` and `gitpat`
 
-- Creates a Tekton pipeline in the existing `my-dev` namespace and uses `gituser` and `gitpat`
-for the git credentials
+    ```bash
+    igc pipeline -n my-dev -u gituser -p gitpat --tekton
+    ```
 
 ### tool-config
 
@@ -292,16 +288,15 @@ name of the tool as the first (and only) positional parameter.
 Configuration for the tool
 can be provided with the `--url`, `--username`, and `--password` optional flags. If the `url`
 is provided then a ConfigMap will be created. If the `username` and/or `password` are provided
-then a Secret will be created,
+then a Secret will be created.
 
 **Example usage**
 
-```bash
-igc tool-config my-tool --url https://url.com/my-tool --username admin --password password
-```
+- Configure a tool named `my-tool` with url `https://url.com/my-tool`, username of `admin`, and password of `password`
 
-- configures a tool named `my-tool` with url `https://url.com/my-tool`, username of `admin`, and
-password of `password`
+    ```bash
+    igc tool-config my-tool --url https://url.com/my-tool --username admin --password password
+    ```
 
 ### enable
 
@@ -311,12 +306,14 @@ password of `password`
   command is
   intended to be run within a git repository directory of a project for
 which a pipeline should be enabled.
-```bash
-igc enable
-```
 
-Once the project has been enabled you will need to run `igc pipeline` to
- register the git repo as a pipeline with your target development cluster.
+- Enable a project with artifacts
+
+    ```bash
+    igc enable
+    ```
+
+Once the project has been enabled, you will need to run `igc pipeline` to register the git repo as a pipeline with your target development cluster.
 
 The `enable` command adds a number of files to the local filesystem, including but not limited to:
 
