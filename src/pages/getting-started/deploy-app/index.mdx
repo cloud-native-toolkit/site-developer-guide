@@ -6,19 +6,17 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Create a sample application and deploy it with the Jenkins pipeline
+Create a sample application and deploy it with the CI pipeline
 
 </PageDescription>
 
 ## Overview
 
-You can create a new app using one of the [<Globals name="templates" />](/codepatterns/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for **IBM Kubernetes** or **Red Hat OpenShift** managed service that have both had the Development environment installed.
+The <Globals name="env" /> supports end-to-end development and deployment of an application. This will show you how to do it.
 
-This video will demonstrate how to work through the steps to create an application that uses a deployment pipeline to install it into your development cluster.
+You can create a new app using one of the [<Globals name="templates" />](/codepatterns/overview). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for an environment based on **Kubernetes** or **Red Hat OpenShift**.
 
-<p></p>
-<p></p>
-<p></p>
+This video demonstrates how to work through the steps to create an application and use a deployment pipeline to install it into your development cluster.
 
 <Video src="/videos/deployapp.m4v" type="video/m4v" poster="/images/poster.png"/>
 
@@ -26,22 +24,25 @@ This video will demonstrate how to work through the steps to create an applicati
 
 - Make sure you have installed all [Prerequisites](/getting-started/prereqs) before continuing
 - Open a terminal
-- log into your Development cluster in a terminal (If using a shared education cluster, log into openshift)
-- To do so, navigate to your cluster in the _IBM Cloud Console_, click on the **Access** tab and
-follow the instructions to login from the command line
-- You can test this with the following simple command: 
+- Log in to the development cluster's CLI (Kubernetes or Red Hat OpenShift)
+    - To do so, navigate to your cluster in the _IBM Cloud console_, click on the **Access** tab, and follow the instructions to log in to the cluster from the command line
+- You can test that you're connected to the cluster with the following simple command:
 
 <Accordion>
 
   <AccordionItem title="OpenShift">
 
-    oc get pods
+  ```bash
+  oc get pods -n tools
+  ```
 
   </AccordionItem>
 
   <AccordionItem title="Kubernetes">
 
-    kubectl get nodes
+  ```bash
+  kubectl get nodes
+  ```
 
   </AccordionItem>
 
@@ -51,7 +52,7 @@ follow the instructions to login from the command line
 ### Links
 
 <AnchorLinks>
-  <AnchorLink to="#open-developer-tools-dashboard">Open Developer Tools Dashboard</AnchorLink>
+  <AnchorLink to="#open-developer-dashboard">Open Developer Dashboard</AnchorLink>
   <AnchorLink to="#create-your-app-in-git">Create your app in Git</AnchorLink>
   <AnchorLink to="#clone-your-code">Clone your code</AnchorLink>
   <AnchorLink to="#running-locally">Running Locally</AnchorLink>
@@ -61,15 +62,13 @@ follow the instructions to login from the command line
   <AnchorLink to="#where-is-your-app-running-">Where is your app running ?</AnchorLink>
 </AnchorLinks>
 
-Clone your code
-### Open Developer Tools Dashboard
 
+### Open Developer Dashboard
 
-
-The Developer Tools Dashboard makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [<Globals name="templates" />](/codepatterns/overview) that make seeding your development project very easy.
+The [Developer Dashboard](/getting-started/dashboard) makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [<Globals name="templates" />](/codepatterns/overview) that make seeding your development project very easy.
 
 - Open a browser and make sure you are logged into [Github](https://github.com)
-- Open the [Developer Tools Dashboard](/getting-started/dashboard) by running the following command:
+- Open the dashboard by running the following command:
     ```
     igc dashboard
     ```
@@ -81,19 +80,25 @@ The Developer Tools Dashboard makes it easy for you to navigate to the tools, in
 
 </InlineNotification>
 
-- Open the Developer Tools Dashboard
+- Open the <Globals name="dashboard" />
 - Click on **<Globals name="templates" />** tab
 - Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with.
     - Click on a <Globals name="template" /> **Tile** to create your app github repository from the template repository selected.
     - You can also click on the **Git Icon** to browse the source template repository and click on the **Template** to create the template
 
+<InlineNotification kind="warning">
+
+**Warning:** Your browser needs to be logged in to your GitHub account for a template to work. If the link from the tile displays the GitHub 404 page, log in and reload the page.
+
+</InlineNotification>
+
 - Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) process.
 
   - **Owner**: Select a validate GitHub organization that you are authorized to create repositories within or the one you were given for the shared cluster (See warning above)
-  - **Repository name**: Enter a valid name for you repo , github will help with showing a green tick if it is valid (See warning above)
+  - **Repository name**: Enter a valid name for you repo, GitHub will help with showing a green tick if it is valid (See warning above)
 
   - **Description**: Describe your app
-    ![Template](images/template.png)
+    ![Template](/images/template.png)
   - Press **Create repository from template**
 
 
@@ -105,7 +110,7 @@ The new repository will be created in your selected organization.
 - Click on **Clone or download**
 - Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
     ```base
-    git clone git@github.com:mjperrins/stockbffnode.git
+    git clone git@github.com:bwoolf1/stockbffnode.git
     ```
 - Change into the cloned directory
     ```
@@ -115,7 +120,7 @@ The new repository will be created in your selected organization.
 - Edit `package.json` and edit the `name:` field and change it from its template name to your chosen name.
 - Save the edits
 - Push the changes back to your repository
-    ```
+    ```bash
     git add .
     git commit -m "Update application name"
     git push
@@ -128,62 +133,100 @@ Most developers like to run the code natively in local development environment. 
 
 ### Register the App in a DevOps Pipeline
 
-You now have the code in a GitHub repository and have cloned it to you local development environment. You now need to register the repository with the continuous integration pipeline technology.
+You now have the code in a GitHub repository and have cloned it to you local development environment. You now need to register the repository with the continuous integration pipeline. The <Globals name="env" /> supports both [Tekton](/guides/continuous-integration-tekton) and [Jenkins](/guides/continuous-integration) for continuous integration.
 
-The default continuous integration tool currently is [Jenkins](/guides
-/continuous-integration). [Tekton](/guides/continuous-integration-tekton) is
- also enabled.
-
-You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Jenkins.
+You can use the [IGC CLI](/getting-started/cli) to assist helping register a pipeline with Tekton or Jenkins.
 
 <InlineNotification kind="warning">
 
-  **Warning:** If you are working on a shared education cluster, please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
+**Warning:** If you are working on a shared education cluster, please deploy your app into a unique project/namespace and continue to do this for all other app creation steps. This will isolate your pipelines into its own namespace/project from other developers working on the same cluster.
   
 </InlineNotification>
-  
 
-  - If working on **OpenShift** create your project namespace first
-      ```bash
-      oc new-project dev-{initials}
-      ```
-  - Do not run `igc pipeline` without a namespace , this will cause your
-   pipeline to be created in the default `dev` namespace:
-      ```bash
-      igc pipeline
-      ```
-  - Instead, include the namespace parameter:
-      ```bash
-      igc pipeline -n dev-{initials}
-      ```
-  - For example:
-      ```bash
-      igc pipeline -n dev-mjp
-      ```
+Create your project namespace first.
 
-  - You can alternatively configure your app to use **Tekton** for CI. For
-   more details review the [Continuous Integration with Tekton Guide](/guides/continuous-integration-tekton)   
+<Accordion>
+
+  <AccordionItem title="OpenShift">
+
+  ```bash
+  oc new-project dev-{initials}
+  ```
+
+  For example:
+  ```bash
+  oc new-project dev-bw
+   ```
+
+  </AccordionItem>
+
+  <AccordionItem title="Kubernetes">
+
+  ```bash
+  kubectl create namespace dev-{initials}
+  ```
+
+  For example:
+  ```bash
+  kubectl create namespace dev-bw
+   ```
+
+  </AccordionItem>
+
+</Accordion>
+
+Now create a pipeline for your repo. You need to specify whether to use Tekton (`--tekton`) or Jenkins (`--jenkins`).
+
+Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead, include the namespace parameter.
+
+- So **don't** run this:
+    ```bash
+    igc pipeline --tekton
+    ```
+- Instead, run this:
+    ```bash
+    igc pipeline -n dev-{initials} --tekton
+    ```
+- For example:
+    ```bash
+    igc pipeline -n dev-bw --tekton
+    ```
+
+  - You can alternatively configure your app to use **Jenkins** for CI. For
+   more details review the [Continuous Integration with Jenkins Guide](/guides/continuous-integration)
       ```bash
-      igc pipeline -n dev-mjp --tekton  
+      igc pipeline -n dev-bw --jenkins
       ```  
   
-- Register your repo using the `igc pipeline` command. The CLI will ask for your github userid, it can be found in your github settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
+- Register your repo using the `igc pipeline` command. The CLI will ask for your GitHub userid, it can be found in your GitHub settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
-    - **Password**: Paste your github personal access token
+    - **Password**: Paste your GitHub personal access token
     - **Branch**: Press enter for the default git branch or type in another branch you want to register
-        ```bash
-        $ oc new-project -n dev-{initials}
-        $ igc pipeline -n dev-{intials}
-        Project git repo: https://github.com/mjperrins/stockbffnode.git
-        ? Provide the username: mperrins
-        ? Please provide your password/personal access token: [hidden]
-        ? Please provide the branch the pipeline should use: master
-        Creating secret with git credentials
-        Registering pipeline
-        Creating git webhook
-        ```
 
-- The pipeline will be registered in your development cluster.
+- The output looks like this:
+    ```bash
+    $ oc new-project dev-{intials}
+    $ igc pipeline -n dev-bw --jenkins
+    Creating secret(s) with git credentials
+      Project git repo: https://github.com/bwoolf1/stockservice-bw.git
+    ? Provide the username: bwoolf1
+    ? Provide your password/personal access token: [hidden]
+    ? Provide the branch the pipeline should use: master
+    Checking for existing namespace: dev-bw
+    Setting up pull secrets
+    Setting up tls secrets
+    Adding pull secrets to serviceAccount
+    Copying ConfigMaps
+    Copying Secrets
+    Copying Tekton tasks
+    Copying Tekton pipelines
+    Copying Jenkins credentials
+    Registering pipeline: bwoolf1.stockservice-bw
+    Creating git webhook
+    Creating webhook to url:  https://c100-e.us-east.containers.cloud.ibm.com:32724/apis/build.openshift.io/v1/namespaces/dev-bw/buildconfigs/bwoolf1.stockservice-bw/webhooks/secret101/github
+    ```
+
+The pipeline will be registered in your development cluster.
 
 ### View your application pipeline
 
@@ -207,7 +250,7 @@ You will see your application dev ops pipeline now starting to build and once co
 </Tab>
 <Tab label="Kubernetes">
 
-- Run the command `igc dashboard` in your terminal to open your [Developer Tools Dashboard](/getting-started/dashboard)
+- Run the command `igc dashboard` in your terminal to open your [<Globals name="dashboard" />](/getting-started/dashboard)
 - Select the Jenkins tool to open the Jenkins dashboard
 - Run the command `igc credentials` in your terminal to get the list of logins for the tools
 - Use the Jenkins userid and password to log into the Jenkins dashboard
@@ -227,25 +270,25 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 
 - To access the app, retrieve the app ingress endpoint using commands below in your terminal, remember to use the namespace you supplied when registering the application.
     ```bash
-    igc ingress -n dev
+    igc ingress -n dev-{intials}
     ```
   
   You will see a list of apps displayed with their ingress URLs for the application.
     ```bash
-    igc ingress -n dev
-    ? Ingresses in the 'dev' namespace. Select an ingress to launch the default browser or 'Exit'.
+    $ igc ingress -n dev-bw
+    ? Endpoints in the 'dev-bw' namespace. Select an endpoint to launch the default browser or 'Exit'.
 
-    1) Exit
-    2) template-graphql-typescript - https://template-graphql-typescript-dev.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-    3) template-node-react - https://template-node-react-dev.mooc-one-rhos-cluster.us-east.containers.appdomain.cloud
-    Answer:
+      1) Exit
+      2) jenkins-ephemeral - https://jenkins-dev-bw.garage-dev-ocp3-c-460849-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud
+      3) stockservice-bw - https://stockservice-bw-dev-bw.garage-dev-ocp3-c-460849-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud
+      Answer:
     ```
 - Use the arrow keys to select the ingress URL and press **Enter** to open it in a web browser and validate the application is working as expected
 
 
 ### Where is your app running ?
 
-- The build pipeline is configured to build you source code into a container image. This image is stored in the IBM Image Registry. The image is then deployed into your namespace/project within you development cluster and validated for its health.
+- The build pipeline is configured to build you source code into a container image. This image is stored in the [Image Registry](/guides/image-registry). The image is then deployed into your namespace/project within you development cluster and validated for its health.
 - Use the steps below to find your application within your cluster console.
 
 <Tabs>
@@ -256,7 +299,7 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 - Select you project either `dev` or the namespace you used to deploy your app
 - Click on **Deployments**
 - You should see the deployment of your application
-- Click on your application , and the corresponding deployment number
+- Click on your application and the corresponding deployment number
 - Try increasing the number of pods to see new instances being provisioned
 - Click on one of the `pod` instances
 - Click on **Logs**
@@ -304,7 +347,7 @@ The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact
 For more detailed instructions of how to enable to the full developer lifecycle read through the **Guides** section.
 
 <AnchorLinks small>
-  <AnchorLink to="../../guides/overview">Guides</AnchorLink>
-  <AnchorLink to="../../codepatterns/overview">Code Patterns
+  <AnchorLink to="/guides/overview">Guides</AnchorLink>
+  <AnchorLink to="/codepatterns/overview">Code Patterns
   </AnchorLink>
 </AnchorLinks>
