@@ -143,60 +143,159 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
   
 </InlineNotification>
 
-Create your project namespace first.
+Create your project namespace first. To simplify steps, set an environment variable with
+your namespace
 
+```bash
+export NAMESPACE=dev-{initial}
+```
+
+<Tabs>
+<Tab label="Using the CLI">
+Run the `namespace` command to create the namespace and set it up.
+
+- if Jenkins pipelines will be run in the namespace, include the `--jenkins` flag
+- if Tekton pipelines will be run in the namespace, include the `--tekton` flag
+- if both Jenkins and Tekton pipelines will be run, include both flags
+
+For example
+```
+igc namespace $NAMESPACE --jenkins --tekton
+```
+</Tab>
+<Tab label="Manual steps">
 <Accordion>
 
   <AccordionItem title="OpenShift">
 
+<ol>
+  <li>Create the namespace
+
   ```bash
-  oc new-project dev-{initials}
+  oc new-project $NAMESPACE
   ```
+  </li>
+  <li>Copy the pull secrets from the default namespace into your new namespace
 
-  For example:
   ```bash
-  oc new-project dev-bw
-   ```
+  curl -OL https://raw.githubusercontent.com/ibm-garage-cloud/garage-terraform-modules/master/generic/cluster/namespaces/scripts/setup-namespace-pull-secrets.sh
+  ./setup-namespace-pull-secrets.sh $NAMESPACE
+  ```
+  </li>
+  <li>Copy the ConfigMaps and Secrets from the tools namespace
 
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get configmap -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get configmap ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get secret -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get secret ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+  <li>If you will be using Jenkins, install Jenkins in the namespace
+
+  ```bash
+  oc new-app jenkins-ephemeral -n $NAMESPACE
+  ```
+  </li>
+  <li>If you will be using Tekton, copy the Tekton tasks
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get tasks.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get tasks.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get pipelines.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get pipelines.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+</ol>
   </AccordionItem>
 
   <AccordionItem title="Kubernetes">
+<ol>
+  <li>Create the namespace
 
   ```bash
-  kubectl create namespace dev-{initials}
+  kubectl create namespace $NAMESPACE
   ```
+  </li>
+  <li>Copy the pull secrets from the default namespace into your new namespace
 
-  For example:
   ```bash
-  kubectl create namespace dev-bw
-   ```
+  curl -OL https://raw.githubusercontent.com/ibm-garage-cloud/garage-terraform-modules/master/generic/cluster/namespaces/scripts/setup-namespace-pull-secrets.sh
+  ./setup-namespace-pull-secrets.sh $NAMESPACE
+  ```
+  </li>
+  <li>Copy the ConfigMaps and Secrets from the tools namespace
 
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get configmap -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get configmap ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get secret -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get secret ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+  <li>If you will be using Tekton, copy the Tekton tasks
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get tasks.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get tasks.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get pipelines.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get pipelines.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+</ol>
   </AccordionItem>
 
 </Accordion>
+</Tab>
+</Tabs>
 
 Now create a pipeline for your repo. You need to specify whether to use Tekton (`--tekton`) or Jenkins (`--jenkins`).
 
-Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead, include the namespace parameter.
+Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead,
+include the namespace we created above as a parameter.
 
-- So **don't** run this:
+- **Don't** run this:
     ```bash
     igc pipeline --tekton
     ```
 - Instead, run this:
     ```bash
-    igc pipeline -n dev-{initials} --tekton
-    ```
-- For example:
-    ```bash
-    igc pipeline -n dev-bw --tekton
+    igc pipeline -n $NAMESPACE --tekton
     ```
 
-  - You can alternatively configure your app to use **Jenkins** for CI. For
-   more details review the [Continuous Integration with Jenkins Guide](/guides/continuous-integration)
-      ```bash
-      igc pipeline -n dev-bw --jenkins
-      ```  
+- You can alternatively configure your app to use **Jenkins** for CI. For
+  more details review the [Continuous Integration with Jenkins Guide](/guides/continuous-integration)
+    ```bash
+    igc pipeline -n $NAMESPACE --jenkins
+    ```
   
 - Register your repo using the `igc pipeline` command. The CLI will ask for your GitHub userid, it can be found in your GitHub settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
@@ -205,22 +304,12 @@ Do not run `igc pipeline` without a namespace, this will cause your pipeline to 
 
 - The output looks like this:
     ```bash
-    $ oc new-project dev-{intials}
     $ igc pipeline -n dev-bw --jenkins
     Creating secret(s) with git credentials
       Project git repo: https://github.com/bwoolf1/stockservice-bw.git
     ? Provide the username: bwoolf1
     ? Provide your password/personal access token: [hidden]
     ? Provide the branch the pipeline should use: master
-    Checking for existing namespace: dev-bw
-    Setting up pull secrets
-    Setting up tls secrets
-    Adding pull secrets to serviceAccount
-    Copying ConfigMaps
-    Copying Secrets
-    Copying Tekton tasks
-    Copying Tekton pipelines
-    Copying Jenkins credentials
     Registering pipeline: bwoolf1.stockservice-bw
     Creating git webhook
     Creating webhook to url:  https://c100-e.us-east.containers.cloud.ibm.com:32724/apis/build.openshift.io/v1/namespaces/dev-bw/buildconfigs/bwoolf1.stockservice-bw/webhooks/secret101/github
