@@ -205,18 +205,21 @@ The command requires that the terminal is already logged in to the cluster.
 
 ### namespace
 
-Creates a namespace (if it doesn't already exist) in the current cluster and prepares it for use:
-- Copies in pull secrets from the default namespace
-- Copies config maps and secrets from the template namespace
-- Adds pull secrets to a service account
+Creates a namespace (if it doesn't exist) and prepares it with the necessary configuration. A namespace in the <Globals name="env" /> isn't just an empty namespace, it contains configuration as well. This command populates the specified namesapce with that configuration:
+- Adds a service account that contains the pull secrets from the `default` namespace
+- Adds config maps and secrets copied from the template namespace
 
-Optionally, the namespace command can also set up the Jenkins environment and/or Tekton environment. The command will install Jenkins into the namespace (only available on OpenShift) and set up the Jenkins serviceAccount. Or will copy the available Tasks and Pipelines from the template namespace.
+When the <Globals name="env" />'s cluster is an OpenShift cluster, this command will actually create a project (which is a Kubernetes namespace with additional annotations).
 
 Command flags:
-- `-t` -- The template namespace; the default is `tools`. When run against OpenShift, this command will actually create a `project` which  result in the creation of a namespace as well.
-- `-z` -- The name of the service account. The default is `default`.
-- `--jenkins` -- Set up the Jenkins environment.
-- `--tekton` -- Set up the Tekton environment.
+- `-t` -- The template namespace; the default is `tools`
+- `-z` -- The name of the service account; the default is `default`
+
+For an OpenShift cluster, the namespace command can optionally set up an environments in the namespace to run Jenkins and/or Tekton pipelines in the namespace.
+
+Command flags:
+- `--jenkins` -- Install Jenkins into the namespace
+- `--tekton` -- Copy the available Tasks and Pipelines from the template namespace
 
 The command requires that the terminal is already logged in to the cluster.
 
