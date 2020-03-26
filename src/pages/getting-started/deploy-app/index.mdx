@@ -269,7 +269,8 @@ igc namespace $NAMESPACE --jenkins --tekton
 </Tab>
 </Tabs>
 
-Now create a pipeline for your repo. You need to specify whether to use Tekton (`--tekton`) or Jenkins (`--jenkins`).
+Now create a pipeline for your repo. You need to specify whether your CI pipeline will
+run in Tekton (`--tekton`) or Jenkins (`--jenkins`).
 
 Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead,
 include the namespace we created above as a parameter.
