@@ -1,10 +1,12 @@
+const pathPrefix = process.env.PATH_PREFIX || '/';
+
 module.exports = {
   siteMetadata: {
     title: 'IBM Garage Cloud Native Toolkit',
     description: 'Cloud Native Toolkit to enable development with IBM Cloud and RedHat',
     keywords: 'gatsby,theme,carbon',
   },
-  pathPrefix: "/",
+  pathPrefix,
   plugins: [
     {
       resolve: 'gatsby-theme-carbon',
