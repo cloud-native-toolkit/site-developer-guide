@@ -27,8 +27,8 @@ const SecondLeftText = () => <p>Fit to purpose</p>;
 const SecondRightText = () => (
   <p>
       The {g.longName} environment has been built to support the principles of a robust SDLC while
-      being flexible enough to fit into a wide range of development environments and toolchains. The
-      {g.shortName} supports different tool selections, from open source versions of tools like Artifactory and
+      being flexible enough to fit into a wide range of development environments and toolchains.
+      The {g.shortName} supports different tool selections, from open source versions of tools like Artifactory and
       SonarQube to enterprise-class software like IBM Cloud Pak for Applications and IBM Multicloud Manager.
     <a
       className={calloutLink}
