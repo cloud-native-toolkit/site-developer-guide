@@ -10,7 +10,7 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the {g.longName}. It provides a cloud-native Open Source
+      This is the developer guide for the {g.longName}. It provides an Open Source
       Software Development Life Cycle (SDLC) and complements IBM Cloud Pak solutions. The {g.shortName} enables
       application development teams to deliver business value quickly using {g.ocp} and {g.kube} on {g.ibmcloud}.
     <a
