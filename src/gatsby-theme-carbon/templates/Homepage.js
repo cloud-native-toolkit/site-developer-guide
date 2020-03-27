@@ -10,8 +10,9 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the {g.longName}. The {g.shortName} creates a {g.env} that empowers cloud-native application development teams to deliver business value quickly
-      using {g.ocp} and {g.kube} on {g.ic}.
+      This is the developer guide for the {g.longName}. It provides a cloud-native Open Source
+      Software Development Life Cycle (SDLC) and complements IBM Cloud Pak solutions. The {g.shortName} enables
+      application development teams to deliver business value quickly using {g.ocp} and {g.kube} on {g.ibmcloud}.
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
@@ -21,17 +22,19 @@ const FirstRightText = () => (
   </p>
 );
 
-const SecondLeftText = () => <p>Garage Method</p>;
+const SecondLeftText = () => <p>Fit to purpose</p>;
 
 const SecondRightText = () => (
   <p>
-      The {g.longName} environment automates and supports developing cloud-native applications
-      using the {g.method} principles and practices.
+      The {g.longName} environment has been built to support the principles of a robust SDLC while
+      being flexible enough to fit into a wide range of development environments and toolchains. The
+      {g.shortName} supports different tool selections, from open source versions of tools like Artifactory and
+      SonarQube to enterprise-class software like IBM Cloud Pak for Applications and IBM Multicloud Manager.
     <a
       className={calloutLink}
-      href="https://www.ibm.com/garage/method"
+      href="https://www.ibm.com/cloud/paks/"
     >
-        {g.method} →
+        {g.cloudpaks} →
     </a>
   </p>
 );

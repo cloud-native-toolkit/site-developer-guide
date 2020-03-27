@@ -5,6 +5,7 @@ globals.longName   = "IBM Garage Cloud Native Toolkit";
 globals.shortName  = "Cloud Native Toolkit";
 globals.env        = "Developer Environment";
 globals.ic         = "IBM Cloud";
+globals.ibmcloud   = "IBM Cloud";
 globals.iccli      = "IBM Cloud CLI";
 globals.kube       = "Kubernetes";
 globals.iks        = "IBM Cloud Kubernetes Service";
@@ -15,6 +16,7 @@ globals.template   = "Code Pattern";
 globals.templates  = "Code Patterns";
 globals.dashboard  = "Developer Dashboard";
 globals.igccli     = "IGC CLI";
+globals.cloudpaks  = "IBM Cloud Paks";
 
 const Globals = ({name}) => {
 
