@@ -1,4 +1,4 @@
-# IBM Garage for Cloud
+# IBM Garage Solution Engineering
 [![Build Status](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide.svg?branch=master)](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide)
 
 ## Cloud Native Toolkit - Developer Guide
@@ -41,6 +41,7 @@ provide for a richer and more interactive set of components in the published gui
 To render the content within your local development environment, run the following:
 
 ```
+npm run build
 npm run dev
 ```
 
