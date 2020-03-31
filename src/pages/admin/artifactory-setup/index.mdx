@@ -38,10 +38,8 @@ Create a repository in Artifactory for storing Helm charts.
 
 - Open the Artifactory dashboard from the [<Globals name="dashboard" />](/getting-started/dashboard) and login
 
-- Log into Artifactory using the default userid and password, `igc credentials
-` can show these values. The first time you log in you will be it is
- unconfigured and displays its Onboarding Wizard starting with the
-  Welcome page.
+- Log into Artifactory using the default userid and password, `igc credentials` can show these values. The first time
+you log in the Welcome Page will prompt you to configure Artifactory using the Onboarding Wizard.
 
 - Press **Get Started**
 
@@ -61,15 +59,14 @@ Create a repository in Artifactory for storing Helm charts.
 
   </ArtDirection>
 
-- Save the password somewhere safe or in your password manager, you will need to
- manually update the
- password in the  `secret` that is stored in the `tools` namespace/project
+- Save the password somewhere safe or in your password manager; you will need to
+  manually update the password in the  `secret` that is stored in the `tools` namespace/project
   called `artifactory-access`. There are more detailed instructions after you
-   have completed the setup wizard.
+  have completed the setup wizard.
 
 The next step is to define the base url that will be used by the server. 
 
-- From your browser you are currently using copy the `URL` from the browser.  
+- From the browser you are currently using copy the `URL` from the address bar.
 
   <ArtDirection>
 
@@ -87,8 +84,8 @@ The next step is to define the base url that will be used by the server.
   </ArtDirection>
 
 - The next page in the wizard is the Configure a Proxy Server page. This is to
- setup a proxy for external resources. You can click **Next** to skip this
-step.
+  setup a proxy for external resources. You can click **Next** to skip this
+  step.
 
   <ArtDirection>
 
@@ -96,10 +93,9 @@ step.
 
   </ArtDirection>
 
-
-- The next page in the wizard is the Create Repositories page. Since
- Artifactory doesn't have a specific package type for Helm charts, create a
-  repository for storing generic artifacts.
+- The next page in the wizard is the Create Repositories page. Since the open source release of
+  Artifactory doesn't provide a package for Helm repositories, we will use a generic repository to hold the helm
+  artifacts.
 
 - Select **Generic**, then press **Next**
 
@@ -123,7 +119,7 @@ step.
 
 - Open the Artifactory dashboard from the [<Globals name="dashboard" />](/getting-started/dashboard) and login
 
-- Click on the **Settings** tab on the left menu, and then select
+- Click on the **Settings** tab on the left menu (the one with the gear icon), and then select
  **Security**
     ![Security Configuration](/images/securitysettings.png)
 
@@ -131,8 +127,10 @@ step.
 
 ### Obtain the encrypted password 
 
-To enable the CI pipelines ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) to store the Helm artifacts in the Artifactory repository, we need to obtain 
-Artifactory's encrypted password and store this where the pipeline can access it--in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
+To enable the CI pipelines ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
+to store the Helm artifacts in the Artifactory repository, we need to obtain
+Artifactory's encrypted password and save it where the pipeline can access the password -- in the `artifactory-access`
+Kubernetes secret in the `tools` namespace in the Development Tools environment.
 
 - In the Artifactory console, press the **Welcome, admin** menu button in the top right corner of the console and select **Edit profile**
 
@@ -155,21 +153,21 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
   </ArtDirection>
 
 - Now we have obtained the **Encrypt** key and had kept a copy of the
- Password we changed on the initial setup wizard. We need to update the
+  Password we changed on the initial setup wizard. We need to update the
   secrets that stores these inside the cluster.
 
 ### Update the OpenShift secret
 
-- Open the OpenShift 4 Console select **Administrator** select **Workloads
-** then **Secrets** select the `tool` namespace and narrow the selection to
- `artifactory-access` then select the context menu **Edit Secrets**. You do
+- Open the OpenShift 4 Console then select the **Administrator** menu. Select **Workloads
+  ** then **Secrets**. At the top select the `tool` namespace and narrow the selection to
+  `artifactory-access` then select the **Edit Secrets** context menu on the right. You do
   not need to base encode these values the OpenShift console does this for you.
   ![Initial JFrog](/images/settingskeys.png)
 
 - Update the values that you retrieved for the encrypt key and updated the
  admin password
-- Update the `ARTIFACTORY_ENCRPT` value with your encrypt key value
-- Update the `ARTIFACTORY_PASSWORD` value with thew new admin password
+    - Update the `ARTIFACTORY_ENCRYPT` value with your encrypt key value
+    - Update the `ARTIFACTORY_PASSWORD` value with thew new admin password
  
 - Click **Save** in OpenShift Console 
 
@@ -179,14 +177,13 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
 
 ### Kubernetes and OpenShift 3
 
-To update the secret in Kuberentes or Openshift 3 navigate to the `secret
-` called `artifactory-access` in the `tools` namespace and update the
- following values. You will need encode these value in base64 key
-  before editing the secret.
+To update the secret in Kuberentes or Openshift 3 navigate to the `secret` called `artifactory-access`
+in the `tools` namespace and update the following values. You will need encode these value in base64 key before
+editing the secret.
 
 [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/#creating-a-secret-manually) 
-store data in base64 format. So to store Artifactory's encrypted password in
- a secret, it needs to be encoded into base64.  
+store data in base64 format. So to store Artifactory's encrypted password in a secret, it needs to be encoded into
+base64.
 
 Any base64 encoding tool will work. For example:
 
@@ -196,16 +193,15 @@ Any base64 encoding tool will work. For example:
 
 - In the field below, copy the encoded value into you clipboard or store it somewhere safe
 
-- Find the `ARTIFACTORY_ENCRPT` value (under `data`) and paste in the Artifactory base64 key into the field
+- Find the `ARTIFACTORY_ENCRYPT` value (under `data`) and paste in the Artifactory base64 key into the field
 
 - Find the `ARTIFACTORY_PASSWORD` value (under `data`) and paste in the
 
 ## Rerun the Pipeline
 
 Previously, when you deployed you first app, the pipeline's Package Helm Chart stage didn't store the chart because 
-the `ARTIFACTORY_ENCRYPT` property was not set. Now that it has been set, rerun
- your pipeline and check that the Helm chart for your app is stored correctly
-  in Artifactory with matching semantic version information.
+the `ARTIFACTORY_ENCRYPT` property was not set. Now that it has been set, rerun your pipeline and check that the Helm
+chart for your app is stored correctly in Artifactory with matching semantic version information.
 
 - In the Artifactory console, select the Artifacts page and expand the `generic-local` repository
 
