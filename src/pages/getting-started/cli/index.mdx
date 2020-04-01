@@ -99,6 +99,35 @@ Follow the instructions in the [cloud-shell-commands readme](https://github.com/
       --help     Show help                                                 [boolean]
     ```
 
+    The help for a specific command, `pipeline`, looks like this:
+
+    ```bash
+    $ igc pipeline --help
+    igc pipeline
+
+    Register a pipeline for the current code repository
+
+    Options:
+      --version                Show version number                         [boolean]
+      --help                   Show help                                   [boolean]
+      --quiet                  Suppress all logging                        [boolean]
+      --debug                  Turn on extra logging                       [boolean]
+      --templateNamespace, -j  the namespace where Jenkins is running       [string]
+      --pipelineNamespace, -n  the namespace where the pipeline should be deployed
+                                                                            [string]
+      --skipWebhook            flag indicating that the webhook should not be
+                               created                                     [boolean]
+      --gitUsername, -u        username used to access the git repository
+      --gitPat, -p             the token used to authenticate the user
+      --values                 optional file with additional values to add to the
+                               secret
+      --tekton                 register a tekton pipeline                  [boolean]
+      --jenkins                register a jenkins pipeline                 [boolean]
+      --pipelineName           the name of the Tekton pipeline to use       [string]
+      --generateCrumb, -c      flag indicating that a crumb is required to complete
+                               the registration                     [default: false]
+    ```
+
 ## Use the CLI
 
 <InlineNotification>
@@ -110,7 +139,7 @@ To use the <Globals name="igccli" />, first install the [prerequisite tools](/ge
 
 </InlineNotification>
 
-To use the <Globals name="igccli" />, you must be logged into your <Globals name="ic" /> account and cluster.
+To use the <Globals name="igccli" />, most commands require that you be logged into your <Globals name="ic" /> account and cluster.
 
 - Log into your <Globals name="ic" /> account with the correct region and resource group:
     ```bash
@@ -140,7 +169,7 @@ oc login --server=<url> --token=<apikey>
 
 Once logged in, you can use the CLI commands.
 
-- For example, this command lists the dashboard ingress URLs for all of the install tools in the tools namespace:
+- For example, this command lists the dashboard ingress URLs for all of the tools installed in the `tools` namespace:
     ```bash
     igc endpoints -n tools
     ```
@@ -151,7 +180,7 @@ Once logged in, you can use the CLI commands.
 
 Lists the VLANs for a particular IBM Cloud region. This information is useful for preparing Terraform cluster creation steps.
 
-The command requires that the terminal is already logged in to the cloud region. It does NOT need to be logged in to a cluster.
+This command requires that the terminal is already logged in to the cloud region. It does NOT need to be logged in to a cluster.
 
 **Example usage**
 
@@ -163,9 +192,14 @@ The command requires that the terminal is already logged in to the cloud region.
 
 ### dashboard
 
-Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. The namespace where the dashboard has been deployed can be provided with the `-n` flag. If not provided, `tools` will be used as the default. If a default browser has not been configured, then the url to the Dashboard will be printed out.
+Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. If a default browser has not been configured, then the URL to the Dashboard will be printed out.
 
-The command requires that the terminal is already logged in to the cluster.
+The dashboard is deployed in a namespace and displays the tools deployed in the same namesapce, as listed by the `credentials` command. Additional tools can be deployed to the namespace; then use the `tool-config` command to add a tool to the list of credentials and add a panel to the dashboard.
+
+This command requires that the terminal is already logged in to the cluster.
+
+**Command flags**
+- `-n` -- The namespace where the dashboard has been deployed; the default is `tools`
 
 **Example usage**
 
@@ -177,23 +211,68 @@ The command requires that the terminal is already logged in to the cluster.
 
 ### credentials
 
-Lists the URLs and credentials for the tools running in the <Globals name="env" />. The command identifies the tools by reading particular `ConfigMaps` and `Secrets` in the namespace. The `-n` flag specifies the namespace; the default is `tools``. The tools reported include Jenkins, SonarQube, ArgoCD, etc.
+Lists the endpoints and credentials for the tools running in the environment. The tools reported include Jenkins, SonarQube, ArgoCD, etc.
 
-The command requires that the terminal is already logged in to the cluster.
+This command requires that the terminal is already logged in to the cluster.
+
+**Command flags**
+- `-n` -- The namespace where the tools have been deployed; the default is `tools`
 
 **Example usage**
 
-- For each tool in the specified namespace (`tools` namespace is the default), list the URL for opening the tool's dashboard and the credentials (e.g. user and password) for logging in.
+- List the credentials for the tools installed in the `tools` namespace
 
     ```bash
     igc credentials -n my-namespace
     ```
 
+    The credentials output is a JSON doc like this
+
+    ```bash
+    $ igc credentials
+    Credentials:  {
+      argocd: {
+        user: 'admin',
+        password: '12345678',
+        url: 'https://argocd-tools.mycluster.us-east.containers.appdomain.cloud'
+      },
+      . . .
+      dashboard: {
+        url: 'https://dashboard-tools.mycluster.us-east.containers.appdomain.cloud'
+      },
+      . . .
+    }
+    ```
+
+### tool-config
+
+Configures a new tool in the environment. After deploying the tool, use this command to add the tool to the list of credentials so that it will be displayed in the dashboard.
+
+**Command flags**
+- The name for the tool
+- `-n` -- The tools namespace; the default is `tools`
+- `--url` -- The endpoint for accessing the tool, usually its dashboard
+- `--username` -- (Optional) The user name for logging into to tool
+- `--password` -- (Optional) The password for logging into to tool
+
+**Example usage**
+
+- Configure a tool named `my-tool` with its dashboard's endpoint and credentials
+
+    ```bash
+    igc tool-config my-tool --url https://mytool-dashboard.mycluster.us-east.containers.appdomain.cloud --username admin --password password
+    ```
+
+
+
 ### endpoints
 
-Lists the ingress and/or route URLs for the specified namespace. The `-n` flag specifies the namespace; the default is `dev`. The results are provided in an interactive menu. If one of the endpoints is selected, it will display the URL and launch it in the default browser. Selecting `Exit` will display the full list and exit.
+Lists the ingress and/or route URLs for the applications in a namespace. The results are provided in an interactive menu. If one of the endpoints is selected, it will display the URL and launch it in the default browser. Selecting `Exit` will display the full list and exit.
 
-The command requires that the terminal is already logged in to the cluster.
+This command requires that the terminal is already logged in to the cluster.
+
+**Command flags**
+- `-n` -- The deployment namespace; the default is `dev`
 
 **Example usage**
 
@@ -205,124 +284,83 @@ The command requires that the terminal is already logged in to the cluster.
 
 ### namespace
 
-Creates a namespace (if it doesn't exist) and prepares it with the necessary configuration. A namespace in the <Globals name="env" /> isn't just an empty namespace, it contains configuration as well. This command populates the specified namesapce with that configuration:
-- Adds a service account that contains the pull secrets from the `default` namespace
-- Adds config maps and secrets copied from the template namespace
+Creates a Kubernetes namespace or OpenShift project (if it doesn't already exist) and adds the necessary data and tools to make it work well as part of the <Globals name="env" />.
 
-When the <Globals name="env" />'s cluster is an OpenShift cluster, this command will actually create a project (which is a Kubernetes namespace with additional annotations).
+This command requires that the terminal is already logged in to the cluster.
 
-Command flags:
-- `-t` -- The template namespace; the default is `tools`
+The command adds a service account to the namespace containing the pull secrets for pulling images from the [image registry](/guides/image-registry). This enables the namespace to deploy containers from the registry.
+
+**Command flags**
 - `-z` -- The name of the service account; the default is `default`
 
-For an OpenShift cluster, the namespace command can optionally set up an environments in the namespace to run Jenkins and/or Tekton pipelines in the namespace.
+If the cluster is OpenShift, each build will be run in the developer's project, so this command copies the resources needed to run the build pipeline from a template project that already has these resources (certain config maps and secrets that the pipeline uses). The project can be set up to run Jenkins pipelines, Tekton pipelines, or both.
 
-Command flags:
+**Command flags**
+- `-t` -- The template namespace; the default is `tools`
 - `--jenkins` -- Install Jenkins into the namespace
 - `--tekton` -- Copy the available Tasks and Pipelines from the template namespace
 
-The command requires that the terminal is already logged in to the cluster.
-
 **Example usage**
 
-- Create the namespace `my-namespace` and update the `default` service account in that namespace
+- Create a namespace for performing testing, one that can deploy containers from the image registry
 
     ```bash
-    igc namespace my-namespace
+    igc namespace test
     ```
 
-- Create the namespace `another-namespace` and the service account `my-sa` and configure the Jenkins environment
+- Create a namespace for building a Stock Trading app using Jenkins pipelines defined in the `tools` namespace
 
     ```bash
-    igc namespace another-namespace -z my-sa --jenkins
-    ```
-
-- Create the namespace `last-namespace` and update the `default` service account and configure the Tekton Tasks and Pipelines using `my-tools` as the template namespace
-
-    ```bash
-    igc namespace last-namespace -t my-tools --tekton
+    igc namespace dev-stock --jenkins
     ```
 
 ### pipeline
 
-Registers a project as a Jenkins or Tekton pipeline by creating a Secret to hold
-the Git authentication information, calling the Jenkins API or applying the appropriate
-configuration yaml, creating a web-hook to trigger the pipeline when changes are pushed,
-and triggering the initial build.
+Connects a branch in a Git repo to a CI pipeline in the <Globals name="env" /> and triggers an initial build. When a new commit is added to the branch, that triggers the pipeline to run, which will rebuild and redeploy the app using the new code. The Git repo needs to be hosted using a site that supports triggers such as GitHub or GitLab. The environment supports CI pipelines implemented using Tekton or Jenkins.
 
-**Note:** This command is intended to be run within the repository directory of a project for
-which a pipeline should be generated.
+This command requires that the terminal is already logged in to the cluster. It also requires that the terminal's current directory is the repository directory for your local copy of the Git repo. The command will use the local Git repo's configuration to find the server copy.
 
-By default the pipeline deploys into the `dev` namespace. The namespace can be changed by passing
-it in using the `-n` flag. If the target namespace does not exist, the command will fail with a
-message to create the namespace using `igc namepace`
+The command will prompt for the username and personal access token to access the Git repository, unless those are provided as command-line parameters. It will also prompt you for the branch to use to trigger builds; the default is `master`.
 
-The pipeline command supports either `jenkins` or `tekton` pipelines using the flags:
-
-- --jenkins or
-- --tekton
-
-Jenkins is the default if no value is provided.
-
-The command will prompt for the username and personal access token that should stored in
-the secret to access the Git repository. Those values can be provided a the command-line using the
-`-u` and `-p` flags, respectively.
+**Command flags**
+- `-n` -- The deployment namespace; the default is `dev`
+- `-u` -- The username for accessing the Git repo
+- `-p` -- The personal access token for accessing the Git repo
+- `--jenkins` -- Deploy using a Jenkins pipeline; this is the default
+- `--tekton` -- Deploy using a Tekton pipeline
 
 **Example usage**
 
-- Create a Jenkins pipeline in the `dev` namespace and prompt for the git credentials
+- Create a Jenkins pipeline in the `dev` namespace and prompt for the Git credentials
 
     ```bash
     igc pipeline --jenkins
     ```
 
-- Create a Tekton pipeline in the existing `my-dev` namespace, using the git credentials `gituser` and `gitpat`
+- Create a Tekton pipeline in the `my-dev` namespace, using the Git credentials `gituser` and `gitpat`
 
     ```bash
     igc pipeline -n my-dev -u gituser -p gitpat --tekton
     ```
 
-### tool-config
-
-Configures a tool into the template namespace. The template namespace is provided with the `-n`
-argument. If not provided, the template namespace will be `tools`. The tool-config takes the
-name of the tool as the first (and only) positional parameter.
-
-Configuration for the tool
-can be provided with the `--url`, `--username`, and `--password` optional flags. If the `url`
-is provided then a ConfigMap will be created. If the `username` and/or `password` are provided
-then a Secret will be created.
-
-**Example usage**
-
-- Configure a tool named `my-tool` with url `https://url.com/my-tool`, username of `admin`, and password of `password`
-
-    ```bash
-    igc tool-config my-tool --url https://url.com/my-tool --username admin --password password
-    ```
-
 ### enable
 
-"Enables" an existing project with the DevOps artifacts. The CLI reads the
- list of
- available pipelines and applies the selected pipeline to your code repo. This
-  command is
-  intended to be run within a git repository directory of a project for
-which a pipeline should be enabled.
+Adds DevOps artifacts to a Git repo that the <Globals name="env" /> uses to deploy the app. The command displays a list of available pipelines and applies the one you select to your code repo. The DevOps files added to your repo include (but are not limited to):
+
+- Helm chart
+- Jenkinsfile
+
+This command DOES NOT require that the terminal is already logged in to an IBM Cloud account nor the cluster. It DOES require that the terminal's current directory is the repository directory for your local copy of the Git repo.
+
+The command will add files to the local repo. You should commit these new files and push them to the server repo. Then run `igc pipeline` to connect your repo to a pipeline in the environment.
+
+**Command flags**
+- `--repo` -- The set of pipelines to choose from; the default is https://github.com/ibm-garage-cloud/garage-pipelines
+
+**Example usage**
 
 - Enable a project with artifacts
 
     ```bash
     igc enable
     ```
-
-Once the project has been enabled, you will need to run `igc pipeline` to register the git repo as a pipeline with your target development cluster.
-
-The `enable` command adds a number of files to the local filesystem, including but not limited to:
-
-- Helm chart
-- Jenkinsfile
-
-After `enable` is called, the generated files should be committed and pushed to the git repository.
-
-The default pipeline repo is `https://ibm-garage-cloud.github.io/garage-pipelines/`, but a different one can be used by providing the `--repo` argument.  The source for the provided pipeline repo can be found at `https://github.com/ibm-garage-cloud/garage-pipelines` to use as a template.
