@@ -41,6 +41,7 @@
       path: /guides/solsa
     - title: CLI Tools Image
       path: /guides/tools-image
+
 - title: Administrator Guide
   pages:
     - title: Overview
@@ -78,8 +79,6 @@
       path: /arch/application
     - title: Build to Manage
       path: /arch/manageable
-
-
 
 - title: Code Patterns
   pages:
@@ -122,6 +121,10 @@
     - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
 
+- title: Office Hours
+  pages:
+    - title: Resource Access Management
+      path: /office-hours/resource-access
 
 - title: How to contribute
   pages:
