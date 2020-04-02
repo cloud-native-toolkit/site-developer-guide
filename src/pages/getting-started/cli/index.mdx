@@ -316,6 +316,135 @@ If the cluster is OpenShift, each build will be run in the developer's project, 
     igc namespace dev-stock --jenkins
     ```
 
+**Manual steps**
+
+Here is a comparison between how the `namespace` command works and the equivalent manual steps.
+
+- To simplify steps, set an environment variable with your namespace
+
+    ```bash
+    export NAMESPACE=dev-{initial}
+    ```
+
+<Tabs>
+<Tab label="Using the CLI">
+Run the `namespace` command to create the namespace and set it up.
+
+- if Jenkins pipelines will be run in the namespace, include the `--jenkins` flag
+- if Tekton pipelines will be run in the namespace, include the `--tekton` flag
+- if both Jenkins and Tekton pipelines will be run, include both flags
+
+For example
+```
+igc namespace $NAMESPACE --jenkins --tekton
+```
+</Tab>
+<Tab label="Manual steps for OpenShift">
+<ol>
+  <li>Create the namespace
+
+  ```bash
+  oc new-project $NAMESPACE
+  ```
+  </li>
+  <li>Copy the pull secrets from the default namespace into your new namespace
+
+  ```bash
+  curl -OL https://raw.githubusercontent.com/ibm-garage-cloud/garage-terraform-modules/master/generic/cluster/namespaces/scripts/setup-namespace-pull-secrets.sh
+  ./setup-namespace-pull-secrets.sh $NAMESPACE
+  ```
+  </li>
+  <li>Copy the ConfigMaps and Secrets from the tools namespace
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get configmap -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get configmap ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get secret -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get secret ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+  <li>If you will be using Jenkins, install Jenkins in the namespace
+
+  ```bash
+  oc new-app jenkins-ephemeral -n $NAMESPACE
+  ```
+  </li>
+  <li>If you will be using Tekton, copy the Tekton tasks
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get tasks.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get tasks.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get pipelines.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get pipelines.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+</ol>
+</Tab>
+<Tab label="Manual steps for Kubernetes">
+<ol>
+  <li>Create the namespace
+
+  ```bash
+  kubectl create namespace $NAMESPACE
+  ```
+  </li>
+  <li>Copy the pull secrets from the default namespace into your new namespace
+
+  ```bash
+  curl -OL https://raw.githubusercontent.com/ibm-garage-cloud/garage-terraform-modules/master/generic/cluster/namespaces/scripts/setup-namespace-pull-secrets.sh
+  ./setup-namespace-pull-secrets.sh $NAMESPACE
+  ```
+  </li>
+  <li>Copy the ConfigMaps and Secrets from the tools namespace
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get configmap -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get configmap ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get secret -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get secret ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+  <li>If you will be using Tekton, copy the Tekton tasks
+
+  ```bash
+  export sourcenamespace=tools;
+  kubectl get tasks.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get tasks.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  kubectl get pipelines.tekton.dev -l grouping=garage-cloud-native-toolkit -n ${sourcenamespace} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get pipelines.tekton.dev ${cm} --namespace ${sourcenamespace} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+  ```
+  </li>
+</ol>
+</Tab>
+</Tabs>
+
 ### pipeline
 
 Connects a branch in a Git repo to a CI pipeline in the <Globals name="env" /> and triggers an initial build. When a new commit is added to the branch, that triggers the pipeline to run, which will rebuild and redeploy the app using the new code. The Git repo needs to be hosted using a site that supports triggers such as GitHub or GitLab. The environment supports CI pipelines implemented using Tekton or Jenkins.
