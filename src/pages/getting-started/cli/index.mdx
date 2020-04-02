@@ -293,6 +293,14 @@ The command adds a service account to the namespace containing the pull secrets 
 **Command flags**
 - `-z` -- The name of the service account; the default is `default`
 
+**Example usage**
+
+- Create a namespace for performing testing, one that can deploy containers from the image registry
+
+    ```bash
+    igc namespace test
+    ```
+
 If the cluster is OpenShift, each build will be run in the developer's project, so this command copies the resources needed to run the build pipeline from a template project that already has these resources (certain config maps and secrets that the pipeline uses). The project can be set up to run Jenkins pipelines, Tekton pipelines, or both.
 
 **Command flags**
@@ -301,12 +309,6 @@ If the cluster is OpenShift, each build will be run in the developer's project, 
 - `--tekton` -- Copy the available Tasks and Pipelines from the template namespace
 
 **Example usage**
-
-- Create a namespace for performing testing, one that can deploy containers from the image registry
-
-    ```bash
-    igc namespace test
-    ```
 
 - Create a namespace for building a Stock Trading app using Jenkins pipelines defined in the `tools` namespace
 
