@@ -16,10 +16,11 @@ To understand how the process is performed, keep these concepts in mind.
 
 ### Roles
 
-A <Globals name="env" /> is installed and used by users acting in three roles:
+A <Globals name="env" /> is installed and used by users acting in four roles:
+- **Account owner**: The user who owns the account.
 - **Account administrators**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
-- **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess)
-- **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-cloudaccess) (e.g. developers, data scientists, etc.)
+- **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles)
+- **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
 The account owner must create the access group for account administrators (see below). Then, as described in [Configure Account](/admin/config-account), the account administrators can set up the resource groups and access groups needed to install and use the environments.
 
@@ -47,7 +48,7 @@ The script adds policies that allow the user to:
 - Invite users to the account
 - Create access groups
 
-The script also adds policies an environment administrator has but for all resource groups, with the ability to:
+The script also adds the same policies that an environment administrator has. But whereas an environment administrator can only manage the resources in one resource group, an account administrator can manage the resources in all resource groups. This gives the account administrator the ability in any resource group to:
 
 - Create clusters
 - Manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
