@@ -111,7 +111,6 @@
     - title: App Modernization - 2
       path: /practical/appmod-exercise2
 
-
 - title: Activation
   pages:
     - title: Garage Method Development
@@ -123,7 +122,7 @@
 
 - title: Resources
   pages:
-    - title: Toolkit Resources
+    - title: Office Hours
       path: /toolkit-resources/office-hours
 
 - title: How to contribute
