@@ -143,60 +143,30 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
   
 </InlineNotification>
 
-Create your project namespace first.
+First, create your project namespace. (See the [IGC CLI](/getting-started/cli) for details about how the `namespace` command works.)
 
-<Accordion>
+```bash
+igc namespace dev-{initials} --jenkins --tekton
+```
 
-  <AccordionItem title="OpenShift">
+Now create a pipeline for your repo. You need to specify whether your CI pipeline will run in Tekton (`--tekton`) or Jenkins (`--jenkins`).
 
-  ```bash
-  oc new-project dev-{initials}
-  ```
+Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead, include the namespace we created above as a parameter.
 
-  For example:
-  ```bash
-  oc new-project dev-bw
-   ```
-
-  </AccordionItem>
-
-  <AccordionItem title="Kubernetes">
-
-  ```bash
-  kubectl create namespace dev-{initials}
-  ```
-
-  For example:
-  ```bash
-  kubectl create namespace dev-bw
-   ```
-
-  </AccordionItem>
-
-</Accordion>
-
-Now create a pipeline for your repo. You need to specify whether to use Tekton (`--tekton`) or Jenkins (`--jenkins`).
-
-Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead, include the namespace parameter.
-
-- So **don't** run this:
+- **Don't** run this:
     ```bash
     igc pipeline --tekton
     ```
 - Instead, run this:
     ```bash
-    igc pipeline -n dev-{initials} --tekton
-    ```
-- For example:
-    ```bash
-    igc pipeline -n dev-bw --tekton
+    igc pipeline -n $NAMESPACE --tekton
     ```
 
-  - You can alternatively configure your app to use **Jenkins** for CI. For
-   more details review the [Continuous Integration with Jenkins Guide](/guides/continuous-integration)
-      ```bash
-      igc pipeline -n dev-bw --jenkins
-      ```  
+- You can alternatively configure your app to use **Jenkins** for CI. For
+  more details review the [Continuous Integration with Jenkins Guide](/guides/continuous-integration)
+    ```bash
+    igc pipeline -n $NAMESPACE --jenkins
+    ```
   
 - Register your repo using the `igc pipeline` command. The CLI will ask for your GitHub userid, it can be found in your GitHub settings. It will ask for you enter your **Github Personal Access Token** and finally your branch.
     - **Username**: Enter your GitHub user id
@@ -205,22 +175,12 @@ Do not run `igc pipeline` without a namespace, this will cause your pipeline to 
 
 - The output looks like this:
     ```bash
-    $ oc new-project dev-{intials}
     $ igc pipeline -n dev-bw --jenkins
     Creating secret(s) with git credentials
       Project git repo: https://github.com/bwoolf1/stockservice-bw.git
     ? Provide the username: bwoolf1
     ? Provide your password/personal access token: [hidden]
     ? Provide the branch the pipeline should use: master
-    Checking for existing namespace: dev-bw
-    Setting up pull secrets
-    Setting up tls secrets
-    Adding pull secrets to serviceAccount
-    Copying ConfigMaps
-    Copying Secrets
-    Copying Tekton tasks
-    Copying Tekton pipelines
-    Copying Jenkins credentials
     Registering pipeline: bwoolf1.stockservice-bw
     Creating git webhook
     Creating webhook to url:  https://c100-e.us-east.containers.cloud.ibm.com:32724/apis/build.openshift.io/v1/namespaces/dev-bw/buildconfigs/bwoolf1.stockservice-bw/webhooks/secret101/github
