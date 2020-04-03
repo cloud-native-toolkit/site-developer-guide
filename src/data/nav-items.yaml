@@ -121,10 +121,10 @@
     - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
 
-- title: Office Hours
+- title: Resources
   pages:
-    - title: Resource Access Management
-      path: /office-hours/resource-access
+    - title: Toolkit Resources
+      path: /toolkit-resources/office-hours
 
 - title: How to contribute
   pages:
