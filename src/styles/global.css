@@ -31,7 +31,7 @@ div[class*='Tabs-module--tab-container'] {
 }
 
 div[class*='Tabs-module--tab-contents'] {
-    margin-left: 0rem;
+    margin-left: 0em;
 }
 
 h2[class*='Markdown-module--h2'] {
@@ -67,8 +67,18 @@ div[class*='Code-module--row']{
     width:95%;
 }
 
+ul[class*='Tabs-module--tab-list']{
+    margin-left: 0rem;
+}
+
+
+section[class*='Tabs-module--panel']{
+    margin-left: 0rem;
+    margin-right: 0rem;
+}
+
 .bx--list--nested {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
 }
 
 .bx--resource-card--dark .bx--tile {
@@ -79,15 +89,3 @@ div[class*='Code-module--row']{
     background-color:cornflowerblue;
 }
 
-.osIcon {
-    background-image: url("/images/openshift.png");
-    background-repeat: no-repeat;
-    background-size: 25px;
-    background-position: top center;
-}
-
-.kubeIcon {
-    background-image: url("/images/kubernetes.png");
-    background-repeat: no-repeat;
-    alignment: center;
-}

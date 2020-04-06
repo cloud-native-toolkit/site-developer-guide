@@ -315,14 +315,15 @@ we are now ready to kick off the installation.
 
 Once the Terraform scripts have finished, you can see the resources that the scripts created in IBM Cloud:
 - In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview "Managing resources in the resource list")
-- On the Resource List page, filter by your Resource Group (e.g. `catalyst-team`)
+- On the Resource List page, filter by your Resource Group (e.g. `appdev-team`)
 - You should see these resources listed:
     - **Clusters**: 1, either Kubernetes or OpenShift
     - **Services**: 5 or so, such as PostgreSQL, LogDNA, etc.
     - **Storage**: 1, an instance of Cloud Object Storage
 - Select the cluster and open the Kubernetes dashboard or OpenShift web console. You should see:
     - Namespaces: `tools`, `dev`, `test`, and `staging`
-    - Deployments in the `tools` namespace: `catalyst-dashboard`, `jenkins`, etc.
+    - Deployments in the `tools` namespace: `developer-dashboard`, `jenkins
+    `, etc.
 
 To get started with code use the following guides:
 
