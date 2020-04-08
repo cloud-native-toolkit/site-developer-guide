@@ -14,7 +14,7 @@ module.exports = {
         isSearchEnabled: true,
         repository: {
           baseUrl:
-            'https://cloudnativetoolkit.dev',
+            'https://github.com/ibm-garage-cloud/ibm-garage-developer-guide',
           subDirectory: '/',
         },
       },
