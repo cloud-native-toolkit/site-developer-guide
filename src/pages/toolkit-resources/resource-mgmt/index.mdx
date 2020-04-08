@@ -8,6 +8,19 @@ Managing Access to Resources in IBM Cloud
 
 </PageDescription>
 
+## Introduction
+
+This tutorial teaches you best practices for using Identity and Access Management (IAM) in [IBM Cloud](https://www.ibm.com/cloud).
+
+This video presentation describes the IAM concepts, shows a demonstration, and includes a Q&A:
+- 01:00 -- Features and concepts
+- 26:00 -- Demonstration
+- 46:00 -- Q&A
+
+<iframe width="80%" height="500" src="https://www.youtube.com/embed/eayMGvkLZmI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+If you'd like to read this material rather than listen to the presentation, below is an explanation of the features and concepts.
+
 ## Requirements for access control
 
 Access control doesn't change the features available in IBM Cloud. It does change who can use which features.
@@ -17,8 +30,8 @@ One approach to access control is to not use it. Just give everyone access to ev
 Another approach is to limit which users can do what. Some users can enter almost every room (e.g. hotel management), some can rent rooms (e.g. the paying guest), and some can enter the rooms that have been rented for them (e.g. the paying guest's family).
 
 This article is about how to apply these limits in IBM Cloud. Here are two common scenarios for employing these limits:
-- **Account owner adds users to their account**: An account owner must pay for all resources created in their account. How can they control which users can and cannot create resources in their account? Some resources can be expensive, so the owner will want to limit who can create them.
-- **Multiple teams developing apps**: Each development team can have their own development environment. Each developer on a team should have access to their team's environment but not the other environments. They may be allowed to change aspects of their environment (such as deploying apps), but should not be able to change other teams' environments.
+- **Account owner adds users to their account**: An account owner must pay for all resources created in their account. How can they control which users can create resources in their account, and which can only use existing resources without creating new ones? Some resources can be expensive, so the owner will want to limit who can create them.
+- **Multiple teams developing apps**: Each development team can have their own development environment. Each developer on a team should have access to their team's environment but not the other environments. They may be allowed to change aspects of their own environment (such as deploying apps), but should not be able to change other teams' environments.
 
 
 ## IBM Cloud Identity and Access Management (IAM)
