@@ -6,7 +6,7 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Create a sample application and deploy it with the CI pipeline
+Create a sample application and deploy it with a CI pipeline
 
 </PageDescription>
 
@@ -143,21 +143,23 @@ You can use the [IGC CLI](/getting-started/cli) to assist helping register a pip
   
 </InlineNotification>
 
-First, create your project namespace. (See the [IGC CLI](/getting-started/cli) for details about how the `namespace` command works.)
+First, create your project namespace. (See the CLI documentation for [igc
+ namespace](/getting-started/cli#namespace) for details about how the `namespace` command works.)
+ 
+- Create a namespace/project for your apps 
+    ```bash
+    igc namespace dev-{initials} --jenkins --tekton
+    ```
+  
+Now create a pipeline for your repo. (See the CLI documentation for [igc pipeline
+](/getting-started/cli#pipeline) for details about how the `pipeline` command works.)
 
-```bash
-igc namespace dev-{initials} --jenkins --tekton
-```
-
-Now create a pipeline for your repo. You need to specify whether your CI pipeline will run in Tekton (`--tekton`) or Jenkins (`--jenkins`).
+You need to specify whether your CI pipeline will run in Tekton (`--tekton`) or Jenkins (`--jenkins`).
 
 Do not run `igc pipeline` without a namespace, this will cause your pipeline to be created in the default `dev` namespace. Instead, include the namespace we created above as a parameter.
 
-- **Don't** run this:
-    ```bash
-    igc pipeline --tekton
-    ```
-- Instead, run this:
+- Create a pipeline in your namespace that uses **Tekton**. For more details
+ review the [Continuous Integration with Tekton Guide](/guides/continuous-integration-tekton)
     ```bash
     igc pipeline -n $NAMESPACE --tekton
     ```
@@ -177,37 +179,58 @@ Do not run `igc pipeline` without a namespace, this will cause your pipeline to 
     ```bash
     $ igc pipeline -n dev-bw --jenkins
     Creating secret(s) with git credentials
-      Project git repo: https://github.com/bwoolf1/stockservice-bw.git
+      Project git repo: https://github.com/bwoolf1/stockbffnode.git
     ? Provide the username: bwoolf1
     ? Provide your password/personal access token: [hidden]
     ? Provide the branch the pipeline should use: master
-    Registering pipeline: bwoolf1.stockservice-bw
+    Registering pipeline: bwoolf1.stockbffnode
     Creating git webhook
-    Creating webhook to url:  https://c100-e.us-east.containers.cloud.ibm.com:32724/apis/build.openshift.io/v1/namespaces/dev-bw/buildconfigs/bwoolf1.stockservice-bw/webhooks/secret101/github
+    Creating webhook to url:  https://c100-e.us-east.containers.cloud.ibm.com
+  :32724/apis/build.openshift.io/v1/namespaces/dev-bw/buildconfigs/bwoolf1
+  .stockbffnode/webhooks/secret101/github
     ```
 
 The pipeline will be registered in your development cluster.
 
 ### View your application pipeline
 
-To view you registered pipeline, follow the steps for the type of development cluster you registered your application with.
+- To view you registered pipeline, follow the steps for the type of
+ development cluster you registered your application with.
 
 <Tabs>
-<Tab label="OpenShift">
+<Tab label="OpenShift 3.11">
 
 - Open the OpenShift Web Console from the Developer Cluster instance
 
 ![OpenShift](images/openshiftconsole.png)
 
 - From the top menu, switch to the **Application Console**
-- Select _dev_ project/namespace or you personal namespace that was used on the creation
-- In the left menu, select *Builds* -> *Pipelines*
+ Select _dev_ project/namespace or you personal namespace that was used for
+ the application pipeine registration
+-- In the left menu, select *Builds* -> *Pipelines*
 
 You will see your application dev ops pipeline now starting to build and once completed will look like the image below.
 
 ![OpenShift](images/ospipeline.png)
 
 </Tab>
+<Tab label="OpenShift 4.3">
+
+- Open the OpenShift Web Console from the Developer Cluster instance
+
+![OpenShift](images/openshiftconsole.png)
+
+- From menu on the left switch to the **Developer**
+- Select _dev_ project/namespace or you personal namespace that was used for
+ the application pipeine registration
+- In the left menu, select *Pipelines*
+
+You will see your application dev ops pipeline now starting to build and once completed will look like the image below.
+
+![OpenShift](images/tektonpipeline.png)
+
+</Tab>
+
 <Tab label="Kubernetes">
 
 - Run the command `igc dashboard` in your terminal to open your [<Globals name="dashboard" />](/getting-started/dashboard)
@@ -230,17 +253,18 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 
 - To access the app, retrieve the app ingress endpoint using commands below in your terminal, remember to use the namespace you supplied when registering the application.
     ```bash
-    igc ingress -n dev-{intials}
+    igc endpoints -n dev-{intials}
     ```
   
   You will see a list of apps displayed with their ingress URLs for the application.
     ```bash
-    $ igc ingress -n dev-bw
+    $ igc endpoints -n dev-bw
     ? Endpoints in the 'dev-bw' namespace. Select an endpoint to launch the default browser or 'Exit'.
 
       1) Exit
       2) jenkins-ephemeral - https://jenkins-dev-bw.garage-dev-ocp3-c-460849-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud
-      3) stockservice-bw - https://stockservice-bw-dev-bw.garage-dev-ocp3-c-460849-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud
+      3) stockbffnode - https://stockbffnode-dev-bw.garage-dev
+  -ocp3-c-460849-0143c5dd31acd8e030a1d6e0ab1380e3-0001.us-east.containers.appdomain.cloud
       Answer:
     ```
 - Use the arrow keys to select the ingress URL and press **Enter** to open it in a web browser and validate the application is working as expected
@@ -252,14 +276,14 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 - Use the steps below to find your application within your cluster console.
 
 <Tabs>
-<Tab label="OpenShift">
+<Tab label="OpenShift 3.11">
 
 - Open the **OpenShift web console**
 - Change to the **Application Console**
 - Select you project either `dev` or the namespace you used to deploy your app
 - Click on **Deployments**
 - You should see the deployment of your application
-- Click on your application and the corresponding deployment number
+- Click on your application, and the corresponding deployment number
 - Try increasing the number of pods to see new instances being provisioned
 - Click on one of the `pod` instances
 - Click on **Logs**
@@ -267,6 +291,22 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 - Navigate around the console to understand where your deployment, service and pods are running
 
 ![Pods on OpenShift](images/podsos.png)
+
+</Tab>
+
+<Tab label="OpenShift 4.3">
+
+- Open the **OpenShift web console**
+- Change to the **Developer** view
+- Click on **Topology** menu
+
+- Click on your application deployment in the topology view
+- Click on on the **Overview** tab
+- Increase the number of running pods
+- Click **Resource** tab and then on the pod **View Logs** link
+- You can see the running state of your application
+
+![Pods on OpenShift](images/topology.png)
 
 </Tab>
 
@@ -288,7 +328,9 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 </Tab>
 </Tabs>
 
-- If you have reached this point, we recommend you repeat the process a few more times using different templates and explore you environment to get familiar with it.
+- If you have reached this point, we recommend you repeat the process a few
+ more times using different code pattern templates and explore you
+  environment to get familiar with it.
 - The [Guides](/guides/overview) will explain more about the tools used in the pipelines
 
 <InlineNotification kind="success">
@@ -302,12 +344,3 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 You now have a running application that is being built and deployed into your development cluster.
 The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.
 
-## Guides
-
-For more detailed instructions of how to enable to the full developer lifecycle read through the **Guides** section.
-
-<AnchorLinks small>
-  <AnchorLink to="/guides/overview">Guides</AnchorLink>
-  <AnchorLink to="/codepatterns/overview">Code Patterns
-  </AnchorLink>
-</AnchorLinks>
