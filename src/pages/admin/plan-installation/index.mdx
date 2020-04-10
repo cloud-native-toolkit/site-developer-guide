@@ -17,30 +17,30 @@ To understand how the process is performed, keep these concepts in mind.
 ### Roles
 
 A <Globals name="env" /> is installed and used by users acting in four roles:
-- **Account owner**: The user who owns the account.
-- **Account administrators**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
+- **Account owner**: The user who owns the account
+- **Account managers**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
 - **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles)
 - **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
-The account owner must create the access group for account administrators (see below). Then, as described in [Configure Account](/admin/config-account), the account administrators can set up the resource groups and access groups needed to install and use the environments.
+The account owner must create the access group for account managers (see below). Then, as described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments.
 
 ### Architecture
 
 [Environment Architecture](/arch/environment) shows the structure of the <Globals name="env" /> that will be installed. Typically, each [development team](/arch/teams) gets its own environment. However, multiple teams can share a single environment. The environment structure is designed to support best practices for a [cloud-native application architecture](/arch/application), including designing applications that are [built to manage](/arch/manageable).
 
-## Access group for account administrators
+## Access group for account managers
 
-The account owner may want to delegate some of the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account administrators access groups, which will be used to support all environments in the account.
+The account owner may want to delegate the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account manager access groups, which will be used to support all environments in the account.
 
-In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account administrators.
+In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account managers.
 
-The account owner must create an access group to grant the necessary permissions for administering the account. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the account administrator(s) to this group.
+The account owner must create an access group to grant the necessary permissions for administering the account. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the account manager(s) to this group.
 
-- Use the account admin policies script
+- Use the account manager policies script
 
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-ADMIN` (all capital letters) (or name it after your account)
-    - Run the script `./terraform/scripts/acp-acct`, which will add the necessary policies to the access group
-    - Add the account administrator(s) to the group
+    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-MGR` (all capital letters) (or name it after your account)
+    - Run the script `./terraform/scripts/acp-mgr`, which will add the necessary policies to the access group
+    - Add the account manager(s) to the group
 
 The script adds policies that allow the user to:
 
@@ -48,7 +48,7 @@ The script adds policies that allow the user to:
 - Invite users to the account
 - Create access groups
 
-The script also adds the same policies that an environment administrator has. But whereas an environment administrator can only manage the resources in one resource group, an account administrator can manage the resources in all resource groups. This gives the account administrator the ability in any resource group to:
+The script also adds the same policies that an environment administrator has. But whereas an environment administrator can only manage the resources in one resource group, an account manager can manage the resources in all resource groups. This gives the account manager the ability in any resource group to:
 
 - Create clusters
 - Manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
@@ -59,7 +59,7 @@ The script also adds the same policies that an environment administrator has. Bu
 
 The overall process:
 
-1. Configure account -- An account administrator configures the account so that <Globals name="env" />s can be installed
+1. Configure account -- An account manager configures the account so that <Globals name="env" />s can be installed
 1. Install environment -- An environment administrator runs the <Globals name="shortName" /> scripts to create a <Globals name="env" />
 1. Configure environment -- The environment administrator finishes setting up the newly installed <Globals name="env" />
 
@@ -67,7 +67,7 @@ Once the environment is set up, the environment users can start using it to deve
 
 ### Configure account
 
-First, before installing an environment, an account administrator needs to configure the IBM Cloud account for the
+First, before installing an environment, an account manager needs to configure the IBM Cloud account for the
   environment. See [Configure Account](/admin/config-account) for detailed instructions, which accomplish this:
 - Decide which data center (region and zone) will host the environment
 - Determine which public/private VLAN pair will comprise the environment's network
@@ -85,11 +85,11 @@ First, before installing an environment, an account administrator needs to confi
 
 ### Install environment
 
-Second, once the account administrator has configured the account for installing an environment, the account administrator and the environment administrator need to jointly decide how the environment administrator is going to install the environment. There are two options:
+Second, once the account manager has configured the account for installing an environment, the account manager and the environment administrator need to jointly decide how the environment administrator is going to install the environment. There are two options:
 
 [**Install including creating a new cluster**](/admin/installation-ibm-cloud): The environment administrator who performs this install needs permissions to create clusters as well as service instances. The script will run as this user to create the cluster, create the service instances, and install the CI/CD tools in the cluster.
 
-[**Install into an existing cluster**](/admin/installation-existing): The account administrator creates the cluster and then grants the environment administrator access to it. The environment administrator who performs this install needs permissions to create service instances but not to create clusters. The script will run as the environment administrator to create the service instances and install the CI/CD tools in the existing cluster.
+[**Install into an existing cluster**](/admin/installation-existing): The account manager creates the cluster and then grants the environment administrator access to it. The environment administrator who performs this install needs permissions to create service instances but not to create clusters. The script will run as the environment administrator to create the service instances and install the CI/CD tools in the existing cluster.
 
 <InlineNotification>
 
