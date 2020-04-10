@@ -3,7 +3,7 @@ const pathPrefix = process.env.PATH_PREFIX || '/';
 module.exports = {
   siteMetadata: {
     title: 'IBM Garage Cloud Native Toolkit',
-    description: 'Cloud Native Toolkit to enable development with IBM Cloud and RedHat',
+    description: 'Cloud Native Toolkit to enable development with IBM Cloud and Red Hat OpenShift',
     keywords: 'gatsby,theme,carbon',
   },
   pathPrefix,
