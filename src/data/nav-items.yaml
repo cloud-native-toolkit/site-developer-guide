@@ -124,6 +124,8 @@
   pages:
     - title: Office Hours
       path: /toolkit-resources/office-hours
+    - title: Resource Access Management
+      path: /toolkit-resources/resource-mgmt
 
 - title: How to contribute
   pages:
