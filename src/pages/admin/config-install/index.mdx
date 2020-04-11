@@ -10,8 +10,11 @@ Configure the environment after installing it
 
 </PageDescription>
 
-- Configure RBAC security in the cluster
-    - Run `./terraform/scripts/rbac.sh <ACCESS-GROUP>`
+Configure RBAC security in the cluster:
+- Run the RBAC script `./terraform/scripts/rbac.sh <ACCESS-GROUP>`
+    - `<ACCESS-GROUP>` is the name of the admin group (i.e. `<resource_group>-ADMIN`)
+
+Other steps:
 - Test opening the [<Globals name="dashboard" />](/getting-started/dashboard)
     - Run `igc dashboard`
 - Complete setup of LogDNA

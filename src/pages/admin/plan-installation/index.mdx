@@ -22,7 +22,14 @@ A <Globals name="env" /> is installed and used by users acting in four roles:
 - **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles)
 - **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
-The account owner must create the access group for account managers (see below). Then, as described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments.
+The account owner must create the access group for account managers (see below).
+- Summary: The account owner will create an `ACCOUNT-MGR` access group using the `acp-mgr` script
+
+Then, as described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments.
+- Summary: For each environment, the account managers will:
+    - Create a resource group
+    - Create an access group named `<resource_group>-ADMIN` using the script `acp-admin`
+    - Create an access group named `<resource_group>-USER` using the script `acp-user`
 
 ### Architecture
 
@@ -34,13 +41,13 @@ The account owner may want to delegate the responsibilities for configuring the 
 
 In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account managers.
 
-The account owner must create an access group to grant the necessary permissions for administering the account. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the account manager(s) to this group.
+The account owner must create an access group to grant the necessary permissions for managing the account. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the account manager(s) to this group.
 
-- Use the account manager policies script
-
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-MGR` (all capital letters) (or name it after your account)
-    - Run the script `./terraform/scripts/acp-mgr`, which will add the necessary policies to the access group
-    - Add the account manager(s) to the group
+To create the access group for the account managers:
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-MGR` (all capital letters) (or name it after your account)
+- Run the script `./terraform/scripts/acp-mgr <ACCESS_GROUP>`, which will add the necessary policies to the access group
+    - `<ACCESS_GROUP>` is the name of the access group (i.e. `ACCOUNT-MGR`)
+- Add the account manager(s) to the group
 
 The script adds policies that allow the user to:
 
@@ -69,19 +76,15 @@ Once the environment is set up, the environment users can start using it to deve
 
 First, before installing an environment, an account manager needs to configure the IBM Cloud account for the
   environment. See [Configure Account](/admin/config-account) for detailed instructions, which accomplish this:
-- Decide which data center (region and zone) will host the environment
-- Determine which public/private VLAN pair will comprise the environment's network
-- Create the resource group that will contain the environment's resources
-- Upgrade the image registry's service plan
-- Create the access groups that will enable administrators and developers to access to the environment's resources
-- Create Resource Group
-- Create access group (capitalised)
-- Create Cluster in the resource group name it `<team>-iks|ocp3|ocp4-cluster`
-    - 3 Node and 8cpu and 33gb memory (typically for a sensible team)
-- Install Developer Tools into cluster following install existing guide
-- run `terraform/scripts/Usage: acp <ACCESS_GROUP> <RESOURCE_GROUP> <PREFIX> <REGION>`
-- apply RBAC Rules`terraform/scripts/rbac.sh <ACCESS-GROUP>`
-- Test `igc dashboard`
+
+1. Upgrade the image registry
+1. Prepare to run scripts
+1. Select a region and zone
+1. Select a pair of public/private VLANs
+1. Create a resource group
+1. Create an access group for environment administrators
+1. Create an access group for environment users
+1. Optionally, create a cluster for the environment
 
 ### Install environment
 
