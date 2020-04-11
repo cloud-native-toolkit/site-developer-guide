@@ -20,56 +20,9 @@ The account must provide a few resources that will be needed to install and use 
 These will be created by an account manager, one of the roles described in [Plan Installation](/admin/plan-installation). These are the steps an account manager should perform to configure the account.
 
 
-### Data center
-
-First, decide which [IBM Cloud location](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") will host the <Globals name="env" />. That will be specified with two settings:
-- Region -- A geography such as *us-south* or *eu-gb*
-- Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
-
-
-### Public and private VLANs
-
-Second, create or provide a pair of public and private VLANs for the selected region and zone. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster.
-
-<InlineNotification>
-
-Note: An account typically automatically has a pair of VLANs for each region and zone. If so, you can use those.
-
-</InlineNotification>
-
-To learn about finding the VLANs an account has, creating more, and how a cluster uses them to implement its network, see:
-
-- Public and private VLANs -- [List existing VLANs](https://cloud.ibm.com/classic/network/vlans)
-    - [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
-    - [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
-    - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
-- Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to verify it can find two VLANs to use
-
-
-### Resource group
-
-Third, create or provide a [resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs). This resource group will control access to the environment's cluster and service instances. This resource group should typically be named after the development team, its project, or the application it is implementing.
-
-<InlineNotification kind="warning">
-
-**Warning**: **The resource group name should be 24 characters or fewer, and should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters, digits, and the separators should be dashes. (The <Globals name="shortName" /> installation scripts will name the cluster `<resource-group>-cluster`, and a cluster name is limited to 32 characters.)
-
-</InlineNotification>
-
-We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct-showcase`, etc.
-
-- [Create the resource group](https://cloud.ibm.com/account/resource-groups)
-
-To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure. A separate API key is needed for each region and resource group. [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the classic infrastructure permissions the cluster service needs. This key grants these permissions to the cluster service, so that any user with permissions to create a cluster can do so without requiring any classic infrastructure permissions.
-
-- Create an API key for the resource group and the data center's region
-    - Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
-    - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
-
-
 ### Upgrade the image registry
 
-Fourth, we'll upgrade the service plan for the [image registry](/guides/image-registry) so that is has more capacity.
+First, we'll upgrade the service plan for the [image registry](/guides/image-registry) so that is has more capacity.
 
 - Set the registry plan
 
@@ -82,7 +35,7 @@ Now we can store more container images.
 
 ### Prepare to run scripts
 
-Fifth, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
+Second, we'll use some scripts in the steps below to help create access groups. Here, we'll download the scripts and prepare to run them. (If you want to use the console to manually configure the access groups, you can skip this step.)
 
 Clone the Git repository with the scripts. (This repo also has the scripts for installing the <Globals name="env" />.)
 
@@ -104,15 +57,63 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
     ```
 
 
+### Data center
+
+Third, decide which [IBM Cloud location](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") will host the <Globals name="env" />. That will be specified with two settings:
+- Region -- A geography such as *us-south* or *eu-gb*
+- Zone -- A [data center](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in the region such as *dal10* or *lon02*
+
+
+### Public and private VLANs
+
+Fourth, create or provide a pair of public and private VLANs for the selected region and zone. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster.
+
+<InlineNotification>
+
+Note: An account often automatically has a pair of VLANs for each region and zone. If so, you can use those.
+
+</InlineNotification>
+
+To learn about finding the VLANs an account has, creating more, and how a cluster uses them to implement its network, see:
+
+- Public and private VLANs -- [List existing VLANs](https://cloud.ibm.com/classic/network/vlans)
+    - [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
+    - [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
+    - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
+- Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to verify it can find two VLANs to use
+
+
+### Resource group
+
+Fifth, create or provide a [resource group](https://cloud.ibm.com/docs/resources?topic=resources-rgs). This resource group will control access to the environment's cluster and service instances. This resource group should typically be named after the development team, its project, or the application it is implementing.
+
+<InlineNotification kind="warning">
+
+**Warning**: **The resource group name should be 24 characters or fewer, and should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)**--the name should be all lowercase letters, digits, and the separators should be dashes. (The <Globals name="shortName" /> installation scripts will name the cluster `<resource-group>-cluster`, and a cluster name is limited to 32 characters.)
+
+</InlineNotification>
+
+We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct-showcase`, etc.
+
+- [Create the resource group](https://cloud.ibm.com/account/resource-groups)
+
+To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure. A separate API key is needed for each region and resource group. [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the classic infrastructure permissions the cluster service needs. This key grants these permissions to the cluster service, so that any user with permissions to create a cluster can do so without requiring any classic infrastructure permissions.
+
+- Create an API key for the resource group and the data center's region
+    - Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+    - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
+
+
 ### Access group for environment administrators
 
 Sixth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
-- Use the environment admin policies script
-
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
-    - Run the script `./terraform/scripts/acp-admin`, which will add the necessary policies to the access group
-    - Add the environment administrator(s) to the group
+To create the access group for the environment administrators:
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
+- Run the script `./terraform/scripts/acp-admin <ACCESS_GROUP> <RESOURCE_GROUP>`, which will add the necessary policies to the access group
+    - `<ACCESS_GROUP>` is the name of the access group (i.e. `<resource_group>-ADMIN`)
+    - `<RESOURCE_GROUP>` is the name of the resource group (i.e. `<resource_group>`)
+- Add the environment administrator(s) to the group
 
 The script adds policies that allow the user to add resources to the resource group:
 - Permission to create clusters
@@ -124,11 +125,13 @@ The script adds policies that allow the user to add resources to the resource gr
 
 Seventh, create an access group to enable users (e.g. developers, data scientists, etc.) to access the resources in the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
 
-- Use the user policies script
-
-    - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
-    - Run the script `./terraform/scripts/acp-user`, which will add the necessary policies to the access group
-    - Add the users to the group
+To create the access group for the environment users:
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
+- Run the script `./terraform/scripts/acp-user <ACCESS_GROUP> <RESOURCE_GROUP> <REGION>`, which will add the necessary policies to the access group
+    - `<ACCESS_GROUP>` is the name of the access group (i.e. `<resource_group>-USER`)
+    - `<RESOURCE_GROUP>` is the name of the resource group (i.e. `<resource_group>`)
+    - `<REGION>` is the name of the region the data center is in
+- Add the users to the group
 
 The script adds policies that allow the user to use resources to the resource group:
 - Access to the resource group
@@ -139,11 +142,13 @@ The script adds policies that allow the user to use resources to the resource gr
 
 ### Cluster for the environment (optional)
 
-If the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then the account manager must create the cluster for the environment administrator.
+Eighth, if the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then the account manager must create the cluster for the environment administrator.
 
 Create the cluster that the environment will be installed into. Create either a Kubernetes cluster or Red Hat OpenShift cluster as needed. A typical cluster size is single zone, 3 nodes, each 8 vCPUs 32GB RAM.
 
-Add policies to the administrators' access group granting access to the new cluster.
+To configure RBAC security in the cluster:
+- Run the RBAC script `./terraform/scripts/rbac.sh <ACCESS-GROUP>`
+    - `<ACCESS-GROUP>` is the name of the admin group (i.e. `<resource_group>-ADMIN`)
 
 
 ## Configuration settings
