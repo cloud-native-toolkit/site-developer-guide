@@ -1,27 +1,27 @@
 language: node_js
 node_js:
   - 12
+env:
+  global:
+    - PATH_PREFIX="${TRAVIS_BRANCH}/"
+    - PAGES_FQDN="cloudnativetoolkit.dev"
 script: npm run build
-branches:
-  only:
-    - master
-    - staging
+before_deploy: mkdir release && mv public release/${TRAVIS_BRANCH}
 deploy:
   - provider: pages
     skip_cleanup: true
     github_url: github.com
     github_token: $GITHUB_TOKEN
-    repo: ibm-garage-cloud/ibm-garage-developer-guide-staging
+    fqdn: ${PAGES_FQDN}
     keep_history: false
-    local_dir: public
+    local_dir: release/master
     on:
-      branch: staging
+      branch: master
   - provider: pages
     skip_cleanup: true
     github_url: github.com
     github_token: $GITHUB_TOKEN
-    fqdn: cloudnativetoolkit.dev
-    keep_history: false
-    local_dir: public
-    on:
-      branch: master
+    fqdn: ${PAGES_FQDN}
+    keep_history: true
+    local_dir: release
+after_deploy: echo "Staging site available at https://${PAGES_FQDN}/${TRAVIS_BRANCH}"
