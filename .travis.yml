@@ -17,13 +17,4 @@ deploy:
     local_dir: release/master
     on:
       branch: master
-  - provider: pages
-    skip_cleanup: true
-    github_url: github.com
-    github_token: $GITHUB_TOKEN
-    fqdn: ${PAGES_FQDN}
-    keep_history: true
-    local_dir: release
-    on:
-      condition: $TRAVIS_BRANCH != "master"
 after_deploy: echo "Staging site available at https://${PAGES_FQDN}/${TRAVIS_BRANCH}"
