@@ -24,4 +24,6 @@ deploy:
     fqdn: ${PAGES_FQDN}
     keep_history: true
     local_dir: release
+    on:
+      condition: $TRAVIS_BRANCH != "master"
 after_deploy: echo "Staging site available at https://${PAGES_FQDN}/${TRAVIS_BRANCH}"
