@@ -70,17 +70,22 @@ Fourth, create or provide a pair of public and private VLANs for the selected re
 
 <InlineNotification>
 
-Note: An account often automatically has a pair of VLANs for each region and zone. If so, you can use those.
+Note: If your account already has a pair of VLANs for your desired region and zone, you can use those.
 
 </InlineNotification>
 
-To learn about finding the VLANs an account has, creating more, and how a cluster uses them to implement its network, see:
+- Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to select two existing VLANs and generate the properties to use for the installation scripts
 
-- Public and private VLANs -- [List existing VLANs](https://cloud.ibm.com/classic/network/vlans)
-    - [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
-    - [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
-    - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
-- Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to verify it can find two VLANs to use
+These links help explain how to find the VLANs an account has, create more, and how a cluster uses them to implement its network.
+
+Managing VLANs:
+- [List existing VLANs](https://cloud.ibm.com/classic/network/vlans)
+- [Catalog > Services > Networking > VLAN](https://cloud.ibm.com/catalog/infrastructure/vlan) -- Create a VLAN
+
+Docs on VLANs:
+- [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
+- [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
+- [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
 
 
 ### Resource group
