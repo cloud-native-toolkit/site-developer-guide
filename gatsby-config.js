@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'IBM Garage Cloud Native Toolkit',
     description: 'Cloud Native Toolkit to enable development with IBM Cloud and Red Hat OpenShift',
-    keywords: 'gatsby,theme,carbon',
+    keywords: 'ibm,garage,cloud,native,toolkit,devops,patterns,terraform,tekton,argodcd,sonarqube,artifactory,openshift,iks,kubernetes',
   },
   pathPrefix,
   plugins: [
@@ -31,8 +31,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: "UA-153689700-1",
+        head: true
       },
     }
 
