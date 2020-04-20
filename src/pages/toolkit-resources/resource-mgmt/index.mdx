@@ -158,7 +158,7 @@ As part of the Cloud Native Toolkit, we create a set of three access groups. Thi
 
 This diagram illustrates the three access groups and the relative scope of permissions they provide:
 
-![Access groups example](/images/access-groups-ex.png)
+![Toolkit access groups](/images/toolkit-access-groups.png)
 
 The three access groups are:
 - **Account Manager**: Acts like an account owner to configure an account. Includes permissions to create infrastructure components including VLANs, as well as IAM components including resource groups, access groups, etc. Optionally creates clusters for the environment administrator.
@@ -166,3 +166,17 @@ The three access groups are:
 - **Environment User**: Uses an environment: Deploys apps, runs CI/CD pipelines, etc. No permissions to create and delete clusters or services. Does include permissions to change existing services, such as creating a new database in an existing database service.
 
 An account only needs one account manager access group, but needs a pair of environment administrator and environment user access groups per environment. This enables each environment to be administered and used by a different group of users, effectively confining each group of users to their particular environment. This is the minimum needed. An account could have multiple management access groups for different aspects of account administration, and likewise an environment could have multiple administrator or user access groups for different levels of access to the environment.
+
+## Access Group Example
+
+The previous section explained how we typically use access groups for three roles: account managers, environment administrators, and environment users. This diagram illustrates an example of the access groups for these three roles for an account that contains two development environments:
+
+![Access groups example](/images/access-example.png)
+
+The diagram shows several components:
+- **Two development environments**: Each development environment has a corresponding resource group, in this example named `app1` and `app2`. The first has a Kubernetes cluster while the second has an OpenShift cluster.
+- **One account manager access group**: The account managers control all resource groups. They act as system administrators for the account.
+- **Two environment administrator access groups**: Each resource group has its own group of environment administrators who act as site reliability engineers (SREs) of the resources in the resource group.
+- **Two environment user access groups**: Each resource group has its own group of environment users who use the resources in the resource group. They typically have a development or data science role such as full-stack developer.
+
+These are not all the access groups you'll ever need because even finer-grained access management is possible, but this is a pretty good start that will work well for typical accounts.
