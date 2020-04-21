@@ -10,6 +10,7 @@ Overall process for installing a <Globals name="env" />
 
 </PageDescription>
 
+
 ## Background
 
 To understand how the process is performed, keep these concepts in mind.
@@ -35,6 +36,7 @@ Then, as described in [Configure Account](/admin/config-account), the account ma
 
 [Environment Architecture](/arch/environment) shows the structure of the <Globals name="env" /> that will be installed. Typically, each [development team](/arch/teams) gets its own environment. However, multiple teams can share a single environment. The environment structure is designed to support best practices for a [cloud-native application architecture](/arch/application), including designing applications that are [built to manage](/arch/manageable).
 
+
 ## Access group for account managers
 
 The account owner may want to delegate the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account manager access groups, which will be used to support all environments in the account.
@@ -45,7 +47,7 @@ The account owner must create an access group to grant the necessary permissions
 
 To create the access group for the account managers:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-MGR` (all capital letters) (or name it after your account)
-- Run the script `./terraform/scripts/acp-mgr.sh`, which will add the necessary policies to the access group
+- Run the script `./terraform/scripts/acp-mgr.sh`, which adds the necessary policies to the access group
 - Add the account manager(s) to the group
 
 The script adds policies that allow the user to:
@@ -59,6 +61,22 @@ The script also adds the same policies that an environment administrator has. Bu
 - Create clusters
 - Manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
 - Create service instances
+
+### Infrastructure permissions for account managers
+
+Account managers need the permissions to create and manage IaaS resources required by a <Globals name="env" />. Permissions for classic infrastructure (fka Softlayer) cannot be added to an access group, only to a user.
+
+For each user added to the account manager access group:
+- Run the script `./terraform/scripts/acp-mgr-iaas.sh`, which adds the necessary permissions to the user
+
+The script adds infrastructure permissions to:
+- Create VLANs
+- Create Kubernetes Service clusters (e.g. create virtual servers, storage, and networking)
+- Manage Kubernetes Service clusters
+
+When an account manager [creates an API key for the Kubernetes Service](/admin/config-account#resource-group), IKS will use that key and the account manager's infrastructure permissions to create the IaaS resources for the cluster.
+
+Whenever a user is removed from the account manager access group, also remove the user's infrastructure permissions.
 
 
 ## Process
@@ -111,6 +129,7 @@ Third, after installing the environment, before giving the users access to the e
 - Complete setup of Argo CD
 - Rerun pipeline and confirm that the app's Helm chart is added to Artifactory
 - Set up a GitOps repo to validate ArgoCD setup and configuration
+
 
 ## Conclusion
 

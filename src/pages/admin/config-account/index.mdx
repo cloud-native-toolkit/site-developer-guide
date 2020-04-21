@@ -115,7 +115,7 @@ Sixth, create an access group to grant the necessary permissions for installing 
 
 To create the access group for the environment administrators:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
-- Run the script `./terraform/scripts/acp-admin.sh`, which will add the necessary policies to the access group
+- Run the script `./terraform/scripts/acp-admin.sh`, which adds the necessary policies to the access group
 - Add the environment administrator(s) to the group
 
 The script adds policies that allow the user to add resources to the resource group:
@@ -130,7 +130,7 @@ Seventh, create an access group to enable users (e.g. developers, data scientist
 
 To create the access group for the environment users:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
-- Run the script `./terraform/scripts/acp-user.sh`, which will add the necessary policies to the access group
+- Run the script `./terraform/scripts/acp-user.sh`, which adds the necessary policies to the access group
 - Add the users to the group
 
 The script adds policies that allow the user to use resources to the resource group:
@@ -147,7 +147,7 @@ Eighth, if the environment administrator will install the environment including 
 Create the cluster that the environment will be installed into. Create either a Kubernetes cluster or Red Hat OpenShift cluster as needed. A typical cluster size is single zone, 3 nodes, each 8 vCPUs 32GB RAM.
 
 To configure RBAC security in the cluster:
-- Run the RBAC script `./terraform/scripts/rbac.sh`
+- Run the script `./terraform/scripts/rbac.sh`, which configures RBAC inside the cluster
 
 
 ## Configuration settings
