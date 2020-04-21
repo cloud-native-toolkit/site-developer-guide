@@ -115,9 +115,7 @@ Sixth, create an access group to grant the necessary permissions for installing 
 
 To create the access group for the environment administrators:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
-- Run the script `./terraform/scripts/acp-admin <ACCESS_GROUP> <RESOURCE_GROUP>`, which will add the necessary policies to the access group
-    - `<ACCESS_GROUP>` is the name of the access group (i.e. `<resource_group>-ADMIN`)
-    - `<RESOURCE_GROUP>` is the name of the resource group (i.e. `<resource_group>`)
+- Run the script `./terraform/scripts/acp-admin.sh`, which will add the necessary policies to the access group
 - Add the environment administrator(s) to the group
 
 The script adds policies that allow the user to add resources to the resource group:
@@ -132,10 +130,7 @@ Seventh, create an access group to enable users (e.g. developers, data scientist
 
 To create the access group for the environment users:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
-- Run the script `./terraform/scripts/acp-user <ACCESS_GROUP> <RESOURCE_GROUP> <REGION>`, which will add the necessary policies to the access group
-    - `<ACCESS_GROUP>` is the name of the access group (i.e. `<resource_group>-USER`)
-    - `<RESOURCE_GROUP>` is the name of the resource group (i.e. `<resource_group>`)
-    - `<REGION>` is the name of the region the data center is in
+- Run the script `./terraform/scripts/acp-user.sh`, which will add the necessary policies to the access group
 - Add the users to the group
 
 The script adds policies that allow the user to use resources to the resource group:
@@ -152,8 +147,7 @@ Eighth, if the environment administrator will install the environment including 
 Create the cluster that the environment will be installed into. Create either a Kubernetes cluster or Red Hat OpenShift cluster as needed. A typical cluster size is single zone, 3 nodes, each 8 vCPUs 32GB RAM.
 
 To configure RBAC security in the cluster:
-- Run the RBAC script `./terraform/scripts/rbac.sh <ACCESS-GROUP>`
-    - `<ACCESS-GROUP>` is the name of the admin group (i.e. `<resource_group>-ADMIN`)
+- Run the RBAC script `./terraform/scripts/rbac.sh`
 
 
 ## Configuration settings
@@ -161,7 +155,6 @@ To configure RBAC security in the cluster:
 The account manager needs to pass the following values about the account configuration to the environment administrator:
 - The region for the environment
 - The resource group for the environment
-- Whether the environment will use an existing an existing PostgreSQL service instance that is already bound to the cluster
 
 If the cluster already exists:
 - Cluster type (Kubernetes or Red Hat OpenShift)

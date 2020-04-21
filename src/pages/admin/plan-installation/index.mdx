@@ -45,8 +45,7 @@ The account owner must create an access group to grant the necessary permissions
 
 To create the access group for the account managers:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCOUNT-MGR` (all capital letters) (or name it after your account)
-- Run the script `./terraform/scripts/acp-mgr <ACCESS_GROUP>`, which will add the necessary policies to the access group
-    - `<ACCESS_GROUP>` is the name of the access group (i.e. `ACCOUNT-MGR`)
+- Run the script `./terraform/scripts/acp-mgr.sh`, which will add the necessary policies to the access group
 - Add the account manager(s) to the group
 
 The script adds policies that allow the user to:
