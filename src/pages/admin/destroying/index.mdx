@@ -10,6 +10,14 @@ Use the <Globals name="env" /> to delete itself
 
 </PageDescription>
 
+
+<InlineNotification>
+
+**Note**: An **environment administrator** performs the steps on this page. See [Plan Installation > Roles](/admin/plan-installation#roles) for the overview of the roles involved.
+
+</InlineNotification>
+
+
 Not only can the <Globals name="shortName" /> create the <Globals name="env" />, the environment can also delete itself. The environment is installed using Terraform, which stores the state of the creation in the `workspace` folder. Terraform can use that state to delete what it installed.
 
 Destroy a <Globals name="env" /> following these steps:
