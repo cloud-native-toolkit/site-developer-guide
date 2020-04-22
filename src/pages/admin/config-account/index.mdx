@@ -10,6 +10,13 @@ Set up the account so the environment can be installed
 
 </PageDescription>
 
+
+<InlineNotification>
+
+**Note**: An **account manager** performs the steps on this page. See [Plan Installation > Roles](/admin/plan-installation#roles) for the overview of the roles involved.
+
+</InlineNotification>
+
 ## Configure IBM Cloud account
 
 The account must provide a few resources that will be needed to install and use the <Globals name="env" />:
@@ -17,7 +24,7 @@ The account must provide a few resources that will be needed to install and use 
 - A resource group
 - A pair of access groups for the admin and users
 
-These will be created by an account manager, one of the roles described in [Plan Installation](/admin/plan-installation). These are the steps an account manager should perform to configure the account.
+These are the steps an account manager should perform to configure the account.
 
 
 ### Upgrade the image registry
@@ -55,6 +62,16 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
     ```bash
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
     ```
+
+
+<InlineNotification>
+
+**Note**: The steps below need to be repeated for each new <Globals name="env" />:
+- Each environment can be in a different data center. For each new environment, select the data center to host it and ensure it has a pair of public/private VLANs for the environment to use. Two environments in the same data center can share a pair of VLANs, or each can be given a separate pair of VLANs.
+- Each environment needs its own resource group and pair of access groups for administrators and users.
+- Each environment will need its own cluster, whether it's created by an account manager or an environment administrator.
+
+</InlineNotification>
 
 
 ### Data center

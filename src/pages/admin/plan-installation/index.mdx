@@ -39,6 +39,12 @@ Then, as described in [Configure Account](/admin/config-account), the account ma
 
 ## Access group for account managers
 
+<InlineNotification>
+
+**Note**: The **account owner** creates this access group for account managers. See [Plan Installation > Roles](/admin/plan-installation#roles) for the overview of the roles involved.
+
+</InlineNotification>
+
 The account owner may want to delegate the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account manager access groups, which will be used to support all environments in the account.
 
 In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account managers.
