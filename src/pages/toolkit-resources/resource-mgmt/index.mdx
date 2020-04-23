@@ -174,7 +174,7 @@ The previous section explained how we typically use access groups for three role
 ![Access groups example](/images/access-example.png)
 
 The diagram shows several components:
-- **Two development environments**: Two development teams, each has its own development environment. Each development environment has a corresponding resource group, in this example named `team1` and `team2`. The first has a Kubernetes cluster while the second has an OpenShift cluster.
+- **Two development environments**: Two development teams, each has its own development environment. Each development environment is organized as a resource group, in this example named `team1` and `team2`. The first has a Kubernetes cluster while the second has an OpenShift cluster.
 - **One account manager access group**: The account managers control all resource groups. They act as system administrators for the account.
 - **Two environment administrator access groups**: Each resource group has its own group of environment administrators who act as site reliability engineers (SREs) of the resources in the resource group.
 - **Two environment user access groups**: Each resource group has its own group of environment users who use the resources in the resource group. They typically have a development or data science role such as full-stack developer.
