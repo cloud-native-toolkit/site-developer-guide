@@ -29,12 +29,14 @@ You can either install the CLI onto your computer or install the Cloud Shell Com
 
 <Accordion>
 
-<AccordionItem title="Install the CLI">
+<AccordionItem title="Install the CLI" open="true">
 
 <InlineNotification kind="warning">
+
 **Warning:** If you have installed the **IGC** CLI up to `v0.4.0` you must
- uninstall it and follow the installation steps below
-`npm rm -g @garage-catalyst/ibm-garage-cloud-cli`
+ uninstall it and follow the installation steps below `npm rm -g @garage
+ -catalyst/ibm-garage-cloud-cli`
+ 
 </InlineNotification>
 
 - Install the CLI:
@@ -124,6 +126,13 @@ surprise then that you should be logged into the prior to running the commands.
 
 <Accordion>
 
+<AccordionItem title="OpenShift" open="true">
+
+```bash
+oc login --server=<url> --token=<apikey>
+```
+</AccordionItem>
+
 <AccordionItem title="Kubernetes">
 
 ```bash
@@ -132,12 +141,7 @@ ibmcloud ks cluster config --cluster <CLUSTER>
 
 </AccordionItem>
 
-<AccordionItem title="OpenShift">
 
-```bash
-oc login --server=<url> --token=<apikey>
-```
-</AccordionItem>
 
 </Accordion>
 
