@@ -25,7 +25,7 @@ A <Globals name="env" /> is installed and used by users acting in four roles:
 
 The account owner must create the access group for account managers (see below). The account owner will:
 - Create an `ACCT-MGR-IAM` access group using the `acp-mgr` script
-- Add a functional ID, configured using the `acp-mgr-iaas` script, with API keys for the account managers
+- Add a functional ID, configured using the `acp-iaas` script, with API keys for the account managers
 
 Then, as described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments. For each environment, the account managers will:
 - Create a resource group
@@ -110,7 +110,7 @@ Account managers need the permissions to create and manage IaaS resources requir
 
 Set up the functional ID in the account:
 - Create the functional ID, sign it up for an IBM Cloud account, and [invite the user](https://cloud.ibm.com/docs/iam?topic=iam-iamuserinv) to this account
-- Run the script `./terraform/scripts/acp-mgr-iaas.sh` for the functional ID's user, which adds the necessary permissions to the user
+- Run the script `./terraform/scripts/acp-iaas.sh` for the functional ID's user, which adds the necessary permissions to the user
 
 The script adds the [classic infrastructure permissions](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) needed to create and manage clusters:
 - Create VLANs
