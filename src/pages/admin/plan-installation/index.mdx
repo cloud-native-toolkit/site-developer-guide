@@ -24,7 +24,7 @@ A <Globals name="env" /> is installed and used by users acting in four roles:
 - **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
 The account owner must create the access group for account managers (see below). The account owner will:
-- Create an `ACCT-MGR-IAM` access group using the `acp-mgr` script
+- Create an `ACCT-MGR-IAM-ADMIN` access group using the `acp-mgr` script
 - Add a functional ID, configured using the `acp-iaas` script, with API keys for the account managers
 
 Then, as described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments. For each environment, the account managers will:
@@ -83,12 +83,12 @@ The account owner must create an access group to grant the necessary permissions
 
 <InlineNotification>
 
-**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/iam?topic=iam-account-services), in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these individually is to create an access group for each: ACCT-MGR-BILLING, ACCT-MGR-LICENSE, ACCT-MGR-SUPPORT. The group created below only has IAM capabilities, so a good name for it is ACCT-MGR-IAM.
+**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/iam?topic=iam-account-services), in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these individually is to create an access group for administering each: ACCT-MGR-BILLING-ADMIN, ACCT-MGR-LICENSE-ADMIN, ACCT-MGR-SUPPORT-ADMIN. The group created below only has IAM capabilities, so a good name for it is ACCT-MGR-IAM-ADMIN.
 
 </InlineNotification>
 
 To create the access group for the account managers:
-- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCT-MGR-IAM` (all capital letters) (or name it after your account)
+- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCT-MGR-IAM-ADMIN` (all capital letters) (or name it after your account)
 - Run the script `./terraform/scripts/acp-mgr.sh`, which adds the necessary policies to the access group
 - Add the account managers to the group
 
