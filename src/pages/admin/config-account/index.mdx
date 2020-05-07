@@ -119,16 +119,26 @@ We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct
 
 - [Create the resource group](https://cloud.ibm.com/account/resource-groups)
 
-To create clusters in the resource group, the account will need API keys for the container service to create resources in the classic infrastructure. A separate API key is needed for each region and resource group. [Classic infrastructure roles](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) explains the classic infrastructure permissions the cluster service needs. This key grants these permissions to the cluster service, so that any user with permissions to create a cluster can do so without requiring any classic infrastructure permissions.
 
-- Create an API key for the resource group and the data center's region
-    - Perform these steps to create an API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
-    - The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`
+### Kubernetes service API key
+
+Sixth, to create clusters in the resource group, the account will need API keys for the container service to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). A separate API key is needed for each region and resource group. An account manager should use [the account's functional ID](/admin/plan-installation#functional-id-for-infrastructure-permissions) to set the API key(s) for the new resource group.
+
+Create an API key for the resource group and the data center's region:
+- Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id#api_key) created by the account owner
+    ```bash
+    ibmcloud login --apikey @key_file_name
+    ```
+- Perform these steps to set the API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+    ```bash
+    ibmcloud ks api-key reset --region <region>
+    ```
+- The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`; the description specifies the resource group and region
 
 
 ### Access group for environment administrators
 
-Sixth, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
+Seventh, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
 To create the access group for the environment administrators:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
@@ -143,7 +153,7 @@ The script adds policies that allow the user to add resources to the resource gr
 
 ### Access group for environment users
 
-Seventh, create an access group to enable users (e.g. developers, data scientists, etc.) to access the resources in the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
+Eighth, create an access group to enable users (e.g. developers, data scientists, etc.) to access the resources in the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
 
 To create the access group for the environment users:
 - Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
@@ -159,7 +169,7 @@ The script adds policies that allow the user to use resources to the resource gr
 
 ### Cluster for the environment (optional)
 
-Eighth, if the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then the account manager must create the cluster for the environment administrator.
+Ninth, if the environment administrator will install the environment including creating a new cluster, then skip this step. However, if the environment administrator will install the environment into an existing cluster, then the account manager must create the cluster for the environment administrator.
 
 Create the cluster that the environment will be installed into. Create either a Kubernetes cluster or Red Hat OpenShift cluster as needed. A typical cluster size is single zone, 3 nodes, each 8 vCPUs 32GB RAM.
 
