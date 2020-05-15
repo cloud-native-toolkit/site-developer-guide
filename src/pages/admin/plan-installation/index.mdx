@@ -74,7 +74,7 @@ The scripts need you to log into IBM Cloud first. In the terminal you'll use to 
 
 - Log in to the IBM Cloud CLI
     ```bash
-    ibmcloud login -a cloud.ibm.com -r <region> -g <resource-group>
+    ibmcloud login -a cloud.ibm.com -r <region>
     ```
 
 ### Access group for account managers
@@ -126,6 +126,7 @@ Next, each account manager will need to use the functional ID to reset the API k
 
 Create API keys for the functional ID:
 - Log into IBM Cloud as the functional ID (not as the account owner)
+- Switch to this account that you're configuring
 - For each account manager, [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key), downloading each key to a file
 - Give each account manager their API key file for the functional ID
 
