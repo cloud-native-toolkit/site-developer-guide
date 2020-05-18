@@ -21,7 +21,7 @@ A <Globals name="env" /> is installed and used by users acting in four roles:
 - **Account owner**: The user who owns the account
 - **Account managers**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
 - **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles)
-- **Environment users**: Users in the account with [permissions to manage existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
+- **Environment users**: Users in the account with [permissions to use existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
 The account owner must create the access group for account managers (see below). The account owner will:
 - Create an `ACCT-MGR-IAM-ADMIN` access group using the `acp-mgr` script

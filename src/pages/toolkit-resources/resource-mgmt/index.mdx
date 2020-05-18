@@ -171,7 +171,7 @@ This diagram illustrates the three access groups and the relative scope of permi
 The three access groups are:
 - **Account Manager**: Acts like an account owner to configure an account. Includes permissions to create infrastructure components including VLANs, as well as IAM components including resource groups, access groups, etc. Optionally creates clusters for the environment administrator.
 - **Environment Administrator**: Owns an environment: Creates it, adds and removes services, etc. Includes permissions to create clusters, to create services, and to set RBAC within the cluster.
-- **Environment User**: Uses an environment: Deploys apps, runs CI/CD pipelines, etc. No permissions to create and delete clusters or services. Does include permissions to change existing services, such as creating a new database in an existing database service.
+- **Environment User**: Uses an environment: Deploys apps, runs CI/CD pipelines, etc. No permissions to create and delete clusters or services. Does include permissions to read from and write to existing services, but not to change their configuration.
 
 An account only needs one account manager access group, but needs a pair of environment administrator and environment user access groups per environment. This enables each environment to be administered and used by a different group of users, effectively confining each group of users to their particular environment. This is the minimum needed. An account could have multiple management access groups for different aspects of account administration, and likewise an environment could have multiple administrator or user access groups for different levels of access to the environment.
 
