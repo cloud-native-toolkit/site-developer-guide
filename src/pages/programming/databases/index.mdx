@@ -64,7 +64,7 @@ While there are many relational databases, over time, these have become the most
 
 - Relational databases are well-documented and mature technologies, and RDBMSs are sold and maintained by a number of established corporations.
 - SQL standards are well-defined and commonly accepted.
-- All RDBMS are ACID-compliant, meaning they satisfy the requirements of Atomicity, Consistency, Isolation, and Durability.
+- All RDBMS are ACID-compliant, meaning their transactions are Atomic, Consistent, Isolated, and Durable
 
 === Disadvantages
 
@@ -103,7 +103,7 @@ These are also dependent on the database type. Principally:
 
 === Which Database Is Right For You?
 
-- If ACID (Atomicity, Durability, Consistency, and Durability) compliance is your first priority, consider using RDBMS.
+- If your first priority is ACID transactions (Atomic, Consistent, Isolated, and Durable), consider using RDBMS.
 - If you have a massively distributed system and can settle for eventual consistency on some nodes/partitions, you might consider a wide column store such as Cassandra or Scylla.
 - If your input data is particularly heterogeneous and difficult to encapsulate according to a normalization schema, consider using a NoSQL DBMS.
 - If your goal is to scale vertically, consider an RDBMS; conversely, if you want to scale horizontally, a NoSQL DBMS may be preferable.
