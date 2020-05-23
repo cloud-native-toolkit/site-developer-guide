@@ -6,240 +6,392 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals'
 
 ## <Globals name="longName" />
 
-_<Globals name="longName" />_  is an organized effort managed by IBM Cloud Garage to help
- development teams build and deliver cloud-native solutions deployed to IBM Cloud with IBM Kubernetes and Red Hat OpenShift Managed Service .
+_<Globals name="longName" />_  is an organized effort managed by the IBM Garage to help
+ development teams build and deliver cloud-native solutions deployed to IBM Cloud with IBM Kubernetes 
+ and Red Hat OpenShift Managed Service. The work is managed as an Open Source project and contribution is
+ welcome from anyone that would like to participate. The following guidelines will help everyone navigate
+ the process of contributing. (Most of these steps will generally apply to any Open Source project.)
 
-### Developer assets
+###  Project structure
 
-_Developer Tools assets_ (aka assets) are guidelines, components, and tooling, the result of community contributions of code, design, ideas, and guidance, that have been packaged and shared for reuse on development projects. Their purpose is twofold:
-- Increase the productivity of application developers
-- Increase the consistency of applications that are developed
-- Drive adoption of Kubernetes and OpenShift usage
+Before diving into the steps, it's important to get a general understanding of the organization structure of
+the repositories. The various components that make up the <Globals name="longName" /> are organized into different git repositories
+that are aligned around solution space, release schedule, and intended audience. Currently, these repositories are
+divided between two public Git organizations:
 
-Assets will embody best practices for common application architectures, implementations, and development tasks and make those best practices easier to apply. Assets will be managed and made available for use via projects.
+- [github.com/ibm-garage-cloud](https://github.com/ibm-garage-cloud)
+- [github.com/IBM](https://github.com/IBM)
 
-###  Projects
+All of the repositories in the [github.com/ibm-garage-cloud](https://github.com/ibm-garage-cloud) 
+organization belong to the <Globals name="shortName" />. Within the [github.com/IBM](https://github.com/IBM) 
+organization only the following repositories contain <Globals name="longName" /> content:
 
-_Developer Tools projects_ (aka projects) are open source efforts narrowly focused on specific areas of interest. The assets are divided into projects. A project should organize a set of related assets such that a user or contributor interested in a project should be interested in  all of the assets in a project.
+- [IBM/template-graphql-typescript](https://github.com/IBM/template-graphql-typescript)
+- [IBM/template-java-spring](https://github.com/IBM/template-java-spring)
+- [IBM/template-node-angular](https://github.com/IBM/template-node-angular)
+- [IBM/template-node-react](https://github.com/IBM/template-node-react)
+- [IBM/template-node-typescript](https://github.com/IBM/template-node-typescript)
+- [IBM/ibm-garage-tekton-tasks](https://github.com/IBM/ibm-garage-tekton-tasks)
+- [IBM/template-argocd-gitops](https://github.com/IBM/template-argocd-gitops)
+- [IBM/template-ibmcloud-services](https://github.com/IBM/template-ibmcloud-services)
+ 
+(These repositories have been relocated to the [github.com/IBM](https://github.com/IBM) because their content applies 
+more broadly than the <Globals name="shortName" /> and/or fits in with the larger catalog of related Code Pattern and
+Starter Kit content). 
 
-Each project will store its assets in a GitHub repository to facilitate managing development of the assets as well as helping individual development projects to access and apply the assets.
+## How to contribute
 
-## Roles and responsibilities
+### 1. Look through the issues
 
-### Consumers
+<InlineNotification kind="info">
 
-_Consumers_ are members of the community who are applying assets to their development projects. Anyone who wants to apply any of the assets can be a user. We encourage consumers to participate as evangelists and contributors as well.
+**Prerequisite:** We use ZenHub to add metadata to the Git issues so they can be managed via a Kanban board. ZenHub
+also allows us to show the issues and pull requests from the various repositories in on place. Viewing 
+the issues with ZenHub requires a Chrome extension - 
+https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd?hl=en-US .  We highly
+recommend installing this extension to help search the issues.
 
-### Evangelists
+</InlineNotification>
 
-_Evangelists_ are members of the community who help others become consumers of the assets. They do so by:
-- Advertising the assets and encouraging others to use them
-- Supporting new consumers and answering questions, such as on Slack (IBM internal)
-- Reporting bugs or missing features through GitHub issues
+Whether you have a question/issue with existing behavior or an idea for a new feature that
+can be added to the Toolkit, the place to begin is looking through the issues. Each repository has its own list of
+issues. If you have an issue with content from a specific repository then any related issues will likely be found
+there. 
 
-### Contributors
+However, given the wide range of repositories and the interconnected nature of many of the components it is usually
+best to look at the ZenHub board. The following steps are the best way to view the board:
 
-_Contributors_ are members of the community who help maintain, improve, and expand the assets. In addition to using and evangelizing the assets, they make the assets better by:
-- Resolving issues in GitHub to fix bugs, add features, and improve documentation
-- Submitting changes as GitHub pull requests
+1. Open the [github.com/ibm-garage-cloud/planning](https://github.com/ibm-garage-cloud/planning) repository
+2. Click on the `ZenHub` link along the top menu. **Note:** You must install the ZenHub extension for the link to
+appear
 
-### Maintainers
+  ![ZenHub link on planning repo](images/planning-zenhub.png)
 
-_Project maintainers_ (aka maintainers) are owners of the project who are committed to the success of the assets in that project. Each project has a team of maintainers, and each team has a lead. In addition to their participation as contributors, maintainers have privileges to:
-- Label, close, and manage GitHub issues
-- Close and merge GitHub pull requests
-- Nominate and vote on new maintainers
+3. Look at the `Repos` drop-down in the top-right of the board to ensure all the issues for the various 
+<Globals name="shortName" /> repositories have been displayed. If the drop-down does not read `Repos (24/24)`
+then do the following to select them all:
 
-## Types of teams
+  i. Click on the `Repos` drop-down
+  
+  ii. Select the `Show all repos` link 
+  
+  ![Show all repos](images/planning-zenhub-repos.png)
 
-### Core team
+4. Use the filters and/or the search bar to find cards related to your issue.
 
-Core team members are IBM employees responsible for the leadership and strategic direction of the set of Catalyst projects as a whole. The core team also directs how the Catalyst strategy will evolve with IBM Cloud product decisions. Core team responsibilities include:
+If you find an existing ticket that is related to your issue, add your information to the
+card.
 
-- Actively engaging with the projects' communities
-- Setting overall direction and vision
-- Setting priorities and release schedule
-- Focusing on broad, cross-cutting concerns
-- Spinning up or shutting down project teams
+#### Existing defect
 
-The core team will operate the technical steering committee.
+If you find an existing defect, be sure to add a comment with the details of your specific
+scenario. When the defect has been addressed and the ticket has been moved to the `Review/QA`
+stage, we will ask you to help test the solution in your environment.
 
-#### Technical steering committee
+#### Existing feature
 
-The technical steering committee coordinates the project teams to ensure consistency between the projects and fosters collaboration between the core team and each project team. This close communication on cross-cutting concerns greatly mitigates the risk of misalignment that can come from decentralized efforts. The committee consists of the project leads of all of the projects as well as other members of the core team who may not presently be leading any projects.
+If you find an existing feature request, please indicate your interest through a comment. As
+appropriate, include the business requirements or user story that is driving the request. We
+will use this input to help determine prioritization of new features.
 
-### Project teams
+#### No issue found
 
-Each project team maintains the assets in its project. Therefore, its members are the maintainers of the assets. Each project operates independently, though it should follow this governance structure to define roles, responsibilities, and decision-making protocols.
+If you are unable to find a card that is related to your issue or feature, proceed to
+the next step to create a new issue. The search doesn't need to be an exhaustive one and
+if there is any question whether the item is new or a duplicate, go ahead and create 
+a new issue. We'd rather have the item captured and mark it as a duplicate after the
+fact, if necessary, than to have an issue fall through the cracks.
 
-The project has a project lead, a lead maintainer who should also be a member of the [technical steering committee](#technical-steering-committee).
+### 2. Create a new issue
 
-Each project lead is responsible for:
-- Acting as a point of primary contact for the team
-- Participating in the technical steering committee
-- Deciding on the initial membership of project maintainers (in consultation with the core team)
-- Determining and publishing project team policies and mechanics, including the way maintainers join and leave the team (which should be based on team consensus)
-- Communicating core vision to the team
-- Ensuring that issues and pull requests progress at a reasonable rate
-- Making final decisions in cases where the team is unable to reach consensus (should be rare)
+If you could not find an existing issue related to your problem or feature then its time to
+create a new issue. Issues fall in one of two categories:
 
-The way that project teams communicate internally and externally is left to each team, but:
-- Technical discussion should take place in the public domain as much as possible, ideally in GitHub issues and pull requests.
-- Each project should have a dedicated Slack channel (IBM internal). Decisions from Slack discussions should be captured in GitHub issues.
-- Project teams should actively seek out discussion and input from stakeholders who are not members of the team.
+- Bug
+- Feature
 
-## Governance
+#### Bug
 
-### Planning
+Bugs can be either be reported against the repository that has the problem or in the general
+[github.com/ibm-garage-cloud/planning](https://github.com/ibm-garage-cloud/planning) repository.
+These are the steps for reporting a bug:
 
-Project planning is managed in a [Kanban board](https://en.wikipedia.org/wiki/Kanban_board), specifically this Zenhub board:
+1. Navigate to the repository in the browser
+2. Click on the `Issues` menu item at the top then click on `New Issue`
 
-- [Planning Zenhub](https://github.ibm.com/garage-catalyst/planning) (To Be Moved Externally)
+  ![GitHub issues](images/github-issues.png)
 
-### Decision-making
+3. Click `Get Started` on the `Bug report` template to create a new issue from the template. 
+**Note:** At the moment, some repositories do not have `Bug report` templates defined. If a template does not exist 
+you will see the blank issue dialog.
 
-Project teams should use [consensus decision making](#consensus) as much as possible, but resort to [lack of consensus decision making](#lack-of-consensus) when necessary.
+  ![GitHub bug report](images/github-bug-report.png)
 
-#### Consensus
+4. Provide all the information relevant to the bug, particularly the details of your scenario and the steps to reproduce
 
-Project teams use [consensus decision-making](http://en.wikipedia.org/wiki/Consensus_decision-making) with the premise that a successful outcome is not where one side of a debate has "won," but rather where concerns from _all_ sides have been addressed in some way. **This emphatically does not mean design by committee, nor compromised design.** Rather, it's a recognition that every design or implementation choice carries a trade-off and numerous costs. There is seldom a 100% right answer.
+#### Feature
 
-Breakthrough thinking sometimes end up changing the playing field by eliminating tradeoffs altogether, but more often, difficult decisions have to be made. **The key is to have a clear vision and set of values and priorities**, which is the core team's responsibility to set and communicate, and the project teams' responsibility to act upon.
-
-Whenever possible, seek to reach consensus through discussion and design iteration. Concretely, the steps are:
-
-- New GitHub issue or pull request is created with initial analysis of tradeoffs.
-- Comments reveal additional drawbacks, problems, or tradeoffs.
-- The issue or pull request is revised to address comments, often by improving the design or implementation.
-- Repeat above until "major objections" are fully addressed, or it's clear that there is a fundamental choice to be made.
-
-Consensus is reached when most people are left with only "minor" objections. While they might choose the tradeoffs slightly differently, they do not feel a strong need to _actively block_ the issue or pull request from progressing.
-
-One important question is: consensus among which people, exactly? Of course, the broader the consensus, the better. When a decision in a project team affects other teams (e.g. new/changed API), the team will be encouraged to invite people (e.g. leads) from affected teams. But at the very least, **consensus within the members of the project team should be the norm for most decisions**. If the core team has done its job of communicating the values and priorities, it should be possible to fit the debate about the issue into that framework and reach a fairly clear outcome.
-
-#### Lack of consensus
-
-In some cases, though, consensus cannot be reached. These cases tend to split into two very different camps:
-
-- **"Trivial" reasons**, e.g., there is not widespread agreement about naming, but there is consensus about the substance.
-- **"Deep" reasons**, e.g., the design fundamentally improves one set of concerns at the expense of another, and people on both sides feel strongly about it.
-
-In either case, an alternative form of decision-making is needed.
-
-- For the "trivial" case, the project lead will make an executive decision or defer the decision to another maintainer on the team.
-- For the "deep" case, the project lead is empowered to make a final decision, but should consult with the core team before doing so.
-
-### Contribution process
-
-Catalyst assets are typically stored in GitHub repositories and use a [fork and pull request](https://guides.github.com/activities/forking/) workflow for contributions. Specific instructions can be found in each project's GitHub `CONTRIBUTING.md` file.
-
-### Contributor License Agreement
-
-We require contributors outside of IBM to sign our Contributor License Agreement (CLA) before code contributions can be reviewed and merged. If you have questions, please [contact the core team](/help/support#email).
-
-### Support
-
-Have questions? Found a bug? Learn where to go and what to do by visiting the [Support page](/help/support).
-
-## Contributing
-
-## Requirements
-
-Set up your SSH Key GitHub account and install node.js 11 or higher.
-
-- [Generating SSH Keys - GitHub](https://help.github.com/articles/generating-ssh-keys/)
-- [`nvm` (Node Version Manager)](https://github.com/creationix/nvm) to use the
-  `Node 6`.
+Features should be reported against the [github.com/ibm-garage-cloud/planning](https://github.com/ibm-garage-cloud/planning)
+repository. These are the steps for requesting a feature:
 
 
-### 8. Make a pull request
+1. Navigate to the [github.com/ibm-garage-cloud/planning](https://github.com/ibm-garage-cloud/planning) repository in 
+the browser
+2. Click on the `Issues` menu item at the top then click on `New Issue`
 
-**Note:** Before you make a pull request,
-[search](https://github.com/IBM/carbon-components/issues) the issues to see if a
-similar issue has already been submitted. If a similar issue has been submitted,
-assign yourself or ask to be assigned to the issue by posting a comment. If the
-issue does not exist, create a new issue.
+  ![GitHub issues](images/github-planning-issues.png)
 
-When you're at a good stopping place and you're ready for feedback from other
-contributors and maintainers, **push your commits to your fork**:
+3. Click `Get Started` on the `Feature request` template to create a new issue from the template 
 
-#### Commit tip
+  ![GitHub feature request](images/github-planning-feature-request.png)
 
-> **Writing commit messages**
->
-> - `<type>` indicates the type of commit that's being made. This can be:
->   `feat`, `fix`, `perf`, `docs`, `chore`, `style`, `refactor`
-> - `<scope>` The scope could be anything specifying place of the commit change
->   or the thing(s) that changed.
->
-> **Commit message format:**
+4. Provide all the information relevant to the bug, particularly the details of the problem addressed by the feature and
+the impact/benefit of implamenting the feature
+
+### 3. Setup your repository for development
+
+On an Open Source project there are typically a few maintainers who have direct
+access to the repositories and a larger number of contributors who do not. In this case, the
+way to introduce changes to the repositories is through a fork. The process for setting up the
+fork is as follows: 
+
+![Git fork flow](images/git-fork-flow-setup.png)
+
+1. Clone the repository to which you want to introduce changes (the `upstream` repository) to 
+your local machine
+
+  ```shell script
+  git clone {upstream repo url}
+  ```
+  
+2. Create a fork of the `upstream` repository by pressing the `Fork` button at the top of the
+page
+
+  ![GitHub fork](images/github-fork.png)
+
+3. Copy the url of the repository fork
+
+  ![GitHub repo url](images/github-repo-url.png)
+
+4. Open a terminal to the cloned directory and run the following to set the push url to
+be the url of the repository fork
+
+  ```shell script
+  git remote set-url origin {fork repo url}
+  ```
+
+5. List the remotes for the local repository clone to verify that the fetch and push urls are
+pointing to the appropriate repositories
+
+  ```shell script
+  git remote -v
+  ```
+
+  The output should look something like the following, with the `fetch` pointing to the 
+  `upstream` url and the `push` pointing to the `fork`
+  
+  ![git remote output](images/git-remote-output.png)
+  
+With the local clone set up this way, any time you get changes from the remote
+(e.g. `git pull`) the changes will be pulled from the `upstream` repository. Similarly,
+when you push changes they will be pushed to the `fork`.
+
+### 4. Develop your changes
+
+Now that you have a fork and a local clone of the repository, you can start making your changes. This
+part is mostly business-as-usual for software development. We have a couple of best practices we 
+recommend:
+
+#### Work in a branch
+
+It is a best practice to make your changes in a separate branch, even though the changes
+will be made in your own fork. There are at least two good reasons for doing this:
+
+1. The branch can be named after the issue number and the feature
+
+  Naming the branch according to the change that is being made provides a bit of documentation
+  for the purpose of the branch. It also helps enforce the notion that the branch exists only
+  for the implementation of that feature.
+
+2. The branch can be rebased when new changes come in from the `upstream`
+
+  Through the course of development of the branch, other changes may be introduced in the
+  upstream repository. Making the changes in a separate branch allows for the upstream
+  changes to be easily pulled in on the master branch and applied to other branches as
+  appropriate.
+
+Create the branch by running:
+
+```shell script
+git checkout -b {branch name}
+```
+
+Push the branch up to your fork by running:
+
+```shell script
+git push -u origin {branch name}
+```
+
+#### Commit message format
+
+Each commit message should clearly describe the changes that are being made. During the
+development process as many small changes are made, a single one-liner is sufficient for
+the commit message.
+
+With larger changes or when the changes in the branch are squashed into a single commit,
+the following commit message format is preferred.
+
+_Writing commit messages_
+
+- `<type>` indicates the type of commit that’s being made. This can be: `feat`, `fix`, `perf`, `docs`, `chore`, `style`, `refactor`.
+- `<scope>` the scope could be anything specifying place of the commit change or the thing(s) that changed.
+- `<subject>` the subject should be a short overview of the change.
+- `<body>` the body should be a detailed description of the change(s). This can be prose or a bulleted listing.
+- `<issue reference>` the issue reference should be a reference to the issue number under which this change is being 
+made. The issue reference should be in the format of `{git org}/{git repo}#{issue number}`
+
+_Commit message format:_
 
 ```
-<type>(<scope>): <subject>
+type(<scope>): <subject>
 <BLANK LINE>
 <body>
 <BLANK LINE>
-<footer>
+<issue reference>
 ```
 
-_Do not submit pull requests from the `master` branch of your fork._
+#### Create a draft pull request when the branch is first pushed to the fork
 
-```
-git checkout -b { YOUR_BRANCH_NAME }
-git add .
-git commit -m "fix(table): IE11 positioning error" -m "Fixes #34"
-```
+GitHub recently introduced `draft` pull requests that allow a pull request to be recorded but
+marked as not yet ready for review. Git provides a url to open a pull request the first time a branch
+is first pushed to the remote, which gives an excellent and easy opportunity to create the draft.
 
-- [Close a commit via commit message](https://help.github.com/articles/closing-issues-via-commit-messages/)
+**Note**: Be sure to link the pull request with the issue
 
-```
-git push origin { YOUR_BRANCH_NAME }
-```
+Creating a draft pull request early has the following benefits:
 
-In your browser, navigate to
-[IBM/carbon-components](https://github.com/IBM/carbon-components) and click the
-button that reads `Compare & pull request`
+1. Clicking the link provided by Git sets up the source and target repos/branches for you so you don't
+need to hunt around
+2. Having the draft pull request gives insight for everyone else where the work is being done
 
-> **Is it a Breaking Change?**
+#### Push changes to your fork frequently during development
 
-> We want to respect semver. It's important to discern whether your pull request
-> contains breaking changes or not. Sometimes, renaming or removing things in
-> the code can result in breaking changes.
+As you are making changes, push them frequently to the fork. This ensures that your code is backed up
+somewhere and allows everyone else to see what activity is happening. It also means that if you get
+pulled into some other work, the latest version of your changes are available for others to possibly
+pick up where you left off.
 
-> Here are some examples of breaking changes... changing, renaming or removing
-> any of the following:
->
-> - HTML attributes
-> - Folders or Files
-> - Any SCSS `@mixin`, `$variable` or `function`
-> - Any JS `function` or `class`
+#### Pull in the latest changes from master frequently and rebase your branch
 
-> We also practice **graceful deprecation** when something is slated to be
-> removed -- we mark it as deprecated in the current version and remove it in
-> the next major version.
+It is good to make sure you are always working off of the latest code from the upstream. With the 
+changes in a separate branch, it is easy to bring in upstream changes with the following steps:
 
-Before you create a pull request, change the base branch depending on what kind
-of change you're submitting.
+1. Checkout master in the local clone
 
-- Pull requests with **non-breaking changes** like patches and minor updates use
-  the `master` as the base branch.
-- Pull requests with **breaking changes** use the latest `major version number`
-  branch as the base branch (i.e. `7.0.0` or whatever the next major version
-  is).
+  ```shell script
+  git checkout master
+  ```
 
-Write a title and description then click `Create pull request`
+2. Pull in the changes from the `upstream` repository
 
-- [How to write the perfect pull request](https://github.com/blog/1943-how-to-write-the-perfect-pull-request)
+  ```shell script
+  git pull
+  ```
 
-### 9. Updating a pull request
+3. Check out your branch
 
-Stay up to date with the activity in your pull request. Maintainers from the
-Design System team will be reviewing your work and making comments, asking
-questions and suggesting changes to be made before they merge your code.
+  ```shell script
+  git checkout {branch}
+  ```
 
-:tada: You no longer need to squash commits :tada:
+4. Rebase your branch on master
 
-When you need to make a change, add, commit and push to your branch normally.
+  ```shell script
+  git rebase master
+  ```
 
-Once all revisions to your pull request are complete, someone from Design
-Systems will squash and merge your commits for you.
+5. Force push the changes
+
+  ```shell script
+  git push --force-with-lease
+  ```
+
+### 5. Create your pull request
+
+GitHub has recently added a new feature that allows a pull request
+to put into `draft` status. This is helpful to record a pull request
+as pending work even if the changes are not yet ready for review.
+
+1. Open your fork repository in a browser
+
+2. Click `New pull request`
+
+  ![New pull request](images/github-new-pull-request.png)
+  
+3. Select the appropriate target and source branches for the pull
+request and press `Create pull request`
+
+  ![Comparing changes](images/github-comparing-changes.png)
+
+  `base repository` is the target repository into which your
+  changes should be merged (should be the upstream repository)
+  
+  `base` is the target branch in the upstream repository into which your
+  changes should be merged (typically this will be `master`)
+  
+  `head repository` is the source of the changes (this should be
+  your fork repository)
+  
+  `compare` is the branch containing your changes that should be merged
+
+2. Write the title and description of the pull request
+
+  [How to write the perfect pull request](https://github.com/blog/1943-how-to-write-the-perfect-pull-request)
+
+3. Link the pull request to the related issue
+
+  ![Link an issue to the pull request](images/github-pull-request-issue.png)
+
+4. Click `Create pull request` or `Create draft pull request` to submit
+
+**Note:** A pull request can be converted to a `draft` after it was created
+by clicking on the `Convert to draft` link located unter the `Reviewers` 
+section on the right-hand side. 
+
+  ![Convert pull request to draft](images/github-pull-request-draft.png)
+
+### 6. Prepare your branch to submit the pull request for review 
+
+1. Pull in the latest changes from master frequently and rebase your branch, as described in the previous section
+
+2. (Optionally) Rebase your branch to squash commits and clean up commit messages.
+
+  An interactive rebase will allow you to clean up your branch before submitting it for review. This
+  will reduce the number of commits down to the core set of changes that reflect the feature/bug fix, 
+  remove any commits that aren't part of the change you are making, and clean up the commit messages
+  to clearly describe the changes and follow the commit message format guidelines.
+
+### 7. Submit your pull request for review
+
+Assuming you have previously created a draft pull request, when you are ready to have your code 
+reviewed and merged then you will need to indicate that in the pull request.
+
+1. Open the browser to the upstream repository.
+
+2. Select the `Pull requests` tab, find your pull request in the list
+and open it.
+
+3. Press the `Ready for review` button to tell the maintainers the pull
+request is ready to be processed. 
+
+  ![Pull request ready for review](images/github-pull-request-ready.png)
+
+### 8. Update your pull request
+
+Keep an eye on the pull request after it has been submitted for review. The maintainers may have questions
+or request changes before the pull request can be closed. The GitHub system should notify you when changes
+are made to your pull request.
+
+Also, the maintainers all have day jobs and sometimes pull requests get overlooked. If your pull request has
+sat for a while you can get some attention to it by tagging one of the maintainers in a commit comment.
+E.g. `@seansund @csantana @bwoolf1 @lsteck` 
