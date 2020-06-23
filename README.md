@@ -29,7 +29,7 @@ Most notably, this project depends on the following:
 (documented in `package.json`):
 
 ```bash
-np install -g gatsby
+npm install -g gatsby
 ```
 
 ### Write content
