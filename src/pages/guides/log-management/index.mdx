@@ -18,17 +18,6 @@ Given that your application is logging, as are lots of other applications and se
 
 [IBM Log Analysis with LogDNA](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA) explains how to configure and use an instance of the LogDNA service, but the <Globals name="env" /> has already done this for you. You can skip these steps about provisioning an instance, installing an agent, and user access.
 
-### LogDNA dashboard
-
-Open the LogDNA web UI for your environment's cluster
-- [IBM Log Analysis with LogDNA: Viewing logs](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-view_logs)
-explains how to open the web UI
-- In the IBM Cloud dashboard, navigate to **Observability** > **Logging**
-- Find the logging instance named after your environment's cluster, such as `showcase-dev-iks-logdna`. To help find it, 
-you can filter by your resource group.
-    ![LogDNA Logging Instance](logdna-logging-instance.png)
-- In the logging instance, press the **View LogDNA** button to open the LogDNA web UI
-
 ## Give it a try
 
 Before you start to understanding how to look at your application logs, make sure you have [deployed an app](/getting-started/deployapp) into your development cluster. Each of the template apps has a logging framework included, this _Git it a Try_ will use [template-node-typescript](/starterkits/starterkittemplates) as an example.

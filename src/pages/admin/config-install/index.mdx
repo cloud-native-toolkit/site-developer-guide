@@ -16,21 +16,25 @@ Configure the toolkit development environment after installation
 
 </InlineNotification>
 
-### Post installation Tools setup
+## Post installation Tools setup
 
-The following post installation setup is required to get the development
- enabled quickly, make sure you have completed at least post installation
-  tasks. The customization is optional and down to development team needs.
+The following post installation setup is required. To get the developers enabled quickly, make sure you have completed at least post installation tasks. The customization is optional and down to development team needs.
 
-- Apply the `RBAC` Rules to development cluster, this restricts the behaviour
- of the development team. Given them access to create content but not
-  manipulate the lower level configuration of the development cluster. 
+### Configure tools menus
 
-- Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`
-    - `{ACCESS-GROUP}` is the name of the admin group (i.e. `{resource_group
-    }-ADMIN`)
+- Perform the steps in [Configure Dashboard](/admin/config-dashboard) to add tiles and menu items for the tools that are external to the cluster: the Image Registry, GitHub, LogDNA, Sysdig, etc.
+
+### Check LogDNA
 
 - Check you log data if flowing into [LogDNA](/guides/log-management)
+
+### Complete Sysdig setup
+
+
+- Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where the tools are installed. Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`, where `{ACCESS-GROUP}` is the name of the admin group (i.e. `{resource_group}-ADMIN`).
+
+
+
 - Complete the setup of [Sysdig](/guides/monitoring#sysdig-dashboard) to check the monitoring data
  is flowing
 - Managing development assets is an important part of any **SDLC**, The open
@@ -47,142 +51,7 @@ The following post installation setup is required to get the development
 - Test the pipeline by [deploying a first app](/getting-started/deploy-app)
 - [Set up a GitOps repo](/practical/inventory-part2#using-cd-to-deploy-to-test) to validate ArgoCD setup and configuration
  
-### Post installation Customization 
-
-With the <Globals name="shortName" /> now installed into your development
- cluster. It is now possible to customize it further to meet your development
-  teams requirements. This maybe to use it for a small squad that just has
-   ten developers, or prepare it for a large activation workshop tht could
-    have two hundred developers. The following customization helps enable the
-     control you need for the developers.
-
-
-- You can customize tools that are displayed in the <Globals name="dashboard" /> follow these instructions [Customize Dashboard](dashboard#customizing-the-tools-view), the following is an common set that help a developer get quickly to the resourced they need to be productive.
-    ```
-    igc tool-config --name github --url {url to git org}
-    igc tool-config --name ir --url {url image registry}
-    igc tool-config --name logdna --url {url to LogDNA instance}
-    igc tool-config --name sysdig --url {url to Sysdig instance}
-    igc tool-config --name ta --url {url to the Transformation Advisor}
-    igc tool-config --name codeready --url {url to the CRW instance}
-    igc tool-config --name mcm --url {url to IBM CP4MCM}
-    igc tool-config --name integration --url {url to CP4I instance}  
-    ```
-  
-- Generated new passwords for **SonarQube** and update the secret in the
- `tool` namespace
+- Generated new passwords for **SonarQube** and update the secret in the `tool` namespace
 - Test all the installed tools with new passwords
 - Test end to end flow for an application and validate the content in each tool
 
-## Optional Tool Configuration
-
-These are optional steps post installation. They do make help with an
- enhanced developer experience.
-
-### Adding Tools to OpenShift Console
-
-You can customize the OpenShift Console. You can extend the tools menu and
- provide fast links to common tools you the development team will require. These tools link are common across the cluster.
-
-![OCP Console Tools](./ocp-console-tools.png)
-
-- From the `terraform/scripts` folded edit the file called `tools.yaml` this
- file contains the CRDs required to configure the menus. You should look
-  through this and add custom links for `github`, `logdna` and `sysdig` save
-   the file. 
-
-- Make sure you are logged into your cluster from the command line and run
- the following script. You will need the ingress sub domain for your cluster. This can be found on the cluster overview in IBM Cloud.
-    ```
-    ./config-console-tools {cluster ingress subdomain}
-    ```
-    
-- You can optionaly extend the list of tools using more of the supported
- tools, here is an example extending links to the Cloud Pak for Integration
-  and Cloud Pak for Multi Cloud Management.
-    ```
-    ---
-    apiVersion: console.openshift.io/v1
-    kind: ConsoleLink
-    metadata:
-      name: toolkit-mcm
-    spec:
-      applicationMenu:
-        imageURL: https://dashboard-tools.#CLUSTER_INGRESS_URL/tools/icon/mcm
-        section: Cloud Native Toolkit
-      href: https://icp-console.gsi-learning-ocp43-7ec5d722a0ab3f463fdc90eeb94dbc70-0000.us-east.containers.appdomain.cloud/
-      location: ApplicationMenu
-      text: Multi Cloud Manager
-    ---
-    apiVersion: console.openshift.io/v1
-    kind: ConsoleLink
-    metadata:
-      name: toolkit-integration
-    spec:
-      applicationMenu:
-        imageURL: https://dashboard-tools.#CLUSTER_INGRESS_URL/tools/icon/integration
-        section: Cloud Native Toolkit
-      href: https://navigator-integration.gsi-ocp311-integration-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.us-east.containers.appdomain.cloud/
-      location: ApplicationMenu
-      text: Integration
-    ```
-
-### CodeReady Workspace Installation
-
-The following tools can be easily added to your development experience using
- the Red Hat Operator Hub.
-
-CodeReady Workspaces is a developer workspace server and cloud IDE
-. Workspaces are defined as project code files and all of their dependencies
- necessary to edit, build, run, and debug them. Each workspace has its own
-  private IDE hosted within it. The IDE is accessible through a browser. The
-   browser downloads the IDE as a single-page web application. CodeReady
-    Workspaces will enable a 100% developer experience to be delivered from a
-     users browser. This is perfect for running enablement learning from
-      constrained developer laptops, or for SREs to make quick change to a
-       microservice.
-       
-### CodeReady Workspaces Intallation Pre-requisite
-
-Provision  the OpenShift 4.3 Cluster Ensure the logged in user has the
- Administrator Privileges Ensure you have created a new Project to manage the
-  "codeready workspace operator & cluster "
-
-Setting up the CRW Operator & Cluster:
-- Navigate to Operator Hub and search of the Red Hat Cloudready workspace,
- Click on the operator and select the appropriate workspace to install the CRW operator. 
-- Navigate to the installed operator to view the CRW operator. 
-- Now click the link visible as part of the operator to create/view the
- CheCluster part of the workspace
-- Create the CheCluster button, to navigate to the YAML Configuration
- page (displays all the parameters). 
-- You need to change the following parameter mentioned below, As part of
- the storage section, please add the following parameters
-    ```    
-    postgresPVCStorageClassName: ibmc-block-gold
-    workspacePVCStorageClassName: ibmc-block-gold
-    ```
-
-- Post definition the yaml section for storage will look as below
-    ```
-     :storage:
-        postgresPVCStorageClassName: ibmc-block-gold
-        pvcStrategy: per-workspace
-        pvcClaimSize: 1Gi
-        preCreateSubPaths: true
-        workspacePVCStorageClassName: ibmc-block-gold
-    ```
-
-- Now create, the cluster after doing the above changes. The cluster will take few minutes to get created as its resources such as Postgres DB, Keycloak Auth, CRW workspace will get created.
-- Once Cluster is created navigate to the overview tab of the CheCluster in
- the CRW operator. You will be able to see the below :
-    - URL of the CodeReady Workspaces URL
-    - URL of the Red Hat SSO Admin Console URL 
-    - oAuth SSO Enabled.
- - This should be enabled by default, if not please slide the button to
-  enable and confirm
- - TLS Would be disabled. Please slide the button to enable https connectivity
- to the CRW workspace and confirm
- - You have now completed the provisioning of the Code Ready Workspaces
-  operator into your development cluster and will enable it to be used by the
-   developers that plan to use this development cluster

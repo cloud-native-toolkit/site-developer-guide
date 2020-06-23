@@ -1,0 +1,48 @@
+---
+title: Sysdig Setup
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Complete the steps for setting up the Sysdig tool
+
+</PageDescription>
+
+
+<InlineNotification>
+
+**Note**: An **environment administrator** performs the steps on this page. See [Plan Installation > Roles](/admin/plan-installation#roles) for the overview of the roles involved.
+
+</InlineNotification>
+
+
+## Overview
+
+Sysdig is the [<Globals name="env" />'s monitoring tool](/guides/monitoring). Before you can use it as part of the environment, you must finish setting up the new instance.
+
+## Setup
+
+Finish setting up the new Sysdig instance.
+
+### Onboarding
+
+Finish onboarding the agent
+- If this is your first time opening the Sysdig dashboard on your cluster's monitoring agent, Sysdig will open the Onboarding wizard
+- The first page shows the hosts (i.e. Kubernetes nodes) and containers that Sysdig found, as well as the integrations it has 
+selected to monitor them
+    ![Sysdig Onboarding pt 1](sysdig-wizard-1.png)
+    Notice there are different types of integrations for different types of runtimes such as Java, servers such as Tomcat, 
+    and even infrasturcture integrations for monitoring the Kubernetes cluster itself and its containerd engines.
+
+- Press **Next**
+
+- The second page shows the predefined metrics, dashboards, and alerts that Sysdig will start using to monitor the apps 
+in your cluster
+    ![Sysdig Onboarding pt 2](sysdig-wizard-2.png)
+    - Press **Complete Onboarding**
+
+## Conclusion
+
+The environment's Sysdig instance is now setup and ready for developers to use.
