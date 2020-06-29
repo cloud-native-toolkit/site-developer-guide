@@ -164,28 +164,24 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
   Password we changed on the initial setup wizard. We need to update the
   secrets that stores these inside the cluster.
 
-### Update the OpenShift secret
+### Update the secret - OpenShift 4
 
-- Open the OpenShift 4 Console then select the **Administrator** menu. Select **Workloads
-  ** then **Secrets**. At the top select the `tool` namespace and narrow the selection to
-  `artifactory-access` then select the **Edit Secrets** context menu on the right. You do
-  not need to base encode these values the OpenShift console does this for you.
+- In the OpenShift 4 console, go to **Administrator** > **Workloads** > **Secrets**. At the top, select the `tools` project and filter for `artifactory`. Select **Edit Secret** on `artifactory-access`. (You do not need to base encode these values the OpenShift console does this for you.)
   ![Initial JFrog](/images/settingskeys.png)
 
-- Update the values that you retrieved for the encrypt key and updated the
- admin password
-    - Update the `ARTIFACTORY_ENCRYPT` value with your encrypt key value
+- Update the values that you retrieved for the encrypt key and updated the admin password
+    - Add a key/value for `ARTIFACTORY_ENCRYPT` and set the value to your encrypt key value
     - Update the `ARTIFACTORY_PASSWORD` value with thew new admin password
  
-- Click **Save** in OpenShift Console 
+- Click **Save** in OpenShift console 
 
 - View the secret in the console and confirm that the visible value of `ARTIFACTORY_ENCRPT` matches the encrypted password shown in the Artifactory console
 
-- You can check the values were updated correctly by running `igc credentials` from the command line
+- On the command line, run `igc credentials` and verify that the Artifactory details have been updated
 
-### Kubernetes and OpenShift 3
+### Update the secret - Kubernetes and OpenShift 3
 
-To update the secret in Kuberentes or Openshift 3 navigate to the `secret` called `artifactory-access`
+To update the secret in Kuberentes or Openshift 3, navigate to the `secret` called `artifactory-access`
 in the `tools` namespace and update the following values. You will need encode these value in base64 key before
 editing the secret.
 

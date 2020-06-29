@@ -157,9 +157,9 @@ After the Dashboard has been installed into you development cluster. You can
     Activitation tab and the Code Patterns tab by creating your own version
      of the [`links.json`](https://github.com/ibm-garage-cloud/developer-dashboard/blob/master/public/data/links.json) JSON file and host that somewhere accessible to you
       clusters network.
-      
-- Add the following environment variables to the Dashboard instances in the
- `tool` namespace.
+
+Customize the Dashboard's title from its default of IBM Cloud Garage:      
+- Add the following environment variables to the Dashboard. Edit the `developer-dashboard` deployment in the `tools` namespace to insert this set of variables in the `Deployment` resource YAML as the `spec.template.spec.containers.env` element:
     ```
     env:
         - name: DASHBOARD_TITLE
@@ -173,4 +173,4 @@ After the Dashboard has been installed into you development cluster. You can
         - name: LINKS_URL
           value: http://<url>/data/links.json
     ```
-
+- **Note**: The `CLOUD_TITLE`, `CLOUD_URL`, and `LINKS_URL` aren't needed when the platform is IBM Cloud

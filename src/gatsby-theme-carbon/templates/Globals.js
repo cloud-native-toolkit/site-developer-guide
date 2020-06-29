@@ -1,8 +1,8 @@
 import React from 'react';
 
 const globals = {};
-globals.longName   = "IBM Garage Cloud Native Toolkit";
-globals.shortName  = "Cloud Native Toolkit";
+globals.longName   = "IBM Cloud-Native Toolkit";
+globals.shortName  = "Cloud-Native Toolkit";
 globals.env        = "Developer Environment";
 globals.ic         = "IBM Cloud";
 globals.ibmcloud   = "IBM Cloud";
