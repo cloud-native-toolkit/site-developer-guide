@@ -20,7 +20,7 @@ Configure the toolkit development environment after installation
 
 The following post installation setup is required. To get the developers enabled quickly, make sure you have completed at least post installation tasks. The customization is optional and down to development team needs.
 
-- Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where the tools are installed. Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`, where `{ACCESS-GROUP}` is the name of the admin group (i.e. `{resource_group}-ADMIN`).
+- Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where the tools are installed. Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`, where `{ACCESS-GROUP}` is the name of the user group (i.e. `{resource_group}-USER`).
 - Perform the steps in [Configure Dashboard](/admin/config-dashboard) to add tiles and menu items for the tools that are external to the cluster: the Image Registry, GitHub, LogDNA, Sysdig, etc.
 - Check you log data if flowing into [LogDNA](/guides/log-management)
 - Complete the [setup of Sysdig](/admin/sysdig-setup) and [check the monitoring data](/guides/monitoring) is flowing
