@@ -83,7 +83,7 @@ Argo CD uses a number of terms to refer to the components
 
 Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
-1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/ibm-garage-cloud/template-argocd-test/generate)
+1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
 
 1. Clone the project to your machine
 
