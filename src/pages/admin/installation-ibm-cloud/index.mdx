@@ -205,7 +205,6 @@ Some of these values are given to you by the account manager:
 The other variables have reasonable defaults that you can change if desired:
 - Set `cluster_name` to specify any valid cluster name that is not already in use or leave unset
 - Set `cluster_type` to specify whether the cluster is **kubernetes** or **openshift**
-- Set `postgres_server_exists` to specify that the existing cluster already has a PostgreSQL service instance
 
 - `cluster_exists` -- Set to `false` to create a new cluster
 - `cluster_type` -- Specify the new cluster's type
@@ -215,15 +214,16 @@ The other variables have reasonable defaults that you can change if desired:
     - **ocp4** -- OpenShift v4
     - ~~**crc** -- CodeReady Containers~~
 - `cluster_name` -- The name for the new cluster
-- `postgres_server_exists` -- Specify whether the resource group already contains an existing PostgreSQL service instance
-
-
-<InlineNotification>
-
-Note: **PostgreSQL** can take some time to provision, so in some cases it is worth manually creating an instance. It needs
-to be in the same region and names `<resource-group>-postgresql`.
-
-</InlineNotification>
+- `registry_namespace` -- The namespace that will be created with the IBM Container Registry. If not provided
+the value will default to the `resource_group_name`
+- `logdna_exists` -- "true" or "false" flag indicating that the logdna instance already exists and a new one 
+should not be provisioned
+- `logdna_name` -- The name of the logdna instance, particularly if one already exists. If not provided the name
+will be generated as `{prefix-name || resource-group-name}-logdna`
+- `sysdig_exists` -- "true" or "false" flag indicating that the sysdig instance already exists and a new one 
+should not be provisioned
+- `sysdig_name` -- The name of the sysdig instance, particularly if one already exists. If not provided the name
+will be generated as `{prefix-name || resource-group-name}-sysdig`
 
 ### VLANs
 
@@ -304,9 +304,19 @@ we are now ready to kick off the installation.
     ```
 
     This script will create the <Globals name="env" />.
+    
+    If you executed the script previously for the current cluster configuration and the workspace directory still
+    exists then you will be prompted to either keep or delete the workspace directory. Keep the workspace directory if
+    you want to use the state from the previous run as a starting point to either add or remove configuration. Delete
+    the workspace if you want to start with a clean install of the Toolkit.
 
     The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
     the Terraform Apply process will begin to create the infrastructure and services for your environment.
+    
+    Both of the prompts can be skipped via command-line arguments passed to the script. To bypass the workspace
+    prompt, provided either `--delete` or `--keep` to either delete or keep the workspace, respectively. To
+    bypass the verification prompt provide `--auto-approve` and the script will automatically answer `Yes` to
+    the prompt and start the terraform process.
 
     Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
     and the rest of the process takes about 30 minutes.
