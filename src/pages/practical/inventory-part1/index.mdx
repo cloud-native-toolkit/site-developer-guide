@@ -1791,13 +1791,13 @@ named `inventory-management-bff-{initials}`
 
 - Open the [pipeline to see it running](/getting-started/deploy-app#view-your-application-pipeline)
 
-- Update the `serviceUrl` value in `charts/base/templates/values.yaml` to point to the kubernetes
+- Update the `connectsTo` value in `charts/base/templates/values.yaml` to point to the kubernetes
 service of the microservice. The value most likely will be `inventory-management-svc-{initials}:80`.
 
 - Commit and push the changes
     ```bash
     git add .
-    git commit -m "Update the serviceUrl"
+    git commit -m "Update the connectsTo"
     git push
     ```
 
