@@ -1,10 +1,10 @@
 ---
-title: Install from Private Catalog
+title: Install from IBM Cloud Private Catalog
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
-Prepare to use a Private Catalog Tile or IBM Schematics to install the <Globals name="longName" /> into an existing IBM Cloud managed Red Hat OpenShift or IBM Kubernetes cluster.
+Prepare to use an IBM Cloud Private Catalog Tile to install the <Globals name="longName" /> into an existing IBM Cloud managed Red Hat OpenShift or IBM Kubernetes cluster.
 
 <Tabs>
 
@@ -34,11 +34,11 @@ As long as the user can create these resources successfully the schematics terra
 
 </Tab>
 
-<Tab label="Install">
+<Tab label="Tile">
 
 <PageDescription>
 
-Configure IBM Cloud Private Catalog Tile or IBM Schematics workspace to install a collection of <Globals name="shortName" /> to support CI/CD DevSecOps within the development cluster
+Configure IBM Cloud Private Catalog Tile to install the  <Globals name="shortName" /> to support CI/CD DevSecOps within a cluster being used for development
 
 </PageDescription>
 
@@ -46,44 +46,35 @@ Configure IBM Cloud Private Catalog Tile or IBM Schematics workspace to install 
 
 <p></p>
 
+One of the features of the IBM Cloud Catalog is support for private catalog
+ tiles. These can contain custom Terraform definitions that can accelerate an
+  SRE teams in the execution of common and repetitive tasks. The CNCF DevOps
+   tools installation can be configured as a private catalog tile. This is
+    the recommend approach for using this asset multiple times. This asset
+     enables the easy transition of a default cluster into a cluster that
+      supports Cloud-Native CI/CD development tools.
+
 - First step is to create a Catalog, Click **Manage->Catalogs**
-- Click on **Create Catalog** , provide a name for your catalog , eg. `Team Catalog`
-- Click **Update** to change the default resource group for the Catalog, select a resource group to associate your new Private Catalog
-- Click **Create** to complete the Catalog Creation step
+- Click on **Create Catalog** , provide a name for example `Team Catalog`
+- Click **Update** to change the default resource group for the Catalog
+- Click **Create** to complete the Catalog Creation
 
 - Next step is to run the following script to register <Globals name="shortName" />
  tile into the Catalog as an offering. You will need an IBM Cloud API Key
 
-- Clone this repository to your local workstation
-- Run the `offering.sh` scripts passing in the API Key and the name of the
- Catalog that you created in the previous step
-- You will need to install `jq` into you command line environment [jq downloads](https://stedolan.github.io/jq/download/)
-
+- Download the current release of `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases" target="_blank">latest releases link</a>
+- Allow the script to execute in a command shell `chmod +x create-catalog-offering.sh`
+- Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the
+ Catalog that you created
+- If you are not running this from the <a href="https://www.ibm.com/cloud/cloud-shell" target="_blank">Cloud Shell</a> you will need to install `jq` into you command line environment <a href="https://stedolan.github.io/jq/download/" target="_blank">jq downloads</a>
     ```bash
-    git clone https://github.com/ibm-garage-cloud/cloudnative-toolkit
-    cd cloudnative-toolkit
-    ./offering.sh {API_KEY} "Team Catalog"
+    chmod +x create-catalog-offering.sh
+    ./create-catalog-offering.sh {API_KEY} "Team Catalog"
     ```
-
-### Install with IBM Schematics
-
-<p></p>
-
-- This link [Cloud Native Toolkit](https://github.com/ibm-garage-cloud/cloudnative-toolkit)
-will give you more information about the Terraform that is used to install the tools.
-
-- Create a workspace in IBM Schematics service and call it `cloud-native-toolkit` and place it in your nominate resource group.
-
-- On the Settings view import your terraform template
-    ```bash
-    https://github.com/ibm-garage-cloud/cloudnative-toolkit
-    ```
-- select `terraform_v0.12` version from the Terraform version drop down
-- click **Save template information**
 
 </Tab>
 
-<Tab label="Variables">
+<Tab label="Apply">
 
 <PageDescription>
 
@@ -91,28 +82,47 @@ To support the running of the Terraform for the <Globals name="shortName" /> ins
 
 </PageDescription>
 
-The installation requires a set of variables to be set for to match your environment.  The Private Catalog Tile or IBM Schematics Terraform assumes that a cluster has already been created and <Globals name="shortName" /> will be installed into an existing cluster. The installation supports Red Hat OpenShift and IBM Kubernetes clusters in both **Classic** and **VPC Gen2** networking configurations.
+The installation requires a set of variables to be set for to match your environment.
 
-| **Variable**   | **Description**  | **eg. Value**  |
-|---|---|---|
-| `ibmcloud_api_key` | The API key from IBM Cloud Console that support service creation access writes  | `{guid API key from Console}`  |
-|  `resource_group_name` | The name of the resource group where the cluster is created  | `dev-team-one`  |
-|  `cluster_type`       |  The name of the cluster |  `kubernetes or ocp4` |
-|  `cluster_name`       |  The name of the cluster |  `dev-team-one-iks-117-vpc` |
-|  `cluster_exists`     |  Does the cluster exist already | `true`  |
-|  `vpc_cluster`        | Is the cluster created in a VPC  | `true`  |
+The installation supports Red Hat OpenShift and IBM Kubernetes clusters in both **Classic** and **VPC Gen2** networking configurations.
 
-### Environment variables
+- Once you have completed the Offering Tile configuration, navigate to the new
+ Catalog. You can do this from the IBM Cloud Console select you Catalog ie. `Team Catalog`and click on the **Private** menu on the on the left you can
+  select the catalog you have created `Team Catalog`
+- Select the **Cloud Native Toolkit** tile
+- Enter values for the variables list , these can be customized depending
+ on the type of cluster and if its in classic or VPC
 
-Set them based on the existing cluster:
-- `resource_group_name` -- The existing cluster's resource group
-- `cluster_exists` -- Set to `true` for an existing cluster
-- `cluster_type` -- Specify the existing cluster's type
-    - **kubernetes** -- Kubernetes
-    - **ocp3** -- OpenShift v3
-    - **ocp4** -- OpenShift v4
-- `cluster_name` -- The existing cluster's name
-- `vpc_cluster` -- Is the cluster running in a VPC or not
+    | **Variable**          | **Description**  | **eg. Value**  |
+    |-----------------------|-----------------------------------------------------------------------------------------------|-------------------------------|
+    | `cluster_exists`      | Flag indicating that the cluster already exists                                               | `true` or `false`             |
+    | `cluster_type`        | The type of cluster into which the toolkit will be installed                                  | `kubernetes` or `ocp4`        |
+    | `ibmcloud_api_key`    | The API key from IBM Cloud Console that has ClusterAdmin access and supports service creation | `{guid API key from Console}` |
+    | `resource_group_name` | Existing resource group in the account where the cluster has been created                     | `dev-team-one`                |
+    | `cluster_name`        | The name of the cluster                                                                       | `dev-team-one-iks-117-vpc`    |
+    | `registry_namespace`  | The namespace that should be used in the IBM Container Registry. If not provided the value will default to the resource group name | `dev-team-one-registry-2020` |
+    | `vpc_cluster`         | Flag indicating that the cluster has been built on VPC infrastructure                         | `true` or `false`             |
+
+- Input the Environment variables
+
+    - Set them based on the existing cluster:
+    - `resource_group_name` -- The existing cluster's resource group
+    - `cluster_name` -- The existing cluster's name
+    - `registry_namespace` -- The name of a unique Registry namespace to store built images
+    - `cluster_exists` -- Set to `true` for an existing cluster
+    - `cluster_type` -- Specify the existing cluster's type
+        - **kubernetes** -- Kubernetes
+        - **openshift** -- OpenShift v3
+        - **ocp3** -- OpenShift v3
+        - **ocp4** -- OpenShift v4
+
+    - `vpc_cluster` -- true of false if the cluster is inside a VPC
+
+- Accept the License which is **Apache 2** license
+- Click **Install**
+
+- This will kick off the installation of the  <Globals name="shortName" />
+ into a development cluster using an IBM Cloud Private Catalog Tile.
 
 <p/>
 
@@ -124,11 +134,11 @@ Set them based on the existing cluster:
 
 </Tab>
 
-<Tab label="Apply">
+<Tab label="Install">
 
 <PageDescription>
 
-Install from the Private Catalog Tile or Apply the Schematics workspace to complete configuration
+Install from the Private Catalog Tile
 
 </PageDescription>
 
@@ -136,9 +146,7 @@ Install from the Private Catalog Tile or Apply the Schematics workspace to compl
 
 <p></p>
 
-- Accept the **Apache 2** License
-
-- Click **Install**
+- After you have Accepted the **Apache 2** License and Clicked **Install**
 
 - This will kick off the installation of the <Globals name="shortName" /> into a cluster targeted for development
 
@@ -146,16 +154,9 @@ Install from the Private Catalog Tile or Apply the Schematics workspace to compl
 
 - Once complete you can now start to use the development tools in your cloud native project
 
-### IBM Schematics
 
-<p></p>
 
-- Having configured the variables for the workspace you can now apply it
-
-- Navigate to the Workspace you have configured `cloud-native-toolkit`
-- Click on the **Apply**
-
-    Installing the tools into an existing cluster takes about 30 minutes. You can view the workspace logs to see the progress of the execution of the Schematics Terraform scripts
+- Installing the tools into an existing cluster takes about 30 minutes. You can view the workspace logs to see the progress of the execution of the Schematics Terraform scripts
 
 - Once the tools are installed with Terraform using IBM Cloud Schematics you will see this message in the logs
     ```
@@ -186,9 +187,6 @@ Install from the Private Catalog Tile or Apply the Schematics workspace to compl
 
 ### <Globals name="env" />
 
-
-
-Once the Schematics scripts have finished, you can see the resources that the scripts created in IBM Cloud:
 - In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/docs/overview?topic=overview-ui#dashboardview "Managing resources in the resource list")
 - On the Resource List page, filter by your Resource Group (e.g. `dev-team-one`)
 - You should see these resources listed:
