@@ -16,57 +16,54 @@ Customize the Developer Dashboard and the OpenShift console
 
 </InlineNotification>
 
-You can add additional tools to the [Developer Dashboard](/getting-started/dashboard) and to the Tools menu on the OpenShift console. The tools in the cluster are automatically added, but the tools outside the cluster must be added manually. You can manually add these tools, specifying their URLs in the process:
-- Image registry
-- GitHub repository
-- LogDNA dashboard
-- Sysdig dashboard
+## Customizing the Dashboard
+
+After the Dashboard has been installed into your development cluster, you can customize it to you team's needs. You can change the Title, Prefix, and Cloud Console links by adding the following environment variables to your deployment yaml.
+   
+Customize the Dashboard's title from its default of "IBM Cloud Garage"  
+- The necessary set of environment variables isn't defined by default. You need to edit the YAML for the `developer-dashboard` deployment in the `tools` namespace to insert this set of variables.
+- Edit the YAML for the /tools/deployments/developer-dashboard resource. In the `spec.template.spec.containers` section, in the resources for the container named `developer-dashboard`, add a new `env` resource to this container that defines these environment variables:
+
+    ```
+              env:
+                - name: DASHBOARD_TITLE
+                  value: GSI Labs Sandbox
+                - name: DASHBOARD_PREFIX
+                  value: IBM 
+                - name: CLOUD_TITLE
+                  value: Azure Console
+                - name: CLOUD_URL
+                  value: https://azure.microsoft.com/en-us/
+                - name: LINKS_URL
+                  value: http://<url>/data/links.json
+    ```
+- Then fill in the values you want to use, such as the name of your team and company
+- **Note**: The `CLOUD_TITLE`, `CLOUD_URL`, and `LINKS_URL` aren't needed when the platform is IBM Cloud
+
+You can also tailor the list of content that is displayed in the Activitation tab and the Code Patterns tab by creating your own version of the [`links.json`](https://github.com/ibm-garage-cloud/developer-dashboard/blob/master/public/data/links.json) JSON file and host that somewhere accessible to you cluster's network.
+
+
+## Adding tools
+
+You can add additional tools to the [Developer Dashboard](/getting-started/dashboard) and to the Tools menu on the OpenShift console. The tools in the cluster are added automatically, but the tools outside the cluster must be added manually. You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces (if you've installed that in the environment), etc.
+
+### Adding tools to the Dashboard
+
+Use the [Cloud Native Toolkit CLI](/getting-started/cli) to add tools to the dashboard.
     
-You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces if you install that in the environment, etc.
-
-With the <Globals name="shortName" /> now installed into your development cluster, it is now possible to customize it further to meet your development team's requirements. This may be to use it for a small squad that just has ten developers, or prepare it for a large activation workshop tht could have two-hundred developers. The following customization helps enable the control you need for the developers.
-
-## Getting Links for Tools
-
-To get the URL for the image registry:
-- In the IBM Cloud console, navigate to Kubernetes > Registry or OpenShift > Registry
-- On the Registry page, select the Images tab
-- That URL for the Images tab (or any of the Registry tabs) is the one to add to the tools lists
-
-### LogDNA dashboard
-
-Get the URL for the LogDNA web UI in your environment
-- [IBM Log Analysis with LogDNA: Viewing logs](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-view_logs)
-explains how to open the web UI
-- In the IBM Cloud dashboard, navigate to **Observability** > **Logging**
-- Find the logging instance named after your environment's cluster, such as `showcase-dev-iks-logdna`. To help find it, 
-you can filter by your resource group.
-    ![LogDNA Logging Instance](logdna-logging-instance.png)
-- In the logging instance, the URL in the **View LogDNA** button is the one to add to the tools lists
-
-### Sysdig dashboard
-
-Get the URL for the Sysdig web UI for your environment
-- [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4) explains how to open the web UI
-    - In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
-    - Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks-sysdig`
-    ![Sysdig Monitoring Instance](sysdig-monitoring-instance.png)
-    - In the monitoring instance, the URL in the **View Sysdig** button is the one to add to the tools lists
-
-
-
-
-## Adding Tools to the Developer Dashboard
-
-To customize tools that are displayed in the <Globals name="dashboard" /> follow these instructions to [Customize Dashboard](/getting-started/dashboard#customizing-the-tools-view). The Dashboard already has several tools configured, and you may want to add more.
-
+- Use this syntax to add a tool:  
+    ```bash
+    igc tool-config --name <name of tool> --url <url of tool> 
+    ```
+  
 - These are tools that every Environment has but that are hosted outside of the cluster. To add these to the Dashboard, run these commands and provide the URLs: 
     ```
     igc tool-config --name ir --url {url image registry}
-    igc tool-config --name github --url {url to git org}
     igc tool-config --name logdna --url {url to LogDNA instance}
     igc tool-config --name sysdig --url {url to Sysdig instance}
+    igc tool-config --name github --url {url to git org}
     ```
+  
 - If your Environment includes the Cloud Paks with these tools, add them to your Dashboard:
     ```
     igc tool-config --name ta --url {url to the Transformation Advisor}
@@ -74,16 +71,45 @@ To customize tools that are displayed in the <Globals name="dashboard" /> follow
     igc tool-config --name integration --url {url to CP4I instance}  
     ```
 
-- If you've installed CodeReady Workspaces in your Environment (see below), add it to your Dashboard:
+- If you've [installed CodeReady Workspaces](/admin/install-crw) in your Environment, add it to your Dashboard:
     ```
     igc tool-config --name codeready --url {url to the CRW instance}
     ```
-  
-## Adding Tools to the OpenShift Console
+
+This table lists the tools that can be displayed.
+ 
+| Tool Name                | Name Parameter  | Description | Pre-Configured |
+| -----------------------  |:-------------- |:------------| :----------- |
+| GitLab | `gitlab`  | IBM Cloud GitLab instance for the region you are using | Yes |
+| Eclipse Che | `che` | Link to Eclipse Che instance | No |  
+| Jenkins | `jenkins` | If IKS configured by default | Yes |
+| Pipeline | `pipeline` | If OCP configured by default | Yes |
+| ArgoCD | `argocd` | Link to ArgoCD instance in cluster | Yes |
+| Artifactory | `artifactory` | Link to Artifactory instance in cluster | Yes |
+| SonarQube | `sonarqube` | Link to SonarQube instance in cluster | Yes |
+| Pact | `pact` | Link to Pact Broker instance in cluster | Yes |
+| Tekton | `tekton` | Link to Tekton Dashboard in cluster | No |
+| Transformation Advisor | `ta` | Link to Transformation Advisor tool in cluster | No |
+| Swagger Editor | `apieditor` | Link to Swagger Editor instance in cluster | Yes |
+| CodeReady Workspaces | `codeready` | Link to CodeReady Workspaces instance in cluster | No |
+| GitHub | `github` | Link to teams GitHub organization | Yes |
+| Cloud Pak for Integration | `integration` | Link to main console for Cloud Pak for Integration | No |
+| Cloud Pak for Multi Cloud Manager | `mcm` | Link to main console for Cloud Pak for Multi Cloud Manager | No |
+| Cloud Pak for Data | `data` | Link to main console for Cloud Pak for Data | No |
+| Cloud Pak for Automation | `automation` | Link to main console for Cloud Pak for Automation | No |
+| Grafana | `grafana` | Link to Grafana in cluster | No |
+| Prometheus | `prometheus` | Link to Prometheus in cluster | No |
+| LogDNA | `logDNA` | Link to LogDNA service instance | No |
+| Sysdig | `Sysdig` | Link to Sysdig service instance | No |
+| Image Registry | `ir` | Link to Image Registry | No |
+| Jaeger| `jaeger` | Link to Jaeger in cluster | Yes |
+
+
+### Adding Tools to the OpenShift Console
 
 If the <Globals name="env" /> includes an OpenShift cluster, the Environment adds a Tools menu to the OpenShift console. The tools in the cluster are automatically added, but you need to add the tools outside of the cluster to specify their URLs. You can also extend the Tools menu to provide fast links to common tools you the development team will require. These tools links are common across the cluster.
 
-![OCP Console Tools](./ocp-console-tools.png)
+![OCP Console Tools](/images/ocp-console-tools.png)
 
 - Edit the file called `tools.yaml` in the `terraform/scripts` folder. This file contains the CRDs required to configure the menu items. Add custom links for `github`, `logdna`, and `sysdig`, and save the file. 
 
@@ -120,53 +146,31 @@ If the <Globals name="env" /> includes an OpenShift cluster, the Environment add
       text: Integration
     ```
 
-## Installing CodeReady Workspaces
+## Obtaining links to external tools
 
-CodeReady Workspaces can be easily added to your development experience using the Red Hat Operator Hub. See [Chapter 3. Installing CodeReady Workspaces from Operator Hub](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/1.1/html/administration_guide/installing-codeready-workspaces-from-operator-hub).
+To add external tools to the Dashboard and/or Tools menu, you need to know the links to those tools. Here's how to find those links.
 
-CodeReady Workspaces is a developer workspace server and cloud IDE. Workspaces are defined as project code files and all of their dependencies necessary to edit, build, run, and debug them. Each workspace has its own private IDE hosted within it. The IDE is accessible through a browser. The browser downloads the IDE as a single-page web application. CodeReady Workspaces will enable a 100% developer experience to be delivered from a user's browser. This is perfect for running enablement learning from constrained developer laptops, or for SREs to make quick change to a microservice.
-       
-### CodeReady Workspaces Intallation Pre-requisite
+### Image registry
 
-Do this first:
-- Provision the OpenShift 4.3 Cluster
-- Ensure the logged in user has the Administrator privileges 
-- Ensure you have created a new Project to manage the "codeready workspace operator & cluster"
+To get the URL for the image registry:
+- In the IBM Cloud console, navigate to Kubernetes > Registry or OpenShift > Registry
+- On the Registry page, select the Images tab
+- That URL for the Images tab (or any of the Registry tabs) is the one to add to the tools lists
 
-Setting up the CRW Operator & Cluster:
-- Navigate to Operator Hub and search of the Red Hat Cloudready workspace. Click on the operator and select the appropriate workspace to install the CRW operator.
-- Navigate to the installed operator to view the CRW operator. 
-- Now click the link visible as part of the operator to create/view the
- CheCluster part of the workspace
-- Create the CheCluster button, to navigate to the YAML Configuration
- page (displays all the parameters). 
-- You need to change the following parameter mentioned below, As part of
- the storage section, please add the following parameters
-    ```    
-    postgresPVCStorageClassName: ibmc-block-gold
-    workspacePVCStorageClassName: ibmc-block-gold
-    ```
+### LogDNA dashboard
 
-- Post definition the yaml section for storage will look as below
-    ```
-     :storage:
-        postgresPVCStorageClassName: ibmc-block-gold
-        pvcStrategy: per-workspace
-        pvcClaimSize: 1Gi
-        preCreateSubPaths: true
-        workspacePVCStorageClassName: ibmc-block-gold
-    ```
+Get the URL for the LogDNA web UI in your environment (as explained in [IBM Log Analysis with LogDNA: Viewing logs](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA?topic=LogDNA-view_logs))
+- In the IBM Cloud dashboard, navigate to **Observability** > **Logging**
+- Find the logging instance named after your environment's cluster, such as `showcase-dev-iks-logdna`. To help find it, 
+you can filter by your resource group.
+    ![LogDNA Logging Instance](/images/logdna-logging-instance.png)
+- In the logging instance, the URL in the **View LogDNA** button is the one to add to the tools lists
 
-- Now create, the cluster after doing the above changes. The cluster will take few minutes to get created as its resources such as Postgres DB, Keycloak Auth, CRW workspace will get created.
-- Once Cluster is created navigate to the overview tab of the CheCluster in
- the CRW operator. You will be able to see the below :
-    - URL of the CodeReady Workspaces URL
-    - URL of the Red Hat SSO Admin Console URL 
-    - oAuth SSO Enabled.
- - This should be enabled by default, if not please slide the button to
-  enable and confirm
- - TLS Would be disabled. Please slide the button to enable https connectivity
- to the CRW workspace and confirm
- - You have now completed the provisioning of the Code Ready Workspaces
-  operator into your development cluster and will enable it to be used by the
-   developers that plan to use this development cluster
+### Sysdig dashboard
+
+Get the URL for the Sysdig web UI for your environment (as explained in [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4))
+- In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
+- Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks-sysdig`
+![Sysdig Monitoring Instance](/images/sysdig-monitoring-instance.png)
+- In the monitoring instance, the URL in the **View Sysdig** button is the one to add to the tools lists
+
