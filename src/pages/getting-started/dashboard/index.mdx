@@ -15,70 +15,100 @@ The Developer Dashboard is one of the tools running in your <Globals name="env" 
 - **Activation**: Links to education to help you learn cloud-native development and deployment using IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud
 - **<Globals name="templates" />**: Links to templates that will help accelerate your project
 
-With the release of **<Globals name="ocp" />** it is now even easier for
- developers to integrate the SDLC tools into the OpenShift console. This
-  console is mainly focused on providing a simple navigation experience when
-   the <Globals name="shortName" /> is installed into <Globals name="iks" />.
+With the release of **<Globals name="ocp" />**, it is now even easier for developers to integrate the SDLC tools into the OpenShift console. This console is mainly focused on providing a simple navigation experience when the <Globals name="shortName" /> is installed into <Globals name="iks" />.
 
 ![Developer Dashboard](/images/developer-dashboard.png)
 
 Here are some recent improvements:
-- More tools can be added to the dashboard using a simple `igc tool-config
-` command
-- Prefix and Title can be customised to you own names
-- The IBM Cloud link can be overidden to support links to multi cloud vendors
- when OpenShift is running on Azure, AWS or Google Cloud and VMWare
-- The tools view is split into two 4 columns to enable more reuse of the screen
-- The Cluster information is now available when you click on `Developer
- Dashboard` title
-- The <Globals name="igccli" /> now installs an alias into the `oc` and
- `kubectl` so it is now possible to open the dashboard quickly using `oc
-  dashboard` and `kubectl dashboard`
+- More tools can be added to the dashboard using a simple `igc tool-config` command
+- Prefix (shown above as "IBM") and Title (shown above as "Cloud Native Toolkit") can be customized to you own names
+- The IBM Cloud link can be overidden to support links to other cloud vendors when OpenShift is running on Azure, AWS, Google Cloud, or VMWare
+- The tools view is split into more columns to enable more reuse of the screen
+- The Cluster information is now available when you click on "Developer Dashboard" title
+- The <Globals name="igccli" /> now installs an alias into the `oc` and `kubectl` so it is now possible to open the dashboard quickly using `oc dashboard` and `kubectl dashboard`
  
-### Tools configured with OpenShift Console
+### Tools configured with OpenShift console
 
-When the <Globals name="shortName" /> was configured for your development
- cluster. The administrator can now configure a set of short cut links to
-  common tools you often use as a developer. 
+When the administrator configures your <Globals name="env" />, they can customize a set of short cut links to common tools you often use as a developer. 
   
 ![OpenShift Links](/images/openshift-console-tools.png)
 
-You can see how these tools are confgured by reading the [Tools configuration
-](/admin/config-install)
+You can see how these tools are configured by reading the [Tools configuration](/admin/config-dashboard)
  
  
 ### Opening the Dashboard
 
-- Open a terminal
-- Make sure you are logged into your Development cluster in a terminal.
-- To do so, navigate to your cluster in the _IBM Cloud Console_, click on the **Access** tab and
-follow the instructions to login from the command line
+You can open the Dashboard from a terminal.
 
-- You can open the Dashboard from the enviornment you are configured with, use the [IGC CLI](/guides/cli#dashboard).
-    ```
-    oc dashboard | kubectl dashboard | igc dashboard
-    ```
-  
+- Open a terminal
+- Make sure your terminal is logged into your Development cluster
+    - In the IBM Cloud console, navigate to your cluster's overview
+    - Switch to the **Access** tab
+    - Follow the instructions to log in from the command line
+- Use the [IGC CLI](/getting-started/cli#dashboard) to open the Dashboard in your environment
+
+<Tabs>
+<Tab label="OpenShift">
+
+```bash
+oc dashboard
+```
+</Tab>
+<Tab label="Kubernetes">
+
+```bash
+kubectl dashboard
+```
+</Tab>
+<Tab label="IGC">
+
+```bash
+igc dashboard
+```
+</Tab>
+</Tabs>
+
 - This will open the Dashboard
 
 ### Access the tools URLs
 
-- To list the ingress endpoints for all of the installed tools, use the [Developer Tools CLI](../getting-started/cli) to run the following command:
-    ```bash
-    oc endpoints -n tools | kubectl endpoints | igc endpoints
-    ```
+You can open the dashboard for any tool via its URL.
+
+- To list the ingress endpoints for all of the installed tools, use the [Developer Tools CLI](/getting-started/cli) to run the following command:
+
+<Tabs>
+<Tab label="OpenShift">
+
+```bash
+oc endpoints -n tools
+```
+</Tab>
+<Tab label="Kubernetes">
+
+```bash
+kubectl endpoints
+```
+</Tab>
+<Tab label="IGC">
+
+```bash
+igc endpoints
+```
+</Tab>
+</Tabs>
+
 
 - This will return the ingress URLs for all of the tools installed in the Developer Tools cluster.
     ```bash
-   ? Endpoints in the 'tools' namespace. Select an endpoint to launch the default browser or 'Exit'.
-   
+    ? Endpoints in the 'tools' namespace. Select an endpoint to launch the default browser or 'Exit'.
+    
      1) Exit
      2) developer-dashboard - http://dashboard.garage-dev-ocp4-c-518489-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud
      3) argocd-server - https://argocd-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
      4) artifactory - https://artifactory-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
      5) dashboard - https://dashboard-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
      6) developer-dashboard - http://dashboard.garage-dev-ocp4-c-518489-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud
-   (Move up and down to reveal more choices)
+    (Move up and down to reveal more choices)
      Answer:
     ```
 
@@ -86,91 +116,37 @@ follow the instructions to login from the command line
 
 ### Credentials
 
-In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. 
-In the meantime, the CLI includes a command to list the tools' logins.
+In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. In the meantime, the CLI includes a command to list the tools' logins.
 
 - To list the logins for all of the installed tools, use the [Developer Tools CLI](../getting-started/cli) to run the following command:
-    ```bash
-    oc credentials | kubectl credentials | igc credentials
-    ```
+
+<Tabs>
+<Tab label="OpenShift">
+
+```bash
+oc credentials
+```
+</Tab>
+<Tab label="Kubernetes">
+
+```bash
+kubectl credentials
+```
+</Tab>
+<Tab label="IGC">
+
+```bash
+igc credentials
+```
+</Tab>
+</Tabs>
+
 - The command lists the `userid` and `password` for each tool installed. You can use these credentials to log into each of the installed tools.
-- More of the tools in <Globals name="ocp" /> will be integrated into the
- OpenShift console login process 
+- More of the tools in <Globals name="ocp" /> will be integrated into the OpenShift console login process 
 
 <InlineNotification>
 
-If you are using OpenShift, the Jenkins credential
-will be `undefined` because the OpenShift built in Jenkins service uses IBM cloud single sign-on mechanism.
+If you are using OpenShift, the Jenkins credential will be `undefined` because the OpenShift built in Jenkins service uses IBM cloud single sign-on mechanism.
 
 </InlineNotification>
 
-### Customizing the Tools view
-
-The tools dashboard supports a collection of tools links. These links can be
- added to the <Globals name="env" /> using the `igc` command line. This
-  enables a level of customization for the development. You can use this to
-   link out to your Cloud Pak main dashboards, or you can add a reference to
-    your Github project. 
-    
-- To add a tool follow the syntax below.  
-    ```bash
-    igc tool-config --name <name of tool> --url <url of tool> 
-    ```
-
-The following is a list of supported tools that be configured for displayed.
- 
-| Tool Name                | Name Parameter  | Description | Pre-Configured |
-| -----------------------  |:-------------- |:------------| :----------- |
-| GitLab | `gitlab`  | IBM Cloud GitLab instance for the region you are using | Yes |
-| Eclipse Che | `che` | Link to Eclipse Che instance | No |  
-| Jenkins | `jenkins` | If IKS configured by default | Yes |
-| Pipeline | `pipeline` | If OCP configured by default | Yes |
-| ArgoCD | `argocd` | Link to ArgoCD instance in cluster | Yes |
-| Artifactory | `artifactory` | Link to Artifactory instance in cluster | Yes |
-| SonarQube | `sonarqube` | Link to SonarQube instance in cluster | Yes |
-| Pact | `pact` | Link to Pact Broker instance in cluster | Yes |
-| Tekton | `tekton` | Link to Tekton Dashboard in cluster | No |
-| Transformation Advisor | `ta` | Link to Transformation Advisor tool in cluster | No |
-| Swagger Editor | `apieditor` | Link to Swagger Editor instance in cluster | Yes |
-| CodeReady Workspaces | `codeready` | Link to CodeReady Workspaces instance in cluster | No |
-| GitHub | `github` | Link to teams GitHub organization | Yes |
-| Cloud Pak for Integration | `integration` | Link to main console for Cloud Pak for Integration | No |
-| Cloud Pak for Multi Cloud Manager | `mcm` | Link to main console for Cloud Pak for Multi Cloud Manager | No |
-| Cloud Pak for Data | `data` | Link to main console for Cloud Pak for Data | No |
-| Cloud Pak for Automation | `automation` | Link to main console for Cloud Pak for Automation | No |
-| Grafana | `grafana` | Link to Grafana in cluster | No |
-| Prometheus | `prometheus` | Link to Prometheus in cluster | No |
-| LogDNA | `logDNA` | Link to LogDNA service instance | No |
-| Sysdig | `Sysdig` | Link to Sysdig service instance | No |
-| Image Registry | `ir` | Link to Image Registry | No |
-| Jaeger| `jaeger` | Link to Jaeger in cluster | Yes |
-
-
-### Customizing the Dashboard
-
-After the Dashboard has been installed into you development cluster. You can
- customized some of the paramters that enable you to make it tailored to you
-  teams needs. You can change the Title , Prefix, and Cloud Console links by
-   adding the following Environment variables to you deployment yaml.
-   
-   You can also tailor the list of content that is displayed in the
-    Activitation tab and the Code Patterns tab by creating your own version
-     of the [`links.json`](https://github.com/ibm-garage-cloud/developer-dashboard/blob/master/public/data/links.json) JSON file and host that somewhere accessible to you
-      clusters network.
-
-Customize the Dashboard's title from its default of IBM Cloud Garage:      
-- Add the following environment variables to the Dashboard. Edit the `developer-dashboard` deployment in the `tools` namespace to insert this set of variables in the `Deployment` resource YAML as the `spec.template.spec.containers.env` element:
-    ```
-    env:
-        - name: DASHBOARD_TITLE
-          value: GSI Labs Sandbox
-        - name: DASHBOARD_PREFIX
-          value: IBM 
-        - name CLOUD_TITLE
-          value: Azure Console
-        - name: CLOUD_URL
-          value: https://azure.microsoft.com/en-us/
-        - name: LINKS_URL
-          value: http://<url>/data/links.json
-    ```
-- **Note**: The `CLOUD_TITLE`, `CLOUD_URL`, and `LINKS_URL` aren't needed when the platform is IBM Cloud

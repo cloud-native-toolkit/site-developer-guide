@@ -60,6 +60,8 @@
       path: /admin/installation-crc
     - title: Configure Environment
       path: /admin/config-install
+    - title: Install CodeReady Workspaces
+      path: /admin/install-crw
     - title: Configure Dashboard
       path: /admin/config-dashboard
     - title: Sysdig Setup
