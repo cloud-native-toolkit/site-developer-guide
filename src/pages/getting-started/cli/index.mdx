@@ -39,6 +39,25 @@ You can either install the CLI onto your computer or install the Cloud Shell Com
  
 </InlineNotification>
 
+<br />
+
+<InlineNotification kind="warning">
+
+**Warning:** If you receive an `EACCES` error when you try to install the cli using the instructions that follow, it is an indiction that 
+npm cannot write to the global package directory and that node has not been set up properly on your machine. **DO NOT**
+rerun the command with `sudo`. (Here's an overview of why that's a bad idea - [Don't use sudo with npm](https://medium.com/@ExplosionPills/dont-use-sudo-with-npm-still-66e609f5f92) )
+
+Instead, you need to correct the issue with node. There are two options:
+
+- To fix your current installation, follow [these instructions](http://npm.github.io/installation-setup-docs/installing/a-note-on-permissions.html)
+- To install using Node Version Manager, follow [these instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Once npm has been updated, rerun the command to install the cli.
+
+</InlineNotification>
+
+<br />
+
 - Install the CLI:
     ```bash
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
