@@ -32,57 +32,44 @@ Before setting up ArgoCD, [set up Artifactory](/admin/artifactory-setup) so that
 
 Configure ArgoCD to use Artifactory as a Helm repository.
 
-### Clone the ArgoCD repository
-
-The ArgoCD repository contains files and samples for configuring ArgoCD.
-
-- Clone the repository to your development machine
-
-  ```bash
-  git clone git@github.com:IBM/template-argocd-gitops.git
-  cd template-argocd-gitops
-  ```
-
 ### Get the Helm repository location
 
 The Helm repository is in Artifactory. ArgoCD will need the URL to that repository.
 
-- In the Artifactory console, select the Home page
+1. In the Artifactory console, select the Home page
 
-- In the Set Me Up section, click on the `generic-local` repository
+2. In the Set Me Up section, click on the `generic-local` repository
 
-  ![Set Me Up - Repositories](setupartifactory.png "Set Me Up: Repositories")
+    ![Set Me Up - Repositories](setupartifactory.png "Set Me Up: Repositories")
 
-- In the Set Me Up dialog for the generic-local repository, copy the Deploy URL
+3. In the Set Me Up dialog for the generic-local repository, copy the Deploy URL
 
-  ![Set Me Up - Generic Local Repository](artifactoryurlsetup.png "Set Me Up: generic-local Repository")
+    ![Set Me Up - Generic Local Repository](artifactoryurlsetup.png "Set Me Up: generic-local Repository")
 
-### Update the ArgoCD configuration file
+### Register the helm repository with ArgoCD
 
-The repo you cloned contains an ArgoCD configuration file. Put the Helm repository location in that file
-and deploy it to your <Globals name="env" />.
+1. Log in to ArgoCD
 
-- Log into your cluster from the CLI
+2. Open the `Settings` dialog by clicking the `Manage your repositories, projects, settings` button on the left menu
 
-- Add the folder name for your helm artifacts to the URL copied from the
- Artifactory console
- `[artifact-helm
--repository
--location]/[helm artifact folder]` this is often the same name as your
- resource group
+    ![ArgoCD - Settings](argocd-settings.png "ArgoCD settings")
 
-- In your local copy of the `template-argocd-gitops` repo, run `./config
-/addhelmrepository.sh [artifact-helm-repository-location]/[helm artifact
- folder]`
+3. From the Settings page, select `Repositories`
 
-    where `[artifact-helm-repository-location]` is the URL of the Helm repository location in Artifactory
+    ![ArgoCD - Repositories](argocd-repositories.png "ArgoCD repositories")
 
-Verify that the new configuration has deployed
+4. Press the `Connect repo using https` button at the top of the page
 
-- In the Kubernetes dashboard or OpenShift console, navigate to the Config Maps in the `tools` namespace
+    ![ArgoCD - New Repository](argocd-repository-new.png "ArgoCD new repository")
+    
+5. In the New Repository dialog, select `helm` for the repository type, provide a name to identify the 
+repository, and enter the Artifactory deploy url for the repository url. Press `Connect` to create the 
+repository.
+    ![ArgoCD - New helm repository](argocd-repository-helm.png "ArgoCD helm repository")
 
-- Select the `argocd-cm` config map and confirm that its `helm.repositories` property specifies the Artifactory URL
+6. The repository should now appear and the list and can be used for application deployments
 
 ## Conclusion
 
-ArgoCD now has the configuration file in the <Globals name="env" /> that it needs to access the Helm chart repository in Artifactory.
+ArgoCD now has the configuration in the <Globals name="env" /> that it needs to access the helm chart repository 
+in Artifactory.
