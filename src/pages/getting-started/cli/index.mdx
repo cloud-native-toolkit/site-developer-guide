@@ -90,6 +90,7 @@ IBM Garage Cloud Native Toolkit CLI (https://cloudnativetoolkit.dev)
 Usage: igc <command> [args]
 
 Commands:
+  igc console             Launch the IKS or OpenShift admin console
   igc create-webhook      Create a git webhook for a given Jenkins pipeline
   igc credentials         Lists the urls and credentials for the tools deployed
                           to the cluster
@@ -218,6 +219,54 @@ The following commands would have the same result on Kubernetes:
 ```shell script
 HOST=$(kubectl get ingress/developer-dashboard -n tools -o jsonpath='{.spec.rules[0].host}')
 open "https://$HOST"
+```
+
+</Tab>
+</Tabs>
+
+**Related commands**
+
+- [credentials](#credentials): shows information about the same tools shown in the dashboard from the 
+command-line
+- [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
+available to the dashboard and `credentials` command   
+
+### console
+
+Opens the *IKS or OpenShift admin console* in the default browser. If a default browser has not been 
+configured, then the URL to the console will be printed out.
+
+This command requires that the login context for the cluster has already been established.
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The command is used in the following way:
+
+```bash
+igc console
+```
+</Tab>
+<Tab label="OpenShift">
+
+The following commands would have the same result on OpenShift:
+
+```shell script
+HOST=$(oc get routes/console -n openshift-console -o jsonpath='{.spec.host}')
+open "https://$HOST"
+```
+</Tab>
+<Tab label="Kubernetes">
+
+The following commands would have the same result on Kubernetes:
+
+```shell script
+REGION="..."
+CLUSTER_NAME="..."
+CLUSTER_ID=$(ibmcloud ks cluster get --cluster ${CLUSTER_NAME} | grep -E "^ID" | sed -E "s/ID: +([^ ]+)/\\1/g")
+open "https://${REGION}.containers.cloud.ibm.com/kubeproxy/clusters/${CLUSTER_ID}/service/#/overview?namespace=default"
 ```
 
 </Tab>
