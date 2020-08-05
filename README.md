@@ -1,12 +1,16 @@
-# IBM Garage Solution Engineering
+# Cloud Native Toolkit - Developer Guide
 [![Build Status](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide.svg?branch=master)](https://travis-ci.org/ibm-garage-cloud/ibm-garage-developer-guide)
-
-## Cloud Native Toolkit - Developer Guide
 
 The developer guide has been written to help developers get familiar with how to use to the tools to manage the full
 lifecycle of cloud native development with IBM Kubernetes Service or managed Red Hat OpenShift on IBM Cloud.
 
-The rendered Developer Guide can be viewed here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)
+The rendered Developer Guide can be viewed here - [https://cloudnativetoolkit.dev](https://cloudnativetoolkit.dev)
+
+*Note*: The Beta version of the Developer Guide can be found here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-beta/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-beta/)
+
+It is primarily used to document features that are currently in Beta prior to releasing those features (and the associated documentation). The content for the Beta version of the Developer Guide is sourced from the `beta` branch.
+
+## Contributing
 
 To update and manage the Developer Guide follow these steps.
 
