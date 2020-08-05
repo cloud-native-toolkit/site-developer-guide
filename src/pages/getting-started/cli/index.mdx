@@ -106,6 +106,9 @@ Commands:
   igc endpoints           List the current ingress hosts for deployed apps in a
                           namespace      [aliases: ingress, endpoint, ingresses]
   igc generate-token      Generate a Jenkins api token
+  igc git [remote]        Launches a browser to the git repo url specified by
+                          the origin remote. If remote not provided defaults to 
+                          origin
   igc git-secret [name]   Create a kubernetes secret that contains the url,
                           username, and personal access token for a git repo
   igc jenkins-auth        Generate a Jenkins api token and register it as
@@ -276,6 +279,47 @@ CLUSTER_ID=$(ibmcloud ks cluster get --cluster ${CLUSTER_NAME} | grep -E "^ID" |
 open "https://${REGION}.containers.cloud.ibm.com/kubeproxy/clusters/${CLUSTER_ID}/service/#/overview?namespace=default"
 ```
 
+</Tab>
+</Tabs>
+
+**Related commands**
+
+- [credentials](#credentials): shows information about the same tools shown in the dashboard from the 
+command-line
+- [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
+available to the dashboard and `credentials` command   
+
+### git
+
+Opens the Git repo in the default browser for the current working directory. If a default browser has not been 
+configured, then the URL to the repo will be printed out.
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The command is used in the following way:
+
+```bash
+igc git
+```
+
+If you have multiple remotes and would like to open one other than `origin`:
+
+```bash
+igc git-repo origin-fork
+```
+
+
+</Tab>
+<Tab label="Manual">
+
+The following commands would have the same result with shell commands:
+
+```shell script
+alias gh="open https://github.$(git config remote.origin.url | cut -f2 -d. | tr ':' /)"
+```
 </Tab>
 </Tabs>
 
