@@ -99,8 +99,9 @@ Commands:
   igc endpoints           List the current ingress hosts for deployed apps in a
                           namespace      [aliases: ingress, endpoint, ingresses]
   igc generate-token      Generate a Jenkins api token
-  igc git-repo [remote]   Launches a browser to the git repo url specified by
-                          the origin remote
+  igc git [remote]        Launches a browser to the git repo url specified by
+                          the origin remote. If remote not provided defaults to 
+                          origin
   igc git-secret [name]   Create a kubernetes secret that contains the url,
                           username, and personal access token for a git repo
   igc jenkins-auth        Generate a Jenkins api token and register it as
@@ -281,7 +282,7 @@ command-line
 - [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
 available to the dashboard and `credentials` command   
 
-### git-repo
+### git
 
 Opens the Git repo in the default browser for the current working directory. If a default browser has not been 
 configured, then the URL to the repo will be printed out.
@@ -294,7 +295,7 @@ configured, then the URL to the repo will be printed out.
 The command is used in the following way:
 
 ```bash
-igc git-repo
+igc git
 ```
 
 If you have multiple remotes and would like to open one other than `origin`:
