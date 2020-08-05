@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Publish Beta
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.TOKEN }}
+          personal_token: ${{ secrets.TOKEN }}
           external_repository: ibm-garage-cloud/ibm-garage-developer-guide-beta
           publish_branch: master
           publish_dir: ./public
