@@ -10,9 +10,10 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      This is the developer guide for the {g.longName}. It provides an Open Source
-      Software Development Life Cycle (SDLC) and complements IBM Cloud Pak solutions. The {g.shortName} enables
-      application development teams to deliver business value quickly using {g.ocp} and {g.kube} on {g.ibmcloud}.
+      The {g.shortName} enables application development and support teams to deliver business value quickly
+      using {g.ocp} and {g.kube} on {g.ibmcloud}. This guide provides information to help Developers, Administrators,
+      and Site Reliability Engineers use the Toolkit to support delivering business applications through the entire
+      Software Development Life Cycle (SDLC).
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
@@ -39,7 +40,7 @@ const SecondRightText = () => (
   </p>
 );
 
-const BannerText = () => <h1>{g.shortName}<br/>Developer Guide</h1>;
+const BannerText = () => <h1>{g.shortName}<br/>Guide</h1>;
 
 const customProps = {
   Banner: <HomepageBanner renderText={BannerText} image={Carbon} />,
