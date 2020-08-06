@@ -12,7 +12,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run dev",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "update": "npm-check -u"
   },
   "dependencies": {
     "gatsby": "^2.19.22",
@@ -22,7 +23,7 @@
     "gatsby-plugin-manifest": "^2.2.39",
     "gatsby-plugin-offline": "^3.0.32",
     "gatsby-source-filesystem": "^2.2.1",
-    "gatsby-theme-carbon": "^1.21.1",
+    "gatsby-theme-carbon": "^1.26.7",
     "gatsby-transformer-json": "^2.3.0",
     "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
+    "npm-check": "^5.9.2",
     "prettier": "^1.19.1"
   }
 }
