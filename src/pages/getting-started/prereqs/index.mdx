@@ -57,24 +57,27 @@ The following is a list of desktop tools required to help with installation and 
     - Note: If you log in to the web UI using SSO, you'll need to [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id) for logging into the CLI. (You can also use this API key for [installing the <Globals name="env" />](/admin/installation-ibm-cloud).)
 
 - [OpenShift OC CLI](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/): Required for Red Hat OpenShift management and development
-    - Download the appropriate client tar ball
-    - Unpack the tar ball
-    - Copy the `oc` and `kubectl` from the unpacked folder into your Terminal `PATH` (e.g. /usr/local/bin)
-
-    - #### MacOS/Linux
-    - Once downloaded navigate to Download folder
+    - Download the appropriate **client** tar ball
+    - Open a terminal and change to the directory where the tar ball was downloaded
+    - Create a directory for the tar ball contents
     ```
-    cd ~/Downloads/openshift-origin-client-tools-v3/
+    mkdir ./openshift-client
     ```
-    - Then copy `oc` and `kubectl` to the system-wide available scripts folder (which is already in your PATH)
+    - Change to the new `openshift-client` directory and unpack the tar ball
     ```
-    cp kubectl /usr/local/bin/kubectl
-    cp oc /usr/local/bin/oc
+    cd openshift-client
+    tar xzf ../openshift-client-{platform}-{version}.tar.gz
     ```
-
+    - Copy the `oc` and `kubectl` commands from the unpacked folder into your Terminal `PATH` (e.g. /usr/local/bin)
+    ```
+    cp kubectl /usr/local/bin
+    cp oc /usr/local/bin
+    ```
+    <br/>
     <InlineNotification >
 
-    Depending on your MacOS security settings you may need to allow access to `oc` and `kubectl`, go to `System Preferences`=>`Security & Privacy` and press `Allow Anyway`*
+    Depending on your MacOS security settings you may need to allow access to `oc` and `kubectl`. If you are presented with a security warning the first time
+    using the command, go to `System Preferences`=>`Security & Privacy` and press `Allow Anyway`*
 
     ![security](security.png)
 
@@ -105,12 +108,11 @@ The following is a list of desktop tools required to help with installation and 
     brew install tektoncd/tools/tektoncd-cli
   ```
 
-
-
-
 - [Visual Studio Code](https://code.visualstudio.com/download): A popular code editor
     - You will be required to edit some files, having a good quality editor is always best practice
     - Enabling [launching VSCode from a terminal](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line)
 
 - [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html): _Optional_ installed on your local machine
     - Used for SpringBoot content
+
+- [ArgoCD cli](https://argoproj.github.io/argo-cd/cli_installation/): _Optional_ Interact with and configure ArgoCD from the command-line
