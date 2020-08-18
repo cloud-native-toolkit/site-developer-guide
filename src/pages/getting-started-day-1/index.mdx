@@ -2,35 +2,35 @@
 title: Getting Started - Day 1
 ---
 
-This developer guide has been structured to support two key [personas](https://www.ibm.com/garage/method/practices/think/practice_personas/) in a cloud native organisation:
-- **The Developer**
-- **Cloud System Administrator**
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
-If you already have access to a development cluster you can jump straight to the documentation that assists a developer get productive. If you are a **System Administrator**  or curious how **Terraform** is used to automate cloud provisioning you can read the documentation focused on the **System Administrator**.
-
+If you already have access to a development cluster that has been set up with the Toolkit you can get started 
+deploying an application to the cluster with an Enterprise-grade devops pipeline. While you
+are there, you can also explore the <Globals name="shortName" /> Developer Dashboard and/or the OpenShift console
+to learn how to leverage those resources to increase productivity building cloud-native applications.
 
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="Developer"
-    subTitle="Get started developing applications with IBM Garage Developer Tools"
-    href="/getting-started/deploy-app"
+    title="Deploying an app"
+    subTitle="Quickly get started deploying an application with an Enterprise-grade DevOps pipeline"
+    href="/getting-started-day-1/deploy-app"
     >
 
-![](./images/code.jpg)
+![](./images/pipeline3.jpg)
 
 </ArticleCard>
 </Column>
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="System Admins"
-    subTitle="Understanding how to install the Development Tools into IBM Cloud or CodeReady Containers"
-    href="/admin/overview"
+    title="Developer Dashboard"
+    subTitle={"Explore the " + Globals.get('shortName') + " Developer Dashboard"}
+    href="/getting-started-day-1/dashboard"
     >
 
-![](./images/sysadmins2.jpg)
+![](./images/developer-dashboard.png)
 
 </ArticleCard>
 </Column>
@@ -38,6 +38,5 @@ If you already have access to a development cluster you can jump straight to the
 
 <AnchorLinks>
   <AnchorLink to="../../guides/overview">Tools Guides</AnchorLink>
-  <AnchorLink to="../../programming/overview">Programming Guide</AnchorLink>
   <AnchorLink to="../../practical/overview">Practical Guides</AnchorLink>
 </AnchorLinks>

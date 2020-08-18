@@ -34,7 +34,7 @@
 - title: Tools Guides
   pages:
     - title: Overview
-      path: /guides/overview
+      path: /guides
     - title: CI with Tekton
       path: /guides/continuous-integration-tekton
     - title: CI with Jenkins
@@ -61,7 +61,7 @@
 - title: Administrator Guide
   pages:
     - title: Overview
-      path: /admin/overview
+      path: /admin
     - title: Install CodeReady Workspaces
       path: /admin/install-crw
     - title: Configure the Dashboard
@@ -87,14 +87,14 @@
 - title: Code Patterns
   pages:
     - title: Overview
-      path: /codepatterns/overview
+      path: /codepatterns
     - title: Git Repos
       path: /codepatterns/gitrepos
 
 - title: Practical Guides
   pages:
     - title: Overview
-      path: /practical/overview
+      path: /practical
     - title: Inventory Code Pattern - 1
       path: /practical/inventory-part1
     - title: Inventory Code Pattern - 2
