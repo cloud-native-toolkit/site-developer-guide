@@ -8,6 +8,7 @@ globals.devenv     = "Developer Environment";
 globals.ic         = "IBM Cloud";
 globals.ibmcloud   = "IBM Cloud";
 globals.iccli      = "IBM Cloud CLI";
+globals.icconsole  = "IBM Cloud Console";
 globals.kube       = "Kubernetes";
 globals.iks        = "IBM Cloud Kubernetes Service";
 globals.ocp        = "Red Hat OpenShift";

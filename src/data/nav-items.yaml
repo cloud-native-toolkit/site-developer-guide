@@ -14,7 +14,7 @@
 - title: Day 0 - Preparing the Env
   pages:
     - title: Overview
-      path: /getting-started-day-0/overview
+      path: /getting-started-day-0
     - title: Planning the installation
       path: /getting-started-day-0/plan-installation/ibm-cloud
     - title: Installing with the toolkit

@@ -1,13 +1,13 @@
 ---
 title: Plan installation
-tabs: ['IBM Cloud', 'Non-IBM Cloud']
+tabs: ['IBM Cloud', 'Hybrid']
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Provides the considersations and steps to prepare the <Globals name="ic" /> account for
+Provides the considerations and steps to prepare the <Globals name="ic" /> account for
 an installation of <Globals name="shortName" /> <Globals name="env" />.
 
 </PageDescription>
@@ -214,21 +214,30 @@ example, we give our resource groups names like `mooc-team-one`, `garage-dev-too
 
 </InlineNotification>
 
-### D. Create an <Globals name="ic" /> API Key
+### C. Create an <Globals name="ic" /> API Key
+
+An API Key is used to authenticate to the <Globals name="ic" /> APIs. It is specific to a user within a particular 
+account, meaning you need a different API key for each account you will be accessing. 
+
+**Note:** If you will be using classic
+infrastructure and/or multiple `account mangers` follow these instructions instead to create a 
+[functional ID](/admin/plan-installation#create-a-functional-id-for-classic-infrastructure-permissions) for the
+account.
+
+[Create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key) and 
+download each key to a file. Be sure to include a descriptive name of the APIKey.
+
+### D. Attach the <Globals name="ic" /> API Key to the resource group
 
 To create resources in the resource group, the account will need API keys for the container service 
 to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). 
-A separate API key is needed for each region and resource group. An account manager should use 
-[the account's functional ID](/admin/plan-installation#functional-id-for-infrastructure-permissions) to set the API 
-key(s) for the new resource group.
-
-Create an API key for the resource group and the data center's region:
+The API key is needed for each region and resource group. Use the API key from the previous step for these steps:
 
 1. Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id#api_key) created by the account owner
     ```shell script
     ibmcloud login --apikey @key_file_name
     ```
-2. Perform these steps to set the API key: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+2. Reset the API key for a given region for the container service: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
     ```shell script
     ibmcloud ks api-key reset --region <region>
     ```
@@ -286,6 +295,10 @@ with 8 vCPUs and 32GB RAM.
 </AccordionItem>
 
 <AccordionItem title="3. (Optional) Set up Classic Infrastructure">
+
+Virtual Private Cloud infrastructure is recommended for use with clusters as it easier to manage with IAM and provides
+a superior environment. However, there are some situations where classic infrastructure is still required, particularly
+Cloud Paks. When classic infrastructure will be used then the following additional configuration is required.
 
 ### A. Create a functional ID for Classic Infrastructure permissions
 
@@ -384,4 +397,12 @@ network:
 </Accordion>
 
 With these steps completed, the account manager will have configured the account so that the environment administrator 
-can install the environment.
+can install the environment. As you move into the next step of installing into the environment that has just been
+prepared, be sure to record the following information:
+
+- <Globals name="ic" /> API key
+- Resource group name
+- Region
+- Data center (classic infrastructure only)
+- Private VLAN id (classic infrastructure only)
+- Public VLAN id (classic infrastructure only)
