@@ -64,7 +64,7 @@ it into your development cluster.
 
 <InlineNotification kind="info">
 
-**Note:** Most all of the remaining steps assume this step has already been performed. If you stop and then come
+**Note:** The remaining steps assume this step has already been performed. If you stop and then come
 back later it is a good idea to re-run this step again before proceeding
 </InlineNotification>
 
@@ -114,15 +114,14 @@ tile displays the GitHub 404 page, log in and reload the page.
 
 </InlineNotification>
 
-
 1. From the Developer Dashboard, click on **<Globals name="templates" />** tab
 
 2. Pick one of the templates that is a good architectural fit for your application and the language and framework that 
 you prefer to work with.
 
   Click on a <Globals name="template" /> **Tile** to create your app github repository from the 
-    template repository selected. You can also click on the **Git Icon** to browse the source template 
-    repository and click on the **Template** to create the template
+  template repository selected. You can also click on the **Git Icon** to browse the source template 
+  repository and click on the **Template** to create the template
     
 3. Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) 
 process.
@@ -141,13 +140,12 @@ The new repository will be created in your selected organization.
 
 ### 5. Clone your code
 
-1. Next, clone it to your local machine.
-2. Click on **Clone or download**
-3. Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
+1. With the browser open to the newly created repository, click on **Clone or download**
+2. Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
     ```shell script
     git clone git@github.com:bwoolf1/stockbffnode.git
     ```
-4. Change into the cloned directory
+3. Change into the cloned directory
     ```shell script
     cd stockbffnode
     ```
@@ -175,6 +173,12 @@ oc project {DEV_NAMESPACE}
 
 ```shell script
 kubectl config set-context --current --namespace={DEV_NAMESPACE}
+```
+</Tab>
+<Tab label="IGC">
+
+```shell script
+igc sync {DEV_NAMESPACE}
 ```
 </Tab>
 </Tabs>
@@ -213,10 +217,10 @@ also ask for the branch that should be used for the pipeline.
 3. When registering a `Tekton` pipeline, you will also be prompted to select which pipeline you want to use for your 
 application
 
-4. When registering a `Jenkins` pipeline, the CLI will also set up a webhook with the git host
+4. After the pipeline has been created, the command will set up a webhook from the Git host to the pipeline event listener
 
-    **Note:** if the webhook registration step fails it is likely because the Git credentials are incorrect or do
-    not have enough permission in the repository
+    **Note:** If the webhook registration step fails it is likely because the Git credentials are incorrect or do
+    not have enough permission in the repository.
 
 The pipeline will be registered in your development cluster.
 
@@ -229,11 +233,17 @@ platform version (`IKS`, `OCP 3.11`, or `OCP 4.3`).
 <AccordionItem title="Jenkins">
 
 <Tabs>
-<Tab label="OpenShift 4.3">
+<Tab label="OpenShift 4.x">
 
-1. Open the OpenShift Web Console from the Developer Cluster instance
+1. Open the OpenShift Web Console
 
-    ![OpenShift](images/openshiftconsole.png)
+    ```shell script
+    oc console
+    ```
+   
+    **OR**
+    
+    ![IBM Cloud console](./images/openshiftconsole.png)
 
 2. From the left-hand menu, select `Builds` -> `Build Configs`
 
@@ -244,9 +254,15 @@ platform version (`IKS`, `OCP 3.11`, or `OCP 4.3`).
 </Tab>
 <Tab label="OpenShift 3.11">
 
-1. Open the OpenShift Web Console from the Developer Cluster instance
+1. Open the OpenShift Web Console
 
-    ![OpenShift](images/openshiftconsole.png)
+    ```shell script
+    oc console
+    ```
+   
+    **OR**
+    
+    ![IBM Cloud console](./images/openshiftconsole.png)
 
 2. From the top menu, switch to the **Application Console**
  Select _dev_ project/namespace or you personal namespace that was used for
@@ -256,7 +272,7 @@ platform version (`IKS`, `OCP 3.11`, or `OCP 4.3`).
 You will see your application dev ops pipeline now starting to build and once completed will look like 
 the image below.
 
-![OpenShift](images/ospipeline.png)
+![OpenShift](./images/ospipeline.png)
 
 </Tab>
 <Tab label="Kubernetes">
@@ -268,7 +284,7 @@ the image below.
 
 Wait for the pipeline stages to start building. Once the stages have completed, you will see a view similar to the one below.
 
-![Jenkins Pipeline](images/pipeline.png)
+![Jenkins Pipeline](./images/pipeline.png)
 
 </Tab>
 </Tabs>
@@ -277,21 +293,27 @@ Wait for the pipeline stages to start building. Once the stages have completed, 
 <AccordionItem title="Tekton">
 
 <Tabs>
-<Tab label="OpenShift 4.3">
+<Tab label="OpenShift 4.x">
 
-1. Open the OpenShift Web Console from the Developer Cluster instance
+1. Open the OpenShift Web Console
 
-    ![OpenShift](images/openshiftconsole.png)
+    ```shell script
+    oc console
+    ```
+   
+    **OR**
+    
+    ![IBM Cloud console](./images/openshiftconsole.png)
 
 2. From menu on the left switch to the **Developer** mode
 
-3. Select _dev_ projectthat was used for the application pipeline registration
+3. Select _dev_ project that was used for the application pipeline registration
  
 4. In the left menu, select *Pipelines*
 
 You will see your application dev ops pipeline now starting to build and once completed will look like the image below.
 
-![OpenShift](images/tektonpipeline.png)
+![OpenShift](./images/tektonpipeline.png)
 
 </Tab>
 <Tab label="Kubernetes or OpenShift 3.11">
@@ -337,23 +359,29 @@ same namespace/project within development cluster where the pipeline ran and val
 below will walk through locating the installed application within the Web Console.
 
 <Tabs>
-<Tab label="OpenShift 4.3">
+<Tab label="OpenShift 4.x">
 
 1. Open the **OpenShift web console**
+    ```shell script
+    oc console
+    ```
 2. Change to the **Developer** view
 3. Click on **Topology** menu
 4. Click on your application deployment in the topology view
-5. Click on on the **Overview** tab
+5. Click on the **Overview** tab
 6. Increase the number of running pods
 7. Click **Resource** tab and then on the pod **View Logs** link
 8. You can see the running state of your application
 
-![Pods on OpenShift](images/topology.png)
+![Pods on OpenShift](src/pages/getting-started-day-1/deploy-app/images/topology.png)
 
 </Tab>
 <Tab label="OpenShift 3.11">
 
 1. Open the **OpenShift web console**
+    ```shell script
+    oc console
+    ```
 2. Change to the **Application Console**
 3. Select you project either `dev` or the namespace you used to deploy your app
 4. Click on **Deployments**
@@ -365,24 +393,27 @@ below will walk through locating the installed application within the Web Consol
 10. You can see the running state of your application
 11. Navigate around the console to understand where your deployment, service and pods are running
 
-![Pods on OpenShift](images/podsos.png)
+![Pods on OpenShift](src/pages/getting-started-day-1/deploy-app/images/podsos.png)
 
 </Tab>
 
 <Tab label="Kubernetes">
 
 1. Open the **Kubernetes Dashboard**
+    ```shell script
+    kubectl console
+    ```
 2. Change to the namespace from `default` to either `dev` or the namespace you used to deploy your app
 3. Click on **Deployments**
 4. You should see the deployment of your application
-5. Click on your application , and the corresponding **Replica Set**
+5. Click on your application and the corresponding **Replica Set**
 6. Try scaling the application, click on **Scale** in the header, change number of pods to 2 and click **OK**
 7. Click on one of the `pod` instances
 8. Click on **Logs**
 9. You can see the running state of your application
 10. Navigate around the console to understand where your deployment, service and pods are running
 
-![Pods on IKS](images/podsiks.png)
+![Pods on IKS](src/pages/getting-started-day-1/deploy-app/images/podsiks.png)
 
 </Tab>
 </Tabs>
@@ -394,9 +425,8 @@ below will walk through locating the installed application within the Web Consol
 </InlineNotification>
 
 Having reached this point, we recommend you repeat the process a few more times using different code 
-pattern templates and explore the environment to get familiar with it. For more information about the 
+pattern templates and explore the environment to get familiar. For more information about the 
 tools used by the pipeline, check out the [Guides](/guides/overview)
 
 This completes the deployment of your app. The next step is to prepare for Continuous Delivery, Code 
 Analysis, and Artifact Management.
-

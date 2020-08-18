@@ -1,0 +1,53 @@
+---
+title: Getting Started - Day 0
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Provides information for provisioning
+an environment using the <Globals name="longName"/>. It describes the available options
+and associated considerations for how the environment can be structured. Additionally,
+this section provides step-by-step guides to get an environment up and running 
+using repeatable Infrastructure as Code components.
+
+</PageDescription>
+
+## Paths to Installation
+
+The <Globals name="longName"/> <Globals name="env"/> can be hosted in 
+any <Globals name="kube"/> or <Globals name="ocp"/> cluster, including those managed by <Globals name="ic"/>. The 
+environment is provisioned using [infrastructure-as-code](/admin/iasc) Terraform scripting that makes the process 
+declarative, automated, and repeatable.
+
+The scripts are composed of a number of Terraform modules that have been organized into different stages. The first 
+stage is responsible for establishing the connection to the cluster (if using an existing cluster) or provisions the
+cluster in IBM Cloud before establishing the connection (if provisioning a new cluster). After establishing the connection,
+the subsequent stages can connect and perform their activities. 
+
+If a managed <Globals name="ic"/> cluster is not used, 
+then the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration 
+values. In this case, we would highly recommend provisioning the cluster using other Terraform scripts.
+
+![](/images/install.png)
+
+The installation process is organized into three activities:
+
+### [Planning the installation](/getting-started-day-0/plan-installation/ibm-cloud) 
+
+Explains the planning and configuration required to prepare for the installation of the Toolkit.
+
+### [Installing with the toolkit](/getting-started-day-0/install-toolkit/ibm-cloud)
+
+Explains the end-to-end process for provisioning the environment with the Toolkit. Within that process, there two 
+primary installation options. Select the approach that best suites your requirements:
+
+* **Install in <Globals name="ic"/>-managed cluster**: Create a new environment in <Globals name="ic"/>, optionally 
+  creating a new cluster in the process.
+
+* **Install in existing OpenShift**: Create a new environment in an OpenShift cluster running anywhere.
+
+### [Completing the configuration](/getting-started-day-0/post-installation)
+
+Explains the steps to finalize the setup of the environment and begin on-boarding developers.
