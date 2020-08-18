@@ -1,3 +1,70 @@
 ---
 title: Post-installation configuration
 ---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Provides a walk-through of the provisioned environment and the steps to validate it is ready to
+begin on-boarding developers. 
+
+</PageDescription>
+
+## Explore the provisioned resources
+
+### <Globals name="ic" /> resources
+
+Once the Terraform scripts have finished, you can see the resources that the scripts created in IBM Cloud:
+
+1. In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/resources "Resource list")
+2. On the Resource List page, filter by your Resource Group by selecting the resource group from the `Group` dropdown (e.g. `appdev-team`)
+3. You should see these resources listed under the following sections:
+    - **Clusters**: 1, either Kubernetes or OpenShift
+    - **Services**: depending on the configuration could be quite a few (LogDNA, Sysdig, Activity Tracker, Watson Assistant, Watson Studio, PostgreSQL, MongoDB, etc)
+    - **Storage**: possibly Cloud Object Storage
+
+### Cluster resources
+
+Log in to the cluster and look at the console to see the resources that have been provisioned within the cluster.
+
+1. Access the cluster console
+
+    <Tabs>
+    <Tab label="Hybrid">
+    
+    ```shell script
+    oc login {server_url} -u {username} -p {password}
+    oc console
+    ```
+   
+    </Tab>
+    <Tab label="IBM Cloud">
+
+    - In the IBM Cloud console, open the [Resource List](https://cloud.ibm.com/resources "Resource list")
+    - On the Resource List page, filter by your Resource Group by selecting the resource group from the `Group` dropdown (e.g. `appdev-team`)
+    - Expand the **Clusters** section and click on the appropriate cluster
+    - Click the button to open the Kubernetes or OpenShift web console
+    
+    </Tab>
+    </Tabs>
+    
+2. Navigate to the `tools` namespace/project.
+3. Look at the status of the pods in the cluster. All should be either in `running` or `completed` state.
+4. If LogDNA or Sysdig were bound to the cluster then a `ibm-observe` namespace/project should have been created containing
+a pod for each node in the cluster
+
+## Verify the environment
+
+The best way to verify that the tools have been configured properly is to deploy a sample pipeline. Follow the 
+[deploy an app](/getting-started-day-1/deploy-app) steps for one of the starter kits to ensure that all the tools have 
+been configured properly. 
+
+## Next steps
+
+To get started with code use the following guides:
+
+<AnchorLinks>
+  <AnchorLink to="../../getting-started-day-1/deploy-app">Deploy First App</AnchorLink>
+  <AnchorLink to="../../guides">Guides</AnchorLink>
+</AnchorLinks>

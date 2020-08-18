@@ -230,3 +230,21 @@ as desired.
 </AccordionItem>
 
 </Accordion>
+
+## Post-installation steps
+
+Once the Terraform has completed, walk through the [post installation steps](/getting-started-day-0/post-installation) to
+explore and verify the environment.
+
+## Troubleshooting
+
+If you find that the Terraform provisioning has failed, try re-running the `runTerraform.sh` script again. 
+The state will be saved and Terraform will try and apply the configuration to match the desired end state.
+
+If you find that some of the services have failed to create in the time allocated, try the following:
+
+1. Manually delete the service instances in your resource group
+3. Re-run the `runTerraform.sh` script with the `--delete` argument to clean up the state
+    ```shell script
+    ./runTerraform.sh --delete
+    ```
