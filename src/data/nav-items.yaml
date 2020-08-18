@@ -5,7 +5,7 @@
 - title: Getting Started
   pages:
     - title: Overview
-      path: /getting-started/overview
+      path: /getting-started
     - title: Prerequisites
       path: /getting-started/prereqs
     - title: CLI
@@ -25,7 +25,7 @@
 - title: Day 1 - Deploying an App
   pages:
     - title: Overview
-      path: /getting-started-day-1/overview
+      path: /getting-started-day-1
     - title: Deploying an App
       path: /getting-started-day-1/deploy-app
     - title: Dashboard
