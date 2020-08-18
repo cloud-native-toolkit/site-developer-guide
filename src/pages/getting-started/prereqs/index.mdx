@@ -51,25 +51,27 @@ The following is a list of desktop tools required to help with installation and 
 
 - [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started): Required for management of IBM Cloud Account and management of your managed IBM Kubernetes and Red Hat OpenShift clusters
     - Don't install just the [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cloud-cli-install-ibmcloud-cli), install the [IBM Cloud CLI and Developer Tools](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started#step1-install-idt)
-    ```
+    ```shell script
     curl -sL https://ibm.biz/idt-installer | bash
     ```
-    - Note: If you log in to the web UI using SSO, you'll need to [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id) for logging into the CLI. (You can also use this API key for [installing the <Globals name="env" />](/admin/installation-ibm-cloud).)
+    - Note: If you log in to the web UI using SSO, you'll need to 
+    [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id) for logging into the CLI. (You can also 
+    use this API key for [installing with the <Globals name="shortName" />](/getting-started-day-0).)
 
 - [OpenShift OC CLI](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/): Required for Red Hat OpenShift management and development
     - Download the appropriate **client** tar ball
     - Open a terminal and change to the directory where the tar ball was downloaded
     - Create a directory for the tar ball contents
-    ```
+    ```shell script
     mkdir ./openshift-client
     ```
     - Change to the new `openshift-client` directory and unpack the tar ball
-    ```
+    ```shell script
     cd openshift-client
     tar xzf ../openshift-client-{platform}-{version}.tar.gz
     ```
     - Copy the `oc` and `kubectl` commands from the unpacked folder into your Terminal `PATH` (e.g. /usr/local/bin)
-    ```
+    ```shell script
     cp kubectl /usr/local/bin
     cp oc /usr/local/bin
     ```
@@ -91,22 +93,23 @@ The following is a list of desktop tools required to help with installation and 
     - Recommended `v12.x LTS`
 
 - [IBM Garage for Cloud CLI](/getting-started/cli): Used to help make working with the development tools as easy as possible
-    ```
+    ```shell script
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ```
   
     *Note:* If you are adventurous, you can install the beta version of the cli that contains upcoming features with the 
     following command (switch back at any time with the above command):
-    ```
+    ```shell script
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli@beta
     ```
 
-- [Tekton CLI](https://github.com/tektoncd/cli): Used to help control Tekton
- pipelines from the command line.
-    ```
+- [jq](https://stedolan.github.io/jq/download/): A powerful command-line processor for JSON files used to support (and simplify) some commands
+
+- [Tekton CLI](https://github.com/tektoncd/cli): Used to help control Tekton pipelines from the command line.
+    ```shell script
     brew tap tektoncd/tools
     brew install tektoncd/tools/tektoncd-cli
-  ```
+    ```
 
 - [Visual Studio Code](https://code.visualstudio.com/download): A popular code editor
     - You will be required to edit some files, having a good quality editor is always best practice

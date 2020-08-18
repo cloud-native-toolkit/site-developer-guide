@@ -16,6 +16,12 @@ h1[id*='page-title'] {
 
 h3[class*='Markdown-module--h3'] {
     margin-top: 1em;
+    margin-botton: .5em;
+}
+
+h3 {
+    margin-top: 1em;
+    margin-botton: .5em;
 }
 
 ul[class*='Markdown-module--list']  {
@@ -36,6 +42,7 @@ div[class*='Tabs-module--tab-contents'] {
 
 h2[class*='Markdown-module--h2'] {
     margin-top: 1em;
+    margin-bottom: .5em;
 }
 
 p[class*='paragraph--responsive']{
