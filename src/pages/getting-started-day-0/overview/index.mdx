@@ -1,43 +1,53 @@
 ---
-title: Getting Started Overview
+title: Installation Overview
 ---
 
-This developer guide has been structured to support two key [personas](https://www.ibm.com/garage/method/practices/think/practice_personas/) in a cloud native organisation:
-- **The Developer**
-- **Cloud System Administrator**
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
-If you already have access to a development cluster you can jump straight to the documentation that assists a developer get productive. If you are a **System Administrator**  or curious how **Terraform** is used to automate cloud provisioning you can read the documentation focused on the **System Administrator**.
+<PageDescription>
 
+Provides information for provisioning
+an environment using the <Globals name="longName"/>. It describes the available options
+and associated considerations for how the environment can be structured. Additionally,
+this section provides step-by-step guides to get an environment up and running 
+using repeatable Infrastructure as Code components.
 
-<Row>
-<Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="dark"
-    title="Developer"
-    subTitle="Get started developing applications with IBM Garage Developer Tools"
-    href="/getting-started/deploy-app"
-    >
+</PageDescription>
 
-![](./images/code.jpg)
+## Paths to Installation
 
-</ArticleCard>
-</Column>
-<Column colLg={4} colMd={4} noGutterMdLeft>
-<ArticleCard
-    color="dark"
-    title="System Admins"
-    subTitle="Understanding how to install the Development Tools into IBM Cloud or CodeReady Containers"
-    href="/admin/overview"
-    >
+The <Globals name="longName"/> <Globals name="env"/> can be hosted in 
+any <Globals name="kube"/> or <Globals name="ocp"/> cluster, including those managed by <Globals name="ic"/>. The 
+environment is provisioned using [infrastructure-as-code](/admin/iasc) Terraform scripting that makes the process 
+declarative, automated, and repeatable.
 
-![](./images/sysadmins2.jpg)
+The scripts are composed of a number of Terraform modules that have been organized into different stages. The first 
+stage is responsible for establishing the connection to the cluster (if using an existing cluster) or provisions the
+cluster in IBM Cloud before establishing the connection (if provisioning a new cluster). After establishing the connection,
+the subsequent stages can connect and perform their activities. 
 
-</ArticleCard>
-</Column>
-</Row>
+If a managed <Globals name="ic"/> cluster is not used, 
+then the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration 
+values. In this case, we would highly recommend provisioning the cluster using other Terraform scripts.
 
-<AnchorLinks>
-  <AnchorLink to="../../guides/overview">Tools Guides</AnchorLink>
-  <AnchorLink to="../../programming/overview">Programming Guide</AnchorLink>
-  <AnchorLink to="../../practical/overview">Practical Guides</AnchorLink>
-</AnchorLinks>
+![](/images/install.png)
+
+The installation process is organized into three activities:
+
+### [Planning the installation](/getting-started-day-0/plan-installation/ibm-cloud) 
+
+Explains the planning and configuration required to prepare for the installation of the Toolkit.
+
+### [Installing with the toolkit](/getting-started-day-0/install-toolkit/ibm-cloud)
+
+Explains the end-to-end process for provisioning the environment with the Toolkit. Within that process, there two 
+primary installation options. Select the approach that best suites your requirements:
+
+* **Install in <Globals name="ic"/>-managed cluster**: Create a new environment in <Globals name="ic"/>, optionally 
+  creating a new cluster in the process.
+
+* **Install in existing OpenShift**: Create a new environment in an OpenShift cluster running anywhere.
+
+### [Completing the configuration](/getting-started-day-0/post-installation)
+
+Explains the steps to finalize the setup of the environment and begin on-boarding developers.
