@@ -11,7 +11,7 @@
     - title: CLI
       path: /getting-started/cli
 
-- title: Day 0 - Preparing the Env
+- title: Day 0 - Creating the Env
   pages:
     - title: Overview
       path: /getting-started-day-0
