@@ -6,7 +6,7 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Use the <Globals name="env" /> to delete itself
+Use the <Globals name="longName" /> environment to delete itself
 
 </PageDescription>
 
@@ -18,23 +18,27 @@ Use the <Globals name="env" /> to delete itself
 </InlineNotification>
 
 
-Not only can the <Globals name="shortName" /> create the <Globals name="env" />, the environment can also delete itself. The environment is installed using Terraform, which stores the state of the creation in the `workspace` folder. Terraform can use that state to delete what it installed.
+Not only can the <Globals name="shortName" /> create the environment, the environment can also delete itself. The 
+environment is installed using Terraform, which stores the state of the applied modules in the `workspace/{cluster name}` 
+folder. Terraform can use that state to delete what it installed.
 
 Destroy a <Globals name="env" /> following these steps:
 
-- Run the following command to launch a [Developer Tools container](/guides/tools-image):
-    ```bash
+1. Run the following command to launch a [Developer Tools container](/guides/tools-image):
+    ```shell script
     ./launch.sh
     ```
 
-- In the container, change to the `workspace` directory:
-    ```bash
-    cd workspace
+2. In the container, change to the `workspace/{cluster name}` directory:
+    ```shell script
+    cd workspace/{cluster name}
     ```
 
-- In the container, run the Terraform tool with the `destroy` option:
-    ```bash
-    terraform destroy
+3. In the container, run the `destroy.sh` script to apply the Terraform destroy:
+    ```shell script
+    ./destroy.sh
     ```
 
-This will remove the development cluster and all the services that were created previously.
+    Rather than directly running `terraform desroy`, the `destroy.sh` script first builds a "destroy plan" from the current
+    state then applies that plan. Performing the destroy in this way is more reliable and allows for certain resources
+    to be selectively destroyed/saved.

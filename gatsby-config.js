@@ -8,6 +8,8 @@ module.exports = {
   },
   pathPrefix,
   plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
     {
       resolve: 'gatsby-theme-carbon',
       options: {
@@ -34,7 +36,13 @@ module.exports = {
         trackingId: "UA-153689700-1",
         head: true
       },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `backgrounds`,
+        path: `${__dirname}/src/bg`, // wherever background images are stored
+      },
     }
-
   ]
 };

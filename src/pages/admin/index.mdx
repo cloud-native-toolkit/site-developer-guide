@@ -6,30 +6,18 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Options for installing the <Globals name="env"/>
+Provides information for a system administrator on how to use and extend the Toolkit components to manage the
+cloud environments. 
 
 </PageDescription>
-
-## Paths to Installation
-
-The <Globals name="longName"/> <Globals name="env"/> can be hosted in any <Globals name="kube"/> or <Globals name="ocp"/> cluster, including those managed by <Globals name="ic"/>. The environment is provisioned using [infrastructure-as-code](/admin/iasc) scripting that makes the process declarative, automated, and repeatable. The provisioning code is implemented as Terraform scripts.
-
-The scripts are organized in a number of stages. When a managed cluster in <Globals name="ic"/> is used, the first stage will either provision a new cluster or connect to an existing cluster on <Globals name="ic"/>. If a managed <Globals name="ic"/> cluster is not used, then the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration values. In this case, we would highly recommend provisioning the cluster using other Terraform scripts.
-
-![](/images/install.png)
-
-[Plan Installation](/admin/plan-installation) explains the end-to-end process for creating a <Globals name="ic"/>. Within that process, there are three installation options. Select the approach that best suites your requirement:
-- **Install new**: Create a new environment in <Globals name="ic"/> including a new cluster
-- **Install existing**: Create a new environment in <Globals name="ic"/> but install it into an existing cluster
-- **Install Red Hat CRC**: Create a new environment in *Red Hat CodeReady Containers* installed locally on your laptop
 
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="Install New"
-    subTitle="Create a new IBM Cloud managed cluster with the Developer Environment installed"
-    href="/admin/installation-ibm-cloud"
+    title="Configure the dashboard"
+    subTitle="Customize the Developer Dashboard and OpenShift console"
+    href="/admin/config-dashboard"
     >
 
 ![](/images/sysadmins2.jpg)
@@ -39,9 +27,9 @@ The scripts are organized in a number of stages. When a managed cluster in <Glob
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="Install Existing"
-    subTitle="Install the Developer Environment into an existing IBM Cloud managed cluster"
-    href="/admin/installation-existing"
+    title="Infrastructure as Code"
+    subTitle="Review the framework and modules that provide Infrastructure as Code scripts"
+    href="/admin/iasc"
     >
 
 ![](/images/sysadmins.jpg)
@@ -51,9 +39,9 @@ The scripts are organized in a number of stages. When a managed cluster in <Glob
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="Install Red Hat CRC"
-    subTitle="Install the Developer Environment into Red Hat CodeReady Containers"
-    href="/admin/installation-crc"
+    title="Cluster configuration"
+    subTitle="Understand the metadata used to configure the cluster and the tools to customize and manage the environment"
+    href="/admin/cluster-configuration"
     >
 
 ![](/images/code2.jpg)
