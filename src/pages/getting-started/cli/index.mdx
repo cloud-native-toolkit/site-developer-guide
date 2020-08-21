@@ -59,12 +59,12 @@ Once npm has been updated, rerun the command to install the cli.
 <br />
 
 - Install the CLI:
-    ```bash
+    ```shell script
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ````
 
 - Verify the version:
-    ```bash
+    ```shell script
     igc --version
     ```
   
@@ -90,7 +90,7 @@ Follow the instructions in the [cloud-shell-commands readme](https://github.com/
 When the CLI is installed, it adds an executable named `igc` to the PATH. Running `igc --help` will list
 the available commands. The output text will be similar to the following:
 
-```bash
+```shell script
 $ igc --help
 IBM Garage Cloud Native Toolkit CLI (https://cloudnativetoolkit.dev)
 
@@ -131,7 +131,7 @@ Options:
 As of v0.5.1, the <Globals name="igccli" /> will now install the commands as plugins to the `kubectl` and `oc` CLIs. 
 For example, all of the following are equivalent:
 
-```bash
+```shell script
 igc pipeline
 kubectl pipeline
 oc pipeline
@@ -158,14 +158,14 @@ surprise then that you should be logged into the prior to running the commands.
 
 <AccordionItem title="OpenShift" open="true">
 
-```bash
+```shell script
 oc login --server=<url> --token=<apikey>
 ```
 </AccordionItem>
 
 <AccordionItem title="Kubernetes">
 
-```bash
+```shell script
 ibmcloud ks cluster config --cluster <CLUSTER>
 ```
 
@@ -183,7 +183,7 @@ your account prior to running the command.
 
 - Log into your <Globals name="ic" /> account with the correct region and resource group:
 
-    ```bash
+    ```shell script
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
     ```
 
@@ -209,7 +209,7 @@ This command requires that the login context for the cluster has already been es
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc dashboard
 ```
 </Tab>
@@ -255,7 +255,7 @@ This command requires that the login context for the cluster has already been es
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc console
 ```
 </Tab>
@@ -301,14 +301,14 @@ configured, then the URL to the repo will be printed out.
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc git
 ```
 
 If you have multiple remotes and would like to open one other than `origin`:
 
-```bash
-igc git-repo origin-fork
+```shell script
+igc git origin-fork
 ```
 
 
@@ -420,7 +420,7 @@ provided
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc endpoints
 ```
 

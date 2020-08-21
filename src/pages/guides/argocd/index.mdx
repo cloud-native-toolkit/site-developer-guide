@@ -1,60 +1,92 @@
 ---
-title: Continuous Delivery
+title: Continuous Delivery with GitOps
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Use Argo CD to continuously deliver application changes
+Use GitOps to continuously deliver application changes
 
 </PageDescription>
 
-In IBM Garage Method, one of the Develop practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). The <Globals name="env" /> uses an [Argo CD](https://argoproj.github.io/argo-cd/) pipeline to automate continuous delivery.
+In IBM Garage Method, one of the **Develop** practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). 
+A preferred model for implementing continuous delivery is GitOps, where the desired state of the operational environment
+is defined in a source control repository (namely Git). 
 
 ## What is continuous delivery
 
-Continuous delivery is the DevOps approach of frequently making new versions of an application's components available for deployment to a runtime environment. The process involves automation of the build and validation process and concludes with a new version of the application that is available for promotion to another environment.
+Continuous delivery is the DevOps approach of frequently making new versions of an application's components available for
+deployment to a runtime environment. The process involves automation of the build and validation process and concludes 
+with a new version of the application that is available for promotion to another environment.
 
 Continuous delivery is closely related to continuous deployment. The distinction is:
 - Continuous delivery deploys an application when a user manually triggers deployment
 - Continuous deployment deploys an application automatically when it is ready
 
-An application is ready for deployment when it passes a set of tests that prove it doesn't contain any significant problems. These tests must be automated so that deployment can be automated. Until you have this set of automated tests and trust them sufficiently, stick with continuous delivery.
+Typically, continuous deployment is an evolution of a continuous delivery process. An application is ready for 
+deployment when it passes a set of tests that prove it doesn't contain any significant problems. Once these tests have been 
+automated in a way that reliably verifies the application components then the deployment can be automated. Additionally,
+for continuous delivery it important to employ other best practices around moving and managing changes in an environment: 
+blue-green deployments, shadow deployments, and feature toggles to name a few. Until these practices are in place and 
+verified, it is best to stick with continuous delivery. 
+
+As with most cloud-native practices, the move from continuous deployment to continuous delivery would not be done in
+a "big bang" but incrementally and as different application components are ready. 
 
 ### What is GitOps
 
-[*GitOps*](https://www.weave.works/technologies/gitops/) is the operational pattern of using Git repositories as the source of truth for defining the configuration that makes up the desired state of the application. It uses Git repositories to declaratively represent the desired state of applications in deployment environments.
+[*GitOps*](https://www.weave.works/technologies/gitops/) is the operational pattern of using source code repositories 
+(namely Git) as the source of truth for defining the configuration that makes up the desired state of the operational 
+environment. Git repositories are used to declaratively represent the desired state of applications in deployment 
+environments.
 
 GitOps takes advantage of several Git features:
-- Git has an audit log of changes
-- Whole releases can be managed from a pull request
+- Git provides a versioned history of changes, listing what was changed and who made the change
+- Change releases can be managed from a pull request, allowing multiple people to make changes but a select few to approve the changes
+- Git provides access control mechanisms to limit who can change and view the configuration
 - Git enables changes to be rolled back quickly if there is an issue with a new release
+- Git supports multiple models for change management: Branches, Forks, GitFlow, etc
+- Hosted git providers (like GitHub) provide a rich API that allows the different operations to be automated, if desired
 
 ### CI/CD integration
 
-For the full end-to-end build and delivery process, both the CI and CD pipelines are required. For this to work, a Git repo is used to convey the configuration values. Within the <Globals name="env" />, we have used certain naming conventions to streamline and simplify the untegration between the various components.
+For the full end-to-end build and delivery process, both the CI and CD pipelines are used. When working in
+a containerized environment such as <Globals name="kube" /> or <Globals name="ocp" />, the responsibilities between the 
+two processes are clearly defined:
 
-![Argo CD config](/images/CI_CD-pipelines.png)
+- The **CI pipeline** is responsible for building validating and packaging the "raw materials" (source code, deployment 
+configuration, etc) into versioned, deployable artifacts (container images, helm charts, published artifacts, etc)
+- The **CD pipeline** is responsible for applying the deployable artifacts into a particular target environment
 
-The naming components are:
-- `app repo` - The name of the Git repository for the application
-- `git org` - The name of the GitHub organization for the application's repo
-- `tag` - The build version
-- `chart version` - The version of the Helm chart
-- `region` - The geographic location in IBM Cloud
+![Argo CD config](./images/CI_CD-pipelines.png)
 
-The derived names are:
-- GitHub application path: `github.com/{git org}/{app repo}`
-- CI Pipeline name: `{git org}.{app repo}`
-- Docker image's path: `{region}.icr.io/{git org}/{app repo}:{tag}` in the [Image Registry](/guides/image-registry)
-- Helm chart's path: `generic-local/{git org}/{app repo}-{tag}-{chart version}.tgz` in the [Helm Repository](/guides/artifact-management)
-- Dependencies filename: `{app repo}/requirements.yaml` in the GitOps repo
-- CD Pipeline name: `{app repo}`
+1. A change made to one of the source repositories triggers the CI process.
+
+2. The CI process builds, validates, and packages those changes into deployable artifacts that are stored in the image
+registry and artifact repository(ies).
+
+3. The last step of the CI process updates the GitOps repository with information about the updated artifacts. 
+
+    At a minimum this step stores updates the version number to the newly released versions of the artifacts but depending on the environment this step might also update the deployment configuration.
+    
+    <InlineNotification>
+    
+    It is also possible to trigger a process when a new image is available in the image registry or a new artifact is available
+    to the artifact management system. 
+    
+    In this case, the CI process could be split into two parts: **1)** create the 
+    container image and artifacts, and **2)** update the GitOps repo with the available artifacts.
+    
+    </InlineNotification>
 
 ## What is Argo CD
 
-[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a Kubernetes cluster or namespace, which also works for an OpenShift cluster or project. Argo CD models a collection of applications as a project and uses a Git repository to store the project's desired state. Each application is stored as a folder in the repository, and each deployment environment is stored as a branch in the repository.
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The 
+deployment environment is a namespace in a Kubernetes cluster, which also works for an OpenShift cluster or project. 
+Argo CD models a collection of applications as a project and uses a Git repository to store the project's desired state. 
+Argo CD if flexible in how the application configuration is stored in the Git repository. The only requirement is that
+the application information is stored somewhere in a Git repository.
 
 Argo CD supports defining Kubernetes manifests in a number of ways:
 - helm charts

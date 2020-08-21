@@ -11,9 +11,9 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 const FirstRightText = () => (
   <p>
       The {g.shortName} enables application development and support teams to deliver business value quickly
-      using {g.ocp} and {g.kube} on {g.ibmcloud}. This guide provides information to help Developers, Administrators,
-      and Site Reliability Engineers use the Toolkit to support delivering business applications through the entire
-      Software Development Life Cycle (SDLC).
+      using {g.ocp} or {g.ic}-managed {g.kube} or {g.ocp}. This guide provides information
+      to help Developers, Administrators, and Site Reliability Engineers use the {g.tinyName} to support delivering
+      business applications through the entire Software Development Life Cycle (SDLC).
     <a
       className={calloutLink}
       href="https://www.ibm.com/cloud"
@@ -28,7 +28,7 @@ const SecondLeftText = () => <p>Fit to purpose</p>;
 const SecondRightText = () => (
   <p>
       The {g.longName} environment has been built to support the principles of a robust SDLC while
-      being flexible enough to fit into a wide range of development environments and toolchains.
+      being flexible enough to fit into a wide range of development settings and toolchains.
       The {g.shortName} supports different tool selections, from open source versions of tools like Artifactory and
       SonarQube to enterprise-class software like IBM Cloud Pak for Applications and IBM Multicloud Manager.
     <a

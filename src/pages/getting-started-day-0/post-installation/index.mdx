@@ -54,17 +54,89 @@ Log in to the cluster and look at the console to see the resources that have bee
 4. If LogDNA or Sysdig were bound to the cluster then a `ibm-observe` namespace/project should have been created containing
 a pod for each node in the cluster
 
-## Verify the environment
+### Validate LogDNA
+
+If LogDNA was provisioned and/or bound to the cluster, check that log data is flowing into [LogDNA](/guides/log-management)
+
+### Validate/complete the SysDig setup
+
+Complete the [setup of Sysdig](/admin/sysdig-setup) and [check the monitoring data](/guides/monitoring) is flowing
+
+### Validate the Developer Dashboard
+ 
+Test opening the [<Globals name="dashboard" />](/getting-started/dashboard)
+
+1. Log into the cluster from the command-line
+2. Run either or all of the CLI options to load the dashboard 
+
+    <Tabs>
+    <Tab label="oc">
+    
+    ```shell script
+    oc dashboard
+    ```
+   
+    </Tab>
+    <Tab label="kubectl">
+    
+    ```shell script
+    kubetl dashboard
+    ```
+   
+    </Tab>
+    <Tab label="IGC">
+    
+    ```shell script
+    igc dashboard
+    ```
+   
+    </Tab>
+    </Tabs>
+
+### Validate the installed tools
+
+1. Log into the cluster from the command-line
+2. Run the [<Globals name="igccli" />](/getting-started/cli) `credentials` command to list the credentials for the tools
+    ```shell script
+    igc credentials -n tools
+    ```
+3. Use the url and credentials provided for each tool to validate the provided credentials
+
+## Additional configuration
+
+The following post installation setup is required. To get the developers enabled quickly, make sure you have 
+completed at least post installation tasks. The customization is optional and down to development team needs.
+
+### Customize the Dashboard configuration
+ 
+Perform the steps in [Configure Dashboard](/admin/config-dashboard) to customize tiles and menu items for the tools
+that are external to the cluster.
+
+### Set up user access
+
+Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where 
+the tools are installed. 
+
+1. Run the RBAC script `./terraform/scripts/rbac.sh` found in the `ibm-garage-iteration-zero` repository
+
+### Create a CI namespace/project
+
+1. Log into the cluster from the command-line
+2. Run the [<Globals name="igccli" />](/getting-started/cli) `sync` command to create the namespace/project
+    ```shell script
+    igc sync --dev {project}
+    ```
+
+### Setup a GitOps repo
+
+1. Follow the steps to [create a GitOps repo](/guides/continuous-delivery#set-up-the-gitops-repo).
+2. Follow the steps to [add configuration for the CI pipeline](/guides/continuous-delivery#hook-the-ci-pipeline-to-the-cd-pipeline), using
+the namespace created in the [previous step](#create-a-ci-namespaceproject).
+
+### Test the pipeline
 
 The best way to verify that the tools have been configured properly is to deploy a sample pipeline. Follow the 
 [deploy an app](/getting-started-day-1/deploy-app) steps for one of the starter kits to ensure that all the tools have 
 been configured properly. 
 
-## Next steps
-
-To get started with code use the following guides:
-
-<AnchorLinks>
-  <AnchorLink to="../../getting-started-day-1/deploy-app">Deploy First App</AnchorLink>
-  <AnchorLink to="../../guides">Guides</AnchorLink>
-</AnchorLinks>
+**Note:** Use the project/namespace created in the [previous two steps](#create-a-ci-namespaceproject) when deploying the app 
