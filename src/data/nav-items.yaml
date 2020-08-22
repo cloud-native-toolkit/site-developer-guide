@@ -23,6 +23,8 @@
       path: /getting-started-day-0/install-toolkit/ibm-cloud
     - title: "- Complete the configuration"
       path: /getting-started-day-0/post-installation
+    - title: IBM Cloud Account
+      path: /getting-started-day-0/ibm-cloud-account-management
     - title: Infrastructure as Code
       path: /getting-started-day-0/infrastructure-as-code
     - title: Git-Ops
