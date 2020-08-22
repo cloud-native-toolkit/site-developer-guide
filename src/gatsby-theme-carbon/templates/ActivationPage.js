@@ -4,7 +4,7 @@ import {ArticleCard,Row,Column} from "gatsby-theme-carbon";
 import _ from 'lodash';
 
 // Create a Helper Method
-function getArticles(data) {
+function getArticles(data,tileColor) {
 
     if (_.isUndefined(data))
         return [];
@@ -19,8 +19,9 @@ function getArticles(data) {
         //Create the parent and add the children
         articles.push(
 
-            <Column colMd={4} colLg={4} noGutterMdLeft>
+            <Column colMd={4} colLg={4} noGutterMdLeft >
                 <ArticleCard
+                    className={tileColor}
                     title={article.title}
                     author={article.author}
                     subTitle = {subtitle}
@@ -37,12 +38,49 @@ function getArticles(data) {
 
 }
 
-export default ({content}) => {
+export default ({content,tileColor}) => {
 
     const data = useStaticQuery(graphql`
     {
       allDataJson {
         nodes {
+          kubernetes {
+            title
+            subtitle
+            author
+            language
+            href
+            color
+          }
+          containers {
+            title
+            subtitle
+            author
+            language
+            href
+            color
+          }
+          openshift_dev {
+            title
+            subtitle
+            author
+            href
+            color
+          }
+          openshift_adv {
+            title
+            subtitle
+            author
+            href
+            color
+          }
+          openshift {
+            title
+            subtitle
+            author
+            href
+            color
+          }
           cnd {
             title
             subtitle
@@ -67,7 +105,6 @@ export default ({content}) => {
           argocd {
             color
             href
-            language
             subtitle
             title
           }
@@ -79,8 +116,9 @@ export default ({content}) => {
         <>
 
             <Row>
-            {getArticles(data.allDataJson.nodes[0][content])}
+            {getArticles(data.allDataJson.nodes[0][content],tileColor)}
             </Row>
         </>
     )
 }
+

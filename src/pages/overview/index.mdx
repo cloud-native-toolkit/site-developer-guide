@@ -11,14 +11,14 @@ Get familiar with using the <Globals name="longName"/>
 
 </PageDescription>
 
-<Globals name="longName" /> provides an environment for developing cloud-native applications for deployment within <Globals name="kube" /> and <Globals name="ocp" />. It 
-embodies <Globals name="method" /> principles and practices for consistently developed 
+<Globals name="longName" /> provides an environment for developing cloud-native applications for deployment within <Globals name="kube" /> and <Globals name="ocp" />. It
+embodies <Globals name="method" /> principles and practices for consistently developed
 applications incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 <Carousel images={["/images/cntk-objectives.png", "/images/cntk-philosophy.png"]} />
 
-The <Globals name="shortName" /> <Globals name="devenv" /> includes 
-several features that support <Globals name="method" /> best practices for consistent and rapid development of 
+The <Globals name="shortName" /> <Globals name="devenv" /> includes
+several features that support <Globals name="method" /> best practices for consistent and rapid development of
 cloud-native applications:
 
 - **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
@@ -28,20 +28,20 @@ cloud-native applications:
 - **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized console to help developers use the environment's capabilities
 
-Typically a [Cloud System Admin](/admin/overview) (such as a 
-[squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets 
-up a new <Globals name="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception), 
-providing a place for the developers to start developing the 
-[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). 
-The objective is to reduce the time required for a team to configure and prepare their development environment. The key 
-benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) 
+Typically a [Cloud System Admin](/admin/overview) (such as a
+[squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
+up a new <Globals name="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
+providing a place for the developers to start developing the
+[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
+The objective is to reduce the time required for a team to configure and prepare their development environment. The key
+benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/)
 consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) 
-so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the 
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules)
+so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the
 industry to deliver real value for modern cloud-native development.
 
-[Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach 
+[Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach
 to how they deliver success with OpenShift.
 
 ### Environment components
@@ -113,7 +113,7 @@ The following best-of-breed open source software tools are installed in the clus
 | Container Image Registry    | [IBM Cloud Container Registry](/guides/image-registry)   |         | Stores container images to be deployed |
 | Artifact Management         | [Artifactory](/guides/artifact-management/)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
 | Continuous Delivery         | [ArgoCD](/guides/continuous-delivery/)                   |         | ArgoCD support Continuous Delivery with GitOps |
-| Web IDE                     | [Eclipse CHE](https://www.eclipse.org/che/)              |         | IDE for editing and managing code in a web browser |
+| Web IDE                     | [Code Ready Workspace](https://developers.redhat.com/products/codeready-workspaces/overview)              |         | IDE for editing and managing code in a web browser |
 
 ## Getting Started
 

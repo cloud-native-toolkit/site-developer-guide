@@ -19,6 +19,14 @@ h3[class*='Markdown-module--h3'] {
     margin-botton: .5em;
 }
 
+pre[class*='Code-module--highlight'] {
+    margin-left: 15px;
+}
+
+div[class*='Code-module--sidebar'] {
+    right: -15px;
+}
+
 h3 {
     margin-top: 1em;
     margin-botton: .5em;
@@ -86,6 +94,50 @@ section[class*='Tabs-module--panel']{
 
 .bx--list--nested {
     margin-bottom: 1.5rem;
+}
+
+
+.bx--list--nested {
+    margin-bottom: 1.5em;
+}
+
+.bx--resource-card--dark .bx--tile {
+    background-color:grey;
+}
+
+
+.bx--article-card--ibm .bx--tile {
+    background-color:#0062ff;
+}
+
+.bx--article-card--ibm:hover .bx--tile {
+    background-color:#3d3d3d;
+}
+
+
+.bx--article-card--ibm .bx--article-card__subtitle {
+    color: var(--cds-text-04, #ffffff);
+}
+
+.bx--article-card--redhat .bx--tile {
+    background-color: #e00;
+}
+
+
+.bx--article-card--redhat:hover .bx--tile {
+    background-color:cornflowerblue;
+}
+
+.bx--article-card--redhat .bx--article-card__subtitle {
+    color: var(--cds-text-04, #ffffff);
+}
+
+.bx--resource-card--dark .bx--tile:hover {
+    background-color:cornflowerblue;
+}
+
+.bx--resource-card--dark .bx--tile:hover {
+    background-color:cornflowerblue;
 }
 
 .bx--resource-card--dark .bx--tile {
