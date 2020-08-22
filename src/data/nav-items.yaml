@@ -115,12 +115,12 @@
     - title: Build to Manage
       path: /arch/manageable
 
-- title: Code Patterns
+- title: Starter Kits
   pages:
     - title: Overview
-      path: /codepatterns
+      path: /starterkits
     - title: Git Repos
-      path: /codepatterns/gitrepos
+      path: /starterkits/gitrepos
 
 - title: Practical Guides
   pages:
@@ -141,12 +141,14 @@
 
 - title: Activation
   pages:
-    - title: Garage Method Development
-      path: /activation/garage-development
     - title: Cloud-Native Development
       path: /activation/cloudnative-development
     - title: Cloud-Native Deployment
       path: /activation/cloudnative-deployment
+    - title: OpenShift Learning
+      path: /activation/redhat-learning
+    - title: Garage Method Development
+      path: /activation/garage-development
 
 - title: Resources
   pages:

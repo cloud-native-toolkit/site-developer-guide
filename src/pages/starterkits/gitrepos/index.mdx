@@ -1,37 +1,36 @@
 ---
-title: Code Patterns Git Repos
+title: Starter Kits Git Repos
 ---
 
 ### Overview
 
-In the [Overview](../overview) section we describe why _Code
- Patterns_ provide a perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed templates that can be used to get projects moving quickly and focusing on use case business logic.
+In the [Overview](../overview) section we describe why _Start Kits_ provide a perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed templates that can be used to get projects moving quickly and focusing on use case business logic.
 
 Read up on why you should start with a **Code Pattern** and if you have not
  already tried to deploy your first app to show you how easy it is to get
   started
 
 <AnchorLinks>
-  <AnchorLink to="../codpatterns/overview">Code Patterns
-   Overview
+  <AnchorLink to="../starterkits">Starter Kits Overview
   </AnchorLink>
   <AnchorLink to="../../getting-started/deploy-app">Deploying your first app</AnchorLink>
 </AnchorLinks>
 
-Here are links to the base set of **Code Patterns** provided for the _IBM Garage for Cloud Developer Tools_.
+Here are links to the base set of **Starter Kits** provided for the _IBM Garage for Cloud Developer Tools_.
 
-- To use the Code Patterns, click on the link and then the **Template** button to create a version in your own git organization.
+- To use the Starter Kits, click on the link and then the **Template** button to create a version in your own git organization.
 
 - Then clone it onto your local machine and then use `igc pipeline` to register it with your Jenkins server.
     ```bash
-    ibmcloud login | oc login
-    kubectl get pods | oc get pods
-    npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
-    git clone <generated startkit template>
-    cd <generated startkit template>
-    code package.json ! rename your project and push changes
-    igc pipeline -n dev
+    oc login
+    oc get pods
+    npm install -g @ibmgaragecloud/cloud-native-toolkit-cli
+    git clone <code pattern> | cd <code pattern>
+    oc sync <project> --dev
+    oc pipeline
     ```
+
+- If you are bringing your own code run the `oc enable` command to add a Helm chart and make sure you code exposes a `/health` endpoint and the `values.yaml` is exposing the correct port for your application.
 
 ### Git Repo Links
 
@@ -112,7 +111,21 @@ Here are links to the base set of **Code Patterns** provided for the _IBM Garage
   </ResourceCard>
 </Column>
 
+<Column colLg={4} colMd={4} noGutterMdLeft>
+  <ResourceCard
+    title="Go Gin Microservice"
+    subTitle="Go Gin Microservice/Bff/Edge"
+    actionIcon="launch"
+    color="dark"
+    href="https://github.com/IBM/template-go-gin"
+  >
 
+![Github icon](/images/github-icon.png)
+
+  </ResourceCard>
+</Column>
+</Row>
+<Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
   <ResourceCard
     title="ArgoCD GitOps"
@@ -126,6 +139,24 @@ Here are links to the base set of **Code Patterns** provided for the _IBM Garage
 
   </ResourceCard>
 </Column>
+
+<Column colLg={4} colMd={4} noGutterMdLeft>
+  <ResourceCard
+    title="Tekton Tasks"
+    subTitle="Contains a set of generic Tekton Tasks for use with Tekton Pipelines"
+    actionIcon="launch"
+    color="light"
+    href="https://github.com/IBM/ibm-garage-tekton-tasks"
+  >
+
+![Github icon](/images/github-icon.png)
+
+  </ResourceCard>
+</Column>
+
+
+
+
 </Row>
 
 
