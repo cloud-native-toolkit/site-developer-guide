@@ -96,11 +96,13 @@ Commands:
   igc endpoints           List the current ingress hosts for deployed apps in a
                           namespace      [aliases: ingress, endpoint, ingresses]
   igc generate-token      Generate a Jenkins api token
+  igc git-secret [name]   Create a kubernetes secret that contains the url,
+                          username, and personal access token for a git repo
   igc git [remote]        Launches a browser to the git repo url specified by
                           the origin remote. If remote not provided defaults to
                           origin
-  igc git-secret [name]   Create a kubernetes secret that contains the url,
-                          username, and personal access token for a git repo
+  igc gitops              Registers the git repository in the kubernetes cluster
+                          as the gitops repository for the given namespace
   igc jenkins-auth        Generate a Jenkins api token and register it as
                           kubernetes secret
   igc sync [namespace]    Create a namespace (if it doesn't exist) and prepare
@@ -300,7 +302,6 @@ If you have multiple remotes and would like to open one other than `origin`:
 ```shell script
 igc git origin-fork
 ```
-
 
 </Tab>
 <Tab label="Manual">
@@ -706,18 +707,18 @@ It's _ephemeral_ meaning it doesn't allocate any persistent storage in the clust
 
 1. Set the project/namespace
 
-```shell script
-oc project {NAMESPACE}
-```
-
-where:
-- `{NAMESPACE}` is the development namespace where the pipelines will run
+    ```shell script
+    oc project {NAMESPACE}
+    ```
+    
+    where:
+    - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 2. Run the following command to provision the Jenkins instance in your namespace
 
-```shell script
-oc new-app jenkins-ephemeral
-```
+    ```shell script
+    oc new-app jenkins-ephemeral
+    ```
 
 3. Open the OpenShift console as described in the login steps above
 
@@ -752,35 +753,35 @@ secret needs to be added that contains the git credentials.
 https://cloudnativetoolkit.dev/getting-started/prereqs#configure-github-personal-access-token
 
 2. Copy the following into a file called `gitsecret.yaml` and update the {Git-Username}, and {Git-PAT}
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  annotations:
-    build.openshift.io/source-secret-match-uri-1: https://github.com/*
-  labels:
-    jenkins.io/credentials-type: usernamePassword
-  name: git-credentials
-type: kubernetes.io/basic-auth
-stringData:
-  username: {Git-Username}
-  password: {Git-PAT}
-```
-
-where:
- - `Git-Username` is the username that has access to the git repo
- - `Git-PAT` is the personal access token of the git user
+    
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      annotations:
+        build.openshift.io/source-secret-match-uri-1: https://github.com/*
+      labels:
+        jenkins.io/credentials-type: usernamePassword
+      name: git-credentials
+    type: kubernetes.io/basic-auth
+    stringData:
+      username: {Git-Username}
+      password: {Git-PAT}
+    ```
+    
+    where:
+     - `Git-Username` is the username that has access to the git repo
+     - `Git-PAT` is the personal access token of the git user
 
 2. After logging into the cluster, create the secret by running the following:
-
-```shell script
-oc project {NAMESPACE}
-oc create -f gitsecret.yaml
-```
-
-where:
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    
+    ```shell script
+    oc project {NAMESPACE}
+    oc create -f gitsecret.yaml
+    ```
+    
+    where:
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 ### 3. Create the build config
 
@@ -789,45 +790,45 @@ custom resources. The following steps will create one by hand to create the buil
 
 1. Copy the following into a file called `buildconfig.yaml` and update the {Name}, {Secret}, {Git-Repo-URL},
 and {Namespace}
-
-```yaml
-apiVersion: v1
-kind: BuildConfig
-metadata:
-  name: {Name}
-spec:
-  triggers:
-  - type: GitHub
-    github:
-      secret: my-secret-value
-  source:
-    git:
-      uri: {Git-Repo-URL}
-      ref: master
-  strategy:
-    jenkinsPipelineStrategy:
-      jenkinsfilePath: Jenkinsfile
-      env:
-      - name: CLOUD_NAME
-        value: openshift
-      - name: NAMESPACE
-        value: {NAMESPACE}
-```
-
-where:
- - `Name` is in the name of your pipeline
- - `Git-Repo-URL` is the https url to the git repository
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    
+    ```yaml
+    apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: {Name}
+    spec:
+      triggers:
+      - type: GitHub
+        github:
+          secret: my-secret-value
+      source:
+        git:
+          uri: {Git-Repo-URL}
+          ref: master
+      strategy:
+        jenkinsPipelineStrategy:
+          jenkinsfilePath: Jenkinsfile
+          env:
+          - name: CLOUD_NAME
+            value: openshift
+          - name: NAMESPACE
+            value: {NAMESPACE}
+    ```
+    
+    where:
+     - `Name` is in the name of your pipeline 
+     - `Git-Repo-URL` is the https url to the git repository
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 2. Assuming you are still logged into the cluster, create the buildconfig resource in the cluster
-
-```shell script
-oc project {NAMESPACE}
-oc create -f buildconfig.yaml
-```
-
-where:
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    
+    ```shell script
+    oc project {NAMESPACE}
+    oc create -f buildconfig.yaml
+    ```
+    
+    where:
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 ### 4. View the pipeline in the OpenShift console
 
@@ -839,22 +840,22 @@ where:
 
 ### 5. Create the webhook
 
-1. Run the following to get the webhook details from the build config
-
-```
-oc project {NAMESPACE}
-oc describe bc {Name}
-```
-
-where:
- - `{Name}` is the name used in the previous step for the build config
- - `{NAMESPACE}` is the development namespace where the pipelines will run
-
-The webhook url will have a structure similar to:
-
-`http://{openshift_api_host:port}/oapi/v1/namespaces/{namespace}/buildconfigs/{name}/webhooks/{secret}/generic`
-
-In this case `{secret}` will be `my-secret-value`
+1. Run the following to get the webhook details from the build config 
+    
+    ```shell script
+    oc project {NAMESPACE}
+    oc describe bc {Name}
+    ```
+    
+    where:
+     - `{Name}` is the name used in the previous step for the build config
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
+    
+    The webhook url will have a structure similar to:
+    
+    `http://{openshift_api_host:port}/oapi/v1/namespaces/{namespace}/buildconfigs/{name}/webhooks/{secret}/generic`
+    
+    In this case `{secret}` will be `my-secret-value`
 
 2. Open a browser to the GitHub repo deployed in the previous step in the build config
 
@@ -912,9 +913,9 @@ dealt with.
 
 2. Apply the pipeline updates using the CLI command
 
-```shell script
-igc enable
-```
+    ```shell script
+    igc enable
+    ```
 
 3. Review the changes using `git diff` and revert any application-specific changes that should remain (e.g.
 customization to the Jenkins pipeline in the `Jenkinsfile`, specific values added to `values.yaml`, customizations
@@ -945,8 +946,7 @@ dealt with.
     curl -O ${PIPELINE_URL}
     ```
 
-5. Extract the tar-ball into your repository directory. You will be prompted to overwrite files. Overwrite as
-appropriate
+5. Extract the tar-ball into your repository directory. You will be prompted to overwrite files. Overwrite as appropriate
 
     ```shell script
     tar xzf ${PIPELINE_FILE}
@@ -957,6 +957,129 @@ customization to the Jenkins pipeline in the `Jenkinsfile`, specific values adde
 to the templates in the `helm chart`)
 
 7. Commit the changes when you are happy with them
+
+</Tab>
+</Tabs>
+
+### git-secret
+
+Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
+contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
+is named `{git org}.{git repo}`. The config map and secret will be created in the currently selected namespace/project, 
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be 
+replaced/updated it won't be updated unless the `--replace` argument is passed.
+
+**Command flags**
+- `[positional]`: overwrites the name of the config map
+- `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
+- `-d`: the directory where the cloned repository is located. Defaults to the current working directory
+- `-u`: the username for the git secret, If not provided the value will be collected from a prompt
+- `-p`: the personal access token, If not provided the value will be collected from a prompt
+- `--values`: an optional yaml file that contains additional attributes to add to the secret
+- `--replace`: flag indicating that the secret should be replaced/updated if it already exists
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The following gives an example of using the `git-secret` command to set up the config map and secret in the `dev` namespace
+
+```shell script
+igc git-secret -n dev
+```
+
+</Tab>
+<Tab label="Manual">
+
+The following gives the equivalent commands to create the config map and secret for a git repository in the `dev` namespace
+
+1. Create the `git-credentials` secret
+
+    ```shell script
+    kubectl create secret generic git-credentials -n dev \
+      --from-literal=username={git username} \
+      --from-literal=password={git personal access token} \
+      --dry-run --output=yaml | \
+    kubectl label -f - --local --dry-run --output=yaml \
+      "jenkins.io/credentials-type=usernamePassword" | \
+    kubectl annotate -f - --local --dry-run --output=yaml \
+      "build.openshift.io/source-secret-match-uri-1=https://github.com/*" \
+      "tekton.dev/git-0=https://github.com" | \
+    kubectl apply -f -
+    ```
+
+2. Create the config map for a git repo located at `https://github.com/showcase/myrepo`
+
+    ```shell script
+    kubectl create configmap showcase.myrepo -n dev \
+      --from-literal=host=github.com \
+      --from-literal=org=showcase \
+      --from-literal=repo=myrepo \
+      --from-literal=url=https://github.com/showcase/myrepo \
+      --from-literal=branch=master
+    ```
+
+</Tab>
+</Tabs>
+
+### gitops
+
+Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
+contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
+is named `gitops-repo`. The config map and secret will be created in the currently selected namespace/project, 
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be 
+replaced/updated it won't be updated unless the `--replace` argument is passed.
+
+**Command flags**
+- `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
+- `-d`: the directory where the cloned repository is located. Defaults to the current working directory
+- `-u`: the username for the git secret, If not provided the value will be collected from a prompt
+- `-p`: the personal access token, If not provided the value will be collected from a prompt
+- `--values`: an optional yaml file that contains additional attributes to add to the secret
+- `--replace`: flag indicating that the secret should be replaced/updated if it already exists
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The following gives an example of using the `gitops` command to set up the config map and secret in the `dev` namespace
+
+```shell script
+igc gitops -n dev
+```
+
+</Tab>
+<Tab label="Manual">
+
+The following gives the equivalent commands to create the config map and secret for a git repository in the `dev` namespace
+
+1. Create the `git-credentials` secret
+
+    ```shell script
+    kubectl create secret generic git-credentials -n dev \
+      --from-literal=username={git username} \
+      --from-literal=password={git personal access token} \
+      --dry-run --output=yaml | \
+    kubectl label -f - --local --dry-run --output=yaml \
+      "jenkins.io/credentials-type=usernamePassword" | \
+    kubectl annotate -f - --local --dry-run --output=yaml \
+      "build.openshift.io/source-secret-match-uri-1=https://github.com/*" \
+      "tekton.dev/git-0=https://github.com" | \
+    kubectl apply -f -
+    ```
+
+2. Create the config map for a git repo located at `https://github.com/showcase/myrepo`
+
+    ```shell script
+    kubectl create configmap github-repo -n dev \
+      --from-literal=host=github.com \
+      --from-literal=org=showcase \
+      --from-literal=repo=myrepo \
+      --from-literal=url=https://github.com/showcase/myrepo \
+      --from-literal=branch=master
+    ```
 
 </Tab>
 </Tabs>
@@ -1026,12 +1149,12 @@ igc vlan
 <Tab label="Manual steps">
 
 1. List the zones for the region
+
     ```shell script
     ibmcloud ks zones --region-only --provider classic
     ```
 
-2. Select the desired zone from the listing provided by the previous command and run the following to list the
-vlans for that zone
+2. Select the desired zone from the listing provided by the previous command and run the following to list the vlans for that zone
 
     ```shell script
     ibmcloud ks vlans --zone ${zone}

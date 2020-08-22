@@ -95,11 +95,11 @@
       path: /admin/install-crw
     - title: Configure the Dashboard
       path: /admin/config-dashboard
-    - title: Sysdig
+    - title: Sysdig Setup
       path: /admin/sysdig-setup
-    - title: Infrastructure as Code
-      path: /admin/iasc
-    - title: Cluster configuration
+    - title: Terraform Modules
+      path: /admin/terraform
+    - title: Cluster Configuration
       path: /admin/cluster-configuration
     - title: Destroying
       path: /admin/destroying
