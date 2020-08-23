@@ -17,7 +17,6 @@ globals.roks       = "Red Hat OpenShift on IBM Cloud";
 globals.method     = "IBM Garage Method";
 globals.template   = "Starter Kit";
 globals.templates  = "Starter Kits";
-
 globals.dashboard  = "Developer Dashboard";
 globals.igccli     = "IGC CLI";
 globals.cloudpaks  = "IBM Cloud Paks";

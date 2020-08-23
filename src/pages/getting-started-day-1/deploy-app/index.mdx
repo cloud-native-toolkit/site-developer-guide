@@ -83,8 +83,8 @@ oc sync {DEV_NAMESPACE} --dev
 
 ### 3. Open the Developer Dashboard
 
-The [Developer Dashboard](/getting-started/dashboard) makes it easy for you to navigate to the tools, including a
-section that allows you to select a set of preconfigured [<Globals name="templates" />](/starterkits) that
+The [Developer Dashboard](/getting-started-day-1/dashboard) makes it easy for you to navigate to the tools, including a
+section that allows you to select a set of preconfigured [<Globals name="templates" />](/codepatterns/overview) that
 make seeding your development project very easy.
 
 1. Open a browser and make sure you are logged into [Github](https://github.com)
@@ -147,6 +147,11 @@ The new repository will be created in your selected organization.
 
 Most developers like to run the code natively in local development environment. To do so, follow the instructions listed in the **README.md** file to run the code locally. You may be required to install a specific runtime like **Java**, **Node** or **Go**.
 
+- If you want to quickly access your git repo you can run a helper command to open the git webpage.
+    ```
+    oc git
+    ```
+
 ### 7. Set the namespace context
 
 Before running these remainder of the instructions commands it is important to set the
@@ -174,23 +179,14 @@ kubectl config set-context --current --namespace={DEV_NAMESPACE}
 
 Up to this point you have the code in a GitHub repository and have cloned it to you local development environment. You
 now need to register the repository with the continuous integration pipeline. The <Globals name="env" /> supports both
-[Tekton](/guides/continuous-integration-tekton) and [Jenkins](/guides/continuous-integration) for continuous
+[Tekton](/guides/tekton) and [Jenkins](/guides/jenkins) for continuous
 integration.
-
-<InlineNotification kind="info">
-
-The pipeline command give an option for both `Jenkins` and `Tekton`. For more information about working with the
-different build engines, please see [Continuous Integration with Jenkins Guide](/guides/jenkins) and
-[Continuous Integration with Tekton Guide](/guides/tekton)
-
-</InlineNotification>
 
 1. Start the process to create a pipeline
 
     ```shell script
     oc pipeline
     ```
-
 1. Select the pipeline type for **OpenShift** we recommend **Tekton** as its optimized for Kubernetes based environments.
 
 1. The first time a pipeline is registered in the namespace, the CLI will ask for a username and
@@ -247,7 +243,7 @@ You will see your application dev ops pipeline now starting to build and once co
 1. Open the Developer Dashboard
 
     ```shell script
-    igc dashboard
+    kubectl dashboard
     ```
 
 2. Select the `Tekton` tile to launch the Tekton UI
@@ -282,9 +278,9 @@ You will see your application dev ops pipeline now starting to build and once co
 </Tab>
 <Tab label="Kubernetes">
 
-1. Run the command `oc dashboard` in your terminal to open your [<Globals name="dashboard" />](/getting-started/dashboard)
+1. Run the command `oc dashboard` in your terminal to open your [<Globals name="dashboard" />](/getting-started-day-1/dashboard)
 2. Select the Jenkins tool to open the Jenkins dashboard
-3. Run the command `igc credentials` in your terminal to get the list of logins for the tools
+3. Run the command `kubectl credentials` in your terminal to get the list of logins for the tools
 4. Use the Jenkins userid and password to log into the Jenkins dashboard
 
 Wait for the pipeline stages to start building. Once the stages have completed, you will see a view similar to the one below.
@@ -300,7 +296,8 @@ Wait for the pipeline stages to start building. Once the stages have completed, 
 
 ### 10. Access the running app
 
-Once the pipeline has completed successfully, the app will be deployed into the namespace used when registering the pipeline. To validate the app is running follow these steps:
+Once the pipeline has completed successfully, the app will be deployed into the namespace used when
+registering the pipeline. To validate the app is running follow these steps:
 
 **Note:** Be sure the namespace context is set correctly before running the following commands -
 [set the namespace context](#7.-set-the-namespace-context)
@@ -315,7 +312,7 @@ Once the pipeline has completed successfully, the app will be deployed into the 
 
 ### 11. Locate the app in the web console
 
-The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/guides/image-registry). After that the image is deployed into the same namespace/project within development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
+The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/guides/ibm-cloud-container-registry). After that the image is deployed into the same namespace/project within development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
 
 <Tabs>
 <Tab label="OpenShift 4.x">
@@ -358,10 +355,10 @@ The build pipeline is configured to build the source code from the Git repositor
 
 <InlineNotification kind="success">
 
-**Success:** You should now have your application running inside your development cluster.
+**Success:** You now have your application running inside your development cluster building built with a CI pipeline.
 
 </InlineNotification>
 
-Having reached this point, we recommend you repeat the process a few more times using different starter kits templates and explore the environment to get familiar. For more information about the tools used by the pipeline, check out the [Guides](/guides/overview)
+Having reached this point, we recommend you repeat the process a few more times using different starter kits templates and explore the environment to get familiar. For more information about the tools used by the pipeline, check out the [Guides](/guides)
 
 This completes the deployment of your app. The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.
