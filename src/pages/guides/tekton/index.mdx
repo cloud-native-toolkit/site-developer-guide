@@ -43,7 +43,7 @@ This guide will focus on using Tekton when the Development tools have been
 
 <InlineNotification>
 
-**Note:** This guide will help you set up the [<Globals name="templates" />](/codepatterns/overview) with  **Tekton** and requires that you have installed Tekton with **Red Hat Code Ready Containers 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
+**Note:** This guide will help you set up the [<Globals name="templates" />](/starterkits) with  **Tekton** and requires that you have installed Tekton with **Red Hat Code Ready Containers 4.2** or have installed open source Tekton into the The IBM Kubernetes Cluster.
 
 </InlineNotification>
 
@@ -71,12 +71,12 @@ The following gives a description of each `Task` that is commonly used in a
 Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
  service and RedHat Code Ready Containers. To install the necessary
   components follow the steps below.
-  
+
 - Install [IBM Garage for Cloud Developer Tools](/admin/overview) on your
  managed OpenShift,CRC or IKS development cluster on the IBM Cloud. This will
   help configure the tools and `secrets` and `configMap` to make working with
    IBM Cloud so much easier.
-    
+
 <Tabs>
 
 <Tab label="OpenShift 3.11">
@@ -108,10 +108,10 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
 - Install Tekton via Knative add-on (can be found in the **Add On** tab in
  the Kubernetes managed service dashboard)
 , it includes
- Tekton support by default and the Webhook extension. 
+ Tekton support by default and the Webhook extension.
 - Install [Tekton Dashboard](https://github.com/tektoncd/dashboard#install-dashboard) follow the instructions in the `README.md`
 - Add Ingress endpoint for the **Tekton Dashboard** add a host name that uses
- the IKS cluster subdomain     
+ the IKS cluster subdomain
     ```yaml
       apiVersion: extensions/v1beta1
       kind: Ingress
@@ -127,11 +127,11 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
                 serviceName: tekton-dashboard
                 servicePort: 9097
     ```
-- Install [Tekton Webhook Extension](https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension) 
+- Install [Tekton Webhook Extension](https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension)
 
 </Tab>
 
-</Tabs> 
+</Tabs>
 
 ### Setup Tekton
 
@@ -143,9 +143,9 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
     ```
 - Install the `Pipelines`
     ```bash
-    kubectl create -f ibm-garage-tekton-tasks/pipelines/ -n dev  
+    kubectl create -f ibm-garage-tekton-tasks/pipelines/ -n dev
     ```
-  
+
 ### Configure namespace for development
 
 - Install the Tekton CLI `tkn` https://github.com/tektoncd/cli
@@ -159,7 +159,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
   oc project {new-namespace}
   ```
 
-- The template `Pipelines` provided support for `Java` or `Node.js` based apps. You can configure your own custom `Tasks` for other runtimes. There are a number of default `Tasks` to get you started they are detailed above. To create an application use one of the provided [<Globals name="templates" />](/codepatterns/overview) these templates work seamlessly with the `Tasks` and `Pipelines` provided.
+- The template `Pipelines` provided support for `Java` or `Node.js` based apps. You can configure your own custom `Tasks` for other runtimes. There are a number of default `Tasks` to get you started they are detailed above. To create an application use one of the provided [<Globals name="templates" />](/starterkits) these templates work seamlessly with the `Tasks` and `Pipelines` provided.
 
 ### Register the App with Tekton
 
@@ -209,11 +209,11 @@ If you are running **Tekton** with IBM Cloud Pak for Applications or Knative
 
 - Review your **Pipeline**
     ```bash
-    tkn pipelinerun list              
+    tkn pipelinerun list
     ```
 - Review **Pipeline** details
     ```bash
-    tkn pipelinerun describe {pipeline-name}              
+    tkn pipelinerun describe {pipeline-name}
     ```
 
 </Tab>
