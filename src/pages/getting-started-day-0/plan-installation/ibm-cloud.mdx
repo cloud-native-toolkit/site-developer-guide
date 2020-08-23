@@ -7,72 +7,11 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Provides the considerations and steps to prepare the <Globals name="ic" /> account for
-an installation of <Globals name="shortName" /> <Globals name="env" />.
+Prepare the <Globals name="ic" /> account for an installation of <Globals name="shortName" /> <Globals name="env" />
 
 </PageDescription>
 
-<Accordion>
-<AccordionItem title="Background on account management">
-
-To understand how the process is performed, keep these concepts in mind.
-
-### Roles
-
-A <Globals name="env" /> is installed and used by users acting in four roles:
-- **Account owner(s)**
-- **Account managers**
-- **Environment administrators**
-- **Environment users**
-
-This diagram from [Resource Access Management](/toolkit-resources/resource-mgmt#access-group-example) 
-shows the relationship of these access groups to a pair of development environments:
-
-![Access groups example](../../images/access-example.png)
-
-#### Account owner(s)
-
-The `account owner(s)` is the user who owns the account or users who have been granted super-user access to the account
-at the same level as the account owner.
-
-An account owner must create the access group for account managers. The account owner will:
-
-- Create an `ACCT-MGR-IAM-ADMIN` access group using the `acp-mgr` script
-- Add a functional ID, configured using the `acp-iaas` script, with API keys for the account managers
-
-#### Account managers
-
-The `account managers` are an account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
-
-As described in [Configure Account](/admin/config-account), the account managers can set up the resource groups 
-and access groups needed to install and use the environments. For each environment, the account managers will:
-- Create a resource group
-- Create an access group named `<resource_group>-ADMIN` using the script `acp-admin`
-- Create an access group named `<resource_group>-USER` using the script `acp-user`
-
-#### Environment administrators
-
-The `environment administrators` are users in the account 
-with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles). In
-this case, the "environment" is scoped to the `resource group`. Environment administrators are granted broad access
-to create, manage, and destroy services and resources within a given `resource group`.
-
-#### Environment users
-
-The `environment users` are users in the account with [permissions to use existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) 
-(e.g. developers, data scientists, etc.). They are consumers of the services and resources that have been provisioned in
-order to build and deploy business applications.
-
-### Architecture
-
-The [Environment Architecture](/arch/environment) page shows the structure of the environment that will be installed. Depending upon
-the approach for development teams, each [development team](/arch/teams) can be assigned its own (small) environment or
-multiple teams can share a single environment. The environment structure is designed to support best practices for 
-a [cloud-native application architecture](/arch/application), including designing applications that 
-are [built to manage](/arch/manageable).
-
-</AccordionItem>
-<AccordionItem title="1. Set up account managers access group" open="true">
+## 1. Set up account managers access group
 
 The **account owner** creates this access group for account managers and adds the functional ID for managing 
 API keys. See [Plan Installation > Roles](/getting-started-day-0/plan-installation/ibm-cloud#roles) for the overview of 
@@ -130,13 +69,11 @@ its name.
 <br />
 
 To create the access group for the account managers:
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) and name it something 
-like `ACCT-MGR-IAM-ADMIN` (all capital letters) (or name it after your account)
-2. Run `./terraform/scripts/acp-mgr.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies 
-to the access group
-  ```shell script
-  ./terraform/scripts/acp-mgr.sh ACCT-MGR-IAM-ADMIN
-  ```
+1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) and name it something like `ACCT-MGR-IAM-ADMIN` or name it after your account (use all capital letters)
+2. Run `./terraform/scripts/acp-mgr.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
+    ```shell script
+    ./terraform/scripts/acp-mgr.sh ACCT-MGR-IAM-ADMIN
+    ```
 3. Add the users to the access group
 
 <br />
@@ -150,9 +87,7 @@ The `./terraform/scripts/acp-mgr.sh` script adds policies that allow the user to
 - Create service instances across all resource groups in the account
 - Manage the IBM Cloud Container Registry (used as the environment's [image registry](/guides/image-registry))
 
-</AccordionItem>
-
-<AccordionItem title="2. Configure the account">
+## 2. Configure the account
 
 The account must provide a few resources that will be needed to install and use the <Globals name="shortName" /> <Globals name="env" />:
 - Upgrade the image registry
@@ -250,8 +185,7 @@ group can be configured manually or with a script provided in the `ibm-cloud-ite
 
 #### i. Create the access group for environment administrators
 
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like
- `<resource_group>-ADMIN` (all capital letters)
+1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like `<resource_group>-ADMIN` (use all capital letters)
 2. Run the script `./terraform/scripts/acp-admin.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
     ./terraform/scripts/acp-admin.sh {ACCESS_GROUP} {resource group}
@@ -267,8 +201,7 @@ The script adds policies that allow the user to add resources to the resource gr
 
 #### ii. Create the access group for environment users
 
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like 
-`<resource_group>-USER` (all capital letters)
+1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like `<resource_group>-USER` (use all capital letters)
 2. Run the script `./terraform/scripts/acp-user.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
     ./terraform/scripts/acp-admin.sh {ACCESS_GROUP} {resource group}
@@ -292,9 +225,7 @@ the cluster and installing the tools then the cluster can be created in advance.
 The process supports either a Kubernetes cluster or Red Hat OpenShift cluster. A typical cluster has 3 nodes, each 
 with 8 vCPUs and 32GB RAM.
 
-</AccordionItem>
-
-<AccordionItem title="3. (Optional) Set up Classic Infrastructure">
+## 3. (Optional) Set up Classic Infrastructure
 
 Virtual Private Cloud infrastructure is recommended for use with clusters as it easier to manage with IAM and provides
 a superior environment. However, there are some situations where classic infrastructure is still required, particularly
@@ -313,16 +244,12 @@ functional ID will always remain and always have the necessary infrastructure pe
 
 #### i. Set up the functional ID in the account
 
-1. Create the email account for the functional ID, sign it up for an IBM Cloud account, and 
-[invite the functional ID](https://cloud.ibm.com/docs/iam?topic=iam-iamuserinv) to this account.
-2. Run the script `./terraform/scripts/acp-iaas.sh` from the `ibm-garage-iteration-zero` repository to grant the necessary
-permissions to the functional ID user.
+1. Create the email account for the functional ID, sign it up for an IBM Cloud account, and [invite the functional ID](https://cloud.ibm.com/docs/iam?topic=iam-iamuserinv) to this account.
+2. Run the script `./terraform/scripts/acp-iaas.sh` from the `ibm-garage-iteration-zero` repository to grant the necessary permissions to the functional ID user.
 
-```shell script
-./terraform/scripts/acp-iaas.sh {functional-id}
-```
-
-<br />
+    ```shell script
+    ./terraform/scripts/acp-iaas.sh {functional-id}
+    ```
 
 The script adds the [classic infrastructure permissions](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) 
 needed to create and manage clusters:
@@ -393,8 +320,7 @@ network:
 - [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
 - List and create VLANs: [Resources > Classic Infrastructure > IP Management > VLANs](https://cloud.ibm.com/classic/network/vlans)
 
-</AccordionItem>
-</Accordion>
+## Next steps
 
 With these steps completed, the account manager will have configured the account so that the environment administrator 
 can install the environment. As you move into the next step of installing into the environment that has just been

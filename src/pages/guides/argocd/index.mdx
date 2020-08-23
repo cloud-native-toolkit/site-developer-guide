@@ -10,83 +10,10 @@ Use GitOps to continuously deliver application changes
 
 </PageDescription>
 
-In IBM Garage Method, one of the **Develop** practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/). 
-A preferred model for implementing continuous delivery is GitOps, where the desired state of the operational environment
-is defined in a source control repository (namely Git). 
-
-## What is continuous delivery
-
-Continuous delivery is the DevOps approach of frequently making new versions of an application's components available for
-deployment to a runtime environment. The process involves automation of the build and validation process and concludes 
-with a new version of the application that is available for promotion to another environment.
-
-Continuous delivery is closely related to continuous deployment. The distinction is:
-- Continuous delivery deploys an application when a user manually triggers deployment
-- Continuous deployment deploys an application automatically when it is ready
-
-Typically, continuous deployment is an evolution of a continuous delivery process. An application is ready for 
-deployment when it passes a set of tests that prove it doesn't contain any significant problems. Once these tests have been 
-automated in a way that reliably verifies the application components then the deployment can be automated. Additionally,
-for continuous delivery it important to employ other best practices around moving and managing changes in an environment: 
-blue-green deployments, shadow deployments, and feature toggles to name a few. Until these practices are in place and 
-verified, it is best to stick with continuous delivery. 
-
-As with most cloud-native practices, the move from continuous deployment to continuous delivery would not be done in
-a "big bang" but incrementally and as different application components are ready. 
-
-### What is GitOps
-
-[*GitOps*](https://www.weave.works/technologies/gitops/) is the operational pattern of using source code repositories 
-(namely Git) as the source of truth for defining the configuration that makes up the desired state of the operational 
-environment. Git repositories are used to declaratively represent the desired state of applications in deployment 
-environments.
-
-GitOps takes advantage of several Git features:
-- Git provides a versioned history of changes, listing what was changed and who made the change
-- Change releases can be managed from a pull request, allowing multiple people to make changes but a select few to approve the changes
-- Git provides access control mechanisms to limit who can change and view the configuration
-- Git enables changes to be rolled back quickly if there is an issue with a new release
-- Git supports multiple models for change management: Branches, Forks, GitFlow, etc
-- Hosted git providers (like GitHub) provide a rich API that allows the different operations to be automated, if desired
-
-### CI/CD integration
-
-For the full end-to-end build and delivery process, both the CI and CD pipelines are used. When working in
-a containerized environment such as <Globals name="kube" /> or <Globals name="ocp" />, the responsibilities between the 
-two processes are clearly defined:
-
-- The **CI pipeline** is responsible for building validating and packaging the "raw materials" (source code, deployment 
-configuration, etc) into versioned, deployable artifacts (container images, helm charts, published artifacts, etc)
-- The **CD pipeline** is responsible for applying the deployable artifacts into a particular target environment
-
-![Argo CD config](./images/CI_CD-pipelines.png)
-
-1. A change made to one of the source repositories triggers the CI process.
-
-2. The CI process builds, validates, and packages those changes into deployable artifacts that are stored in the image
-registry and artifact repository(ies).
-
-3. The last step of the CI process updates the GitOps repository with information about the updated artifacts. 
-
-    At a minimum this step stores updates the version number to the newly released versions of the artifacts but depending on the environment this step might also update the deployment configuration.
-    
-    <InlineNotification>
-    
-    It is also possible to trigger a process when a new image is available in the image registry or a new artifact is available
-    to the artifact management system. 
-    
-    In this case, the CI process could be split into two parts: **1)** create the 
-    container image and artifacts, and **2)** update the GitOps repo with the available artifacts.
-    
-    </InlineNotification>
-
-## What is Argo CD
-
-[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, GitOps continuous delivery tool for Kubernetes. The 
-deployment environment is a namespace in a Kubernetes cluster, which also works for an OpenShift cluster or project. 
-Argo CD models a collection of applications as a project and uses a Git repository to store the project's desired state. 
-Argo CD if flexible in how the application configuration is stored in the Git repository. The only requirement is that
-the application information is stored somewhere in a Git repository.
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, [GitOps](/getting-started-day-0/git-ops) [continuous delivery](/getting-started-day-2/continuous-delivery) 
+tool for Kubernetes. The deployment environment is a namespace in a container platform like <Globals name="kube" /> or <Globals name="ocp" />. 
+Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state. 
+Argo CD is flexible in the structure of the application configuration represented in the Git repository.
 
 Argo CD supports defining Kubernetes manifests in a number of ways:
 - helm charts
@@ -94,12 +21,14 @@ Argo CD supports defining Kubernetes manifests in a number of ways:
 - ksonnet
 - jsonnet
 - plain directory of yaml/json manifests
+- custom plugins
 
-Argo CD synchronizes the application state with the desired state defined in Git and automates the deployment of Kubernetes resources to ensure they match.
+Argo CD compares the actual state of the application in the cluster with the desired state defined in Git and determines if
+they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a 
+notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to 
+ensure they match. 
 
 ## Configuring GitOps with Argo CD
-
-You must have completed the [Argo CD Setup](/admin/artifactory-setup) before continuing.
 
 **Terminology:**
 
@@ -107,13 +36,27 @@ Argo CD uses a number of terms to refer to the components
 
 - Application - A deployable unit
 
-    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more sophisticated applications in more advanced scenarios, we will be using this simple definition here.
+    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image 
+    that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more 
+    sophisticated applications in more advanced scenarios, we will be using this simple definition here.
     
 - Project - A collection of applications that make up a solution
 
 ### Set up the GitOps repo
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one 
+repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that 
+repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) 
+that makes up the project will be described in its own folder. The repository will also contain a branch for each 
+destination (i.e. cluster and namespace) into which we want to deploy the applications.
+
+<InlineNotification>
+
+**Note:** There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git
+repository that is accessible from by the Argo CD instance.  The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate) 
+used in the following steps is optional and provides some application templates to help simplify some configuration activities.
+
+</InlineNotification>
 
 1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
 
@@ -121,59 +64,49 @@ Argo CD uses a Git repo to express the desired state of the Kubernetes environme
 
 1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the testing environment)
 
-    ```bash
+    ```shell script
     git checkout -b test
     ```
 
-1. The repository contains a template Helm chart in the `app-artifactory` folder. Copy that folder and rename it to match one of
-the application names in your project, i.e. `{app repo}`.
+1. Push the test branch up to the repository
 
-   The application name should match the repository name if the CI pipeline is going push changes to the CD pipeline.
+    ```shell script
+    git push -u origin test
+    ```
 
-1. Update `Chart.yaml`
+### Hook the CI pipeline to the CD pipeline
 
-   - `name` - The name of the application, should match the folder from the previous step
+The last stage in the CI pipeline updates a GitOps repository with the updated application metadata from the build. In
+order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes
+to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
 
-1. Update `requirements.yaml`
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc).
+If you used the [IGC CLI](/getting-started/cli) to register the pipeline then this secret has already been created.
+- A secret named `gitops-repo` holds the url and branch for the gitops repository.
 
-    - `name` - The name of Helm chart and Docker image, should match your Git repo name, i.e. `{app repo}`
-    - `version` - The version number of the Helm chart, i.e. `{chart version}`
-    - `repository` - The url to the Helm repository including the folder where the Helm charts are being stored, i.e. `http://artifactory.{ingress subdomain}/artifactory/generic-local/`
+Fortunately the [IGC CLI](/getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the
+command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops) section.
 
-        The url of the Helm repository in Artifactory can be determined by following the steps described in [Administrator Guide - Argo CD setup](/admin/argocd-setup/#get-the-helm-repository-location).
+1. Run the `gitops` command to create the config map and secret in the CI namespace
 
-1. Update `values.yaml`
- 
-    - Replace `<app-chart-name>` with the name of application
-    - Provide configuration values specific to the Helm chart under the `<app-chart-name>` prefix
+    ```shell script
+    igc gitops
+    ```
 
-    **Note:** The Helm values will need to be prefixed with the Helm chart name that was provided in the previous step. For example, assuming the helm chart is `message-logger`, the values.yaml file would look like the following:
-    ```yaml
-    message-logger:
-      replicaCount: 3
-    ``` 
-   **Note:** The specific values that should be configured are dependent on the Helm chart that is referenced in the `requirements.yaml`. For the <Globals name="templates" />, you can see those details and customize the chart by looking in the `chart/{chart name}` of the repository.
+<InlineNotification>
 
-1. Repeat steps 4-7 for each application in the project
+**Note:**
 
-### Register the git repo in Argo CD
+- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the 
+pipeline is running.
+- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD 
+pipeline.
 
-Now that the repository has been created, we need to tell Argo CD where it is.
+</InlineNotification>
 
-1. Get the Argo CD login information from the `igc credentials` CLI command
-
-    **Note:** You need to be logged into the cluster on the command-line for the CLI to access the cluster information.
-
-1. Log in to Argo CD
-
-1. Click on the gear icon on the left menu to access the Settings options
-
-    ![Argo CD config](/images/argocd-config.png)
-
-1. Select the `Repositories` option
-
-1. Press either the Connect Repo using HTTPS or Connect Repo using SSH button at the top and provide the information
-for the Git repo
+As of v2.0.0 of the Tekton tasks and the Jenkins pipelines, the CI pipeline will create a folder and the initial configuration
+for an application deployment if it doesn't already exist. This means, there is no other manual configuration required
+to set up the repository.
 
 ### Create a project in Argo CD (Optional)
 
@@ -181,9 +114,10 @@ In Argo CD terms, each deployable component is an application and applications a
 required for Argo CD to be able to deploy applications, but it helps to organize applications and provide some restrictions
 on what can be done for applications that make up a project.
 
-To create a project:
+<Tabs>
+<Tab label="Argo CD UI">
 
-1. Log into Argo CD
+1. Log into the Argo CD user interface
 
 1. Click on the gear icon on the left menu to access the Settings options
 
@@ -195,10 +129,10 @@ To create a project:
 
 1. Specify the properties for the new project
 
-    - name - Provide the name for the project
-    - description - A brief description of the project
-    - source - Press Add source and pick the Git repository from the list that was added previously
-    - destinations
+    - Name - Provide the name for the project
+    - Description - A brief description of the project
+    - Source - Press Add source and pick the Git repository from the list that was added previously
+    - Destinations
         - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
         - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
     - Press Create
@@ -207,12 +141,81 @@ To create a project:
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
     to both the `test` and `staging` namespaces within the current cluster.
 
-### Add an application in Argo CD for each application component (Helm chart)
+</Tab>
+<Tab label="Argo CD CLI">
+
+1. Log in to the Argo CD CLI
+
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
+
+2. Create the project
+    
+    ```shell script
+    argocd proj create {PROJECT} --dest {CLUSTER_HOST},{NAMESPACE} --src {GIT_REPO}
+    ```
+    
+    where:
+    
+    - `{PROJECT}` is the name you want to give to the project.
+    - `{CLUSTER_HOST}` is the url for the cluster server to which the project applications can be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where ArgoCD has been deployed. `*` can also be used to allow deployments to any server.
+    - `{NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
+    - `{GIT_REPO}` is the url of the git repository where the gitops config will be located or `*` if you want to allow any.
+
+    **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destations and/or
+    sources that should be configured for the project
+    
+</Tab>
+<Tab label="Argo CD custom resource">
+
+1. Log in to the cluster from the command line
+
+2. Create a file named `project.yaml` with the following contents
+
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: {PROJECT_NAME}
+    spec:
+      sourceRepos:
+        - '*'
+      destinations:
+        - namespace: '*'
+          server: https://kubernetes.default.svc
+    ```
+   
+   where:
+   
+   - `{PROJECT NAME}` is the name of the project
+
+3. Apply the yaml to the cluster in the namespace where Argo CD has been deployed (e.g. `tools`)
+
+    ```shell script
+    kubectl apply -f project.yaml -n tools
+    ```
+
+</Tab>
+</Tabs>
+
+### Add an application in Argo CD for each application component
 
 The last step in the process is to define the application(s) within Argo CD that should be managed. This consists of
 connecting the config within the Git repo to the cluster and namespace.
 
-1. Log into Argo CD
+<Tabs>
+<Tab label="Argo CD UI">
+
+1. Log into Argo CD user interface
 
 1. Press `New Application` and provide the following values:
 
@@ -228,33 +231,131 @@ connecting the config within the Git repo to the cluster and namespace.
 
 1. Repeat that step for each application and each environment
 
-### Hook the CI pipeline to the CD pipeline
+</Tab>
+<Tab label="Argo CD CLI">
 
-The last stage in the CI pipeline updates the version number in the `requirements.yaml` to the version of the helm chart
-that was just built. Through a couple naming conventions the only thing the pipeline needs in order to interact
-with the CD process is a Kubernetes secret named `gitops-cd-secret` that provides the details needed
-to connect to the git repo to push updates.
+1. Log in to the Argo CD CLI
 
-Fortunately, a CLI command provides a simple way to create a Kubernetes secret
-that contains git credentials.
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
 
-Create the `gitops-cd-secret`:
+2. Create an application
 
-1. Log into the cluster on the command-line.
+    ```shell script
+    argocd app create {APP_NAME} --project {PROJECT} --repo {GIT_REPO} --path {APP_FOLDER} --dest-namespace {NAMESPACE} --dest-server {SERVER_URL}
+    ```
+    
+    where:
+    
+    - `{APP_NAME}` is the name you want to give the application
+    - `{PROJECT}` is the name of the project created above or "default"
+    - `{GIT_REPO}` is the url of the git repository where the gitops config is be located
+    - `{APP_FOLDER}` is the path to the configuration for the application in the gitops repo
+    - `{DEST_NAMESPACE}` is the target namespace in the cluster where the application will be deployed
+    - `{SERVER_URL}` is the url of the cluster where the application will be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where ArgoCD has been deployed
 
-1. Change the directory to the root of the Argo CD <Globals name="template" /> repo that was cloned previously.
+</Tab>
+<Tab label="Argo CD custom resource">
 
-1. Run `igc git-secret gitops-repo -n dev-{initials}` to create the secret. This command will prompt for the username, personal access token, and the branch to put in the secret.
+1. Log in to the cluster from the command line
 
-#### What just happened?
+2. Create a file named `application.yaml` with the following contents
 
-The `git-secret` command creates a secret in a Kubernetes namespace containing the url, username, password, and branch information for a git repo. In the command above, we provided `gitops-cd-secret` for the secret name. (If that value is left off the secret name defaults to `{git org}.{git repo}`.) You can verify the secret was created by running:
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: {APPLICATION NAME}
+    spec:
+      destination:
+        namespace: {TARGET NAMESPACE}
+        server: {TARGET CLUSTER}
+      project: {PROJECT NAME}
+      source:
+        path: {APPLICATION PATH}
+        repoURL: {REPO URL}
+        targetRevision: {REPO BRANCH}
+        helm:
+          valueFiles:
+            - values.yaml
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    ```
+   
+    where:
+   
+    - `{APPLICATION NAME}` is the name of the application
+    - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
+    - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
+    - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluter where Argo CD has been deployed
+    - `{APPLICATION PATH}`
+    - `{REPO URL}`
+    - `{REPO BRANCH}`
 
-```bash
-kubectl get secrets/gitops-cd-secret -n dev-{initials} -o yaml
-```
+3. Apply the yaml to the cluster in the namespace where Argo CD has been deployed (e.g. `tools`)
 
-**Note:**
+    ```shell script
+    kubectl apply -f project.yaml -n tools
+    ```
 
-- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the pipeline is running (e.g. `dev-{initials}`).
-- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD pipeline. `test` is the recommended value for the branch field.
+</Tab>
+</Tabs>
+
+### Configure another cluster as an Argo CD deployment target
+
+Argo CD supports deploying applications into clusters other than the one into which it has been installed. To do that,
+the target cluster must first be registered with Argo CD. After that, the cluster api server can be selected as a
+deployment target within an application configuration. The following describes the steps required to add another cluster
+as a deployment target:
+
+
+1. Log in to the Argo CD CLI
+
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
+
+2. Log into the target cluster from the command line
+
+3. Run the Argo CD command to list the available clusters 
+
+    ```shell script
+    argocd cluster add
+    ```
+    
+    The currently selected cluster will be the one with the asterisk next to it. Copy the cluster id from the table
+
+4. Add the cluster to Argo CD
+
+    ```shell script
+    argocd cluster add {CLUSTER ID}
+    ```
+   
+    where:
+    
+    - `{CLUSTER ID}` is the id of the target cluster from the previous step
+
+5. Confirm the configuration by listing the known clusters
+
+    ```shell script
+    argocd cluster list
+    ```

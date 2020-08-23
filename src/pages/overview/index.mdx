@@ -17,9 +17,26 @@ applications incorporating best practices that increase developer velocity for e
 
 <Carousel images={["/images/cntk-objectives.png", "/images/cntk-philosophy.png"]} />
 
-The <Globals name="shortName" /> <Globals name="devenv" /> includes
-several features that support <Globals name="method" /> best practices for consistent and rapid development of
-cloud-native applications:
+## Components of the <Globals name="longName" />
+
+As the name suggests, the <Globals name="longName" /> provides a collection of tools that can be used in part or in 
+whole to support the activities of software development life-cycle. The following provides a listing of the "tools" that 
+make up the <Globals name="shortName" />:
+
+![<Globals name="shortName" />](./images/cntk-in-the-toolkit.png)
+
+- [**CNTK Guides**](#guides) - this set of documentation that weaves the various toolkit components together with a perspective on how to apply cloud-native practices to deliver business solutions 
+- [**Infrastucture as Code**](getting-started-day-0/infrastructure-as-code) - Terraform scripts and GitOps configuration to provision and manage the environment
+- [**CLI**](/getting-started/cli) - a simple node-based CLI that installs as a plugin to the `kubectl` and `oc` CLIs and provides commands to simplify common
+- [**Developer Dashboard**](/getting-started-day-1/dashboard) - Dashboard component and <Globals name="ocp" /> console extensions to simplify common developer activities
+- [**DevOps pipelines**](/getting-started-day-1/continuous-integration) - continuous integration pipelines for Tekton and Jenkins
+- [**Starter Kits and Code Patterns**](./starterkits) - software repositories that can be used to quickly get started building applications using common patterns, or to serve as a reference to enhance existing patterns
+- [**Learning Journey**](/activation) - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the <Globals name="tinyName" />
+
+## <Globals name="shortName" /> <Globals name="devenv" />
+
+The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support 
+<Globals name="method" /> best practices for consistent and rapid development of cloud-native applications:
 
 - **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
@@ -28,17 +45,18 @@ cloud-native applications:
 - **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized console to help developers use the environment's capabilities
 
-Typically a [Cloud System Admin](/admin/overview) (such as a
-[squad leader](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
-up a new <Globals name="env" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
-providing a place for the developers to start developing the
-[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
-The objective is to reduce the time required for a team to configure and prepare their development environment. The key
-benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/)
+Typically a [Cloud System Admin](/admin/overview) or a 
+[squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets 
+up a new <Globals name="devenv" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception), 
+providing a place for the developers to start developing the 
+[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). 
+The objective is to reduce the time required for a team to configure and prepare their development environment. The key 
+benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) 
 consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules)
-so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with 
+a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules) 
+so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the 
 industry to deliver real value for modern cloud-native development.
 
 [Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach
