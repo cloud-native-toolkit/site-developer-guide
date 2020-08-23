@@ -10,15 +10,13 @@ Explore the resources at your fingertips provided by the <Globals name="shortNam
 
 </PageDescription>
 
-The Developer Dashboard is one of the tools running in your <Globals name="devenv" />. It is designed to help you navigate 
+The Developer Dashboard is one of the tools running in your <Globals name="devenv" />. It is designed to help you navigate
 to the installed tools and provide a simple way to perform common developer tasks, such as:
 - **Dashboard**: Navigate to the tools installed in the cluster
 - **Activation**: Links to education to help you learn cloud-native development and deployment using IBM Cloud Kubernetes Service and Red Hat OpenShift on IBM Cloud
 - **<Globals name="templates" />**: Links to templates that will help accelerate your project
 
-With the release of **<Globals name="ocp" /> 4.x**, it is now even easier for developers to integrate the SDLC tools into 
-the OpenShift console. This Developer Dashboard is mainly focused on providing a simple navigation experience when the 
-<Globals name="shortName" /> is installed into <Globals name="iks" />.
+With the release of **<Globals name="ocp" /> 4.x**, it is now even easier for developers to integrate the SDLC tools into the OpenShift console. This Developer Dashboard is mainly focused on providing a simple navigation experience when the <Globals name="shortName" /> is installed into <Globals name="iks" />.
 
 ![Developer Dashboard](/images/developer-dashboard.png)
 
@@ -29,12 +27,12 @@ Here are some recent improvements:
 - The tools view is split into more columns to enable more reuse of the screen
 - The Cluster information is now available when you click on "Developer Dashboard" title
 - The <Globals name="igccli" /> now installs an alias into the `oc` and `kubectl` so it is now possible to open the dashboard quickly using `oc dashboard` and `kubectl dashboard`
- 
+
 ### Tools configured with OpenShift console
 
-When the administrator configures your <Globals name="devenv" />, they can customize a set of short cut links to common 
-tools you often use as a developer. 
-  
+When the administrator configures your <Globals name="devenv" />, they can customize a set of short cut links to common
+tools you often use as a developer.
+
 ![OpenShift Links](/images/openshift-console-tools.png)
 
 You can see how these tools are configured by reading the [tools configuration guide](/admin/config-dashboard)
@@ -52,19 +50,19 @@ You can open the Dashboard from a terminal.
 
     <Tabs>
     <Tab label="OpenShift">
-    
+
     ```shell script
     oc dashboard
     ```
     </Tab>
     <Tab label="Kubernetes">
-    
+
     ```shell script
     kubectl dashboard
     ```
     </Tab>
     <Tab label="IGC">
-    
+
     ```shell script
     igc dashboard
     ```
@@ -75,29 +73,29 @@ You can open the Dashboard from a terminal.
 
 ### Opening the Kubernetes/OpenShift console
 
-1. Use the [<Globals name="igccli" />](/getting-started/cli) `console` command to open the IKS or OpenShift console:
+- Use the [<Globals name="igccli" />](/getting-started/cli) `console` command to open the IKS or OpenShift console:
 
     <Tabs>
     <Tab label="OpenShift">
-    
+
     ```shell script
     oc console
     ```
-  
+
     </Tab>
     <Tab label="Kubernetes">
-    
+
     ```shell script
     kubectl console
     ```
-  
+
     </Tab>
     <Tab label="IGC">
-    
+
     ```shell script
     igc console
     ```
-  
+
     </Tab>
     </Tabs>
 
@@ -107,36 +105,36 @@ You can open the Dashboard from a terminal.
 
 ### Access the URLs to endpoints in the cluster
 
-1. Use the [<Globals name="igccli" />](/getting-started/cli) `endpoints` command to list the endpoints for a given namespace/project:
+- Use the [<Globals name="igccli" />](/getting-started/cli) `endpoints` command to list the endpoints for a given namespace/project:
 
     <Tabs>
     <Tab label="OpenShift">
-    
+
     ```shell script
     oc endpoints -n tools
     ```
-  
+
     </Tab>
     <Tab label="Kubernetes">
-    
+
     ```shell script
     kubectl endpoints -n tools
     ```
-  
+
     </Tab>
     <Tab label="IGC">
-    
+
     ```shell script
     igc endpoints -n tools
     ```
-  
+
     </Tab>
     </Tabs>
 
     This will return the route and ingress URLs for the `tools` namespace where the DevOps tools have been installed in the cluster:
     ```shell script
     ? Endpoints in the 'tools' namespace. Select an endpoint to launch the default browser or 'Exit'.
-    
+
      1) Exit
      2) developer-dashboard - http://dashboard.garage-dev-ocp4-c-518489-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud
      3) argocd-server - https://argocd-tools.gsi-learning-ocp311-clu-7ec5d722a0ab3f463fdc90eeb94dbc70-0001.eu-gb.containers.appdomain.cloud
@@ -153,36 +151,36 @@ You can open the Dashboard from a terminal.
 
 In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. In the meantime, the CLI includes a command to list the tools' logins.
 
-1. Use the [<Globals name="igccli" />](/getting-started/cli) `credentials` command to list the endpoints and credentials for the tools
+- Use the [<Globals name="igccli" />](/getting-started/cli) `credentials` command to list the endpoints and credentials for the tools
 
     <Tabs>
     <Tab label="OpenShift">
-    
+
     ```shell script
     oc credentials
     ```
     </Tab>
     <Tab label="Kubernetes">
-    
+
     ```shell script
     kubectl credentials
     ```
     </Tab>
     <Tab label="IGC">
-    
+
     ```shell script
     igc credentials
     ```
     </Tab>
     </Tabs>
 
-    The command lists the `userid` and `password` for each tool installed. You can use these credentials to log into 
+    The command lists the `userid` and `password` for each tool installed. You can use these credentials to log into
     each of the installed tools.
-    More of the tools in <Globals name="ocp" /> will be integrated into the OpenShift console login process 
+    More of the tools in <Globals name="ocp" /> will be integrated into the OpenShift console login process
 
     <InlineNotification>
-    
-    If you are using OpenShift, the Jenkins credential will be `undefined` because the OpenShift built in Jenkins 
+
+    If you are using OpenShift, the Jenkins credential will be `undefined` because the OpenShift built in Jenkins
     service uses IBM cloud single sign-on mechanism.
-    
+
     </InlineNotification>

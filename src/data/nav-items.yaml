@@ -132,14 +132,6 @@
       path: /practical/inventory-part1
     - title: Inventory Code Pattern - 2
       path: /practical/inventory-part2
-    - title: Cloud Pak for Applications - 1
-      path: /practical/cp4apps
-    - title: Cloud Pak for Applications - 2
-      path: /practical/cp4apps2
-    - title: App Modernization -  1
-      path: /practical/appmod-exercise1
-    - title: App Modernization - 2
-      path: /practical/appmod-exercise2
 
 - title: Activation
   pages:
