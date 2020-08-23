@@ -295,8 +295,7 @@ Wait for the pipeline stages to start building. Once the stages have completed, 
 
 ### 10. Access the running app
 
-Once the pipeline has completed successfully, the app will be deployed into the namespace used when
-registering the pipeline. To validate the app is running follow these steps:
+Once the pipeline has completed successfully, the app will be deployed into the namespace used when registering the pipeline. To validate the app is running follow these steps:
 
 **Note:** Be sure the namespace context is set correctly before running the following commands -
 [set the namespace context](#7.-set-the-namespace-context)
@@ -304,18 +303,14 @@ registering the pipeline. To validate the app is running follow these steps:
 1. Retrieve the app ingress endpoint using commands below in your terminal.
 
     ```bash
-    igc endpoints
+    oc endpoints
     ```
 
-2. From the endpoints listed, select the URL for the repo that was just deployed and press **Enter** to
-open that URL in a web browser and validate the application is working as expected
+2. From the endpoints listed, select the URL for the repo that was just deployed and press **Enter** to open that URL in a web browser and validate the application is working as expected
 
 ### 11. Locate the app in the web console
 
-The build pipeline is configured to build the source code from the Git repository into a container image. This
-image is stored in the [Image Registry](/guides/image-registry). After that the image is deployed into the
-same namespace/project within development cluster where the pipeline ran and validated for its health. The steps
-below will walk through locating the installed application within the Web Console.
+The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/guides/image-registry). After that the image is deployed into the same namespace/project within development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
 
 <Tabs>
 <Tab label="OpenShift 4.x">
@@ -332,7 +327,7 @@ below will walk through locating the installed application within the Web Consol
 7. Click **Resource** tab and then on the pod **View Logs** link
 8. You can see the running state of your application
 
-![Pods on OpenShift](src/pages/getting-started-day-1/deploy-app/images/topology.png)
+![Pods on OpenShift](images/topology.png)
 
 </Tab>
 
@@ -352,7 +347,7 @@ below will walk through locating the installed application within the Web Consol
 9. You can see the running state of your application
 10. Navigate around the console to understand where your deployment, service and pods are running
 
-![Pods on IKS](src/pages/getting-started-day-1/deploy-app/images/podsiks.png)
+![Pods on IKS](images/podsiks.png)
 
 </Tab>
 </Tabs>
@@ -363,9 +358,6 @@ below will walk through locating the installed application within the Web Consol
 
 </InlineNotification>
 
-Having reached this point, we recommend you repeat the process a few more times using different code
-pattern templates and explore the environment to get familiar. For more information about the
-tools used by the pipeline, check out the [Guides](/guides/overview)
+Having reached this point, we recommend you repeat the process a few more times using different starter kits templates and explore the environment to get familiar. For more information about the tools used by the pipeline, check out the [Guides](/guides/overview)
 
-This completes the deployment of your app. The next step is to prepare for Continuous Delivery, Code
-Analysis, and Artifact Management.
+This completes the deployment of your app. The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.
