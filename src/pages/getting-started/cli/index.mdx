@@ -710,7 +710,7 @@ It's _ephemeral_ meaning it doesn't allocate any persistent storage in the clust
     ```shell script
     oc project {NAMESPACE}
     ```
-    
+
     where:
     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
@@ -753,7 +753,7 @@ secret needs to be added that contains the git credentials.
 https://cloudnativetoolkit.dev/getting-started/prereqs#configure-github-personal-access-token
 
 2. Copy the following into a file called `gitsecret.yaml` and update the {Git-Username}, and {Git-PAT}
-    
+
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -768,18 +768,18 @@ https://cloudnativetoolkit.dev/getting-started/prereqs#configure-github-personal
       username: {Git-Username}
       password: {Git-PAT}
     ```
-    
+
     where:
      - `Git-Username` is the username that has access to the git repo
      - `Git-PAT` is the personal access token of the git user
 
 2. After logging into the cluster, create the secret by running the following:
-    
+
     ```shell script
     oc project {NAMESPACE}
     oc create -f gitsecret.yaml
     ```
-    
+
     where:
      - `{NAMESPACE}` is the development namespace where the pipelines will run
 
@@ -790,7 +790,7 @@ custom resources. The following steps will create one by hand to create the buil
 
 1. Copy the following into a file called `buildconfig.yaml` and update the {Name}, {Secret}, {Git-Repo-URL},
 and {Namespace}
-    
+
     ```yaml
     apiVersion: v1
     kind: BuildConfig
@@ -814,19 +814,19 @@ and {Namespace}
           - name: NAMESPACE
             value: {NAMESPACE}
     ```
-    
+
     where:
-     - `Name` is in the name of your pipeline 
+     - `Name` is in the name of your pipeline
      - `Git-Repo-URL` is the https url to the git repository
      - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 2. Assuming you are still logged into the cluster, create the buildconfig resource in the cluster
-    
+
     ```shell script
     oc project {NAMESPACE}
     oc create -f buildconfig.yaml
     ```
-    
+
     where:
      - `{NAMESPACE}` is the development namespace where the pipelines will run
 
@@ -840,21 +840,21 @@ and {Namespace}
 
 ### 5. Create the webhook
 
-1. Run the following to get the webhook details from the build config 
-    
+1. Run the following to get the webhook details from the build config
+
     ```shell script
     oc project {NAMESPACE}
     oc describe bc {Name}
     ```
-    
+
     where:
      - `{Name}` is the name used in the previous step for the build config
      - `{NAMESPACE}` is the development namespace where the pipelines will run
-    
+
     The webhook url will have a structure similar to:
-    
+
     `http://{openshift_api_host:port}/oapi/v1/namespaces/{namespace}/buildconfigs/{name}/webhooks/{secret}/generic`
-    
+
     In this case `{secret}` will be `my-secret-value`
 
 2. Open a browser to the GitHub repo deployed in the previous step in the build config
@@ -965,8 +965,8 @@ to the templates in the `helm chart`)
 
 Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
 contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
-is named `{git org}.{git repo}`. The config map and secret will be created in the currently selected namespace/project, 
-unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be 
+is named `{git org}.{git repo}`. The config map and secret will be created in the currently selected namespace/project,
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
 replaced/updated it won't be updated unless the `--replace` argument is passed.
 
 **Command flags**
@@ -1027,8 +1027,8 @@ The following gives the equivalent commands to create the config map and secret 
 
 Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
 contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
-is named `gitops-repo`. The config map and secret will be created in the currently selected namespace/project, 
-unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be 
+is named `gitops-repo`. The config map and secret will be created in the currently selected namespace/project,
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
 replaced/updated it won't be updated unless the `--replace` argument is passed.
 
 **Command flags**

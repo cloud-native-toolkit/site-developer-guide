@@ -27,6 +27,12 @@ div[class*='Code-module--sidebar'] {
     right: -15px;
 }
 
+div[class*='Code-module--path']  {
+    margin-left:15px;
+}
+
+
+
 h3 {
     margin-top: 1em;
     margin-botton: .5em;
@@ -79,6 +85,7 @@ div[class*='module--container']{
 }
 
 div[class*='Code-module--row']{
+    display: block;
     width:95%;
 }
 
