@@ -23,6 +23,8 @@
       path: /getting-started-day-0/install-toolkit/ibm-cloud
     - title: "- Complete the configuration"
       path: /getting-started-day-0/post-installation
+    - title: IBM Cloud Account
+      path: /getting-started-day-0/ibm-cloud-account-management
     - title: Infrastructure as Code
       path: /getting-started-day-0/infrastructure-as-code
     - title: Git-Ops
@@ -95,11 +97,11 @@
       path: /admin/install-crw
     - title: Configure the Dashboard
       path: /admin/config-dashboard
-    - title: Sysdig
+    - title: Sysdig Setup
       path: /admin/sysdig-setup
-    - title: Infrastructure as Code
-      path: /admin/iasc
-    - title: Cluster configuration
+    - title: Terraform Modules
+      path: /admin/terraform
+    - title: Cluster Configuration
       path: /admin/cluster-configuration
     - title: Destroying
       path: /admin/destroying

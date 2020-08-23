@@ -15,7 +15,7 @@ Create a sample application and deploy it with a CI pipeline
 The <Globals name="env" /> supports end-to-end development and deployment of an application. The instructions below
 will show you how to do it.
 
-You can create a new app using one of the [<Globals name="templates" />](/starterkits/overview). These have been
+You can create a new app using one of the [<Globals name="templates" />](/starterkits). These have been
 created to include all the key components, configuration, and frameworks to get you started on creating the code you
 need for your solutions. The approach for getting started is exactly the same for an environment based on
 **Red Hat OpenShift** or **Kubernetes**.
@@ -81,7 +81,6 @@ This is something that would typically happen once at the beginning of a project
 oc sync {DEV_NAMESPACE} --dev
 ```
 
-
 ### 3. Open the Developer Dashboard
 
 The [Developer Dashboard](/getting-started/dashboard) makes it easy for you to navigate to the tools, including a
@@ -89,7 +88,7 @@ section that allows you to select a set of preconfigured [<Globals name="templat
 make seeding your development project very easy.
 
 1. Open a browser and make sure you are logged into [Github](https://github.com)
-2. Open the console by running the following command:
+2. Open the dashboard by running the following command:
 
     ```shell script
     oc dashboard
@@ -133,10 +132,13 @@ The new repository will be created in your selected organization.
 
 1. With the browser open to the newly created repository, click on **Clone or download**
 2. Copy the clone _SSH link_, and use the `git clone` command to clone it to your developer desktop machine.
+
     ```shell script
     git clone git@github.com:{gitid}/stockbffnode.git
     ```
+
 3. Change into the cloned directory
+
     ```shell script
     cd stockbffnode
     ```
@@ -157,12 +159,14 @@ and `kubernetes`.)
 ```shell script
 oc project {DEV_NAMESPACE}
 ```
+
 </Tab>
 <Tab label="Kubernetes">
 
 ```shell script
 kubectl config set-context --current --namespace={DEV_NAMESPACE}
 ```
+
 </Tab>
 </Tabs>
 
@@ -186,6 +190,7 @@ different build engines, please see [Continuous Integration with Jenkins Guide](
     ```shell script
     oc pipeline
     ```
+
 1. Select the pipeline type for **OpenShift** we recommend **Tekton** as its optimized for Kubernetes based environments.
 
 1. The first time a pipeline is registered in the namespace, the CLI will ask for a username and
@@ -330,7 +335,6 @@ The build pipeline is configured to build the source code from the Git repositor
 ![Pods on OpenShift](images/topology.png)
 
 </Tab>
-
 <Tab label="Kubernetes">
 
 1. Open the **Kubernetes Dashboard**
