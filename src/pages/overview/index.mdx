@@ -24,7 +24,7 @@ As the name suggests, the <Globals name="longName" /> provides a collection of t
 whole to support the activities of software development life-cycle. The following provides a listing of the "tools" that
 make up the <Globals name="shortName" />:
 
-![<Globals name="shortName" />](./images/cntk-in-the-toolkit.png)
+![Cloud-Native Toolkit](./images/cntk-in-the-toolkit.png)
 
 - [**CNTK Guides**](#guides) - this set of documentation that weaves the various toolkit components together with a perspective on how to apply cloud-native practices to deliver business solutions
 - [**Infrastucture as Code**](getting-started-day-0/infrastructure-as-code) - Terraform scripts and GitOps configuration to provision and manage the environment
@@ -36,8 +36,8 @@ make up the <Globals name="shortName" />:
 
 ## <Globals name="shortName" /> <Globals name="devenv" />
 
-The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support
-<Globals name="method" /> best practices for consistent and rapid development of cloud-native applications:
+The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support <Globals name="method" /> best practices 
+for consistent and rapid development of cloud-native applications:
 
 - **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
@@ -46,29 +46,26 @@ The <Globals name="shortName" /> <Globals name="devenv" /> includes several feat
 - **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized console to help developers use the environment's capabilities
 
-Typically a [Cloud System Admin](/admin/overview) or a
-[squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
-up a new <Globals name="devenv" /> after the [initial inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
-providing a place for the developers to start developing the
-[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
-The objective is to reduce the time required for a team to configure and prepare their development environment. The key
-benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/)
+Typically a [Cloud System Admin](/admin/overview) (or a [squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets 
+up a new <Globals name="devenv" /> after the [inception workshop](https://www.ibm.com/garage/method/practices/think/inception), 
+providing a place for the developers to start developing the 
+[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). 
+The objective is to reduce the time required for a team to configure and prepare their development environment. The key 
+benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) 
 consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform), driven by scripts with
-a [modular configuration](https://github.com/ibm-garage-cloud/garage-terraform-modules)
-so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform) scripts structured as [modular components](https://github.com/ibm-garage-cloud/garage-terraform-modules) 
+so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the 
 industry to deliver real value for modern cloud-native development.
 
-[Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach
-to how they deliver success with OpenShift.
+[Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach to how they deliver success with OpenShift.
 
 ### Environment components
 
 After installation, the <Globals name="env" /> consists of the following components and developer tools:
-- A development cluster
+- A <Globals name="iks" /> or <Globals name="ocp" /> development cluster
+- A collection of continuous delivery tools deployed into the cluster
 - A set of backend services
-- A set of continuous delivery tools
 
 This diagram illustrates the <Globals name="env" />:
 
@@ -77,7 +74,7 @@ This diagram illustrates the <Globals name="env" />:
 The diagram shows the components in the environment: the cluster, the deployment target environments, the cloud services, and the tools.
 
 <Accordion>
-  <AccordionItem title="Logo Usage Reference">
+<AccordionItem title="Logo Usage Reference">
 
 | Logo      | Usage Reference |
 | --------- | ---------- |
@@ -97,27 +94,18 @@ The diagram shows the components in the environment: the cluster, the deployment
 </AccordionItem>
 </Accordion>
 
+The tools to provision an environment using the <Globals name="shortName" /> can the customized to provision a particular
+set of tools fit for the environment. The Toolkit provides a default installation to provision a <Globals name="devenv" /> 
+as a starting point. Any of the available components listed on the [Terraform modules](/admin/terraform) page can be used
+to prepare the environment.
+
 #### Development cluster
 
-The heart of the <Globals key="env" /> is a cluster:
+The heart of the <Globals name="devenv" /> is a cluster:
 
-- An [<Globals key="iks" />](https://www.ibm.com/cloud/container-service)
-or [<Globals key="roks" />](https://www.ibm.com/cloud/openshift) 3-node cluster
+- An [IBM Cloud-managed Kubernetes](https://www.ibm.com/cloud/container-service) or [Red Hat OpenShift](https://www.ibm.com/cloud/openshift) cluster
 - Cluster namespace that encapsulates the tooling installed in the cluster: *tools*
-- Cluster namespaces for deployment target environments: *dev*, *test*, and *staging*
-
-#### Backend services
-
-The following <Globals key="ic" /> services are created and bound to the cluster:
-
-| Capability                | Service        |Description |
-| -----------------------   |:-------------- |------------|
-| Log Management            | [Log Analysis with LogDNA](/guides/log-management)  | Manage and analyze app logs  |
-| Monitoring                | [Cloud Monitoring with Sysdig](/guides/monitoring)  | Monitor app and platform resources |
-| User Authentication       | [App ID](/programming/security/)                    | Verify identities of clients accessing app end points |
-| Relational Data Storage   | [Databases For PostgreSQL](/programming/databases) (used by SonarQube) | Stores relational data structured as schemas for SQL querying |
-| Schemaless Data Storage   | [Cloudant](/programming/databases)                  | NoSQL database for JSON documents |
-| Binary Data Storage       | [Cloud Object Storage](/programming/databases)      | Storage service commonly used for binary content |
+- A collection of SRE tools and services
 
 #### Continuous delivery tools
 
@@ -133,6 +121,19 @@ The following best-of-breed open source software tools are installed in the clus
 | Artifact Management         | [Artifactory](/guides/artifact-management/)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
 | Continuous Delivery         | [ArgoCD](/guides/continuous-delivery/)                   |         | ArgoCD support Continuous Delivery with GitOps |
 | Web IDE                     | [Code Ready Workspace](https://developers.redhat.com/products/codeready-workspaces/overview)              |         | IDE for editing and managing code in a web browser |
+
+#### Backend services
+
+The following <Globals key="ic" /> services are created and bound to the cluster:
+
+| Capability                | Service        |Description |
+| -----------------------   |:-------------- |------------|
+| Log Management            | [Log Analysis with LogDNA](/guides/log-management)  | Manage and analyze app logs  |
+| Monitoring                | [Cloud Monitoring with Sysdig](/guides/monitoring)  | Monitor app and platform resources |
+| User Authentication       | [App ID](/programming/security/)                    | Verify identities of clients accessing app end points |
+| Relational Data Storage   | [Databases For PostgreSQL](/programming/databases) (used by SonarQube) | Stores relational data structured as schemas for SQL querying |
+| Schemaless Data Storage   | [Cloudant](/programming/databases)                  | NoSQL database for JSON documents |
+| Binary Data Storage       | [Cloud Object Storage](/programming/databases)      | Storage service commonly used for binary content |
 
 ## Getting Started
 
