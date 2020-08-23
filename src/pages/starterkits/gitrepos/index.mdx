@@ -1,36 +1,37 @@
 ---
-ltitle: Code Patterns Git Repos
+title: Starter Kits Git Repos
 ---
 
 ### Overview
 
-In the [Overview](../overview) section we describe why _Code
- Patterns_ provide a perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed templates that can be used to get projects moving quickly and focusing on use case business logic.
+In the [Overview](../overview) section we describe why _Start Kits_ provide a perfect on ramp to help projects get started. The Developer Tools project is providing a set of seed templates that can be used to get projects moving quickly and focusing on use case business logic.
 
 Read up on why you should start with a **Starter Kit** and if you have not
+
  already tried to deploy your first app to show you how easy it is to get
   started
 
 <AnchorLinks>
-  <AnchorLink to="../codpatterns/overview">Code Patterns
-   Overview
+  <AnchorLink to="../starterkits">Starter Kits Overview
   </AnchorLink>
   <AnchorLink to="../../getting-started/deploy-app">Deploying your first app</AnchorLink>
 </AnchorLinks>
 
-Here are links to the base set of **Code Patterns** provided for the _IBM Garage for Cloud Developer Tools_.
+Here are links to the base set of **Starter Kits** provided for the _IBM Garage for Cloud Developer Tools_.
 
-- To use the Code Patterns, click on the link and then the **Template** button to create a version in your own git organization.
+- To use the Starter Kits, click on the link and then the **Template** button to create a version in your own git organization.
 
 - Then clone it onto your local machine and then use `igc pipeline` to register it with your Jenkins server.
     ```bash
     oc login
     oc get pods
     npm install -g @ibmgaragecloud/cloud-native-toolkit-cli
-    git clone <starter kit> | cd <starter kit>
+    git clone <code pattern> | cd <code pattern>
     oc sync <project> --dev
     oc pipeline
     ```
+
+- If you are bringing your own code run the `oc enable` command to add a Helm chart and make sure you code exposes a `/health` endpoint and the `values.yaml` is exposing the correct port for your application.
 
 ### Git Repo Links
 
@@ -164,7 +165,7 @@ Here are links to the base set of **Code Patterns** provided for the _IBM Garage
 <Column colLg={4} colMd={4} noGutterMdLeft>
   <ResourceCard
     title="Bring your own code"
-    subTitle="Enable an existing project or a custom starter kit with pipeline logic"
+    subTitle="Enable an existing project or a custom code pattern with pipeline logic"
     actionIcon="launch"
     color="light"
     href="../getting-started/cli#enable"
