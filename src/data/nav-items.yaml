@@ -128,15 +128,6 @@
     - title: Git Repos
       path: /starterkits/gitrepos
 
-- title: Practical Guides
-  pages:
-    - title: Overview
-      path: /practical
-    - title: Inventory Code Pattern - 1
-      path: /practical/inventory-part1
-    - title: Inventory Code Pattern - 2
-      path: /practical/inventory-part2
-
 - title: Activation
   pages:
     - title: Cloud-Native Development

@@ -3,7 +3,6 @@ title: Overview
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals'
-import Carousel from 'gatsby-theme-carbon/src/templates/Carousel'
 
 <PageDescription>
 
@@ -12,7 +11,7 @@ Get familiar with using the <Globals name="longName"/>
 </PageDescription>
 
 <Globals name="longName" /> provides an environment for developing cloud-native applications for deployment
-within <Globals name="kube" /> and <Globals name="ocp" />. It
+within <Globals name="ocp" /> and <Globals name="kube" />. It
 embodies <Globals name="method" /> principles and practices for consistently developed
 applications, incorporating best practices that increase developer velocity for efficient delivery of business value.
 
@@ -39,9 +38,9 @@ DevOps and "Build to Manage" practices. They have been provided through the <Glo
 developers and SREs can benefit from these practices without requiring any additional effort and so that they can be applied
 consistently from project to project. 
 
-### Quickly ramp up development teams on <Globals name="kube" /> and <Globals name="ocp" />
+### Quickly ramp up development teams on <Globals name="ocp" /> and <Globals name="kube" /> 
 
-Containerized platforms like <Globals name="kube" /> and <Globals name="ocp" /> provide a great deal of functionality and 
+Containerized platforms like <Globals name="ocp" /> and <Globals name="kube" /> provide a great deal of functionality and 
 flexibility for application teams. However, these platforms can at time seem unapproachable for developers and SREs new to the environment
 given all the different concepts and components. The <Globals name="shortName" /> aims to help with the learning curve in two
 different ways:
@@ -49,10 +48,15 @@ different ways:
 1. Provide tools and techniques to "round off the corners" of the more complex aspects of working in a containerized environment
 2. Provide a learning journey that incrementally introduces the concepts of a containerized environment in terms of practical scenarios, not abstract theory 
 
+## Guided walk-though
+
+If you'd like to have a guided walkthrough of what the <Globals name="shortName" /> provides, check out this [video demonstration](https://www.youtube.com/watch?v=LcWboN1T7Zk) of
+the <Globals name="tinyName" /> in action.
+
 ## Components of the <Globals name="longName" />
 
 As the name suggests, the <Globals name="longName" /> provides a collection of tools that can be used in part or in
-whole to support the activities of software development life-cycle. The following provides a listing of the "tools" that
+whole to support the activities of software development life-cycle. The following provides a listing of the assets that
 make up the <Globals name="shortName" />:
 
 ![Cloud-Native Toolkit](./images/cntk-in-the-toolkit.png)
@@ -70,7 +74,7 @@ make up the <Globals name="shortName" />:
 The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support <Globals name="method" /> best practices 
 for consistent and rapid development of cloud-native applications:
 
-- **Cluster**: A <Globals name="kube" /> or <Globals name="ocp" /> cluster that both hosts the tools and itself is a deployment target for application builds
+- **Cluster**: A <Globals name="ocp" /> or <Globals name="kube" /> cluster that both hosts the tools and itself is a deployment target for application builds
 - **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
 - **Backend services**: Cloud services commonly required by cloud-native applications for monitoring, security, and persistence
 - **CI/CD**: A prebuilt, ready-to-run continuous delivery pipeline incorporating best-of-breed open source software tools
@@ -94,7 +98,7 @@ industry to deliver real value for modern cloud-native development.
 ### Environment components
 
 After installation, the <Globals name="env" /> consists of the following components and developer tools:
-- A <Globals name="iks" /> or <Globals name="ocp" /> development cluster
+- A <Globals name="ocp" /> or <Globals name="iks" /> development cluster
 - A collection of continuous delivery tools deployed into the cluster
 - A set of backend services
 
