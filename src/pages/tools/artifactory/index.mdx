@@ -21,9 +21,9 @@ An artifact repository manager hosts multiple binary repositories, like a databa
 An artifact repository manager is an integral part of a CI/CD solution, a companion to the pipeline. As the pipeline builds artifacts, they're stored in the repositories. When the pipeline later needs artifacts that have already been built, they're retrieved from the repositories. This enables a build to be broken into smaller stages with well-defined inputs and outputs and provides better tracking of each stage's results. Often a failed pipeline can restart in the middle using artifacts that were already built and stored.
 
 An artifact repository often serves as the storage for a package manager, which assembles an application from artifacts. Here are some common package managers and their repositories:
-- [**Maven**](https://maven.apache.org): Builds Java artifacts (such as Jar, War, Ear, etc.) and projects stored in [Maven repositories](https://maven.apache.org/guides/introduction/introduction-to-repositories.html) such as [Maven Central](https://maven.apache.org/repository/index.html)
+- [**Maven**](https://maven.apache.org): Builds Java artifacts (such as Jar, War, Ear, etc.) and projects stored in [Maven repositories](https://maven.apache.org/tools/introduction/introduction-to-repositories.html) such as [Maven Central](https://maven.apache.org/repository/index.html)
 - [**npm**](https://docs.npmjs.com/about-npm/): Assembles programs from JavaScript packages stored in [npm-registries](https://docs.npmjs.com/misc/registry) such as the [public npm registry](https://docs.npmjs.com/about-the-public-npm-registry)
-- [**PIP**](https://pypi.org/project/pip/): Installs Python packages from [index repositories](https://packaging.python.org/guides/hosting-your-own-index/) such as the [Python Package Index (PyPI)](https://pypi.org/)
+- [**PIP**](https://pypi.org/project/pip/): Installs Python packages from [index repositories](https://packaging.python.org/tools/hosting-your-own-index/) such as the [Python Package Index (PyPI)](https://pypi.org/)
 - [**Helm**](https://helm.sh): Deploys applications to Kubernetes using charts stored in [Helm repositories](https://helm.sh/docs/chart_repository/) such as the [Helm Hub](https://helm.sh/blog/intro-helm-hub/) catalog of repositories
 
 Docker is not a package manager, but its architecture includes an artifact repository:
@@ -35,8 +35,8 @@ Note that you do not need a very large team to start reaping benefits from an ar
 
 Note: Be sure to [set up Artifactory](/getting-started/artifactory-setup) before using it in the Development Tools environment.
 
-The <Globals name="env" /> will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
-- **Docker images**: The [Developer Tools Image Registry](/guides/image-registry)
+The <Globals name="env" /> will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
+- **Docker images**: The [Developer Tools Image Registry](/tools/image-registry)
 - **Helm charts**: A Helm repository in Artifactory
 
 The [<Globals name="templates" />](/starterkits) have also been configured to store their Helm charts in Artificatory.
@@ -44,8 +44,8 @@ The [<Globals name="templates" />](/starterkits) have also been configured to st
 Artifactory is part of the <Globals name="env" />'s complete CI/CD solution:
 
 <AnchorLinks small>
-  <AnchorLink to="../../guides/continuous-integration">Continuous Integration</AnchorLink>
-  <AnchorLink to="../../guides/continuous-delivery">Continuous Delivery</AnchorLink>
+  <AnchorLink to="/getting-started-day-1/continuous-integration">Continuous Integration</AnchorLink>
+  <AnchorLink to="/getting-started-day-2/continuous-delivery">Continuous Delivery</AnchorLink>
 </AnchorLinks>
 
 ### Artifactory dashboard

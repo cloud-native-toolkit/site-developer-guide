@@ -20,8 +20,8 @@ Complete the steps for setting up the Artifactory tool
 
 ## Overview
 
-Artifactory is the [<Globals name="env" />'s artifact repository manager](/guides/artifact-management).
-Before you can use it as part of the [continuous integration pipeline](/guides/continuous-integration),
+Artifactory is the [<Globals name="env" />'s artifact repository manager](/tools/artifact-management).
+Before you can use it as part of the [continuous integration pipeline](/tools/continuous-integration),
 it first must be configured as part of the environment.
 
 ##  Configuration
@@ -135,7 +135,7 @@ The next step is to define the base url that will be used by the server.
 
 ### Obtain the encrypted password 
 
-To enable the CI pipelines ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
+To enable the CI pipelines ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.)
 to store the Helm artifacts in the Artifactory repository, we need to obtain
 Artifactory's encrypted password and save it where the pipeline can access the password -- in the `artifactory-access`
 Kubernetes secret in the `tools` namespace in the Development Tools environment.

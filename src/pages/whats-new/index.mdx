@@ -1,0 +1,42 @@
+---
+title: What's new?
+---
+
+## Iteration Zero release 2.0.0
+
+Date: Aug 24, 2020
+
+### Features
+
+* Bumps ibm-container-platform module to v1.16.3 to create doc links (#135) (#166)
+* Updates k8s-ocp-cluster module to v2.3.2 to match ibm-container-platform configuration (#166)
+* Streamlines configuration for non-IBM Cloud OCP Clusters (#139)
+* Bumps tekton module to v2.0.1 to show dashboard tile (#161)
+* Bumps tekton resources module to v2.0.0 (#155)
+* Bumps namespace module to v2.5.2 to copy configmaps properly and to improve delete logic (#161) (#166)
+* Bumps logdna and sysdig modules to v2.3.0 (#164) (#169)
+    - Updates logdna and sysdig to use cluster id and resource id when binding the service to prevent cross-region issues
+    - Bumps cli-tools image to v0.7.0-lite to get v1.9.0 of ibm terraform provider (requirement of logdna and sysdig versions)
+    - Adds logdna_region and sysdig_region variables to allow logdna and sysdig to be in a different region than the cluster
+* Bumps artifactory module to v1.9.1 (#157) (#168)
+    - Automates post-install configuration steps
+    - Sets internal (service) url in secret
+* Bump sonarqube to v1.9.0 to automate the password reset (#170)
+* Bumps dashboard module to v1.8.0 (#172)
+    - Menu updates (#171)
+    - Reduce the tools menu down to just the cloud paks as all the core tools are now installed with the izero
+* Updates tile build logic to match new name for environment.tfvars (#162)
+    - Picks up new `tools_namespace` variable to create tool-config in correct namespace
+    - Adds documentation for vpc_zone_names variable
+* Changes default values for provision_logdna and provision_sysdig to 'true' (#172)
+* Adds provision_activity_tracker variable to fix error
+
+### Maintenance
+
+* Updates cluster variables (ibm-garage-cloud/planning#499)
+* Adds template for bug report (#158)
+* Exposes vpc_zone_names to tile (#159)
+* Simple fix for readme for tiles
+* Changes documentation for default value of provision_logdna and provision_sysdig as true (#173)
+* Updates verify platform matrix (#175)
+* Overrides variable values for test (#176)

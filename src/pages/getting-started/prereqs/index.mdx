@@ -33,7 +33,7 @@ You'll need these accounts to use the <Globals name="env" />.
 
 
 ### Configure Github Personal Access Token
-For your CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.) to connect to and use your GitHub repo, it will need a [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) with `public_repo` and `write:repo_hook` scopes. The Personal Access Token only needs to be generated once because it is associated with the GitHub organization and can be used to access any of the organization's repos.
+For your CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.) to connect to and use your GitHub repo, it will need a [GitHub personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) with `public_repo` and `write:repo_hook` scopes. The Personal Access Token only needs to be generated once because it is associated with the GitHub organization and can be used to access any of the organization's repos.
 
   - Navigate to [Developer Settings](https://github.com/settings/tokens) and generate a new token; name it something like "CI pipeline"
   - Select `public_repo` scope to enable git clone
@@ -85,7 +85,7 @@ The following is a list of desktop tools required to help with installation and 
 
     </InlineNotification>
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop): Required for running common tools and [Developer Tools Image](/guides/tools-image)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop): Required for running common tools and [Developer Tools Image](/tools/tools-image)
     - Installed and running on your local machine
 
 - [Node](https://nodejs.org/en/): Required for running the [IBM Garage for Cloud CLI](/getting-started/cli)
