@@ -161,3 +161,9 @@ section[class*='Tabs-module--panel']{
 .BrainhubCarousel__arrows{position:relative;padding:21px;border:none;overflow:hidden;outline:0;font-size:0;line-height:0;background-color:#7b59ff}.BrainhubCarousel__arrows span{display:block;position:absolute;top:50%;left:50%;border-style:solid;border-color:#fff;border-width:3px 3px 0 0;padding:5px;transition:0.3s;font-size:0}.BrainhubCarousel__arrows:hover{background-color:#8768ff}.BrainhubCarousel__arrows:hover span{display:block;position:absolute;top:50%;left:50%;border-style:solid;border-color:#fff;border-width:3px 3px 0 0;padding:5px;transition:0.3s;font-size:0}.BrainhubCarousel__arrows:hover:enabled{background-color:#8768ff}.BrainhubCarousel__arrows:hover:enabled span{border-color:#fff;margin:0}.BrainhubCarousel__arrows:disabled{background-color:#ccc}.BrainhubCarousel__arrowLeft span{transform:translate(-50%, -50%) rotate(-135deg);margin-left:2.45px}.BrainhubCarousel__arrowRight span{transform:translate(-50%, -50%) rotate(45deg);margin-left:-2.45px}.BrainhubCarousel--isRTL .BrainhubCarousel__arrowLeft span{transform:translate(-50%, -50%) rotate(45deg);margin-left:-2.45px}.BrainhubCarousel--isRTL .BrainhubCarousel__custom-arrowLeft span{transform:rotate(180deg)}.BrainhubCarousel--isRTL .BrainhubCarousel__arrowRight span{transform:translate(-50%, -50%) rotate(-135deg);margin-left:2.45px}.BrainhubCarousel--isRTL .BrainhubCarousel__custom-arrowRight span{transform:rotate(-180deg)}.BrainhubCarousel--isRTL .BrainhubCarousel__arrows:hover span{margin:0}.BrainhubCarousel__arrow--disable{pointer-events:none}
 
 /*# sourceMappingURL=style.css.map*/
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

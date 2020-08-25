@@ -179,7 +179,7 @@ kubectl config set-context --current --namespace={DEV_NAMESPACE}
 
 Up to this point you have the code in a GitHub repository and have cloned it to you local development environment. You
 now need to register the repository with the continuous integration pipeline. The <Globals name="env" /> supports both
-[Tekton](/guides/tekton) and [Jenkins](/guides/jenkins) for continuous
+[Tekton](/tools/tekton) and [Jenkins](/tools/jenkins) for continuous
 integration.
 
 1. Start the process to create a pipeline
@@ -312,7 +312,7 @@ registering the pipeline. To validate the app is running follow these steps:
 
 ### 11. Locate the app in the web console
 
-The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/guides/ibm-cloud-container-registry). After that the image is deployed into the same namespace/project within development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
+The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/tools/ibm-cloud-container-registry). After that the image is deployed into the same namespace/project within development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
 
 <Tabs>
 <Tab label="OpenShift 4.x">
@@ -359,6 +359,6 @@ The build pipeline is configured to build the source code from the Git repositor
 
 </InlineNotification>
 
-Having reached this point, we recommend you repeat the process a few more times using different starter kits templates and explore the environment to get familiar. For more information about the tools used by the pipeline, check out the [Guides](/guides)
+Having reached this point, we recommend you repeat the process a few more times using different starter kits templates and explore the environment to get familiar. For more information about the tools used by the pipeline, check out the [Guides](/tools)
 
 This completes the deployment of your app. The next step is to prepare for Continuous Delivery, Code Analysis, and Artifact Management.

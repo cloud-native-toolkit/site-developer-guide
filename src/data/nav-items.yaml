@@ -2,6 +2,10 @@
   pages:
     - path: /overview
 
+- title: What's New?
+  pages:
+    - path: /whats-new
+
 - title: Getting Started
   pages:
     - title: Overview
@@ -65,29 +69,29 @@
 - title: Tool Guides
   pages:
     - title: Overview
-      path: /guides
+      path: /tools
     - title: CI with Tekton
-      path: /guides/tekton
+      path: /tools/tekton
     - title: CI with Jenkins
-      path: /guides/jenkins
+      path: /tools/jenkins
     - title: IBM Cloud Container Registry
-      path: /guides/ibm-cloud-container-registry
+      path: /tools/ibm-cloud-container-registry
     - title: Artifact mgmt with Artifactory
-      path: /guides/artifactory
+      path: /tools/artifactory
     - title: Code analysis with SonarQube
-      path: /guides/sonarqube
+      path: /tools/sonarqube
     - title: Contract testing with PACT
-      path: /guides/contract-testing-with-pact
+      path: /tools/contract-testing-with-pact
     - title: Log management with LogDNA
-      path: /guides/logdna
+      path: /tools/logdna
     - title: Monitoring with Sysdig
-      path: /guides/sysdig
+      path: /tools/sysdig
     - title: CD with ArgoCD
-      path: /guides/argocd
+      path: /tools/argocd
     - title: Architecture as Code with SolSA
-      path: /guides/solsa
+      path: /tools/solsa
     - title: CLI Tools Image
-      path: /guides/tools-image
+      path: /tools/tools-image
 
 - title: Administrator Guide
   pages:
@@ -97,6 +101,8 @@
       path: /admin/install-crw
     - title: Configure the Dashboard
       path: /admin/config-dashboard
+    - title: Artifactory Setup
+      path: /admin/artifactory-setup
     - title: Sysdig Setup
       path: /admin/sysdig-setup
     - title: Terraform Modules
@@ -123,15 +129,6 @@
       path: /starterkits
     - title: Git Repos
       path: /starterkits/gitrepos
-
-- title: Practical Guides
-  pages:
-    - title: Overview
-      path: /practical
-    - title: Inventory Code Pattern - 1
-      path: /practical/inventory-part1
-    - title: Inventory Code Pattern - 2
-      path: /practical/inventory-part2
 
 - title: Activation
   pages:

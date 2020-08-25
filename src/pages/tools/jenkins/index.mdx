@@ -60,7 +60,7 @@ The [<Globals name="templates" />](/starterkits) are a good place to start to se
 igc pipeline
 ```
 
-By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute, knowing it has access to the key information that enables it to integrate with both the cloud platform and the various development tools. See [Cluster Configuration](/guides/cluster-configuration) for more detailed information.
+By default, the pipeline will register into the `dev` namespace and will copy all the `configMaps` and `secrets` from the `tools` namespace to the `dev` namespace. This means the pipeline can execute, knowing it has access to the key information that enables it to integrate with both the cloud platform and the various development tools. See [Cluster Configuration](/tools/cluster-configuration) for more detailed information.
 
 ### Registering Pipeline in new namespace
 
@@ -78,6 +78,6 @@ In addition to continuous integration, the <Globals name="env" /> also supports 
 using Artifactory and ArgoCD:
 
 <AnchorLinks small>
-  <AnchorLink to="../../guides/artifactory">Artifact Management with Artifactory</AnchorLink>
-  <AnchorLink to="../../guides/argocd">Continuous Delivery with ArgoCD</AnchorLink>
+  <AnchorLink to="/tools/artifactory">Artifact Management with Artifactory</AnchorLink>
+  <AnchorLink to="/tools/argocd">Continuous Delivery with ArgoCD</AnchorLink>
 </AnchorLinks>
