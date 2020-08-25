@@ -101,6 +101,8 @@
       path: /admin/install-crw
     - title: Configure the Dashboard
       path: /admin/config-dashboard
+    - title: Artifactory Setup
+      path: /admin/artifactory-setup
     - title: Sysdig Setup
       path: /admin/sysdig-setup
     - title: Terraform Modules
