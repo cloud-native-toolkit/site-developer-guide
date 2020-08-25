@@ -1,0 +1,25 @@
+---
+title: Image registry
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+An Image Registry is a repository of versioned container images. It is perhaps a subset of the larger [Artifact Management](/getting-started-day-1/artifact-management) topic
+but has special considerations.
+
+A specific protocol has been defined around building, pushing, tagging and pulling container images to and from an Image Repository. Typically,
+the [continuous integration](/getting-started-day-1/continuous-integration) process is responsible for verifying and building the application 
+source into an image and pushing it into the registry. At deployment time, the deployment descriptor (e.g. kubernetes resource definition) references
+the image at its location within the image registry and the container platform pulls the image and manages the running image in the cluster. Tools
+like `skopeo` can also be used within the process to copy images from one registry to another.
+
+There are a number of options available for the Image Registry, both running in-cluster and outside of the cluster. <Globals name="ocp" >
+even provides an image registry as part of the platform. While an intermediate image registry might be used during the CI process,
+in an enterprise environment it is ideal to have a centrally managed image registry from which vulnerability scans, certifications, and 
+backups can be performed. Some of the available options include:
+
+- [IBM Cloud Image Registry](/tools/ibm-cloud-image-registry)
+- [Artifactory](/tools/artifactory)
+- Nexus
+- <Globals name="ocp" /> image streams
+ 

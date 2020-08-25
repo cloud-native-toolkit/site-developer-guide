@@ -1,0 +1,361 @@
+---
+title: Continuous Delivery with GitOps
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Use GitOps to continuously deliver application changes
+
+</PageDescription>
+
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, [GitOps](/getting-started-day-0/git-ops) [continuous delivery](/getting-started-day-2/continuous-delivery) 
+tool for Kubernetes. The deployment environment is a namespace in a container platform like <Globals name="kube" /> or <Globals name="ocp" />. 
+Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state. 
+Argo CD is flexible in the structure of the application configuration represented in the Git repository.
+
+Argo CD supports defining Kubernetes manifests in a number of ways:
+- helm charts
+- kustomize
+- ksonnet
+- jsonnet
+- plain directory of yaml/json manifests
+- custom plugins
+
+Argo CD compares the actual state of the application in the cluster with the desired state defined in Git and determines if
+they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a 
+notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to 
+ensure they match. 
+
+## Configuring GitOps with Argo CD
+
+**Terminology:**
+
+Argo CD uses a number of terms to refer to the components
+
+- Application - A deployable unit
+
+    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image 
+    that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more 
+    sophisticated applications in more advanced scenarios, we will be using this simple definition here.
+    
+- Project - A collection of applications that make up a solution
+
+### Set up the GitOps repo
+
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one 
+repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that 
+repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) 
+that makes up the project will be described in its own folder. The repository will also contain a branch for each 
+destination (i.e. cluster and namespace) into which we want to deploy the applications.
+
+<InlineNotification>
+
+**Note:** There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git
+repository that is accessible from by the Argo CD instance.  The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate) 
+used in the following steps is optional and provides some application templates to help simplify some configuration activities.
+
+</InlineNotification>
+
+1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
+
+1. Clone the project to your machine
+
+1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the testing environment)
+
+    ```shell script
+    git checkout -b test
+    ```
+
+1. Push the test branch up to the repository
+
+    ```shell script
+    git push -u origin test
+    ```
+
+### Hook the CI pipeline to the CD pipeline
+
+The last stage in the CI pipeline updates a GitOps repository with the updated application metadata from the build. In
+order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes
+to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
+
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc).
+If you used the [IGC CLI](/getting-started/cli) to register the pipeline then this secret has already been created.
+- A secret named `gitops-repo` holds the url and branch for the gitops repository.
+
+Fortunately the [IGC CLI](/getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the
+command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops) section.
+
+1. Run the `gitops` command to create the config map and secret in the CI namespace
+
+    ```shell script
+    igc gitops
+    ```
+
+<InlineNotification>
+
+**Note:**
+
+- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the 
+pipeline is running.
+- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD 
+pipeline.
+
+</InlineNotification>
+
+As of v2.0.0 of the Tekton tasks and the Jenkins pipelines, the CI pipeline will create a folder and the initial configuration
+for an application deployment if it doesn't already exist. This means, there is no other manual configuration required
+to set up the repository.
+
+### Create a project in Argo CD (Optional)
+
+In Argo CD terms, each deployable component is an application and applications are grouped into projects. Projects are not
+required for Argo CD to be able to deploy applications, but it helps to organize applications and provide some restrictions
+on what can be done for applications that make up a project.
+
+<Tabs>
+<Tab label="Argo CD UI">
+
+1. Log into the Argo CD user interface
+
+1. Click on the gear icon on the left menu to access the Settings options
+
+    ![Argo CD config](/images/argocd-config.png)
+
+1. Select the Projects option
+
+1. Press the New Project button at the top of the page
+
+1. Specify the properties for the new project
+
+    - Name - Provide the name for the project
+    - Description - A brief description of the project
+    - Source - Press Add source and pick the Git repository from the list that was added previously
+    - Destinations
+        - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
+    - Press Create
+
+    **Note:** Initially, the only cluster that is available is the one in which Argo CD is -
+    `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
+    to both the `test` and `staging` namespaces within the current cluster.
+
+</Tab>
+<Tab label="Argo CD CLI">
+
+1. Log in to the Argo CD CLI
+
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
+
+2. Create the project
+    
+    ```shell script
+    argocd proj create {PROJECT} --dest {CLUSTER_HOST},{NAMESPACE} --src {GIT_REPO}
+    ```
+    
+    where:
+    
+    - `{PROJECT}` is the name you want to give to the project.
+    - `{CLUSTER_HOST}` is the url for the cluster server to which the project applications can be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where ArgoCD has been deployed. `*` can also be used to allow deployments to any server.
+    - `{NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
+    - `{GIT_REPO}` is the url of the git repository where the gitops config will be located or `*` if you want to allow any.
+
+    **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destations and/or
+    sources that should be configured for the project
+    
+</Tab>
+<Tab label="Argo CD custom resource">
+
+1. Log in to the cluster from the command line
+
+2. Create a file named `project.yaml` with the following contents
+
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: {PROJECT_NAME}
+    spec:
+      sourceRepos:
+        - '*'
+      destinations:
+        - namespace: '*'
+          server: https://kubernetes.default.svc
+    ```
+   
+   where:
+   
+   - `{PROJECT NAME}` is the name of the project
+
+3. Apply the yaml to the cluster in the namespace where Argo CD has been deployed (e.g. `tools`)
+
+    ```shell script
+    kubectl apply -f project.yaml -n tools
+    ```
+
+</Tab>
+</Tabs>
+
+### Add an application in Argo CD for each application component
+
+The last step in the process is to define the application(s) within Argo CD that should be managed. This consists of
+connecting the config within the Git repo to the cluster and namespace.
+
+<Tabs>
+<Tab label="Argo CD UI">
+
+1. Log into Argo CD user interface
+
+1. Press `New Application` and provide the following values:
+
+    - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
+    - `project` - The project with which the application should be included
+    - `sync-policy` - The manner with which Argo CD will use to manage the deployed artifacts. `Automatic` is
+    recommended
+    - `repository url` - The Git url where the configuration is stored
+    - `revision` - The branch where the configuration for this instance is stored
+    - `path` - The path within the repository where the application config is located (should be the application name)
+    - `destination cluster` - The cluster url for the deployment
+    - `destination namespace` - The namespace where the application should be deployed
+
+1. Repeat that step for each application and each environment
+
+</Tab>
+<Tab label="Argo CD CLI">
+
+1. Log in to the Argo CD CLI
+
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
+
+2. Create an application
+
+    ```shell script
+    argocd app create {APP_NAME} --project {PROJECT} --repo {GIT_REPO} --path {APP_FOLDER} --dest-namespace {NAMESPACE} --dest-server {SERVER_URL}
+    ```
+    
+    where:
+    
+    - `{APP_NAME}` is the name you want to give the application
+    - `{PROJECT}` is the name of the project created above or "default"
+    - `{GIT_REPO}` is the url of the git repository where the gitops config is be located
+    - `{APP_FOLDER}` is the path to the configuration for the application in the gitops repo
+    - `{DEST_NAMESPACE}` is the target namespace in the cluster where the application will be deployed
+    - `{SERVER_URL}` is the url of the cluster where the application will be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where ArgoCD has been deployed
+
+</Tab>
+<Tab label="Argo CD custom resource">
+
+1. Log in to the cluster from the command line
+
+2. Create a file named `application.yaml` with the following contents
+
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: {APPLICATION NAME}
+    spec:
+      destination:
+        namespace: {TARGET NAMESPACE}
+        server: {TARGET CLUSTER}
+      project: {PROJECT NAME}
+      source:
+        path: {APPLICATION PATH}
+        repoURL: {REPO URL}
+        targetRevision: {REPO BRANCH}
+        helm:
+          valueFiles:
+            - values.yaml
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    ```
+   
+    where:
+   
+    - `{APPLICATION NAME}` is the name of the application
+    - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
+    - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
+    - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluter where Argo CD has been deployed
+    - `{APPLICATION PATH}`
+    - `{REPO URL}`
+    - `{REPO BRANCH}`
+
+3. Apply the yaml to the cluster in the namespace where Argo CD has been deployed (e.g. `tools`)
+
+    ```shell script
+    kubectl apply -f project.yaml -n tools
+    ```
+
+</Tab>
+</Tabs>
+
+### Configure another cluster as an Argo CD deployment target
+
+Argo CD supports deploying applications into clusters other than the one into which it has been installed. To do that,
+the target cluster must first be registered with Argo CD. After that, the cluster api server can be selected as a
+deployment target within an application configuration. The following describes the steps required to add another cluster
+as a deployment target:
+
+
+1. Log in to the Argo CD CLI
+
+    ```shell script
+    argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
+    ```
+    
+    where:
+    
+    - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+    - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
+    the username and password
+    
+    The grpc url and credentials can be retrieved from the `igc credentials` command
+
+2. Log into the target cluster from the command line
+
+3. Run the Argo CD command to list the available clusters 
+
+    ```shell script
+    argocd cluster add
+    ```
+    
+    The currently selected cluster will be the one with the asterisk next to it. Copy the cluster id from the table
+
+4. Add the cluster to Argo CD
+
+    ```shell script
+    argocd cluster add {CLUSTER ID}
+    ```
+   
+    where:
+    
+    - `{CLUSTER ID}` is the id of the target cluster from the previous step
+
+5. Confirm the configuration by listing the known clusters
+
+    ```shell script
+    argocd cluster list
+    ```

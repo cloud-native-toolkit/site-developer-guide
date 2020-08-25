@@ -9,17 +9,17 @@ The <Globals name="shortName" /> Command Line Interface (CLI)
 
 </PageDescription>
 
-The <Globals name="longName" /> includes the IBM Garage for Cloud (IGC) Command Line Interface (CLI). 
-The [<Globals name="igccli" />](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) provides a set of helpful 
-utilities that can be invoked from the command line. It was created to automate and simplify complicated and repetitive 
+The <Globals name="longName" /> includes the IBM Garage for Cloud (IGC) Command Line Interface (CLI).
+The [<Globals name="igccli" />](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) provides a set of helpful
+utilities that can be invoked from the command line. It was created to automate and simplify complicated and repetitive
 tasks, allowing developers to be more productive.
 
-Use of the CLI is in no way required to work with the <Globals name="shortName" /> and everything done by the CLI can 
-be done manually instead. For each of the commands, the equivalent manual steps are also given for the sake of full 
-transparency and to take away any notion of "magic" that the CLI might be performing. 
+Use of the CLI is in no way required to work with the <Globals name="shortName" /> and everything done by the CLI can
+be done manually instead. For each of the commands, the equivalent manual steps are also given for the sake of full
+transparency and to take away any notion of "magic" that the CLI might be performing.
 
 Some of the utilities provided by the CLI include:
-- Register your application's git repo into a CI pipeline ([Jenkins](/guides/continuous-integration), [Tekton](/guides/continuous-integration-tekton), etc.)
+- Register your application's git repo into a CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.)
 - List the ingress URLs and route URLs defined within the cluster
 - List the connection information (endpoints, user names, and passwords) for the tools configured in the environment
 - Help copy `config maps` and `secrets` into new projects/namespace
@@ -33,17 +33,7 @@ You can either install the CLI onto your computer or install the Cloud Shell Com
 
 <InlineNotification kind="warning">
 
-**Warning:** If you have installed the **IGC** CLI up to `v0.4.0` you must
- uninstall it and follow the installation steps below `npm rm -g @garage
- -catalyst/ibm-garage-cloud-cli`
- 
-</InlineNotification>
-
-<br />
-
-<InlineNotification kind="warning">
-
-**Warning:** If you receive an `EACCES` error when you try to install the cli using the instructions that follow, it is an indiction that 
+**Warning:** If you receive an `EACCES` error when you try to install the cli using the instructions that follow, it is an indiction that
 npm cannot write to the global package directory and that node has not been set up properly on your machine. **DO NOT**
 rerun the command with `sudo`. (Here's an overview of why that's a bad idea - [Don't use sudo with npm](https://medium.com/@ExplosionPills/dont-use-sudo-with-npm-still-66e609f5f92) )
 
@@ -59,16 +49,16 @@ Once npm has been updated, rerun the command to install the cli.
 <br />
 
 - Install the CLI:
-    ```bash
+    ```shell script
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ````
 
 - Verify the version:
-    ```bash
+    ```shell script
     igc --version
     ```
-  
-*Note:* If you are adventurous, you can install the beta version of the cli that contains upcoming features with the 
+
+*Note:* If you are adventurous, you can install the beta version of the cli that contains upcoming features with the
 following command (switch back at any time with the above command):
 
 ```shell script
@@ -90,7 +80,7 @@ Follow the instructions in the [cloud-shell-commands readme](https://github.com/
 When the CLI is installed, it adds an executable named `igc` to the PATH. Running `igc --help` will list
 the available commands. The output text will be similar to the following:
 
-```bash
+```shell script
 $ igc --help
 IBM Garage Cloud Native Toolkit CLI (https://cloudnativetoolkit.dev)
 
@@ -108,6 +98,11 @@ Commands:
   igc generate-token      Generate a Jenkins api token
   igc git-secret [name]   Create a kubernetes secret that contains the url,
                           username, and personal access token for a git repo
+  igc git [remote]        Launches a browser to the git repo url specified by
+                          the origin remote. If remote not provided defaults to
+                          origin
+  igc gitops              Registers the git repository in the kubernetes cluster
+                          as the gitops repository for the given namespace
   igc jenkins-auth        Generate a Jenkins api token and register it as
                           kubernetes secret
   igc sync [namespace]    Create a namespace (if it doesn't exist) and prepare
@@ -125,10 +120,10 @@ Options:
   --help     Show help                                                 [boolean]
 ```
 
-As of v0.5.1, the <Globals name="igccli" /> will now install the commands as plugins to the `kubectl` and `oc` CLIs. 
+As of v0.5.1, the <Globals name="igccli" /> will now install the commands as plugins to the `kubectl` and `oc` CLIs.
 For example, all of the following are equivalent:
 
-```bash
+```shell script
 igc pipeline
 kubectl pipeline
 oc pipeline
@@ -138,7 +133,7 @@ oc pipeline
 
 <InlineNotification>
 
-Some of the commands provided by the <Globals name="igccli" /> orchestrate interactions between other CLIs. To get 
+Some of the commands provided by the <Globals name="igccli" /> orchestrate interactions between other CLIs. To get
 started please install the [prerequisite tools](/getting-started/prereqs), in particular:
 - The <Globals name="kube" /> CLI
 - The <Globals name="ocp" /> CLI
@@ -148,21 +143,21 @@ started please install the [prerequisite tools](/getting-started/prereqs), in pa
 
 ### Log into your cluster
 
-Most all of the commands provided by the <Globals name="igccli" /> interact with a cluster. It probably comes as no 
+Most all of the commands provided by the <Globals name="igccli" /> interact with a cluster. It probably comes as no
 surprise then that you should be logged into the prior to running the commands.
 
 <Accordion>
 
 <AccordionItem title="OpenShift" open="true">
 
-```bash
+```shell script
 oc login --server=<url> --token=<apikey>
 ```
 </AccordionItem>
 
 <AccordionItem title="Kubernetes">
 
-```bash
+```shell script
 ibmcloud ks cluster config --cluster <CLUSTER>
 ```
 
@@ -180,7 +175,7 @@ your account prior to running the command.
 
 - Log into your <Globals name="ic" /> account with the correct region and resource group:
 
-    ```bash
+    ```shell script
     ibmcloud login -a cloud.ibm.com -r <region> -g <resource group>
     ```
 
@@ -188,7 +183,7 @@ your account prior to running the command.
 
 ### dashboard
 
-Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. If a default browser has not been 
+Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. If a default browser has not been
 configured, then the URL to the Dashboard will be printed out.
 
 The dashboard displays the <Globals name="shortName" /> tools configured within the cluster along with links to
@@ -206,7 +201,7 @@ This command requires that the login context for the cluster has already been es
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc dashboard
 ```
 </Tab>
@@ -233,14 +228,14 @@ open "https://$HOST"
 
 **Related commands**
 
-- [credentials](#credentials): shows information about the same tools shown in the dashboard from the 
+- [credentials](#credentials): shows information about the same tools shown in the dashboard from the
 command-line
 - [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
-available to the dashboard and `credentials` command   
+available to the dashboard and `credentials` command
 
 ### console
 
-Opens the *IKS or OpenShift admin console* in the default browser. If a default browser has not been 
+Opens the *IKS or OpenShift admin console* in the default browser. If a default browser has not been
 configured, then the URL to the console will be printed out.
 
 This command requires that the login context for the cluster has already been established.
@@ -252,7 +247,7 @@ This command requires that the login context for the cluster has already been es
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc console
 ```
 </Tab>
@@ -281,10 +276,50 @@ open "https://${REGION}.containers.cloud.ibm.com/kubeproxy/clusters/${CLUSTER_ID
 
 **Related commands**
 
-- [credentials](#credentials): shows information about the same tools shown in the dashboard from the 
+- [credentials](#credentials): shows information about the same tools shown in the dashboard from the
 command-line
 - [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
-available to the dashboard and `credentials` command   
+available to the dashboard and `credentials` command
+
+### git
+
+Opens the Git repo in the default browser for the current working directory. If a default browser has not been
+configured, then the URL to the repo will be printed out.
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The command is used in the following way:
+
+```shell script
+igc git
+```
+
+If you have multiple remotes and would like to open one other than `origin`:
+
+```shell script
+igc git origin-fork
+```
+
+</Tab>
+<Tab label="Manual">
+
+The following commands would have the same result with shell commands:
+
+```shell script
+alias gh="open https://github.$(git config remote.origin.url | cut -f2 -d. | tr ':' /)"
+```
+</Tab>
+</Tabs>
+
+**Related commands**
+
+- [credentials](#credentials): shows information about the same tools shown in the dashboard from the
+command-line
+- [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
+available to the dashboard and `credentials` command
 
 ### credentials
 
@@ -292,8 +327,8 @@ Lists the endpoints, user names, and passwords for the tools configured in the e
 get the login credentials for each of the installed tools. Ideally all of the tools would be accessible via SSO at which
 point this command will be obsolete.
 
-The command works by reading information available in the cluster. When each tool is installed by the toolkit, a 
-`config map` and `secret` are created to store the url and credential for the tool. That information is used in a 
+The command works by reading information available in the cluster. When each tool is installed by the toolkit, a
+`config map` and `secret` are created to store the url and credential for the tool. That information is used in a
 number of different ways within the environment:
 
 - Provide configuration information to the pipelines
@@ -354,19 +389,19 @@ kubectl get secret -n tools -l grouping=garage-cloud-native-toolkit -o json | \
 
 - [dashboard](#dashboard): displays the url of the Developer Dashboard and launches the default browser
 - [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
-available to the dashboard and `credentials` command   
+available to the dashboard and `credentials` command
 
 ### endpoints
 
-Lists the ingress and/or route URLs for the applications in a given namespace. An attempt will be made to get the 
-namespace from the current context if one is not provided as an argument. Results of the command are provided in an 
-interactive menu. If one of the endpoints is selected, it will display the URL and launch it in the default browser. 
+Lists the ingress and/or route URLs for the applications in a given namespace. An attempt will be made to get the
+namespace from the current context if one is not provided as an argument. Results of the command are provided in an
+interactive menu. If one of the endpoints is selected, it will display the URL and launch it in the default browser.
 Selecting `Exit` will print the full list of endpoints and exit.
 
 This command requires that the login context for the cluster has already been established.
 
 **Command flags**
-- `-n`: the namespace from which the endpoints will be read; the value will be read from the current context if not 
+- `-n`: the namespace from which the endpoints will be read; the value will be read from the current context if not
 provided
 
 **Usage**
@@ -376,7 +411,7 @@ provided
 
 The command is used in the following way:
 
-```bash
+```shell script
 igc endpoints
 ```
 
@@ -403,26 +438,26 @@ kubectl get ingress -n tools
 </Tab>
 </Tabs>
 
-### sync (formerly namespace)
+### sync
 
 Creates a Kubernetes namespace or OpenShift project (if it doesn't already exist) and sets it up so that the namespace
 can be used as a target for application deployments and/or to host the <Globals name="env" />. The command performs two
-major functions - 1) set up a service account in the namespace with the pull secret(s) for the IBM Container Registry 
+major functions - 1) set up a service account in the namespace with the pull secret(s) for the IBM Container Registry
 and 2) synchronize the `ConfigMaps` and `Secrets` from a template namespace to create a "development" namespace. After
-the command has run successfully it will set the provided namespace in the current context 
+the command has run successfully it will set the provided namespace in the current context
 (e.g. equivalent to `oc project X`)
 
 The pull secret(s) are required in order for pods to pull images that are stored in the IBM Container Registry.
-When the cluster is created in IBM Cloud, a pull secret is provided in the `default` namespace. In order for a 
-pod in another namespace to use it, the secret must first be copied into the namespace. After that, the pod either 
+When the cluster is created in IBM Cloud, a pull secret is provided in the `default` namespace. In order for a
+pod in another namespace to use it, the secret must first be copied into the namespace. After that, the pod either
 needs to reference the pull secret directly or the service account used by the resource needs to have a reference to
 the secret. The CLI copies the pull secret over and adds it to the service account so the pod can take either
 approach.
 
 The other function this command performs is to copy relevant `ConfigMaps` and `Secrets` into the namespace that are
-needed for development activities. Managing resources across namespaces (particularly `ConfigMaps` and `Secrets`) is a 
-common challenge in Kubernetes environments. We have provided the command at this time to simplify the steps required 
-to get everything ready. Ultimately, this problem seems like an ideal one for an Operator to solve and when one is 
+needed for development activities. Managing resources across namespaces (particularly `ConfigMaps` and `Secrets`) is a
+common challenge in Kubernetes environments. We have provided the command at this time to simplify the steps required
+to get everything ready. Ultimately, this problem seems like an ideal one for an Operator to solve and when one is
 available (either from the Toolkit or elsewhere) this command will be retired or transitioned.
 
 There are two different types of namespaces that the command will set up:
@@ -431,7 +466,7 @@ There are two different types of namespaces that the command will set up:
 
 -OR-
 
-- "development" namespace where DevOps pipelines can be run and where application components can be deployed 
+- "development" namespace where DevOps pipelines can be run and where application components can be deployed
 (e.g. dev)
 
 Both "release" and "development" namespaces will have the pull secret(s) created. However, only the "development"
@@ -516,18 +551,18 @@ The following steps will copy the `ConfigMaps` and `Secrets` from a template nam
 
 ### pipeline
 
-Connects a branch in a Git repo to a either a Jenkins or Tekton CI pipeline in the <Globals name="env" /> and triggers 
+Connects a branch in a Git repo to a either a Jenkins or Tekton CI pipeline in the <Globals name="env" /> and triggers
 an initial build. A webhook is also created so that when a new commit is added to the branch, the pipeline is triggered
-to start the process to rebuild and redeploy the app using the new code. The Git repo needs to be hosted using a site 
-that supports triggers such as GitHub or GitLab. 
+to start the process to rebuild and redeploy the app using the new code. The Git repo needs to be hosted using a site
+that supports triggers such as GitHub or GitLab.
 
-This command requires that the terminal is already logged in to the cluster. It also requires that the terminal's 
-current directory is the repository directory for your local copy of the Git repo. The command uses the local Git 
+This command requires that the terminal is already logged in to the cluster. It also requires that the terminal's
+current directory is the repository directory for your local copy of the Git repo. The command uses the local Git
 repo's configuration to find the server copy.
 
-If Jenkins or Tekton are not specified when the command is invoked then you will be prompted for which CI tool to use. 
-The command will also prompt for the username and personal access token to access the Git repository, unless those are 
-provided as command-line parameters. It will also prompt you for the branch to use to trigger builds; the default 
+If Jenkins or Tekton are not specified when the command is invoked then you will be prompted for which CI tool to use.
+The command will also prompt for the username and personal access token to access the Git repository, unless those are
+provided as command-line parameters. It will also prompt you for the branch to use to trigger builds; the default
 is the current branch.
 
 **Command flags**
@@ -555,7 +590,7 @@ igc pipeline -n my-dev -u gituser -p gitpat --tekton
 </Tab>
 <Tab label="Manual Steps for Tekton">
 
-The following is the list of steps required to manually configure a **Tekton** 
+The following is the list of steps required to manually configure a **Tekton**
 pipeline with your development cluster.
 <br></br>
 
@@ -667,23 +702,23 @@ and manually kick of a pipeline build
 
 ### 1. Provision Jenkins ephemeral
 
-Jenkins ephemeral provides a kubernetes native version of Jenkins that dynamically provisions build agents on-demand. 
+Jenkins ephemeral provides a kubernetes native version of Jenkins that dynamically provisions build agents on-demand.
 It's _ephemeral_ meaning it doesn't allocate any persistent storage in the cluster.
 
 1. Set the project/namespace
 
-```shell script
-oc project {NAMESPACE}
-```
+    ```shell script
+    oc project {NAMESPACE}
+    ```
 
-where:
-- `{NAMESPACE}` is the development namespace where the pipelines will run
+    where:
+    - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 2. Run the following command to provision the Jenkins instance in your namespace
 
-```shell script
-oc new-app jenkins-ephemeral
-```
+    ```shell script
+    oc new-app jenkins-ephemeral
+    ```
 
 3. Open the OpenShift console as described in the login steps above
 
@@ -693,12 +728,12 @@ oc new-app jenkins-ephemeral
 
 ### 2. Give the `jenkins` service account `privileged` access
 
-All of the <Globals name="shortName"/> pipelines use `buildah` to build and push the container image to the registry. 
-Unfortunately, the `buildah` container must run as root. By default, OpenShift does not allow containers to run as the 
+All of the <Globals name="shortName"/> pipelines use `buildah` to build and push the container image to the registry.
+Unfortunately, the `buildah` container must run as root. By default, OpenShift does not allow containers to run as the
 root user and special permission is required for the pipeline to run.
 
-With the Jenkins build engine, all the build processes run as the `jenkins` service account. In order for the pipeline 
-container to run as root on OpenShift we will need to give the `privileged` security context constraint (scc) to 
+With the Jenkins build engine, all the build processes run as the `jenkins` service account. In order for the pipeline
+container to run as root on OpenShift we will need to give the `privileged` security context constraint (scc) to
 `jenkins` service account with the following command:
 
 ```shell script
@@ -711,89 +746,89 @@ where:
 
 ### 3. Create a secret with git credentials
 
-In order for Jenkins to have access to the git repository, particularly if it is a private repository, a Kubernetes 
+In order for Jenkins to have access to the git repository, particularly if it is a private repository, a Kubernetes
 secret needs to be added that contains the git credentials.
 
-1. Create a personal access token (if you don't already have one) using the prereq instructions - 
+1. Create a personal access token (if you don't already have one) using the prereq instructions -
 https://cloudnativetoolkit.dev/getting-started/prereqs#configure-github-personal-access-token
 
 2. Copy the following into a file called `gitsecret.yaml` and update the {Git-Username}, and {Git-PAT}
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  annotations:
-    build.openshift.io/source-secret-match-uri-1: https://github.com/*
-  labels:
-    jenkins.io/credentials-type: usernamePassword
-  name: git-credentials
-type: kubernetes.io/basic-auth
-stringData:
-  username: {Git-Username}
-  password: {Git-PAT}
-```
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      annotations:
+        build.openshift.io/source-secret-match-uri-1: https://github.com/*
+      labels:
+        jenkins.io/credentials-type: usernamePassword
+      name: git-credentials
+    type: kubernetes.io/basic-auth
+    stringData:
+      username: {Git-Username}
+      password: {Git-PAT}
+    ```
 
-where:
- - `Git-Username` is the username that has access to the git repo
- - `Git-PAT` is the personal access token of the git user
+    where:
+     - `Git-Username` is the username that has access to the git repo
+     - `Git-PAT` is the personal access token of the git user
 
 2. After logging into the cluster, create the secret by running the following:
 
-```shell script
-oc project {NAMESPACE}
-oc create -f gitsecret.yaml
-```
+    ```shell script
+    oc project {NAMESPACE}
+    oc create -f gitsecret.yaml
+    ```
 
-where:
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    where:
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 ### 3. Create the build config
 
-On OpenShift 4.3, Jenkins is built into the OpenShift console and the build pipelines can be managed using Kubernetes 
+On OpenShift 4.3, Jenkins is built into the OpenShift console and the build pipelines can be managed using Kubernetes
 custom resources. The following steps will create one by hand to create the build pipeline for the new application.
 
-1. Copy the following into a file called `buildconfig.yaml` and update the {Name}, {Secret}, {Git-Repo-URL}, 
+1. Copy the following into a file called `buildconfig.yaml` and update the {Name}, {Secret}, {Git-Repo-URL},
 and {Namespace}
 
-```yaml
-apiVersion: v1
-kind: BuildConfig
-metadata:
-  name: {Name}
-spec:
-  triggers:
-  - type: GitHub
-    github:
-      secret: my-secret-value
-  source:
-    git:
-      uri: {Git-Repo-URL}
-      ref: master
-  strategy:
-    jenkinsPipelineStrategy:
-      jenkinsfilePath: Jenkinsfile
-      env:
-      - name: CLOUD_NAME
-        value: openshift
-      - name: NAMESPACE
-        value: {NAMESPACE}
-```
+    ```yaml
+    apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      name: {Name}
+    spec:
+      triggers:
+      - type: GitHub
+        github:
+          secret: my-secret-value
+      source:
+        git:
+          uri: {Git-Repo-URL}
+          ref: master
+      strategy:
+        jenkinsPipelineStrategy:
+          jenkinsfilePath: Jenkinsfile
+          env:
+          - name: CLOUD_NAME
+            value: openshift
+          - name: NAMESPACE
+            value: {NAMESPACE}
+    ```
 
-where:
- - `Name` is in the name of your pipeline 
- - `Git-Repo-URL` is the https url to the git repository
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    where:
+     - `Name` is in the name of your pipeline
+     - `Git-Repo-URL` is the https url to the git repository
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 2. Assuming you are still logged into the cluster, create the buildconfig resource in the cluster
 
-```shell script
-oc project {NAMESPACE}
-oc create -f buildconfig.yaml
-```
+    ```shell script
+    oc project {NAMESPACE}
+    oc create -f buildconfig.yaml
+    ```
 
-where:
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    where:
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
 ### 4. View the pipeline in the OpenShift console
 
@@ -805,22 +840,22 @@ where:
 
 ### 5. Create the webhook
 
-1. Run the following to get the webhook details from the build config 
+1. Run the following to get the webhook details from the build config
 
-```
-oc project {NAMESPACE}
-oc describe bc {Name}
-```
+    ```shell script
+    oc project {NAMESPACE}
+    oc describe bc {Name}
+    ```
 
-where:
- - `{Name}` is the name used in the previous step for the build config
- - `{NAMESPACE}` is the development namespace where the pipelines will run
+    where:
+     - `{Name}` is the name used in the previous step for the build config
+     - `{NAMESPACE}` is the development namespace where the pipelines will run
 
-The webhook url will have a structure similar to:
+    The webhook url will have a structure similar to:
 
-`http://{openshift_api_host:port}/oapi/v1/namespaces/{namespace}/buildconfigs/{name}/webhooks/{secret}/generic`
+    `http://{openshift_api_host:port}/oapi/v1/namespaces/{namespace}/buildconfigs/{name}/webhooks/{secret}/generic`
 
-In this case `{secret}` will be `my-secret-value`
+    In this case `{secret}` will be `my-secret-value`
 
 2. Open a browser to the GitHub repo deployed in the previous step in the build config
 
@@ -835,7 +870,7 @@ In this case `{secret}` will be `my-secret-value`
 7. Press the button to test the webhook to ensure that everything was done properly
 
 8. Go back to your project code and push a change to one of the files
-   
+
 9. Go to the Build pipeline page in the OpenShift console to see that the build was triggered
 
 </Tab>
@@ -848,7 +883,7 @@ TBD
 
 ### enable
 
-Adds DevOps artifacts to a Git repo that the <Globals name="env" /> uses to deploy the app. The command displays a 
+Adds DevOps artifacts to a Git repo that the <Globals name="env" /> uses to deploy the app. The command displays a
 list of available pipelines and applies the one you select to your code repo. The DevOps files added to your repo
  include (but are not limited to):
 
@@ -858,13 +893,13 @@ list of available pipelines and applies the one you select to your code repo. Th
 This command DOES NOT require that the terminal is already logged in to an IBM Cloud account nor the cluster. It DOES
 require that the terminal's current directory is the repository directory for your local copy of the Git repo.
 
-The command will add files to the local repo. You should commit these new files and push them to the server repo. 
+The command will add files to the local repo. You should commit these new files and push them to the server repo.
 Then run `igc pipeline` to connect your repo to a pipeline in the environment.
 
 **Command flags**
 - `--repo`: the set of pipelines to choose from; the default is https://github.com/ibm-garage-cloud/garage-pipelines
 - `-p`: the name of the pipeline that should be installed; if not provided then you will be prompted
-- `-b`: the branch from which the pipeline should be installed; the default is `stable` 
+- `-b`: the branch from which the pipeline should be installed; the default is `stable`
 - `r`: the version number of the pipeline that should be installed; the default is `latest`
 
 **Usage**
@@ -878,11 +913,11 @@ dealt with.
 
 2. Apply the pipeline updates using the CLI command
 
-```shell script
-igc enable
-```
+    ```shell script
+    igc enable
+    ```
 
-3. Review the changes using `git diff` and revert any application-specific changes that should remain (e.g. 
+3. Review the changes using `git diff` and revert any application-specific changes that should remain (e.g.
 customization to the Jenkins pipeline in the `Jenkinsfile`, specific values added to `values.yaml`, customizations
 to the templates in the `helm chart`)
 
@@ -911,14 +946,13 @@ dealt with.
     curl -O ${PIPELINE_URL}
     ```
 
-5. Extract the tar-ball into your repository directory. You will be prompted to overwrite files. Overwrite as
-appropriate
+5. Extract the tar-ball into your repository directory. You will be prompted to overwrite files. Overwrite as appropriate
 
     ```shell script
     tar xzf ${PIPELINE_FILE}
     ```
 
-6. Review the changes using `git diff` and revert any application-specific changes that should remain (e.g. 
+6. Review the changes using `git diff` and revert any application-specific changes that should remain (e.g.
 customization to the Jenkins pipeline in the `Jenkinsfile`, specific values added to `values.yaml`, customizations
 to the templates in the `helm chart`)
 
@@ -927,9 +961,132 @@ to the templates in the `helm chart`)
 </Tab>
 </Tabs>
 
+### git-secret
+
+Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
+contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
+is named `{git org}.{git repo}`. The config map and secret will be created in the currently selected namespace/project,
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
+replaced/updated it won't be updated unless the `--replace` argument is passed.
+
+**Command flags**
+- `[positional]`: overwrites the name of the config map
+- `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
+- `-d`: the directory where the cloned repository is located. Defaults to the current working directory
+- `-u`: the username for the git secret, If not provided the value will be collected from a prompt
+- `-p`: the personal access token, If not provided the value will be collected from a prompt
+- `--values`: an optional yaml file that contains additional attributes to add to the secret
+- `--replace`: flag indicating that the secret should be replaced/updated if it already exists
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The following gives an example of using the `git-secret` command to set up the config map and secret in the `dev` namespace
+
+```shell script
+igc git-secret -n dev
+```
+
+</Tab>
+<Tab label="Manual">
+
+The following gives the equivalent commands to create the config map and secret for a git repository in the `dev` namespace
+
+1. Create the `git-credentials` secret
+
+    ```shell script
+    kubectl create secret generic git-credentials -n dev \
+      --from-literal=username={git username} \
+      --from-literal=password={git personal access token} \
+      --dry-run --output=yaml | \
+    kubectl label -f - --local --dry-run --output=yaml \
+      "jenkins.io/credentials-type=usernamePassword" | \
+    kubectl annotate -f - --local --dry-run --output=yaml \
+      "build.openshift.io/source-secret-match-uri-1=https://github.com/*" \
+      "tekton.dev/git-0=https://github.com" | \
+    kubectl apply -f -
+    ```
+
+2. Create the config map for a git repo located at `https://github.com/showcase/myrepo`
+
+    ```shell script
+    kubectl create configmap showcase.myrepo -n dev \
+      --from-literal=host=github.com \
+      --from-literal=org=showcase \
+      --from-literal=repo=myrepo \
+      --from-literal=url=https://github.com/showcase/myrepo \
+      --from-literal=branch=master
+    ```
+
+</Tab>
+</Tabs>
+
+### gitops
+
+Creates a kubernetes secret that contains the username and personal access token for a git repo and a config map that
+contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
+is named `gitops-repo`. The config map and secret will be created in the currently selected namespace/project,
+unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
+replaced/updated it won't be updated unless the `--replace` argument is passed.
+
+**Command flags**
+- `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
+- `-d`: the directory where the cloned repository is located. Defaults to the current working directory
+- `-u`: the username for the git secret, If not provided the value will be collected from a prompt
+- `-p`: the personal access token, If not provided the value will be collected from a prompt
+- `--values`: an optional yaml file that contains additional attributes to add to the secret
+- `--replace`: flag indicating that the secret should be replaced/updated if it already exists
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+The following gives an example of using the `gitops` command to set up the config map and secret in the `dev` namespace
+
+```shell script
+igc gitops -n dev
+```
+
+</Tab>
+<Tab label="Manual">
+
+The following gives the equivalent commands to create the config map and secret for a git repository in the `dev` namespace
+
+1. Create the `git-credentials` secret
+
+    ```shell script
+    kubectl create secret generic git-credentials -n dev \
+      --from-literal=username={git username} \
+      --from-literal=password={git personal access token} \
+      --dry-run --output=yaml | \
+    kubectl label -f - --local --dry-run --output=yaml \
+      "jenkins.io/credentials-type=usernamePassword" | \
+    kubectl annotate -f - --local --dry-run --output=yaml \
+      "build.openshift.io/source-secret-match-uri-1=https://github.com/*" \
+      "tekton.dev/git-0=https://github.com" | \
+    kubectl apply -f -
+    ```
+
+2. Create the config map for a git repo located at `https://github.com/showcase/myrepo`
+
+    ```shell script
+    kubectl create configmap github-repo -n dev \
+      --from-literal=host=github.com \
+      --from-literal=org=showcase \
+      --from-literal=repo=myrepo \
+      --from-literal=url=https://github.com/showcase/myrepo \
+      --from-literal=branch=master
+    ```
+
+</Tab>
+</Tabs>
+
 ### tool-config
 
-Configures a new tool in the environment. After deploying the tool, use this command to add the tool to the list of 
+Configures a new tool in the environment. After deploying the tool, use this command to add the tool to the list of
 credentials so that it will be displayed in the dashboard.
 
 **Command flags**
@@ -944,7 +1101,7 @@ credentials so that it will be displayed in the dashboard.
 <Tabs>
 <Tab label="CLI">
 
-The following gives an example of using the `tool-config` command to set up a tool named `my-tool` with its 
+The following gives an example of using the `tool-config` command to set up a tool named `my-tool` with its
 dashboard's endpoint and credentials
 
 ```shell script
@@ -971,9 +1128,9 @@ helm install my-tool tool-config \
 
 ### vlan
 
-Lists the VLANs for a particular IBM Cloud region. This information is useful for preparing Terraform cluster creation 
+Lists the VLANs for a particular IBM Cloud region. This information is useful for preparing Terraform cluster creation
 steps. The command reads all the data centers in the region and allows you to select the appropriate data center for
-the vlan. 
+the vlan.
 
 This command requires that the terminal is already logged in to the cloud region. It does NOT need to be logged in to a cluster.
 
@@ -992,12 +1149,12 @@ igc vlan
 <Tab label="Manual steps">
 
 1. List the zones for the region
+
     ```shell script
     ibmcloud ks zones --region-only --provider classic
     ```
 
-2. Select the desired zone from the listing provided by the previous command and run the following to list the
-vlans for that zone
+2. Select the desired zone from the listing provided by the previous command and run the following to list the vlans for that zone
 
     ```shell script
     ibmcloud ks vlans --zone ${zone}

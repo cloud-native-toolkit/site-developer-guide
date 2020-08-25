@@ -1,0 +1,7 @@
+---
+title: Monitoring
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+In IBM Garage Method, one of the Operate practices is to [automate application monitoring](https://www.ibm.com/garage/method/practices/manage/practice_automated_monitoring/). Sysdig automates application monitoring, enabling an operator to view stats and collect metrics about a Kubernetes cluster and its deployments. The <Globals name="env" /> includes an IBM Cloud Monitoring with Sysdig service instance configured with a Sysdig agent installed in the environment's cluster. Simply by deploying your application into the <Globals name="env" />, Sysdig monitors it, just open the Sysdig web UI from the IBM Cloud dashboard to browse your application's status.
