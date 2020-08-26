@@ -1,0 +1,75 @@
+---
+title: Cloud-Native Learning Journey - Advanced Topics
+---
+import Globals from 'gatsby-theme-carbon/src/templates/Globals'
+
+<PageDescription>
+
+Topics for developers to understand advanced Cloud-Native concepts with IBM Cloud and Red Hat OpenShift
+
+</PageDescription>
+
+### ***Developer advanced journey is still under development***
+
+<InlineNotification>
+
+Before you proceed, make sure you have completed developer intermediate journey and have installed **<Globals name="shortName" />**
+
+</InlineNotification>
+
+This set of tasks focuses on the advanced Developer concepts: How to use the Developer Tools environment to perform the software delivery lifecycle (SDLC).
+
+### Learning Tasks
+
+The learning tasks help you understand the tasks in the advanced Developer Experience. Developer intermediate focuses on being able to use the environment well enough to develop and deploy a basic cloud-native application. Developer advanced focuses on using the SDLC to iteratively develop, deliver, operate, secure, and manage applications. As a team executes the key agile ceremonies using the [Garage Method](https://www.ibm.com/garage/method/cloud/), it's important for developers and architects to understand what is involved in moving software components consistently and reliably from *dev* to *test* and on to *production*.
+
+These learning tasks are more advanced than those from the developer intermediate experience, so take your time and do some research on the topic before jumping into the task.
+
+## Before the Workshop
+
+Please complete these tasks before attending the first session. This will help you get started quickly with the practical exercises.
+
+| Task                            | Description         | Link        | Time    |
+| --------------------------------| ------------------  |:----------- |---------|
+| Prerequisites | Install the prerequisite tools  | [Setup Prerequisites](/getting-started/prereqs) | 10 mins |
+| **Operator Overview** | Operators are a method of packaging, deploying, and managing a Kubernetes application |<a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/operator/" target="_newwindow">Operators</a> | 15 min |
+| **Operator Labs** | Developing operator step by step |<a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/operator/lab" target="_newwindow">Operator Labs</a> | 45 min |
+| **Enhancing Inventory App with managed services** | | | |
+| App ID | Secure the solution with App ID  | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/inventory-appid" target="_newwindow">App ID</a> | 25 mins |
+| Cloudant | Integrate Backend with Cloudant Database | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/inventory-cloudant" target="_newwindow">Cloudant</a> | 15 mins |
+| **Continuous Integration** | | | |
+| Overview of pipeline structure (Jenkins & Tekton) | | | |
+| Understanding ConfigMaps and Secrets | | | |
+| Customizing the Jenkins pipeline | | | |
+| Customizing the Tekton pipeline | | | |
+| **Continuous Delivery VSI's** | | | |
+| VPC Overview | | | |
+| Create VSI into a VPC | | | |
+| Deploy an App into a VSI using tekton | | | |
+| **Continuous Delivery** | | | |
+| Continuous Delivery | Overview | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-foundation/continuous-delivery" target="_newwindow">CD</a> | 15 mins |
+| GitOps with ArgoCD | Overview | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/gitops" target="_newwindow">GitOps</a> | 15 mins |
+| CD for Inventory App | Enhance Inventory App with CD | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/inventory-cd" target="_newwindow">CD for Inventory App</a> | 30 mins |
+| **DevSecOps** | | | |
+| DevSecOps | DevSecOps Overview | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/devsecops" target="_newwindow">DevSecOps</a> | 15 mins |
+| Advanced Container Security | DevSecOps with Aqua CSP | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/devsecops-aquasec-csp" target="_newwindow">Container Security</a> | 20 mins |
+| Advanced Container Security | DevSecOps with Twistlock | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/devsecops-twistlock" target="_newwindow">Container Security</a> | 20 mins |
+| Add security to CI/CD | DevSecOps with Trivy | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/devsecops-trivy" target="_newwindow">Incorporate CI/CD</a> | 30 mins |
+| **Advanced Monitoring and Logging** | | | |
+| Monitoring | Advanced Monitoring with Sysdig | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/monitoring" target="_newwindow">Advanced Monitoring</a> | 30 mins |
+| Log Management | Advanced Log Management with LogDNA | <a href="https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/developer-advanced/log-management" target="_newwindow">Advanced Log Management</a> | 30 mins |
+| End to End Tracing with Jaeger | | | |
+| **Advanced Microservices Techniques** | | | |
+| Service Mesh | | | |
+| KNative Serverless | | | |
+| Modify inventory application with service mesh | | | |
+| End to end Tracing with Jaeger | | | |
+| Events with Kafka | | | |
+| Contract testing | | | |
+| OpenAPI and Swagger Editor | | | |
+| API Consumption | | | |
+
+Once you have completed these tasks, you will have completed the learning requirements for both the intermediate and the advanced Experience. For intermediate journey, you created your first app and CI pipeline, and then extended that into a 3-tier polyglot solution. For advanced journey, you worked with your application's logs, monitored your app, and moved your code from *dev* to *test*.
+
+What is very clear is that the Developer Tools environment--an application architecture that combines a Red Hat OpenShift or Kubernetes cluster with powerful cloud services, packaged with a development environment with a CI/CD pipeline incorporating best-of-breed open source tools--gives you a powerful development platform that enables you to build any form of cloud-native application. These skills form the foundation not only to develop applications for Kubernetes and OpenShift, but to develop applications that leverage the IBM Cloud Paks as well.
+

@@ -130,16 +130,21 @@
     - title: Git Repos
       path: /starterkits/gitrepos
 
-- title: Activation
+- title: Learning Journey
   pages:
+
+    - title: Intermediate Topics
+      path: /learning/intermediate
+    - title: Advanced Topics
+      path: /learning/advanced
     - title: Cloud-Native Development
-      path: /activation/cloudnative-development
+      path: /learning/cloudnative-development
     - title: Cloud-Native Deployment
-      path: /activation/cloudnative-deployment
+      path: /learning/cloudnative-deployment
     - title: OpenShift Learning
-      path: /activation/redhat-learning
+      path: /learning/redhat-learning
     - title: Garage Method Development
-      path: /activation/garage-development
+      path: /learning/garage-development
 
 - title: Resources
   pages:

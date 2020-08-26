@@ -27,26 +27,26 @@ the point of cloud-native development is to deliver business value to end users 
 are provided in service to that goal.
 
 Through the automation provided by the <Globals name="shortName" /> we can provision an environment in minutes through automation
-that is fully configured and ready for a development team to start working immediately. With the other components of 
+that is fully configured and ready for a development team to start working immediately. With the other components of
 the <Globals name="tinyName" />, developers can begin with a rich DevOps framework with a focus on "build to manage" techniques to
-help build production-ready applications. 
+help build production-ready applications.
 
 ### Reduce risk through consistent delivery models from start to production
 
 The <Globals name="shortName" /> encapsulates many of the available best practices for cloud-native development including
 DevOps and "Build to Manage" practices. They have been provided through the <Globals name="tinyName" /> in this way so that
 developers and SREs can benefit from these practices without requiring any additional effort and so that they can be applied
-consistently from project to project. 
+consistently from project to project.
 
-### Quickly ramp up development teams on <Globals name="ocp" /> and <Globals name="kube" /> 
+### Quickly ramp up development teams on <Globals name="ocp" /> and <Globals name="kube" />
 
-Containerized platforms like <Globals name="ocp" /> and <Globals name="kube" /> provide a great deal of functionality and 
+Containerized platforms like <Globals name="ocp" /> and <Globals name="kube" /> provide a great deal of functionality and
 flexibility for application teams. However, these platforms can at time seem unapproachable for developers and SREs new to the environment
 given all the different concepts and components. The <Globals name="shortName" /> aims to help with the learning curve in two
 different ways:
 
 1. Provide tools and techniques to "round off the corners" of the more complex aspects of working in a containerized environment
-2. Provide a learning journey that incrementally introduces the concepts of a containerized environment in terms of practical scenarios, not abstract theory 
+2. Provide a learning journey that incrementally introduces the concepts of a containerized environment in terms of practical scenarios, not abstract theory
 
 ## Guided walk-though
 
@@ -67,11 +67,11 @@ make up the <Globals name="shortName" />:
 - [**Developer Dashboard**](/getting-started-day-1/dashboard) - Dashboard component and <Globals name="ocp" /> console extensions to simplify common developer activities
 - [**DevOps pipelines**](/getting-started-day-1/continuous-integration) - continuous integration pipelines for Tekton and Jenkins
 - [**Starter Kits and Code Patterns**](./starterkits) - software repositories that can be used to quickly get started building applications using common patterns, or to serve as a reference to enhance existing patterns
-- [**Learning Journey**](/activation) - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the <Globals name="tinyName" />
+- [**Learning Journey**](/learning/intermediate) - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the <Globals name="tinyName" />
 
 ## <Globals name="shortName" /> <Globals name="devenv" />
 
-The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support <Globals name="method" /> best practices 
+The <Globals name="shortName" /> <Globals name="devenv" /> includes several features that support <Globals name="method" /> best practices
 for consistent and rapid development of cloud-native applications:
 
 - **Cluster**: A <Globals name="ocp" /> or <Globals name="kube" /> cluster that both hosts the tools and itself is a deployment target for application builds
@@ -81,16 +81,16 @@ for consistent and rapid development of cloud-native applications:
 - **<Globals name="templates" />**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized console to help developers use the environment's capabilities
 
-Typically a [Cloud System Admin](/admin/overview) (or a [squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets 
-up a new <Globals name="devenv" /> after the [inception workshop](https://www.ibm.com/garage/method/practices/think/inception), 
-providing a place for the developers to start developing the 
-[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product). 
-The objective is to reduce the time required for a team to configure and prepare their development environment. The key 
-benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/) 
+Typically a [Cloud System Admin](/admin/overview) (or a [squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
+up a new <Globals name="devenv" /> after the [inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
+providing a place for the developers to start developing the
+[minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
+The objective is to reduce the time required for a team to configure and prepare their development environment. The key
+benefit is to make the end-to-end [CI/CD development lifecycle](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/)
 consistent across each platform and make the out-of-the-box developer experience as simple as possible.
 
-The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform) scripts structured as [modular components](https://github.com/ibm-garage-cloud/garage-terraform-modules) 
-so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the 
+The installation is performed using [Terraform](https://cloud.ibm.com/docs/terraform) scripts structured as [modular components](https://github.com/ibm-garage-cloud/garage-terraform-modules)
+so unneeded tools can be easily disabled or new tools added. The combination of tools selected are proven in the
 industry to deliver real value for modern cloud-native development.
 
 [Red Hat Open Innovation Labs CI/CD components](https://github.com/rht-labs/labs-ci-cd) embodies a very similar approach to how they deliver success with OpenShift.
@@ -130,7 +130,7 @@ The diagram shows the components in the environment: the cluster, the deployment
 </Accordion>
 
 The tools to provision an environment using the <Globals name="shortName" /> can the customized to provision a particular
-set of tools fit for the environment. The Toolkit provides a default installation to provision a <Globals name="devenv" /> 
+set of tools fit for the environment. The Toolkit provides a default installation to provision a <Globals name="devenv" />
 as a starting point. Any of the available components listed on the [Terraform modules](/admin/terraform) page can be used
 to prepare the environment.
 
@@ -159,14 +159,14 @@ The following best-of-breed open source software tools are installed in the clus
 
 #### Backend services
 
-The following <Globals key="ic" /> services are created and bound to the cluster:
+The following <Globals key="ic" /> services can be created and bound to the cluster:
 
 | Capability                | Service        |Description |
 | -----------------------   |:-------------- |------------|
 | Log Management            | [Log Analysis with LogDNA](/tools/log-management)  | Manage and analyze app logs  |
 | Monitoring                | [Cloud Monitoring with Sysdig](/tools/monitoring)  | Monitor app and platform resources |
 | User Authentication       | [App ID](/programming/security/)                    | Verify identities of clients accessing app end points |
-| Relational Data Storage   | [Databases For PostgreSQL](/programming/databases) (used by SonarQube) | Stores relational data structured as schemas for SQL querying |
+| Relational Data Storage   | [Databases For PostgreSQL](/programming/databases)  | Stores relational data structured as schemas for SQL querying |
 | Schemaless Data Storage   | [Cloudant](/programming/databases)                  | NoSQL database for JSON documents |
 | Binary Data Storage       | [Cloud Object Storage](/programming/databases)      | Storage service commonly used for binary content |
 
