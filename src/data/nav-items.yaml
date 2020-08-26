@@ -132,7 +132,8 @@
 
 - title: Learning Journey
   pages:
-
+    - title: Foundational Topics
+      path: /learning/foundational
     - title: Intermediate Topics
       path: /learning/intermediate
     - title: Advanced Topics
