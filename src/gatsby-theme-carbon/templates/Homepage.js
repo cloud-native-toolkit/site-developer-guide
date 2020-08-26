@@ -10,8 +10,8 @@ const FirstLeftText = () => <p>{g.longName}</p>;
 
 const FirstRightText = () => (
   <p>
-      The {g.shortName} enables application development and support teams to deliver business value quickly
-      using {g.ocp} or {g.ic}-managed {g.kube}. This guide provides information
+      The {g.shortName} is an open-source collection of assets that enable application development and support teams to
+      deliver business value quickly using {g.ocp} or {g.ic}-managed {g.kube}. This guide provides information
       to help Developers, Administrators, and Site Reliability Engineers use the {g.tinyName} to support delivering
       business applications through the entire Software Development Life Cycle (SDLC).
     <a
