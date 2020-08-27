@@ -7,9 +7,9 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Steps to prepare an environment using the <Globals name="shortName" /> for new <Globals name="ic" />-managed clusters running on VPC infrastructure or existing <Globals name="ic" />-managed 
-clusters running on classic or VPC infrastructure. 
-  
+Steps to prepare an environment using the <Globals name="shortName" /> for new <Globals name="ic" />-managed clusters running on VPC infrastructure or existing <Globals name="ic" />-managed
+clusters running on classic or VPC infrastructure.
+
 </PageDescription>
 
 See the following for instructions on how to
@@ -20,14 +20,16 @@ infrastructure](./new-ibm-cloud-classic)
 
 <Tab label="Private Catalog" open="true">
 
-One of the features of the IBM Cloud Catalog is support for private catalog tiles. These can 
-contain custom Terraform definitions that can accelerate SRE teams in the execution of common 
-and repetitive tasks. The <Globals name="shortName" /> tools installation can be configured as 
-a private catalog tile. This is the recommended approach for using this asset multiple times. 
-This asset enables the easy transition of a default cluster into a cluster that supports 
+One of the features of the IBM Cloud Catalog is support for private catalog tiles. These can
+contain custom Terraform definitions that can accelerate SRE teams in the execution of common
+and repetitive tasks. The <Globals name="shortName" /> tools installation can be configured as
+a private catalog tile. This is the recommended approach for using this asset multiple times.
+This asset enables the easy transition of a default cluster into a cluster that supports
 Cloud-Native CI/CD development tools.
 
 ### A. Create the catalog
+
+<br></br>
 
 1. Log in to the <Globals name="ic" /> Console
 2. Click **Manage->Catalogs** from the top menu
@@ -41,6 +43,8 @@ Cloud-Native CI/CD development tools.
 
 ### B. Register the <Globals name="shortName" /> tiles in the catalog
 
+<br></br>
+
 <InlineNotification>
 
 **Note:** The following instructions depend on the `jq` command. The information for installing
@@ -48,18 +52,23 @@ Cloud-Native CI/CD development tools.
 
 </InlineNotification>
 
+<br />
+
 1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
     ```shell script
     LATEST_RELEASE=$(curl -s https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
     curl -OL https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh
     chmod +x create-catalog-offering.sh
     ```
+
 2. Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the catalog that you created
     ```shell script
     ./create-catalog-offering.sh {API_KEY} "Team Catalog"
     ```
 
 ### C. Apply the tile
+
+<br />
 
 Once the tile has been installed it can be used repeatedly to set up clusters with
 the CNCF tools. Each time the tile is applied, a set of configuration variables are
@@ -68,7 +77,7 @@ required.
 1. Log in to the <Globals name="ic" /> Console.
 2. Select **Catalog** from the top menu.
 3. From the side menu, select your catalog from the drop-down list (e.g. `Team Catalog`). (**IBM Cloud catalog** should be selected initially.)
-4. Click **Private** on the side menu to see the private catalog entries 
+4. Click **Private** on the side menu to see the private catalog entries
 5. Click on the **Cloud-Native Toolkit** tile
 6. Enter values for the variables list provided.
 
@@ -87,20 +96,23 @@ required.
     | `logdna_name`         | The name of the LogDNA instance (If `provision_logdna` is set to `false` this value is used by the scripts to bind the existing LogDNA instance to the cluster) | `cntk-showcase-logdna` |
     | `provision_sysdig`    | Flag indicating that a new instance of Sysdig should be provisioned                           | `true` or `false`          |
     | `sysdig_name`         | The name of the Sysdig instance (If `provision_sysdig` is set to `false` this value is used by the scripts to bind the existing Sysdig instance to the cluster) | `cntk-showcase-sysdig` |
-    
+
     <InlineNotification>
-    
+
     **Note:** Provisioning a new cluster using classic infrastructure is not supported with the tile install. In this case
     you are recommended to either create the cluster using the <Globals name="ic" /> Console then use the tile
     to install the Toolkit **OR** to install with one of the other methods.
-    
+
     </InlineNotification>
+
+<br />
+
 
 7. Check the box to accept the **Apache 2** license for the tile.
 8. Click **Install** to start the install process
 
-This will kick off the installation of the <Globals name="shortName" /> using an 
-IBM Cloud Private Catalog Tile. The progress can be reviewed from the 
+This will kick off the installation of the <Globals name="shortName" /> using an
+IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 **Schematics** entry
 
 </Tab>
@@ -109,6 +121,9 @@ IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 
 ### A. Download the Iteration Zero scripts
 
+<br />
+
+
 1. Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
     ```shell script
     git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
@@ -116,22 +131,28 @@ IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 
 ### B. Configure the credentials
 
+<br />
+
 1. In a terminal, change to the `ibm-garage-iteration-zero` cloned directory
     ```shell script
     cd ibm-garage-iteration-zero
     ```
+
 2. Copy the `credentials.template` file to a file named `credentials.properties`
     ```shell script
     cp credentials.template credentials.properties
     ```
-   
+
    **Note:** `credentials.properties` is already listed in `.gitignore` to prevent the
    private credentials from being committed to the git repository
+
 3. Update the value for the `ibmcloud.api.key` property in `credentials.properties` with your <Globals name="ic" /> API key
 
     **Note:** The API key should have been set up during [plan installation](/getting-started-0/plan-installation/ibm-cloud).
 
 ### C. Configure the environment variables
+
+<br />
 
 The settings for creating the <Globals name="shortName" /> on <Globals name="ic" /> are set in the `environment-ibmcloud.tfvars`
 file in the `./terraform/settings` directory of the `ibm-garage-iteration-zero` repository.
@@ -161,14 +182,16 @@ Update `environment-ibmcloud.tfvars` with the appropriate values for your instal
 
 ### D. (Optional) Customize the installed components
 
+<br />
+
 The `terraform/stages` directory contains the default set of stages that define the
 modules that will be applied to the environment. The stages can be customized to change
-the makeup of the environment that is provisioned by either removing or adding stages from/to the 
-`terraform/stages` directory. 
+the makeup of the environment that is provisioned by either removing or adding stages from/to the
+`terraform/stages` directory.
 
 **Note:** The stages occasionally have dependencies on other stages (e.g. most all
 depend on the cluster module, many depend on the namespace module, etc.) so be aware of those
-dependencies as you start making changes. Dependencies are reflected in the `module.{stage name}` references 
+dependencies as you start making changes. Dependencies are reflected in the `module.{stage name}` references
 in the stage variable list.
 
 The `terraform/stages/catalog` directory contains some optional
@@ -180,6 +203,8 @@ as desired.
 
 ### E. Run the installation
 
+<br />
+
 1. Open a terminal to the `ibm-garage-iteration-zero` directory
 2. Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image") from which the Terraform scripts will be run
     ```shell script
@@ -187,7 +212,7 @@ as desired.
     ```
 
     This will download the Cloud Garage Tools Docker image that contains all the necessary tools to execute Terraform scripts
-    and exec shell into the running container. When the container starts it 
+    and exec shell into the running container. When the container starts it
     mounts the filesystem's `./terraform/` directory as `/home/devops/src/` and loads the values from the
     `credentials.properties` file as environment variables.
 
@@ -196,35 +221,35 @@ as desired.
     ```shell script
     ./runTerraform.sh
     ```
-    
+
     This script collects the values provided in the `environment-ibmcloud.tfvars` and the
     stages defined in the `terraform/stages` to build the Terraform workspace. Along the way it
     will prompt for a couple pieces of information.
-    
+
     1. Type of installation: `ibmcloud` or `ocp`
-    
+
         There are two major paths to installing with the Toolkit. In this case, we are installing
         into an <Globals name="ic" />-managed environment so we will select `ibmcloud`.
-        
+
         This prompt can be skipped by providing `--ibmcloud` as an argument to `./runTerraform.sh`
-    
+
     2. Handling of an old workspace (if applicable): `keep` or `delete`
-    
+
         If you executed the script previously for the current cluster configuration and the workspace directory still
         exists then you will be prompted to either keep or delete the workspace directory. Keep the workspace directory if
         you want to use the state from the previous run as a starting point to either add or remove configuration. Delete
-        the workspace if you want to start with a clean install of the Toolkit. 
-        
+        the workspace if you want to start with a clean install of the Toolkit.
+
         This prompt can be skipped by providing `--delete` or `--keep` as an argument to `./runTerraform.sh`
 
     3. Verify the installation configuration
-    
-        The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
+
+        The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes),
         the Terraform Apply process will begin to create the infrastructure and services for your environment.
-    
+
         This prompt can be skipped by providing `--auto-approve` as an argument to `./runTerraform.sh`
 
-    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
+    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer)
     and the rest of the process takes about 30 minutes.
 
 </Tab>
@@ -238,10 +263,10 @@ explore and verify the environment.
 
 ## Troubleshooting
 
-If you find that the Terraform provisioning has failed, try re-running the `runTerraform.sh` script again. 
+If you find that the Terraform provisioning has failed, for Private Catalog delete the workspace and for Iteration Zero  try re-running the `runTerraform.sh` script again.
 The state will be saved and Terraform will try and apply the configuration to match the desired end state.
 
-If you find that some of the services have failed to create in the time allocated, try the following:
+If you find that some of the services have failed to create in the time allocated, try the following with Iteration zero:
 
 1. Manually delete the service instances in your resource group
 3. Re-run the `runTerraform.sh` script with the `--delete` argument to clean up the state
