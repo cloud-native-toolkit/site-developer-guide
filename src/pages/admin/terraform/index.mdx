@@ -1,5 +1,5 @@
 ---
-title: Infrastructure as Code
+title: Infrastructure as Code Terraform
 ---
 
 <PageDescription>
@@ -11,7 +11,7 @@ title: Infrastructure as Code
 
 `Infrastructure as Code` is the practice of defining and managing the logic used to provision infrastructure as versioned
 artifacts in the same way that code artifacts have traditionally been handled. There are a number of different tools and
-frameworks available that enable this type of approach. The IBM Garage for Cloud Developer Tools currently leverage 
+frameworks available that enable this type of approach. The IBM Garage for Cloud Developer Tools currently leverage
 Terraform as the technology used to implement the Infrastructure as Code strategy.
 
 The IasC terraform logic is stored in two repositories:
@@ -19,14 +19,14 @@ The IasC terraform logic is stored in two repositories:
 - `garage-terraform-modules`
 
     The modules that provide logic to provision individual components of the infrastructure. These modules cover one of
-    three different categories: infrastructure (e.g. create a kubernetes cluster), cloud service, or software deployed and 
+    three different categories: infrastructure (e.g. create a kubernetes cluster), cloud service, or software deployed and
     configured into a cluster. https://github.com/ibm-garage-cloud/garage-terraform-modules
 
-- `ibm-garage-iteration-zero` 
+- `ibm-garage-iteration-zero`
 
-    The logic that makes use of the modules with specific configuration parameters used to deliver an entire solution. 
+    The logic that makes use of the modules with specific configuration parameters used to deliver an entire solution.
     https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero
-    
+
 
 This guide will walk through the various files that make up the Infrastructure as Code components and how to
 customize them. The [Installation Overview](/admin/overview) walks through how to perform an install with the Iteration Zero
@@ -41,10 +41,10 @@ provided as `stages` that can be removed and added as needed.
 
 The files in the `stages` and `stages-crc` folders provide Terraform files that make use of external
 Terraform modules to provision resources. The different resources are logically grouped with stage numbers
-and names for the resource provided. All of the stages are processed by the Terraform apply at the same 
+and names for the resource provided. All of the stages are processed by the Terraform apply at the same
 time and Terraform works out the sequencing of execution based on the dependencies between the modules.
 
-The Iteration Zero application comes with a pre-defined set of software and services that will be 
+The Iteration Zero application comes with a pre-defined set of software and services that will be
 provisioned. For more advanced situations, that set of modules can be easily customized.
 
 - Removing a stage
@@ -59,29 +59,29 @@ provisioned. For more advanced situations, that set of modules can be easily cus
 - Modifying a stage
 
     Any of the values for the variables in `variables.tf` or in the stage files can be updated to change
-    the results of what is built 
+    the results of what is built
 
 ### Environment configuration
 
-There a number of files used to provide the overall configuration for the environment that will be 
+There a number of files used to provide the overall configuration for the environment that will be
 provisioned.
 
 - `credentials.template`
 
     Template file for the credentials.properties
-    
+
 - `credentials.properties`
 
     File containing the API key and Classic Infrastructure credentials needed to run the scripts
-    
+
 - `terraform/settings/environment.tfvars`
 
     General configuration values for the environment, like `region`, `resource group` and `cluster type`
-     
+
 - `terraform/settings/vlan.tfvars`
 
     Configuration values for the IBM Cloud vlan settings needed for the creation of a new cluster
-    
+
 - `terraform/stages/variables.tf` or `terraform/stages-crc/variables.tf`
 
     Defined variables for the various stages and, in some cases, default values.
@@ -92,19 +92,19 @@ provisioned.
 
     Launches a container image from the Docker Hub registry that contains all the tools necessary to run
     the terraform scripts and opens into a shell where the Terraform logic can be run
-    
+
 - `terraform/runTerraform.sh`
 
     Based on the values configured in `environment.tfvars`, this script creates the `terraform/workspace`
-    directory, copies the appropriate Terraform files into that directory, then applies the Terraform 
+    directory, copies the appropriate Terraform files into that directory, then applies the Terraform
     scripts
-    
+
 - `terraform/scripts/apply.sh`
 
     Applies the Terraform scripts. This script is copied into the `terraform/workspace` directory during the
     `runTerraform.sh` logic. It is then available to rerun the Terraform logic without having to set
     the `terraform/workspace` directory up again.
-    
+
 - `terraform/scripts/destroy-cluster.sh`
 
     Helper script that destroys the IBM Cloud cluster to clean up the environment
@@ -122,12 +122,12 @@ The terraform modules project contains the building block components that can be
 provisioned environment. The modules are organized into one of three major categories:
 
 - `cloud-managed`
-    
+
     Modules that provision infrastructure (cluster and/or services) into a managed cloud environment
-    
+
 - `self-managed`
 
-    Modules that provision infrastructure into a self-managed environment (e.g. software deployed 
+    Modules that provision infrastructure into a self-managed environment (e.g. software deployed
     into a cluster)
 
 - `generic`
