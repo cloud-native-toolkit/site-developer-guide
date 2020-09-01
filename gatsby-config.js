@@ -29,7 +29,6 @@ module.exports = {
         path: './src/data'
       },
     },
-
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
