@@ -10,6 +10,12 @@ The rendered Developer Guide can be viewed here - [https://cloudnativetoolkit.de
 
 It is primarily used to document features that are currently in Beta prior to releasing those features (and the associated documentation). The content for the Beta version of the Developer Guide is sourced from the `beta` branch.
 
+## Logos
+
+We have painstakingly documented all of the logos and icons used for 3rd party tools and the process for
+documenting their use within the Developer Guide and the broader Toolkit. The [Logo Usage page](./docs/logos) documents
+the approved logos and the requirements for their use.
+
 ## Contributing
 
 To update and manage the Developer Guide follow these steps.
