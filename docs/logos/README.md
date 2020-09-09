@@ -8,7 +8,7 @@ here. If there is a new logo needed, then follow the process detailed below.
 
 The logos in the table below can be used within the Toolkit to represent the tool. However, in all cases of use the following guidelines must be followed:
 
-1. The logo must be used **as provided**. It cannot be altered in any way, including scaling the image. If you need a variation of one of the images that does not exist in the table below then submit an issue.
+1. The logo must be used **as provided**. It cannot be altered in any way. If you need a variation of one of the images that does not exist in the table below then submit an issue.
 
 2. The context of the logo's use can represent that the tool is available in the toolkit but in no way can imply endorsement by that tool
 
