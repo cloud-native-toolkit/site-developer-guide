@@ -56,8 +56,8 @@ Cloud-Native CI/CD development tools.
 
 1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
     ```shell script
-    LATEST_RELEASE=$(curl -s https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
-    curl -OL https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh
+    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
+    curl -OL "https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
     chmod +x create-catalog-offering.sh
     ```
 
