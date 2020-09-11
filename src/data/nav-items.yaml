@@ -61,6 +61,8 @@
       path: /getting-started-day-2
     - title: Continuous Delivery
       path: /getting-started-day-2/continuous-delivery
+    - title: Secret Management
+      path: /getting-started-day-2/secret-management
     - title: Log Management
       path: /getting-started-day-2/log-management
     - title: Monitoring
@@ -82,12 +84,14 @@
       path: /tools/sonarqube
     - title: Contract testing with PACT
       path: /tools/contract-testing-with-pact
-    - title: Log management with LogDNA
+    - title: Log mgmt with LogDNA
       path: /tools/logdna
     - title: Monitoring with Sysdig
       path: /tools/sysdig
     - title: CD with ArgoCD
       path: /tools/argocd
+    - title: Secret mgmt with Key Protect
+      path: /tools/secret-management-with-key-protect
     - title: Architecture as Code with SolSA
       path: /tools/solsa
     - title: CLI Tools Image
