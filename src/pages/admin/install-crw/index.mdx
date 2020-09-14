@@ -39,21 +39,58 @@ Setting up the CRW Operator & Cluster:
 - Create the CheCluster button, to navigate to the YAML Configuration
  page (displays all the parameters). 
 - You need to change the following parameter mentioned below, As part of
- the storage section, please add the following parameters
-    ```    
+ the storage section, please add the following parameters, depending on your
+ cluster type:
+
+   <Tabs>
+   <Tab label="VPC">
+
+    ```
+    postgresPVCStorageClassName: ibmc-vpc-block-10iops-tier
+    workspacePVCStorageClassName: ibmc-vpc-block-10iops-tier
+    ```
+
+    </Tab>
+    <Tab label="Classic">
+
+    ```
     postgresPVCStorageClassName: ibmc-block-gold
     workspacePVCStorageClassName: ibmc-block-gold
     ```
 
+    </Tab>
+    </Tabs>
+
+
+
 - Post definition the yaml section for storage will look as below
+    <Tabs>
+    <Tab label="VPC">
+
     ```
-     :storage:
-        postgresPVCStorageClassName: ibmc-block-gold
-        pvcStrategy: per-workspace
-        pvcClaimSize: 1Gi
-        preCreateSubPaths: true
-        workspacePVCStorageClassName: ibmc-block-gold
+    storage:
+      postgresPVCStorageClassName: ibmc-vpc-block-10iops-tier
+      pvcStrategy: per-workspace
+      pvcClaimSize: 1Gi
+      preCreateSubPaths: true
+      workspacePVCStorageClassName: ibmc-vpc-block-10iops-tier
     ```
+    
+    </Tab>
+    <Tab label="Classic">
+
+    ```
+    storage:
+      postgresPVCStorageClassName: ibmc-block-gold
+      pvcStrategy: per-workspace
+      pvcClaimSize: 1Gi
+      preCreateSubPaths: true
+      workspacePVCStorageClassName: ibmc-block-gold
+    ```
+
+    </Tab>
+    </Tabs>        
+
 
 - Now create, the cluster after doing the above changes. The cluster will take few minutes to get created as its resources such as Postgres DB, Keycloak Auth, CRW workspace will get created.
 - Once Cluster is created navigate to the overview tab of the CheCluster in
