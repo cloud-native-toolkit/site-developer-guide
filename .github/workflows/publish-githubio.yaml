@@ -12,6 +12,7 @@ jobs:
     env:
       NODE_VERSION: 12.x
       TITLE: Cloud-Native Toolkit
+      PATH_PREFIX: dev-guide
 
     steps:
       - uses: actions/checkout@v2
