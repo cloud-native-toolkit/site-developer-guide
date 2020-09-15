@@ -576,7 +576,7 @@ is the current branch.
 
 <Tabs>
 <Tab label="CLI">
-Create a Jenkins pipeline in the `dev` namespace and prompt for the Git credentials
+Create a Jenkins pipeline in the current namespace and prompt for the Git credentials
 
 ```shell script
 igc pipeline --jenkins
@@ -594,108 +594,169 @@ The following is the list of steps required to manually configure a **Tekton**
 pipeline with your development cluster.
 <br></br>
 
+1. Set the current namespace/project
 
-- Configure the service account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
-  ```
-  oc create serviceaccount pipeline
-  oc adm policy add-scc-to-user privileged -z pipeline
-  oc adm policy add-role-to-user edit -z pipeline
-  ```
-- Clone the tasks from the `tools` namespace into the `new-namespace`
-  ```
-  kubectl get tasks --export -o yaml -n tools  | sed s/"namespace: tools/namespace: $(oc project -q)"/ | kubectl apply -f -
-  ```
-- Clone the pipelines from the `tools` namespace into the `new-namespace`
-  ```
-  kubectl get pipelines --export -o yaml -n tools  | sed s/"namespace: tools/namespace: $(oc project -q)"/ | kubectl apply -f -
-  ```
+    **For OpenShift:**
+    ```shell script
+    oc project {namespace}
+    ```
+    
+    **For Kubernetes:**
+    ```shell script
+    kubectl config set-context --current --namespace={namespace}
+    ```
+2. Configure the service account `pipeline` if it doesn't exist, on OpenShift 4 the operator takes care of this you can skip.
+    ```shell script
+    oc create serviceaccount pipeline
+    oc adm policy add-scc-to-user privileged -z pipeline
+    oc adm policy add-role-to-user edit -z pipeline
+    ```
+3. Clone the tasks from the `tools` namespace into the current namespace
+    ```shell script
+    kubectl get tasks -o json -n tools | \
+      jq 'del(.items[].metadata.uid) | del(.items[].metadata.selfLink) | del(.items[].metadata.resourceVersion) | del(.items[].metadata.namespace) | del(.items[].metadata.creationTimestamp) | del(.items[].metadata.generation) | del(.items[].metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | \
+      kubectl apply -f -
+    ```
+4. List the available pipeline templates in the `tools` namespace. Select the one to use for your project.
+    ```shell script
+    kubectl get pipelines -n tools
+    ```
+5. Clone the selected pipeline from the `tools` namespace into the current namespace
+    ```shell script
+    kubectl get pipeline ${TEMPLATE_NAME} -o json -n tools | \
+      jq --arg PIPELINE_NAME ${PIPELINE_NAME} '.metadata.name = $PIPELINE_NAME | del(.metadata.uid) | del(.metadata.selfLink) | del(.metadata.resourceVersion) | del(.metadata.namespace) | del(.metadata.creationTimestamp) | del(.metadata.generation) | del(.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | \
+      kubectl apply -f -
+    ```
+  
+    where:
+    - `TEMPLATE_NAME` is the name of the pipeline selected in the previous step
+    - `PIPELINE_NAME` is the name of the pipeline for your project
 
-### Pipeline Resource
+### Start the pipeline
 
-- Create a Pipeline resource for the git repository, replace with the correct github url for your repository
-  Use the `tkn` CLI to create `git` resource input the github repo url for `url` and branch for `revision`
-  ```
-  tkn resource create
-  ```
-  Here is the an example of the cli
-  ```
-  tkn resource create
-  ? Enter a name for a pipeline resource : nodejs-typescript-git
-  ? Select a resource type to create : git
-  ? Enter a value for url :  https://github.com/{user or org}/{app}
-  ? Enter a value for revision :  master
-  New git resource "nodejs-typescript-git" has been created
-  ```
-- Create a Pipeline resource for the docker image registry, you can use the internal registry in OpenShift or use an external registry like IBM Container Registry (credentials need setup)
-  Use the `tkn` CLI to create `image` resource
-  ```
-  tkn resource create
-  ```
-  Select `image` for type.
+The Tekton pipeline does not automatically start when it is first created. After the webhook is created in the subsequent steps the
+pipeline will start when changes are pushed to the repository but before that, we can manually trigger the build to start using the CLI.
+(The pipeline can also be started through the OpenShift Console.)
 
-  Enter the corresponding `url` for container registry, use the new-namespace} in the url
+- Kick off the pipeline using the Tekton CLI
 
-  For OCP 3 internal registry use `docker-registry.default.svc:5000/{new-namespace}/node-typescript:latest`
+    ```shell script
+    tkn pipeline start {PIPELINE_NAME} -s pipeline -p git-url={GIT_REPO} -p git-revision={GIT_BRANCH} 
+    ```
 
-  For OCP 4 or CRC internal registry use `image-registry.openshift-image-registry.svc:5000/{new-namespace}/node-typescript:latest`
+- To create a new PipelineRun with the same parameters from a previous PipelineRun you can do the following
 
-  For external registry like IBM Container registry based on region use `us.icr.io/{namespace}/node-typescript:latest` use an existing namespace in your IBM Cloud
-  ```
-  tkn resource create
-  ? Enter a name for a pipeline resource : nodejs-typescript-image
-  ? Select a resource type to create : image
-  ? Enter a value for url :  docker-registry.default.svc:5000/dev/node-typescript:latest
-  ? Enter a value for digest :
-  New image resource "nodejs-typescript-image" has been created
-  ```
-- Select the pipeline, to show the available pipeline run
-  ```
-  tkn pipeline ls
-  NAME              AGE              LAST RUN   STARTED   DURATION   STATUS
-  igc-java-gradle   33 minutes ago   ---        ---       ---        ---
-  igc-nodejs        33 minutes ago   ---        ---       ---        ---
-  ```
-  In this case use `igc-java-gradle` for java or `igc-nodejs` for nodejs.
-- Run the Pipeline using the `git` and `image` Pipeline resources.
-  Set the following environment variable for convienience:
-  ```
-  export PIPELINE=igc-nodejs
-  export GIT=nodejs-typescript-git
-  export IMAGE=nodejs-typescript-image
-  ```
-  Then run the `tkn pipeline start` with the input arguments using the service account `pipeline`
-  ```
-  tkn pipeline start \
-  ${PIPELINE} \
-  -r git-source=${GIT} \
-  -r docker-image=${IMAGE} \
-  -s pipeline
-  ```
+    ```shell script
+    tkn pipeline start {PIPELINE_NAME} --use-pipelinerun {PIPELINE_RUN_NAME}
+    ```
 
 ### Create a Git Webhook
 
-- Open the Tekton Dashboard from the main Tools Dashboard or the ICPA landing page.
+#### Create the event listener and triggers
 
-- Create a Webhook in the Tekton Dashboard
-    ![Webhook](/images/webhook.png)
+In order for a Tekton pipeline to be triggered by a webhook notification, several resources need to be created:
 
-    - Click **Webhook** on the menu
-    - Click **Add Webhook** and enter the information for the webhook
-    - Name: **insert name**
-    - Repository UR: **template git repo url**
-    - Access Token: Create github access token with permission minimum write:repo_hook
-    - Namespace: **insert namespace**
-    - Pipeline: select **igc-java-gradle** or **igc-nodejs**
-    - Service Account: **pipeline**
-    - Docker Registry:
-        - For OCP 3 internal registry use `docker-registry.default.svc:5000/{new-namespace}`
-        - For OCP 4 or CRC internal registry use `image-registry.openshift-image-registry.svc:5000/{new-namespace}`
-        - For external registry like IBM Container registry based on region use `us.icr.io/{namespace}` use an existing namespace in your IBM Cloud. Make sure to configure docker credentials in the Tekton Dashboard using your IAM API Key and `iamapikey` for username in your namespace.
+- `TriggerTemplate` - defines how to create the PipelineRun and any other required resources when a webhook notification is received.
+- `TriggerBinding` - provides a mapping for the information available in the webhook payload into the TriggerTemplate
+- `EventListener` - makes the connection between the Pipeline, TriggerBinding, and TriggerTemplate together that will be created when a webhook is triggered
 
-- Check that Webhook is created on the Github repository (Settings-Webhooks)
+1. Create a file named `tekton-trigger.yaml` and paste in the following contents:
 
-- Make a change to the git repo and push the change to remote git repository or click on **Pipelines**
-and manually kick of a pipeline build
+    ```yaml
+    apiVersion: triggers.tekton.dev/v1alpha1
+    kind: TriggerTemplate
+    metadata:
+      labels:
+        app: {PIPELINE_NAME}
+      name: {TRIGGER_TEMPLATE_NAME}
+    spec:
+      params:
+      - description: The git revision
+        name: gitrevision
+      - description: The git repository url
+        name: gitrepositoryurl
+      resourcetemplates:
+      - apiVersion: tekton.dev/v1beta1
+        kind: PipelineRun
+        metadata:
+          generateName: {PIPELINE_NAME}-
+        spec:
+          params:
+          - name: git-url
+            value: $(params.gitrepositoryurl)
+          - name: git-revision
+            value: $(params.gitrevision)
+          - name: scan-image
+            value: "false"
+          pipelineRef:
+            name: {PIPELINE_NAME}
+    ---
+    apiVersion: triggers.tekton.dev/v1alpha1
+    kind: TriggerBinding
+    metadata:
+      labels:
+        app: {PIPELINE_NAME}
+      name: {TRIGGER_BINDING_NAME}
+    spec:
+      params:
+      - name: gitrevision
+        value: $(body.head_commit.id)
+      - name: gitrepositoryurl
+        value: $(body.repository.url)
+    ---
+    apiVersion: triggers.tekton.dev/v1alpha1
+    kind: EventListener
+    metadata:
+      labels:
+        app: {PIPELINE_NAME}
+      name: {EVENT_LISTENER_NAME}
+    spec:
+      serviceAccountName: pipeline
+      triggers:
+      - bindings:
+        - kind: TriggerBinding
+          name: {TRIGGER_BINDING_NAME}
+        interceptors:
+        - cel:
+            filter: header.match('X-GitHub-Event', 'push') && body.ref == 'refs/heads/{BRANCH_NAME}'
+        name: {PIPELINE_NAME}
+        template:
+          name: {TRIGGER_TEMPLATE_NAME}
+    ```
+
+2. Replace the place holder values with the appropriate values:
+
+    where:
+    - `{PIPELINE_NAME}` is the name of your Pipeline resource from the previous section.
+    - `{TRIGGER_TEMPLATE_NAME}` is the name of the TriggerTemplate. This can be the same as the `{PIPELINE_NAME}`.
+    - `{TRIGGER_BINDING_NAME}` is the name of the TriggerBinding. This can be the same as the `{PIPELINE_NAME}`.
+    - `{EVENT_LISTENER_NAME}` is the name of the EventListener. This can be `el-{PIPELINE_NAME}` if the EventListeners will be configured one-to-one with the Pipelines or the instance can be shared across the project.
+    - `{BRANCH_NAME}` is the name of the branch from which webhook events should trigger the build to start
+
+3. Apply the trigger resources to the cluster, in the same namespace where the Pipeline was created
+
+    ```shell script
+    kubectl apply -f tekton-trigger.yaml
+    ```
+
+4. In order for the Git repository to trigger the build with a webhook, an endpoint needs to be available. Expose the EventListener service with a route to provide that endpoint.
+
+    ```shell script
+    oc expose service ${EVENT_LISTENER_NAME} --name=${EVENT_LISTENER_NAME}
+    ```
+
+#### Register the webhook url with your Git repository
+
+The particular steps will vary to create the Webhook depending on the flavor of hosted Git you are using (GitHub, GitHub Enterprise, GitLab, BitBucket, etc)
+but the general flow will remain the same.
+
+1. Get the host name for the route created in the previous step
+
+    ```shell script
+    oc get route ${EVENT_LISTENER_NAME} -o jsonpath='{.spec.host}'
+    ```
+
+2. Create a webhook in your hosted Git repository using the https url of the host name from the previous step that is triggered by the desired events (e.g. push, pull request, release)
 
 </Tab>
 <Tab label="Manual steps for Jenkins on OpenShift">
