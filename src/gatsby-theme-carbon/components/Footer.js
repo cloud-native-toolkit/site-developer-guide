@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from 'gatsby-theme-carbon/src/components/Footer';
 
 const currentYear = new Date().getFullYear();
-const lastUpdated = "January 2020";
+const lastUpdated = "October 2020";
 
 const version = "1.1.2";
 
@@ -30,7 +30,7 @@ const Content = () => (
 const links = {
     firstCol: [
         {
-            href: '/contribute',
+            href: '/contributing',
             linkText: 'Contribute',
         },
         { href: 'https://www.ibm.com/privacy', linkText: 'Privacy' },
