@@ -16,57 +16,31 @@
       path: /getting-started/cli
     - title: Dev-Ops Concepts
       path: /getting-started/dev-ops
-
+      
 - title: Day 0 - Prepare
   pages:
     - title: Overview
       path: /getting-started-day-0
-    - title: "- Plan the installation"
+    - title: "Plan the installation"
       path: /getting-started-day-0/plan-installation/ibm-cloud
-    - title: "- Install with the toolkit"
+    - title: "Install with the toolkit"
       path: /getting-started-day-0/install-toolkit/ibm-cloud-on-vpc
-    - title: "- Complete the configuration"
+    - title: "Complete the configuration"
       path: /getting-started-day-0/post-installation
-    - title: IBM Cloud Account
-      path: /getting-started-day-0/ibm-cloud-account-management
-    - title: Infrastructure as Code
-      path: /getting-started-day-0/infrastructure-as-code
-    - title: Git-Ops
-      path: /getting-started-day-0/git-ops
-    - title: Private Catalog
-      path: /getting-started-day-0/private-catalog
 
 - title: Day 1 - Build and deploy
   pages:
     - title: Overview
       path: /getting-started-day-1
-    - title: "- Deploying an app"
+    - title: "Deploying an app"
       path: /getting-started-day-1/deploy-app
-    - title: "- Developer Dashboard"
+    - title: "Developer Dashboard"
       path: /getting-started-day-1/dashboard
-    - title: Continuous Integration
-      path: /getting-started-day-1/continuous-integration
-    - title: Code Analysis
-      path: /getting-started-day-1/code-analysis
-    - title: Contract Testing
-      path: /getting-started-day-1/contract-testing
-    - title: Artifact Management
-      path: /getting-started-day-1/artifact-management
-    - title: Image Registry
-      path: /getting-started-day-1/image-registry
 
 - title: Day 2 - Run and manage
   pages:
     - title: Overview
       path: /getting-started-day-2
-    - title: Continuous Delivery
-      path: /getting-started-day-2/continuous-delivery
-    - title: Secret Management
-      path: /getting-started-day-2/secret-management
-    - title: Log Management
-      path: /getting-started-day-2/log-management
-    - title: Monitoring
-      path: /getting-started-day-2/monitoring
 
 - title: Tool Guides
   pages:
