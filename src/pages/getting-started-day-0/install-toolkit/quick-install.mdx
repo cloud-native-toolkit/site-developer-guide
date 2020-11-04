@@ -20,8 +20,10 @@ Steps to prepare an environment using the <Globals name="shortName" /> in an exi
 1. Install the latest from the main branch
 ```shell script
 oc create -f https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
+sleep 5
 oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
 oc logs job/ibm-toolkit -f -n default
+
 ```
 
 </Tab>
@@ -45,8 +47,10 @@ oc logs job/ibm-toolkit -f -n default
 1. Run the installation job after customizing the installation script
     ```shell script
     oc create -f install-ibm-toolkit.yaml
+    sleep 5
     oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
     oc logs job/ibm-toolkit -f -n default
+    
     ```
 
 </Tab>
