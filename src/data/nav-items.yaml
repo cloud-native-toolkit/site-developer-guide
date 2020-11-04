@@ -24,7 +24,7 @@
     - title: "Plan the installation"
       path: /getting-started-day-0/plan-installation/ibm-cloud
     - title: "Install with the toolkit"
-      path: /getting-started-day-0/install-toolkit/hybrid
+      path: /getting-started-day-0/install-toolkit/quick-install
     - title: "Complete the configuration"
       path: /getting-started-day-0/post-installation
 
