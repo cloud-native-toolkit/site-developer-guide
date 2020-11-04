@@ -1,6 +1,6 @@
 ---
 title: Install the toolkit with IBM Cloud classic infrastructure
-tabs: ['IBM Cloud on VPC', 'Hybrid', 'IBM Cloud on Classic']
+tabs: ['Quick Install', 'IBM Cloud on VPC', 'IBM Cloud on Classic']
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
@@ -29,7 +29,7 @@ Steps to prepare an environment using the <Globals name="shortName" /> for <Glob
     ```shell script
     cp credentials.template credentials.properties
     ```
-   
+
    **Note:** `credentials.properties` is already listed in `.gitignore` to prevent the
    private credentials from being committed to the git repository
 3. Update the value for the `ibmcloud.api.key` property in `credentials.properties` with your <Globals name="ic" /> API key
@@ -70,7 +70,7 @@ on classic infrastructure, the following values should be used:
 
 ### D. Configure the VLAN settings
 
-The `vlan.tfvars` file in `terraform/settings` contains properties that define the classic infrastructure configuration in order to provision a 
+The `vlan.tfvars` file in `terraform/settings` contains properties that define the classic infrastructure configuration in order to provision a
 new cluster. Typical values look like this:
 
 ```shell script
@@ -89,8 +89,8 @@ You must set all of these specifically for your cluster. Use the values provided
 
 The [IGC CLI](/getting-started/cli) can be used to generate these settings, to make the configuration as simple as possible.
 
-If your account has numerous VLANs and you want your cluster to use specific ones, then skip this step and provide the 
-values by hand. This tool is for users who don't know what these required settings should be and want a simple way to 
+If your account has numerous VLANs and you want your cluster to use specific ones, then skip this step and provide the
+values by hand. This tool is for users who don't know what these required settings should be and want a simple way to
 gather reasonable defaults for their particular account.
 
 1. Log in using the <Globals name="igcli" />
@@ -108,12 +108,12 @@ gather reasonable defaults for their particular account.
 
 The `terraform/stages` directory contains the default set of stages that define the
 modules that will be applied to the environment. The stages can be customized to change
-the makeup of the environment that is provisioned by either removing or adding stages from/to the 
-`terraform/stages` directory. 
+the makeup of the environment that is provisioned by either removing or adding stages from/to the
+`terraform/stages` directory.
 
 **Note:** The stages occasionally have dependencies on other stages (e.g. most all
 depend on the cluster module, many depend on the namespace module, etc.) so be aware of those
-dependencies as you start making changes. Dependencies are reflected in the `module.{stage name}` references 
+dependencies as you start making changes. Dependencies are reflected in the `module.{stage name}` references
 in the stage variable list.
 
 The `terraform/stages/catalog` directory contains some optional
@@ -132,7 +132,7 @@ as desired.
     ```
 
     This will download the Cloud Garage Tools Docker image that contains all the necessary tools to execute Terraform scripts
-    and exec shell into the running container. When the container starts it 
+    and exec shell into the running container. When the container starts it
     mounts the filesystem's `./terraform/` directory as `/home/devops/src/` and loads the values from the
     `credentials.properties` file as environment variables.
 
@@ -141,33 +141,33 @@ as desired.
     ```shell script
     ./runTerraform.sh
     ```
-    
+
     This script collects the values provided in the `environment-ibmcloud.tfvars` and the
     stages defined in the `terraform/stages` to build the Terraform workspace. Along the way it
     will prompt for a couple pieces of information.
-    
+
     1. Type of installation: `ibmcloud` or `ocp`
-    
+
         There are two major paths to installing with the Toolkit. In this case, we are installing
         into an <Globals name="ic" />-managed environment so we will select `ibmcloud`.
-        
+
         This prompt can be skipped by providing `--ibmcloud` as an argument to `./runTerraform.sh`
-    
+
     2. Handling of an old workspace (if applicable): `keep` or `delete`
-    
+
         If you executed the script previously for the current cluster configuration and the workspace directory still
         exists then you will be prompted to either keep or delete the workspace directory. Keep the workspace directory if
         you want to use the state from the previous run as a starting point to either add or remove configuration. Delete
-        the workspace if you want to start with a clean install of the Toolkit. 
-        
+        the workspace if you want to start with a clean install of the Toolkit.
+
         This prompt can be skipped by providing `--delete` or `--keep` as an argument to `./runTerraform.sh`
 
     3. Verify the installation configuration
-    
-        The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes), 
+
+        The script will verify some basic settings and prompt if you want to proceed. After you select **Y** (for yes),
         the Terraform Apply process will begin to create the infrastructure and services for your environment.
-    
+
         This prompt can be skipped by providing `--auto-approve` as an argument to `./runTerraform.sh`
 
-    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer) 
+    Creating a new cluster takes about 1.5 hours on average (but can also take considerably longer)
     and the rest of the process takes about 30 minutes.
