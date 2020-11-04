@@ -21,7 +21,7 @@ Steps to prepare an environment using the <Globals name="shortName" /> in an exi
 ```shell script
 oc create -f https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
 oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
-oc logs job/ibm-toolkit -n default
+oc logs job/ibm-toolkit -f -n default
 ```
 
 </Tab>
@@ -46,7 +46,7 @@ oc logs job/ibm-toolkit -n default
     ```shell script
     oc create -f install-ibm-toolkit.yaml
     oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
-    oc logs job/ibm-toolkit -n default
+    oc logs job/ibm-toolkit -f -n default
     ```
 
 </Tab>
