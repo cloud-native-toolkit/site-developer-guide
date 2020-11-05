@@ -2,7 +2,9 @@
 set -e
 
 REPLY=continue
-oc get job/ibm-toolkit &>/dev/null && read -p "Tookit already installed, delete tool's namespace and do fresh install? N/y: " REPLY
+if oc get job/ibm-toolkit &>/dev/null; then
+ read -p "Tookit already installed, delete tool's namespace and do fresh install? N/y: " REPLY </dev/tty
+fi
 if [ "$REPLY" == "Y" ] || [ "$REPLY" == "y" ]; then
   oc delete job/ibm-toolkit -n default
 elif [ "$REPLY" == "N" ] || [ "$REPLY" == "n" ] || [ -z "$REPLY" ]; then
