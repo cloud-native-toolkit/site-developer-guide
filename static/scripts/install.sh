@@ -1,10 +1,11 @@
 #!/bin/sh
 set -e
 
+REPLY=continue
 oc get job/ibm-toolkit &>/dev/null && read -p "Tookit already installed, delete tool's namespace and do fresh install? N/y: " REPLY
 if [[ "$REPLY" == "Y" || "$REPLY" == "y" ]]; then
   oc delete job/ibm-toolkit -n default
-else
+elif [[ "$REPLY" == "N" || "$REPLY" == "n" || -z "$REPLY" ]]
   echo "Installation skipped"
   exit 0
 fi
