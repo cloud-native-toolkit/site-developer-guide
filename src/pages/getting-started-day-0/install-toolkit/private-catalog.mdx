@@ -5,6 +5,7 @@ tabs: ['Private Catalog', 'Iteration Zero', 'Quick Install']
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
+<PageDescription>
 
 One of the features of the IBM Cloud Catalog is support for private catalog tiles. These can
 contain custom Terraform definitions that can accelerate SRE teams in the execution of common
@@ -12,6 +13,12 @@ and repetitive tasks. The <Globals name="shortName" /> tools installation can be
 a private catalog tile. This is the recommended approach for using this asset multiple times.
 This asset enables the easy transition of a default cluster into a cluster that supports
 Cloud-Native CI/CD development tools.
+
+</PageDescription>
+
+<InlineNotification kind="warning">
+This installation method will only work on IBM Cloud. Use Iteration Zero for others.
+</InlineNotification>
 
 ### A. Create the catalog
 
