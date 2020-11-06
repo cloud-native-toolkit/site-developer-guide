@@ -17,7 +17,18 @@ Steps to prepare an environment using the <Globals name="shortName" /> in an exi
 
 ### Run the installation using the OpenShift CLI
 
-1. Install the latest from the main branch
+<Accordion align="start">
+
+<AccordionItem title="Linux or MacOS" open>
+
+```shell script
+curl -sfL get.cloudnativetoolkit.dev | sh -
+```
+
+</AccordionItem>
+
+<AccordionItem title="Windows Users">
+
 ```shell script
 oc create -f https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
 sleep 5
@@ -25,6 +36,10 @@ oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
 oc logs job/ibm-toolkit -f -n default
 
 ```
+
+</AccordionItem>
+
+</Accordion>
 
 </Tab>
 
@@ -50,7 +65,7 @@ oc logs job/ibm-toolkit -f -n default
     sleep 5
     oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
     oc logs job/ibm-toolkit -f -n default
-    
+
     ```
 
 </Tab>
