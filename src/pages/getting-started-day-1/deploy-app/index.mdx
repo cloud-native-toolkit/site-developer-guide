@@ -236,7 +236,7 @@ kubectl config set-context --current --namespace={DEV_NAMESPACE}
 
 ### 8. Register the App in a DevOps Pipeline
 
-Up to this point you have the code in a GitHub repository and have cloned it to your local development environment. You now need to register the repository with the continuous integration pipeline. The <Globals name="env" /> supports both [Tekton](/guides/continuous-integration-tekton) and [Jenkins](/guides/continuous-integration) for continuous
+Up to this point you have the code in a GitHub repository and have cloned it to your local development environment. You now need to register the repository with the continuous integration pipeline. The <Globals name="env" /> supports both [Tekton](/tools/tekton) and [Jenkins](/tools/jenkins) for continuous
 integration.
 
 - Start the process to create a pipeline
@@ -248,8 +248,8 @@ integration.
     <InlineNotification kind="info">
 
     The pipeline command give an option for both `Jenkins` and `Tekton`. For more information about working with the
-    different build engines, please see [Continuous Integration with Jenkins Guide](/guides/continuous-integration) and
-    [Continuous Integration with Tekton Guide](/guides/continuous-integration-tekton)
+    different build engines, please see [Continuous Integration with Jenkins Guide](/tools/jenkins) and
+    [Continuous Integration with Tekton Guide](/tools/tekton)
 
     </InlineNotification>
 
@@ -266,13 +266,15 @@ also ask for the branch that should be used for the pipeline.
   **Branch**: Press enter to use the default git branch, master, or type in another branch you want to register
 
 - When registering a `Tekton` pipeline, you will be prompted to select which pipeline you want to use for your application. If you selected Node based Code Pattern, select the Node pipeline. If you selected Java, select the Gradle pipeline.
-- For the first app, select the `igc-nodejs-v1-x-0` version of the pipeline. This will use the Node based CI pipeline with Tekton.
+- For the first app, select the `ibm-nodejs` version of the pipeline. This will use the Node based CI pipeline with Tekton.
     ```
     ? Select the Pipeline to use in the PipelineRun: (Use arrow keys)❯
-     igc-appmod-liberty-v1-2-0
-     igc-java-gradle-v1-2-0
-     igc-java-maven-v1-2-0
-     igc-nodejs-v1-2-0
+     ibm-appmod-liberty
+     ibm-golang
+     ibm-golang-edge
+     ibm-java-gradle
+     ibm-java-maven
+     ibm-nodejs
      Skip PipelineRun creation
     ```
 - It also gives you a option of vulnerability scanning the images.The scan is performed by the Vulnerability Advisor of IBM Image Registry. This scan is performed in "scan" stage of pipeline after "img-release" stage.
@@ -394,7 +396,7 @@ open that URL in a web browser. Validate the application is working as expected.
 ### 11. Locate the app in the web console
 
 The build pipeline is configured to build the source code from the Git repository into a container image. This
-image is stored in the [Image Registry](/developer-intermediate/image-registry). After that, the image is deployed into the
+image is stored in the [Image Registry](/learning/intermediate). After that, the image is deployed into the
 same namespace/project within the development cluster where the pipeline ran and validated for its health. The steps
 below will walk through locating the installed application within the Web Console.
 
