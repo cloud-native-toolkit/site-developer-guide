@@ -83,7 +83,7 @@ The next step is to define the base url that will be used by the server.
 
   </ArtDirection>
 
-- Past the URL into the **Select Base URL** form and remove any trailing
+- Paste the URL into the **Select Base URL** form and remove any trailing
  context roots, similar to the one in this view.
 
   <ArtDirection>
@@ -126,7 +126,7 @@ The next step is to define the base url that will be used by the server.
 
 ### Allow Anonymous Access to Artifactory
 
-- Open the Artifactory dashboard from the [<Globals name="dashboard" />](/getting-started/dashboard) and login
+- Open the Artifactory dashboard from the [<Globals name="dashboard" />](/getting-started-day-1/dashboard) and login
 
 - Click on the **Settings** tab on the left menu (the one with the gear icon), and then select
  **Security**
@@ -136,7 +136,7 @@ The next step is to define the base url that will be used by the server.
 
 ### Obtain the encrypted password 
 
-To enable the CI pipelines ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.)
+To enable the CI pipelines ([Jenkins](/tools/jenkins), [Tekton](/tools/tekton), etc.)
 to store the Helm artifacts in the Artifactory repository, we need to obtain
 Artifactory's encrypted password and save it where the pipeline can access the password -- in the `artifactory-access`
 Kubernetes secret in the `tools` namespace in the Development Tools environment.
