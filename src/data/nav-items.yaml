@@ -127,6 +127,8 @@
 
 - title: Resources
   pages:
+    - title: Videos
+      path: /toolkit-resources/videos
     - title: Office Hours
       path: /toolkit-resources/office-hours
     - title: Resource Access Management
