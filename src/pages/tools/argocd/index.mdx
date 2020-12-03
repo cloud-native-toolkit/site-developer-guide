@@ -10,9 +10,9 @@ Use GitOps to continuously deliver application changes
 
 </PageDescription>
 
-[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, [GitOps](/getting-started-day-0/git-ops) [continuous delivery](/getting-started-day-2/continuous-delivery) 
-tool for Kubernetes. The deployment environment is a namespace in a container platform like <Globals name="kube" /> or <Globals name="ocp" />. 
-Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state. 
+[Argo CD](https://argoproj.github.io/argo-cd/) is a declarative, [GitOps](/getting-started-day-0/git-ops) [continuous delivery](/getting-started-day-2/continuous-delivery)
+tool for Kubernetes. The deployment environment is a namespace in a container platform like <Globals name="kube" /> or <Globals name="ocp" />.
+Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state.
 Argo CD is flexible in the structure of the application configuration represented in the Git repository.
 
 Argo CD supports defining Kubernetes manifests in a number of ways:
@@ -24,8 +24,8 @@ Argo CD supports defining Kubernetes manifests in a number of ways:
 - custom plugins
 
 Argo CD compares the actual state of the application in the cluster with the desired state defined in Git and determines if
-they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a 
-notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to 
+they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a
+notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to
 ensure they match.
 
 <InlineNotification>
@@ -43,24 +43,24 @@ Argo CD uses a number of terms to refer to the components
 
 - Application - A deployable unit
 
-    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image 
-    that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more 
+    In the context of the <Globals name="env" />, an application is one Helm chart that contains one container image
+    that was produced by one CI pipeline. While Helm charts and images could certainly be combined to make more
     sophisticated applications in more advanced scenarios, we will be using this simple definition here.
-    
+
 - Project - A collection of applications that make up a solution
 
 ### Set up the GitOps repo
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one 
-repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that 
-repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) 
-that makes up the project will be described in its own folder. The repository will also contain a branch for each 
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one
+repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that
+repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications)
+that makes up the project will be described in its own folder. The repository will also contain a branch for each
 destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 <InlineNotification>
 
 **Note:** There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git
-repository that is accessible from by the Argo CD instance.  The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate) 
+repository that is accessible from by the Argo CD instance.  The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
 used in the following steps is optional and provides some application templates to help simplify some configuration activities.
 
 </InlineNotification>
@@ -89,7 +89,7 @@ to that repository. As with other configuration within the pipeline, this is han
 
 - A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc).
 If you used the [IGC CLI](/getting-started/cli) to register the pipeline then this secret has already been created.
-- A secret named `gitops-repo` holds the url and branch for the gitops repository.
+- A config map named `gitops-repo` holds the url and branch for the gitops repository.
 
 Fortunately the [IGC CLI](/getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the
 command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops) section.
@@ -104,9 +104,9 @@ command as well as the alternative manual steps can be found in the [IGC CLI git
 
 **Note:**
 
-- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the 
+- For the secret to be available to the CI pipeline, the secret needs to be created in the same namespace where the
 pipeline is running.
-- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD 
+- The value provided for `branch` is the one the pipeline will use to when committing changes to trigger the CD
 pipeline.
 
 </InlineNotification>
@@ -156,23 +156,23 @@ on what can be done for applications that make up a project.
     ```shell script
     argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
     ```
-    
+
     where:
-    
+
     - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
     - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
     the username and password
-    
+
     The grpc url and credentials can be retrieved from the `igc credentials` command
 
 2. Create the project
-    
+
     ```shell script
     argocd proj create {PROJECT} --dest {CLUSTER_HOST},{NAMESPACE} --src {GIT_REPO}
     ```
-    
+
     where:
-    
+
     - `{PROJECT}` is the name you want to give to the project.
     - `{CLUSTER_HOST}` is the url for the cluster server to which the project applications can be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where Argo CD has been deployed. `*` can also be used to allow deployments to any server.
     - `{NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
@@ -180,7 +180,7 @@ on what can be done for applications that make up a project.
 
     **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destations and/or
     sources that should be configured for the project
-    
+
 </Tab>
 <Tab label="Argo CD custom resource">
 
@@ -200,9 +200,9 @@ on what can be done for applications that make up a project.
         - namespace: '*'
           server: https://kubernetes.default.svc
     ```
-   
+
    where:
-   
+
    - `{PROJECT NAME}` is the name of the project
 
 3. Apply the yaml to the cluster in the namespace where Argo CD has been deployed (e.g. `tools`)
@@ -246,13 +246,13 @@ connecting the config within the Git repo to the cluster and namespace.
     ```shell script
     argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
     ```
-    
+
     where:
-    
+
     - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
     - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
     the username and password
-    
+
     The grpc url and credentials can be retrieved from the `igc credentials` command
 
 2. Create an application
@@ -265,9 +265,9 @@ connecting the config within the Git repo to the cluster and namespace.
       --dest-namespace {NAMESPACE} \
       --dest-server {SERVER_URL}
     ```
-    
+
     where:
-    
+
     - `{APP_NAME}` is the name you want to give the application
     - `{PROJECT}` is the name of the project created above or "default"
     - `{GIT_REPO}` is the url of the git repository where the gitops config is be located
@@ -304,9 +304,9 @@ connecting the config within the Git repo to the cluster and namespace.
           prune: true
           selfHeal: true
     ```
-   
+
     where:
-   
+
     - `{APPLICATION NAME}` is the name of the application
     - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
     - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
@@ -327,12 +327,12 @@ connecting the config within the Git repo to the cluster and namespace.
 ### Managing secrets in Argo CD
 
 The following provides the steps to handle protected information in a GitOps repository using the
-[Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect). The plugin takes yaml 
+[Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect). The plugin takes yaml
 configuration as input, looks up the credentials in Key Protect, and generates a secret in the cluster from the results.
 
 <InlineNotification>
 
-**Note:** If Argo CD was installed via the Toolkit then the plugin should already be installed and ready to use. If not, the 
+**Note:** If Argo CD was installed via the Toolkit then the plugin should already be installed and ready to use. If not, the
 instructions for installing the plugin can be found in the [plugin documentation](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect).
 
 </InlineNotification>
@@ -346,8 +346,8 @@ those instructions you can find the information required for the subsequent step
 
 #### Create the secret configuration
 
-The input to the plugin is a directory that contains one or more yaml "secret templates". In this case the "secret template" provides the 
-structure of the desired secret with placeholders for the values that will be pulled from the key management system. 
+The input to the plugin is a directory that contains one or more yaml "secret templates". In this case the "secret template" provides the
+structure of the desired secret with placeholders for the values that will be pulled from the key management system.
 
 1. Create a directory to contain the secret configuration. The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops) repository has a template in `templates/secrets-plugin` that can be copied as a starting point
 
@@ -372,18 +372,18 @@ structure of the desired secret with placeholders for the values that will be pu
           b64value: dGVhbS1jYXA=
         - name: password
           keyId: 36397b07-d98d-4c0b-bd7a-d6c290163684
-    ``` 
-    
-    - The `metadata.annotations` value is optional. 
-    
+    ```
+
+    - The `metadata.annotations` value is optional.
+
         - `key-manager` - the only value supported currently is `key-protect`
         - `key-protect/instanceId` - the instance id of the key protect instance. If not provided then the `instance-id` value from the `key-protect-access` secret will be used.
         - `key-protect/region` - the region where the key protect instance has been provisioned. If not provided then the `region` value from the `key-protect-access` secret will be used.
-        
+
     - The `metadata.name` value given will be used as the name for the Secret that will be generated.
     - The information in `spec.labels` and `spec.annotations` will be copied over as the `labels` and `annotations` in the Secret that is generated
     - The `spec.values` section contains the information that should be provided in the `data` section of the generated Secret. There are three prossible ways the values can be provided:
-    
+
         - `value` - the actual value can be provided directly as clear text. This would be appropriate for information that is not sensitive but is required in the secret
         - `b64value` - a base64 encoded value can be provided to the secret. This can be used for large values that might present formatting issues or for information that is not sensitive but that might be obfuscated a bit (like a username)
         - `keyId` - the id (not the name) of the Standard Key that has been stored in Key Protect. The value stored in Key Protect can be anything
@@ -422,13 +422,13 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
     ```shell script
     argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
     ```
-    
+
     where:
-    
+
     - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
     - `--sso` is an optional flag used when SSO authentication is enabled. If not using SSO then you will be prompted for
     the username and password
-    
+
     The grpc url and credentials can be retrieved from the `igc credentials` command
 
 2. Create an application
@@ -442,9 +442,9 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
       --dest-server {SERVER_URL} \
       --config-management-plugin key-protect-secret
     ```
-    
+
     where:
-    
+
     - `{APP_NAME}` is the name you want to give the application
     - `{PROJECT}` is the name of the project created above or "default"
     - `{GIT_REPO}` is the url of the git repository where the gitops config is be located
@@ -480,9 +480,9 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
           prune: true
           selfHeal: true
     ```
-   
+
     where:
-   
+
     - `{APPLICATION NAME}` is the name of the application
     - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
     - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
@@ -512,23 +512,23 @@ as a deployment target:
     ```shell script
     argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
     ```
-    
+
     where:
-    
+
     - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
     - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
     the username and password
-    
+
     The grpc url and credentials can be retrieved from the `igc credentials` command
 
 2. Log into the target cluster from the command line
 
-3. Run the Argo CD command to list the available clusters 
+3. Run the Argo CD command to list the available clusters
 
     ```shell script
     argocd cluster add
     ```
-    
+
     The currently selected cluster will be the one with the asterisk next to it. Copy the cluster id from the table
 
 4. Add the cluster to Argo CD
@@ -536,9 +536,9 @@ as a deployment target:
     ```shell script
     argocd cluster add {CLUSTER ID}
     ```
-   
+
     where:
-    
+
     - `{CLUSTER ID}` is the id of the target cluster from the previous step
 
 5. Confirm the configuration by listing the known clusters
