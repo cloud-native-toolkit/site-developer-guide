@@ -67,7 +67,7 @@ used in the following steps is optional and provides some application templates 
 
 1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
 
-1. Clone the project to your machine
+1. Clone the project to your machine and navigate into the directory
 
 1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the testing environment)
 
@@ -75,11 +75,35 @@ used in the following steps is optional and provides some application templates 
     git checkout -b test
     ```
 
+1. Copy the helm chart template into application name folder
+
+    ```shell script
+    cp -r templates/project-config-helm {APPLICATION_NAME}
+    ```
+
 1. Push the test branch up to the repository
 
     ```shell script
     git push -u origin test
     ```
+
+1. Create a corresponding OCP namespace for `test`
+
+    ```shell script
+    igc namespace {TEST_NAMESPACE}
+    ```
+
+1. Grant access to service accounts in the new `test` namespace to pull the container image from the `dev` namespace
+
+    ```shell script
+    oc policy add-role-to-group system:image-puller system:serviceaccounts:{TEST_NAMESPACE} -n {DEV_NAMESPACE}
+    ```
+
+<InlineNotification>
+
+**Note:** Repeat the last 5 steps above for any other envioronments you wish to deploy to such as staging and production.
+
+</InlineNotification>
 
 ### Hook the CI pipeline to the CD pipeline
 
