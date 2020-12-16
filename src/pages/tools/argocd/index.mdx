@@ -434,7 +434,10 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
     - `path` - The path within the repository where the application config is located (should be the application name)
     - `destination cluster` - The cluster url for the deployment
     - `destination namespace` - The namespace where the application should be deployed
-    - `source dropdown` - Select `key-protect-plugin` from the source dropdown
+    - `Plugin` - In the last section of the UI select `Plugin` from the dropdown
+        ![Argo CD plugin](/images/argocd-plugin.png)
+    - `key-protect-secret` - Click in the name field and select `key-protect-secret` from the dropdown
+        ![Argo CD key protect secret](/images/argocd-key-protect-secret.png)
 
 1. Repeat that step for each secret application and environment
 
