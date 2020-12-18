@@ -51,11 +51,12 @@ oc logs job/ibm-toolkit -f -n default
     ```shell script
     curl -LO https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
     ```
-1. If you want a specific version of the manifest yaml file visit the [release page](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases) and download the corresponding manifest file `install-toolkit-yaml`
+1. If you want a specific version of the manifest yaml file visit the [release page](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases) and download the corresponding manifest file `install-ibm-toolkit.yaml
+`
 
 ### B. Customize Installation
 
-1.  Edit the file `install-toolkit-yaml` if you want to change any of the defaults, such as changing the tools namespace, adding a components from the catalog directory or removing a default component.
+1.  Edit the file `install-ibm-toolkit.yaml` if you want to change any of the defaults, such as changing the tools namespace, adding a components from the catalog directory or removing a default component.
 
 ### C. Run the installation using the OpenShift CLI
 
