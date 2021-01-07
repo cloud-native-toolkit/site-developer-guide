@@ -1,0 +1,143 @@
+---
+title: Developer Tools Setup
+---
+
+To enable the best working experience through the hands-on exercises, you
+need to select the environment you plan to use for development and the required tools for integration with IBM Cloud.
+
+- If you plan to use your desktop/laptop for hands-on exercises, follow
+ the instructions in the Desktop/Laptop tab. You will need a recent macOS or
+  Windows 10 operating system for this option.
+- If you cannot install tools on your desktop/laptop, follow the Cloud Shell
+ instructions.
+
+Once you have fulfilled these setup requirements you will be ready to
+go through the **Getting Started** steps.
+
+<Tabs>
+
+<Tab label="Cloud Shell">
+
+## Introduction to Cloud Shell
+
+IBM Cloud Shell is a free service that gives you complete control of your cloud resources, applications, and 
+infrastructure, from any web browser. It's instantly accessible from your free IBM Cloud account--no other installation 
+is needed.
+
+Features of IBM Cloud Shell include:
+
+- Preconfigured environment: IBM Cloud Shell provides a curated, cloud-based workspace with dozens of preinstalled tools 
+  and programming languages. It's automatically authenticated with your IBM Cloud account so you can start to develop 
+  immediately.
+
+- File upload/download: use this feature to import files to IBM Cloud Shell or pull-down data to your local machine.
+
+- Multiple sessions: use up to five shell sessions at a time to maximize your productivity. Mirror workflows on your 
+  local machine, or view logs on one session while editing a file in another.
+
+### Accessing the Cloud Shell
+
+- Open the IBM Cloud console (cloud.ibm.com) in your browser and log in if needed.
+
+- Invoke Cloud Shell by clicking on the button at the top, right-hand corner of the browser window.
+    ![Invoke Cloud Shell](./images/invokecloudshell.png)
+
+</Tab>
+
+<Tab label="Desktop/Laptop">
+
+## Additional tools installation
+
+There are some tools that are assumed to already be available within the shell environment. 
+
+### Docker client
+
+[Docker Desktop](https://www.docker.com/products/docker-desktop) is required for working with container images locally,
+running common tools and using the [Developer Tools Image](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/guides/tools-image).
+
+### Git client
+
+The [Git Client](https://git-scm.com/) needs to be installed in your development operating system to work with Git 
+repositories locally. It comes as standard for Mac OS.
+
+### Code editor/IDE
+
+You will be viewing and updating code artifacts. It is important to have a good code editor to make the process easier.
+If you don't already have an IDE available, [Visual Studio Code](https://code.visualstudio.com/download) is a popular 
+(and free) code editor to use. 
+
+You can also enable [launching VSCode from a terminal](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to
+make it easier to transition from the terminal to the IDE.
+
+</Tab>
+
+</Tabs>
+
+### Set up the shell environment
+
+We have provided a simplified installer that will install tools and configure the shell environment. The
+installer will first check if the required tool is available in the path. If not, the missing tool(s) will be
+installed into the `bin/` folder of the current user's home directory and the `PATH` variable will be updated in the
+`.bashrc` or `.zshrc` file to include that directory.
+
+The following tools are included in the shell installer:
+
+- IBM Cloud cli (ibmcloud)
+- ArgoCD cli (argocd)
+- Tekton cli (tkn)
+- IBM Cloud fast switching (icc)
+- kube-ps1 prompt
+- OpenShift cli (oc)
+- Kubernetes cli (kubectl)
+- JSON cli (jq)
+- IBM Garage Cloud CLI (igc)
+
+1. Set up the shell environment by running:
+    ```shell
+    curl -sL shell.cloudnativetoolkit.dev | sh - && . ~/.bashrc
+    ```
+
+2. If successful, you should see something like the following:
+    ```shell
+    Downloading scripts: https://github.com/ibm-garage-cloud/cloud-shell-commands/releases/download/0.3.5/assets.tar.gz
+    ** Installing argocd cli
+    ** Installing tkn cli
+    ** Installing kube-ps1
+    ** Installing icc
+    ** Installing Cloud-Native Toolkit cli
+    ```
+
+3. You can check the shell was installed correctly by checking the `oc` version:
+    ```shell
+    oc sync --version
+    ```
+
+### Configure git
+
+- Execute the following commands replacing the email and short name:
+
+    ```shell
+    $ git config --global user.email "<email>"
+    $ git config --global user.name "<short_name>"
+    ```
+
+### Configure IBM Cloud cluster fast-switching (icc)
+
+If you will be working with clusters and services hosted on IBM Cloud, it is highly recommended to use the provided `icc`
+command to simplify the process of switching between clusters.
+
+1. Get your IBM Cloud API Key for the account. If you don't have one then [create an API Key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key)
+2. Configure the `icc` command with your API Key with `icc --add-account`
+3. Get the cluster metadata for the account by running `icc --generate`
+4. List the available clusters with `icc`
+5. Optionally, give a short nickname for your cluster by running `icc --nickname`
+
+You can now log in to a cluster by running `icc [cluster name|cluster nickname]`
+
+<InlineNotification>
+
+If you have multiple accounts, the `icc --add-account` can be run multiple times to add the different API Keys. Also,
+`icc --generate` can be run multiple times to refresh the list of available clusters. Any nicknames that have been added
+will be preserved.
+
+</InlineNotification>

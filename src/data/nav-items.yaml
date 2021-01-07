@@ -12,8 +12,8 @@
       path: /getting-started
     - title: Prerequisites
       path: /getting-started/prereqs
-    - title: Developer Tools Setup
-      path: /getting-started/dev-tools-setup
+    - title: Developer Env Setup
+      path: /getting-started/dev-env-setup
     - title: CLI
       path: /getting-started/cli
     - title: Dev-Ops Concepts
