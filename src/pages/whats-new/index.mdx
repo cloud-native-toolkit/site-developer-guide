@@ -4,6 +4,45 @@ title: What's new?
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals'
 
+## Jan 6, 2020
+
+### [CLI](/getting-started/cli)
+
+[v1.11.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.11.1),
+[v1.11.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.11.0),
+[v1.10.2](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.10.2),
+[v1.10.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.10.1),
+[v1.10.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.10.0),
+[v1.9.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.9.0),
+[v1.8.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.8.1),
+[v1.8.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.8.0),
+[v1.7.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.7.1),
+[v1.7.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.7.0),
+[v1.6.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.6.0),
+[v1.5.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.5.0)
+
+Many usability changes, particularly for the `pipeline` command:
+
+__Reduces required permissions__
+
+- At the start of every command that needs access to the kube api, the cli checks that a connection is available. 
+  Previously it did that by trying to list all the pods in the cluster (e.g. the equivalent of `kubectl get pods -A`). 
+  Unfortunately, that command needs a great deal of access to succeed. The check was changed to run a command that requires
+  much less permission.
+- Before creating the webhook triggers, the pipeline command would read the Tekton version number from annotations on the
+  operator deployment in the `openshift-operators` namespace. This check required a great deal of permissions to be able
+  to read the deployment in that namespace. Instead, the `pipeline` command has been changed to resort to a brute force 
+  check - it assumes v0.6.0 and if it fails tries again with v0.4.0.
+
+__Usability updates for `pipeline` command__
+
+- Allows the repo url to be passed in so it is not necessary to clone the repository first
+- Creates a single event listener per namespace/project instead of a new event listener for each repo
+- Detects the runtime of the repository and filters the tekton pipelines based on the runtime
+- Reads params from tekton pipeline and prompts for values
+- The input arguments have been cleaned up to remove conflicts and to use values that make more sense for the
+  input parameters.
+
 ## Dec 11, 2020
 
 ### [IasC (IZero and Terraform modules)](/admin/terraform)
