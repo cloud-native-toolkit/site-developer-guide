@@ -553,24 +553,84 @@ The following steps will copy the `ConfigMaps` and `Secrets` from a template nam
 
 Connects a branch in a Git repo to a either a Jenkins or Tekton CI pipeline in the <Globals name="env" /> and triggers
 an initial build. A webhook is also created so that when a new commit is added to the branch, the pipeline is triggered
-to start the process to rebuild and redeploy the app using the new code. The Git repo needs to be hosted using a site
-that supports triggers such as GitHub or GitLab.
+to start the process to rebuild and redeploy the app using the new code. Currently, webhook creation is supported for 
+repositories hosted on Gitlab, Github, Github Enterprise, Bitbucket, and Gogs.
 
-This command requires that the terminal is already logged in to the cluster. It also requires that the terminal's
-current directory is the repository directory for your local copy of the Git repo. The command uses the local Git
-repo's configuration to find the server copy.
+This command can either be used to register a git repository that has previously been cloned to the local filesystem **OR**
+using the remote repo url. 
 
-If Jenkins or Tekton are not specified when the command is invoked then you will be prompted for which CI tool to use.
-The command will also prompt for the username and personal access token to access the Git repository, unless those are
-provided as command-line parameters. It will also prompt you for the branch to use to trigger builds; the default
-is the current branch.
+#### Repository location
 
-**Command flags**
-- `-n`: the deployment namespace; if not provided the namespace from the current context will be used
+The `pipeline` command supports registering a CI pipeline for a repository that has been cloned locally or using the 
+remote repository url.
+
+##### Local repository
+
+If you are registering a local repository then you must run the command from within the directory of your local clone of the Git repo. When
+registering a local repository, the pipeline will use the branch that is currently checked out.
+
+##### Remote repository
+
+To register a remote repository, pass the repo url as an argument to the `pipeline`
+command. For example:
+
+```shell
+oc pipeline "https://github.com/my-org/my-repo"
+```
+
+You can optionally provide the branch name with the url using a hash (`#`):
+
+```shell
+oc pipeline "https://github.com/my-org/my-repo#my-branch"
+```
+
+**Note:** When registering a remote git repo, if the branch is not provided then the default branch will be used.
+
+#### Pipeline type
+
+The `pipeline` command supports registering pipelines with either Tekton or Jenkins. The pipeline can be specified from
+the command-line with either the `--tekton` or `--jenkins` flags. If a flag is not provided then you will
+be prompted to select the pipeline.
+
+#### Git credentials
+
+The command will prompt for the username and password/personal access token to access the Git repository, unless those are
+already stored in a secret in the cluster namespace or provided as command-line parameters. The username and password can
+be provided with the `-u` and `-p` flags. If you want to change the credentials that have already been stored in the 
+cluster namespace, the `-g` argument an be provided and you will be prompted for the credentials.
+
+#### Tekton template pipeline
+
+If a Tekton pipeline will be used, a template pipeline must be selected for the new repository pipeline. The command 
+reads the template pipelines available in the template namespace. The template namespace can be provided with the `-t` argument 
+and will default to `tools` if not provided. The command will also filter the list of pipelines based on the runtime 
+determined from the given repository. 
+
+If there is more than one template pipeline available then you will be prompted to pick one. The template pipeline
+can also be provided on the command-line using the `--pipeline` argument. If the name doesn't match an available
+pipeline then you will be prompted to select one.
+
+#### Pipeline parameters
+
+Once the pipeline template is selected, you will be prompted to provide values for the defined pipeline parameters. The
+values can also be provided from the command-line using the `-p` argument. The name of the parameter is listed at the 
+beginning of the prompt message. Multiple parameters can be provided by repeating the `-p` argument. For example:
+
+```shell
+oc pipeline --tekton "https://github.com/my-org/my-repo" -p scan-image=false -p edge=false
+```
+
+#### Optional arguments
+
 - `-u`: the username for accessing the Git repo
-- `-p`: the personal access token for accessing the Git repo
+- `-P`: the password or personal access token for accessing the Git repo
+- `-g`: ignore existing `git-credentials` secret and prompt to update the values
+- `-p`: provide parameters for the pipeline
 - `--jenkins`: deploy using a Jenkins pipeline
 - `--tekton`: deploy using a Tekton pipeline
+- `--pipeline`: the name of the Tekton pipeline
+- `-n`: the deployment namespace; if not provided the namespace from the current context will be used
+- `-t`: the template namespace; if not provided the value will default to `tools`
 
 **Usage**
 
@@ -579,13 +639,13 @@ is the current branch.
 Create a Jenkins pipeline in the current namespace and prompt for the Git credentials
 
 ```shell script
-igc pipeline --jenkins
+oc pipeline --jenkins
 ```
 
 Create a Tekton pipeline in the `my-dev` namespace, using the Git credentials `gituser` and `gitpat`
 
 ```shell script
-igc pipeline -n my-dev -u gituser -p gitpat --tekton
+oc pipeline -n my-dev -u gituser -P gitpat --tekton
 ```
 </Tab>
 <Tab label="Manual Steps for Tekton">
