@@ -24,8 +24,8 @@ Argo CD supports defining Kubernetes manifests in a number of ways:
 - custom plugins
 
 Argo CD compares the actual state of the application in the cluster with the desired state defined in Git and determines if
-they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a 
-notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to 
+they are out of sync. When it detects the environment is out of sync, Argo CD can be configured to either send out a
+notification to kick off a separate reconciliation process or Argo CD can automatically synchronize the environments to
 ensure they match.
 
 <InlineNotification>
@@ -65,7 +65,8 @@ used in the following steps is optional and provides some application templates 
 
 </InlineNotification>
 
-1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate)
+
+1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate).  **If you see a 404 error when you click on the link, you need to sign in to github.**
 
 1. Clone the project to your machine and navigate into the directory
 
@@ -81,9 +82,11 @@ used in the following steps is optional and provides some application templates 
     cp -r templates/project-config-helm {APPLICATION_NAME}
     ```
 
-1. Push the test branch up to the repository
+1. Commit the changes and push the test branch up to the repository
 
     ```shell script
+    git add .
+    git commit -m 'add helm chart template'
     git push -u origin test
     ```
 
@@ -351,12 +354,12 @@ connecting the config within the Git repo to the cluster and namespace.
 ### Managing secrets in Argo CD
 
 The following provides the steps to handle protected information in a GitOps repository using the
-[Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect). The plugin takes yaml 
+[Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect). The plugin takes yaml
 configuration as input, looks up the credentials in Key Protect, and generates a secret in the cluster from the results.
 
 <InlineNotification>
 
-**Note:** If Argo CD was installed via the Toolkit then the plugin should already be installed and ready to use. If not, the 
+**Note:** If Argo CD was installed via the Toolkit then the plugin should already be installed and ready to use. If not, the
 instructions for installing the plugin can be found in the [plugin documentation](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect).
 
 </InlineNotification>
@@ -370,8 +373,8 @@ those instructions you can find the information required for the subsequent step
 
 #### Create the secret configuration
 
-The input to the plugin is a directory that contains one or more yaml "secret templates". In this case the "secret template" provides the 
-structure of the desired secret with placeholders for the values that will be pulled from the key management system. 
+The input to the plugin is a directory that contains one or more yaml "secret templates". In this case the "secret template" provides the
+structure of the desired secret with placeholders for the values that will be pulled from the key management system.
 
 1. Create a directory to contain the secret configuration. The [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops) repository has a template in `templates/secrets-plugin` that can be copied as a starting point
 
@@ -396,18 +399,18 @@ structure of the desired secret with placeholders for the values that will be pu
           b64value: dGVhbS1jYXA=
         - name: password
           keyId: 36397b07-d98d-4c0b-bd7a-d6c290163684
-    ``` 
-    
-    - The `metadata.annotations` value is optional. 
-    
+    ```
+
+    - The `metadata.annotations` value is optional.
+
         - `key-manager` - the only value supported currently is `key-protect`
         - `key-protect/instanceId` - the instance id of the key protect instance. If not provided then the `instance-id` value from the `key-protect-access` secret will be used.
         - `key-protect/region` - the region where the key protect instance has been provisioned. If not provided then the `region` value from the `key-protect-access` secret will be used.
-        
+
     - The `metadata.name` value given will be used as the name for the Secret that will be generated.
     - The information in `spec.labels` and `spec.annotations` will be copied over as the `labels` and `annotations` in the Secret that is generated
     - The `spec.values` section contains the information that should be provided in the `data` section of the generated Secret. There are three prossible ways the values can be provided:
-    
+
         - `value` - the actual value can be provided directly as clear text. This would be appropriate for information that is not sensitive but is required in the secret
         - `b64value` - a base64 encoded value can be provided to the secret. This can be used for large values that might present formatting issues or for information that is not sensitive but that might be obfuscated a bit (like a username)
         - `keyId` - the id (not the name) of the Standard Key that has been stored in Key Protect. The value stored in Key Protect can be anything
@@ -449,13 +452,13 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
     ```shell script
     argocd login {GRPC_INGRESS_HOST} --grpc-web [--sso]
     ```
-    
+
     where:
-    
+
     - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
     - `--sso` is an optional flag used when SSO authentication is enabled. If not using SSO then you will be prompted for
     the username and password
-    
+
     The grpc url and credentials can be retrieved from the `igc credentials` command
 
 2. Create an application
@@ -469,9 +472,9 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
       --dest-server {SERVER_URL} \
       --config-management-plugin key-protect-secret
     ```
-    
+
     where:
-    
+
     - `{APP_NAME}` is the name you want to give the application
     - `{PROJECT}` is the name of the project created above or "default"
     - `{GIT_REPO}` is the url of the git repository where the gitops config is be located
@@ -507,9 +510,9 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
           prune: true
           selfHeal: true
     ```
-   
+
     where:
-   
+
     - `{APPLICATION NAME}` is the name of the application
     - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
     - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
