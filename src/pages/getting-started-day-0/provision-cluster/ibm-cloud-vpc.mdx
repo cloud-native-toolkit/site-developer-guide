@@ -1,14 +1,14 @@
 ---
-title: Install the toolkit on IBM Cloud VPC infrastructure
-tabs: ['Quick Install', 'IBM Cloud on VPC', 'IBM Cloud on Classic']
+title: Provision an IBM Cloud cluster 
+tabs: ['IBM Cloud VPC', 'IBM Cloud Classic', 'Multi-Cloud']
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 <PageDescription>
 
-Steps to prepare an environment using the <Globals name="shortName" /> for new <Globals name="ic" />-managed clusters running on VPC infrastructure or existing <Globals name="ic" />-managed
-clusters running on classic or VPC infrastructure.
+Steps to provision a new <Globals name="ic" />-managed cluster
+running on VPC infrastructure using the <Globals name="shortName" />.
 
 </PageDescription>
 
@@ -20,93 +20,34 @@ infrastructure](./ibm-cloud-on-classic)
 
 <Tab label="Private Catalog" open="true">
 
-One of the features of the IBM Cloud Catalog is support for private catalog tiles. These can
-contain custom Terraform definitions that can accelerate SRE teams in the execution of common
-and repetitive tasks. The <Globals name="shortName" /> tools installation can be configured as
-a private catalog tile. This is the recommended approach for using this asset multiple times.
-This asset enables the easy transition of a default cluster into a cluster that supports
-Cloud-Native CI/CD development tools.
-
-### A. Create the catalog
-
-<br></br>
-
-1. Log in to the <Globals name="ic" /> Console
-2. Click **Manage->Catalogs** from the top menu
-3. Click on **Create Catalog**
-4. In the `Create a catalog` dialog, provide the following values:
-    - **name:** the name of the catalog, for example `Team Catalog`
-    - **description:** (optional) a brief description of the purpose of the catalog
-    - **products:** select **Start with no products**
-    - **resource group:** click **Update** to change the default resource group for the catalog
-5. Click **Create** to complete the catalog creation
-
-### B. Register the <Globals name="shortName" /> tiles in the catalog
-
-<br></br>
-
 <InlineNotification>
 
-**Note:** The following instructions depend on the `jq` command. The information for installing
-`jq` can be found on the [<Globals name="shortName" /> prerequisites](/getting-started/prereqs) page
+These steps assume the private catalog has been created and populated with the <Globals name="shortName" /> tiles during 
+the [prepare the account](../prepare-account#3.-create-the-private-catalog) steps.
 
 </InlineNotification>
 
 <br />
 
-1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
-    ```shell script
-    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
-    curl -OL "https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
-    chmod +x create-catalog-offering.sh
-    ```
-
-2. Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the catalog that you created
-    ```shell script
-    ./create-catalog-offering.sh {API_KEY} "Team Catalog"
-    ```
-
-### C. Apply the tile
-
-<br />
-
-Once the tile has been installed it can be used repeatedly to set up clusters with
-the CNCF tools. Each time the tile is applied, a set of configuration variables are
-required.
-
 1. Log in to the <Globals name="ic" /> Console.
 2. Select **Catalog** from the top menu.
 3. From the side menu, select your catalog from the drop-down list (e.g. `Team Catalog`). (**IBM Cloud catalog** should be selected initially.)
 4. Click **Private** on the side menu to see the private catalog entries
-5. Click on the **Cloud-Native Toolkit** tile
+5. Click on the **220. Cloud-Native VPC cluster** tile
 6. Enter values for the variables list provided.
 
     | **Variable**          | **Description**                                                                               | **eg. Value**                 |
     |-----------------------|-----------------------------------------------------------------------------------------------|-------------------------------|
     | `ibmcloud_api_key`    | The API key from IBM Cloud Console that has ClusterAdmin access and supports service creation | `{guid API key from Console}` |
-    | `resource_group_name` | Existing resource group in the account where the cluster has been created                     | `dev-team-one`                |
-    | `region`              | The region where the cluster has been provisioned                                             | `us-east`, `eu-gb`, etc       |
-    | `cluster_exists`      | Flag indicating if the cluster already exists. (`false` means the cluster should be provisioned) | `true` or `false`          |
-    | `vpc_cluster`         | Flag indicating that the cluster has been built on VPC infrastructure                         | `true` or `false`             |
-    | `vpc_zone_names`      | A comma-separated list of the VPC zones that should be used for worker nodes. This value is requored if `cluster_exists` is set to `false` and `vpc_cluster` is set to `true` | `us-south-1` or `us-east-1,us-east-2` |
-    | `cluster_name`        | The name of the cluster (If `cluster_exists` is set to `true` then this name should match an existing cluster) | `dev-team-one-iks-117-vpc` |
-    | `cluster_type`        | The type of cluster into which the toolkit will be installed                                  | `kubernetes`, `ocp3`, `ocp4` or `ocp44` |
-    | `registry_namespace`  | The namespace that should be used in the IBM Container Registry. If not provided the value will default to the resource group name | `dev-team-one-registry-2020` |
-    | `provision_logdna`    | Flag indicating that a new instance of LogDNA should be provisioned                           | `true` or `false`          |
-    | `logdna_name`         | The name of the LogDNA instance (If `provision_logdna` is set to `false` this value is used by the scripts to bind the existing LogDNA instance to the cluster) | `cntk-showcase-logdna` |
-    | `provision_sysdig`    | Flag indicating that a new instance of Sysdig should be provisioned                           | `true` or `false`          |
-    | `sysdig_name`         | The name of the Sysdig instance (If `provision_sysdig` is set to `false` this value is used by the scripts to bind the existing Sysdig instance to the cluster) | `cntk-showcase-sysdig` |
-
-    <InlineNotification>
-
-    **Note:** Provisioning a new cluster using classic infrastructure is not supported with the tile install. In this case
-    you are recommended to either create the cluster using the <Globals name="ic" /> Console then use the tile
-    to install the Toolkit **OR** to install with one of the other methods.
-
-    </InlineNotification>
-
-<br />
-
+    | `resource_group_name` | The existing resource group in the account where the cluster will be created                  | `dev-team-one`                |
+    | `region`              | The region where the cluster will be provisioned.                                             | `us-east`, `eu-gb`, etc       |
+    | `cluster_name`        | The name of the cluster that will be provisioned.                                             | `dev-team-one-iks-117-vpc`    |
+    | `vpc_zone_names`      | A comma-separated list of the VPC zones that should be used for worker nodes.                 | `us-south-1` or `us-east-1,us-east-2` |
+    | `cluster_type`        | The type of cluster into which the toolkit will be installed. The default is `OpenShift 4.5`. | `kubernetes`, `ocp3`, `ocp4`, `ocp44`, or `ocp45` |
+    | `flavor`              | The flavor of machine that should be provisioned for each worker. Defaults to `mx2.4x32`.     | `mx2.4x32`          |
+    | `cluster_worker_count`| The number of worker nodes that should be provisioned for each zone. Defaults to `3`          | `3` |
+    | `cluster_provision_cos`| Flag indicating that a new Object Storage instance should be provisioned. Defaults to `true` | `true` or `false`          |
+    | `cos_name`            | The name of the Object Storage instance (If `cluster_provision_cose` is set to `true` this value is required | `cntk-showcase-cos` |
 
 7. Check the box to accept the **Apache 2** license for the tile.
 8. Click **Install** to start the install process
@@ -123,9 +64,9 @@ IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 
 <br />
 
-
 1. Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
-    ```shell script
+   
+    ```shell
     git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
     ```
 
@@ -134,12 +75,14 @@ IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 <br />
 
 1. In a terminal, change to the `ibm-garage-iteration-zero` cloned directory
-    ```shell script
+   
+    ```shell
     cd ibm-garage-iteration-zero
     ```
 
 2. Copy the `credentials.template` file to a file named `credentials.properties`
-    ```shell script
+   
+    ```shell
     cp credentials.template credentials.properties
     ```
 
@@ -148,7 +91,7 @@ IBM Cloud Private Catalog Tile. The progress can be reviewed from the
 
 3. Update the value for the `ibmcloud.api.key` property in `credentials.properties` with your <Globals name="ic" /> API key
 
-    **Note:** The API key should have been set up during [plan installation](/getting-started-0/plan-installation/ibm-cloud).
+    **Note:** The API key should have been set up during [plan installation](/getting-started-0/prepare-account).
 
 ### C. Configure the environment variables
 
@@ -163,22 +106,35 @@ the following table to determine which values should be used:
 | **Variable**          | **Required?** | **Description**                                                                     | **eg. Value**                 |
 |-----------------------|-----|-----------------------------------------------------------------------------------------------|-------------------------------|
 | `cluster_type`        | yes | The type of cluster into which the toolkit will be installed                                  | `kubernetes`, `ocp3`, `ocp4` or `ocp44` |
-| `cluster_exists`      | yes | Flag indicating if the cluster already exists. (`false` means the cluster should be provisioned) | `true` or `false`          |
-| `resource_group_name` | yes | Existing resource group in the account where the cluster has been created                     | `dev-team-one`                |
-| `vpc_cluster`         | yes | Flag indicating that the cluster has been built on VPC infrastructure. Defaults to `true`     | `true` or `false`             |
+| `cluster_exists`      | yes | Flag indicating if the cluster already exists. (`false` means the cluster should be provisioned) | `false`          |
+| `vpc_cluster`         | yes | Flag indicating that the cluster has been built on VPC infrastructure. Defaults to `true`     | `true`          |
 | `name_prefix`         | no  | The prefix that should be applied for any resources that are provisioned. Defaults to `{resource_group_name}` | `dev-one`     |
-| `region`              | no  | The region where the cluster has been/will be provisioned                                     | `us-east`, `eu-gb`, etc       |
-| `vpc_zone_names`      | no  | A comma-separated list of the VPC zones that should be used for worker nodes. This value is required if `cluster_exists` is set to `false` and `vpc_cluster` is set to `true` | `us-south-1` or `us-east-1,us-east-2` |
 | `cluster_name`        | no  | The name of the cluster (If `cluster_exists` is set to `true` then this name should match an existing cluster). Defaults to `{prefix_name}-cluster` or `{resource_group_name}-cluster` | `dev-team-one-iks-117-vpc` |
-| `registry_namespace`  | no  | The namespace that should be used in the IBM Container Registry. Defaults to `{resource_group_name}` | `dev-team-one-registry-2020` |
+| `resource_group_name` | yes | Existing resource group in the account where the cluster has been created                     | `dev-team-one`                |
+| `region`              | yes | The region where the cluster has been/will be provisioned                                     | `us-east`, `eu-gb`, etc       |
+| `vpc_zone_names`      | no  | A comma-separated list of the VPC zones that should be used for worker nodes. This value is required if `cluster_exists` is set to `false` and `vpc_cluster` is set to `true` | `us-south-1` or `us-east-1,us-east-2` |
 | `provision_logdna`    | no  | Flag indicating that a new instance of LogDNA should be provisioned. Defaults to `false`      | `true` or `false`          |
 | `logdna_name`         | no  | The name of the LogDNA instance (If `provision_logdna` is set to `false` this value is used by the scripts to bind the existing LogDNA instance to the cluster) | `cntk-showcase-logdna` |
+| `logdna_region`       | no  | The region where the existing LogDNA instance has been provisioned. If not provided will default to the cluster `region`. | `us-east` |
 | `provision_sysdig`    | no  | Flag indicating that a new instance of Sysdig should be provisioned. Defaults to `false`      | `true` or `false`          |
 | `sysdig_name`         | no  | The name of the Sysdig instance (If `provision_sysdig` is set to `false` this value is used by the scripts to bind the existing Sysdig instance to the cluster) | `cntk-showcase-sysdig` |
+| `sysdig_region`       | no  | The region where the existing Sysdig instance has been provisioned. If not provided will default to the cluster `region`. | `us-east` |
+| `cos_name`            | no  | The name of the Cloud Object Storage instance that will be used with the OCP cluster. | |
+| `registry_type`       | no  | The type of the Container Registry that will be used with the cluster. Valid values are `icr`, `ocp`, `other`, or `none`. | |
+| `registry_namespace`  | no  | The namespace that should be used in the IBM Container Registry. Defaults to `{resource_group_name}` | `dev-team-one-registry-2020` |
+| `registry_host`       | no  | The host name of the image registry (e.g. us.icr.io or quay.io). This value is only used if the registry_type is set to "other" | `quay.io` |
+| `registry_user`       | no  | The username needed to access the image registry. This value is only used if the registry_type is set to "other" | `{username}` |
+| `registry_password`   | no  | The password needed to access the image registry. This value is required if the registry_type is set to "other". | `{password}` |
+| `source_control_type` | no  | The type of source control system (github, gitlab, or none)                                                      | `github` |
+| `source_control_url`  | no  | The url to the source control system                                                                             | `https://github.com` |
 
 <br />
 
-Update `environment-ibmcloud.tfvars` with the appropriate values for your installation.
+Update `environment-ibmcloud.tfvars` with the appropriate values for your installation. Particularly, be sure to set the 
+following values in order to provision a VPC cluster:
+
+- `cluster_exists` to `false`
+- `vpc_cluster` to `true`
 
 ### D. (Optional) Customize the installed components
 
@@ -207,7 +163,8 @@ as desired.
 
 1. Open a terminal to the `ibm-garage-iteration-zero` directory
 2. Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image") from which the Terraform scripts will be run
-    ```shell script
+   
+    ```shell
     ./launch.sh
     ```
 
@@ -218,7 +175,7 @@ as desired.
 
 3. Apply the Terraform by running the provided `runTerraform.sh` script
 
-    ```shell script
+    ```shell
     ./runTerraform.sh
     ```
 
@@ -226,12 +183,9 @@ as desired.
     stages defined in the `terraform/stages` to build the Terraform workspace. Along the way it
     will prompt for a couple pieces of information.
 
-    1. Type of installation: `ibmcloud` or `ocp`
-
-        There are two major paths to installing with the Toolkit. In this case, we are installing
-        into an <Globals name="ic" />-managed environment so we will select `ibmcloud`.
-
-        This prompt can be skipped by providing `--ibmcloud` as an argument to `./runTerraform.sh`
+    1. Type of installation: `cluster`
+    
+        This prompt can be skipped by providing `--cluster` as an argument to `./runTerraform.sh`
 
     2. Handling of an old workspace (if applicable): `keep` or `delete`
 
@@ -256,11 +210,6 @@ as desired.
 
 </Tabs>
 
-## Post-installation steps
-
-Once the Terraform has completed, walk through the [post installation steps](/getting-started-day-0/post-installation) to
-explore and verify the environment.
-
 ## Troubleshooting
 
 If you find that the Terraform provisioning has failed, for Private Catalog delete the workspace and for Iteration Zero  try re-running the `runTerraform.sh` script again.
@@ -270,6 +219,7 @@ If you find that some of the services have failed to create in the time allocate
 
 1. Manually delete the service instances in your resource group
 3. Re-run the `runTerraform.sh` script with the `--delete` argument to clean up the state
-    ```shell script
+   
+    ```shell
     ./runTerraform.sh --delete
     ```

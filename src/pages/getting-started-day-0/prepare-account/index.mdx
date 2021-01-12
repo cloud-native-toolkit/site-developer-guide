@@ -1,6 +1,5 @@
 ---
-title: Installation Planning
-tabs: ['IBM Cloud', 'Multi-Cloud']
+title: Prepare the IBM Cloud account
 ---
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
@@ -10,6 +9,9 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 Prepare the <Globals name="ic" /> account for an installation of <Globals name="shortName" /> <Globals name="env" />
 
 </PageDescription>
+
+**Note:** If you will be hosting the <Globals name="shortName" /> outside of <Globals name="ic" /> then you can jump
+to [install the toolkit](install-toolkit/quick-install).
 
 ## 1. Set up account managers access group
 
@@ -149,7 +151,7 @@ example, we give our resource groups names like `mooc-team-one`, `garage-dev-too
 
 </InlineNotification>
 
-### C. Create an <Globals name="ic" /> API Key
+### D. Create an <Globals name="ic" /> API Key
 
 An API Key is used to authenticate to the <Globals name="ic" /> APIs. It is specific to a user within a particular 
 account, meaning you need a different API key for each account you will be accessing. 
@@ -162,7 +164,7 @@ account.
 [Create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key) and 
 download each key to a file. Be sure to include a descriptive name of the APIKey.
 
-### D. Attach the <Globals name="ic" /> API Key to the resource group
+### E. Attach the <Globals name="ic" /> API Key to the resource group
 
 To create resources in the resource group, the account will need API keys for the container service 
 to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). 
@@ -178,7 +180,7 @@ The API key is needed for each region and resource group. Use the API key from t
     ```
 3. The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`; the description specifies the resource group and region
 
-### E. Create access groups for the resource group
+### F. Create access groups for the resource group
 
 For each resource group, create an access group for `environment administrators` and `environment users`. The access 
 group can be configured manually or with a script provided in the `ibm-cloud-iteration-zero` repository.
@@ -216,20 +218,48 @@ The script adds policies that allow the user to use resources to the resource gr
 - Access to the image registry
 - Access to each of the services in the resource group
 
-### F. (Optional) Create the cluster
+## 3. Create the Private Catalog
 
-The Toolkit install scripts can provision a cluster during the install process. However, if the user running the 
-install scripts doesn't have permission to create the cluster or if you just want to separate the process of provisioning
-the cluster and installing the tools then the cluster can be created in advance.
+### A. Create the catalog
 
-The process supports either a Kubernetes cluster or Red Hat OpenShift cluster. A typical cluster has 3 nodes, each 
-with 8 vCPUs and 32GB RAM.
+1. Log in to the <Globals name="ic" /> Console
+2. Click **Manage->Catalogs** from the top menu
+3. Click on **Create Catalog**
+4. In the `Create a catalog` dialog, provide the following values:
+   - **name:** the name of the catalog, for example `Team Catalog`
+   - **description:** (optional) a brief description of the purpose of the catalog
+   - **products:** select **Start with no products**
+   - **resource group:** click **Update** to change the default resource group for the catalog
+5. Click **Create** to complete the catalog creation
 
-## 3. (Optional) Set up Classic Infrastructure
+### B. Register the <Globals name="shortName" /> tiles in the catalog
+
+<InlineNotification>
+
+**Note:** The following instructions depend on the `jq` command. `jq` is included in the [development environment setup](../getting-started/dev-env-setup).
+
+</InlineNotification>
+
+1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
+   
+    ```shell
+    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
+    curl -OL "https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
+    chmod +x create-catalog-offering.sh
+    ```
+
+2. Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the catalog that you created in the previous step
+   
+    ```shell
+    ./create-catalog-offering.sh {API_KEY} "Team Catalog"
+    ```
+
+## 4. (Optional) Set up Classic Infrastructure
 
 Virtual Private Cloud infrastructure is recommended for use with clusters as it easier to manage with IAM and provides
 a superior environment. However, there are some situations where classic infrastructure is still required, particularly
-Cloud Paks. When classic infrastructure will be used then the following additional configuration is required.
+when using Cloud Paks due to some current storage limitations with the VPC infrastructure. When classic infrastructure
+will be used then the following additional configuration is required.
 
 ### A. Create a functional ID for Classic Infrastructure permissions
 
