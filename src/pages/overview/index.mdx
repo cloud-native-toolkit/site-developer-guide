@@ -173,13 +173,13 @@ The following best-of-breed open source software tools are installed in the clus
 
 | Capability                  | Tool           | Bitnami |Description |
 | --------------------------- |:-------------- | ------- |------------|
-| Continuous Integration      | [Jenkins CI](/tools/continuous-integration/)            |  Yes    | Jenkins is a common tool for Continuous Integration   |
-| Continuous Integration      | [Tekton CI](/tools/continuous-integration-tekton)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
-| API Contract Testing        | [Pact](/tools/contract-testing/)                        |         | Pact enables API contract testing |
-| Code Analysis               | [SonarQube](/tools/code-analysis)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
-| Container Image Registry    | [IBM Cloud Container Registry](/tools/image-registry)   |         | Stores container images to be deployed |
-| Artifact Management         | [Artifactory](/tools/artifact-management/)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
-| Continuous Delivery         | [ArgoCD](/tools/continuous-delivery/)                   |         | ArgoCD support Continuous Delivery with GitOps |
+| Continuous Integration      | [Jenkins CI](/tools/jenkins)            |  Yes    | Jenkins is a common tool for Continuous Integration   |
+| Continuous Integration      | [Tekton CI](/tools/tekton)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
+| API Contract Testing        | [Pact](/tools/contract-testing-with-pact)                        |         | Pact enables API contract testing |
+| Code Analysis               | [SonarQube](/tools/sonarqube)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
+| Container Image Registry    | [IBM Cloud Container Registry](/tools/ibm-cloud-container-registry)   |         | Stores container images to be deployed |
+| Artifact Management         | [Artifactory](/tools/artifactory)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
+| Continuous Delivery         | [ArgoCD](/tools/argocd)                   |         | ArgoCD support Continuous Delivery with GitOps |
 | Web IDE                     | [Code Ready Workspace](https://developers.redhat.com/products/codeready-workspaces/overview)              |         | IDE for editing and managing code in a web browser |
 
 #### Backend services
@@ -188,12 +188,12 @@ The following <Globals key="ic" /> services can be created and bound to the clus
 
 | Capability                | Service        |Description |
 | -----------------------   |:-------------- |------------|
-| Log Management            | [Log Analysis with LogDNA](/tools/log-management)  | Manage and analyze app logs  |
-| Monitoring                | [Cloud Monitoring with Sysdig](/tools/monitoring)  | Monitor app and platform resources |
+| Log Management            | [Log Analysis with LogDNA](/tools/logdna)  | Manage and analyze app logs  |
+| Monitoring                | [Cloud Monitoring with Sysdig](/tools/sysdig)  | Monitor app and platform resources |
 | User Authentication       | [App ID](/programming/security/)                    | Verify identities of clients accessing app end points |
 | Relational Data Storage   | [Databases For PostgreSQL](/programming/databases)  | Stores relational data structured as schemas for SQL querying |
 | Schemaless Data Storage   | [Cloudant](/programming/databases)                  | NoSQL database for JSON documents |
-| Binary Data Storage       | [Cloud Object Storage](/programming/databases)      | Storage service commonly used for binary content |
+| Binary Data Storage       | [Cloud Object Storage](https://cloud.ibm.com/objectstorage/create)      | Storage service commonly used for binary content |
 
 ## Getting Started
 

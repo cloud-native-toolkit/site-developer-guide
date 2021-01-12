@@ -18,6 +18,7 @@ module.exports = {
           baseUrl:
             'https://github.com/ibm-garage-cloud/ibm-garage-developer-guide',
           subDirectory: '/',
+          branch: 'main'
         },
       },
     },
