@@ -206,7 +206,7 @@ The script adds policies that allow the user to add resources to the resource gr
 1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like `<resource_group>-USER` (use all capital letters)
 2. Run the script `./terraform/scripts/acp-user.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
-    ./terraform/scripts/acp-admin.sh {ACCESS_GROUP} {resource group}
+    ./terraform/scripts/acp-user.sh {ACCESS_GROUP} {resource group}
     ```
 3. Add the users to the group
 
