@@ -31,7 +31,12 @@
       path: /workshop/cd
     - title: Microservices Inventory App
       path: /workshop/inventory
-
+    - title: App Modernization
+      path: /workshop/appmod
+    - title: DevOps with Operator Framework
+      path: /workshop/operators
+    - title: Cloud Pak for Integration
+      path: /workshop/cp4i
 - title: Day 0 - Install
   pages:
     - title: Overview
