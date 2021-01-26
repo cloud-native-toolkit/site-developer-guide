@@ -1,0 +1,40 @@
+---
+title: Setup Workshop Environment
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Provides the steps to install the <Globals name="longName"/> and setting up the  <Globals name="longName"/> Workshop hands on labs.
+
+</PageDescription>
+
+## 1. Create OpenShift Cluster
+
+- Create an OpenShift Cluster for example:
+  - Using 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
+  - Using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
+  - Internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
+
+## 2. Install IBM Cloud Native Toolkit
+
+- Use one of the install options for example the [Quick Install](https://cloudnativetoolkit.dev/getting-started-day-0/install-toolkit/quick-install)
+    ```bash
+    curl -sfL get.cloudnativetoolkit.dev | sh -
+    ```
+
+## 3. Setup IBM Cloud Native Toolkit Workshop
+
+- Install the foundation for the workshops
+    ```bash
+    curl -sfL workshop.cloudnativetoolkit.dev | sh -
+    ```
+The username and password for Git Admin is `toolkit` `toolkit`
+
+## 4. Setup CLI and Terminal Shell
+
+- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](https://cloudnativetoolkit.dev/getting-started/dev-env-setup) and [Toolkit CLI](https://cloudnativetoolkit.dev/getting-started/cli). Run the following command on Cloud, Linux or MacOS shell:
+    ```bash
+    curl -sL shell.cloudnativetoolkit.dev | sh - && . ~/.bashrc
+    ```

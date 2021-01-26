@@ -21,13 +21,15 @@
 
 - title: Workshop
   pages:
-    - title: 1. Workshop Environment
+    - title: Overview
       path: /workshop
-    - title: 2. CI Pipelines with Tekton
+    - title: Setup Workshop Environment
+      path: /workshop/setup
+    - title: CI Pipelines with Tekton
       path: /workshop/ci
-    - title: 3. CD GitOps with Argo
+    - title: CD GitOps with Argo
       path: /workshop/cd
-    - title: 4. Inventory App
+    - title: Microservices Inventory App
       path: /workshop/inventory
 
 - title: Day 0 - Install
