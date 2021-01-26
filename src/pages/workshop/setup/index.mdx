@@ -13,9 +13,10 @@ Provides the steps to install the <Globals name="longName"/> and setting up the 
 ## 1. Create OpenShift Cluster
 
 - Create an OpenShift Cluster for example:
-  - Using 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
-  - Using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
-  - Internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
+  - The 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
+  - Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](getting-started-day-0/provision-cluster/ibm-cloud-vpc)
+  - On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
+  - IBM internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
 
 ## 2. Install IBM Cloud Native Toolkit
 
@@ -32,9 +33,10 @@ Provides the steps to install the <Globals name="longName"/> and setting up the 
     ```
 The username and password for Git Admin is `toolkit` `toolkit`
 
-## 4. Setup CLI and Terminal Shell
+## 4. (Optional) Auto configure Terminal Shell
 
-- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](https://cloudnativetoolkit.dev/getting-started/dev-env-setup) and [Toolkit CLI](https://cloudnativetoolkit.dev/getting-started/cli). Run the following command on Cloud, Linux or MacOS shell:
+- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](https://cloudnativetoolkit.dev/getting-started/dev-env-setup) and [Toolkit CLI](https://cloudnativetoolkit.dev/getting-started/cli).
+  Run the following command on Cloud, Linux or MacOS shell:
     ```bash
     curl -sL shell.cloudnativetoolkit.dev | sh - && . ~/.bashrc
     ```
