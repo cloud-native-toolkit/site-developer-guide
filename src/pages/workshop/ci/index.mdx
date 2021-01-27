@@ -82,14 +82,14 @@ Deploy an Application using CI Pipelines with Tekton
     - Open Registry from Console Link
     - Open Artifactory from Console Link
 
-1. Select **Developer** perspective, select project `$TOOLKIT_PROJECT-dev` and then select **Topology** from the Console and verify the application running
+1. Select **Developer** perspective, select project `$TOOLKIT_PROJECT-qa` and then select **Topology** from the Console and verify the application running
 
 1. Open the application route url and try out the application using the swagger UI
 
 1. Make a change to the application in the git repository and see the pipeline running again from the Console.
     ```bash
-    git config --global user.email "${TOOLKIT_USERNAME}@example.com"
-    git config --global user.name "${TOOLKIT_USERNAME}"
+    git config --local user.email "${TOOLKIT_USERNAME}@example.com"
+    git config --local user.name "${TOOLKIT_USERNAME}"
     echo "A change to trigger a new PipelineRun $(date)" >> README.md
     git add .
     git commit -m "update readme"

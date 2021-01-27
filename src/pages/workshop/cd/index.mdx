@@ -56,8 +56,8 @@ Promote an Application using CD with GitOps and ArgoCD
 
 1. Promote the application from **QA** to **STAGING** by copying the app manifest files using git
     ```bash
-    git config --global user.email "${TOOLKIT_USERNAME}@example.com"
-    git config --global user.name "${TOOLKIT_USERNAME}"
+    git config --local user.email "${TOOLKIT_USERNAME}@example.com"
+    git config --local user.name "${TOOLKIT_USERNAME}"
 
     cp -a qa/${TOOLKIT_PROJECT}/ staging/${TOOLKIT_PROJECT}/
 
