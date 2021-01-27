@@ -30,7 +30,7 @@ Promote an Application using CD with GitOps and ArgoCD
     - Filter Applications by name `${TOOLKIT_PROJECT}-qa` (ie project1-qa)
     - Select the application `master-qa-${TOOLKIT_PROJECT}-app` (ie master-qa-project1-app)
 
-1. Verify Application is running in the QA namespace correspondin to your username `${TOOLKIT_PROJECT}-qa`
+1. Verify Application is running in the QA namespace corresponding to your username `${TOOLKIT_PROJECT}-qa`
     - Select **Developer** perspective, select project `${TOOLKIT_PROJECT}-qa` and then select **Topology** from the Console and see the application running
 
 1. Setup environment variable `GIT_OPS_URL` for the git url using the value from previous step or as following
@@ -73,7 +73,7 @@ Promote an Application using CD with GitOps and ArgoCD
     - Select the application `master-staging-${TOOLKIT_PROJECT}-app` (ie master-staging-project1-app)
     - Click **Refresh**
 
-1. Verify Application is running in the **STAGING** namespace correspondin to your username `${TOOLKIT_PROJECT}-qa`
+1. Verify Application is running in the **STAGING** namespace corresponding to your username `${TOOLKIT_PROJECT}-qa`
     - Select **Developer** perspective, select project `${TOOLKIT_PROJECT}-staging` and then select **Topology** from the Console and see the application running
 
 1. Propose a change for the Application in **STAGING**
@@ -103,12 +103,12 @@ Promote an Application using CD with GitOps and ArgoCD
     - Enter a Comment like `We need more instances business is growing Yay!`
     - click **Create Pull Request**
 
-1. Review the PR follow change management process established by your team.
+1. Review the PR follow the change management process established by your team.
     - Click Merge Pull Request
-    - Clikc Delete Branch
+    - Click Delete Branch
 
 1. Review that application is scales out
     - Review in ArgoCD UI, it takes about 4 minutes to sync, you can click **Refresh**
     - Review in OpenShift Console, click the Deployment circle details shows 2 Pods.
 
-1. Congradulations you finished this activity, continue with lab [Deploy a 3 tier Microservice using React, Node.js, and Java](./inventory)
+1. Congratulations you finished this activity, continue with the lab [Deploy a 3 tier Microservice using React, Node.js, and Java](./inventory)

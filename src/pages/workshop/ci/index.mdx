@@ -25,7 +25,7 @@ Deploy an Application using CI Pipelines with Tekton
     ```
 
 1. **(Skip if using KubeAdmin or IBM Cloud)** Login into OpenShift using `oc`
-    - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token, if using a cluster that was configure with the workshop scripts outside IBM Cloud then use `user1` or respective assigned username, and the password is `password`
+    - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token, if using a cluster that was configured with the workshop scripts outside IBM Cloud then use `user1` or respective assigned username, and the password is `password`
     ```bash
     oc login $OCP_URL -u $TOOLKIT_USERNAME -p password
     ```
@@ -74,7 +74,7 @@ Deploy an Application using CI Pipelines with Tekton
     - Hit Enter to enable image scanning
     - Open the url to see the pipeline running in the OpenShift Console
 
-1. Verify that Pipeline Run completeled succesfully
+1. Verify that Pipeline Run completed successfully
 
 1. Review the Pipeline Tasks/Stages
     - Test
@@ -103,13 +103,13 @@ Deploy an Application using CI Pipelines with Tekton
     - Review the recent commit
     - Review the webhook recent delivery
 
-1. Verify that a new Pipeline starts succesfully
+1. Verify that a new Pipeline starts successfully
 
 1. Verify that the App manifests are being updated in the `gitops` repo in the git account `toolkit` under the `qa` directory.
     - Open Git Ops from Console Link
     - Select toolkit/gitops git repository
 
-1. Congradulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](./cd)
+1. Congratulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](./cd)
 
 
 
