@@ -84,6 +84,10 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
     - The Java bin path is not located based on the root of the git repository and instead in `CustomerOrderServicesApp/target`
     - Every application would have custom values you can pass them to the pipeline as parameters.
 
+1. Verity that the Pipeline started using the URL printed by the command
+
+1. This is a good moment to take a break as the pipelines will take a few minutes.
+
 1. Verify that Pipeline Run completed successfully
 
 1. Review the Pipeline Tasks/Stages
@@ -100,7 +104,7 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 1. Register the Application in ArgoCD to deploy using GitOps
     - Select ArgoCD from the Console Link and login using OpenShift login
     - Click **NEW APP**
-    - Application Name: ${TOOLKIT_PROJECT}-websphere-liberty (ie project1-websphere-liberty)
+    - Application Name: ${TOOLKIT_PROJECT}-qa-websphere-liberty (ie project1-qa-websphere-liberty)
     - ArgoCD Project: `default`
     - Sync Policy: `Automatic` (Check prune resources and self heal)
     - Repository URL: `http://gogs.tools:3000/toolkit/gitops.git`
