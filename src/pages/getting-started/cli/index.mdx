@@ -9,6 +9,11 @@ The <Globals name="shortName" /> Command Line Interface (CLI)
 
 </PageDescription>
 
+**TLDR; Install the CLI**
+```shell script
+npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+````
+
 The <Globals name="longName" /> includes the IBM Garage for Cloud (IGC) Command Line Interface (CLI).
 The [<Globals name="igccli" />](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) provides a set of helpful
 utilities that can be invoked from the command line. It was created to automate and simplify complicated and repetitive
@@ -49,14 +54,14 @@ Once npm has been updated, rerun the command to install the cli.
 <br />
 
 - Install the CLI:
-    ```shell script
-    npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
-    ````
+```shell script
+npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+````
 
 - Verify the version:
-    ```shell script
-    igc --version
-    ```
+```shell script
+igc --version
+```
 
 *Note:* If you are adventurous, you can install the beta version of the cli that contains upcoming features with the
 following command (switch back at any time with the above command):
@@ -553,15 +558,15 @@ The following steps will copy the `ConfigMaps` and `Secrets` from a template nam
 
 Connects a branch in a Git repo to a either a Jenkins or Tekton CI pipeline in the <Globals name="env" /> and triggers
 an initial build. A webhook is also created so that when a new commit is added to the branch, the pipeline is triggered
-to start the process to rebuild and redeploy the app using the new code. Currently, webhook creation is supported for 
+to start the process to rebuild and redeploy the app using the new code. Currently, webhook creation is supported for
 repositories hosted on Gitlab, Github, Github Enterprise, Bitbucket, and Gogs.
 
 This command can either be used to register a git repository that has previously been cloned to the local filesystem **OR**
-using the remote repo url. 
+using the remote repo url.
 
 #### Repository location
 
-The `pipeline` command supports registering a CI pipeline for a repository that has been cloned locally or using the 
+The `pipeline` command supports registering a CI pipeline for a repository that has been cloned locally or using the
 remote repository url.
 
 ##### Local repository
@@ -596,15 +601,15 @@ be prompted to select the pipeline.
 
 The command will prompt for the username and password/personal access token to access the Git repository, unless those are
 already stored in a secret in the cluster namespace or provided as command-line parameters. The username and password can
-be provided with the `-u` and `-p` flags. If you want to change the credentials that have already been stored in the 
+be provided with the `-u` and `-p` flags. If you want to change the credentials that have already been stored in the
 cluster namespace, the `-g` argument an be provided and you will be prompted for the credentials.
 
 #### Tekton template pipeline
 
-If a Tekton pipeline will be used, a template pipeline must be selected for the new repository pipeline. The command 
-reads the template pipelines available in the template namespace. The template namespace can be provided with the `-t` argument 
-and will default to `tools` if not provided. The command will also filter the list of pipelines based on the runtime 
-determined from the given repository. 
+If a Tekton pipeline will be used, a template pipeline must be selected for the new repository pipeline. The command
+reads the template pipelines available in the template namespace. The template namespace can be provided with the `-t` argument
+and will default to `tools` if not provided. The command will also filter the list of pipelines based on the runtime
+determined from the given repository.
 
 If there is more than one template pipeline available then you will be prompted to pick one. The template pipeline
 can also be provided on the command-line using the `--pipeline` argument. If the name doesn't match an available
@@ -613,7 +618,7 @@ pipeline then you will be prompted to select one.
 #### Pipeline parameters
 
 Once the pipeline template is selected, you will be prompted to provide values for the defined pipeline parameters. The
-values can also be provided from the command-line using the `-p` argument. The name of the parameter is listed at the 
+values can also be provided from the command-line using the `-p` argument. The name of the parameter is listed at the
 beginning of the prompt message. Multiple parameters can be provided by repeating the `-p` argument. For example:
 
 ```shell
@@ -660,7 +665,7 @@ pipeline with your development cluster.
     ```shell script
     oc project {namespace}
     ```
-    
+
     **For Kubernetes:**
     ```shell script
     kubectl config set-context --current --namespace={namespace}
@@ -684,7 +689,7 @@ pipeline with your development cluster.
       jq --arg PIPELINE_NAME ${PIPELINE_NAME} '.metadata.name = $PIPELINE_NAME | del(.metadata.uid) | del(.metadata.selfLink) | del(.metadata.resourceVersion) | del(.metadata.namespace) | del(.metadata.creationTimestamp) | del(.metadata.generation) | del(.metadata.annotations."kubectl.kubernetes.io/last-applied-configuration")' | \
       kubectl apply -f -
     ```
-  
+
     where:
     - `TEMPLATE_NAME` is the name of the pipeline selected in the previous step
     - `PIPELINE_NAME` is the name of the pipeline for your project
@@ -698,7 +703,7 @@ pipeline will start when changes are pushed to the repository but before that, w
 - Kick off the pipeline using the Tekton CLI
 
     ```shell script
-    tkn pipeline start {PIPELINE_NAME} -s pipeline -p git-url={GIT_REPO} -p git-revision={GIT_BRANCH} 
+    tkn pipeline start {PIPELINE_NAME} -s pipeline -p git-url={GIT_REPO} -p git-revision={GIT_BRANCH}
     ```
 
 - To create a new PipelineRun with the same parameters from a previous PipelineRun you can do the following
