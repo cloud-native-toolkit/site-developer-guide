@@ -10,6 +10,7 @@ The <Globals name="shortName" /> Command Line Interface (CLI)
 </PageDescription>
 
 **TLDR; Install the CLI**
+
 ```shell script
 npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
 ````
@@ -54,19 +55,21 @@ Once npm has been updated, rerun the command to install the cli.
 <br />
 
 - Install the CLI:
-```shell script
-npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
-````
+  
+    ```shell
+    npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+    ````
 
 - Verify the version:
-```shell script
-igc --version
-```
+  
+    ```shell
+    igc --version
+    ```
 
 *Note:* If you are adventurous, you can install the beta version of the cli that contains upcoming features with the
 following command (switch back at any time with the above command):
 
-```shell script
+```shell
 npm i -g @ibmgaragecloud/cloud-native-toolkit-cli@beta
 ```
 
@@ -74,7 +77,7 @@ npm i -g @ibmgaragecloud/cloud-native-toolkit-cli@beta
 
 <AccordionItem title="Install the Cloud Shell">
 
-Follow the instructions in the [cloud-shell-commands readme](https://github.com/ibm-garage-cloud/cloud-shell-commands/blob/master/README.md) to install the Cloud Shell Commands.
+Follow the instructions in the [development environment setup](/getting-started/dev-env-setup) to install the shell commands.
 
 </AccordionItem>
 
@@ -261,8 +264,7 @@ igc console
 The following commands would have the same result on OpenShift:
 
 ```shell script
-HOST=$(oc get routes/console -n openshift-console -o jsonpath='{.spec.host}')
-open "https://$HOST"
+open $(oc whoami --show-console)
 ```
 </Tab>
 <Tab label="Kubernetes">
