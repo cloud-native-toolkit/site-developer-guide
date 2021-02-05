@@ -55,13 +55,13 @@ Once npm has been updated, rerun the command to install the cli.
 <br />
 
 - Install the CLI:
-  
+
     ```shell
     npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
     ````
 
 - Verify the version:
-  
+
     ```shell
     igc --version
     ```
@@ -95,33 +95,38 @@ IBM Garage Cloud Native Toolkit CLI (https://cloudnativetoolkit.dev)
 Usage: igc <command> [args]
 
 Commands:
-  igc console             Launch the IKS or OpenShift admin console
-  igc create-webhook      Create a git webhook for a given Jenkins pipeline
-  igc credentials         Lists the urls and credentials for the tools deployed
-                          to the cluster
-  igc dashboard           Open the Developer Dashboard in the default browser
-  igc enable              Enable the current repository with pipeline logic
-  igc endpoints           List the current ingress hosts for deployed apps in a
-                          namespace      [aliases: ingress, endpoint, ingresses]
-  igc generate-token      Generate a Jenkins api token
-  igc git-secret [name]   Create a kubernetes secret that contains the url,
-                          username, and personal access token for a git repo
-  igc git [remote]        Launches a browser to the git repo url specified by
-                          the origin remote. If remote not provided defaults to
-                          origin
-  igc gitops              Registers the git repository in the kubernetes cluster
-                          as the gitops repository for the given namespace
-  igc jenkins-auth        Generate a Jenkins api token and register it as
-                          kubernetes secret
-  igc sync [namespace]    Create a namespace (if it doesn't exist) and prepare
-                          it with the necessary configuration
+  igc console                  Launch the IKS or OpenShift admin console
+  igc create-webhook           Create a git webhook for a given Jenkins pipeline
+  igc credentials              Lists the urls and credentials for the tools
+                               deployed to the cluster
+  igc dashboard                Open the Developer Dashboard in the default
+                               browser
+  igc enable                   Enable the current repository with pipeline logic
+  igc endpoints                List the current ingress hosts for deployed apps
+                               in a namespace
+                                         [aliases: ingress, endpoint, ingresses]
+  igc git-secret [name]        Create a kubernetes secret that contains the url,
+                               username, and personal access token for a git
+                               repo
+  igc git [remote]             Launches a browser to the git repo url specified
+                               by the remote. If not provided remote defaults to
+                               origin
+  igc gitops                   Registers the git repository in the kubernetes
+                               cluster as the gitops repository for the given
+                               namespace
+  igc sync [namespace]         Create a namespace (if it does not exist) and
+                               prepare it with the necessary configuration
                                                    [aliases: project, namespace]
-  igc pipeline            Register a pipeline for the current code repository
-  igc tool-config [name]  Create the config map and secret for a tool configured
-                          in the environment
-  igc vlan                Print out the vlan values
-  igc yq <command>        lightweight yaml command-line processor that addresses
-                          deficiencies with the existing `yq` command
+  igc pull-secret [namespace]  Copy pull secrets into the provided project from
+                               the template namespace
+  igc pipeline [gitUrl]        Register a pipeline for the current code
+                               repository
+  igc tool-config [name]       Create the config map and secret for a tool
+                               configured in the environment
+  igc vlan                     Print out the vlan values
+  igc yq <command>             lightweight yaml command-line processor that
+                               addresses deficiencies with the existing `yq`
+                               command
 
 Options:
   --version  Show version number                                       [boolean]
@@ -448,11 +453,92 @@ kubectl get ingress -n tools
 ### sync
 
 Creates a Kubernetes namespace or OpenShift project (if it doesn't already exist) and sets it up so that the namespace
-can be used as a target for application deployments and/or to host the <Globals name="env" />. The command performs two
-major functions - 1) set up a service account in the namespace with the pull secret(s) for the IBM Container Registry
-and 2) synchronize the `ConfigMaps` and `Secrets` from a template namespace to create a "development" namespace. After
+can be used as a target for application deployments and/or to host the <Globals name="env" />.
+
+The command synchronize the `ConfigMaps` and `Secrets` from a template namespace (ie `tools`) to create a "development" namespace. After
 the command has run successfully it will set the provided namespace in the current context
 (e.g. equivalent to `oc project X`)
+
+This command copies the relevant `ConfigMaps` and `Secrets` into the namespace that are
+needed for development activities. Managing resources across namespaces (particularly `ConfigMaps` and `Secrets`) is a
+common challenge in Kubernetes environments. We have provided the command at this time to simplify the steps required
+to get everything ready. Ultimately, this problem seems like an ideal one for an Operator to solve and when one is
+available (either from the Toolkit or elsewhere) this command will be retired or transitioned.
+
+The command will setup the "development" namespace where DevOps pipelines can be run (e.g. myapp-dev)
+
+The "development" namespace will have the `ConfigMaps` and `Secrets` copied over.
+```
+Positionals:
+  namespace  The namespace that will be created and/or prepared
+
+Options:
+      --version            Show version number                         [boolean]
+      --help               Show help                                   [boolean]
+  -t, --templateNamespace  the template namespace that will be the source of the
+                           config                    [string] [default: "tools"]
+  -z, --serviceAccount     the service account that will be used within the
+                           namespace               [string] [default: "default"]
+      --verbose            flag to produce more verbose logging        [boolean]
+```
+
+**Usage**
+
+<Tabs>
+<Tab label="CLI">
+
+Create a `dev` namespace for development
+
+```shell script
+igc sync myapp-dev
+```
+</Tab>
+<Tab label="OpenShift">
+
+Create a `dev` namespace for development
+
+```shell script
+oc sync myapp-dev
+```
+</Tab>
+<Tab label="Kubernetes">
+
+Create a `dev` namespace for development
+
+```shell script
+kubectl sync myapp-dev
+```
+</Tab>
+
+<Tab label="Manual ConfigMap and Secret setup">
+
+The following steps will copy the `ConfigMaps` and `Secrets` from a template namespace to a target namespace:
+
+```shell script
+  export TEMPLATE_NAMESPACE="tools"
+  export NAMESPACE="NAMESPACE"
+
+  kubectl get configmap -l group=catalyst-tools -n ${TEMPLATE_NAMESPACE} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get configmap ${cm} --namespace ${TEMPLATE_NAMESPACE} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+
+  kubectl get secret -l group=catalyst-tools -n ${TEMPLATE_NAMESPACE} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
+    while read cm; do
+      kubectl get secret ${cm} --namespace ${TEMPLATE_NAMESPACE} --export -o yaml | \
+        kubectl apply --namespace $NAMESPACE -f -
+    done
+
+```
+</Tab>
+</Tabs>
+
+### pull-secret
+
+Copy pull secrets into the provided project from the template namespace for the IBM Container Registry.
+
+Set up a service account in the namespace with the pull secret(s) for the IBM Container Registry that are copied.
 
 The pull secret(s) are required in order for pods to pull images that are stored in the IBM Container Registry.
 When the cluster is created in IBM Cloud, a pull secret is provided in the `default` namespace. In order for a
@@ -461,53 +547,43 @@ needs to reference the pull secret directly or the service account used by the r
 the secret. The CLI copies the pull secret over and adds it to the service account so the pod can take either
 approach.
 
-The other function this command performs is to copy relevant `ConfigMaps` and `Secrets` into the namespace that are
-needed for development activities. Managing resources across namespaces (particularly `ConfigMaps` and `Secrets`) is a
-common challenge in Kubernetes environments. We have provided the command at this time to simplify the steps required
-to get everything ready. Ultimately, this problem seems like an ideal one for an Operator to solve and when one is
-available (either from the Toolkit or elsewhere) this command will be retired or transitioned.
+This command should be use to set up "release" namespaces where applications can be deployed (e.g. test, staging)
 
-There are two different types of namespaces that the command will set up:
+```
+Positionals:
+  namespace  The namespace into which the pull-secret(s) will be created
 
-- "release" namespace where applications can be deployed (e.g. test, staging)
-
--OR-
-
-- "development" namespace where DevOps pipelines can be run and where application components can be deployed
-(e.g. dev)
-
-Both "release" and "development" namespaces will have the pull secret(s) created. However, only the "development"
-namespace will also have the `ConfigMaps` and `Secrets` copied over.
-
-**Command flags**
-- `-t`: the template namespace that will be the source of the `config maps` and `secrets`; the default is `tools`
-- `-z`: the name of the service account; the default is `default`
-- `--dev`: flag indicating the namespace should be set for development
-- `--verbose`: flag indicating that the console output should persist on the screen
+Options:
+      --version            Show version number                         [boolean]
+      --help               Show help                                   [boolean]
+  -t, --templateNamespace  the template namespace that will be the source of the
+                           config                    [string] [default: "tools"]
+  -z, --serviceAccount     the service account that will be used within the
+                           namespace               [string] [default: "default"]
+      --dev                flag to indicate this is a development namespace and
+                           that development artifacts should be created[boolean]
+      --verbose            flag to produce more verbose logging        [boolean]
+```
 
 **Usage**
 
 <Tabs>
 <Tab label="CLI">
 
-Create a `test` namespace
+Copy the pull secret from `default` namespace into `myapp-test` namepsace and add to serviceAccount `default`
 
 ```shell script
-igc sync test
+igc pull-secret myapp-test -t default -z default
 ```
 
-Create a `dev` namespace for development
-
-```shell script
-igc sync dev --dev
-```
 </Tab>
+
 <Tab label="Manual pull secret setup">
 
 The following commands will copy the pull secret(s) from the `default` namespace and add them to the service account:
 
 ```shell script
-export NAMESPACE="NAMESPACE"
+export NAMESPACE="myapp-test"
 export SERVICE_ACCOUNT="default"
 
 if [[ $(kubectl get secrets -n "${NAMESPACE}" -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | grep icr | wc -l | xargs) -eq 0 ]]; then
@@ -532,29 +608,9 @@ else
 fi
 ```
 </Tab>
-<Tab label="Manual ConfigMap and Secret setup">
 
-The following steps will copy the `ConfigMaps` and `Secrets` from a template namespace to a target namespace:
-
-```shell script
-  export TEMPLATE_NAMESPACE="tools"
-  export NAMESPACE="NAMESPACE"
-
-  kubectl get configmap -l grouping=garage-cloud-native-toolkit -n ${TEMPLATE_NAMESPACE} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
-    while read cm; do
-      kubectl get configmap ${cm} --namespace ${TEMPLATE_NAMESPACE} --export -o yaml | \
-        kubectl apply --namespace $NAMESPACE -f -
-    done
-
-  kubectl get secret -l grouping=garage-cloud-native-toolkit -n ${TEMPLATE_NAMESPACE} -o jsonpath='{ range .items[*] }{ .metadata.name }{ "\n" }{ end }' | \
-    while read cm; do
-      kubectl get secret ${cm} --namespace ${TEMPLATE_NAMESPACE} --export -o yaml | \
-        kubectl apply --namespace $NAMESPACE -f -
-    done
-
-```
-</Tab>
 </Tabs>
+
 
 ### pipeline
 
@@ -1005,6 +1061,8 @@ TBD
 
 </Tab>
 </Tabs>
+
+
 
 ### enable
 
