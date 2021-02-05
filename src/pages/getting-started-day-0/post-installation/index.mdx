@@ -129,14 +129,14 @@ the tools are installed.
 1. Log into the cluster from the command-line
 2. Run the [<Globals name="igccli" />](/getting-started/cli) `sync` command to create the namespace/project
     ```shell script
-    oc sync --dev {project}
+    oc sync {project}
     ```
 
 ### Setup a GitOps repo
 
-1. Follow the steps to [create a GitOps repo](/tools/continuous-delivery#set-up-the-gitops-repo).
-2. Follow the steps to [add configuration for the CI pipeline](/tools/continuous-delivery#hook-the-ci-pipeline-to-the-cd-pipeline), using
-the namespace created in the [previous step](#create-a-ci-namespaceproject).
+1. Follow the steps to [create a GitOps repo](/tools/argocd#set-up-the-gitops-repo).
+2. Follow the steps to [add configuration for the CI pipeline](/tools/argocd#hook-the-ci-pipeline-to-the-cd-pipeline), using
+the namespace created in the previous step.
 
 ### Test the pipeline
 
