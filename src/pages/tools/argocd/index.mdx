@@ -80,6 +80,13 @@ used in the following steps is optional and provides some application templates 
     cd ${GIT_DIRECTORY}
     ```
 
+1. Create and push test branch
+
+    ```shell script
+    git checkout -b test
+    git push -u origin test
+    ```
+
 ### Hook the CI pipeline to the CD pipeline
 
 The last stage in the CI pipeline updates a GitOps repository with the updated application metadata from the build. In
