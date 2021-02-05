@@ -200,11 +200,6 @@ for the GitOps repo you just created. For `HTTPS` you can use the access token y
 
 ### Create a project in Argo CD
 
-<InlineNotification kind="warning">
-**Note:** Before continuing to setup ArgoCD, please verify that the CI Pipeline run created the directory for the application on the gitops git repository
-and the directory container the helm related files including `requirements.yaml`
-</InlineNotification>
-
 In Argo CD terms, each deployable component is an application and applications are grouped into projects. Projects are not
 required for Argo CD to be able to deploy applications, but it helps to organize applications and provide some restrictions
 on what can be done for applications that make up a project.
@@ -303,6 +298,11 @@ on what can be done for applications that make up a project.
 </Tabs>
 
 ### Add an application in Argo CD for each application component
+
+<InlineNotification kind="warning">
+**Note:** Before continuing to setup ArgoCD, please verify that the CI Pipeline run created the directory for the application on the gitops git repository
+and the directory container the helm related files including `requirements.yaml`
+</InlineNotification>
 
 The last step in the process is to define the application(s) within Argo CD that should be managed. This consists of
 connecting the config within the Git repo to the cluster and namespace.
