@@ -68,45 +68,17 @@ used in the following steps is optional and provides some application templates 
 
 1. Create a new repo from the [Argo CD <Globals name="template" />](https://github.com/IBM/template-argocd-gitops/generate).  **If you see a 404 error when you click on the link, you need to sign in to github.**
 
-1. Clone the project to your machine and navigate into the directory
-
-1. Create a branch for the environment (e.g. `test` to configure the values for deployment to the testing environment)
+1. Clone the project to your machine
 
     ```shell script
-    git checkout -b test
+    git clone ${GIT_URL_GITOPS}
     ```
 
-1. Copy the helm chart template into application name folder
+1. navigate into the directory
 
     ```shell script
-    cp -r templates/project-config-helm {APPLICATION_NAME}
+    cd ${GIT_DIRECTORY}
     ```
-
-1. Commit the changes and push the test branch up to the repository
-
-    ```shell script
-    git add .
-    git commit -m 'add helm chart template'
-    git push -u origin test
-    ```
-
-1. Create a corresponding OCP namespace for `test`
-
-    ```shell script
-    igc namespace {TEST_NAMESPACE}
-    ```
-
-1. Grant access to service accounts in the new `test` namespace to pull the container image from the `dev` namespace
-
-    ```shell script
-    oc policy add-role-to-group system:image-puller system:serviceaccounts:{TEST_NAMESPACE} -n {DEV_NAMESPACE}
-    ```
-
-<InlineNotification>
-
-**Note:** Repeat the last 5 steps above for any other envioronments you wish to deploy to such as staging and production.
-
-</InlineNotification>
 
 ### Hook the CI pipeline to the CD pipeline
 
@@ -120,6 +92,12 @@ If you used the [IGC CLI](/getting-started/cli) to register the pipeline then th
 
 Fortunately the [IGC CLI](/getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the
 command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops) section.
+
+1. Make sure to switch context to the project/namespace CI namespace
+
+    ```shell script
+    oc project ${DEV_NAMESPACE}
+    ```
 
 1. Run the `gitops` command to create the config map and secret in the CI namespace
 
@@ -142,7 +120,83 @@ As of v2.0.0 of the Tekton tasks and the Jenkins pipelines, the CI pipeline will
 for an application deployment if it doesn't already exist. This means, there is no other manual configuration required
 to set up the repository.
 
-### Create a project in Argo CD (Optional)
+Now run a new Pipeline and make sure a directory for the application is created on the gitops git repository.
+This is required before configuring ArgoCD.
+
+### Configure Release namespaces
+
+ArgoCD will deploy the application into the "releases" namespace such as ${TEST_NAMESPACE} or ${STAGING_NAMESPACE}
+
+1. Creat a release namespace where ArgoCD will deploy the application
+
+    ```shell script
+    oc new-project ${TEST_NAMESPACE}
+    ```
+
+The release namespaces need pull secrets for the application container images to be pull.
+
+<Tabs>
+<Tab label="OpenShift Image Registry">
+
+If you are using the OpenShift Image Registry then you need to give permission to the services accounts
+in the "release" namespaces to be able to pull images from the "development" namespaces.
+
+- Grant access to service accounts in the new `test` or `staging` namespace to pull the container image from the `dev` namespace
+
+  ```shell script
+  oc policy add-role-to-group system:image-puller system:serviceaccounts:{TEST_NAMESPACE} -n {DEV_NAMESPACE}
+  ```
+
+</Tab>
+
+<Tab label="IBM Container Registry">
+
+If you are using the IBM Container Registry then you need to copy the pull secret `all-icr-io` from the `default` namespace
+and then add this secret to the service account used by your application (ie `default` service account)
+
+- Use the Toolkit CLI to copy the secret and setup the service account
+
+  ```shell script
+  igc pull-secret ${TEST_NAMESPACE} -t default -z default
+  ```
+
+</Tab>
+
+<Tab label="Other Container Registries">
+
+If you are using an external image registry from a 3rd party provider like quay.io or dockerhub.io then you need to create
+the pull secret of type "docker-registry" and add it to the service account. Check the OpenShift
+Documentation
+[Using pull secrets](https://docs.openshift.com/container-platform/4.6/openshift_images/managing_images/using-image-pull-secrets.html)
+
+</Tab>
+</Tabs>
+
+
+
+
+### Register the GitOps repo in ArgoCD
+
+Now that the repository has been created, we need to tell ArgoCD where it is.
+
+- Log into ArgoCD
+
+- Click on the gear icon on the left menu to access the Settings options
+
+    ![ArgoCD config](/images/argocd-config.png)
+
+- Select the `Repositories` option
+
+- Click either the `Connect Repo using HTTPS` or `Connect Repo using SSH` button at the top and provide the information
+for the GitOps repo you just created. For `HTTPS` you can use the access token you used when you ran `igc gitops`
+
+
+### Create a project in Argo CD
+
+<InlineNotification>
+**Note:** Before continuing to setup ArgoCD, please verify that the CI Pipeline run created the directory for the application on the gitops git repository
+and the directory container the helm related files including `requirements.yaml`
+</InlineNotification>
 
 In Argo CD terms, each deployable component is an application and applications are grouped into projects. Projects are not
 required for Argo CD to be able to deploy applications, but it helps to organize applications and provide some restrictions
@@ -167,13 +221,13 @@ on what can be done for applications that make up a project.
     - Description - A brief description of the project
     - Source - Press Add source and pick the Git repository from the list that was added previously
     - Destinations
-        - Add `https://kubernetes.default.svc` for the cluster url and `test` for the namespace
-        - Add `https://kubernetes.default.svc` for the cluster url and `staging` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `${TEST_NAMESPACE}` for the namespace
+        - Add `https://kubernetes.default.svc` for the cluster url and `${STAGING_NAMESPACE}` for the namespace
     - Press Create
 
     **Note:** Initially, the only cluster that is available is the one in which Argo CD is -
     `https://kubernetes.default.svc`. By adding the two destinations we have allowed the project to be deployed
-    to both the `test` and `staging` namespaces within the current cluster.
+    to both the `${TEST_NAMESPACE}` and `${STAGING_NAMESPACE}` namespaces within the current cluster.
 
 </Tab>
 <Tab label="Argo CD CLI">
@@ -195,14 +249,14 @@ on what can be done for applications that make up a project.
 2. Create the project
 
     ```shell script
-    argocd proj create {PROJECT} --dest {CLUSTER_HOST},{NAMESPACE} --src {GIT_REPO}
+    argocd proj create {PROJECT} --dest {CLUSTER_HOST},{TEST_NAMESPACE} --src {GIT_REPO}
     ```
 
     where:
 
     - `{PROJECT}` is the name you want to give to the project.
     - `{CLUSTER_HOST}` is the url for the cluster server to which the project applications can be deployed. Use `https://kubernetes.default.svc` to reference the same cluster where Argo CD has been deployed. `*` can also be used to allow deployments to any server.
-    - `{NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
+    - `{TEST_NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
     - `{GIT_REPO}` is the url of the git repository where the gitops config will be located or `*` if you want to allow any.
 
     **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destations and/or
@@ -254,14 +308,14 @@ connecting the config within the Git repo to the cluster and namespace.
 1. Press `New Application` and provide the following values:
 
     - `application name` - The name of the application. It is recommend to use the format of `{namespace}-{image name}`
-    - `project` - The project with which the application should be included
+    - `project` - The ArgoCD project with which the application should be included
     - `sync-policy` - The manner with which Argo CD will use to manage the deployed artifacts. `Automatic` is
     recommended
-    - `repository url` - The Git url where the configuration is stored
-    - `revision` - The branch where the configuration for this instance is stored
+    - `repository url` - The Git url where the configuration is stored (restricted to git urls configured in the Argo Project)
+    - `revision` - The Git branch where the configuration for this instance is stored
     - `path` - The path within the repository where the application config is located (should be the application name)
     - `destination cluster` - The cluster url for the deployment
-    - `destination namespace` - The namespace where the application should be deployed
+    - `destination namespace` - The namespace where the application should be deployed (restricted to namespaces configured in the Argo Project)
 
 1. Repeat that step for each application and each environment
 
