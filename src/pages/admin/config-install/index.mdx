@@ -23,7 +23,7 @@ The following post installation setup is required. To get the developers enabled
 - Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where the tools are installed. Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`, where `{ACCESS-GROUP}` is the name of the user group (i.e. `{resource_group}-USER`).
 - Perform the steps in [Configure Dashboard](/admin/config-dashboard) to add tiles and menu items for the tools that are external to the cluster: the Image Registry, GitHub, LogDNA, Sysdig, etc.
 - Check you log data if flowing into [LogDNA](/tools/log-management)
-- Complete the [setup of Sysdig](/admin/sysdig-setup) and [check the monitoring data](/tools/monitoring) is flowing
+- Complete the [setup of Sysdig](/admin/sysdig-setup) and [check the monitoring data](../tools/sysdig) is flowing
 
 - Managing development assets is an important part of any **SDLC**, The open
  source version of Artifactory has been installed into the cluster, This
