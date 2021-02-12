@@ -14,6 +14,17 @@ need to select the environment you plan to use for development and the required 
 Once you have fulfilled these setup requirements you will be ready to
 go through the **Getting Started** steps.
 
+## TL;DR
+
+Set up the shell environment by running:
+
+```shell
+curl -sL shell.cloudnativetoolkit.dev | sh -
+```
+
+Be sure to follow the instructions provided to enable the changes in the current terminal session. 
+
+
 <Tabs>
 
 <Tab label="Cloud Shell">
@@ -94,20 +105,33 @@ The following tools are included in the shell installer:
 
 1. Set up the shell environment by running:
     ```shell
-    curl -sL shell.cloudnativetoolkit.dev | sh - && . ~/.bashrc
+    curl -sL shell.cloudnativetoolkit.dev | sh -
     ```
 
 2. If successful, you should see something like the following:
-    ```shell
+    ```
     Downloading scripts: https://github.com/ibm-garage-cloud/cloud-shell-commands/releases/download/0.3.5/assets.tar.gz
     ** Installing argocd cli
     ** Installing tkn cli
     ** Installing kube-ps1
     ** Installing icc
     ** Installing Cloud-Native Toolkit cli
+   
+    kube-ps1 has been installed to display the current Kubernetes context and namespace in the prompt. It can be turned on and off with the following commands:
+
+      kubeon     - turns kube-ps1 on for the current session
+      kubeon -g  - turns kube-ps1 on globally
+      kubeoff    - turns kube-ps1 off for the current session
+      kubeoff -g - turns kube-ps1 off globally
+
+    Your shell configuration has been updated. Run the following to apply the changes to the current terminal:
+
+      source ~/.zshrc
     ```
 
-3. You can check the shell was installed correctly by checking the `oc` version:
+3. Follow the instruction given at the end of the output to enable the changes in the current terminal session.
+
+4. You can check the shell was installed correctly by checking the `oc sync` version:
     ```shell
     oc sync --version
     ```
