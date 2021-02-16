@@ -32,10 +32,10 @@ get it.
 ## (Optional) Create your operator
 
 These steps will walk you through building a simple operator following the Operator SDK quick-start guide. You can choose
-between <a href="https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/" target="_blank">Ansible</a> 
-<a href="https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/" target="_blank">Go</a>, or 
+between <a href="https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/" target="_blank">Ansible</a>
+<a href="https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/" target="_blank">Go</a>, or
 <a href="https://sdk.operatorframework.io/docs/building-operators/helm/quickstart/" target="_blank">Helm</a> quick start guides
-for the following example. 
+for the following example.
 
 <InlineNotification>
 
@@ -53,22 +53,7 @@ quick start guide below.
     mkdir memcached-operator
     cd memcached-operator
     ```
-
-2. Initialize the directory as a git repository
-
-    ```shell
-    git init
-    ```
-
-3. Create the README.md and the initial commit
-
-    ```shell
-    echo "# memcached operator" > README.md
-    git add .
-    git commit -m "Initial commit"
-    ```
-
-4. Initialize the operator
+1. Initialize the operator
 
     ```shell
     operator-sdk init --plugins=ansible --domain=example.com
@@ -77,9 +62,7 @@ quick start guide below.
     where:
     - `--plugins` can be either `ansible`, `go`, or `helm`. If `--plugins` is not provided then it defaults to `go`
     - `--domain` is the base domain name used for the Custom Resource Definition generated for the operator
-
-5. Create an API for the operator
-
+1. Create an API for the operator
     ```shell
     operator-sdk create api --group cache --version v1 --kind Memcached --generate-role
     ```
@@ -88,30 +71,32 @@ quick start guide below.
     - `--group` is the api group for the CRD
     - `--kind` is the resource kind for the CRD
     - `--version` is the resource version for the CRD
-
-6. Commit the changes to the local git repository
-
+1. Generate metadata for Operator bundle
     ```shell
-    git add .
-    git commit -m "Initial operator version"
+    make bundle
     ```
-
-7. Create a new git repository on GitHub and copy the url
-   
-8. Push the local git repository to the remote GitHub repository
-
+    Answer the interactive questions
+1. Create the README.md and initialize git repository
+    ```shell
+    echo "# memcached operator" > README.md
+    git init
+    git add .
+    git commit -m "Initial commit"
+    ```
+1. Create a new remote git repository on a git server such as GitHub and copy the url
+1. Push the local git repository to the remote GitHub repository
     ```shell
     git remote add origin ${GIT_URL}
     git push -u origin $(git rev-parse --abbrev-ref HEAD)
     ```
 
-At this point you have enough of a functioning operator to try out the Tekton operator pipeline. If you want to explore 
+At this point you have enough of a functioning operator to try out the Tekton operator pipeline. If you want to explore
 the operator you have created and/or enhance its capabilities, there are more detailed instructions on the [operator sdk](https://sdk.operatorframework.io/docs/building-operators/)
 page.
 
 ## Register the operator pipeline
 
-This step is similar to [deploying an application](../deploy-app). 
+This step is similar to [deploying an application](../deploy-app).
 
 ### 1. Log into your Development Cluster from the command line
 
@@ -174,7 +159,7 @@ oc sync ${OPERATOR_NAMESPACE}
 3. The CLI will attempt to determine the runtime of your repository. It should detect that it is an operator and prompt you to select `ibm-operator` pipeline or `ibm-operator-catalog` pipeline. Select `ibm-operator` pipeline.
 
 4. When registering a `Tekton` pipeline, the CLI also reads the available parameters from the pipeline and generates prompts for input. In this case, the option of scanning the built image for vulnerabilities is the only options. The scan is performed by the Vulnerability Advisor if you are using IBM Image Registry or by [Trivy](https://github.com/aquasecurity/trivy) if another image registry is used. This scan is performed in "scan" stage of pipeline after "img-release" stage.
-   
+
     ```shell
     ? scan-image: Enable the pipeline to scan the image for vulnerabilities?(Y/n)
     ```
@@ -215,9 +200,9 @@ The operator catalog repository is a simple repo used to keep track of the opera
 that will be packaged together in the catalog. Even though you may start with one operator, it
 is assumed that ultimately multiple operators will be managed together in one catalog.
 
-1. Open the [operator catalog template repository](https://github.com/ibm-garage-cloud/template-operator-catalog) and 
+1. Open the [operator catalog template repository](https://github.com/ibm-garage-cloud/template-operator-catalog) and
    create a repository for the operator catalog using the template
-   
+
 2. Copy the repository url
 
 3. Create/connect to the project for the operator development. This does not need to be the same one used for the operator build.
@@ -279,3 +264,4 @@ operator bundle that was created. This update will trigger the creation of a new
 
 6. Trigger the operator catalog pipeline build to register the catalog source in the GitOps repo
 
+7. Configure ArgoCD to deploy the `CatalogSource` into the namesapce `openshift-marketplace`
