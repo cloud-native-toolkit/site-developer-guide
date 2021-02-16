@@ -16,6 +16,8 @@
       path: /getting-started/dev-env-setup
     - title: CLI
       path: /getting-started/cli
+    - title: ICC
+      path: /getting-started/icc
     - title: Dev-Ops Concepts
       path: /getting-started/dev-ops
 
