@@ -40,11 +40,12 @@ it into your development cluster.
   <AnchorLink to="#4.-create-your-app-in-git">4. Create your app in Git</AnchorLink>
   <AnchorLink to="#5.-register-the-application-in-a-devops-pipeline">5. Register the application in a DevOps Pipeline</AnchorLink>
   <AnchorLink to="#6.-view-your-application-pipeline">6. View your application pipeline</AnchorLink>
-  <AnchorLink to="#7.-access-the-running-app">7. Access the running app</AnchorLink>
-  <AnchorLink to="#8.-locate-the-app-in-the-web-console">8. Locate the app in the Web Console</AnchorLink>
-  <AnchorLink to="#9.-clone-your-code">9. Clone your code</AnchorLink>
-  <AnchorLink to="#10.-run-the-application locally">10. Run the application locally</AnchorLink>
-  <AnchorLink to="#11.-test-the-webhook">11. Test the webhook</AnchorLink>
+  <AnchorLink to="#7.-view-your-application-artifacts">7. View your application artifacts</AnchorLink>
+  <AnchorLink to="#8.-access-the-running-app">8. Access the running app</AnchorLink>
+  <AnchorLink to="#9.-locate-the-app-in-the-web-console">9. Locate the app in the Web Console</AnchorLink>
+  <AnchorLink to="#10.-clone-your-code">10. Clone your code</AnchorLink>
+  <AnchorLink to="#11.-run-the-application locally">11. Run the application locally</AnchorLink>
+  <AnchorLink to="#12.-test-the-webhook">12. Test the webhook</AnchorLink>
 </AnchorLinks>
 
 ## Create an application
@@ -292,7 +293,25 @@ Wait for the pipeline stages to start building. Once the stages have completed, 
 
 </Accordion>
 
-### 7. Access the running app
+### 7. View your application artifacts
+
+The pipeline built two artifacts for deploying your app:
+- Container image -- The [image registry](/tools/ibm-cloud-container-registry) includes a container image with your app built in
+- Helm chart -- The [artifact repository](/tools/artifactory) includes a [Helm chart repository](https://helm.sh/docs/topics/chart_repository/) that includes a Helm chart for deploying your app
+
+Let's look at these artifacts in the Toolkit environment.
+
+The container image is stored in the IBM Cloud Container Registry:
+1. From the OpenShift console's tools menu or from the Developer Dashboard's tools page, select Image Registry.
+2. In the image regisry, you'll see the image the pipeline built for your app, such as `us.icr.io/isv-scenarios/stockbffnode-bw` with a different tag for each build.
+  ![Image Registry](./images/images-in-iccr.png)
+
+The Helm chart is stored in Artifactory:
+1. From the OpenShift console's tools menu or from the Developer Dashboard's tools page, select Artifactory.
+2. In the Artifactory console, select Artifactory > Artifacts > generic-local. You'll see a `isv-scenarios` folder with a different chart for each build, such as `generic-local/isv-scenarios/stockbffnode-bw-0.0.1.tgz`.
+  ![Helm chart repo](./images/charts-in-artifactory.png)
+
+### 8. Access the running app
 
 Once the pipeline has completed successfully, the app will be deployed into the namespace used when
 registering the pipeline. To validate the app is running follow these steps:
@@ -307,7 +326,7 @@ registering the pipeline. To validate the app is running follow these steps:
 
 2. From the endpoints listed, select the URL for the repo that was just deployed and press **Enter** to open that URL in a web browser. Validate the application is working as expected.
 
-### 8. Locate the app in the web console
+### 9. Locate the app in the web console
 
 The build pipeline is configured to build the source code from the Git repository into a container image. This
 image is stored in the [Image Registry](/learning/intermediate). After that, the image is deployed into the
@@ -370,7 +389,7 @@ Having reached this point, we recommend you repeat the process a few more
 
 ## Run the application locally
 
-### 9. Clone your code to you local machine
+### 10. Clone your code to you local machine
 
 1. Open a browser to the Git repository created in the previous step.
 
@@ -396,7 +415,7 @@ Having reached this point, we recommend you repeat the process a few more
     cd stockbffnode
     ```
 
-### 10. Run the application locally
+### 11. Run the application locally
 
 Most developers like to run the code natively in local development environment. To do so, follow the instructions listed in the **README.md** file to run the code locally.
 You may be required to install a specific runtime like **Java**, **Node** or **Go**.
@@ -453,7 +472,7 @@ You may be required to install a specific runtime like **Java**, **Node** or **G
 
 - You can now add new features and function from inside the Cloud Shell and experiment with your code before you push any changes back to git.
 
-### 11. Test the webhook
+### 12. Test the webhook
 
 1.  Go to your cloned git project and navigate to <i>chart/base</i> directory.
     
