@@ -28,7 +28,28 @@ If you have multiple clusters, especially in multiple accounts, ICC makes it eas
 
 To install ICC, perform [Developer Tools Setup](/getting-started/dev-env-setup) to install all of the CLIs including ICC.
 
-Once ICC is installed, you can view help for how to use it:
+### Install yq
+
+ICC (currently) requires `yq`, and it has to be v3 (v4 doesn't have the commands ICC needs). Check to see if `yq` is currently installed and if it's version 3:
+```shell
+$ which yq
+/usr/local/bin/yq
+$ yq -V
+yq version 3.3.2
+```
+
+If you don't have `yq` installed, follow either of these instructions:
+- Installing yq in [Installing Command-Line Tools > For macOS](https://docs.pivotal.io/scdf-k8s/1-1/installing-command-line-tools.html#macos)
+  - Download the [latest v3 build](https://github.com/mikefarah/yq/releases/tag/3.4.1)
+- Install [yq v3 using Homebrew](https://formulae.brew.sh/formula/yq@3)
+   ```shell
+   $ brew install yq@3
+   ```
+   And follow the instructions to add the install directory to your path.
+
+### ICC help
+
+Once ICC (and yq) is installed, you can view help for how to use it:
 ```shell
 icc --help
 Usage: icc [nickname] [--account {ACCOUNT_FILTER}] [--resourceGroup {RG_FILTER}] [--generate [{ACCOUNT_FILTER}]] [--nickname [{cluster name}]]
