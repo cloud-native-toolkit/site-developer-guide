@@ -1212,7 +1212,7 @@ Creates a kubernetes secret that contains the username and personal access token
 contains the url, host, org, repo, and branch for the git repository. The secret is always named `git-credentials` and the config map
 is named `gitops-repo`. The config map and secret will be created in the currently selected namespace/project,
 unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
-replaced/updated it won't be updated unless the `--replace` argument is passed.
+replaced/updated unless the `--replace` argument is passed.
 
 **Command flags**
 - `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
