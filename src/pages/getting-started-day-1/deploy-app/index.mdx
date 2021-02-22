@@ -12,22 +12,15 @@ Create a sample application and deploy it with a CI pipeline
 
 ## Overview
 
-The <Globals name="env" /> supports end-to-end development and deployment of an application. The instructions below
-will show you how to do it.
+The <Globals name="env" /> supports end-to-end development and deployment of an application. The instructions below will show you how to do it.
 
-You can create a new app using one of the [<Globals name="templates" />](/starterkits). These have been
-created to include all the key components, configuration, and frameworks to get you started on creating the code you
-need for your solutions. The approach for getting started is exactly the same for an environment based on
-**Kubernetes** or **Red Hat OpenShift**.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/czYQfvPTa7Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-**Note:** The instructions provided below lean heavily on the use of the <Globals name="igccli"/> to both show how the
-CLI works in context and to streamline the process (the reason for creating the CLI in the first place). However, the
-use of the CLI is in no way required to use the <Globals name="shortName"/>. If you would prefer to work through these
-instructions without the use of the CLI, we have provided the equivalent manual steps for each command on
-the [Cloud-Native Toolkit CLI](/getting-started/cli) page.
+You can create a new app using one of the [<Globals name="templates" />](/starterkits). These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for an environment based on **Kubernetes** or **Red Hat OpenShift**.
 
-This video demonstrates how to work through the steps to create an application and use a deployment pipeline to install
-it into your development cluster.
+**Note:** The instructions provided below lean heavily on the use of the <Globals name="igccli"/> to both show how the CLI works in context and to streamline the process (the reason for creating the CLI in the first place). However, the use of the CLI is in no way required to use the <Globals name="shortName"/>. If you would prefer to work through these instructions without the use of the CLI, we have provided the equivalent manual steps for each command on the [Cloud-Native Toolkit CLI](/getting-started/cli) page.
+
+This video demonstrates how to work through the steps to create an application and use a deployment pipeline to install it into your development cluster.
 
 <Video src="/videos/deployapp.m4v" type="video/m4v" poster="/images/poster.png"/>
 
@@ -77,20 +70,15 @@ oc console
 
 <InlineNotification kind="info">
 
-**NOTE**: If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](/getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster.
-The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding
+**NOTE**: If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](/getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster. The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding
 
 </InlineNotification>
 
 ### 2. Create the development namespace
 
-Before getting started, the development namespace/project needs to be created and prepared for the DevOps pipelines. 
-This is something that would typically happen once at the beginning of a project when a development team is formed and 
-assigned to the cluster. 
+Before getting started, the development namespace/project needs to be created and prepared for the DevOps pipelines. This is something that would typically happen once at the beginning of a project when a development team is formed and assigned to the cluster. 
 
-This step copies the common `secrets` and `configMaps` that contain the CI/CD configuration from the `tools` 
-namespace into the development namespace/project. This enables the pipelines to reference the values easily for your 
-project.
+This step copies the common `secrets` and `configMaps` that contain the CI/CD configuration from the `tools` namespace into the development namespace/project. This enables the pipelines to reference the values easily for your project.
 
 ```shell
 oc sync ${DEV_NAMESPACE}
@@ -98,12 +86,9 @@ oc sync ${DEV_NAMESPACE}
 
 ### 3. Open the Developer Dashboard
 
-The [Developer Dashboard](/getting-started-day-1/dashboard) makes it easy for you to navigate to the tools, including a
-section that allows you to select a set of preconfigured [<Globals name="templates" />](/starterkits/gitrepos) 
-that make seeding your development project very easy.
+The [Developer Dashboard](/getting-started-day-1/dashboard) makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [<Globals name="templates" />](/starterkits/gitrepos) that make seeding your development project very easy.
 
-Before starting, open a browser and make sure you are logged into [Github](https://github.com). There are two options
-for how to access the dashboard:
+Before starting, open a browser and make sure you are logged into [Github](https://github.com). There are two options for how to access the dashboard:
 
 <Tabs>
 <Tab label="OpenShift console">
@@ -126,12 +111,9 @@ oc dashboard
 
 <InlineNotification kind="warning">
 
-**Warning:** If you are developing on a shared education cluster, you need to make it easy to identify
-your app. Please suffix the app name with your initials `{app name}-{your initials}` (e.g.
-`stockbffnode-mjp`) and use the **Git Organization** for the shared environment.
+**Warning:** If you are developing on a shared education cluster, you need to make it easy to identify your app. Please suffix the app name with your initials `{app name}-{your initials}` (e.g. `stockbffnode-mjp`) and use the **Git Organization** for the shared environment.
 
-**Warning:** Your browser needs to be logged in to your GitHub account for a template to work. If the link from the
-tile displays the GitHub 404 page, log in and reload the page.
+**Warning:** Your browser needs to be logged in to your GitHub account for a template to work. If the link from the tile displays the GitHub 404 page, log in and reload the page.
 
 </InlineNotification>
 
@@ -139,9 +121,7 @@ tile displays the GitHub 404 page, log in and reload the page.
 
 2. Pick one of the templates that is a good architectural fit for your application and the language and framework that you prefer to work with. For your first application, select the **Typescript Microservice**. This also works well in the Cloud Shell.
 
-    Click on a <Globals name="template" /> **Tile** to create your app github repository from the
-    template repository selected. You can also click on the **Git Icon** to browse the source template
-    repository and click on the **Template** to create the template.
+    Click on a <Globals name="template" /> **Tile** to create your app github repository from the template repository selected. You can also click on the **Git Icon** to browse the source template repository and click on the **Template** to create the template.
 
 3. Complete the [GitHub create repository from template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) process.
 
@@ -163,10 +143,7 @@ tile displays the GitHub 404 page, log in and reload the page.
 
 <InlineNotification kind="info">
 
-We will be using the `pipeline` command of the IBM Garage Cloud cli to register the DevOps pipeline. The pipeline 
-command gives an option for both `Jenkins` and `Tekton`. For more information about working with the different build 
-engines, please see [Continuous Integration with Jenkins Guide](/tools/jenkins) and
-[Continuous Integration with Tekton Guide](/tools/tekton)
+We will be using the `pipeline` command of the IBM Garage Cloud cli to register the DevOps pipeline. The pipeline command gives an option for both `Jenkins` and `Tekton`. For more information about working with the different build engines, please see [Continuous Integration with Jenkins Guide](/tools/jenkins) and [Continuous Integration with Tekton Guide](/tools/tekton)
 
 </InlineNotification>
 
@@ -315,8 +292,7 @@ The Helm chart is stored in Artifactory:
 
 ### 8. Access the running app
 
-Once the pipeline has completed successfully, the app will be deployed into the namespace used when
-registering the pipeline. To validate the app is running follow these steps:
+Once the pipeline has completed successfully, the app will be deployed into the namespace used when registering the pipeline. To validate the app is running follow these steps:
 
 **Note:** Be sure the namespace context is set correctly before running the following commands
 
@@ -330,10 +306,7 @@ registering the pipeline. To validate the app is running follow these steps:
 
 ### 9. Locate the app in the web console
 
-The build pipeline is configured to build the source code from the Git repository into a container image. This
-image is stored in the [Image Registry](/learning/intermediate). After that, the image is deployed into the
-same namespace/project within the development cluster where the pipeline ran and validated for its health. The steps
-below will walk through locating the installed application within the Web Console.
+The build pipeline is configured to build the source code from the Git repository into a container image. This image is stored in the [Image Registry](/learning/intermediate). After that, the image is deployed into the same namespace/project within the development cluster where the pipeline ran and validated for its health. The steps below will walk through locating the installed application within the Web Console.
 
 <Tabs>
 <Tab label="OpenShift 4.x">
