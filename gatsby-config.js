@@ -2,8 +2,8 @@ const pathPrefix = process.env.PATH_PREFIX || '/';
 
 module.exports = {
   siteMetadata: {
-    title: 'IBM Cloud Native Toolkit',
-    description: 'Cloud Native Toolkit to enable development with IBM Cloud and Red Hat OpenShift',
+    title: 'Cloud-Native Toolkit',
+    description: 'Cloud-Native Toolkit to enable development with IBM Cloud and Red Hat OpenShift',
     keywords: 'ibm,garage,cloud,native,toolkit,devops,patterns,terraform,tekton,argodcd,sonarqube,artifactory,openshift,iks,kubernetes',
   },
   pathPrefix,
