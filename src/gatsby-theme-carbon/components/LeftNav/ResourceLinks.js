@@ -4,16 +4,20 @@ import ResourceLinks from 'gatsby-theme-carbon/src/components/LeftNav/ResourceLi
 const links = [
 
   {
+    title: 'Cloud-Native Github Org',
+    href: 'https://github.com/ibm-garage-cloud',
+  },
+  {
+    title: 'Cloud-Native Project Planning',
+    href: 'https://github.com/ibm-garage-cloud/planning/issues#zenhub',
+  },
+  {
     title: 'IBM Cloud',
     href: 'https://www.ibm.com/cloud',
   },
   {
-    title: 'Garage Method',
+    title: 'IBM Garage Method',
     href: 'https://www.ibm.com/garage/method',
-  },
-  {
-    title: 'Dev Tools Github Org',
-    href: 'https://github.com/ibm-garage-cloud',
   },
   {
     title: 'IBM Cloud Terraform Provider',
