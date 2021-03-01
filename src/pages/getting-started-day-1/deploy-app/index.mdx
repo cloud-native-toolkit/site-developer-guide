@@ -185,6 +185,31 @@ We will be using the `pipeline` command of the IBM Garage Cloud cli to register 
 
 10. When the command is completed it will present options for next steps. You can use the Tekton cli commands to inspect the pipeline run that has been created and tail the log and/or navigate to the provided url to see the pipeline running from the OpenShift console.
 
+<Accordion>
+<AccordionItem title="More information about Tekton custom resources">
+  
+A typical Tekton pipeline uses the following resources:
+
+- `Task`: consists of a number of steps that run to complete a determined task. Can be ran alone, or even be reusable across pipelines. Receives input parameters each run.
+- `Pipeline`: one or more tasks grouped together to run sequentially. Is often triggered by an event.
+
+When you run the `oc pipeline` command with Tekton, it creates a running instance of a `Pipeline`, which is called a `PipelineRun`. The `PipelineRun` runs instances of `Task` resources, which are each a separate `TaskRun`. You will check these in more detail in the next step.
+
+The definition of each of these resources is a Custom Resource Definition in the cluster, deployed under the `tekton.dev` group. You can find them in the cluster's administration panel, under `Administration` > `Custom Resource Definitions`, or by running `oc get crd | grep tekton.dev`.
+
+Executing the `oc pipeline` command will also setup a custom trigger for your pipeline, which will happen whenever a new commit is pushed to GitHub, via a webhook. To setup the trigger, Tekton uses the following resources:
+
+- `PipelineTemplate`: specifies how the `PipelineRun` will execute, receiving some parameters from the trigger action, and configuring how each pipeline parameter will be set;
+- `TriggerBinding`: will link an event to a `PipelineTemplate`, passing the parameters received from the event through;
+- `Trigger`: references to which `PipelineTemplate` the `TriggerBinding` is linked;
+- `EventListener`: a pod that stays listening for events and triggers a determined `Trigger` when the event occurs.
+
+These resource definitions can also be found in the cluster's Custom Resource Definitions, under the group `triggers.tekton.dev`.
+
+</AccordionItem>
+
+</Accordion>
+
 ### 6. View your application pipeline
 
 The steps to view your registered pipeline will vary based on type of pipeline (`Jenkins` or `Tekton`) and container platform version.
