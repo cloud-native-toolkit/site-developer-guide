@@ -37,7 +37,7 @@ All the common logging frameworks support the ability publish different types of
 
 - Add the following `debug` statement and `error` condition to the `greetings` implementation in your app.
 
-    ```typescript src=/src/services/hello-world.service
+    ```typescript
 
       async greeting(name: string = 'World'): Promise<string> {
         this.logger.info(`Generating greeting for ${name}`);
@@ -65,7 +65,7 @@ Now that we have introduced some debug messages, let's adjust the log level for 
 
 - To add `LOG_LEVEL` settings to you app, edit the `deployment.yaml` in your `chart` folder and add the following `debug` value to the `LOG_LEVEL` env property
 
-    ```yaml src=/chart/template-node-typescript/templates/deployment.yaml
+    ```yaml
     -env:
         name: LOG_LEVEL
         value: debug

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const globals = {};
-globals.longName   = "IBM Cloud-Native Toolkit";
+globals.longName   = "Cloud-Native Toolkit";
 globals.shortName  = "Cloud-Native Toolkit";
 globals.tinyName   = "Toolkit";
 globals.env        = "environment";

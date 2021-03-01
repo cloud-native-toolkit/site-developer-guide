@@ -22,6 +22,12 @@ Cloud-Native CI/CD development tools.
 This installation method will only work on IBM Cloud. Use Iteration Zero for others.
 </InlineNotification>
 
+## Cloud-Native Toolkit: Tile Installation
+
+Walkthrough of the Cloud Native Toolkit installation on RedHat OpenShift using the Private Catalog on IBM Cloud.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H_DsaYXLBVc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### A. Create the catalog
 
 <br></br>
@@ -49,17 +55,18 @@ This installation method will only work on IBM Cloud. Use Iteration Zero for oth
 
 <br />
 
-1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
-    ```shell script
-    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
-    curl -OL "https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
-    chmod +x create-catalog-offering.sh
-    ```
+Run the following command to install the offering tiles into an existing catalog. You will be prompted for your catalog name
+and IBM Cloud API Key.
 
-2. Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the catalog that you created
-    ```shell script
-    ./create-catalog-offering.sh {API_KEY} "Team Catalog"
-    ```
+```shell
+bash -c "$(curl -Ls tiles.cloudnativetoolkit.dev)"
+```
+
+Alternatively, the values can be provided to the script via environment variables named `CATALOG_NAME` and `API_KEY`.
+
+```shell
+CATALOG_NAME="Team Catalog" API_KEY="xxxx" bash -c "$(curl -Ls tiles.cloudnativetoolkit.dev)"
+```
 
 ### C. Apply the tile
 
