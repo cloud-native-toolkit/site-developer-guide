@@ -16,7 +16,7 @@
       path: /getting-started/cli
     - title: Dev-Ops Concepts
       path: /getting-started/dev-ops
-      
+
 - title: Day 0 - Prepare
   pages:
     - title: Overview
@@ -124,6 +124,8 @@
       path: /learning/redhat-learning
     - title: Garage Method Development
       path: /learning/garage-development
+    - title: Integration Topics
+      path: /learning/cp4i      
 
 - title: Resources
   pages:
