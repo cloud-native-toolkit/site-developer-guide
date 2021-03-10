@@ -152,6 +152,8 @@
       path: /learning/redhat-learning
     - title: Garage Method Development
       path: /learning/garage-development
+    - title: Integration Topics
+      path: /learning/cp4i      
 
 - title: Resources
   pages:
