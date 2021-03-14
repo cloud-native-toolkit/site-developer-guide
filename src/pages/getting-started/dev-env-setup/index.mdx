@@ -20,9 +20,11 @@ Set up the shell environment by running:
 
 ```shell
 curl -sL shell.cloudnativetoolkit.dev | sh -
+source ~/.bashrc || source ~/.zshrc
+
 ```
 
-Be sure to follow the instructions provided to enable the changes in the current terminal session. 
+Be sure to follow the instructions provided to enable the changes in the current terminal session.
 
 
 <Tabs>
@@ -31,19 +33,19 @@ Be sure to follow the instructions provided to enable the changes in the current
 
 ## Introduction to Cloud Shell
 
-IBM Cloud Shell is a free service that gives you complete control of your cloud resources, applications, and 
-infrastructure, from any web browser. It's instantly accessible from your free IBM Cloud account--no other installation 
+IBM Cloud Shell is a free service that gives you complete control of your cloud resources, applications, and
+infrastructure, from any web browser. It's instantly accessible from your free IBM Cloud account--no other installation
 is needed.
 
 Features of IBM Cloud Shell include:
 
-- Preconfigured environment: IBM Cloud Shell provides a curated, cloud-based workspace with dozens of preinstalled tools 
-  and programming languages. It's automatically authenticated with your IBM Cloud account so you can start to develop 
+- Preconfigured environment: IBM Cloud Shell provides a curated, cloud-based workspace with dozens of preinstalled tools
+  and programming languages. It's automatically authenticated with your IBM Cloud account so you can start to develop
   immediately.
 
 - File upload/download: use this feature to import files to IBM Cloud Shell or pull-down data to your local machine.
 
-- Multiple sessions: use up to five shell sessions at a time to maximize your productivity. Mirror workflows on your 
+- Multiple sessions: use up to five shell sessions at a time to maximize your productivity. Mirror workflows on your
   local machine, or view logs on one session while editing a file in another.
 
 ### Accessing the Cloud Shell
@@ -59,7 +61,7 @@ Features of IBM Cloud Shell include:
 
 ## Additional tools installation
 
-There are some tools that are assumed to already be available within the shell environment. 
+There are some tools that are assumed to already be available within the shell environment.
 
 ### Docker client
 
@@ -72,8 +74,8 @@ The [Git Client](https://git-scm.com/) needs to be installed in your development
 ### Code editor/IDE
 
 You will be viewing and updating code artifacts. It is important to have a good code editor to make the process easier.
-If you don't already have an IDE available, [Visual Studio Code](https://code.visualstudio.com/download) is a popular 
-(and free) code editor to use. 
+If you don't already have an IDE available, [Visual Studio Code](https://code.visualstudio.com/download) is a popular
+(and free) code editor to use.
 
 You can also enable [launching VSCode from a terminal](https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line) to
 make it easier to transition from the terminal to the IDE.
@@ -104,6 +106,8 @@ The following tools are included in the shell installer:
 1. Set up the shell environment by running:
     ```shell
     curl -sL shell.cloudnativetoolkit.dev | sh -
+    source ~/.bashrc || source ~/.zshrc
+
     ```
 
 2. If successful, you should see something like the following:
@@ -114,7 +118,7 @@ The following tools are included in the shell installer:
     ** Installing kube-ps1
     ** Installing icc
     ** Installing Cloud-Native Toolkit cli
-   
+
     kube-ps1 has been installed to display the current Kubernetes context and namespace in the prompt. It can be turned on and off with the following commands:
 
       kubeon     - turns kube-ps1 on for the current session
