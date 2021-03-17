@@ -46,11 +46,14 @@ jobs:
           ignorePatterns: 'github,google,w3.ibm.com'
           recursiveLinks: false # Check all URLs on all reachable pages (could take a while)
       - name: Print the result
+        if: always()
         run: echo "${{steps.link-report.outputs.result}}"
       - name: Write the result to file
+        if: always()
         run: if [[ -n "${{steps.link-report.outputs.result}}" ]]; then echo "${{steps.link-report.outputs.result}}" > ./output.md; fi
       - name: Create Issue From File
         uses: peter-evans/create-issue-from-file@v2
+        if: always()
         with:
           title: Broken links
           content-filepath: ./output.md
