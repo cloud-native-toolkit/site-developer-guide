@@ -43,7 +43,7 @@ jobs:
           url: 'https://cloudnativetoolkit.dev'
           # optional:
           honorRobotExclusions: false
-          ignorePatterns: 'github,google'
+          ignorePatterns: 'github,google,w3.ibm.com'
           recursiveLinks: false # Check all URLs on all reachable pages (could take a while)
       - name: Print the result
         run: echo "${{steps.link-report.outputs.result}}"
