@@ -1,0 +1,6 @@
+node_modules/
+public/
+.idea/
+.cache/
+*.iml
+.DS_Store
