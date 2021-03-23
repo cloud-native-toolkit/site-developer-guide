@@ -1,4 +1,4 @@
-FROM node:14-stretch as builder
+FROM quay.io/ibmgaragecloud/node:lts-stretch as builder
 
 RUN apt-get update && apt-get -y install libjemalloc1
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.1
@@ -17,6 +17,6 @@ COPY --chown=1001:0 . .
 
 RUN npm ci && npm run clean && npm run build
 
-FROM bitnami/nginx
+FROM quay.io/bitnami/nginx
 
 COPY --from=builder /home/dev/app/public /app
