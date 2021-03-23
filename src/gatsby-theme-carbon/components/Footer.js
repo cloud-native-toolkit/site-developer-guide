@@ -52,7 +52,7 @@ const LicensingDisclaimer = () => (
 );
 
 const MyFooter = ({ Content, links, DisclaimerContent }) => {
-    const { firstCol, secondCol } = links;
+    const { firstCol } = links;
     const { site } = useStaticQuery(graphql`
     query {
       site {
