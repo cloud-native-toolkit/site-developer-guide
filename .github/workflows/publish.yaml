@@ -44,28 +44,7 @@ jobs:
         with:
           # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
           config-name: release-drafter.yaml
-          publish: false
+          publish: true
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Update package.json
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          npm version ${{ steps.create-release.outputs.tag_name }}
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: eregon/publish-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        with:
-          release_id: ${{ steps.create-release.outputs.id }}
