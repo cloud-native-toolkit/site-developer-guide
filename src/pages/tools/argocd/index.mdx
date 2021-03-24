@@ -417,19 +417,19 @@ connecting the config within the Git repo to the cluster and namespace.
 ### Managing secrets in Argo CD
 
 The following provides the steps to handle protected information in a GitOps repository using the
-[Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect). The plugin takes yaml
+[Argo CD Key Protect plugin](https://github.com/cloud-native-toolkit/argocd-plugin-key-protect). The plugin takes yaml
 configuration as input, looks up the credentials in Key Protect, and generates a secret in the cluster from the results.
 
 <InlineNotification>
 
 **Note:** If Argo CD was installed via the Toolkit then the plugin should already be installed and ready to use. If not, the
-instructions for installing the plugin can be found in the [plugin documentation](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect).
+instructions for installing the plugin can be found in the [plugin documentation](https://github.com/cloud-native-toolkit/argocd-plugin-key-protect).
 
 </InlineNotification>
 
 #### Prepare the Key Protect instance
 
-As the name suggests, the [Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect) leverages the
+As the name suggests, the [Argo CD Key Protect plugin](https://github.com/cloud-native-toolkit/argocd-plugin-key-protect) leverages the
 capabilities of the Key Protect service to manage the protected information. The details for setting up and
 managing the Key Protect instance can be found in [Secret management with Key Protect](/tools/secret-management-with-key-protect). From
 those instructions you can find the information required for the subsequent steps.

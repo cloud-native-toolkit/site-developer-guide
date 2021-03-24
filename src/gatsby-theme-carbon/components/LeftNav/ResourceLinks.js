@@ -5,11 +5,11 @@ const links = [
 
   {
     title: 'Cloud-Native Github Org',
-    href: 'https://github.com/ibm-garage-cloud',
+    href: 'https://github.com/cloud-native-toolkit',
   },
   {
     title: 'Cloud-Native Project Planning',
-    href: 'https://github.com/ibm-garage-cloud/planning/issues#zenhub',
+    href: 'https://github.com/cloud-native-toolkit/planning/issues#zenhub',
   },
   {
     title: 'IBM Cloud',

@@ -14,9 +14,9 @@ Steps to install the <Globals name="shortName" /> for running Openshift or Kuber
 
 ### A. Download the Iteration Zero scripts
 
-1. Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) Git repository to your local filesystem
+1. Clone the [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero) Git repository to your local filesystem
     ```shell script
-    git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+    git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
     ```
 
 ### B. Configure the credentials
@@ -122,7 +122,7 @@ in the stage variable list.
 
 The `terraform/stages/catalog` directory contains some optional
 stages that are prep-configured and can be dropped into the `terraform/stages` directory. Other
-modules are available from the [Garage Terraform Modules](https://github.com/ibm-garage-cloud/garage-terraform-modules)
+modules are available from the [Garage Terraform Modules](https://github.com/cloud-native-toolkit/garage-terraform-modules)
 catalog and can be added as stages to the directory as well. Since this is Terraform,
 any other Terraform scripts and modules can be added to the `terraform/stages` directory
 as desired.
@@ -154,7 +154,7 @@ in the stage variable list.
 
 The `terraform/stages-ocp4/catalog` directory contains some optional
 stages that are prep-configured and can be dropped into the `terraform/stages-ocp4` directory. Other
-modules are available from the [Garage Terraform Modules](https://github.com/ibm-garage-cloud/garage-terraform-modules)
+modules are available from the [Garage Terraform Modules](https://github.com/cloud-native-toolkit/garage-terraform-modules)
 catalog and can be added as stages to the directory as well. Since this is Terraform,
 any other Terraform scripts and modules can be added to the `terraform/stages-ocp4` directory
 as desired.
@@ -164,7 +164,7 @@ as desired.
 ### D. Run the installation
 
 1. Open a terminal to the `ibm-garage-iteration-zero` directory
-2. Launch a [Developer Tools Docker container](https://github.com/ibm-garage-cloud/ibm-garage-cli-tools "Cloud Garage Tools Docker image") from which the Terraform scripts will be run
+2. Launch a [Developer Tools Docker container](https://github.com/cloud-native-toolkit/ibm-garage-cli-tools "Cloud Garage Tools Docker image") from which the Terraform scripts will be run
     ```shell script
     ./launch.sh
     ```

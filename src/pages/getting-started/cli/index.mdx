@@ -12,11 +12,11 @@ The <Globals name="shortName" /> Command Line Interface (CLI)
 **TLDR; Install the CLI**
 
 ```shell script
-npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+npm i -g @ibmgaragecloud/ibm-garage-cloud-cli
 ````
 
 The <Globals name="longName" /> includes the IBM Garage for Cloud (IGC) Command Line Interface (CLI).
-The [<Globals name="igccli" />](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli) provides a set of helpful
+The [<Globals name="igccli" />](https://github.com/cloud-native-toolkit/ibm-garage-cloud-cli) provides a set of helpful
 utilities that can be invoked from the command line. It was created to automate and simplify complicated and repetitive
 tasks, allowing developers to be more productive.
 
@@ -57,7 +57,7 @@ Once npm has been updated, rerun the command to install the cli.
 - Install the CLI:
 
     ```shell
-    npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+    npm i -g @ibmgaragecloud/ibm-garage-cloud-cli
     ````
 
 - Verify the version:
@@ -70,7 +70,7 @@ Once npm has been updated, rerun the command to install the cli.
 following command (switch back at any time with the above command):
 
 ```shell
-npm i -g @ibmgaragecloud/cloud-native-toolkit-cli@beta
+npm i -g @ibmgaragecloud/ibm-garage-cloud-cli@beta
 ```
 
 </AccordionItem>
@@ -1080,7 +1080,7 @@ The command will add files to the local repo. You should commit these new files 
 Then run `igc pipeline` to connect your repo to a pipeline in the environment.
 
 **Command flags**
-- `--repo`: the set of pipelines to choose from; the default is https://github.com/ibm-garage-cloud/garage-pipelines
+- `--repo`: the set of pipelines to choose from; the default is https://github.com/cloud-native-toolkit/garage-pipelines
 - `-p`: the name of the pipeline that should be installed; if not provided then you will be prompted
 - `-b`: the branch from which the pipeline should be installed; the default is `stable`
 - `r`: the version number of the pipeline that should be installed; the default is `latest`
@@ -1118,7 +1118,7 @@ dealt with.
 2. Download the `index.yaml` file containing the available pipeline versions
 
     ```shell script
-    curl -O https://ibm-garage-cloud.github.io/garage-pipelines/index.yaml
+    curl -O https://cloud-native-toolkit.github.io/garage-pipelines/index.yaml
     ```
 
 3. Look through the `index.yaml` file to identify the url for the desired pipeline branch and version
@@ -1301,7 +1301,7 @@ The following gives an example of using helm directly to do the equivalent (usin
 
 ```shell script
 helm install my-tool tool-config \
-  --repo https://ibm-garage-cloud.github.io/toolkit-charts/ \
+  --repo https://cloud-native-toolkit.github.io/toolkit-charts/ \
   --set url=https://mytool-dashboard.mycluster.us-east.containers.appdomain.cloud \
   --set username=admin \
   --set password=password
