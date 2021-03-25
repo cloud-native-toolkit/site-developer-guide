@@ -36,7 +36,7 @@ curl -sfL get.cloudnativetoolkit.dev | sh -
 <AccordionItem title="Windows Users">
 
 ```shell script
-oc create -f https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
+oc create -f https://raw.githubusercontent.com/cloud-native-toolkit/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
 sleep 5
 oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
 oc logs job/ibm-toolkit -f -n default
@@ -55,9 +55,9 @@ oc logs job/ibm-toolkit -f -n default
 
 1. Download the latest Toolkit installation manifest yaml file
     ```shell script
-    curl -LO https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
+    curl -LO https://raw.githubusercontent.com/cloud-native-toolkit/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
     ```
-1. If you want a specific version of the manifest yaml file visit the [release page](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases) and download the corresponding manifest file `install-ibm-toolkit.yaml
+1. If you want a specific version of the manifest yaml file visit the [release page](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases) and download the corresponding manifest file `install-ibm-toolkit.yaml
 `
 
 ### B. Customize Installation

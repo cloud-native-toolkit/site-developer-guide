@@ -15,7 +15,7 @@ const Content = ({buildTime}) => {
                 <br /> an issue on{' '}
                 <a
                     style={{ textDecoration: 'underline' }}
-                    href="https://github.com/ibm-garage-cloud/planning/issues/new/choose">
+                    href="https://github.com/cloud-native-toolkit/planning/issues/new/choose">
                     GitHub.
                 </a>
             </p>

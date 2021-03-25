@@ -38,12 +38,12 @@ downloaded and the environment needs to be prepared before running them.
 
 #### i. Clone the Iteration Zero git repository
 
-The [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) repository contains a 
+The [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero) repository contains a 
 number of scripts that support the administrative tasks. It also has contains the Terraform scripts for installing 
 the <Globals name="shortName" /> <Globals name="env" />.)
 
 ```shell script
-git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
 cd ibm-garage-iteration-zero
 ```
 
@@ -103,12 +103,12 @@ downloaded and the environment needs to be prepared before running them.
 
 #### i. Clone the Iteration Zero git repository
 
-The [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero) repository contains a 
+The [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero) repository contains a 
 number of scripts that support the administrative tasks. It also has contains the Terraform scripts for installing 
 the <Globals name="shortName" /> <Globals name="env" />.)
 
 ```shell script
-git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
 cd ibm-garage-iteration-zero
 ```
 
@@ -240,11 +240,11 @@ The script adds policies that allow the user to use resources to the resource gr
 
 </InlineNotification>
 
-1. Download `create-catalog-offering.sh` from the <a href="https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
+1. Download `create-catalog-offering.sh` from the <a href="https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases/latest" target="_blank">latest Iteration Zero release</a> and make the file executable
    
     ```shell
-    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/ibm-garage-cloud/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
-    curl -OL "https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
+    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/cloud-native-toolkit/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
+    curl -OL "https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
     chmod +x create-catalog-offering.sh
     ```
 
