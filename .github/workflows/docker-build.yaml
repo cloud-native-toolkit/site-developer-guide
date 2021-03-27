@@ -1,0 +1,64 @@
+name: Docker build
+
+on:
+  release:
+    types:
+      - published
+  push:
+    branches:
+      - main
+      - beta
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up tags
+        id: setup
+        run: |
+          TAG_BASE="quay.io/ibmgaragecloud/toolkit-guide"
+
+          BRANCH=${GITHUB_REF#refs/heads/}
+          TAG="${{ github.event.release.tag_name }}"
+          if [[ -n "${TAG}" ]]; then
+            echo "Running against tag: ${TAG}"
+            TAGS="${TAG_BASE}:${TAG}"
+          else
+            echo "Running against branch: ${BRANCH}"
+            TAGS="${TAG_BASE}:${BRANCH}"
+            if [[ "${BRANCH}" == "main" ]]; then
+              TAGS="${TAGS},${TAG_BASE}:latest"
+            fi
+          fi
+
+          echo "::set-output name=tags::${TAGS}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Login to Quay
+        uses: docker/login-action@v1
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{steps.setup.outputs.tags}}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
