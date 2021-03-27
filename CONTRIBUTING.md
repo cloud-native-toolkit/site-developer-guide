@@ -1,5 +1,5 @@
 
-[Follow this link to read Contributing Guidelines](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/contributing)
+[Follow this link to read Contributing Guidelines](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide/contributing)
 
 For Developer Guide content, also please review the following IBM guidelines:
 

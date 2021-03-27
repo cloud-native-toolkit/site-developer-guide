@@ -28,6 +28,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.TOKEN }}
-          external_repository: ibm-garage-cloud/dev-guide
+          external_repository: cloud-native-toolkit/dev-guide
           publish_branch: master
           publish_dir: ./public
