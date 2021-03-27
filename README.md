@@ -1,10 +1,10 @@
 # Cloud Native Toolkit - Developer Guide
 
-[![Publish](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/actions/workflows/publish.yaml)
+[![Publish](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml)
 
-[![Publish Beta](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml)
+[![Publish Beta](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml)
 
-![Release](https://img.shields.io/github/v/release/ibm-garage-cloud/ibm-garage-developer-guide)
+![Release](https://img.shields.io/github/v/release/cloud-native-toolkit/ibm-garage-developer-guide)
 
 [![Docker Repository on Quay](https://quay.io/repository/ibmgaragecloud/toolkit-guide/status "Docker Repository on Quay")](https://quay.io/repository/ibmgaragecloud/toolkit-guide)
 
@@ -13,7 +13,7 @@ lifecycle of cloud native development with IBM Kubernetes Service or managed Red
 
 The rendered Developer Guide can be viewed here - [https://cloudnativetoolkit.dev](https://cloudnativetoolkit.dev)
 
-*Note*: The Beta version of the Developer Guide can be found here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-beta/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-beta/)
+*Note*: The Beta version of the Developer Guide can be found here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-beta/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-beta/)
 
 It is primarily used to document features that are currently in Beta prior to releasing those features (and the associated documentation). The content for the Beta version of the Developer Guide is sourced from the `beta` branch.
 
@@ -72,10 +72,10 @@ http://localhost:8000/
 
 This repository has been configured to build and publish the changes automatically via travis-ci. There are two builds currently configured:
 
-- `dev` branch is automatically published to the `gh-pages` branch in [https://github.com/ibm-garage-cloud/ibm-garage-developer-guide-staging](https://github.com/ibm-garage-cloud/ibm-garage-developer-guide-staging) and is visible as a staging site here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-staging/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide-staging/)
-- `master` branch is automatically published to the `gh-pages` branch in this repository which is visible here - [https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/](https://ibm-garage-cloud.github.io/ibm-garage-developer-guide/)
+- `dev` branch is automatically published to the `gh-pages` branch in [https://github.com/cloud-native-toolkit/ibm-garage-developer-guide-staging](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide-staging) and is visible as a staging site here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-staging/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-staging/)
+- `master` branch is automatically published to the `gh-pages` branch in this repository which is visible here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide/)
 
-The status of the travis-ci build can be seen here - https://travis-ci.org/github/ibm-garage-cloud/ibm-garage-developer-guide
+The status of the travis-ci build can be seen here - https://travis-ci.org/github/cloud-native-toolkit/ibm-garage-developer-guide
 
 **Note:** There is a time delay between when deploy process completes and when the
 content is available on the published site.
