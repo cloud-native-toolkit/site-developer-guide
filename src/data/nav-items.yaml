@@ -12,30 +12,57 @@
       path: /getting-started
     - title: Prerequisites
       path: /getting-started/prereqs
+    - title: Developer Env Setup
+      path: /getting-started/dev-env-setup
     - title: CLI
       path: /getting-started/cli
+    - title: ICC
+      path: /getting-started/icc
     - title: Dev-Ops Concepts
       path: /getting-started/dev-ops
 
-- title: Day 0 - Prepare
+- title: Workshop
+  pages:
+    - title: Overview
+      path: /workshop
+    - title: Setup Workshop Environment
+      path: /workshop/setup
+    - title: CI Pipelines with Tekton
+      path: /workshop/ci
+    - title: CD GitOps with Argo
+      path: /workshop/cd
+    - title: Microservices Inventory App
+      path: /workshop/inventory
+    - title: App Modernization
+      path: /workshop/appmod
+    - title: DevOps with Operator Framework
+      path: /workshop/operators
+    - title: Cloud Pak for Integration
+      path: /workshop/cp4i
+- title: Day 0 - Install
+
   pages:
     - title: Overview
       path: /getting-started-day-0
-    - title: "Plan the installation"
-      path: /getting-started-day-0/plan-installation/ibm-cloud
-    - title: "Install with the toolkit"
-      path: /getting-started-day-0/install-toolkit/ibm-cloud-on-vpc
-    - title: "Complete the configuration"
+    - title: Prepare the account
+      path: /getting-started-day-0/prepare-account
+    - title: Provision a cluster
+      path: /getting-started-day-0/provision-cluster/ibm-cloud-vpc
+    - title: Install the toolkit
+      path: /getting-started-day-0/install-toolkit/quick-install
+    - title: Complete the configuration
       path: /getting-started-day-0/post-installation
 
 - title: Day 1 - Build and deploy
   pages:
     - title: Overview
       path: /getting-started-day-1
-    - title: "Deploying an app"
+    - title: Deploy an app
       path: /getting-started-day-1/deploy-app
-    - title: "Developer Dashboard"
+    - title: Developer Dashboard
       path: /getting-started-day-1/dashboard
+    - title: (Advanced) Build an operator
+      path: /getting-started-day-1/build-operator
 
 - title: Day 2 - Run and manage
   pages:
@@ -110,6 +137,8 @@
 
 - title: Learning Journey
   pages:
+    - title: Overview
+      path: /learning
     - title: Cloud-Native Bootcamp
       path: /learning/foundational
     - title: Intermediate Topics
@@ -125,10 +154,12 @@
     - title: Garage Method Development
       path: /learning/garage-development
     - title: Integration Topics
-      path: /learning/cp4i      
+      path: /learning/cp4i
 
 - title: Resources
   pages:
+    - title: Videos
+      path: /toolkit-resources/videos
     - title: Office Hours
       path: /toolkit-resources/office-hours
     - title: Resource Access Management

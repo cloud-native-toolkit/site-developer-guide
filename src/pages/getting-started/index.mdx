@@ -7,14 +7,28 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 ## The Software Development Life-Cycle
 
 The <Globals name="longName" /> supports the full Software Development Life-Cycle (SDLC). Often, we break the life-cycle
-into three "days" to describe the distinct phases through the development process. The following "Getting Started" sections
-walk through using the <Globals name="tinyName" /> through each phase of the overall development life-cycle:
+into three "days" to describe the distinct phases through the development process. These phases are often performed
+iteratively, revisiting the activities of each "day" as more information is learned and new requirements are understood.
+The following "Getting Started" sections walk through using the <Globals name="tinyName" /> through each phase of the
+overall development life-cycle.
 
 <Row>
 <Column colLg={4} colMd={4} noGutterMdLeft>
 <ArticleCard
     color="dark"
-    title="Day 0 - Prepare"
+    title="Try  - Workshop"
+    subTitle="Try it your self using the workshop environment, you will be able to setup and try hands on labs within minutes"
+    href="/workshop"
+    >
+
+![](./images/workshop.jpg)
+
+</ArticleCard>
+</Column>
+<Column colLg={4} colMd={4} noGutterMdLeft>
+<ArticleCard
+    color="dark"
+    title="Day 0 - Install"
     subTitle="Plan and create the environments that will be used for development and production, including the supporting tools"
     href="/getting-started-day-0"
     >
@@ -51,15 +65,18 @@ walk through using the <Globals name="tinyName" /> through each phase of the ove
 
 ### Prerequisites
 
-Before proceeding, be sure to install the [<Globals name="shortName" /> prerequisites](./prereqs). The prerequisites
-contain a number of CLIs and tools that are essential for cloud-native provisioning, development, and operations.
+Before proceeding, be sure to walk through the [<Globals name="shortName" /> prerequisites](./getting-started/prereqs) and set up the
+[<Globals name="shortName" /> developer environment](./getting-started/dev-env-setup). The developer environment setup will install a
+number of tools that are essential for cloud-native provisioning, development, and operations.
 
 ### CLI overview
 
-One of the components of the <Globals name="shortName" /> is the [<Globals name="igccli" />](./cli) that provides a set 
+One of the components of the <Globals name="shortName" /> is the [<Globals name="igccli" />](./getting-started/cli) that provides a set
 of commands to simplify common tasks that are performed often by all the personas during the cloud-native software
-development life-cycle. The [<Globals name="igccli" />](./cli) documentation aims to make known the various commands
+development life-cycle. The [<Globals name="igccli" />](./getting-started/cli) documentation aims to make known the various commands
 that are available and de-mystify what actions it performs.
+
+
 
 ## Additional information
 

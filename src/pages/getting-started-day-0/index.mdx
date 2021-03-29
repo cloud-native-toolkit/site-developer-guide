@@ -21,24 +21,43 @@ any <Globals name="kube"/> or <Globals name="ocp"/> cluster, including those man
 environment is provisioned using [infrastructure-as-code](#infrastructure-as-code) [Terraform scripts](/admin/terraform) that
 make the process declarative, automated, and repeatable.
 
-The scripts are composed of a number of Terraform modules that have been organized into different stages. The first
-stage is responsible for establishing the connection to the cluster (if using an existing cluster) or provisions the
-cluster in IBM Cloud before establishing the connection (if provisioning a new cluster). After establishing the connection,
-the subsequent stages can connect and perform their activities.
+![Install paths](/images/install-paths.png)
 
-If a managed <Globals name="ic"/> cluster is not used,
-then the cluster can be provisioned by other means, and the first stage will just expose the cluster configuration
-values. In this case, we would highly recommend provisioning the cluster using other Terraform scripts.
+### Entry points
 
-![](/images/install.png)
+There are different entry points into the <Globals name="shortName"/> depending on the environment. The simplest approach 
+is to install the <Globals name="shortName"/> on an existing cluster. The existing cluster can be <Globals name="ocp"/> running
+anywhere or <Globals name="iks"/>. The next simplest way to install the <Globals name="shortName"/> is to use the All-in-One 
+approach to provision the cluster, SRE tools, and install the <Globals name="shortName"/> in one step. Finally, for more 
+control of the environment each of the steps can be performed individually.
 
-The installation process is organized into three activities:
+<InlineNotification>
 
-### [Planning the installation](/getting-started-day-0/plan-installation/ibm-cloud)
+If you want try out the <Globals name="shortName"/> quickly, you can get access to a temporary cluster on [IBM OpenLabs](https://developer.ibm.com/openlabs/openshift)
+or the [OpenShift: Interactive Learning Portal](https://learn.openshift.com/playgrounds/openshift45/) and run the [quick install](/getting-started-day-0/install-toolkit/quick-install).
+You can have a <Globals name="shortName"/> cluster up and running in about 10 minutes!
+
+</InlineNotification>
+
+### Install approaches
+
+There three different options for installing the components:
+
+1. Quick-installer - one-line installer that can be used to install the <Globals name="shortName"/> on an existing cluster
+2. Private Catalog Tiles - for environments within <Globals name="ic"/>, the install functions can be invoked using tiles in a private catalog similar to installing other software within the account
+3. Iteration Zero - for a highly-customized installation or to install in an environment other than <Globals name="ic"/> then you can work directly with the Iteration Zero terraform scripts
+
+A full installation of the <Globals name="shortName"/> is organized into four activities:
+
+### [Prepare the account](/getting-started-day-0/prepare-account)
 
 Explains the planning and configuration required to prepare for the installation of the Toolkit.
 
-### [Installing with the toolkit](/getting-started-day-0/install-toolkit/ibm-cloud-on-vpc)
+### [Provision a cluster](/getting-started-day-0/provision-cluster/ibm-cloud-vpc)
+
+Provisions a cluster into which the toolkit will be installed.
+
+### [Install the toolkit](/getting-started-day-0/install-toolkit/quick-install)
 
 Explains the end-to-end process for provisioning the environment with the Toolkit. Within that process, there two
 primary installation options. Select the approach that best suites your requirements:
@@ -48,7 +67,7 @@ primary installation options. Select the approach that best suites your requirem
 
 * **Install in existing OpenShift**: Create a new environment in an OpenShift cluster running anywhere.
 
-### [Completing the configuration](/getting-started-day-0/post-installation)
+### [Complete the configuration](/getting-started-day-0/post-installation)
 
 Explains the steps to finalize the setup of the environment and begin on-boarding developers.
 

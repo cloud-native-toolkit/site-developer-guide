@@ -1,0 +1,83 @@
+---
+title: Install the toolkit on an existing cluster
+tabs: ['Quick Install', 'Private Catalog', 'Iteration Zero']
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Steps to prepare an environment using the <Globals name="shortName" /> in an existing cluster.
+
+</PageDescription>
+
+## Cloud-Native Toolkit: Quick Installation
+
+Walkthrough of the Cloud Native Toolkit installation on RedHat OpenShift.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/97s_uredoSw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<Tabs>
+
+<Tab label="Default" open="true">
+
+### Run the installation using the OpenShift CLI
+
+<Accordion align="start">
+
+<AccordionItem title="Linux or MacOS" open>
+
+```shell script
+curl -sfL get.cloudnativetoolkit.dev | sh -
+```
+
+</AccordionItem>
+
+<AccordionItem title="Windows Users">
+
+```shell script
+oc create -f https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
+sleep 5
+oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
+oc logs job/ibm-toolkit -f -n default
+
+```
+
+</AccordionItem>
+
+</Accordion>
+
+</Tab>
+
+<Tab label="Customize" open="true">
+
+### A. Download the manifest `install-toolkit-yaml`
+
+1. Download the latest Toolkit installation manifest yaml file
+    ```shell script
+    curl -LO https://raw.githubusercontent.com/ibm-garage-cloud/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml
+    ```
+1. If you want a specific version of the manifest yaml file visit the [release page](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases) and download the corresponding manifest file `install-ibm-toolkit.yaml
+`
+
+### B. Customize Installation
+
+1.  Edit the file `install-ibm-toolkit.yaml` if you want to change any of the defaults, such as changing the tools namespace, adding a components from the catalog directory or removing a default component.
+
+### C. Run the installation using the OpenShift CLI
+
+1. Run the installation job after customizing the installation script
+    ```shell script
+    oc create -f install-ibm-toolkit.yaml
+    sleep 5
+    oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
+    oc logs job/ibm-toolkit -f -n default
+
+    ```
+
+</Tab>
+
+</Tabs>
+
+
+

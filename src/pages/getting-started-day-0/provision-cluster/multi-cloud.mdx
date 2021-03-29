@@ -1,0 +1,63 @@
+---
+title: Provision the cluster
+tabs: ['IBM Cloud VPC', 'IBM Cloud Classic', 'Multi-Cloud']
+---
+
+import Globals from 'gatsby-theme-carbon/src/templates/Globals';
+
+<PageDescription>
+
+Provides the considerations and steps to prepare an OpenShift cluster for
+an installation of <Globals name="shortName" /> <Globals name="env" />. 
+
+</PageDescription>
+
+## 1. Provision the cluster
+
+Provisioning the OpenShift cluster is the minimum requirement to prepare for the Toolkit install. The cluster could be
+OpenShift CRC running on a laptop, a cloud-managed OpenShift cluster on AWS or Azure, or an on-premise install of
+OpenShift. We'll leave the steps to provision to you since the details will vary considerably depending upon the 
+approach. However, whichever platform you use we highly recommend utilizing or developing automation scripts to 
+perform the provisioning, so that it can be done repeatably.
+
+Here are some resources that might help get started:
+
+<CardGroup>
+  <MiniCard title="OpenShift CRC setup" href="../prepare-account/openshift-crc-setup" />
+  <MiniCard title="OpenShift on AWS" href="https://github.com/ibm-cloud-architecture/terraform-openshift4-aws" />
+  <MiniCard title="OpenShift on GCP" href="https://github.com/ibm-cloud-architecture/terraform-openshift4-gcp" />
+  <MiniCard title="OpenShift on Azure" href="https://github.com/ibm-cloud-architecture/terraform-openshift4-azure" />
+  <MiniCard title="OpenShift on VMWare" href="https://github.com/ibm-cloud-architecture/terraform-openshift4-vmware" />
+</CardGroup>
+
+<InlineNotification>
+
+The <Globals name="longName" /> is not responsible for maintaining the Terraform scripts provided in the links above
+and does not give any guarantee as to their current condition. If there are any issues with those scripts it would be
+best to pursue it with the maintainers by raising issues against the appropriate repository.
+
+</InlineNotification>
+
+## 2. Configure access to the cluster
+
+In order to interact with the cluster, user credentials need to be established having Cluster Admin rights. The initial
+`kubeadmin` user (or whatever name is used after it is changed) can be used or a new user can be added for use by
+the provisioning scripts.
+
+## Next steps
+
+Now that the cluster has been provisioned and the access control has been configured, you are ready to move to the next
+step and perform the installation with the Toolkit. Before moving on, be sure to record the following information:
+
+- OpenShift login user (user id with Cluster Admin permission)
+- OpenShift login password
+- OpenShift server url
+
+For installation, use the [Quick Install](../install-toolkit/quick-install) or [Iteration Zero](../install-toolkit/iteration-zero) scripts. 
+Follow the step-by-step instructions to get the <Globals name="shortName" /> installed.
+
+<InlineNotification kind='warning'>
+
+The [Private Catalog](../install-toolkit/private-catalog) installation cannot be used outside of the IBM Cloud.
+
+</InlineNotification>
