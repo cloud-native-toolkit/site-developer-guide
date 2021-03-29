@@ -39,6 +39,7 @@
       path: /workshop/operators
     - title: Cloud Pak for Integration
       path: /workshop/cp4i
+
 - title: Day 0 - Install
   pages:
     - title: Overview
@@ -152,6 +153,8 @@
       path: /learning/redhat-learning
     - title: Garage Method Development
       path: /learning/garage-development
+    - title: Integration Topics
+      path: /learning/cp4i
 
 - title: Resources
   pages:
