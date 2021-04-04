@@ -28,7 +28,7 @@
     "gatsby-remark-autolink-headers": "^2.10.0",
     "gatsby-remark-table-of-contents": "^0.1.1",
     "gatsby-source-filesystem": "^2.10.0",
-    "gatsby-theme-carbon": "^1.27.0",
+    "gatsby-theme-carbon": "^1.27.3",
     "gatsby-transformer-json": "^2.10.0",
     "gatsby-transformer-remark": "^2.15.0",
     "gatsby-transformer-sharp": "^2.11.0",
