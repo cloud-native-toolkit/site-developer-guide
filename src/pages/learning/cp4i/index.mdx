@@ -19,6 +19,7 @@ This activity provides a working example of a Tekton based CICD pipeline to buil
 The Pipeline and Task resources available in the [Cloud Native Toolkit](https://cloudnativetoolkit.dev/) can be used as a starting point to build BAR files for other ACE workflows.
 
 The activity consists of the following tasks:
+
   1. [Prerequisites](#prerequisites)
   2. [Deploy the Inventory Management Service](#deploy-the-backend-inventory-management-service)
   3. [Configure the App Connect workflow with the Inventory REST API URL](#configure-the-app-connect-workflow)
@@ -128,6 +129,7 @@ The image below depicts the Tekton pipeline executed.
   **Personal Access Token**: Paste your GitHub personal access token
 
 13. When registering a `Tekton` pipeline, you will also be prompted to select which pipeline you want to use for your application. Select `ibm-java-gradle`.
+
 14. Select `Y`/`n` to enable the pipeline to scan the image for vulnerabilities.
 15. Provide `/api/health` as the health endpoint.  This is needed by the pipeline when running the **health** Task.
 15. After the pipeline has been created, the command will set up a webhook from the Git host to the pipeline event listener.
@@ -174,6 +176,7 @@ Here is a view of a completed and successful pipelinerun.
 7. Commit and push the changes into your forked repository.
 
 
+
 ### **Execute the App Connect pipeline**
 
 The image below depicts the Tekton pipeline executed.
@@ -204,6 +207,7 @@ The image below depicts the Tekton pipeline executed.
 8. From menu on the left switch to the **Developer** mode and select *dev* project that was used for the application pipeline registration.
 9. In the left menu, select *Pipelines* and click on the link to the `inventory-mgmt-ace-solution-xxxxxx` PipelineRun (PLR).
 10. Validate the App Connect server is working correctly in the terminal.
+
     ```shell script
     curl http://$(oc get route inventory-mgmt-ace-solution-http -o jsonpath='{ .spec.host }')/api/stock-items
     ```
@@ -215,3 +219,4 @@ The image below depicts the Tekton pipeline executed.
 
 Here is a view of a completed and successful pipelinerun.
 ![Tekton pipeline](images/CNTK-ACE-Pipeline.png)
+
