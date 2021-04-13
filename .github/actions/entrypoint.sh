@@ -1,3 +1,3 @@
 #!/bin/sh
 
-mkdocs gh-deploy --config-file "${GITHUB_WORKSPACE}/mkdocs.yml" --force
+mkdocs build --config-file "${GITHUB_WORKSPACE}/mkdocs.yml"
