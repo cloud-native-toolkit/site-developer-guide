@@ -1,0 +1,14 @@
+FROM python:slim-stretch
+
+RUN pip install --no-cache-dir pygments==2.8.1 pymdown-extensions==8.1.1 mkdocs==1.1.2 mkdocs-material==7.0.6 mkdocs-minify-plugin==0.4.0 mkdocs-redirects==1.0.1 mkdocs-with-pdf==0.8.3
+
+COPY ./dev/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+WORKDIR /site
+COPY . .
+VOLUME ["/site"]
+
+EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
