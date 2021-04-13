@@ -42,7 +42,7 @@ extra_css:
 extra:
   generator: false
 copyright: Copyright © 2021 Cloud-Native Toolkit
-google_analytics: ['UA-153689700-1']
+google_analytics: ['UA-153689700-1', 'cloudnativetoolkit.dev']
 nav:
   - Home: index.md
   - Overview: 
