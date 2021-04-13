@@ -21,7 +21,6 @@ theme:
       - navigation.instant
     custom_dir: custom-theme/
 use_directory_urls: false
-strict: true
 plugins:
   - search:
       lang: en
@@ -137,4 +136,3 @@ nav:
     - Contribute: contribute/contribute.md
     - Documentation: contribute/documentation.md
     - Build Automation: contribute/automation.md
-  
