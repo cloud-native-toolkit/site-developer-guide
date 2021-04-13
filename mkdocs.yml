@@ -1,0 +1,140 @@
+site_name: Cloud Native Toolkit
+site_description: >-
+  The Cloud-Native Toolkit is an open-source collection of assets that enable application development and support teams to deliver business value quickly using Red Hat OpenShift or Kubernetes
+site_url: https://cloudnativetoolkit.dev
+site_author: Brian Innes
+repo_name: cloud-native-toolkit/ibm-garage-developer-guide
+repo_url: https://github.com/cloud-native-toolkit/ibm-garage-developer-guide
+docs_dir: docs
+site_dir: public
+theme:
+    name: material
+    palette:
+      scheme: default
+      primary: indigo
+      accent: indigo
+    font: 
+      text: IBM Plex Sans
+      code: IBM Plex Mono
+    language: en
+    features:
+      - navigation.instant
+    custom_dir: custom-theme/
+use_directory_urls: false
+strict: true
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+markdown_extensions:
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.details
+extra_css:
+    - css/extra.css
+extra:
+  generator: false
+copyright: Copyright © 2021 Cloud-Native Toolkit
+google_analytics: ['UA-153689700-1']
+nav:
+  - Home: index.md
+  - Overview: 
+    - What is the Cloud Native Toolkit: overview/overview.md
+    - What's New: overview/whats-new.md
+    - Prerequisets: overview/prerequisites.md 
+  - Install: 
+    - Options for installing up Toolkit: setup/setup-options.md
+    - Fast Start install: setup/fast-start.md
+  - Learning the Toolkit:
+    - Fast Start:
+      - Learning Overview: learning/fast-start.md
+      - Developer setup: learning/dev-setup.md
+      - Continuous Integration: learning/fast-ci.md
+      - Continuous Delivery: learning/fast-cd.md
+    - In Depth: 
+      - Cloud-Native Development with the Toolkit: learning/in-depth.md
+      - Automated Testing: learning/testing.md
+      - Static Analysis: learning/analysis.md
+      - Pipeline: learning/pipeline.md
+  - Adopting the Toolkit:
+    - Adopting the Toolkit: adopting/adopting.md
+    - Alternate setup options:
+      - Installation options: adopting/setup/installing.md
+      - Configuring IBM Cloud based setup: adopting/setup/ibmcloud-setup.md
+      - Firewalled setup: adopting/setup/firewalled-setup.md
+      - Air-gapped setup: adopting/setup/air-gapped-setup.md
+    - Customizing the Toolkit: adopting/customize.md
+    - Toolkit administration: adopting/admin.md
+    - Best Practices: 
+      - Toolkit best practices: adopting/best-practices.md
+      - Security and Permissions: adopting/security.md
+      - Auditing and Logging: adopting/audit-logging.md
+    - Use Cases: 
+      - User cases: adopting/applying.md
+      - Build an Operator: adopting/operator/operator.md
+  - Reference:
+    - Reference: reference/reference.md 
+    - Starter Kits:
+      - Starter Kit overiew: reference/starter-kit/starter-kit.md
+      - Base template: reference/starter-kit/base.md
+      - Create a Starter Kit: reference/starter-kit/new-starterkit.md
+    - Command Line Tool: reference/cli.md
+    - Git repositories: reference/git.md
+    - Toolkit Components:
+      - Developer Dashboard: reference/tools/dashboard.md
+      - ArgoCD: reference/tools/argocd.md
+      - Artifactory: reference/tools/artifactory.md
+      - PACT: reference/tools/pact.md
+      - SonarQube: reference/tools/sonar-qube.md
+      - OpenShift Pipelines/Tekton: reference/tools/tekton.md
+      - IBM Container Registry: reference/tools/ibm-cloud-container-registry.md
+    - Pipeline Task Reference:
+      - ibm-build-tag-push: reference/tasks/placeholder.md
+      - ibm-deploy: reference/tasks/placeholder.md
+      - ibm-gitops: reference/tasks/placeholder.md
+      - ibm-golang-test: reference/tasks/placeholder.md
+      - ibm-gradle-pact-verify: reference/tasks/placeholder.md
+      - ibm-health-check: reference/tasks/placeholder.md
+      - ibm-helm-release: reference/tasks/placeholder.md
+      - ibm-img-release: reference/tasks/placeholder.md
+      - ibm-img-scan-ibm: reference/tasks/placeholder.md
+      - ibm-img-scan-trivy: reference/tasks/placeholder.md
+      - ibm-img-scan: reference/tasks/placeholder.md
+      - ibm-java-gradle-test: reference/tasks/placeholder.md
+      - ibm-java-maven-test: reference/tasks/placeholder.md
+      - ibm-nodejs-test: reference/tasks/placeholder.md
+      - ibm-operator-bundle: reference/tasks/placeholder.md
+      - ibm-operator-catalog-build: reference/tasks/placeholder.md
+      - ibm-catalog-gitops: reference/tasks/placeholder.md
+      - ibm-operator-test: reference/tasks/placeholder.md
+      - ibm-setup: reference/tasks/placeholder.md
+      - ibm-tag-release: reference/tasks/placeholder.md
+    - Iteration Zero:
+      - Terraform modules: reference/terraform/terraform.md
+  - Resources: 
+      - Additional resources: resources/resources.md
+      - Workshop: 
+        - Workshop overview: resources/workshop/workshop.md
+        - Setup: resources/workshop/setup.md
+        - Continuous integration: resources/workshop/ci.md
+        - Continuous delivery: resources/workshop/cd.md
+        - 3-tier application: resources/workshop/inventory.md
+        - Application modernization: resources/workshop/appmod.md
+      - IBM Cloud:
+        - IBM Cloud: resources/ibm-cloud/ibm-cloud.md
+        - Access control: resources/ibm-cloud/access-control.md
+        - ICC tool: resources/ibm-cloud/icc.md
+        - Cloud shell: resources/ibm-cloud/cloud-shell.md
+  - Contributing:
+    - Governance: contribute/governance.md
+    - Contribute: contribute/contribute.md
+    - Documentation: contribute/documentation.md
+    - Build Automation: contribute/automation.md
+  
