@@ -1,3 +1,3 @@
 #!/bin/sh
 
-mkdocs serve --config-file "./mkdocs.yml" --livereload --dirtyreload
+mkdocs serve --config-file "./mkdocs.yml" --livereload
