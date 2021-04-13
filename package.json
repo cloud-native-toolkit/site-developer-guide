@@ -1,0 +1,28 @@
+{
+  "name": "ibm-garage-developer-guide",
+  "version": "1.0.0",
+  "description": "[![Publish](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "predev": "./dev/cleanup.sh devguide-dev",
+    "dev": "./dev/run.sh devguide-dev 8000",
+    "postdev": "./dev/print-env.sh 8000",
+    "dev:stop": "./dev/cleanup.sh devguide-dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibm-garage-cloud/ibm-garage-developer-guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/issues"
+  },
+  "homepage": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide#readme"
+}
