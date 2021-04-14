@@ -12,9 +12,14 @@ This section will cover:
 
 ---
 
+!!!Todo
+    Fixup links - make relative when setup sections have been completed
+
+    how do windows users do the workshop?
+
 1. Prerequisites
 
-    - The instructor should [Setup Workshop Environment](/workshop/setup)
+    - The instructor should [Setup Workshop Environment](setup.md)
     - The student should [Setup CLI and Terminal Shell](/workshop/setup#4.- (optional)-auto-configure-terminal-shell)
     - An user with cluster-admin (ie kubeadmin) needs to deploy a DB2 instance to be shared by all the users
 

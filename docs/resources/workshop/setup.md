@@ -34,6 +34,9 @@ Create an OpenShift Cluster for example:
     !!!Note
       The username and password for Git Admin is `toolkit` `toolkit`
 
+!!!Todo
+    Shouls this be moved out of setup and into the student section of the workshop?
+
 ## 4. (Optional) Auto configure Terminal Shell
 
 - You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](https://cloudnativetoolkit.dev/getting-started/dev-env-setup) and [Toolkit CLI](https://cloudnativetoolkit.dev/getting-started/cli).
