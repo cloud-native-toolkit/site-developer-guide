@@ -60,7 +60,7 @@ been provided to automate the configuration of the policies.
 
 <InlineNotification>
 
-**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/iam?topic=iam-account-services), 
+**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/account?topic=account-cloudaccess), 
 in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these 
 individually is to create an access group for administering each: `ACCT-MGR-BILLING-ADMIN`, `ACCT-MGR-LICENSE-ADMIN`, 
 `ACCT-MGR-SUPPORT-ADMIN`. The group created below only has IAM capabilities, so we suggest `ACCT-MGR-IAM-ADMIN` for
@@ -71,7 +71,7 @@ its name.
 <br />
 
 To create the access group for the account managers:
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) and name it something like `ACCT-MGR-IAM-ADMIN` or name it after your account (use all capital letters)
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) and name it something like `ACCT-MGR-IAM-ADMIN` or name it after your account (use all capital letters)
 2. Run `./terraform/scripts/acp-mgr.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
     ./terraform/scripts/acp-mgr.sh ACCT-MGR-IAM-ADMIN
@@ -87,7 +87,7 @@ The `./terraform/scripts/acp-mgr.sh` script adds policies that allow the user to
 - Create access groups and manage access group membership
 - Create clusters across all resources groups in the account
 - Create service instances across all resource groups in the account
-- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/tools/image-registry))
+- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/getting-started-day-1/image-registry/))
 
 ## 2. Configure the account
 
@@ -120,7 +120,7 @@ ibmcloud login -a cloud.ibm.com -r <region>
 
 ### B. Upgrade the image registry
 
-Upgrade the service plan for the [image registry](/tools/image-registry) so that is has unlimited capacity for images.
+Upgrade the service plan for the [image registry](/getting-started-day-1/image-registry/) so that is has unlimited capacity for images.
 
 ```shell script
 ibmcloud cr plan-upgrade standard
@@ -161,7 +161,7 @@ infrastructure and/or multiple `account mangers` follow these instructions inste
 [functional ID](/admin/plan-installation#create-a-functional-id-for-classic-infrastructure-permissions) for the
 account.
 
-[Create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key) and 
+[Create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey) and 
 download each key to a file. Be sure to include a descriptive name of the APIKey.
 
 ### E. Attach the <Globals name="ic" /> API Key to the resource group
@@ -170,7 +170,7 @@ To create resources in the resource group, the account will need API keys for th
 to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). 
 The API key is needed for each region and resource group. Use the API key from the previous step for these steps:
 
-1. Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id#api_key) created by the account owner
+1. Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/account?topic=account-federated_id) created by the account owner
     ```shell script
     ibmcloud login --apikey @key_file_name
     ```
@@ -187,7 +187,7 @@ group can be configured manually or with a script provided in the `ibm-cloud-ite
 
 #### i. Create the access group for environment administrators
 
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like `<resource_group>-ADMIN` (use all capital letters)
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) named something like `<resource_group>-ADMIN` (use all capital letters)
 2. Run the script `./terraform/scripts/acp-admin.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
     ./terraform/scripts/acp-admin.sh {ACCESS_GROUP} {resource group}
@@ -198,12 +198,12 @@ group can be configured manually or with a script provided in the `ibm-cloud-ite
 
 The script adds policies that allow the user to add resources to the resource group:
 - Permission to create clusters
-- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](/tools/image-registry))
+- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](/getting-started-day-1/image-registry/))
 - Permission to create service instances
 
 #### ii. Create the access group for environment users
 
-1. Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) named something like `<resource_group>-USER` (use all capital letters)
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) named something like `<resource_group>-USER` (use all capital letters)
 2. Run the script `./terraform/scripts/acp-user.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
     ```shell script
     ./terraform/scripts/acp-user.sh {ACCESS_GROUP} {resource group}
@@ -304,7 +304,7 @@ the classic infrastructure for the cluster. For security reasons, each account m
 functional ID's account.
 
 1. Log into IBM Cloud as the functional ID (not as the account owner) and switch to the appropriate account.
-2. For each account manager, [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key) and 
+2. For each account manager, [create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey) and 
 download each key to a file. Be sure to include the account manager's name in the name/description of the APIKey.
 3. Give each account manager their API key file for the functional ID
 

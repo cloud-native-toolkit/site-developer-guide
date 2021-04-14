@@ -35,7 +35,7 @@ These are the steps an account manager should perform to configure the account.
 
 ### Upgrade the image registry
 
-First, we'll upgrade the service plan for the [image registry](/tools/image-registry) so that is has more capacity.
+First, we'll upgrade the service plan for the [image registry](/getting-started-day-1/image-registry/) so that is has more capacity.
 
 - Set the registry plan
 
@@ -131,7 +131,7 @@ We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct
 Sixth, to create clusters in the resource group, the account will need API keys for the container service to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). A separate API key is needed for each region and resource group. An account manager should use [the account's functional ID](/admin/plan-installation#functional-id-for-infrastructure-permissions) to set the API key(s) for the new resource group.
 
 Create an API key for the resource group and the data center's region:
-- Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/iam?topic=iam-federated_id#api_key) created by the account owner
+- Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/account?topic=account-federated_id) created by the account owner
     ```bash
     ibmcloud login --apikey @key_file_name
     ```
@@ -147,13 +147,13 @@ Create an API key for the resource group and the data center's region:
 Seventh, create an access group to grant the necessary permissions for installing a <Globals name="env" />. Do this by running a script, or by using the console to manually perform the steps in the script. Also, add the environment administrator(s) (who is the user who will run the scripts to create the environment) to this group.
 
 To create the access group for the environment administrators:
-- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-ADMIN` (all capital letters)
+- Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups), name it something like `<resource_group>-ADMIN` (all capital letters)
 - Run the script `./terraform/scripts/acp-admin.sh`, which adds the necessary policies to the access group
 - Add the environment administrator(s) to the group
 
 The script adds policies that allow the user to add resources to the resource group:
 - Permission to create clusters
-- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](/tools/image-registry))
+- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](/getting-started-day-1/image-registry/))
 - Permission to create service instances
 
 
@@ -162,7 +162,7 @@ The script adds policies that allow the user to add resources to the resource gr
 Eighth, create an access group to enable users (e.g. developers, data scientists, etc.) to access the resources in the <Globals name="env" />. This can be done later, after the environment is created, either by running a script or using the console. Also, add the users who will use the environment (e.g. developers, etc.) to this group.
 
 To create the access group for the environment users:
-- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `<resource_group>-USER` (all capital letters)
+- Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups), name it something like `<resource_group>-USER` (all capital letters)
 - Run the script `./terraform/scripts/acp-user.sh`, which adds the necessary policies to the access group
 - Add the users to the group
 
