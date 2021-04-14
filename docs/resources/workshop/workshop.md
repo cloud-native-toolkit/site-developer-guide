@@ -16,3 +16,4 @@ The Workshop is design to provide a quick way to try the methodology leveraging 
 [![Deploy a 3 tier Microservice using React, Node.js, and Java](./images/inventory.jpg){: width=30%}](inventory.md) Deploy a 3 tier Microservice using React, Node.js, and Java
 
 [![App Modernization with modern DevOps](./images/appmod.jpg){: width=30%}](appmod.md) App Modernization with modern DevOps
+
