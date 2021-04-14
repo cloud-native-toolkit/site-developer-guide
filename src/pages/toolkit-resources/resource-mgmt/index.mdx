@@ -52,7 +52,7 @@ The documentation explains some stratagies:
 - [Best practices for setting up your account](https://cloud.ibm.com/docs/account?topic=account-account_setup)
 - [What is a resource?](https://cloud.ibm.com/docs/resources?topic=resources-resource)
 - [Best practices for organizing resources in a resource group](https://cloud.ibm.com/docs/resources?topic=resources-bp_resourcegroups)
-- [Best practices for assigning access](https://cloud.ibm.com/docs/iam?topic=iam-account_setup)
+- [Best practices for assigning access](https://cloud.ibm.com/docs/account?topic=account-account_setup)
 
 The IAM structure enables a lot of flexibility for very fine-grained access control. However, this broad range of capabilities can be complex to learn and is often more than many administrators need. This article will focus on the most important IAM components and best practices for how to use those.
 
@@ -160,7 +160,7 @@ The discussion above does not attempt to describe everything that IAM can do, bu
 - **Assign policies to access groups, not users**: Don’t assign the same policy to one user after another, it’ll become a maintenance nightmare. Rather, use role-based access control: Design roles, grant them permissions, and assign users to roles.
 - **Assign access to resource groups, not accounts or resources**: Don’t create multiple policies with the same access to different resources. Rather: Assign access to a resource group, to grant access to all resources in the resource group but not other resource groups.
 
-[Best practices for assigning access](https://cloud.ibm.com/docs/iam?topic=iam-account_setup) has similar tips and some additional explanation.
+[Best practices for assigning access](https://cloud.ibm.com/docs/account?topic=account-account_setup) has similar tips and some additional explanation.
 
 Remember, the [full component diagram](/toolkit-resources/resource-mgmt#ibm-cloud-identity-and-access-management-(iam)) for IAM is quite complex. The [main set of components](http://localhost:8000/toolkit-resources/resource-mgmt#iam-main-components) that [you should use most of the time](http://localhost:8000/toolkit-resources/resource-mgmt#policies-connect-access-groups-to-resources) is much simpler.
 

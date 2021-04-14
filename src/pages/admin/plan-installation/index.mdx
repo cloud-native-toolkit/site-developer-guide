@@ -19,7 +19,7 @@ To understand how the process is performed, keep these concepts in mind.
 
 A <Globals name="env" /> is installed and used by users acting in four roles:
 - **Account owner**: The user who owns the account
-- **Account managers**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/iam?topic=iam-account-services)
+- **Account managers**: Account owner or other users with [account management permissions](https://cloud.ibm.com/docs/account?topic=account-cloudaccess)
 - **Environment administrators**: Users in the account with [permissions to create services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#platformroles)
 - **Environment users**: Users in the account with [permissions to use existing services in the environment's resource group](https://cloud.ibm.com/docs/iam?topic=iam-userroles#service_access_roles) (e.g. developers, data scientists, etc.)
 
@@ -89,12 +89,12 @@ The account owner must create an access group to grant the necessary permissions
 
 <InlineNotification>
 
-**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/iam?topic=iam-account-services), in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these individually is to create an access group for administering each: ACCT-MGR-BILLING-ADMIN, ACCT-MGR-LICENSE-ADMIN, ACCT-MGR-SUPPORT-ADMIN. The group created below only has IAM capabilities, so a good name for it is ACCT-MGR-IAM-ADMIN.
+**Note**: IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/account?topic=account-cloudaccess), in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these individually is to create an access group for administering each: ACCT-MGR-BILLING-ADMIN, ACCT-MGR-LICENSE-ADMIN, ACCT-MGR-SUPPORT-ADMIN. The group created below only has IAM capabilities, so a good name for it is ACCT-MGR-IAM-ADMIN.
 
 </InlineNotification>
 
 To create the access group for the account managers:
-- Create a new [access group](https://cloud.ibm.com/docs/iam?topic=iam-account_setup), name it something like `ACCT-MGR-IAM-ADMIN` (all capital letters) (or name it after your account)
+- Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups), name it something like `ACCT-MGR-IAM-ADMIN` (all capital letters) (or name it after your account)
 - Run the script `./terraform/scripts/acp-mgr.sh`, which adds the necessary policies to the access group
 - Add the account managers to the group
 
@@ -107,7 +107,7 @@ The script adds policies that allow the user to:
 The script also adds the same policies that an environment administrator has. But whereas an environment administrator can only manage the resources in one resource group, an account manager can manage the resources in all resource groups. This gives the account manager the ability in any resource group to:
 
 - Create clusters
-- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/tools/image-registry))
+- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/getting-started-day-1/image-registry/))
 - Create service instances
 
 ### Functional ID for infrastructure permissions
@@ -133,7 +133,7 @@ Next, each account manager will need to use the functional ID to reset the API k
 Create API keys for the functional ID:
 - Log into IBM Cloud as the functional ID (not as the account owner)
 - Switch to this account that you're configuring
-- For each account manager, [create an API key](https://cloud.ibm.com/docs/iam?topic=iam-userapikey#create_user_key), downloading each key to a file
+- For each account manager, [create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey), downloading each key to a file
 - Give each account manager their API key file for the functional ID
 
 Users should not share these API key files with each other. When a user is no longer an account manager, remove them from the access group and delete their API key. To make a user an account manager, add them to the access group and create an API key for them.
