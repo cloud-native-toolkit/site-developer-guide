@@ -9,6 +9,9 @@ This section provides information about some alternate install options for the T
 
     - Setup options
     - Customizing the toolkit
+        - Choosing different components for pipeline
+        - replacing with external components (e.g. DockerHub or Quay as registry rather than internal registry)
+        - Modifying pipelines and tasks
     - Admin guide
     - Best practices
     - Use cases

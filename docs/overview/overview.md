@@ -47,19 +47,17 @@ the Toolkit in action.
 
 ## Components of the Cloud-Native Toolkit
 
-As the name suggests, the Cloud-Native Toolkit provides a collection of tools that can be used in part or in
-whole to support the activities of software development life-cycle. The following provides a listing of the assets that
-make up the Cloud-Native Toolkit:
+As the name suggests, the Cloud-Native Toolkit provides a collection of tools that can be used in part or in whole to support the activities of software development life-cycle. The following provides a listing of the assets that make up the Cloud-Native Toolkit:
 
-![Cloud-Native Toolkit](./images/cntk-in-the-toolkit.png)
+![Cloud-Native Toolkit](images/cntk-in-the-toolkit.png)
 
-- [**Guides**](#guides) - this set of documentation that weaves the various toolkit components together with a perspective on how to apply cloud-native practices to deliver business solutions
-- [**Infrastructure as Code**](getting-started-day-0/infrastructure-as-code) - Terraform scripts and GitOps configuration to provision and manage the environment
-- [**CLI**](/getting-started/cli) - a simple node-based CLI that installs as a plugin to the `kubectl` and `oc` CLIs and provides commands to simplify common
-- [**Developer Dashboard**](/getting-started-day-1/dashboard) - Dashboard component and Red Hat OpenShift console extensions to simplify common developer activities
-- [**DevOps pipelines**](/getting-started-day-1/continuous-integration) - continuous integration pipelines for Tekton and Jenkins
-- [**Starter Kits and Code Patterns**](./starterkits) - software repositories that can be used to quickly get started building applications using common patterns, or to serve as a reference to enhance existing patterns
-- [**Learning Journey**](/learning/intermediate) - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the Toolkit
+- **Guides** - this set of documentation that weaves the various toolkit components together with a perspective on how to apply cloud-native practices to deliver business solutions
+- [**Infrastructure as Code**](../adopting/best-practices/infrastructure-as-code.md){: target="_blank"} - Terraform scripts and GitOps configuration to provision and manage the environment
+- [**CLI**](../reference/cli.md){: target="_blank"} - a simple node-based CLI that installs as a plugin to the `kubectl` and `oc` CLIs and provides commands to simplify common
+- [**Developer Dashboard**](../reference/dashboard.md){: target="_blank"} - Dashboard component and Red Hat OpenShift console extensions to simplify common developer activities
+- [**DevOps pipelines**](../adopting/best-practices/ci.md){: target="_blank"} - continuous integration pipelines for Tekton and Jenkins
+- [**Starter Kits and Code Patterns**](../reference/starter-kit/starter-kit.md){: target="_blank"} - software repositories that can be used to quickly get started building applications using common patterns, or to serve as a reference to enhance existing patterns
+- [**Learning Journey**](../learning/fast-start.md){: target="_blank"} - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the Toolkit
 
 ## Cloud-Native Toolkit Developer Environment
 
