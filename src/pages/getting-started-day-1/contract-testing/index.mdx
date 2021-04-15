@@ -4,7 +4,7 @@ title: Contract testing
 
 import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
-In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing). [Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline. The <Globals name="env" />'s CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.) includes a Pact stage. Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
+In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing). [Pact](https://docs.pact.io/) automates contract testing and enables it to be added to a continuous integration pipeline. The <Globals name="env" />'s CI pipeline ([Jenkins](/tools/jenkins), [Tekton](/tools/tekton/), etc.) includes a Pact stage. Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.
 
 _Contract testing_ is a testing discipline that ensures two applications (a consumer and
 a provider) have a shared understanding of the interactions or the _contract_ between them.
