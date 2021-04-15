@@ -21,7 +21,7 @@ get it.
 ## (Optional) Create your operator
 
 These steps will walk you through building a simple operator following the Operator SDK quick-start guide. You can choose
-between [Ansible](]https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/){: target=_blank}, [Go](https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/){: target=_blank}, or
+between [Ansible](https://sdk.operatorframework.io/docs/building-operators/ansible/quickstart/){: target=_blank}, [Go](https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/){: target=_blank}, or
 [Helm](https://sdk.operatorframework.io/docs/building-operators/helm/quickstart){: target="_blank} quick start guides for the following example.
 
 !!!Note
@@ -89,11 +89,11 @@ page.
 
 ## Register the operator pipeline
 
-This step is similar to [deploying an application](../deploy-app).
+This step is similar to what you learned in the fast-start Continuous Integration section [deploying an application](../../../learning/fast-ci.md){: target=_blank}
 
 ### 1. Log into your Development Cluster from the command line
 
-Before starting, make sure you have set up your [development tools](/getting-started/dev-tools-setup).
+Before starting, make sure you have set up your [development tools](../../../learning/dev-setup.md).
 
 === "Cluster managed by IBM Cloud"
 

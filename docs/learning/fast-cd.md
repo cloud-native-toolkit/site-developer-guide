@@ -194,7 +194,7 @@ In Argo CD terms, each deployable component is an application and applications a
 
         where:
 
-        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On Red Hat OpenShift this is the same as the UI host
         - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
         the username and password
 
@@ -280,7 +280,7 @@ The last step in the process is to define the application(s) within Argo CD that
 
         where:
 
-        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On Red Hat OpenShift this is the same as the UI host
         - `--sso` is an optional flag used when sso authentication is enabled. If not using SSO then you will be prompted for
         the username and password
 
@@ -446,7 +446,7 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
 
         where:
 
-        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On <Global name="ocp" /> this is the same as the UI host
+        - `GRPC_INGRESS_HOST` is the host name of the grpc endpoint. On Red Hat OpenShift this is the same as the UI host
         - `--sso` is an optional flag used when SSO authentication is enabled. If not using SSO then you will be prompted for
         the username and password
 
