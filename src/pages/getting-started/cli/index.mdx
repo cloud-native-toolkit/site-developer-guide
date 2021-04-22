@@ -25,7 +25,7 @@ be done manually instead. For each of the commands, the equivalent manual steps 
 transparency and to take away any notion of "magic" that the CLI might be performing.
 
 Some of the utilities provided by the CLI include:
-- Register your application's git repo into a CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.)
+- Register your application's git repo into a CI pipeline ([Jenkins](/tools/jenkins), [Tekton](/tools/tekton/), etc.)
 - List the ingress URLs and route URLs defined within the cluster
 - List the connection information (endpoints, user names, and passwords) for the tools configured in the environment
 - Help copy `config maps` and `secrets` into new projects/namespace
@@ -196,7 +196,7 @@ your account prior to running the command.
 
 ### dashboard
 
-Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. If a default browser has not been
+Opens the [Developer Dashboard](/getting-started-day-1/dashboard/) in the default browser. If a default browser has not been
 configured, then the URL to the Dashboard will be printed out.
 
 The dashboard displays the <Globals name="shortName" /> tools configured within the cluster along with links to
@@ -344,7 +344,7 @@ The command works by reading information available in the cluster. When each too
 number of different ways within the environment:
 
 - Provide configuration information to the pipelines
-- Populate the tiles on the [Developer Dashboard](/getting-started/dashboard)
+- Populate the tiles on the [Developer Dashboard](/getting-started-day-1/dashboard/)
 - Populate the results of the `credentials` command
 
 This command requires that the login context for the cluster has already been established.

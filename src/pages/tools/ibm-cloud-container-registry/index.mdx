@@ -116,7 +116,7 @@ IBM Cloud Container Registry is not only a Docker registry hosted in IBM Cloud, 
 
 ## Image registry in the Pipeline
 
-The CI and CD pipelines currently exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/tools/continuous-integration), [Tekton](/tools/continuous-integration-tekton), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
+The CI and CD pipelines currently exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/tools/jenkins), [Tekton](/tools/tekton/), etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
 - **Docker images**: This Developer Tools Image Registry
 - **Helm charts**: A [Helm repository in Artifactory](/tools/artifact-management)
 
