@@ -26,6 +26,6 @@ While separate development teams can each have a separate <Globals name="env" />
 - Teams must share a single set of CI/CD tools and pipeline configurations that can be managed by a single adminstration team
 - Teams share a single *test* namespace and *staging* namespace, and must coordinate accordingly
 
-Teams that do no wish to use the same CI/CD tools or otherwise want to avoid having to coordinate with each other should use separate development environments. Teams that want to economize, share a set of CI/CD tools, and need to coordinate on application development may find a shared environment easier to use.
+Teams that do not wish to use the same CI/CD tools or otherwise want to avoid having to coordinate with each other should use separate development environments. Teams that want to economize, share a set of CI/CD tools, and need to coordinate on application development may find a shared environment easier to use.
 
 To create a shared environment, first install a single environment. Then create a *dev* namespace for each team, such as *dev-team1*, *dev-team2*, etc. (The original *dev* namespace can be renamed for the first team, *dev-team1*.) The multiple developer namespaces all share a single *tools* namespace and the CI/CD tools installed in it. They all use Argo CD--one of the Developer Tools--to deploy to shared *test* and *staging* namespaces. Use [Kubernetes RBAC](/getting-started-day-0) to control which developers can access which dev namespaces.
