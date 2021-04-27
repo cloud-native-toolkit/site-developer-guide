@@ -241,7 +241,7 @@ To work on documentation and be able to view the rendered web site you need to c
     You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
 
     - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
-    - `mkdocs serve` will build the static site and launch a test server on [http://localhost:8000](http://localhost:8000){: target=_blank}.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
+    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
 
 === "Tooling within a Docker container"
 
@@ -250,6 +250,6 @@ To work on documentation and be able to view the rendered web site you need to c
     - You need to have [Docker](https://www.docker.com) installed and running on your system
     - There are helper configurations installed if you have npm from [Node.JS](https://nodejs.org) installed.
     - To start developing run command `npm run dev` in the root directory of the git repo (where **package.json** and **mkdocs.yaml** are located)
-    - Open a browser to [http://localhost:8000](http://localhost:8000){: target=_blank}, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
+    - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
     - To stop developing run command `npm dev:stop`, which will terminate the docker container
     - View the scripts section of **package.json** in the root folder of the git repo for additional options available

@@ -13,14 +13,12 @@ This section will cover:
 ---
 
 !!!Todo
-    Fixup links - make relative when setup sections have been completed
-
     how do windows users do the workshop?
 
 1. Prerequisites
 
     - The instructor should [Setup Workshop Environment](setup.md)
-    - The student should [Setup CLI and Terminal Shell](/workshop/setup#4.- (optional)-auto-configure-terminal-shell)
+    - The student should [Setup CLI and Terminal Shell](setup.md#4-optional-auto-configure-terminal-shell)
     - An user with cluster-admin (ie kubeadmin) needs to deploy a DB2 instance to be shared by all the users
 
     ```shell
@@ -33,7 +31,7 @@ This section will cover:
 
 1. (Optional) Analyze the application using the following guide [Modernizing runtimes with Liberty](https://ibm-cloud-architecture.github.io/modernization-playbook/applications/liberty/liberty-analyze)
     - Download [Transformation Advisor](https://www.ibm.com/garage/method/practices/learn/ibm-transformation-advisor/)
-    - The results of a Data Collector is already provided provided download <a href="/AppSrv01.zip" target="_blank">AppSrv01.zip</a>
+    - The results of a Data Collector is already provided provided download [AppSrv01.zip](AppSrv01.zip){: target=_blank}
     - Upload the data collection into Transformation Advisor
     - Review the CustomerOrderServicesApp.ear analysis
     - The migration path files have been deployed to git for this lab.

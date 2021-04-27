@@ -4,3 +4,5 @@ The Cloud Native Toolkit is developed in the open, with all content being manage
 
 The primary organization is [https://github.com/ibm-garage-cloud](https://github.com/ibm-garage-cloud)
 
+!!!Todo
+    Outline all the git repositories here

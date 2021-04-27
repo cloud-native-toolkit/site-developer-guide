@@ -12,7 +12,7 @@ Check them out at [cloudnativetoolkit.dev/workshop](https://cloudnativetoolkit.d
 
 ## Jan 6, 2021
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.11.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.11.1),
 [v1.11.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.11.0),
@@ -51,7 +51,7 @@ __Usability updates for `pipeline` command__
 
 ## Dec 11, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.5.0](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.5.0)
 
@@ -74,7 +74,7 @@ __Usability updates for `pipeline` command__
   - ibm-logdna v2.4.3
   - ibm-sysdig v2.3.3
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.4.2](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.4.2),
 [v1.4.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.4.1)
@@ -94,7 +94,7 @@ __Usability updates for `pipeline` command__
 
 - Registers the `gitops` command as a plugin to kubectl and oc clis
 
-#### [Tekton tasks](/tools/tekton)
+#### [Tekton tasks](../reference/tools/tekton.md)
 
 [v2.2.3](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.2.3),
 [v2.2.2](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.2.2),
@@ -108,7 +108,7 @@ __Usability updates for `pipeline` command__
 
 ## Nov 20, 2020
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.4.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.4.0),
 [v1.3.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.3.0),
@@ -121,7 +121,7 @@ __Usability updates for `pipeline` command__
 
 ## Nov 13, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.4.0](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.4.0)
 
@@ -138,7 +138,7 @@ __Usability updates for `pipeline` command__
   - k8s-source-control v1.2.0
   - tools-swagger-editor v1.4.0
 
-#### [Tekton tasks](/tools/tekton)
+#### [Tekton tasks](../reference/tools/tekton)
 
 [v2.1.26](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.26),
 [v2.1.25](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.25),
@@ -155,7 +155,7 @@ __Usability updates for `pipeline` command__
 
 ## Nov 6, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.3.9](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.3.9),
 [v2.3.8](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.3.9),
@@ -175,7 +175,7 @@ __Usability updates for `pipeline` command__
   - ibm-container-platform v1.18.0
   - ibm-object-storage v2.0.1
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.2.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.2.0),
 [v1.1.0](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.1.0)
@@ -185,7 +185,7 @@ __Usability updates for `pipeline` command__
 
 ## Oct 30, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.2.1](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.2.1),
 [v2.2.0](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.2.0)
@@ -197,7 +197,7 @@ __Usability updates for `pipeline` command__
   - ocp-cluster v2.3.5
   - pactbroker v1.4.0
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.0.3](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.0.3),
 [v1.0.2](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.0.2)
@@ -205,7 +205,7 @@ __Usability updates for `pipeline` command__
 - Fixes bug that causes the `endpoint` command to fail due to a missing import
 - Fixes bug with the `credentials` command that caused the internal urls to be displayed instead of the external ones
 
-#### [Tekton tasks](/tools/tekton)
+#### [Tekton tasks](../reference/tools/tekton)
 
 [v2.1.19](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.19),
 [v2.1.18](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.18),
@@ -235,7 +235,7 @@ __Usability updates for `pipeline` command__
 
 ## Sept 25, 2020
 
-#### [Tekton tasks](/tools/tekton)
+#### [Tekton tasks](../reference/tools/tekton)
 
 [v2.1.2](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.2),
 [v2.1.1](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.1.1),
@@ -246,7 +246,7 @@ __Usability updates for `pipeline` command__
 
 ## Sept 11, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.1.0](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.1.0),
 [v2.0.2](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.0.2),
@@ -257,7 +257,7 @@ __Usability updates for `pipeline` command__
 
 ## Aug 25, 2020
 
-#### [IasC (IZero and Terraform modules)](/admin/terraform)
+#### [IasC (IZero and Terraform modules)](./admin/terraform)
 
 [v2.0.0](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero/releases/tag/v2.0.0)
 
@@ -268,14 +268,14 @@ __Usability updates for `pipeline` command__
 - Automates the post-install configuration steps for Artifactory
 - Automates the post-install configuration steps for SonarQube
 
-#### [CLI](/getting-started/cli)
+#### [CLI](./getting-started/cli)
 
 [v1.0.1](https://github.com/ibm-garage-cloud/ibm-garage-cloud-cli/releases/tag/1.0.1)
 
 - Updates tekton pipeline handling to create the webhook
 - Adds `git`,`gitops` and `console` commands
 
-#### [Tekton tasks](/tools/tekton)
+#### [Tekton tasks](../reference/tools/tekton)
 
 [v2.0.3](https://github.com/IBM/ibm-garage-tekton-tasks/releases/tag/v2.0.3)
 

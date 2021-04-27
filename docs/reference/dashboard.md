@@ -19,7 +19,7 @@ Here are some recent improvements:
 - The IBM Cloud link can be overidden to support links to other cloud vendors when OpenShift is running on Azure, AWS, Google Cloud, or VMWare
 - The tools view is split into more columns to enable more reuse of the screen
 - The Cluster information is now available when you click on "Developer Dashboard" title
-- The IGC CLI now installs an alias into the `oc` and `kubectl` so it is now possible to open the dashboard quickly using `oc dashboard` and `kubectl dashboard`
+- The Toolkit CLI now installs an alias into the `oc` and `kubectl` so it is now possible to open the dashboard quickly using `oc dashboard` and `kubectl dashboard`
 
 ### Tools configured with OpenShift console
 
@@ -28,7 +28,7 @@ tools you often use as a developer.
 
 ![OpenShift Links](images/openshift-console-tools.png)
 
-You can see how these tools are configured by reading the [tools configuration guide](/admin/config-dashboard)
+You can see how these tools are configured by reading the [tools configuration guide](../adopting/customize/config-dashboard/dashboard.md)
 
 ### Opening the Dashboard
 
@@ -63,7 +63,7 @@ You can open the Dashboard from a terminal.
 
 ### Opening the Kubernetes/OpenShift console
 
-- Use the [IGC CLI](/getting-started/cli) `console` command to open the IKS or OpenShift console:
+- Use the [Toolkit CLI](../reference/cli.md) `console` command to open the IKS or OpenShift console:
 
     <Tabs>
     <Tab label="OpenShift">
@@ -95,7 +95,7 @@ You can open the Dashboard from a terminal.
 
 ### Access the URLs to endpoints in the cluster
 
-- Use the [IGC CLI](/getting-started/cli) `endpoints` command to list the endpoints for a given namespace/project:
+- Use the [Toolkit CLI](../reference/cli.md) `endpoints` command to list the endpoints for a given namespace/project:
 
     <Tabs>
     <Tab label="OpenShift">
@@ -142,7 +142,7 @@ You can open the Dashboard from a terminal.
 
 In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. In the meantime, the CLI includes a command to list the tools' logins.
 
-- Use the [IGC CLI](/getting-started/cli) `credentials` command to list the endpoints and credentials for the tools
+- Use the [Toolkit CLI](../reference/cli.md) `credentials` command to list the endpoints and credentials for the tools
 
     <Tabs>
     <Tab label="OpenShift">

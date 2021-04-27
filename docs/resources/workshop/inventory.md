@@ -6,12 +6,9 @@ Click on image below to launch video:
 
 [!["Workshop: Microservice Inventory App"](http://img.youtube.com/vi/gvuJi7qEZck/0.jpg)](https://youtu.be/gvuJi7qEZck "Workshop: Microservice Inventory App"){: target=_blank}
 
-!!!Todo
-    Fixup links (relative links need to be used!)
-
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)
-    - The student should [Setup CLI and Terminal Shell](/workshop/setup#4.-(optional)-auto-configure-terminal-shell)
+    - The student should [Setup CLI and Terminal Shell](setup.md#4-optional-auto-configure-terminal-shell)
 
 1. Instructor will provide the following info:
     - OpenShift Console URL (OCP_CONSOLE_URL)

@@ -1,9 +1,12 @@
 # Configure Dashboard
 
+!!!Todo
+    Fix the formatting
+
 Customize the Developer Dashboard and the OpenShift console
 
 !!!Note
-  An **environment administrator** performs the steps on this page. See [Plan Installation > Roles](/admin/plan-installation#roles) for the overview of the roles involved.
+  An **environment administrator** performs the steps on this page. See [Plan Installation > Roles](./admin/plan-installation#roles) for the overview of the roles involved.
 
 ## Customizing the Dashboard
 
@@ -34,11 +37,11 @@ You can also tailor the list of content that is displayed in the Activation tab 
 
 ## Adding tools
 
-You can add additional tools to the [Developer Dashboard](/getting-started/dashboard) and to the Tools menu on the OpenShift console. The tools in the cluster are added automatically, but the tools outside the cluster must be added manually. You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces (if you've installed that in the environment), etc.
+You can add additional tools to the [Developer Dashboard](./getting-started/dashboard) and to the Tools menu on the OpenShift console. The tools in the cluster are added automatically, but the tools outside the cluster must be added manually. You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces (if you've installed that in the environment), etc.
 
 ### Adding tools to the Dashboard
 
-Use the [Cloud Native Toolkit CLI](/getting-started/cli) to add tools to the dashboard.
+Use the [Cloud Native Toolkit CLI](./getting-started/cli) to add tools to the dashboard.
 
 - Use this syntax to add a tool:
     ```bash
@@ -60,7 +63,7 @@ Use the [Cloud Native Toolkit CLI](/getting-started/cli) to add tools to the das
     igc tool-config --name integration --url {url to CP4I instance}
     ```
 
-- If you've [installed CodeReady Workspaces](/admin/install-crw) in your Environment, add it to your Dashboard:
+- If you've [installed CodeReady Workspaces](./admin/install-crw) in your Environment, add it to your Dashboard:
     ```
     igc tool-config --name codeready --url {url to the CRW instance}
     ```
@@ -96,9 +99,9 @@ This table lists the tools that can be displayed.
 
 ### Adding Tools to the OpenShift Console
 
-If the <Globals name="env" /> includes an OpenShift cluster, the Environment adds a Tools menu to the OpenShift console. The tools in the cluster are automatically added, but you need to add the tools outside of the cluster to specify their URLs. You can also extend the Tools menu to provide fast links to common tools you the development team will require. These tools links are common across the cluster.
+If the environment includes an OpenShift cluster, the Environment adds a Tools menu to the OpenShift console. The tools in the cluster are automatically added, but you need to add the tools outside of the cluster to specify their URLs. You can also extend the Tools menu to provide fast links to common tools you the development team will require. These tools links are common across the cluster.
 
-![OCP Console Tools](/images/ocp-console-tools.png)
+![OCP Console Tools](./images/ocp-console-tools.png)
 
 - Edit the file called `tools.yaml` in the `terraform/scripts` folder. This file contains the CRDs required to configure the menu items. Add custom links for `github`, `logdna`, and `sysdig`, and save the file.
 
@@ -152,7 +155,7 @@ Get the URL for the LogDNA web UI in your environment (as explained in [IBM Log 
 - In the IBM Cloud dashboard, navigate to **Observability** > **Logging**
 - Find the logging instance named after your environment's cluster, such as `showcase-dev-iks-logdna`. To help find it,
 you can filter by your resource group.
-    ![LogDNA Logging Instance](/images/logdna-logging-instance.png)
+    ![LogDNA Logging Instance](./images/logdna-logging-instance.png)
 - In the logging instance, the URL in the **View LogDNA** button is the one to add to the tools lists
 
 ### Sysdig dashboard
@@ -160,6 +163,6 @@ you can filter by your resource group.
 Get the URL for the Sysdig web UI for your environment (as explained in [Step 4: Launch the web UI](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig?topic=Sysdig-getting-started#step4))
 - In the IBM Cloud dashboard, navigate to **Observability** > **Monitoring**
 - Find the monitoring instance named after your environment's cluster, such as `showcase-dev-iks-sysdig`
-![Sysdig Monitoring Instance](/images/sysdig-monitoring-instance.png)
+![Sysdig Monitoring Instance](./images/sysdig-monitoring-instance.png)
 - In the monitoring instance, the URL in the **View Sysdig** button is the one to add to the tools lists
 

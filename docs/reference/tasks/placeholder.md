@@ -1,5 +1,11 @@
 # Task Placeholder page
 
+
+!!!Todo
+    Complete this content for each Pipeline and Task provided in the Toolkit
+
+## Template content
+
 For each task the content should be:
 
 ## Description
