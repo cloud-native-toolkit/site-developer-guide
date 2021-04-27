@@ -6,8 +6,8 @@
     What is appropriate?
 
     - [Cloud Native Bootcamp : https://cloudnative101.dev](https://cloudnative101.dev)
-    - [Learning Journey : https://cloudnativetoolkit.dev/overview](https://cloudnativetoolkit.dev/overview) - need to split our sections?
-
+    - [Learning Journey : https://cloudnativetoolkit.dev/overview](https://cloudnativetoolkit.dev/overview) - need to split out sections?
+    - [IBM Open Labs - Red Hat OpenSHift on IBM Cloud](https://developer.ibm.com/openlabs/openshift)
 
 ## Alternate learning options
 

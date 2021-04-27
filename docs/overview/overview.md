@@ -1,9 +1,7 @@
 # What is the Cloud-Native Toolkit?
 
 Cloud-Native Toolkit is an open-source collection of assets that provide an environment for developing
-cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. It
-embodies IBM Garage Method principles and practices for consistently developed
-applications, incorporating best practices that increase developer velocity for efficient delivery of business value.
+cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. It embodies IBM Garage Method principles and practices for consistently developed applications, incorporating best practices that increase developer velocity for efficient delivery of business value.
 
 [!["IBM Garage method overview"](http://img.youtube.com/vi/u3PTRqkd94k/0.jpg)](https://youtu.be/u3PTRqkd94k "IBM Garage method overview"){: target=_blank}
 
@@ -55,7 +53,7 @@ As the name suggests, the Cloud-Native Toolkit provides a collection of tools th
 - [**Infrastructure as Code**](../adopting/best-practices/infrastructure-as-code.md){: target="_blank"} - Terraform scripts and GitOps configuration to provision and manage the environment
 - [**CLI**](../reference/cli.md){: target="_blank"} - a simple node-based CLI that installs as a plugin to the `kubectl` and `oc` CLIs and provides commands to simplify common
 - [**Developer Dashboard**](../reference/dashboard.md){: target="_blank"} - Dashboard component and Red Hat OpenShift console extensions to simplify common developer activities
-- [**DevOps pipelines**](../adopting/best-practices/ci.md){: target="_blank"} - continuous integration pipelines for Tekton and Jenkins
+- [**DevOps pipelines**](../reference/tasks/pipelines.md){: target="_blank"} - continuous integration pipelines for Tekton and Jenkins
 - [**Starter Kits and Code Patterns**](../reference/starter-kit/starter-kit.md){: target="_blank"} - software repositories that can be used to quickly get started building applications using common patterns, or to serve as a reference to enhance existing patterns
 - [**Learning Journey**](../learning/fast-start.md){: target="_blank"} - activation material to teach practitioners how to apply cloud-native practices in real-world scenarios using the Toolkit
 
@@ -71,7 +69,7 @@ for consistent and rapid development of cloud-native applications:
 - **Starter Kits**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed
 - **Dashboard**: A centralized console to help developers use the environment's capabilities
 
-Typically a [Cloud System Admin](/admin) (or a [squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
+Typically a [Cloud System Admin](./admin) (or a [squad lead](https://www.ibm.com/garage/method/practices/culture/practice-building-effective-squads/)) installs and sets
 up a new Developer Environment after the [inception workshop](https://www.ibm.com/garage/method/practices/think/inception),
 providing a place for the developers to start developing the
 [minimum viable product (MVP)](https://www.ibm.com/garage/method/practices/think/inception/practice_minimum_viable_product).
@@ -117,10 +115,7 @@ The diagram shows the components in the environment: the cluster, the deployment
     | LogDNA | IBM Cloud service supplied by [LogDNA](https://logdna.com/)|
     | Sysdig | IBM Cloud service supplied by [Sysdig](https://sysdig.com/)|
 
-The tools to provision an environment using the Cloud-Native Toolkit can the customized to provision a particular
-set of tools fit for the environment. The Toolkit provides a default installation to provision a Developer Environment
-as a starting point. Any of the available components listed on the [Terraform modules](/admin/terraform) page can be used
-to prepare the environment.
+The tools to provision an environment using the Cloud-Native Toolkit can the customized to provision a particular set of tools fit for the environment. The Toolkit provides a default installation to provision a Developer Environment as a starting point. Any of the available components listed on the [Terraform modules](./admin/terraform) page can be used to prepare the environment.
 
 #### Development cluster
 
@@ -136,24 +131,11 @@ The following best-of-breed open source software tools are installed in the clus
 
 | Capability                  | Tool           | Bitnami |Description |
 | --------------------------- |:-------------- | ------- |------------|
-| Continuous Integration      | [Jenkins CI](/tools/jenkins)            |  Yes    | Jenkins is a common tool for Continuous Integration   |
-| Continuous Integration      | [Tekton CI](/tools/tekton)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
-| API Contract Testing        | [Pact](/tools/contract-testing-with-pact)                        |         | Pact enables API contract testing |
-| Code Analysis               | [SonarQube](/tools/sonarqube)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
-| Container Image Registry    | [IBM Cloud Container Registry](/tools/ibm-cloud-container-registry)   |         | Stores container images to be deployed |
-| Artifact Management         | [Artifactory](/tools/artifactory)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
-| Continuous Delivery         | [ArgoCD](/tools/argocd)                   |         | ArgoCD support Continuous Delivery with GitOps |
+| Continuous Integration      | [Jenkins CI](../reference/tools/jenkins.md)            |  Yes    | Jenkins is a common tool for Continuous Integration   |
+| Continuous Integration      | [Tekton CI](../reference/tools/tekton.md)       |         | Tekton is an emerging tool for Continuous Integration with Kubernetes and OpenShift  |
+| API Contract Testing        | [Pact](../reference/tools/pact.md)                        |         | Pact enables API contract testing |
+| Code Analysis               | [SonarQube](../reference/tools/sonar-qube.md)                       |  Yes    | SonarQube can scan code and display the results in a dashboard |
+| Container Image Registry    | [IBM Cloud Container Registry](../reference/tools/ibm-cloud-container-registry.md)   |         | Stores container images to be deployed |
+| Artifact Management         | [Artifactory](../reference/tools/artifactory.md)              |  Yes    | Artifactory is an artifact storage and Helm chart repository  |
+| Continuous Delivery         | [ArgoCD](../reference/tools/argocd.md)                   |         | ArgoCD support Continuous Delivery with GitOps |
 | Web IDE                     | [Code Ready Workspace](https://developers.redhat.com/products/codeready-workspaces/overview)              |         | IDE for editing and managing code in a web browser |
-
-#### Backend services
-
-The following IBM Cloud services can be created and bound to the cluster:
-
-| Capability                | Service        |Description |
-| -----------------------   |:-------------- |------------|
-| Log Management            | [Log Analysis with LogDNA](/tools/logdna)  | Manage and analyze app logs  |
-| Monitoring                | [Cloud Monitoring with Sysdig](/tools/sysdig)  | Monitor app and platform resources |
-| User Authentication       | [App ID](/programming/security/)                    | Verify identities of clients accessing app end points |
-| Relational Data Storage   | [Databases For PostgreSQL](/programming/databases)  | Stores relational data structured as schemas for SQL querying |
-| Schemaless Data Storage   | [Cloudant](/programming/databases)                  | NoSQL database for JSON documents |
-| Binary Data Storage       | [Cloud Object Storage](https://cloud.ibm.com/objectstorage/create)      | Storage service commonly used for binary content |

@@ -4,12 +4,9 @@ Click on image below to launch video:
 
 [!["Workshop: CI Pipelines with Tekton"](http://img.youtube.com/vi/V-BFLaPdoPo/0.jpg)](https://youtu.be/V-BFLaPdoPo "Workshop: CI Pipelines with Tekton"){: target=_blank}
 
-!!!Todo
-    Fixup links - relative links are needed
-
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)
-    - The student should [Setup CLI and Terminal Shell](/workshop/setup#4-setup-cli-and-terminal-shell)
+    - The student should [Setup CLI and Terminal Shell](setup.md#4-optional-auto-configure-terminal-shell)
 
 1. Instructor will provide the following info:
     - OpenShift Console URL (OCP_CONSOLE_URL)

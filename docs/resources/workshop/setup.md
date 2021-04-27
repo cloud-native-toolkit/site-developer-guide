@@ -10,10 +10,13 @@ Click on image below to launch video:
 
 Create an OpenShift Cluster for example:
 
-  - The 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
-  - Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](getting-started-day-0/provision-cluster/ibm-cloud-vpc)
-  - On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
-  - IBM internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
+!!!Todo
+    Fixup links below
+
+- The 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
+- Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](getting-started-day-0/provision-cluster/ibm-cloud-vpc)
+- On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
+- IBM internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
 
 ## 2. Install IBM Cloud Native Toolkit
 

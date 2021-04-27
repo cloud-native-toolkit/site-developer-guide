@@ -113,7 +113,7 @@ oc console
     !!!Todo
         Fix the workspaces link, once that content has been migrated
 
-    If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](/getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster.
+    If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](./getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster.
 
     The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding
 

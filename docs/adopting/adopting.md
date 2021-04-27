@@ -1,17 +1,14 @@
 # Adopting the Cloud-Native Toolkit
 
-After you complete the learning section you may want to install the toolkit in your working environment and start adopting the Toolkit.
+This section assumes you have completed the fast-start learning, or equivalent, and have some knowledge of the Cloud-Native Toolkit.
 
-This section provides information about some alternate install options for the Toolkit, how to customize the toolkit and some best practices for using the Toolkit in various use cases.
+Now you have some hands on experience of using the toolkit, you want to start using the Toolkit on your own project.  To do this you need to make some decisions on how you want to integrate the Cloud-Native Toolkit into your development environment.
 
-!!!Todo
-    Provide a brief introduction to the sections within Adopting the Toolkit:
+This section provides guidance on:
 
-    - Setup options
-    - Customizing the toolkit
-        - Choosing different components for pipeline
-        - replacing with external components (e.g. DockerHub or Quay as registry rather than internal registry)
-        - Modifying pipelines and tasks
-    - Admin guide
-    - Best practices
-    - Use cases
+- how to setup the Toolkit within your development environment
+- how to customize the Toolkit to meet your development team needs
+- how to add or replace components of the Toolkit with alternate solutions, such as selecting a different container registry solution
+- how to use the Toolkit for the included development use cases (JavaScript, TypeScript, Spring Boot, etc...)
+- how to support development use cases not provided with the Toolkit
+- best practices for using the Toolkit within a Cloud-Native development process
