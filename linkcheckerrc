@@ -1,0 +1,10 @@
+[filtering]
+ignore=
+  ^https://cloudnativetoolkit.dev
+  ^https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/edit
+  xml$
+  ^https://ccp-ui.csplab.intranet.ibm.com
+  ^https://ccp-ui.apps.labprod.ocp.csplab.local
+
+[checking]
+anchors=1
