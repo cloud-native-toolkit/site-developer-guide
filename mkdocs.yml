@@ -7,6 +7,7 @@ repo_name: cloud-native-toolkit/ibm-garage-developer-guide
 repo_url: https://github.com/cloud-native-toolkit/ibm-garage-developer-guide
 docs_dir: docs
 site_dir: public
+edit_uri: edit/main/docs
 theme:
     name: material
     palette:
@@ -17,8 +18,6 @@ theme:
       text: IBM Plex Sans
       code: IBM Plex Mono
     language: en
-    features:
-      - navigation.instant
     custom_dir: custom-theme/
 use_directory_urls: false
 plugins:
@@ -61,6 +60,7 @@ nav:
       - Cloud-Native Development with the Toolkit: learning/in-depth.md
       - Automated Testing: learning/testing.md
       - Static Analysis: learning/analysis.md
+      - DevOps: learning/devops.md
       - Pipeline: learning/pipeline.md
   - Adopting the Toolkit:
     - Adopting the Toolkit: adopting/adopting.md
@@ -69,17 +69,23 @@ nav:
       - Configuring IBM Cloud based setup: adopting/setup/ibmcloud-setup.md
       - Firewalled setup: adopting/setup/firewalled-setup.md
       - Air-gapped setup: adopting/setup/air-gapped-setup.md
+      - Post Install steps: adopting/setup/configureEnvironment.md
+      - Artifactory post install: adopting/setup/artifactory-setup.md
     - Customizing the Toolkit: 
       - Customization overview: adopting/customize/customize.md
       - Customizing the dashboard: adopting/customize/config-dashboard/dashboard.md
     - Toolkit administration: adopting/admin.md
     - Best Practices: 
       - Best Practices: adopting/best-practices/best-practices.md
+      - IBM Cloud setup:
+        - IBM Cloud setup: adopting/best-practices/ibm-cloud-account/ibm-cloud-setup.md
+        - Access control: adopting/best-practices/ibm-cloud-account/configure-account.md
+        - Installation planning: adopting/best-practices/ibm-cloud-account/plan-installation.md
       - Container Registry: adopting/best-practices/registry.md
       - Infrastructure as Code: adopting/best-practices/infrastructure-as-code.md
-      - Continuous Integration: adopting/best-practices/ci.md
-      - Security and Permissions: adopting/security.md
-      - Auditing and Logging: adopting/audit-logging.md
+      - DevOps: adopting/best-practices/devops.md
+      - Secret management: adopting/best-practices/secret-management.md
+      - Monitoring and Logs: adopting/best-practices/monitoring-logs.md
     - Use Cases: 
       - User cases: adopting/use-cases/applying.md
       - Add a new use case: adopting/use-cases/add-use-case.md
@@ -94,9 +100,10 @@ nav:
       - Base template: reference/starter-kit/base.md
       - Create a Starter Kit: reference/starter-kit/new-starterkit.md
     - Toolkit Components:
-      - Developer Dashboard: reference/tools/dashboard.md
+      - Toolkit components: reference/tools/tools.md
       - ArgoCD: reference/tools/argocd.md
       - Artifactory: reference/tools/artifactory.md
+      - Jenkins: reference/tools/jenkins.md
       - PACT: reference/tools/pact.md
       - SonarQube: reference/tools/sonar-qube.md
       - OpenShift Pipelines/Tekton: reference/tools/tekton.md
@@ -124,7 +131,8 @@ nav:
       - ibm-setup: reference/tasks/placeholder.md
       - ibm-tag-release: reference/tasks/placeholder.md
     - Iteration Zero:
-      - Terraform modules: reference/terraform/terraform.md
+      - Iteration Zero: reference/iteration-zero/iteration-zero.md
+      - Terraform modules: reference/iteration-zero/terraform.md
   - Resources: 
       - Additional resources: resources/resources.md
       - Workshop: 

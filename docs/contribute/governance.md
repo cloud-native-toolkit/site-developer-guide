@@ -8,8 +8,7 @@ roles detail a number of ways in which people might interact with the Toolkit.
 
 ### Consumers
 
-_Consumers_ are members of the community who are applying assets to their development projects. Anyone who wants to 
-apply any of the assets can be a user. We encourage consumers to participate as evangelists and contributors as well.
+_Consumers_ are members of the community who are applying assets to their development projects. Anyone who wants to apply any of the assets can be a user. We encourage consumers to participate as evangelists and contributors as well.
 
 ### Evangelists
 
@@ -59,6 +58,7 @@ Each project team maintains the assets in its project. Therefore, its members ar
 The project has a project lead, a lead maintainer who should also be a member of the technical steering committee.
 
 Each project lead is responsible for:
+
 - Acting as a point of primary contact for the team
 - Participating in the technical steering committee
 - Deciding on the initial membership of project maintainers (in consultation with the core team)
@@ -68,6 +68,7 @@ Each project lead is responsible for:
 - Making final decisions in cases where the team is unable to reach consensus (should be rare)
 
 The way that project teams communicate internally and externally is left to each team, but:
+
 - Technical discussion should take place in the public domain as much as possible, ideally in GitHub issues and pull requests.
 - Each project should have a dedicated Slack channel (IBM internal). Decisions from Slack discussions should be captured in GitHub issues.
 - Project teams should actively seek out discussion and input from stakeholders who are not members of the team.
@@ -78,7 +79,7 @@ The way that project teams communicate internally and externally is left to each
 
 Project planning is managed in a [Kanban board](https://en.wikipedia.org/wiki/Kanban_board), specifically this Zenhub board:
 
-- [Planning Zenhub](https://github.ibm.com/garage-catalyst/planning) (To Be Moved Externally)
+- [Planning Zenhub](https://github.com/cloud-native-toolkit/planning)
 
 ### Decision-making
 
@@ -119,8 +120,4 @@ Catalyst assets are typically stored in GitHub repositories and use a [fork and 
 
 ### Contributor License Agreement
 
-We require contributors outside of IBM to sign our Contributor License Agreement (CLA) before code contributions can be reviewed and merged. If you have questions, please [contact the core team](/help/support#email).
-
-### Support
-
-Have questions? Found a bug? Learn where to go and what to do by visiting the [Support page](/help/support).
+We require contributors outside of IBM to sign our Contributor License Agreement (CLA) before code contributions can be reviewed and merged.

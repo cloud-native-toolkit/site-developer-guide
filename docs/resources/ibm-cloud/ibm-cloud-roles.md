@@ -1,5 +1,8 @@
 # IBM Cloud account management
 
+!!!Todo
+    Is this content needed - is there not a link on IBM Cloud website we can just refer to?  Shouldn't replicate documentation that is maintained elsewhere?
+
 The IBM Cloud environment is provided with a number of powerful tools to manage user access and resource provisioning
 but little is configured for you out of the box. This guide gives an approach to managing the account in a sensible way that can easily be extended or re-configured based upon the requirements of a given situation.
 
@@ -28,7 +31,7 @@ An account owner must create the access group for account managers. The account 
 
 The `account managers` are an account owner or other users with account management permissions
 
-As described in [Configure Account](/admin/config-account), the account managers can set up the resource groups and access groups needed to install and use the environments. For each environment, the account managers will:
+As described in [Configure Account](../../adopting/best-practices/ibm-cloud-account/configure-account.md), the account managers can set up the resource groups and access groups needed to install and use the environments. For each environment, the account managers will:
 
 - Create a resource group
 - Create an access group named `<resource_group>-ADMIN` using the script `acp-admin`

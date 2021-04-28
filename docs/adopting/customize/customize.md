@@ -15,6 +15,13 @@
       - Terraform modules available and details of what each module does
       - Pipelines and Tasks installed and details of what each module does
 
+    This content should reference the iteration zero reference section, where each Terraform module will be described
+    
+    There is content within the original site documentation, but it may need updating:
+
+    - [https://cloudnativetoolkit.dev/admin/cluster-configuration](https://cloudnativetoolkit.dev/admin/cluster-configuration)
+    - [https://cloudnativetoolkit.dev/admin/terraform](https://cloudnativetoolkit.dev/admin/terraform)
+
 !!!Todo
     This section talks about options to move away from the *standard* install
 

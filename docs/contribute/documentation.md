@@ -4,6 +4,8 @@ The developer guide is created using [MkDocs](http://mkdocs.org){: target="_blan
 
 MkDocs takes Markdown documents and turns them into a static website, that can be accessed from a filesystem or served from a web server.
 
+A [link checker tool](https://linkchecker.github.io/linkchecker/index.html) is also used to validate all links in the MkDocs generated website.
+
 ## Document layout
 
 The documentation is organized into distinct sections to provide easy navigation and allow self-service viewers to get started, then dive into deeper content with a clear path.
@@ -50,7 +52,9 @@ MkDocs will warn of any internal broken links, so it is important that links wit
 - a link starting with a file name (including the .md extension) or relative directory (../directory/filename.md) is an internal link and will be verified by MkDocs
 
 !!!Information
-    Internal links should be to the Markdown file.  When the site is generated the filename will be automatically converted to the correct URL
+    Internal links should be to the Markdown file (with .md extension).  When the site is generated the filename will be automatically converted to the correct URL
+
+As part of the build process a linkchecker application will check the generated html site for any broken links.  You can run this linkchecker locally using the instructions.  If any links in the documentation should be excluded from the link checker, such as links to localhost, then they should be added as a regex to the linkcheckerrc file, located in the root folder of the project - see [linkchecker documentation](https://linkchecker.github.io/linkchecker/index.html) for additional information
 
 ## Extensions used in the prototype
 
@@ -237,11 +241,13 @@ To work on documentation and be able to view the rendered web site you need to c
     - Clone or Fork the documentation repository
     - cd into the documentation directory
     - Install the required python packages `pip install -r requirements.txt'
+    - Install the linkchecker using command `pip install git+https://github.com/linkchecker/linkchecker.git`
 
     You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
 
     - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
-    - `mkdocs serve` will build the static site and launch a test server on [http://localhost:8000](http://localhost:8000){: target=_blank}.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
+    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
+    - To check links in the built site (`mkdocs build` much be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the lincheckerrc file.
 
 === "Tooling within a Docker container"
 
@@ -250,6 +256,7 @@ To work on documentation and be able to view the rendered web site you need to c
     - You need to have [Docker](https://www.docker.com) installed and running on your system
     - There are helper configurations installed if you have npm from [Node.JS](https://nodejs.org) installed.
     - To start developing run command `npm run dev` in the root directory of the git repo (where **package.json** and **mkdocs.yaml** are located)
-    - Open a browser to [http://localhost:8000](http://localhost:8000){: target=_blank}, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
+    - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
     - To stop developing run command `npm dev:stop`, which will terminate the docker container
     - View the scripts section of **package.json** in the root folder of the git repo for additional options available
+    - To build the static HTML file and check all links run command `npm run build`

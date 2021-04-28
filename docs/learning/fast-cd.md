@@ -1,6 +1,6 @@
 # Continuous Delivery - fast start
 
-[Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank } is a declarative, [GitOps](/getting-started-day-0/git-ops){: target=_blank } [continuous delivery](/getting-started-day-2/continuous-delivery){: target=_blank } tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
+[Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank } is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
 
 Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state.
 
@@ -78,10 +78,10 @@ The last stage in the CI pipeline updates a GitOps repository with the updated a
 order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes
 to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
 
-- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [IGC CLI](/getting-started/cli) to register the pipeline then this secret has already been created.
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [Toolkit CLI](./getting-started/cli) to register the pipeline then this secret has already been created.
 - A config map named `gitops-repo` holds the url and branch for the gitops repository.
 
-Fortunately the [IGC CLI](/getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops) section.
+Fortunately the [Toolkit CLI](./getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [Toolkit CLI gitops command](./getting-started/cli#gitops) section.
 
 1. Make sure to switch context to the project/namespace CI namespace
 
@@ -360,7 +360,7 @@ The following provides the steps to handle protected information in a GitOps rep
 
 #### Prepare the Key Protect instance
 
-As the name suggests, the [Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](/tools/secret-management-with-key-protect). From
+As the name suggests, the [Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](./tools/secret-management-with-key-protect). From
 those instructions you can find the information required for the subsequent steps.
 
 #### Create the secret configuration
@@ -429,7 +429,7 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
         - `destination cluster` - The cluster url for the deployment
         - `destination namespace` - The namespace where the application should be deployed
         - `Plugin` - In the last section of the UI select `Plugin` from the dropdown
-            ![Argo CD plugin](/images/argocd-plugin.png)
+            ![Argo CD plugin](./images/argocd-plugin.png)
         - `key-protect-secret` - Click in the name field and select `key-protect-secret` from the dropdown 
         
         ![Argo CD key protect secret](./images/argocd-key-protect-secret.png)

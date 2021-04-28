@@ -51,7 +51,7 @@ Options:
 ```
 
 !!!Info
-    As of v0.5.1, the IGC CLI will now install the commands as [plugins](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/){: target="_blank" .external } to the `kubectl` and `oc` CLIs.
+    As of v0.5.1, the Toolkit CLI will now install the commands as [plugins](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/){: target="_blank" .external } to the `kubectl` and `oc` CLIs.
     For example, all of the following are equivalent:
 
     ```shell
@@ -62,8 +62,8 @@ Options:
 ### Prerequisite tools
 
 
-Some of the commands provided by the IGC CLI orchestrate interactions between other CLIs. To get
-started please install the [prerequisite tools](/getting-started/prereqs), in particular:
+Some of the commands provided by the Toolkit CLI orchestrate interactions between other CLIs. To get
+started please install the [prerequisite tools](../learning/dev-setup.md){: target=_blank}, in particular:
 
 - The Kubernetes CLI
 - The Red Hat OpenShift CLI
@@ -73,7 +73,7 @@ started please install the [prerequisite tools](/getting-started/prereqs), in pa
 
 ### dashboard
 
-Opens the [Developer Dashboard](/getting-started/dashboard) in the default browser. If a default browser has not been
+Opens the [Developer Dashboard](dashboard.md) in the default browser. If a default browser has not been
 configured, then the URL to the Dashboard will be printed out.
 
 The dashboard displays the Cloud-Native Toolkit tools configured within the cluster along with links to
@@ -88,7 +88,7 @@ This command requires that the login context for the cluster has already been es
 
 !!!ToDo
     Add Windows Powershell equivalents
-    
+
 === "CLI"
     The command is used in the following way:
 
@@ -203,7 +203,7 @@ The command works by reading information available in the cluster. When each too
 number of different ways within the environment:
 
 - Provide configuration information to the pipelines
-- Populate the tiles on the [Developer Dashboard](/getting-started/dashboard)
+- Populate the tiles on the [Developer Dashboard](dashboard.md){: target=_blank}
 - Populate the results of the `credentials` command
 
 This command requires that the login context for the cluster has already been established.
@@ -753,8 +753,7 @@ oc pipeline --tekton "https://github.com/my-org/my-repo" -p scan-image=false -p 
         In order for Jenkins to have access to the git repository, particularly if it is a private repository, a Kubernetes
         secret needs to be added that contains the git credentials.
 
-        1. Create a personal access token (if you don't already have one) using the prereq instructions -
-        https://cloudnativetoolkit.dev/getting-started/prereqs#configure-github-personal-access-token
+        1. Create a personal access token (if you don't already have one) using the [prereq instructions](../learning/dev-setup.md#git-pat){: target=_blank}
 
         2. Copy the following into a file called `gitsecret.yaml` and update the {Git-Username}, and {Git-PAT}
 
