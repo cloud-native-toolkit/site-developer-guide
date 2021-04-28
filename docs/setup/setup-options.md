@@ -11,8 +11,7 @@ If you don't have access to a Cloud-Native Toolkit then you need to select one o
 
 ## Options for installing the toolkit
 
-!!!Todo
-    Add a graphic here to summarise the different install options (with indications of when an approach is appropriate)
+![fast-start install](images/fast-start-install.png){style="width: 90%" .center }
 
 The Cloud-Native toolkit will run on a standard Kubernetes cluster or on the Red Hat OpenShift hybrid cloud platform, which is based on Kubernetes.
 

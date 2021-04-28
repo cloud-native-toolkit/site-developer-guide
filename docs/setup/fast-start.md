@@ -33,21 +33,23 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
     - Incurs costs
     - No local resources needed to run cluster
 
-=== "Code Ready Containers"
-    #### Code Ready Containers
+=== "OpenShift or OKD"
+    #### OpenShift / OKD
+
+    - Run on local hardware, virtualized infrastructure or cloud provider
+    - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licences)
+    
+        !!!Todo
+            What is the minimum config that needs to be done to allow Toolkit install?
+
+=== "CodeReady Containers"
+    #### CodeReady Containers
 
     - Run locally on laptop or workstation
     - no runtime costs
-    - Need 16GB memory or greater
+    - Need 16GB memory or greater in host system
     - No remote access from public internet services, such as github
     - cluster access only from host system by default - no remote access to cluster over network
-
-=== "Local OpenShift"
-    #### Local OpenShift / OKD
-
-    - Run on local hardware
-    - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licences)
-    - you need to 
 
 === "Open Labs cluster"
     #### Open Labs cluster
@@ -75,23 +77,41 @@ Select the option you want for your cluster, then follow the instructions.
     !!!Todo
         Add instructions here
 
-=== "Code Ready Containers"
-    #### Code Ready Containers
+=== "OpenShift or OKD"
+    #### OpenShift / OKD
 
-    !!!Todo
-        Add instructions here
+    1. Install the OpenShift or OKD cluster:
+        - For OpenShift follow the [install instructions](https://docs.openshift.com/container-platform/4.7/installing/index.html){: target="_blank" .external } for your preferred environment
+        - For OKD follow the [install instructions](https://docs.okd.io/latest/installing/index.html){: target="_blank" .external } for your preferred environment
 
-=== "Local OpenShift"
-    #### Local OpenShift / OKD
+        !!!Todo
+            Add any additional post install configuration steps needed here
+    
+    2. Once installed you need to ensure you can sign onto the OpenShift cluster using the web console (see the Web console section in the docs for details on how to access the console).  
+    3. Once you are signed into the console you can download and install the OpenShift Command Line Interface (CLI) tools.  The CLI tools are available from the question mark icon next to you login name at the top of the OpenShift console, or from [Red Hat](https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/){: target="_blank" .external }.
+    4. On your local workstation or laptop open a command prompt and sign in to your OpenShift cluster.  The exact command needed is available from the OpenShift web console, select your name at the top of the screen, then in the dropdown select the **Copy login command** link.  This will open a screen where you can select **Display Token** (you may be asked to authenticate again before the token is displayed) then you can copy the command line command needed to login to the cluster.
 
-    !!!Todo
-        Add instructions here
+=== "CodeReady Containers"
+    #### CodeReady Containers
+
+    1. Navigate to the [Red Hat CodeReady Containers](https://developers.redhat.com/products/codeready-containers/overview){: target="_blank" .external } site.
+    2. Select **Install OpenShift on your laptop** button and follow the instructions to install CodeRead Containers to your laptop
+
+        !!!Warning
+            CodeReady Containers needs to adjust your laptop networking, so on some platforms it will not work alongside VPN clients needed to access corporate networks.  If you need to run a VPN client, then you can install CodeReady Containers in a virtual machine on your laptop and work inside the virtual machine to access CodeReady Containers.
+    
+    3. Download and install the OpenShift Command Line Interface (CLI) tools.  The CLI tools are available from the question mark icon next to you login name at the top of the OpenShift console - see [section 3.3.1 in the CodeReady Containers Getting Started Guide](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.25.0/html/getting_started_guide/using-codeready-containers_gsg#accessing-the-openshift-web-console_gsg), or from [Red Hat](https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/){: target="_blank" .external }.
+    4. Once you have the CodeReady Containers CLI installed you need to login to the cluster - this is covered in the [CodeReady Containers Getting Started Guide - section 3.3.2](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.25.0/html/getting_started_guide/using-codeready-containers_gsg#accessing-the-openshift-cluster-with-oc_gsg){: target="_blank" .external }
+    5. Move onto the next section to install the Cloud-Native Toolkit
 
 === "Open Labs cluster"
     #### Open Labs cluster
 
-    !!!Todo
-        Add instructions here
+    1. Navigate to the [IBM Open Labs - Red Hat OpenShift on IBM Cloud](https://developer.ibm.com/openlabs/openshift){: target="_blank" .external }
+    2. Select the **Bring Your Own Application - Launch Lab** button
+    3. Sign-in to the IBM Cloud or signup if you don't already have an IBM account
+    4. When the Lab has been launched, forward the instructions in the left panel to show the 2nd page, **Quick Links and Common Commands**.  Here you can see the command line commands to log into your IBM cloud account and also the OpenShift cluster.  Log into the IBM cloud and OpenShift cluster, using the command prompt on the left side of the lab browser screen
+    5. Jump to the next section and follow the command in the **Linux / MacOS** tab to install the Cloud-Native Toolkit - run the command on the command line in the left panel of the lab screen.  You must have completed the logon in the previous step before starting the toolkit install
 
 ## Installing the toolkit
 
