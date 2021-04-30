@@ -36,11 +36,12 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
 === "OpenShift or OKD"
     #### OpenShift / OKD
 
-    - Run on local hardware, virtualized infrastructure or cloud provider
+    !!!Warning
+        This option requires you to setup and configure an OpenShift or OKD cluster, so assumes you have the environment and skills to complete this task.  If not it is recommended that you select one of the other options
+
+    - run on local hardware, virtualized infrastructure or cloud provider
     - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licences)
-    
-        !!!Todo
-            What is the minimum config that needs to be done to allow Toolkit install?
+    - the cluster must have a default storage class configured, so a persistent volume claim will be satisfied
 
 === "CodeReady Containers"
     #### CodeReady Containers
@@ -56,7 +57,7 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
 
     - No local resources needed to run cluster
     - No runtime costs
-    - Limited time cluster (6 hours)
+    - Limited time cluster - enough time to complete the learning material, but clusters get automatically cleaned up after a few hours
 
 ## Obtaining your Kubernetes Cluster
 
@@ -68,8 +69,29 @@ Select the option you want for your cluster, then follow the instructions.
 === "OpenShift on IBM Cloud"
     #### Red Hat OpenShift running on IBM Cloud
 
-    !!!Todo
-        Add instructions here
+    1. Sign into your IBM account
+    2. Navigate to the Catalog using the link at the top of the IBM Cloud web console
+    3. Search for OpenShift and select RedHat OpenShift on IBM Cloud
+    4. Create a cluster.  On the options page:
+        - If working in your company account check with your account admin about the OpenShift licence entitlement, and make the appropriate entitlement choice.  Otherwise, leave the OCP entitlement option at the default to purchase the needed licenses
+        - Leave the Ifrastructure as **Classic**
+        - If you have a preferred Resource Group you need to use, select it here.  Check with your account admin to verify the resource group you should use if working in a company account.  Otherwise, leave as **Default**
+        - Select your preferred Geography.  It is best to select the closest geography to your location
+        - Select availability to **single zone** as this cluster will be used for training, so Multi-zone is not needed
+        - Select the worker zone closest to your location
+        - Enter a cluster name in the Resource details section
+        - Press **Create** to create your cluster
+    5. Wait for the cluster to deploy - this can take several minutes, but whilse waiting you can install the IBM Cloud command line interface (CLI) in the next step
+    6. If you don't already have the ibmcloud CLI installed on your workstation you need to install it.  The instructions can be found in the [IBM Cloud documentation](https://cloud.ibm.com/docs?tab=develop){: target="_blank" .external }
+    7.  When the OpenShift Cluster has been deployed, use the button on the IBM Cloud web console to launch the **OpenShift web console**
+    8. If you don't already have the OpenShift command line interface (CLI) installed on your workstation, you should install it now.  The installation image can be downloaded from the OpenShift web console.  Select the help icon (question mark) next to your user name at the top of the web console.  Select Command Line Tools from the menu, then download and install the appropriate version of the oc CLI for your workstation.
+    9.  Open a command terminal window on your workstation (where the ibmcloud and oc command line tooling has been installed)
+    10. Login to the IBM Cloud with command `ibmcloud login` if you belong to a company account that has single signon enabled, then the command is `ibmcloud login --sso`.  If your IBM Cloud account has access to multiple accounts and you get an option to choose the account during the login process, ensure you select the account where the OpenShift cluster was deployed.
+    11. If you don't see the Resource Group in the account summary presented after loggin in.  Use command `ibmcloud target -g Default` to target the correct Resource Group (this is the resource group used when deploying the cluster.  The default value is **Default**)
+    12. Click the dropdown next to your username at the top of the OpenShift web console and select **Copy Login Command**.  Select Display Token and copy the oc login command from the web console and paste it into the terminal on your workstation.  Run the command to login to the cluster on the command line
+    13. Move to the next step to install the toolkit
+
+
 
 === "Kubernetes on IBM Cloud"
     #### Kubernetes running on IBM Cloud
@@ -110,14 +132,55 @@ Select the option you want for your cluster, then follow the instructions.
     1. Navigate to the [IBM Open Labs - Red Hat OpenShift on IBM Cloud](https://developer.ibm.com/openlabs/openshift){: target="_blank" .external }
     2. Select the **Bring Your Own Application - Launch Lab** button
     3. Sign-in to the IBM Cloud or signup if you don't already have an IBM account
-    4. When the Lab has been launched, forward the instructions in the left panel to show the 2nd page, **Quick Links and Common Commands**.  Here you can see the command line commands to log into your IBM cloud account and also the OpenShift cluster.  Log into the IBM cloud and OpenShift cluster, using the command prompt on the left side of the lab browser screen
-    5. Jump to the next section and follow the command in the **Linux / MacOS** tab to install the Cloud-Native Toolkit - run the command on the command line in the left panel of the lab screen.  You must have completed the logon in the previous step before starting the toolkit install
+    4. When the Lab has been launched, forward the instructions in the left panel to show the 2nd page, **Quick Links and Common Commands**.  Here you can see the command line commands to log into your IBM cloud account and also the OpenShift cluster.
+    
+        1. Log into the IBM cloud using the command prompt on the left side of the lab browser screen.  Use the `ibmcloud login` command.  Enter your email then password when prompted then select account **DTECLOUD**.  Press enter to skip selecting a region and choose 'N' if prompted to update the ibmcloud utility.
+        2. Log into the OpenShift cluster using the `oc login` command shown in the left pane.  You can double click the command in the right side panel to copy it accross to the left hand panel in the UI.  Press enter to run it.
+    
+    5. Install the Cloud-Native Toolkit Command Line Interface (CLI).  Copy and paste the code blocks below into the right panel of the Labs UI to install Node.js and then the toolkit CLI:
+
+        !!!Todo
+            This should be in the learning section for developer setup?
+
+        1. Create the installation directory.  This command will prompt you for the student password.  Above the terminal window there are a set of icons.  One is a key icon.  Press the key icon to see a set of credentials.  The student password is in the SSH section of the Service Information panel, identified by **pass**
+
+            ```bash
+            sudo mkdir -p /usr/local/lib/nodejs
+            ```
+
+        2. install Node.js using commands:
+
+            ```bash
+            wget https://nodejs.org/dist/v14.16.1/node-v14.16.1-linux-x64.tar.xz
+            sudo tar -xJvf node-v14.16.1-linux-x64.tar.xz -C /usr/local/lib/nodejs
+            ```
+
+            ```bash
+            cat <<EOF >> .bashrc
+            # Nodejs
+            export PATH=/usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin:$PATH
+            EOF
+            . ./.bashrc
+            ```
+        
+        3. install the Toolkit CLI
+            ```bash
+            sudo PATH=/usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin/npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
+            ```
+
+    6. The OpenLabs have an hour default duration.  This can be extended to give you more time to complete a lab using the clock icon above the terminal panel.  You should extend the lab session to allow you to complete the learning.
+
+        !!!Warning
+            The remaining time for the lab session is shown above the terminal panel.  This is a countdown clock.  When it reaches 00:00:00 your lab session will be automatically terminated and cleaned up without any prompts or warnings, so be sure to extend any lab session as needed before it counts down to 00:00:00
+
+    7. You can access the OpenShift web console using the link in the **Quick Links** section in the left panel of the Labs user interface.  Clicking the link will open the console in a new tab.
+    8. Jump to the next section and use the command in the **Linux / MacOS** tab to install the Cloud-Native Toolkit - run the command on the command line in the left panel of the lab screen.  You must have completed the `oc login` command, detailed in step 4 above, before starting the toolkit install
 
 ## Installing the toolkit
 
 To install the toolkit perform the following steps:
 
-1. In a command or terminal window ensure you are logged onto your cluster (**oc login** or **kubectl login**) with an admin account, that can create new namespaces on the cluster and setup RBAC security.
+1. In a command or terminal window ensure you are logged onto your cluster (**oc login** or **kubectl login**) with an admin account with the ability to create new namespaces/projects on the cluster and setup RBAC security.
 2. Run the following command (choose your operating system):
 
     === "Linux / MacOS"
@@ -139,3 +202,4 @@ To install the toolkit perform the following steps:
         oc wait pod -l job-name=ibm-toolkit --for=condition=Ready -n default
         oc logs job/ibm-toolkit -f -n default
         ```
+3. Wait for the terraform scripts to complete the installation of the toolkit - this can take several minutes

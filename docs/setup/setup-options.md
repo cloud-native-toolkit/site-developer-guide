@@ -3,7 +3,7 @@
 !!!note
     If you are a developer attending a training event, where the training environment is provided, you should skip this section and move onto the Cloud-Native Toolkit fast [start content](../learning/fast-start.md)
 
-There is no single way to setup an enterprise development infrastructure for cloud native application development.  There are [many different tools available](https://www.cncf.io/projects/) to help create Cloud Native applications.  You need to find the set of tools and processes to support the needs of the developers and how they work.  This can be a time consuming processes, to evaluate available tools and determine how to integrate them into a development environment.
+There is no single way to setup an enterprise development infrastructure for cloud native application development.  There are [many different tools available](https://www.cncf.io/projects/){: target="_blank" .external } to help create Cloud Native applications.  You need to find the set of tools and processes to support the needs of the developers and how they work.  This can be a time consuming processes, to evaluate available tools and determine how to integrate them into a development environment.
 
 The Cloud-Native toolkit is an opinionated set of tools to create a production ready development environment.  The toolkit also provides installation options and starter kits to get you up and running quickly.
 
@@ -20,3 +20,25 @@ The Cloud-Native toolkit supports many different options for installing and conf
 The [fast-start installation](fast-start.md) will create an environment for you to learn about cloud native development.  Once you have a better understanding of cloud native development you can then make informed decisions about how you want to do Cloud-Native Development within your production environment and customize the toolkit to meet your requirements.
 
 You will find additional installation and toolkit configuration options in the [Adopting the toolkit](../adopting/setup/installing.md) section, but the recommended path for your first installation is the [fast-start installation](fast-start.md) option.
+
+## Prerequisites for installing the Cloud-Native Toolkit
+
+For all options to complete the Fast-start training your need a laptop or workstation with a modern Operating System (MS Windows, Mac OS or Linux) with an up to date browser.
+
+For IBM Cloud, bare metal, virtualized infrastructure or 3rd party cloud installs you also need to have a terminal for interracting with the cluster using command line tools.  If using the IBM Cloud there is a web based tool available so you don't need to install additional tooling on your workstation or laptop.
+
+If using the Learning environment, you only need a browser, as the learning environment provides a web based command line environment.
+
+### IBM Cloud Shell
+
+If you plan to use an IBM Cloud based cluster to complete the learning, then you can opt to use the IBM Cloud web based shell environment.  To access the shell simply navigate to [https://cloud.ibm.com/shell](https://cloud.ibm.com/shell){: target="_blank" .external }.
+
+The web based shell contains all the tool needed (curl, node.js, ibmcloud CLI and oc CLI) to complete the installation.
+
+### Install prerequisit tools on your workstation or laptop
+
+If you are not planning to use the IBM Cloud shell or are going to use the online Learning environment, then you need to have some prerequisit software installed on your laptop or workstation.
+
+If on Mac OS or Linux then you need to have curl installed.  This is usually available from the distro package manager or installed as part of the base operating syste,
+
+For all operating systems [Node.js](https://nodejs.org/en/) needs to be installed
