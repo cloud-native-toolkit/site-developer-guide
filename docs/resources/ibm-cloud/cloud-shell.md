@@ -1,12 +1,12 @@
 # Introduction to IBM Cloud Shell
 
 IBM Cloud Shell is a free service that gives you complete control of your cloud resources, applications, and
-infrastructure, from any web browser. It's instantly accessible from your free IBM Cloud account--no other installation
+infrastructure, from any web browser. It's instantly accessible from your IBM Cloud account - no other installation
 is needed.
 
 Features of IBM Cloud Shell include:
 
-- Preconfigured environment: IBM Cloud Shell provides a curated, cloud-based workspace with dozens of preinstalled tools
+- Pre-configured environment: IBM Cloud Shell provides a curated, cloud-based workspace with dozens of preinstalled tools
   and programming languages. It's automatically authenticated with your IBM Cloud account so you can start to develop
   immediately.
 
