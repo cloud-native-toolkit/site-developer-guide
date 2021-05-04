@@ -101,3 +101,6 @@ To install the Cloud-Native Toolkit CLI run the following command:
 curl -sL shell.cloudnativetoolkit.dev | bash -
 source ~/.bashrc || source ~/.zshrc
 ```
+
+!!!Note
+    If you have access to multiple IBM Cloud accounts you may find the [IBM Cloud cluster fast-switching tool (icc)](../resources/ibm-cloud/icc.md){: target=_blank} of use.  The **icc** tool is installed as part of the Cloud-Native Toolkit CLI.

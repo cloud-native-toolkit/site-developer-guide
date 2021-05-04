@@ -234,7 +234,7 @@ Let's look at these artifacts in the Toolkit environment.
 The container image is stored in the IBM Cloud Container Registry:
 
 1. From the OpenShift console's tools menu or from the Developer Dashboard's tools page, select Image Registry.
-2. In the image regisry, you'll see the image the pipeline built for your app, such as `us.icr.io/isv-scenarios/stockbffnode-bw` with a different tag for each build.
+2. In the image registry, you'll see the image the pipeline built for your app, such as `us.icr.io/isv-scenarios/stockbffnode-bw` with a different tag for each build.
 
     ![Image Registry](./images/images-in-iccr.png)
 
