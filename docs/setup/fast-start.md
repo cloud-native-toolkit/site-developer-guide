@@ -1,18 +1,12 @@
 # Fast-Start Install
 
-!!!todo
-    This page is only partially complete
-
 This section will guide you through installing the Cloud-Native Toolkit suitable for learning how to use the toolkit.
 
 Fast-start installation does not install the base Kubernetes cluster.  You need to provide the cluster before starting the toolkit installation.
 
 ## Choosing a Kubernetes cluster option
 
-The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift cluster.  The following options are supported by the toolkit:
-
-!!!Todo
-    State any configuration/setup requirements in the tabs for each environment.  Such as having a default storage class defined, IAM Admin permissions, etc...
+The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift cluster:
 
 === "OpenShift on IBM Cloud"
     #### Red Hat OpenShift running on IBM Cloud
@@ -29,6 +23,8 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
 === "Kubernetes on IBM Cloud"
     #### Kubernetes running on IBM Cloud
 
+    This option provides a managed Kubernetes cluster running on the IBM Cloud.
+
     - Managed Kubernetes environment
     - Incurs costs
     - No local resources needed to run cluster
@@ -36,15 +32,22 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
 === "OpenShift or OKD"
     #### OpenShift / OKD
 
+    !!!Todo
+        Validate the toolkit installs and works on OKD (assumptions of licensed add-ons, such as pipelines?)
+
+    This option allows you to use RedHat OpenShift or OKD, the sibling community managed version of OpenShift as the learning environment for the Cloud-Native Toolkit.  You can install OpenShift or OKD to your own hardware or use a third party cloud provider.
+
     !!!Warning
         This option requires you to setup and configure an OpenShift or OKD cluster, so assumes you have the environment and skills to complete this task.  If not it is recommended that you select one of the other options
 
     - run on local hardware, virtualized infrastructure or cloud provider
-    - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licences)
+    - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licenses)
     - the cluster must have a default storage class configured, so a persistent volume claim will be satisfied
 
 === "CodeReady Containers"
     #### CodeReady Containers
+
+    CodeReady Containers is a cut-down version of OpenShift to provide a local development environment on your laptop or workstation.  It is freely available, but does have some limitations.
 
     - Run locally on laptop or workstation
     - no runtime costs
@@ -55,14 +58,13 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
 === "Open Labs cluster"
     #### Open Labs cluster
 
+    Open Labs is an IBM provided online learning environment.  You can access a RedHat OpenShift cluster without needing to install anything locally to your laptop or workstation.
+
     - No local resources needed to run cluster
     - No runtime costs
     - Limited time cluster - enough time to complete the learning material, but clusters get automatically cleaned up after a few hours
 
 ## Obtaining your Kubernetes Cluster
-
-!!!Todo
-    Ensure this section also covers installing the CLI for the cluster (oc or kubectl)
 
 Select the option you want for your cluster, then follow the instructions.
 
@@ -74,24 +76,22 @@ Select the option you want for your cluster, then follow the instructions.
     3. Search for OpenShift and select RedHat OpenShift on IBM Cloud
     4. Create a cluster.  On the options page:
         - If working in your company account check with your account admin about the OpenShift licence entitlement, and make the appropriate entitlement choice.  Otherwise, leave the OCP entitlement option at the default to purchase the needed licenses
-        - Leave the Ifrastructure as **Classic**
+        - Leave the Infrastructure as **Classic**
         - If you have a preferred Resource Group you need to use, select it here.  Check with your account admin to verify the resource group you should use if working in a company account.  Otherwise, leave as **Default**
         - Select your preferred Geography.  It is best to select the closest geography to your location
         - Select availability to **single zone** as this cluster will be used for training, so Multi-zone is not needed
         - Select the worker zone closest to your location
         - Enter a cluster name in the Resource details section
         - Press **Create** to create your cluster
-    5. Wait for the cluster to deploy - this can take several minutes, but whilse waiting you can install the IBM Cloud command line interface (CLI) in the next step
+    5. Wait for the cluster to deploy - this can take several minutes, but while waiting you can install the IBM Cloud command line interface (CLI) in the next step
     6. If you don't already have the ibmcloud CLI installed on your workstation you need to install it.  The instructions can be found in the [IBM Cloud documentation](https://cloud.ibm.com/docs?tab=develop){: target="_blank" .external }
     7.  When the OpenShift Cluster has been deployed, use the button on the IBM Cloud web console to launch the **OpenShift web console**
     8. If you don't already have the OpenShift command line interface (CLI) installed on your workstation, you should install it now.  The installation image can be downloaded from the OpenShift web console.  Select the help icon (question mark) next to your user name at the top of the web console.  Select Command Line Tools from the menu, then download and install the appropriate version of the oc CLI for your workstation.
     9.  Open a command terminal window on your workstation (where the ibmcloud and oc command line tooling has been installed)
     10. Login to the IBM Cloud with command `ibmcloud login` if you belong to a company account that has single signon enabled, then the command is `ibmcloud login --sso`.  If your IBM Cloud account has access to multiple accounts and you get an option to choose the account during the login process, ensure you select the account where the OpenShift cluster was deployed.
-    11. If you don't see the Resource Group in the account summary presented after loggin in.  Use command `ibmcloud target -g Default` to target the correct Resource Group (this is the resource group used when deploying the cluster.  The default value is **Default**)
+    11. If you don't see the Resource Group in the account summary presented after logging in.  Use command `ibmcloud target -g Default` to target the correct Resource Group (this is the resource group used when deploying the cluster.  The default value is **Default**)
     12. Click the dropdown next to your username at the top of the OpenShift web console and select **Copy Login Command**.  Select Display Token and copy the oc login command from the web console and paste it into the terminal on your workstation.  Run the command to login to the cluster on the command line
     13. Move to the next step to install the toolkit
-
-
 
 === "Kubernetes on IBM Cloud"
     #### Kubernetes running on IBM Cloud
@@ -107,7 +107,7 @@ Select the option you want for your cluster, then follow the instructions.
         - For OKD follow the [install instructions](https://docs.okd.io/latest/installing/index.html){: target="_blank" .external } for your preferred environment
 
         !!!Todo
-            Add any additional post install configuration steps needed here
+            Add any additional post install configuration steps needed here - storage class?
     
     2. Once installed you need to ensure you can sign onto the OpenShift cluster using the web console (see the Web console section in the docs for details on how to access the console).  
     3. Once you are signed into the console you can download and install the OpenShift Command Line Interface (CLI) tools.  The CLI tools are available from the question mark icon next to you login name at the top of the OpenShift console, or from [Red Hat](https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/){: target="_blank" .external }.
@@ -135,7 +135,7 @@ Select the option you want for your cluster, then follow the instructions.
     4. When the Lab has been launched, forward the instructions in the left panel to show the 2nd page, **Quick Links and Common Commands**.  Here you can see the command line commands to log into your IBM cloud account and also the OpenShift cluster.
     
         1. Log into the IBM cloud using the command prompt on the left side of the lab browser screen.  Use the `ibmcloud login` command.  Enter your email then password when prompted then select account **DTECLOUD**.  Press enter to skip selecting a region and choose 'N' if prompted to update the ibmcloud utility.
-        2. Log into the OpenShift cluster using the `oc login` command shown in the left pane.  You can double click the command in the right side panel to copy it accross to the left hand panel in the UI.  Press enter to run it.
+        2. Log into the OpenShift cluster using the `oc login` command shown in the left pane.  You can double click the command in the right side panel to copy it across to the left hand panel in the UI.  Press enter to run it.
     
     5. Install the Cloud-Native Toolkit Command Line Interface (CLI).  Copy and paste the code blocks below into the right panel of the Labs UI to install Node.js and then the toolkit CLI:
 

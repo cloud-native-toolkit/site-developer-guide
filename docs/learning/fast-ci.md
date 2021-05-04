@@ -28,7 +28,7 @@ Before starting, make sure you have set up your [development tools](dev-setup.md
 === "OpenShift cluster"
 
     !!!Todo
-        Why $VARIABLES used below?  Now Windows friendly!
+        Why $VARIABLES used below?  Not Windows friendly!
 
     Run `oc login $SERVER -u $OCP_USERNAME -p $OCP_PASSWORD`
 
