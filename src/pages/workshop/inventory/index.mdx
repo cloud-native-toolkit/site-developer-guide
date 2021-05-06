@@ -24,7 +24,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 1. Set `TOOLKIT_USERNAME` environment variable replace `user1` with assigned usernames
     ```bash
     TOOLKIT_USERNAME=user1
-
     ```
 
 1. **(Skip if using KubeAdmin or IBM Cloud)** Login into OpenShift using `oc`
@@ -36,13 +35,11 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 1. Set `TOOLKIT_PROJECT` environment variable replace `project1` or `projectx` based on user id assigned
     ```bash
     TOOLKIT_PROJECT=project1
-
     ```
 
 1. Create a project/namespace using your project prefix, and `-dev` and suffix
     ```
     oc sync $TOOLKIT_PROJECT-dev
-
     ```
 
 1. Fork Inventory Sample Application Java
@@ -58,7 +55,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     GIT_REPO=inventory-management-svc-solution
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
-
     ```
 
 1. Create a pipeline for the application
@@ -81,7 +77,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     GIT_REPO=inventory-management-bff-solution
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
-
     ```
 
 1. Create a pipeline for the application
@@ -102,7 +97,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     GIT_REPO=inventory-management-ui-solution
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
-
     ```
 
 1. Create a pipeline for the application
@@ -116,7 +110,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     ```bash
     GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/gitops
     echo GIT_OPS_URL=${GIT_OPS_URL}
-
     ```
 
 1. Clone the git repository and change directory
@@ -124,7 +117,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     cd $HOME
     git clone $GIT_OPS_URL gitops-inventory
     cd gitops-inventory
-
     ```
 
 1. Review the `qa` directory in the git repository, the directory might be empty if the 3 pipelines are not done yet.
@@ -196,7 +188,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     git add .
     git commit -m "Add inventory application to gitops for project ${TOOLKIT_PROJECT}"
     git push -u origin master
-
     ```
 
 1. Register the Application in ArgoCD to deploy using GitOps
