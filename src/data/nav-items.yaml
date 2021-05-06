@@ -153,8 +153,10 @@
       path: /learning/redhat-learning
     - title: Garage Method Development
       path: /learning/garage-development
-    - title: Integration Topics
-      path: /learning/cp4i
+    - title: App Connect Pipeline
+      path: /learning/ace-pipeline
+    - title: GitOps and Integration
+      path: /learning/gitops-int/gitops-with-cloud-native-toolkit
 
 - title: Resources
   pages:
