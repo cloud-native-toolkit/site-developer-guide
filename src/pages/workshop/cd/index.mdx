@@ -17,14 +17,20 @@ Promote an Application using CD with GitOps and ArgoCD
 1. Prerequisites
     - Complete lab [Deploy an Application using CI Pipelines with Tekton](./ci).
 
-1. Set `TOOLKIT_USERNAME` environment variable, replace `userXX` with assigned usernames (ex. `user01`)
+1. Set `TOOLKIT_USERNAME` environment variable. 
+   If you are participation in a workshop replace `userdemo` with your assigned username (ex. `user01`).
+   If you configured your own workshop environment you can use the `userdemo` value.
     ```bash
-    TOOLKIT_USERNAME=user1
+    TOOLKIT_USERNAME=userdemo
+
     ```
 
-1. Set `TOOLKIT_PROJECT` environment variable, replace `projectXX` based on user id assigned (ex. `project01`)
+1. Set `TOOLKIT_PROJECT` environment variable. 
+   If you are participation in a workshop replace `projectdemo` with your assigned project (ex. `project01`).
+   If you configured your own workshop environment you can use the `projectdemo` value.
     ```bash
-    TOOLKIT_PROJECT=project1
+    TOOLKIT_PROJECT=projectdemo
+
     ```
 
 1. Verify Application is deployed in **QA**
@@ -71,6 +77,7 @@ Promote an Application using CD with GitOps and ArgoCD
 1. Verify Application is deployed in **STAGING**
     - Select ArgoCD from the Console Link and login using OpenShift login
     - Filter Applications by namespace `${TOOLKIT_PROJECT}-staging` (ie project01-staging)
+    - It might take a couple minutes for the application to show up
     - Select the application `master-staging-${TOOLKIT_PROJECT}-app` (ie master-staging-project01-app)
     - Click **Refresh**
         ![Argo CD App staging](../images/argo-app-staging.jpg)

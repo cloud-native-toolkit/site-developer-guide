@@ -17,7 +17,7 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
 
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](/workshop/setup)
-    - The student should [Setup CLI and Terminal Shell](/workshop/setup#4.-(optional)-auto-configure-terminal-shell)
+    - The student should [Setup CLI and Terminal Shell](/workshop/terminal)
     - An user with cluster-admin (ie kubeadmin) needs to deploy a DB2 instance to be shared by all the users
     ```bash
     oc new-project db2
@@ -38,12 +38,15 @@ import Globals from 'gatsby-theme-carbon/src/templates/Globals';
     - OpenShift Console URL (OCP_CONSOLE_URL)
     - The username and password for OpenShift and Git Server (default values are user01, user02, etc.. for users and `password` for password).
 
-1. Set `TOOLKIT_USERNAME` environment variable, replace `userXX` with assigned username (ex. `user01`)
+1. Set `TOOLKIT_USERNAME` environment variable.
+   If you are participation in a workshop replace `userdemo` with your assigned username (ex. `user01`).
     ```bash
-    TOOLKIT_USERNAME=userXX
+    TOOLKIT_USERNAME=userdemo
     ```
-1. **(Skip if using KubeAdmin or IBM Cloud)** Login into OpenShift using `oc`
-    - If you are using an IBM Cloud cluster login with your IBM account email and IAM API Key or Token, if using a cluster that was configured with the workshop scripts outside IBM Cloud then use `user01` or respective assigned username, and the password is `password`
+1. Login to OpenShift using `oc`
+    - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token by using the **Copy Login Command**
+        ![Login](../images/login.jpg)
+    - If using a cluster that was configured with the workshop scripts outside IBM Cloud then use respective assigned username (ex. `user01`), and the password is `password`
     ```bash
     oc login $OCP_URL -u $TOOLKIT_USERNAME -p password
     ```
