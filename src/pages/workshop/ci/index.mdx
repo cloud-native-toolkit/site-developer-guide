@@ -23,7 +23,6 @@ Deploy an Application using CI Pipelines with Tekton
 1. Set `TOOLKIT_USERNAME` environment variable replace `user1` or `userx` with assigned usernames
     ```bash
     TOOLKIT_USERNAME=user1
-
     ```
 
 1. **(Skip if using KubeAdmin or IBM Cloud)** Login into OpenShift using `oc`
@@ -35,13 +34,11 @@ Deploy an Application using CI Pipelines with Tekton
 1. Set `TOOLKIT_PROJECT` environment variable replace `project1` or `projectx` based on username id assigned
     ```bash
     TOOLKIT_PROJECT=project1
-
     ```
 
 1. Create a project/namespace using your project as prefix, and `-dev` and suffix
     ```bash
     oc sync $TOOLKIT_PROJECT-dev
-
     ```
 
 1. Fork application template git repo
@@ -57,7 +54,6 @@ Deploy an Application using CI Pipelines with Tekton
     ```bash
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/$TOOLKIT_USERNAME/app
     echo GIT_URL=${GIT_URL}
-
     ```
 
 1. Clone the git repository and change directory
@@ -65,7 +61,6 @@ Deploy an Application using CI Pipelines with Tekton
     cd $HOME
     git clone $GIT_URL
     cd app
-
     ```
 
 1. Create a pipeline for the application
@@ -96,7 +91,6 @@ Deploy an Application using CI Pipelines with Tekton
     git add .
     git commit -m "update readme"
     git push -u origin master
-
     ```
 
 1. Verify that change in Git Server and Git WebHook
