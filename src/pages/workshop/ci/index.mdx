@@ -24,7 +24,6 @@ Deploy an Application using CI Pipelines with Tekton
    If you are participation in a workshop replace `userdemo` with your assigned username (ex. `user01`).
     ```bash
     TOOLKIT_USERNAME=userdemo
-
     ```
 
 1. Login to OpenShift using `oc`
@@ -39,7 +38,6 @@ Deploy an Application using CI Pipelines with Tekton
    If you are participation in a workshop replace `projectdemo` based on your assigned username (ex. `project01`).
     ```bash
     TOOLKIT_PROJECT=projectdemo
-
     ```
 
 1. Create a project/namespace using your project as prefix, and `-dev` and suffix
@@ -54,7 +52,7 @@ Deploy an Application using CI Pipelines with Tekton
         ![Starter Kits](../images/starter-kits.jpg)
     - Select One in our case **Go Gin Microservice**
     - Click Fork
-    - Login into GIT Sever using the provided username and password (ie `user01` and `password`)
+    - Login into GIT Sever using the provided username and password (ie `userdemo` and `password`)
     - **IMPORTANT**: Rename Repository Name to `app`
     - Click **Fork Repository**
 
@@ -63,6 +61,7 @@ Deploy an Application using CI Pipelines with Tekton
     ```bash
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/$TOOLKIT_USERNAME/app
     echo GIT_URL=${GIT_URL}
+    
     ```
 
 1. Clone the git repository and change directory
@@ -70,6 +69,7 @@ Deploy an Application using CI Pipelines with Tekton
     cd $HOME
     git clone $GIT_URL
     cd app
+
     ```
 
 1. Create a Tekton pipeline for the application
@@ -109,6 +109,7 @@ Deploy an Application using CI Pipelines with Tekton
     git add .
     git commit -m "update readme"
     git push -u origin master
+
     ```
 
 1. Verify that change in Git Server and Git WebHook
