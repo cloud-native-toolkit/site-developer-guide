@@ -58,9 +58,9 @@ nav:
       - Continuous Delivery: learning/fast-cd.md
     - In Depth: 
       - Cloud-Native Development with the Toolkit: learning/in-depth.md
+      - DevOps: learning/devops.md
       - Automated Testing: learning/testing.md
       - Static Analysis: learning/analysis.md
-      - DevOps: learning/devops.md
       - Pipeline: learning/pipeline.md
   - Adopting the Toolkit:
     - Adopting the Toolkit: adopting/adopting.md

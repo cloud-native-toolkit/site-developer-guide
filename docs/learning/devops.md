@@ -6,15 +6,11 @@ Click the image below to launch the video
 
 [!["DevOps concepts with Red Hat OpenShift`"](http://img.youtube.com/vi/GOPWObjFTsI/0.jpg)](https://youtu.be/GOPWObjFTsI "DevOps concepts with Red Hat OpenShift"){: target=_blank}
 
-!!!Todo
-    Fixup formatting and reduce IBM branding
-
 ## Continuous Delivery
 
 In IBM Garage Method, one of the **Develop** practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/).
 
-A preferred model for implementing continuous delivery is GitOps, where the desired state of the operational environment
-is defined in a source control repository (namely Git).
+A preferred model for implementing continuous delivery is GitOps, where the desired state of the operational environment is defined in a source control repository (namely Git).
 
 ## What is continuous delivery
 
@@ -53,8 +49,7 @@ For the full end-to-end build and delivery process, both the CI and CD pipelines
 
 1. A change made to one of the source repositories triggers the CI process.
 
-2. The CI process builds, validates, and packages those changes into deployable artifacts that are stored in the image
-registry and artifact repository(ies).
+2. The CI process builds, validates, and packages those changes into deployable artifacts that are stored in the image registry and artifact repository(ies).
 
 3. The last step of the CI process updates the GitOps repository with information about the updated artifacts.
 
@@ -76,9 +71,8 @@ registry and artifact repository(ies).
 
 The practice of (CD) can be accomplished in different ways and with different tools. It is possible and certainly valid to use the same tool for both CI and CD (e.g. Tekton or Jenkins) with caution you enforce a clear separation between the two processes. Typically, that would result in two distinct pipelines to respond to changes that happen within the two different Git repos - source repo and gitops repo.
 
-Another class of tools is available that are particularly suited for Continuous Delivery and GitOps. The following is by no
-means an exhaustive list but it does provide some of the common tools used for CD in a cloud-native environment:
+Another class of tools is available that are particularly suited for Continuous Delivery and GitOps. The following is by no means an exhaustive list but it does provide some of the common tools used for CD in a cloud-native environment:
 
-- [ArgoCD](./tools/argocd)
-- Flux
-- [IBM Multicloud Manager](https://www.ibm.com/cloud/cloud-pak-for-management)
+- [ArgoCD](../reference/tools/argocd.md){: target=_blank}
+- [Flux](https://fluxcd.io){: target=_blank}
+- [IBM Multicloud Manager](https://www.ibm.com/cloud/cloud-pak-for-management){: target=_blank}

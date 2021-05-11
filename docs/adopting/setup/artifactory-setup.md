@@ -97,7 +97,7 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
 
 - Press the **Eye** icon to view the encrypted password and press the **Cut & Paste** icon to copy it
 
-  ![Initial JFrog](.images/viewapikey.png){style="width: 60%" .center }
+  ![Initial JFrog](./images/viewapikey.png){style="width: 60%" .center }
 
 - Now we have obtained the **Encrypt** key and had kept a copy of the Password we changed on the initial setup wizard. We need to update the secrets that stores these inside the cluster.
 

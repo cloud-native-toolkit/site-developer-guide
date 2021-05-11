@@ -1,6 +1,6 @@
 # Cloud-Native Toolkit Developer Setup
 
-Before starting the learning activities, you need to setup your development environment.  The choice of Kubernets/OpenShift cluster will determine what tools and setup you need to have in place.
+Before starting the learning activities, you need to setup your development environment.  This section assumes you have the development tools for your preferred programming language already installed.  It only covers the tooling for the Cloud-Native Toolkit.
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ To complete the cloud-Native Toolkit learning, you need to have
 - a laptop or workstation running Linux, MacOS or MS Windows.  If running linux you may need to adapt some of the instructions to match your Linux distribution
 - a web browser, capable of running modern web sites
 - an active, public, [GitHub](https://github.com){: target=_blank} account
-- access to a Kubernetes/OpenShift cluster.  If one has not been provided or you did not set one up please work through the [Install](../setup/setup-options.md){: target=_blank} section to get access to a cluster.
+- access to a Red Hat OpenShift cluster.  If one has not been provided or you did not set one up please work through the [Install](../setup/setup-options.md){: target=_blank} section to get access to a cluster.
 
 This guide assumes that you have some basic knowledge of Kubernetes, Docker, and modern software delivery techniques including CI/CD. There are some suggested educational materials listed in the [Resources](../resources/resources.md){: target=_blank} section.
 
@@ -30,8 +30,7 @@ If you don't need, or already have the command line tools installed then you can
 The set of command line tools you need depends on the cluster you will be using to complete the learning:
 
 - IBM Cloud based clusters need the **IBM Cloud Command Line Interface (CLI)**
-- OpenShift/OKD/minikube clusters need the RedHat **oc** command
-- Kubernetes clusters need the **kubectl** command
+- OpenShift clusters need the RedHat **oc** command
 
 #### IBM Cloud CLI
 
@@ -39,19 +38,18 @@ To install the IBM Cloud CLI follow the instructions in the [IBM Cloud documenta
 
 #### RedHat oc command
 
-The oc command is available from all installations of RedHat OpenShift, CRC or OKD.  Navigate and log into the web console of the cluster, then in the dropdown accessed by clicking the help icon (a question mark next to you username at the top of the web console) you will find a link to the install images for various operating systems.
+The oc command is available from all installations of RedHat OpenShift or CodeReady Containers.  Navigate and log into the web console for the cluster, then in the dropdown accessed by clicking the help icon (a question mark next to you username at the top of the web console) you will find a link to the install images for various operating systems.
 
 The install images are also available to download from [RedHat](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/){: target=_blank}.  Be sure to get the latest version of the oc command.
 
-#### Kubectl command
-
-The kubectl command is available from the [Kubernetes](https://kubernetes.io/docs/tasks/tools/){: target=_blank} website.
-
 ## User accounts
 
-You'll need the following accounts to complete the Cloud-Native Toolkit Getting Started steps.
+You'll need the following accounts to complete the Cloud-Native Toolkit learning.
 
 ### Github account
+
+!!!Todo
+    CRC cannot be triggered by github - what to use?
 
 You will need a [GitHub account](https://github.com){: target=_blank} (public, not enterprise) to use the Starter Kit templates. Create one if you do not have one already. If you have not logged in for a while, make sure your login is working.
 
