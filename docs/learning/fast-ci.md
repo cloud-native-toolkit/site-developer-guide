@@ -34,15 +34,12 @@ Before starting, make sure you have set up your [development tools](dev-setup.md
 
 You should now be able to access the OpenShift console:
 
-!!!Todo
-    Are we using oc for both Kubernetes and Kubernetes installation - does the developer setup enable this?
-
 ```shell
 oc console
 ```
 
 !!!Todo
-    The link for CRC below is not available - what should this be?
+    The link for CRW below is not available - what should this be?
 
 !!!Note
     If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](./getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster. The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding

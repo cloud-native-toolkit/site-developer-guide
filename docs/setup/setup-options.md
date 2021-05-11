@@ -39,6 +39,6 @@ The web based shell contains all the tool needed (curl, node.js, ibmcloud CLI an
 
 If you are not planning to use the IBM Cloud shell or are going to use the online Learning environment, then you need to have some prerequisite software installed on your laptop or workstation.
 
-If on Mac OS or Linux then you need to have curl installed.  This is usually available from the distro package manager or installed as part of the base operating system
+If on Mac OS or Linux then you need to have curl installed.  This is usually available from the Linux package manager or installed as part of the base operating system
 
 For all operating systems [Node.js](https://nodejs.org/en/) needs to be installed

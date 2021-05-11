@@ -6,7 +6,7 @@ Fast-start installation does not install the base Kubernetes cluster.  You need 
 
 ## Choosing a Kubernetes cluster option
 
-The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift cluster:
+The toolkit can be installed over the Kubernetes Service running on IBM Cloud or a Red Hat OpenShift cluster.  However, the fast-start installer only works against a Red Hat OpenShift cluster :
 
 === "OpenShift on IBM Cloud"
     #### Red Hat OpenShift running on IBM Cloud
@@ -29,20 +29,20 @@ The toolkit can be installed over a standard Kubernetes or Red Hat OpenShift clu
     - Incurs costs
     - No local resources needed to run cluster
 
-=== "OpenShift or OKD"
-    #### OpenShift / OKD
+=== "Red Hat OpenShift"
+    #### Red Hat OpenShift
 
-    !!!Todo
-        Validate the toolkit installs and works on OKD (assumptions of licensed add-ons, such as pipelines?)
-
-    This option allows you to use RedHat OpenShift or OKD, the sibling community managed version of OpenShift as the learning environment for the Cloud-Native Toolkit.  You can install OpenShift or OKD to your own hardware or use a third party cloud provider.
+    This option allows you to use your own installation of RedHat OpenShift as the learning environment for the Cloud-Native Toolkit.  You can install OpenShift to your own hardware or use a third party cloud provider.
 
     !!!Warning
         This option requires you to setup and configure an OpenShift or OKD cluster, so assumes you have the environment and skills to complete this task.  If not it is recommended that you select one of the other options
 
     - run on local hardware, virtualized infrastructure or cloud provider
-    - need your own OpenShift licenses (OKD is a sibling project that does not need OpenShift licenses)
+    - need your own OpenShift licenses
     - the cluster must have a default storage class configured, so a persistent volume claim will be satisfied
+
+    !!!Note
+        OKD is a community distribution of OpenShift.  The fast-start installer assumes access to the RedHat Operator Hub so it can install components such as OpenShift Pipelines, so OKD is not supported.
 
 === "CodeReady Containers"
     #### CodeReady Containers
@@ -93,18 +93,11 @@ Select the option you want for your cluster, then follow the instructions.
     12. Click the dropdown next to your username at the top of the OpenShift web console and select **Copy Login Command**.  Select Display Token and copy the oc login command from the web console and paste it into the terminal on your workstation.  Run the command to login to the cluster on the command line
     13. Move to the next step to install the toolkit
 
-=== "Kubernetes on IBM Cloud"
-    #### Kubernetes running on IBM Cloud
-
-    !!!Todo
-        Add instructions here
-
-=== "OpenShift or OKD"
-    #### OpenShift / OKD
+=== "Red Hat OpenShift"
+    #### Red Hat OpenShift
 
     1. Install the OpenShift or OKD cluster:
         - For OpenShift follow the [install instructions](https://docs.openshift.com/container-platform/4.7/installing/index.html){: target="_blank" .external } for your preferred environment
-        - For OKD follow the [install instructions](https://docs.okd.io/latest/installing/index.html){: target="_blank" .external } for your preferred environment
 
         !!!Todo
             Add any additional post install configuration steps needed here - storage class?
@@ -117,7 +110,7 @@ Select the option you want for your cluster, then follow the instructions.
     #### CodeReady Containers
 
     1. Navigate to the [Red Hat CodeReady Containers](https://developers.redhat.com/products/codeready-containers/overview){: target="_blank" .external } site.
-    2. Select **Install OpenShift on your laptop** button and follow the instructions to install CodeRead Containers to your laptop
+    2. Select **Install OpenShift on your laptop** button and follow the instructions to install CodeRead Containers to your laptop.  Ideally you want to increase the resources available to CodeReady containers, so use the command line options to increase memory to as much as you can spare on your laptop or workstation and expand the disk size if possible.
 
         !!!Warning
             CodeReady Containers needs to adjust your laptop networking, so on some platforms it will not work alongside VPN clients needed to access corporate networks.  If you need to run a VPN client, then you can install CodeReady Containers in a virtual machine on your laptop and work inside the virtual machine to access CodeReady Containers.
@@ -125,6 +118,9 @@ Select the option you want for your cluster, then follow the instructions.
     3. Download and install the OpenShift Command Line Interface (CLI) tools.  The CLI tools are available from the question mark icon next to you login name at the top of the OpenShift console - see [section 3.3.1 in the CodeReady Containers Getting Started Guide](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.25.0/html/getting_started_guide/using-codeready-containers_gsg#accessing-the-openshift-web-console_gsg), or from [Red Hat](https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/){: target="_blank" .external }.
     4. Once you have the CodeReady Containers CLI installed you need to login to the cluster - this is covered in the [CodeReady Containers Getting Started Guide - section 3.3.2](https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.25.0/html/getting_started_guide/using-codeready-containers_gsg#accessing-the-openshift-cluster-with-oc_gsg){: target="_blank" .external }
     5. Move onto the next section to install the Cloud-Native Toolkit
+
+    !!!Todo
+        What to do about github access - local server?
 
 === "Open Labs cluster"
     #### Open Labs cluster
