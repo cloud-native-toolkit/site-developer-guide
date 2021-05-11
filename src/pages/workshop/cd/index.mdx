@@ -21,14 +21,12 @@ Promote an Application using CD with GitOps and ArgoCD
    If you are participation in a workshop replace `userdemo` with your assigned username (ex. `user01`).
     ```bash
     TOOLKIT_USERNAME=userdemo
-
     ```
 
 1. Set `TOOLKIT_PROJECT` environment variable. 
    If you are participation in a workshop replace `projectdemo` based on your assigned username (ex. `project01`).
     ```bash
     TOOLKIT_PROJECT=projectdemo
-
     ```
 
 1. Verify Application is deployed in **QA**
@@ -45,6 +43,7 @@ Promote an Application using CD with GitOps and ArgoCD
     ```bash
     GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/gitops
     echo GIT_OPS_URL=${GIT_OPS_URL}
+
     ```
 
 1. Clone the git repository and change directory
@@ -52,12 +51,14 @@ Promote an Application using CD with GitOps and ArgoCD
     cd $HOME
     git clone $GIT_OPS_URL
     cd gitops
+
     ```
 
 1. Review the `qa` and `staging` directory in the git repository
     ```bash
     ls -l qa/
     ls -l staging/
+
     ```
 
 1. Promote the application from **QA** to **STAGING** by copying the app manifest files using git
@@ -70,6 +71,7 @@ Promote an Application using CD with GitOps and ArgoCD
     git add .
     git commit -m "Promote Application from QA to STAGING environment for $TOOLKIT_PROJECT"
     git push -u origin master
+
     ```
 
 1. Verify Application is deployed in **STAGING**
@@ -99,6 +101,7 @@ Promote an Application using CD with GitOps and ArgoCD
     git checkout -b ${TOOLKIT_PROJECT}-pr1
     git commit -m "Update Application in ${TOOLKIT_PROJECT}-staging namespace"
     git push -u origin ${TOOLKIT_PROJECT}-pr1
+    
     ```
     - Open Git Ops from Console Link
     - Select toolkit/gitops git repository
