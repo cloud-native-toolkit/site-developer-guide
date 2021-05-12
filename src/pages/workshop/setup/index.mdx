@@ -58,7 +58,9 @@ Provides the steps to install the <Globals name="longName"/> and setting up the 
         export PROJECT_COUNT=30 
         ```
 
-    - You can add additional users to the workshop clusters.
+  - Once you have finished configuring your customizations, login to the cluster from the cli and run the `scripts/install.sh` script to perform the install.
+
+  - You can also add additional users to the workshop clusters.
       - Create a file with one user id per line. 
       **IMPORTANT: there needs to be newline after the last entry.**
       For example a `users.txt` file with content.  
@@ -87,4 +89,4 @@ Provides the steps to install the <Globals name="longName"/> and setting up the 
         export ADDITIONAL_USERS_SELF_PROVISIONER=N
         ```
       
-  - Once you have finished configuring your customizations, login to the cluster from the cli and run the `scripts/install.sh` script to perform the install.
+  - Once you have finished configuring the additional users, login to the cluster from the cli and run the `scripts/13-ocp-additional-users.sh` script.
