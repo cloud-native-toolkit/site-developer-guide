@@ -27,6 +27,8 @@
       path: /workshop
     - title: Setup Workshop Environment
       path: /workshop/setup
+    - title: Setup Terminal
+      path: /workshop/terminal
     - title: CI Pipelines with Tekton
       path: /workshop/ci
     - title: CD GitOps with Argo
