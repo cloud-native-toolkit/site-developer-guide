@@ -2,7 +2,7 @@ site_name: Cloud Native Toolkit
 site_description: >-
   The Cloud-Native Toolkit is an open-source collection of assets that enable application development and support teams to deliver business value quickly using Red Hat OpenShift or Kubernetes
 site_url: https://cloudnativetoolkit.dev
-site_author: Brian Innes
+site_author: Cloud-Native Toolkit development team
 repo_name: cloud-native-toolkit/ibm-garage-developer-guide
 repo_url: https://github.com/cloud-native-toolkit/ibm-garage-developer-guide
 docs_dir: docs
@@ -64,28 +64,34 @@ nav:
       - Pipeline: learning/pipeline.md
   - Adopting the Toolkit:
     - Adopting the Toolkit: adopting/adopting.md
-    - Alternate setup options:
-      - Installation options: adopting/setup/installing.md
-      - Configuring IBM Cloud based setup: adopting/setup/ibmcloud-setup.md
-      - Firewalled setup: adopting/setup/firewalled-setup.md
-      - Air-gapped setup: adopting/setup/air-gapped-setup.md
-      - Post Install steps: adopting/setup/configureEnvironment.md
-      - Artifactory post install: adopting/setup/artifactory-setup.md
-    - Customizing the Toolkit: 
-      - Customization overview: adopting/customize/customize.md
-      - Customizing the dashboard: adopting/customize/config-dashboard/dashboard.md
-    - Toolkit administration: adopting/admin.md
     - Best Practices: 
       - Best Practices: adopting/best-practices/best-practices.md
       - IBM Cloud setup:
         - IBM Cloud setup: adopting/best-practices/ibm-cloud-account/ibm-cloud-setup.md
-        - Access control: adopting/best-practices/ibm-cloud-account/configure-account.md
         - Installation planning: adopting/best-practices/ibm-cloud-account/plan-installation.md
+        - Access control: adopting/best-practices/ibm-cloud-account/configure-account.md
+        - Monitoring and Logs: adopting/best-practices/ibm-cloud-account/monitoring-logs.md
       - Container Registry: adopting/best-practices/registry.md
       - Infrastructure as Code: adopting/best-practices/infrastructure-as-code.md
       - DevOps: adopting/best-practices/devops.md
       - Secret management: adopting/best-practices/secret-management.md
-      - Monitoring and Logs: adopting/best-practices/monitoring-logs.md
+    - Advanced setup options:
+      - Installation options: adopting/setup/installing.md
+      - Configuring IBM Cloud based setup: adopting/setup/ibmcloud-setup.md
+      - Install IBM Cloud cluster from catalog: adopting/setup/ibmcloud-tile-cluster.md
+      - Install IBM Cloud cluster Iteration Zero: adopting/setup/ibmcloud-iz-cluster.md
+      - Install cluster elsewhere: adopting/setup/provision-cluster.md
+      - Air-gapped setup: adopting/setup/air-gapped-setup.md
+      - Install toolkit to existing cluster: adopting/setup/toolkit-install.md
+      - Post Install steps: adopting/setup/configureEnvironment.md
+    - Customizing the Toolkit: 
+      - Customization overview: adopting/customize/customize.md
+      - Customizing the dashboard: adopting/customize/config-dashboard/dashboard.md
+    - Toolkit administration:
+      - Artifactory setup: adopting/admin/artifactory-setup.md
+      - Argo CD setup: adopting/admin/argo-cd-setup.md
+      - Sysdig setup: adopting/admin/sysdig-setup.md
+      - cluster configuration: adopting/admin/cluster-config.md
     - Use Cases: 
       - User cases: adopting/use-cases/applying.md
       - Add a new use case: adopting/use-cases/add-use-case.md
@@ -143,7 +149,6 @@ nav:
         - 3-tier application: resources/workshop/inventory.md
         - Application modernization: resources/workshop/appmod.md
       - IBM Cloud:
-        - IBM Cloud: resources/ibm-cloud/ibm-cloud.md
         - IBM Cloud roles: resources/ibm-cloud/ibm-cloud-roles.md
         - Access control: resources/ibm-cloud/access-control.md
         - ICC tool: resources/ibm-cloud/icc.md

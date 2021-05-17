@@ -12,10 +12,10 @@ The following post installation setup is required. To get the developers enabled
 - Configure the RBAC rules in the development cluster. This restricts who can change the parts of the cluster where the tools are installed. Run the RBAC script `./terraform/scripts/rbac.sh {ACCESS-GROUP}`, where `{ACCESS-GROUP}` is the name of the user group (i.e. `{resource_group}-USER`).
 - Perform the steps in [Configure Dashboard](../customize/config-dashboard/dashboard.md) to add tiles and menu items for the tools that are external to the cluster: the Image Registry, GitHub, LogDNA, Sysdig, etc.
 - If running on IBM Cloud:
-  - Check you log data if flowing into LogDNA
-  - Complete the [setup of Sysdig](ibmcloud-setup.md) and check the monitoring data is flowing
+    - Check you log data if flowing into LogDNA
+    - Complete the [setup of Sysdig](ibmcloud-setup.md) and check the monitoring data is flowing
 
-- Managing development assets is an important part of any **SDLC**, The open source version of Artifactory has been installed into the cluster, This enables the full end to end process SDLC to be demonstrated. This version requires some manual configuration after its installation. These these instructions can be found here [Artifactory Setup](./admin/artifactory-setup)
+- Managing development assets is an important part of any **Software Development Life Cycle** (SDLC), The open source version of Artifactory has been installed into the cluster, This enables the full end to end process SDLC to be demonstrated. This version requires some manual configuration after its installation. These these instructions can be found here [Artifactory Setup](./admin/artifactory-setup)
 
 - Complete the [Argo CD Setup](continuous-delivery#configuring-gitops-with-argo-cd), this configures ArgoCD to use Artifactory as a Helm Repository
 - Test opening the [Developer Dashboard](./getting-started-day-1/dashboard/)

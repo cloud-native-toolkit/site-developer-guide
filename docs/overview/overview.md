@@ -40,8 +40,9 @@ different ways:
 
 ## Guided walk-though
 
-If you'd like to have a guided walkthrough of what the Cloud-Native Toolkit provides, check out this [video demonstration](https://www.youtube.com/watch?v=LcWboN1T7Zk){: target="_blank"} of
-the Toolkit in action.
+If you'd like to have a guided walk through of what the Cloud-Native Toolkit provides, check out this video demonstration of the Toolkit in action:
+
+[![Cloud-Native Toolkit](http://img.youtube.com/vi/LcWboN1T7Zk/0.jpg)](https://youtu.be/LcWboN1T7Zk "Cloud-Native Toolkit"){: target="_blank"}
 
 ## Components of the Cloud-Native Toolkit
 

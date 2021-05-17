@@ -2,7 +2,7 @@
 
 This section assumes you have completed the fast-start learning, or equivalent, and have some knowledge of the Cloud-Native Toolkit.
 
-Now you have some hands on experience of using the toolkit, you want to start using the Toolkit on your own project.  To do this you need to make some decisions on how you want to integrate the Cloud-Native Toolkit into your development environment.
+Now you have some hands on experience of using the toolkit, you want to start using the Toolkit on your own project.  To do this you need to make some decisions on how you want to integrate the Cloud-Native Toolkit into your development processes.
 
 This section provides guidance on:
 

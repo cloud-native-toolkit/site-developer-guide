@@ -3,20 +3,23 @@
 !!!Todo
     Complete content - take from [here](https://cloudnativetoolkit.dev/learning)
 
-    What is appropriate?
-
-    - [Cloud Native Bootcamp : https://cloudnative101.dev](https://cloudnative101.dev)
-    - [Learning Journey : https://cloudnativetoolkit.dev/overview](https://cloudnativetoolkit.dev/overview) - need to split out sections?
-    - [IBM Open Labs - Red Hat OpenSHift on IBM Cloud](https://developer.ibm.com/openlabs/openshift)
-
-## Alternate learning options
+## Alternate Cloud-Native Toolkit learning options
 
 - [Workshop](workshop/workshop.md) : Assets to run a workshop with local git server
 
-## Additional content
+## Additional Cloud-Native and OpenShift learning
 
-!!!Todo
-    Add this content
+- [Cloud Native Bootcamp : https://cloudnative101.dev](https://cloudnative101.dev){: target=_blank}
+- [Learning Journey : https://cloudnativetoolkit.dev/overview](https://cloudnativetoolkit.dev/overview){: target=_blank} - need to split out sections?
+- [IBM Open Labs - Red Hat OpenSHift on IBM Cloud](https://developer.ibm.com/openlabs/openshift){: target=_blank}
 
-- Office Hour replays
-- YouTube channel
+## Additional IBM Cloud resources
+
+- [IBM Cloud roles](ibm-cloud/ibm-cloud-roles.md)
+- [access control](ibm-cloud/access-control.md)
+- [cluster fast-switching tool](ibm-cloud/icc.md)
+- [cloud shell](ibm-cloud/cloud-shell.md)
+
+## Additional resources
+
+- [YouTube Channel](https://www.youtube.com/channel/UCCv359rg3CxVGFttCp0Tzvg){: target=_blank}
