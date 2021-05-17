@@ -21,8 +21,7 @@ information. There are a number of key management systems available to manage th
 
 ## Use the key management system at deployment time
 
-[CD with ArgoCD](../../reference/tools/argocd) covers how to use ArgoCD to do GitOps, including how to manage sensitive information in a 
-key management system.
+[CD with ArgoCD](../../reference/tools/argocd.md) covers how to use ArgoCD to do GitOps, including how to manage sensitive information in a key management system.
 
 ## Use the key management system at pod startup time
 

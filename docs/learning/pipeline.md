@@ -1,20 +1,8 @@
 # Continuous Integration Pipeline
 
-!!!Todo
-    Add the following content:
-
-    - Pipeline technology comparison (Jenkins vs Tekton)
-    - What the pipeline needs to deliver - everything needed by Continuous Delivery to deliver into testing and production
-        - Build the application (Language specific - install dependencies, compile/link code, ...)
-        - Run automated unit tests
-        - Perform analysis
-        - Package into container
-        - Perform security scans
-        - Build Helm package
-
 The pipeline technology is what ties all the different tools and activities into you CI/CD workflow.  Tekton in the underlying technology in OpenShift Pipelines, which is the default pipeline technology now used by the Cloud-Native Toolkit.  Jenkins support is still available, but OpenShift Pipelines is the preferred technology.
 
-There are a number of pipelines included with the Cloud-Native toolkit based around the programming language of the project.  A pipeline is make up by orchestrating a number of tasks.  There are a number of tasks installed by the Cloud-Native Toolkit.
+There are a number of pipelines included with the Cloud-Native toolkit.  The pipeline content is based on the programming language of the project.  A pipeline orchestrates the activities defined by a number of tasks.  There is a collection of useful tasks installed by the Cloud-Native Toolkit.  The source for the pipelines and tasks installed by the Toolkit can be found [here](https://github.com/IBM/ibm-garage-tekton-tasks){: target=_blank}.
 
 As an example the Node.js pipeline performs the following tasks:
 
