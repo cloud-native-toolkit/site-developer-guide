@@ -73,6 +73,6 @@ The practice of (CD) can be accomplished in different ways and with different to
 
 Another class of tools is available that are particularly suited for Continuous Delivery and GitOps. The following is by no means an exhaustive list but it does provide some of the common tools used for CD in a cloud-native environment:
 
-- [ArgoCD](./tools/argocd){: target=_blank}
+- [ArgoCD](../../reference/tools/argocd.md){: target=_blank}
 - Flux
 - [IBM Multicloud Manager](https://www.ibm.com/cloud/cloud-pak-for-management){: target=_blank}

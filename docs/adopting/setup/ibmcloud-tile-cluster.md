@@ -3,7 +3,7 @@
 This method will install a managed cluster and the Cloud-Native Toolkit on IBM Cloud using the private catalog tiles installed in the previous step.
 
 !!!Note
-    These steps assume the private catalog has been created and populated with the Cloud-Native Toolkit tiles during the [prepare the account](/getting-started-day-0/prepare-account#3.-create-the-private-catalog) steps.
+    These steps assume the private catalog has been created and populated with the Cloud-Native Toolkit tiles during the [prepare the account](ibmcloud-setup.md#3-create-the-private-catalog) steps.
 
 Select the preferred environment for the cluster to run in, [VPC or Classic](https://cloud.ibm.com/docs/cloud-infrastructure?topic=cloud-infrastructure-compare-infrastructure){: target=_blank} infrastructure.
 

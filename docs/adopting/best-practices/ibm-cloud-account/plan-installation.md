@@ -32,29 +32,14 @@ This diagram from [Resource Access Management]((../../resources/ibm-cloud/access
 
 The steps below help the account owner start configuring the account in this manner.
 
-### Architecture
-
-!!!Todo
-    Fixup after content is migrated
-
-    - https://cloudnativetoolkit.dev/arch/environment
-    - https://cloudnativetoolkit.dev/arch/teams
-    - https://cloudnativetoolkit.dev/arch/application
-    - https://cloudnativetoolkit.dev/arch/manageable
-
-[Environment Architecture](./arch/environment) shows the structure of the environment that will be installed. Typically, each [development team](./arch/teams) gets its own environment. However, multiple teams can share a single environment. The environment structure is designed to support best practices for a [cloud-native application architecture](./arch/application), including designing applications that are [built to manage](./arch/manageable).
-
 ## Set up account managers
-
-!!!Note
-    The **account owner** creates this access group for account managers and adds the functional ID for managing API keys. See [Plan Installation > Roles](./admin/plan-installation#roles){: target=_blank} for the overview of the roles involved.
 
 The account owner may want to delegate the responsibilities for configuring the account for all of the development teams that want environments. Those users who are delegated to will need account management permissions. An easy way to manage who has these permissions is to create an access group with those policies and add those users to the group. An account only needs one of these account manager access groups, which will be used to support all environments in the account.
 
 In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore it is the account owner who must create the access group for account managers.
 
 !!!Note:
-    The video in [Resource Access Management > Configuration Process](./toolkit-resources/resource-mgmt#configuration-process){: target=_blank} shows how to perform the steps in this process.
+    The video in [Resource Access Management > Configuration Process](../../../resources/ibm-cloud/access-control.md#configuration-process){: target=_blank} shows how to perform the steps in this process.
 
 ### Prepare to run scripts
 
@@ -104,7 +89,7 @@ The script adds policies that allow the user to:
 The script also adds the same policies that an environment administrator has. But whereas an environment administrator can only manage the resources in one resource group, an account manager can manage the resources in all resource groups. This gives the account manager the ability in any resource group to:
 
 - Create clusters
-- Manage the IBM Cloud Container Registry (used as the environment's [image registry](./tools/image-registry){: target=_blank})
+- Manage the IBM Cloud Container Registry (used as the environment's [image registry](../registry.md){: target=_blank})
 - Create service instances
 
 ### Functional ID for infrastructure permissions
@@ -152,7 +137,7 @@ Once the environment is set up, the environment users can start using it to deve
 ### 1. Configure account
 
 First, before installing an environment, an account manager needs to configure the IBM Cloud account for the
-  environment. See [Configure Account](./admin/config-account){: target=_blank} for detailed instructions, which accomplish this:
+  environment. See [Configure Account](../../setup/ibmcloud-setup.md){: target=_blank} for detailed instructions, which accomplish this:
 
 1. Upgrade the image registry
 1. Prepare to run scripts
@@ -171,16 +156,16 @@ First, before installing an environment, an account manager needs to configure t
 
 Once the account manager has configured the account for installing an environment, the account manager and the environment administrator need to jointly decide how the environment administrator is going to install the environment. There are two options:
 
-[**Install including creating a new cluster**](./admin/installation-ibm-cloud){: target=_blank}: The environment administrator who performs this install needs permissions to create clusters as well as service instances. The script will run as this user to create the cluster, create the service instances, and install the CI/CD tools in the cluster.
+[**Install including creating a new cluster**](../../setup/ibmcloud-tile-cluster.md){: target=_blank}: The environment administrator who performs this install needs permissions to create clusters as well as service instances. The script will run as this user to create the cluster, create the service instances, and install the CI/CD tools in the cluster.
 
-[**Install into an existing cluster**](./admin/installation-existing){: target=_blank}: The account manager creates the cluster and then grants the environment administrator access to it. The environment administrator who performs this install needs permissions to create service instances but not to create clusters. The script will run as the environment administrator to create the service instances and install the CI/CD tools in the existing cluster.
+[**Install into an existing cluster**](../../setup/toolkit-install.md){: target=_blank}: The account manager creates the cluster and then grants the environment administrator access to it. The environment administrator who performs this install needs permissions to create service instances but not to create clusters. The script will run as the environment administrator to create the service instances and install the CI/CD tools in the existing cluster.
 
 !!!Note
-    A third option is to [install an environment in Red Hat CodeReady Containers](./admin/installation-crc){: target=_blank}. For this option, you're not installing in IBM Cloud, so you don't have to configure your IBM Cloud account. However, you do have to install CRC.
+    A third option is to [install an environment in Red Hat CodeReady Containers](../../setup/install-crc.md){: target=_blank}. For this option, you're not installing in IBM Cloud, so you don't have to configure your IBM Cloud account. However, you do have to install CRC.
 
 ### 3. Configure environment
 
-After installing the environment, before giving the users access to the environment, the environment administrator needs to finish configuring it. See [Configure Environment](./admin/config-install){: target=_blank} for detailed instructions, which accomplish this:
+After installing the environment, before giving the users access to the environment, the environment administrator needs to finish configuring it. See [Configure Environment](../../setup/configureEnvironment.md){: target=_blank} for detailed instructions, which accomplish this:
 
 - Configure RBAC security in the cluster
 - Test opening the Developer Dashboard

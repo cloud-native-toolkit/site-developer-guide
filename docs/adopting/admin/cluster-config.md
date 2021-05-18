@@ -36,7 +36,7 @@ The pull secrets are also added to the `default` service account in each of the 
 ## Created resources
 
 The following resources are all created during the Iteration Zero provisioning process. These resources
-are used generally to expose the config of the installed tools but specifically used by the CI pipeline ([Jenkins](/tools/jenkins), [Tekton](/tools/tekton/), etc.) to interact with the deployed tools. The resources are bound as optional environment variables in the containers used within the pipeline so if a particular tool has not been installed the associated environment variables won't be set. For example:
+are used generally to expose the config of the installed tools but specifically used by the CI pipeline ([Jenkins](../../reference/tools/jenkins.md), [Tekton](../../reference/tools/tekton.md), etc.) to interact with the deployed tools. The resources are bound as optional environment variables in the containers used within the pipeline so if a particular tool has not been installed the associated environment variables won't be set. For example:
 
 ```yaml
   envFrom:

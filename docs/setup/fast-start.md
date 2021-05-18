@@ -140,27 +140,27 @@ Select the option you want for your cluster, then follow the instructions.
 
         1. Create the installation directory.  This command will prompt you for the student password.  Above the terminal window there are a set of icons.  One is a key icon.  Press the key icon to see a set of credentials.  The student password is in the SSH section of the Service Information panel, identified by **pass**
 
-            ```bash
+            ```shell
             sudo mkdir -p /usr/local/lib/nodejs
             ```
 
         2. install Node.js using commands:
 
-            ```bash
+            ```shell
             wget https://nodejs.org/dist/v14.16.1/node-v14.16.1-linux-x64.tar.xz
             sudo tar -xJvf node-v14.16.1-linux-x64.tar.xz -C /usr/local/lib/nodejs
             ```
 
-            ```bash
-            cat <<EOF >> .bashrc
+            ```shell
+            cat <<EOF >> .shellrc
             # Nodejs
             export PATH=/usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin:$PATH
             EOF
-            . ./.bashrc
+            . ./.shellrc
             ```
         
         3. install the Toolkit CLI
-            ```bash
+            ```shell
             sudo PATH=/usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin/npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
             ```
 
@@ -181,7 +181,7 @@ To install the toolkit perform the following steps:
 
     === "Linux / MacOS"
 
-        ```bash
+        ```shell
         curl -sfL get.cloudnativetoolkit.dev | sh -
         ```
 

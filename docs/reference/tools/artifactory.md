@@ -14,9 +14,9 @@ An artifact repository manager is an integral part of a CI/CD solution, a compan
 
 An artifact repository often serves as the storage for a package manager, which assembles an application from artifacts. Here are some common package managers and their repositories:
 
-- [**Maven**](https://maven.apache.org){: target=_blank}: Builds Java artifacts (such as Jar, War, Ear, etc.) and projects stored in [Maven repositories](https://maven.apache.org/tools/introduction/introduction-to-repositories.html){: target=_blank} such as [Maven Central](https://maven.apache.org/repository/index.html){: target=_blank}
+- [**Maven**](https://maven.apache.org){: target=_blank}: Builds Java artifacts (such as Jar, War, Ear, etc.) and projects stored in [Maven repositories](https://maven.apache.org/guides/introduction/introduction-to-repositories.html){: target=_blank} such as [Maven Central](https://maven.apache.org/repository/index.html){: target=_blank}
 - [**npm**](https://docs.npmjs.com/about-npm/){: target=_blank}: Assembles programs from JavaScript packages stored in [npm-registries](https://docs.npmjs.com/misc/registry){: target=_blank} such as the [public npm registry](https://docs.npmjs.com/about-the-public-npm-registry){: target=_blank}
-- [**PIP**](https://pypi.org/project/pip/){: target=_blank}: Installs Python packages from [index repositories](https://packaging.python.org/tools/hosting-your-own-index/){: target=_blank} such as the [Python Package Index (PyPI)](https://pypi.org/){: target=_blank}
+- [**PIP**](https://pypi.org/project/pip/){: target=_blank}: Installs Python packages from [index repositories](https://packaging.python.org/guides/hosting-your-own-index/){: target=_blank} such as the [Python Package Index (PyPI)](https://pypi.org/){: target=_blank}
 - [**Helm**](https://helm.sh){: target=_blank}: Deploys applications to Kubernetes using charts stored in [Helm repositories](https://helm.sh/docs/chart_repository/){: target=_blank} such as the [Helm Hub](https://helm.sh/blog/intro-helm-hub/){: target=_blank} catalog of repositories
 
 Docker is not a package manager, but its architecture includes an artifact repository:
@@ -27,19 +27,19 @@ Note that you do not need a very large team to start reaping benefits from an ar
 
 ## Artifact management in the Pipeline
 
-Note: Be sure to [set up Artifactory](./admin/artifactory-setup/){: target=_blank} before using it in the Development Tools environment, if you are using external Artifactory that was not set up as part of the toolkit installation.
+Note: Be sure to [set up Artifactory](../../adopting/admin/artifactory-setup.md){: target=_blank} before using it in the Development Tools environment, if you are using external Artifactory that was not set up as part of the toolkit installation.
 
-The environment will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](/tools/jenkins){: target=_blank}, [Tekton](/tools/tekton){: target=_blank}, etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
+The environment will eventually be extended to store a number of artifact types in Artifactory. Thus far, the CI and CD pipelines exchange two types of artifacts: Docker images and Helm charts. The CI pipeline ([Jenkins](jenkins.md){: target=_blank}, [Tekton](tekton.md){: target=_blank}, etc.) builds these artifacts and ArgoCD deploys them. To store and share the artifacts, the pipeline uses two repositories:
 
-- **Docker images**: The [Developer Tools Image Registry](/tools/ibm-cloud-container-registry){: target=_blank}
+- **Docker images**: The [Developer Tools Image Registry](ibm-cloud-container-registry.md){: target=_blank}
 - **Helm charts**: A Helm repository in Artifactory
 
-The [templates](/starterkits){: target=_blank} have also been configured to store their Helm charts in Artificatory.
+The [templates](../starter-kit/starter-kit.md){: target=_blank} have also been configured to store their Helm charts in Artificatory.
 
 Artifactory is part of the environment's complete CI/CD solution:
 
-- [Continuous Integration](/getting-started-day-1/continuous-integration){: target=_blank}
-- [Continuous Delivery](/getting-started-day-2/continuous-delivery){: target=_blank}
+- [Continuous Integration](../../learning/fast-ci.md){: target=_blank}
+- [Continuous Delivery]../../learning/fast-cd.md){: target=_blank}
 
 ### Artifactory dashboard
 
@@ -47,7 +47,7 @@ Use the Artifactory dashboard to browse the repositories and their artifacts.
 
 Open the Artifactory web UI for your environment.
 
-- Use the [Developer Dashboard](/getting-started-day-1/dashboard){: target=_blank} to open the Artifactory dashboard
+- Use the [Developer Dashboard](../dashboard.md){: target=_blank} to open the Artifactory dashboard
 
 Browse the Helm repository.
 

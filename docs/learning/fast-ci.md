@@ -38,11 +38,8 @@ You should now be able to access the OpenShift console:
 oc console
 ```
 
-!!!Todo
-    The link for CRW below is not available - what should this be?
-
 !!!Note
-    If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](./getting-started/dev-env-setup#code-ready-workspace) before logging in to the cluster. The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding
+    If your workshop is on Code Ready Workspaces, follow the steps in [Code Ready Workspaces Setup](../resources/ibm-cloud/crw.md) before logging in to the cluster. The remaining steps assume this step has already been performed. If you stop and then come back later it is a good idea to re-run this step again before proceeding
 
 ### 2. Create the development namespace
 
@@ -56,7 +53,7 @@ oc sync ${DEV_NAMESPACE}
 
 ### 3. Open the Developer Dashboard
 
-The [Developer Dashboard](../reference/dashboard.md) makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [Starter Kits](./starterkits/gitrepos) that make seeding your development project very easy.
+The [Developer Dashboard](../reference/dashboard.md) makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [Starter Kits](../reference/starter-kit/starter-kit.md) that make seeding your development project very easy.
 
 Before starting, open a browser and make sure you are logged into [Github](https://github.com). There are two options for how to access the dashboard:
 
@@ -103,7 +100,7 @@ Before starting, open a browser and make sure you are logged into [Github](https
 ### 5. Register the application in a DevOps Pipeline
 
 !!!Info
-    We will be using the `pipeline` command of the IBM Garage Cloud cli to register the DevOps pipeline. The pipeline command gives an option for both `Jenkins` and `Tekton`. For more information about working with the different build engines, please see [Continuous Integration with Jenkins Guide](./tools/jenkins) and [Continuous Integration with Tekton Guide](./tools/tekton)
+    We will be using the `pipeline` command of the IBM Garage Cloud cli to register the DevOps pipeline. The pipeline command gives an option for both `Jenkins` and `Tekton`. For more information about working with the different build engines, please see [Continuous Integration with Jenkins Guide](../reference/tools/jenkins.md) and [Continuous Integration with Tekton Guide](../reference/tools/tekton.md)
 
 1. Open a browser to the Git repository created in the previous step.
 
@@ -207,7 +204,7 @@ The steps to view your registered pipeline will vary based on type of pipeline (
 
     === "Kubernetes"
 
-        1. Run the command `oc dashboard` in your terminal to open your [Developer Dashboard](./getting-started-day-1/dashboard)
+        1. Run the command `oc dashboard` in your terminal to open your [Developer Dashboard](../reference/dashboard.md)
         2. Select the Jenkins tool to open the Jenkins dashboard
         3. Run the command `kubectl credentials` in your terminal to get the list of logins for the tools
         4. Use the Jenkins userid and password to log into the Jenkins dashboard

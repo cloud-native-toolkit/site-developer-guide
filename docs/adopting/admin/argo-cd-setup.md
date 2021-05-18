@@ -5,14 +5,14 @@ Complete the steps for setting up the ArgoCD tool to support integration with
 
 ## Overview
 
-ArgoCD is the [environment's continuous delivery tool](/tools/continuous-delivery).
+ArgoCD is the [environment's continuous delivery tool](../best-practices/devops.md#continuous-delivery).
 Before you can use it as part of the environment, it must first be configured.
 
 ## Prerequisites
 
 Before setting up ArgoCD, [set up Artifactory](artifactory-setup.md) so that ArgoCD can use it as a Helm repository.
 
-##  Configuration
+## Configuration
 
 Configure ArgoCD to use Artifactory as a Helm repository.
 

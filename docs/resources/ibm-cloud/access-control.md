@@ -35,7 +35,7 @@ This article is about how to apply these limits in IBM Cloud. Here are two commo
 
 ## IBM Cloud Identity and Access Management (IAM)
 
-Access to resources in IBM Cloud is controlled using IBM Cloud Identity and Access Management (IAM). [Identity and access management (IAM)](https://en.wikipedia.org/w/index.php?title=Identity_and_access_management{: target=_blank}) is a general approach many software systems use to authenticate clients and authorize them to use functionality. [What is IBM Cloud Identity and Access Management?](https://cloud.ibm.com/docs/iam?topic=iam-iamoverview){: target=_blank} introduces IBM Cloud's implementation of IAM, which includes this diagram of the IAM components and their relationships:
+Access to resources in IBM Cloud is controlled using IBM Cloud Identity and Access Management (IAM). [Identity and access management (IAM)](https://en.wikipedia.org/w/index.php?title=Identity_and_access_management){: target=_blank} is a general approach many software systems use to authenticate clients and authorize them to use functionality. [What is IBM Cloud Identity and Access Management?](https://cloud.ibm.com/docs/iam?topic=iam-iamoverview){: target=_blank} introduces IBM Cloud's implementation of IAM, which includes this diagram of the IAM components and their relationships:
 
 ![IAM complete](images/iam-complete.png)
 

@@ -85,7 +85,7 @@ The next step is to define the base url that will be used by the server.
 
 ### Obtain the encrypted password
 
-To enable the CI pipelines ([Jenkins](../../reference/tools/jenkins), [Tekton](../../reference/tools/tekton), etc.) to store the Helm artifacts in the Artifactory repository, we need to obtain Artifactory's encrypted password and save it where the pipeline can access the password -- in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
+To enable the CI pipelines ([Jenkins](../../reference/tools/jenkins.md), [Tekton](../../reference/tools/tekton.md), etc.) to store the Helm artifacts in the Artifactory repository, we need to obtain Artifactory's encrypted password and save it where the pipeline can access the password -- in the `artifactory-access` Kubernetes secret in the `tools` namespace in the Development Tools environment.
 
 - In the Artifactory console, press the **Welcome, admin** menu button in the top right corner of the console and select **Edit profile**
 
