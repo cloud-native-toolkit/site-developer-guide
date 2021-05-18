@@ -23,3 +23,12 @@
 ## Additional resources
 
 - [YouTube Channel](https://www.youtube.com/channel/UCCv359rg3CxVGFttCp0Tzvg){: target=_blank}
+
+## Linking to this site
+
+As the site is under continuous revisions, you may want to provide links that are guaranteed to be available.  The following links will always be maintained:
+
+- Site home : [https://cloudnativetoolkit.dev](https://cloudnativetoolkit.dev){: target=_blank}
+- Install : [https://cloudnativetoolkit.dev/install](https://cloudnativetoolkit.dev/install){: target=_blank}
+- Learn : [https://cloudnativetoolkit.dev/learn](https://cloudnativetoolkit.dev/learn){: target=_blank}
+- workshop : [https://cloudnativetoolkit.dev/workshop](https://cloudnativetoolkit.dev/workshop){: target=_blank}

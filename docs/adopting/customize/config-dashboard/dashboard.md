@@ -2,9 +2,6 @@
 
 Customize the Developer Dashboard and the OpenShift console
 
-!!!Note
-    An **environment administrator** performs the steps on this page. See [Plan Installation > Roles](./admin/plan-installation#roles) for the overview of the roles involved.
-
 ## Customizing the Dashboard
 
 After the Dashboard has been installed into your development cluster, you can customize it to you team's needs. You can change the Title, Prefix, and Cloud Console links by adding the following environment variables to your deployment yaml.
@@ -37,11 +34,11 @@ You can also tailor the list of content that is displayed in the Activation tab 
 
 ## Adding tools
 
-You can add additional tools to the [Developer Dashboard](./getting-started/dashboard) and to the Tools menu on the OpenShift console. The tools in the cluster are added automatically, but the tools outside the cluster must be added manually. You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces (if you've installed that in the environment), etc.
+You can add additional tools to the [Developer Dashboard](../../../reference/dashboard.md) and to the Tools menu on the OpenShift console. The tools in the cluster are added automatically, but the tools outside the cluster must be added manually. You can also add tools for the Cloud Paks that you install in the environment, for CodeReady Workspaces (if you've installed that in the environment), etc.
 
 ### Adding tools to the Dashboard
 
-Use the [Cloud Native Toolkit CLI](./getting-started/cli) to add tools to the dashboard.
+Use the [Cloud Native Toolkit CLI](../../../reference/cli.md) to add tools to the dashboard.
 
 - Use this syntax to add a tool:
 
@@ -66,7 +63,7 @@ Use the [Cloud Native Toolkit CLI](./getting-started/cli) to add tools to the da
     igc tool-config --name integration --url {url to CP4I instance}
     ```
 
-- If you've [installed CodeReady Workspaces](./admin/install-crw) in your Environment, add it to your Dashboard:
+- If you've [installed CodeReady Workspaces](../../../resources/ibm-cloud/crw.md) in your Environment, add it to your Dashboard:
 
     ```shell
     igc tool-config --name codeready --url {url to the CRW instance}

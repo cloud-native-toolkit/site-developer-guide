@@ -108,7 +108,7 @@ We give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `gct
 
 ### Kubernetes service API key
 
-Sixth, to create clusters in the resource group, the account will need API keys for the container service to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra){: target=_blank}. A separate API key is needed for each region and resource group. An account manager should use [the account's functional ID](./admin/plan-installation#functional-id-for-infrastructure-permissions){: target=_blank} to set the API key(s) for the new resource group.
+Sixth, to create clusters in the resource group, the account will need API keys for the container service to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra){: target=_blank}. A separate API key is needed for each region and resource group. An account manager should use [the account's functional ID](plan-installation.md#functional-id-for-infrastructure-permissions){: target=_blank} to set the API key(s) for the new resource group.
 
 Create an API key for the resource group and the data center's region:
 

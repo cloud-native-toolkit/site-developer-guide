@@ -14,13 +14,13 @@ Create an OpenShift Cluster for example:
     Fixup links below
 
 - The 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
-- Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](getting-started-day-0/provision-cluster/ibm-cloud-vpc)
-- On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](https://cloudnativetoolkit.dev/getting-started-day-0/plan-installation/multi-cloud)
-- IBM internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/ ) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
+- Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](../../adopting/setup/ibmcloud-tile-cluster.md)
+- On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](../../adopting/setup/provision-cluster.md)
+- IBM internal DTE Infrastructure access via [IBM VPN](https://ccp-ui.csplab.intranet.ibm.com/) or [IBM CSPLAB](https://ccp-ui.apps.labprod.ocp.csplab.local/)
 
 ## 2. Install IBM Cloud Native Toolkit
 
-- Use one of the install options for example the [Quick Install](https://cloudnativetoolkit.dev/getting-started-day-0/install-toolkit/quick-install)
+- Use one of the install options for example the [Quick Install](../../setup/fast-start.md)
 
     ```shell
     curl -sfL get.cloudnativetoolkit.dev | sh -
@@ -42,7 +42,7 @@ Create an OpenShift Cluster for example:
 
 ## 4. (Optional) Auto configure Terminal Shell
 
-- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](https://cloudnativetoolkit.dev/getting-started/dev-env-setup) and [Toolkit CLI](https://cloudnativetoolkit.dev/getting-started/cli).
+- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](../../learning/dev-setup.md) and [Toolkit CLI](../../reference/cli.md).
   Run the following command on Cloud, Linux or MacOS shell:
 
     ```shell

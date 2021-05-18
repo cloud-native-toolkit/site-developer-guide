@@ -8,7 +8,7 @@ Provisioning the OpenShift cluster is the minimum requirement to prepare for the
 
 Here are some resources that might help get started:
 
-- [OpenShift CRC setup](../prepare-account/openshift-crc-setup){: target=_blank}
+- [OpenShift CRC setup](install-crc.md){: target=_blank}
 - [OpenShift on AWS](https://github.com/ibm-cloud-architecture/terraform-openshift4-aws){: target=_blank}
 - [OpenShift on GCP](https://github.com/ibm-cloud-architecture/terraform-openshift4-gcp){: target=_blank}
 - [OpenShift on Azure](https://github.com/ibm-cloud-architecture/terraform-openshift4-azure){: target=_blank}

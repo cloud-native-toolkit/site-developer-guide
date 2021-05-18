@@ -45,7 +45,7 @@ HTML can be embedded in Markdown, but in the documentation it is preferred to st
 
 ### Links within MkDocs generated content
 
-MkDocs will warn of any internal broken links, so it is important that links within the documentation are recognised as internal links.  
+MkDocs will warn of any internal broken links, so it is important that links within the documentation are recognized as internal links.  
 
 - a link starting with a protocol name, such as http or https, is an external link
 - a link starting with `/` is an external link.  This is because MkDocs generated content can be embedded into another web application, so links can point outside of the MkDocs generated site but hosted on the same website
@@ -106,7 +106,7 @@ where:
 
 ### Tabs
 
-Content can be organised into a set of horizontal tabs.  
+Content can be organized into a set of horizontal tabs.  
 
 ```md
 === "Tab 1"
@@ -247,7 +247,7 @@ To work on documentation and be able to view the rendered web site you need to c
 
     - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
     - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
-    - To check links in the built site (`mkdocs build` much be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the lincheckerrc file.
+    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the lincheckerrc file.
 
 === "Tooling within a Docker container"
 

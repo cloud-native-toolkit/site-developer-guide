@@ -2,16 +2,16 @@
 
 IBM CloudPrepare the  account for an installation of Cloud-Native Toolkit environment
 
-**Note:** If you already have a cluster then you can jump to [install the toolkit](install-toolkit/quick-install). If you will be provisioning a cluster outside of IBM Cloud then you can jump to [provision the cluster](provision-cluster/multi-cloud).
+**Note:** If you already have a cluster then you can jump to [install the toolkit](toolkit-install.md). If you will be provisioning a cluster outside of IBM Cloud then you can jump to [provision the cluster](provision-cluster.md).
 
 ## 1. Set up account managers access group
 
-The **account owner** creates this access group for account managers and adds the functional ID for managing API keys. See [Plan Installation > Roles](/getting-started-day-0#ibm-cloud-account) for the overview of the roles involved. An account only needs one of these `account manager` access groups, which will be used to support all environments in the account.
+The **account owner** creates this access group for account managers and adds the functional ID for managing API keys. See [IBM Cloud account management](../../resources/ibm-cloud/ibm-cloud-roles.md) for the overview of the roles involved. An account only needs one of these `account manager` access groups, which will be used to support all environments in the account.
 
 In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore, it is the account owner who must create the access group for account managers.
 
 !!!Note
-    The video in [Resource Access Management > Configuration Process](/toolkit-resources/resource-mgmt#configuration-process) shows how to perform the steps in this process.
+    The video in [Resource Access Management > Configuration Process](../../resources/ibm-cloud/access-control.md#configuration-process) shows how to perform the steps in this process.
 
 ### A. Prepare to run scripts
 
@@ -57,7 +57,7 @@ The `./terraform/scripts/acp-mgr.sh` script adds policies that allow the user to
 - Create access groups and manage access group membership
 - Create clusters across all resources groups in the account
 - Create service instances across all resource groups in the account
-- Manage the IBM Cloud Container Registry (used as the environment's [image registry](/getting-started-day-1/image-registry/))
+- Manage the IBM Cloud Container Registry (used as the environment's image registry)
 
 ## 2. Configure the account
 
@@ -88,7 +88,7 @@ ibmcloud login -a cloud.ibm.com -r <region>
 
 ### B. Upgrade the image registry
 
-Upgrade the service plan for the [image registry](/getting-started-day-1/image-registry/) so that is has unlimited capacity for images.
+Upgrade the service plan for the [image registry](../../adopting/best-practices/registry.md) so that is has unlimited capacity for images.
 
 ```shell
 ibmcloud cr plan-upgrade standard
@@ -112,7 +112,7 @@ ibmcloud cr plan-upgrade standard
 An API Key is used to authenticate to the IBM Cloud APIs. It is specific to a user within a particular account, meaning you need a different API key for each account you will be accessing.
 
 **Note:** If you will be using classic
-infrastructure and/or multiple `account mangers` follow these instructions instead to create a [functional ID](/admin/plan-installation#create-a-functional-id-for-classic-infrastructure-permissions) for the account.
+infrastructure and/or multiple `account mangers` follow these instructions instead to create a [functional ID](../best-practices/ibm-cloud-account/plan-installation.md#functional-id-for-infrastructure-permissions){: target=_blank} for the account.
 
 [Create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey) and download each key to a file. Be sure to include a descriptive name of the APIKey.
 
@@ -152,7 +152,7 @@ For each resource group, create an access group for `environment administrators`
 The script adds policies that allow the user to add resources to the resource group:
 
 - Permission to create clusters
-- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](./getting-started-day-1/image-registry/))
+- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](../../adopting/best-practices/registry.md))
 - Permission to create service instances
 
 #### ii. Create the access group for environment users
@@ -190,7 +190,7 @@ The script adds policies that allow the user to use resources to the resource gr
 ### B. Register the Cloud-Native Toolkit tiles in the catalog
 
 !!!Note
-    The following instructions depend on the `jq` command. `jq` is included in the [development environment setup](../getting-started/dev-env-setup)
+    The following instructions depend on the [`jq`](https://stedolan.github.io/jq/){: target=_blank} command, which is installed as part of the [Cloud-Native Toolkit CLI](../../learning/dev-setup.md#install-the-cloud-native-toolkit-command-line-interface-cli){: target=_blank}
 
 1. Download `create-catalog-offering.sh` from the [latest Iteration Zero release]("https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases/latest"){: target="_blank"} and make the file executable
 
@@ -262,7 +262,7 @@ Visit the [VLANs](https://cloud.ibm.com/classic/network/vlans) page to list and 
 
 #### List the available vlans
 
-Use the [IGC CLI](/getting-started/cli)'s `igc vlan` command to select two existing VLANs and generate the properties to use for the installation scripts
+Use the [IGC CLI](../../reference/cli.md)'s `igc vlan` command to select two existing VLANs and generate the properties to use for the installation scripts
 
 ```shell
 igc vlan
@@ -285,3 +285,8 @@ With these steps completed, the account manager will have configured the account
 - Data center (classic infrastructure only)
 - Private VLAN id (classic infrastructure only)
 - Public VLAN id (classic infrastructure only)
+
+Please now select which installation method to use:
+
+- [Catalog tile](ibmcloud-tile-cluster.md)
+- [Iteration Zero scripts](ibmcloud-iz-cluster.md)

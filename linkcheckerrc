@@ -1,10 +1,24 @@
 [filtering]
+checkextern=1
 ignore=
   ^https://cloudnativetoolkit.dev
   ^https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/edit
-  xml$
+  xml.gz$
   ^https://ccp-ui.csplab.intranet.ibm.com
   ^https://ccp-ui.apps.labprod.ocp.csplab.local
+  fonts.gstatic.com
+
+nofollow=
+  public/install.html$
+  public/learn.html$
+  public/learning.html$
+  public/setup.html$
+  public/workshop.html$
+  public/resource/workshop.html$
+
+[AnchorCheck]
 
 [checking]
 anchors=1
+robotstxt=0
+

@@ -47,11 +47,13 @@ that makes up the project will be described in its own folder. The repository wi
 destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 !!!Note
-    There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops/generate) used in the following steps is optional and provides some application templates to help simplify some configuration activities.
+    There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) used in the following steps is optional and provides some application templates to help simplify some configuration activities.
 
 [!["GitOps with ArgoCD"](http://img.youtube.com/vi/plK2C-efwW8/0.jpg)](https://youtu.be/plK2C-efwW8 "GitOps with ArgoCD"){: target=_blank }
 
-1. Create a new repo from the [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops/generate).  **If you see a 404 error when you click on the link, you need to sign in to github.**
+1. Create a new repo from the [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) `https://github.com/IBM/template-argocd-gitops/generate`.  
+
+    click **Use this template** - If you see a 404 error when you click on the link, you need to sign in to github.
 
 1. Clone the project to your machine
 
@@ -78,10 +80,10 @@ The last stage in the CI pipeline updates a GitOps repository with the updated a
 order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes
 to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
 
-- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [Toolkit CLI](./getting-started/cli) to register the pipeline then this secret has already been created.
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [Toolkit CLI](../reference/cli.md) to register the pipeline then this secret has already been created.
 - A config map named `gitops-repo` holds the url and branch for the gitops repository.
 
-Fortunately the [Toolkit CLI](./getting-started/cli) provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [Toolkit CLI gitops command](./getting-started/cli#gitops) section.
+Fortunately the [Toolkit CLI](../reference/cli.md) provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [Toolkit CLI gitops command](../reference/cli.md#gitops) section.
 
 1. Make sure to switch context to the project/namespace CI namespace
 
@@ -360,7 +362,7 @@ The following provides the steps to handle protected information in a GitOps rep
 
 #### Prepare the Key Protect instance
 
-As the name suggests, the [Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](./tools/secret-management-with-key-protect). From
+As the name suggests, the [Argo CD Key Protect plugin](https://github.com/ibm-garage-cloud/argocd-plugin-key-protect) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](../reference/tools/key-protect.md). From
 those instructions you can find the information required for the subsequent steps.
 
 #### Create the secret configuration

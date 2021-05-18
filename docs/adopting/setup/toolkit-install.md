@@ -82,7 +82,7 @@ Steps to install the Cloud-Native Toolkit for running Openshift or Kubernetes cl
 
     #### Optional: Generate the VLAN properties
 
-    The [IGC CLI](/getting-started/cli) can be used to generate these settings, to make the configuration as simple as possible.
+    The [IGC CLI](../../reference/cli.md) can be used to generate these settings, to make the configuration as simple as possible.
 
     If your account has numerous VLANs and you want your cluster to use specific ones, then skip this step and provide the 
     values by hand. This tool is for users who don't know what these required settings should be and want a simple way to 

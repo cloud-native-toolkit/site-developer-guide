@@ -19,14 +19,14 @@ Follow these directions to see code analysis in action:
 
 Deploy the template named Spring Boot Microservice.
 
-- Follow the directions in [Deploying an App](/getting-started-day-1/deploy-app)
+- Follow the directions in [Deploying an App](../../learning/fast-ci.md)
     - Deploy the Spring Boot Microservice template
     - Name the new repo something like `sonar-java`
     - Be sure to run the CI pipeline for your project, and confirm that it runs the Sonar scan stage
 
 Examine SonarQube's analysis report for your app.
 
-- Use the [Developer Dashboard](/getting-started-day-1/dashboard) to open the SonarQube dashboard
+- Use the [Developer Dashboard](../dashboard.md) to open the SonarQube dashboard
 
 - Go to the Projects page
 

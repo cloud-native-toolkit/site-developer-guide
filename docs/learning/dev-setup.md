@@ -57,7 +57,7 @@ Ensure you have a git command line tool installed.  You can verify you have a wo
 
 #### Configure a Github personal access token
 
-For the automation you will learn as part of the Continuous Integration process you will need a [GitHub personal access token](https:/docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token){: target=_blank} with `public_repo` and `write:repo_hook` scopes.
+For the automation you will learn as part of the Continuous Integration process you will need a [GitHub personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token){: target=_blank} with `public_repo` and `write:repo_hook` scopes.
 
 A Personal Access Token is used in place of a user password to authenticate with GitHub.
 
@@ -96,9 +96,11 @@ To install the Cloud-Native Toolkit CLI run the following command:
     What is the Windows equivalent?
 
 ```shell
-curl -sL shell.cloudnativetoolkit.dev | bash -
+curl -sL shell.cloudnativetoolkit.dev | shell -
 source ~/.bashrc || source ~/.zshrc
 ```
 
 !!!Note
     If you have access to multiple IBM Cloud accounts you may find the [IBM Cloud cluster fast-switching tool (icc)](../resources/ibm-cloud/icc.md){: target=_blank} of use.  The **icc** tool is installed as part of the Cloud-Native Toolkit CLI.
+
+    If you are working on the IBM Cloud there is a browser based shell environment you can use.  Information about setting up and accessing the browser based shell to work with the Cloud-Native Toolkit can be found in the [resources section](../resources/ibm-cloud/cloud-shell.md){: target=_blank}

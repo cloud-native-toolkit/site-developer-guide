@@ -25,6 +25,14 @@ plugins:
       lang: en
   - minify:
       minify_html: true
+  - redirects:
+      redirect_maps:
+        'install': 'setup/setup-options.md'
+        'setup': 'learning/dev-setup.md'
+        'learn': 'learning/fast-start.md'
+        'learning': 'learning/fast-start.md'
+        'workshop': 'resources/workshop/workshop.md'
+        'resource/workshop': 'resources/workshop/workshop.md'
 markdown_extensions:
   - attr_list
   - admonition
@@ -81,6 +89,7 @@ nav:
       - Install IBM Cloud cluster from catalog: adopting/setup/ibmcloud-tile-cluster.md
       - Install IBM Cloud cluster Iteration Zero: adopting/setup/ibmcloud-iz-cluster.md
       - Install cluster elsewhere: adopting/setup/provision-cluster.md
+      - Install CodeReady Containers: adopting/setup/install-crc.md
       - Air-gapped setup: adopting/setup/air-gapped-setup.md
       - Install toolkit to existing cluster: adopting/setup/toolkit-install.md
       - Post Install steps: adopting/setup/configureEnvironment.md
@@ -114,6 +123,7 @@ nav:
       - SonarQube: reference/tools/sonar-qube.md
       - OpenShift Pipelines/Tekton: reference/tools/tekton.md
       - IBM Container Registry: reference/tools/ibm-cloud-container-registry.md
+      - IBM Key Protect: reference/tools/key-protect.md
     - Pipeline Task Reference:
       - Pipilines: reference/tasks/pipelines.md
       - ibm-build-tag-push: reference/tasks/placeholder.md
@@ -153,6 +163,7 @@ nav:
         - Access control: resources/ibm-cloud/access-control.md
         - ICC tool: resources/ibm-cloud/icc.md
         - Cloud shell: resources/ibm-cloud/cloud-shell.md
+        - CodeReady Workspaces: resources/ibm-cloud/crw.md
   - Contributing:
     - Governance: contribute/governance.md
     - Contribute: contribute/contribute.md

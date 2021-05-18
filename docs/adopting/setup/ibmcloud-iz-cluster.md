@@ -1,4 +1,7 @@
-# Provision an IBM Cloud cluster using Private Catalog
+# Provision an IBM Cloud cluster using Iteration Zero scripts
+
+!!!Information
+    This installation method will provision the cluster if it doesn't already exist
 
 ## Install a managed cluster and the Cloud Native Toolkit using Iteration Zero
 
@@ -113,7 +116,7 @@ There are a number of values that can be applied in the file, some required and 
 
     #### Optional: Generate the VLAN properties
 
-    The [IGC CLI](/getting-started/cli) can be used to generate these settings, to make the configuration as simple as possible.
+    The [IGC CLI](../../reference/cli.md) can be used to generate these settings, to make the configuration as simple as possible.
 
     If your account has numerous VLANs and you want your cluster to use specific ones, then skip this step and provide the
     values by hand. This tool is for users who don't know what these required settings should be and want a simple way to

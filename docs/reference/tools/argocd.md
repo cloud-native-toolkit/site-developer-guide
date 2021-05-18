@@ -39,11 +39,13 @@ Argo CD uses a number of terms to refer to the components
 Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/){: target=_blank}. Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications){: target=_blank} that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 !!!Note
-    There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD template](https://github.com/IBM/template-argocd-gitops/generate){: target=_blank} used in the following steps is optional and provides some application templates to help simplify some configuration activities.
+    There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD template](https://github.com/IBM/template-argocd-gitops){: target=_blank} used in the following steps is optional and provides some application templates to help simplify some configuration activities.
 
 [![Gitops with ArgoCD](http://img.youtube.com/vi/plK2C-efwW8/0.jpg)](https://youtu.be/plK2C-efwW8 "Gitops with ArgoCD"){: target="_blank"}
 
-1. Create a new repo from the [Argo CD template](https://github.com/IBM/template-argocd-gitops/generate){: target=_blank}.  **If you see a 404 error when you click on the link, you need to sign in to github.**
+1. Create a new repo from the [Argo CD template](https://github.com/IBM/template-argocd-gitops){: target=_blank}.  
+
+    Click **Use this template** - If you see a 404 error when you click on the link, you need to sign in to github.
 
 1. Clone the project to your machine
 
@@ -68,10 +70,10 @@ Argo CD uses a Git repo to express the desired state of the Kubernetes environme
 
 The last stage in the CI pipeline updates a GitOps repository with the updated application metadata from the build. In order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
 
-- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the repositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc). If you used the [IGC CLI](/getting-started/cli){: target=_blank} to register the pipeline then this secret has already been created.
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the repositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc). If you used the [IGC CLI](../../reference/cli.md){: target=_blank} to register the pipeline then this secret has already been created.
 - A config map named `gitops-repo` holds the url and branch for the gitops repository.
 
-Fortunately the [IGC CLI](/getting-started/cli){: target=_blank} provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [IGC CLI gitops command](/getting-started/cli#gitops){: target=_blank} section.
+Fortunately the [IGC CLI](../../reference/cli.md){: target=_blank} provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [IGC CLI gitops command](../../reference/cli.md#gitops){: target=_blank} section.
 
 1. Make sure to switch context to the project/namespace CI namespace
 
@@ -340,7 +342,7 @@ The following provides the steps to handle protected information in a GitOps rep
 
 #### Prepare the Key Protect instance
 
-As the name suggests, the [Argo CD Key Protect plugin](https://github.com/cloud-native-toolkit/argocd-plugin-key-protect){: target=_blank}) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](/tools/secret-management-with-key-protect){: target=_blank}. From those instructions you can find the information required for the subsequent steps.
+As the name suggests, the [Argo CD Key Protect plugin](https://github.com/cloud-native-toolkit/argocd-plugin-key-protect){: target=_blank}) leverages the capabilities of the Key Protect service to manage the protected information. The details for setting up and managing the Key Protect instance can be found in [Secret management with Key Protect](key-protect.md){: target=_blank}. From those instructions you can find the information required for the subsequent steps.
 
 #### Create the secret configuration
 
