@@ -92,9 +92,6 @@ The Cloud-Native Toolkit CLI needs to be installed in all development environmen
 
 To install the Cloud-Native Toolkit CLI run the following command:
 
-!!!Todo
-    What is the Windows equivalent?
-
 ```shell
 curl -sL shell.cloudnativetoolkit.dev | shell -
 source ~/.bashrc || source ~/.zshrc

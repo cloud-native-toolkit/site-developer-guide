@@ -1,7 +1,6 @@
 # Additional Resources
 
-!!!Todo
-    Complete content - take from [here](https://cloudnativetoolkit.dev/learning)
+Use the links below to find additional resources and learning content around Cloud-Native development, RedHat OpenShift and the IBM Cloud.
 
 ## Alternate Cloud-Native Toolkit learning options
 
@@ -10,10 +9,11 @@
 ## Additional Cloud-Native and OpenShift learning
 
 - [Cloud Native Bootcamp : https://cloudnative101.dev](https://cloudnative101.dev){: target=_blank}
-- [Learning Journey : https://cloudnativetoolkit.dev/overview](https://cloudnativetoolkit.dev/overview){: target=_blank} - need to split out sections?
-- [IBM Open Labs - Red Hat OpenSHift on IBM Cloud](https://developer.ibm.com/openlabs/openshift){: target=_blank}
+- [Learning Journey : https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/](https://ibm-gsi-ecosystem.github.io/ibm-gsi-cloudnative-journey/){: target=_blank}
+- [IBM Open Labs - Red Hat OpenShift on IBM Cloud : https://developer.ibm.com/openlabs/openshift](https://developer.ibm.com/openlabs/openshift){: target=_blank}
+- [IBM Garage Methodology : https://www.ibm.com/garage/method/](https://www.ibm.com/garage/method/){: target=_blank}
 
-## Additional IBM Cloud resources
+## Useful IBM Cloud resources
 
 - [IBM Cloud roles](ibm-cloud/ibm-cloud-roles.md)
 - [access control](ibm-cloud/access-control.md)
@@ -22,7 +22,7 @@
 
 ## Additional resources
 
-- [YouTube Channel](https://www.youtube.com/channel/UCCv359rg3CxVGFttCp0Tzvg){: target=_blank}
+- [Cloud-Native Toolkit YouTube Channel](https://www.youtube.com/channel/UCCv359rg3CxVGFttCp0Tzvg){: target=_blank}
 
 ## Linking to this site
 

@@ -4,7 +4,7 @@
 
 The environment supports end-to-end development and deployment of an application. The instructions below will show you how to do it.
 
-[!["Deploying an App with Telkton and the IGC command line tool"](http://img.youtube.com/vi/czYQfvPTa7Y/0.jpg)](https://youtu.be/czYQfvPTa7Y "Deploying an App with Telkton and the IGC command line tool"){: target=_blank }
+[!["Deploying an App with Tekton and the IGC command line tool"](http://img.youtube.com/vi/czYQfvPTa7Y/0.jpg)](https://youtu.be/czYQfvPTa7Y "Deploying an App with Tekton and the IGC command line tool"){: target=_blank }
 
 You can create a new app using one of the [Starter Kits](../reference/starter-kit/starter-kit.md){: target=_blank }. These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for an environment based on **Kubernetes** or **Red Hat OpenShift**.
 
@@ -13,7 +13,7 @@ You can create a new app using one of the [Starter Kits](../reference/starter-ki
 
 The video below (click to play the video) demonstrates how to work through the steps to create an application and use a deployment pipeline to install it into your development cluster.
 
-[!["Deploying an App with Telkton and the IGC command line tool"](../images/poster.png){: style="width: 80%" .center }](../videos/deployapp.m4v "Deploying an App"){: target=_blank}
+[!["Deploying an App with Tekton and the IGC command line tool"](../images/poster.png){: style="width: 80%" .center }](../videos/deployapp.m4v "Deploying an App"){: target=_blank}
 
 ## Create an application
 
@@ -26,9 +26,6 @@ Before starting, make sure you have set up your [development tools](dev-setup.md
     Log into the cluster with `icc [cluster name|cluster nickname]`
 
 === "OpenShift cluster"
-
-    !!!Todo
-        Why $VARIABLES used below?  Not Windows friendly!
 
     Run `oc login $SERVER -u $OCP_USERNAME -p $OCP_PASSWORD`
 

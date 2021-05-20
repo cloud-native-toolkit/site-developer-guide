@@ -111,9 +111,8 @@ nav:
     - Developer Dashboard: reference/dashboard.md
     - Git repositories: reference/git.md
     - Starter Kits:
-      - Starter Kit overiew: reference/starter-kit/starter-kit.md
-      - Base template: reference/starter-kit/base.md
-      - Create a Starter Kit: reference/starter-kit/new-starterkit.md
+      - Starter Kit overview: reference/starter-kit/starter-kit.md
+      - Available Starter Kits: reference/starter-kit/starter-kits.md
     - Toolkit Components:
       - Toolkit components: reference/tools/tools.md
       - ArgoCD: reference/tools/argocd.md
@@ -125,27 +124,8 @@ nav:
       - IBM Container Registry: reference/tools/ibm-cloud-container-registry.md
       - IBM Key Protect: reference/tools/key-protect.md
     - Pipeline Task Reference:
-      - Pipilines: reference/tasks/pipelines.md
-      - ibm-build-tag-push: reference/tasks/placeholder.md
-      - ibm-deploy: reference/tasks/placeholder.md
-      - ibm-gitops: reference/tasks/placeholder.md
-      - ibm-golang-test: reference/tasks/placeholder.md
-      - ibm-gradle-pact-verify: reference/tasks/placeholder.md
-      - ibm-health-check: reference/tasks/placeholder.md
-      - ibm-helm-release: reference/tasks/placeholder.md
-      - ibm-img-release: reference/tasks/placeholder.md
-      - ibm-img-scan-ibm: reference/tasks/placeholder.md
-      - ibm-img-scan-trivy: reference/tasks/placeholder.md
-      - ibm-img-scan: reference/tasks/placeholder.md
-      - ibm-java-gradle-test: reference/tasks/placeholder.md
-      - ibm-java-maven-test: reference/tasks/placeholder.md
-      - ibm-nodejs-test: reference/tasks/placeholder.md
-      - ibm-operator-bundle: reference/tasks/placeholder.md
-      - ibm-operator-catalog-build: reference/tasks/placeholder.md
-      - ibm-catalog-gitops: reference/tasks/placeholder.md
-      - ibm-operator-test: reference/tasks/placeholder.md
-      - ibm-setup: reference/tasks/placeholder.md
-      - ibm-tag-release: reference/tasks/placeholder.md
+      - Pipelines: reference/tasks/pipelines.md
+      - placeholder: reference/tasks/placeholder.md
     - Iteration Zero:
       - Iteration Zero: reference/iteration-zero/iteration-zero.md
       - Terraform modules: reference/iteration-zero/terraform.md

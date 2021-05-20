@@ -40,11 +40,7 @@ Argo CD uses a number of terms to refer to the components
 !!!Todo
     Is this better in the developer setup section?
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one
-repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that
-repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications)
-that makes up the project will be described in its own folder. The repository will also contain a branch for each
-destination (i.e. cluster and namespace) into which we want to deploy the applications.
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 !!!Note
     There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) used in the following steps is optional and provides some application templates to help simplify some configuration activities.
@@ -80,7 +76,7 @@ The last stage in the CI pipeline updates a GitOps repository with the updated a
 order to do that, the CI pipeline needs to know which repository should be used and needs the credentials to push changes
 to that repository. As with other configuration within the pipeline, this is handled with config maps and secrets:
 
-- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the respositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [Toolkit CLI](../reference/cli.md) to register the pipeline then this secret has already been created.
+- A secret named `git-credentials` holds the credentials the CI pipeline uses to access all the repositories in the Git host (e.g. GitHub, GitLab, BitBucket, etc.  If you used the [Toolkit CLI](../reference/cli.md) to register the pipeline then this secret has already been created.
 - A config map named `gitops-repo` holds the url and branch for the gitops repository.
 
 Fortunately the [Toolkit CLI](../reference/cli.md) provides a `gitops` command to simplify this step. Information on how to use the command as well as the alternative manual steps can be found in the [Toolkit CLI gitops command](../reference/cli.md#gitops) section.
@@ -111,7 +107,7 @@ Now run a new Pipeline and make sure a directory for the application is created 
 
 ArgoCD will deploy the application into the "releases" namespace such as ${TEST_NAMESPACE} or ${STAGING_NAMESPACE}
 
-1. Creat a release namespace where ArgoCD will deploy the application
+1. Create a release namespace where ArgoCD will deploy the application
 
     ```shell
     oc new-project ${TEST_NAMESPACE}
@@ -215,8 +211,7 @@ In Argo CD terms, each deployable component is an application and applications a
         - `{TEST_NAMESPACE}` is the namespace in the cluster where the applications can be deployed. `*` can be used to indicate any namespace.
         - `{GIT_REPO}` is the url of the git repository where the gitops config will be located or `*` if you want to allow any.
 
-        **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destations and/or
-        sources that should be configured for the project
+        **Note:** The `--dest` and `--src` arguments can be provided multiple times if there are multiple destinations and/or sources that should be configured for the project
 
 === "Argo CD custom resource"
 
@@ -342,7 +337,7 @@ The last step in the process is to define the application(s) within Argo CD that
         - `{APPLICATION NAME}` is the name of the application
         - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
         - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
-        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluter where Argo CD has been deployed
+        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluster where Argo CD has been deployed
         - `{APPLICATION PATH}` is the path to the folder where the secret template was created
         - `{REPO URL}` is the url to the git repository
         - `{REPO BRANCH}` is the branch in the git repository that contains the application configuration
@@ -403,7 +398,7 @@ structure of the desired secret with placeholders for the values that will be pu
 
     - The `metadata.name` value given will be used as the name for the Secret that will be generated.
     - The information in `spec.labels` and `spec.annotations` will be copied over as the `labels` and `annotations` in the Secret that is generated
-    - The `spec.values` section contains the information that should be provided in the `data` section of the generated Secret. There are three prossible ways the values can be provided:
+    - The `spec.values` section contains the information that should be provided in the `data` section of the generated Secret. There are three possible ways the values can be provided:
 
         - `value` - the actual value can be provided directly as clear text. This would be appropriate for information that is not sensitive but is required in the secret
         - `b64value` - a base64 encoded value can be provided to the secret. This can be used for large values that might present formatting issues or for information that is not sensitive but that might be obfuscated a bit (like a username)
@@ -508,7 +503,7 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
         - `{APPLICATION NAME}` is the name of the application
         - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
         - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
-        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluter where Argo CD has been deployed
+        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluster where Argo CD has been deployed
         - `{APPLICATION PATH}` is the path to the folder where the secret template was created
         - `{REPO URL}` is the url to the git repository
         - `{REPO BRANCH}` is the branch in the git repository that contains the application configuration

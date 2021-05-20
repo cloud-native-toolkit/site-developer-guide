@@ -8,12 +8,7 @@ This section will cover:
 
 - Application Modernization DevOps, Monolith to Container
 - Deploy the modernized Customer Order Services application in a WebSphere Liberty container to a Red Hat OpenShift cluster
-- The DevOps process is composed of Continous Integration (CI) with OpenShift Pipelines (Tekton) and Continous Deployment (CD) with GitOps engine ArgoCD
-
----
-
-!!!Todo
-    how do windows users do the workshop?
+- The DevOps process is composed of Continuos Integration (CI) with OpenShift Pipelines (Tekton) and Continuos Deployment (CD) with GitOps engine ArgoCD
 
 1. Prerequisites
 
@@ -109,7 +104,7 @@ This section will cover:
     - Open Registry from Console Link
     - Open Artifactory from Console Link
 
-1. Review the Application in GitOps git reposistory. The pipeline step `gitops` is pushing the application manifest into the GitOps git repository
+1. Review the Application in GitOps git repository. The pipeline step `gitops` is pushing the application manifest into the GitOps git repository
     - Open **Git Ops** from Console link
     - Navigate to `project1/qa/project1/appmod-liberty-toolkit`
     - Review the Helm Chart for the Application

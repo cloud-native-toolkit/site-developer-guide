@@ -136,7 +136,7 @@ Select the option you want for your cluster, then follow the instructions.
     5. Install the Cloud-Native Toolkit Command Line Interface (CLI).  Copy and paste the code blocks below into the right panel of the Labs UI to install Node.js and then the toolkit CLI:
 
         !!!Todo
-            This should be in the learning section for developer setup?
+            should this be in the learning section for developer setup?
 
         1. Create the installation directory.  This command will prompt you for the student password.  Above the terminal window there are a set of icons.  One is a key icon.  Press the key icon to see a set of credentials.  The student password is in the SSH section of the Service Information panel, identified by **pass**
 
@@ -186,11 +186,6 @@ To install the toolkit perform the following steps:
         ```
 
     === "Windows"
-
-        !!!Todo
-            Does this work for both CMD and Power shell?
-
-            This uses **oc** - are we using that for both Kubernetes and OpenShift?
 
         ```Powershell
         oc create -f https://raw.githubusercontent.com/cloud-native-toolkit/ibm-garage-iteration-zero/master/install/install-ibm-toolkit.yaml

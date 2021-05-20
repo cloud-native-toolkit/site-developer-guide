@@ -151,9 +151,6 @@ First, before installing an environment, an account manager needs to configure t
 
 ### 2. Install environment
 
-!!!Todo
-    Fixup links once alternate installation instructions created
-
 Once the account manager has configured the account for installing an environment, the account manager and the environment administrator need to jointly decide how the environment administrator is going to install the environment. There are two options:
 
 [**Install including creating a new cluster**](../../setup/ibmcloud-tile-cluster.md){: target=_blank}: The environment administrator who performs this install needs permissions to create clusters as well as service instances. The script will run as this user to create the cluster, create the service instances, and install the CI/CD tools in the cluster.

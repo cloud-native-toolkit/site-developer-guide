@@ -71,6 +71,9 @@ Use the [Cloud Native Toolkit CLI](../../../reference/cli.md) to add tools to th
 
 This table lists the tools that can be displayed.
 
+!!!Todo
+    Verify this list is still correct
+
 | Tool Name                | Name Parameter  | Description | Pre-Configured |
 | -----------------------  |:-------------- |:------------| :----------- |
 | GitLab | `gitlab`  | IBM Cloud GitLab instance for the region you are using | Yes |

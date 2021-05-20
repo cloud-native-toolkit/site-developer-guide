@@ -4,7 +4,7 @@ Initially the Fast-start installation method is the recommended way to install t
 
 When you want to adopt cloud native development within an enterprise development team, then you may want more control over the installation and configuration of the toolkit.  This section outlines more advanced options available for installing the toolkit.
 
-- [IBM Cloud Private Catalog](ibmcloud-tile-cluster.md){: target=_blank}:  This provides a mechanism to easily create and delete instances of the Cloud-Native Toolkit on clusters within the IBM Cloud using the catalog, as you do with other services on the IBM Cloud.
+- [IBM Cloud Private Catalog](ibmcloud-tile-cluster.md){: target=_blank}:  This provides a mechanism to easily create and delete instances of the Cloud-Native Toolkit on clusters within the IBM Cloud using the catalog, as you do with other service on the IBM Cloud.
 - [Iteration-Zero](ibmcloud-iz-cluster.md){: target=_blank}: This is a command line based tool that gives you full control over customizing how the toolkit is installed and what components you want deployed as part of the toolkit.  Iteration-Zero is used by the other install methods, but you can also drive it directly from the command line.
 
 When you want to install your development cluster and the Cloud-Native Toolkit, there are a number of choices you need to make, including:

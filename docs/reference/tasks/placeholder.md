@@ -1,6 +1,5 @@
 # Task Placeholder page
 
-
 !!!Todo
     Complete this content for each Pipeline and Task provided in the Toolkit
 
