@@ -10,9 +10,6 @@ Click on image below to launch video:
 
 Create an OpenShift Cluster for example:
 
-!!!Todo
-    Fixup links below
-
 - The 8 hours free Cluster on [IBM Open Labs](https://developer.ibm.com/openlabs/openshift) select lab 6 `Bring Your Own Application`
 - Deploy a Cluster on IBM Cloud VPC2 using the [Toolkit](../../adopting/setup/ibmcloud-tile-cluster.md)
 - On other Clouds using docs from [cloudnativetoolkit.dev/multi-cloud](../../adopting/setup/provision-cluster.md)
@@ -38,7 +35,7 @@ Create an OpenShift Cluster for example:
       The username and password for Git Admin is `toolkit` `toolkit`
 
 !!!Todo
-    Shouls this be moved out of setup and into the student section of the workshop?
+    Should this be moved out of setup and into the student section of the workshop?
 
 ## 4. (Optional) Auto configure Terminal Shell
 

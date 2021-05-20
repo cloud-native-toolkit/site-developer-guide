@@ -5,14 +5,14 @@ Easily log in to an IBM Cloud account and cluster
 The ICC command-line tool makes it easy to log into an IBM Cloud account and a cluster in that account. It is the equivalent of running this for Kubernetes:
 
 ```shell
-ibmcloud login <a whole bunch of paratemers>
+ibmcloud login <a whole bunch of parameters>
 ibmcloud ks cluster <some more parameters>
 ```
 
 or this for OpenShift:
 
 ```shell
-ibmcloud login <a whole bunch of paratemers>
+ibmcloud login <a whole bunch of parameters>
 oc login <some more parameters>
 ```
 
@@ -25,9 +25,6 @@ To install ICC, perform [Developer Tools Setup](../../learning/dev-setup.md) to 
 ### Install yq
 
 ICC (currently) requires `yq`, and it has to be v3 (v4 doesn't have the commands ICC needs). Check to see if `yq` is currently installed and if it's version 3:
-
-!!!Todo
-   Windows alternate commands? 
 
 ```shell
 $ which yq
@@ -110,7 +107,7 @@ Once ICC is installed, before you can use it, you need to set it up:
    - Run '/Users/bwoolf/bin/icc --nickname' to update the nickname for a cluster
    ```
 
-   !!!Note   
+   !!!Note
       If you have multiple accounts, run `icc --add-account` multiple times to add the different API Keys. Also, `icc --generate` can be run multiple times to refresh the list of available clusters. Any nicknames that have been added will be preserved.
 
 4. List the available clusters with `icc`

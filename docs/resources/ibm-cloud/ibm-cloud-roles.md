@@ -1,8 +1,5 @@
 # IBM Cloud account management
 
-!!!Todo
-    Is this content needed - is there not a link on IBM Cloud website we can just refer to?  Shouldn't replicate documentation that is maintained elsewhere?
-
 The IBM Cloud environment is provided with a number of powerful tools to manage user access and resource provisioning
 but little is configured for you out of the box. This guide gives an approach to managing the account in a sensible way that can easily be extended or re-configured based upon the requirements of a given situation.
 

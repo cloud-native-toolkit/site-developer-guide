@@ -20,9 +20,6 @@ The standard pipelines used by the Cloud-Native Toolkit use SonarQube analysis.
 
 Hadolint is a linter that checks Dockerfiles to ensure that container best practices are being used.
 
-!!!Todo
-    Verify Hadolint is enabled in starter kits
-
 ## Vulnerability advisor
 
 The vulnerability advisor scans container images to identify if the container contains any packages that contain known security contained in operating system packages.  Some scanning applications will also check application dependencies contained in the container image.

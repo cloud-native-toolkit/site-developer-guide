@@ -1,4 +1,4 @@
-# Cloud Native Toolkit - Command Line Interface 
+# Cloud Native Toolkit - Command Line Interface
 
 ## Invoking the CLI
 
@@ -59,8 +59,8 @@ Options:
     kubectl pipeline
     oc pipeline
     ```
-### Prerequisite tools
 
+### Prerequisite tools
 
 Some of the commands provided by the Toolkit CLI orchestrate interactions between other CLIs. To get
 started please install the [prerequisite tools](../learning/dev-setup.md){: target=_blank}, in particular:
@@ -82,12 +82,10 @@ activation content and links to Starter Kits to start a project quickly.
 This command requires that the login context for the cluster has already been established.
 
 **Command flags**
+
 - `-n`: the namespace where the dashboard has been deployed; the default is `tools`
 
 **Usage**
-
-!!!ToDo
-    Add Windows Powershell equivalents
 
 === "CLI"
     The command is used in the following way:
@@ -209,6 +207,7 @@ number of different ways within the environment:
 This command requires that the login context for the cluster has already been established.
 
 **Command flags**
+
 - `-n`: the namespace where the tools have been deployed; the default is `tools`
 
 **Usage**
@@ -266,6 +265,7 @@ Selecting `Exit` will print the full list of endpoints and exit.
 This command requires that the login context for the cluster has already been established.
 
 **Command flags**
+
 - `-n`: the namespace from which the endpoints will be read; the value will be read from the current context if not
 provided
 
@@ -295,6 +295,7 @@ provided
     ```shell
     kubectl get ingress -n tools
     ```
+
 ### sync
 
 Creates a Kubernetes namespace or OpenShift project (if it doesn't already exist) and sets it up so that the namespace
@@ -895,7 +896,8 @@ The command will add files to the local repo. You should commit these new files 
 Then run `igc pipeline` to connect your repo to a pipeline in the environment.
 
 **Command flags**
-- `--repo`: the set of pipelines to choose from; the default is https://github.com/ibm-garage-cloud/garage-pipelines
+
+- `--repo`: the set of pipelines to choose from; the default is `https://github.com/ibm-garage-cloud/garage-pipelines`
 - `-p`: the name of the pipeline that should be installed; if not provided then you will be prompted
 - `-b`: the branch from which the pipeline should be installed; the default is `stable`
 - `r`: the version number of the pipeline that should be installed; the default is `latest`

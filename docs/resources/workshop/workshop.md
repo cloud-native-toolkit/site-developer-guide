@@ -2,9 +2,6 @@
 
 The Workshop is design to provide a quick way to try the methodology leveraging the tools that the Toolkit integrates.
 
-!!!Todo
-    Is this workshop Windows enabled - all instructions tend to use curl piped into sh?  Is Windows support needed?
-
 ## Agenda
 
 [![Setup Workshop Environment](./images/workshop.jpg){: width=30%}](setup.md) Setup Workshop Environment (*workshop admin only*)
@@ -16,4 +13,3 @@ The Workshop is design to provide a quick way to try the methodology leveraging 
 [![Deploy a 3 tier Microservice using React, Node.js, and Java](./images/inventory.jpg){: width=30%}](inventory.md) Deploy a 3 tier Microservice using React, Node.js, and Java
 
 [![App Modernization with modern DevOps](./images/appmod.jpg){: width=30%}](appmod.md) App Modernization with modern DevOps
-

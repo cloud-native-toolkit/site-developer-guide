@@ -6,9 +6,6 @@ Click the image below to launch the video
 
 [!["DevOps concepts with Red Hat OpenShift`"](http://img.youtube.com/vi/GOPWObjFTsI/0.jpg)](https://youtu.be/GOPWObjFTsI "DevOps concepts with Red Hat OpenShift"){: target=_blank}
 
-!!!Todo
-    Fixup formatting and reduce IBM branding
-
 ## Continuous Delivery
 
 In IBM Garage Method, one of the **Develop** practices is [continuous delivery](https://www.ibm.com/garage/method/practices/deliver/practice_continuous_delivery/){: target=_blank}. A preferred model for implementing continuous delivery is GitOps, where the desired state of the operational environment
