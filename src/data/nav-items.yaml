@@ -81,6 +81,8 @@
       path: /tools/jenkins
     - title: IBM Cloud Container Registry
       path: /tools/ibm-cloud-container-registry
+    - title: Container Image Security Enforcement
+      path: /tools/container-image-security-enforcement
     - title: Artifact mgmt with Artifactory
       path: /tools/artifactory
     - title: Code analysis with SonarQube
