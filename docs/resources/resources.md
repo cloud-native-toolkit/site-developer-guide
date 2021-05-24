@@ -30,5 +30,6 @@ As the site is under continuous revisions, you may want to provide links that ar
 
 - Site home : [https://cloudnativetoolkit.dev](https://cloudnativetoolkit.dev){: target=_blank}
 - Install : [https://cloudnativetoolkit.dev/install](https://cloudnativetoolkit.dev/install){: target=_blank}
+- Developer setup: [https://cloudnativetoolkit.dev/setup](https://cloudnativetoolkit.dev/setup){: target=_blank}
 - Learn : [https://cloudnativetoolkit.dev/learn](https://cloudnativetoolkit.dev/learn){: target=_blank}
 - workshop : [https://cloudnativetoolkit.dev/workshop](https://cloudnativetoolkit.dev/workshop){: target=_blank}

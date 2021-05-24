@@ -231,7 +231,39 @@ The Admonitions supported by the Material theme are :
 !!! quote
     This is a quote
 
-## Setting up an documentation environment
+### Redirects
+
+To help external sites wanting to link to the documentation there are a number of vanity links maintained using the [redirect plugin](){: target=_blank}.  The links are defined in the **mkdocs.yml** file and documented on the [Additional Resources](../resources/resources.md#linking-to-this-site){: target=_blank} page.
+
+To ensure the auto-generated link page does not get reported by the link checker, an entry needs to be added to the **nofollow** section of the link checker config file, **linkcheckerrc** in the root directory of the project.
+
+E.g. if a link /help was created then an entry in the nofollow section should be ```public/help.html$```.
+
+## Spell checking
+
+This project uses [cSpell](https://github.com/streetsidesoftware/cspell){: target=_blank} to check spelling within the markdown.  The configuration included in the project automatically excludes content in a code block, enclosed in triple back quotes \`\`\`.
+
+The configuration file also specifies that US English is the language used in the documentation, so only US English spellings should be used for words where alternate international English spellings exist.
+
+You can add words to be considered valid either within a markdown document or within the cspell configuration file, **cspell.json**, in the root folder of the documentation repository.
+
+Words defined within a page only apply to that page, but words added to the configuration file apply to the entire project.
+
+### Adding local words
+
+You can add a list of words to be considered valid for spell checking purposes as a comment in a Markdown file.
+
+The comment has a specific format to be picked up by the cSpell tool:
+
+```<!--- cSpell:ignore linkchecker linkcheckerrc mkdocs mkdoc -->```
+
+here the words *linkchecker*, *linkcheckerrc*, *mkdocs* and *mkdoc* are specified as words to be accepted by the spell checker within the file containing the comment.
+
+### Adding global words
+
+The cSpell configuration file **cspell.json** contains a list of words that should always be considered valid when spell checking.  The list of words applies to all files being checked.
+
+## Setting up a documentation environment
 
 To work on documentation and be able to view the rendered web site you need to create an environment, which comprises of:
 
@@ -244,12 +276,17 @@ To work on documentation and be able to view the rendered web site you need to c
     - cd into the documentation directory
     - Install the required python packages `pip install -r requirements.txt'
     - Install the linkchecker using command `pip install git+https://github.com/linkchecker/linkchecker.git`
+    - Install the spell checker using command `npm install -g cspell`
+
+    !!!note
+        sudo command may be needed to install globally, depending on your system configuration
 
     You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
 
     - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
     - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Every time a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
-    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the linkcheckerrc file.
+    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the **linkcheckerrc** file.
+    - To check spelling ```cspell docs/**/*.md``` should be run in the root folder of the project, containing the **cspell.json** file.
 
 === "Tooling within a Docker container"
 
@@ -261,4 +298,4 @@ To work on documentation and be able to view the rendered web site you need to c
     - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
     - To stop developing run command `npm dev:stop`, which will terminate the docker container
     - View the scripts section of **package.json** in the root folder of the git repo for additional options available
-    - To build the static HTML file and check all links run command `npm run build`
+    - To build the static HTML file and check all links and spelling run command `npm run build`
