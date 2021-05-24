@@ -1,6 +1,6 @@
 # Secret management with Key Protect
 
-[Key Protect](https://www.ibm.com/cloud/key-protect){: target=_blank} is a tool that provides centralized management of encryption keysand sensitive information. Key Protect manages two different types of keys: `root keys` and `standard keys`.
+[Key Protect](https://www.ibm.com/cloud/key-protect){: target=_blank} is a tool that provides centralized management of encryption keys and sensitive information. Key Protect manages two different types of keys: `root keys` and `standard keys`.
 
 `Root keys` are used to encrypt information in other systems, like the etcd database of the cluster, or data in Object Storage, or a MongoDB database. The details of which are the subject for a different article.
 

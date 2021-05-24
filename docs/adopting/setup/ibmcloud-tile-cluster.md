@@ -1,5 +1,7 @@
 # Provision an IBM Cloud cluster using private catalog
 
+<!--- cSpell:ignore cntk -->
+
 This method will install a managed cluster and the Cloud-Native Toolkit on IBM Cloud using the private catalog tiles installed in the previous step.
 
 !!!Note
@@ -27,7 +29,7 @@ Select the preferred environment for the cluster to run in, [VPC or Classic](htt
         | `flavor`              | The flavor of machine that should be provisioned for each worker. Defaults to `mx2.4x32`.     | `mx2.4x32`          |
         | `cluster_worker_count`| The number of worker nodes that should be provisioned for each zone. Defaults to `3`          | `3` |
         | `cluster_provision_cos`| Flag indicating that a new Object Storage instance should be provisioned. Defaults to `true` | `true` or `false`          |
-        | `cos_name`            | The name of the Object Storage instance (If `cluster_provision_cose` is set to `true` this value is required | `cntk-showcase-cos` |
+        | `cos_name`            | The name of the Object Storage instance (If `cluster_provision_cos` is set to `true` this value is required | `cntk-showcase-cos` |
 
     7. Check the box to accept the **Apache 2** license for the tile.
     8. Click **Install** to start the install process

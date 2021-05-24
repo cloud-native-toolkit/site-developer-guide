@@ -1,5 +1,7 @@
 # Configure Dashboard
 
+<!--- cSpell:ignore Paks apieditor CRDs appdomain Multicloud -->
+
 Customize the Developer Dashboard and the OpenShift console
 
 ## Customizing the Dashboard
@@ -106,7 +108,7 @@ If the environment includes an OpenShift cluster, the Environment adds a Tools m
 
 ![OCP Console Tools](./images/ocp-console-tools.png)
 
-- Edit the file called `tools.yaml` in the `terraform/scripts` folder. This file contains the CRDs required to configure the menu items. Add custom links for `github`, `logdna`, and `sysdig`, and save the file.
+- Edit the file called `tools.yaml` in the `terraform/scripts` folder. This file contains the Custom Resource Definitions (CRDs) required to configure the menu items. Add custom links for `github`, `logdna`, and `sysdig`, and save the file.
 
 - Run the `terraform/scripts/config-console-tools` script to apply the settings in `tools.yaml`. To do so: Make sure you are logged into your cluster from the command line and run the script, specifying your cluster's ingress subdomain. To find the ingress subdomain, go to the cluster overview page in the IBM Cloud console; it's something like `resource-group-NNN-XXX.region.containers.appdomain.cloud`.
 

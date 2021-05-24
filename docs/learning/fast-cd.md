@@ -1,5 +1,7 @@
 # Continuous Delivery - fast start
 
+<!--- cSpell:ignore grpc jsonnet ksonnet -->
+
 [Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank } is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
 
 Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state.

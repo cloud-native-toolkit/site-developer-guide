@@ -1,5 +1,7 @@
 # Starter Kits
 
+<!--- cSpell:ignore cloudnative Frontends -->
+
 ## Overview
 
 To complement the IBM Cloud-Native Toolkit this project provides a set of **Starter Kits**. These have been designed to support build to manage and give a production ready entry point for cloud-native development. While the use of the **Starter Kits** is not required to be able to use the development tools, their use is **highly recommended** to get up and running quickly.

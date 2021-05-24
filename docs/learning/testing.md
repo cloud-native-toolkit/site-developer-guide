@@ -1,5 +1,7 @@
 # Automated testing
 
+<!--- cSpell:ignore qube -->
+
 Automated testing is an essential part of cloud-native development.  In traditional development, where a typical development cycle consists of a number of months, there is a period of time set aside at the end of the development cycle to run testing.  
 
 With cloud-native development the approach to software development is very different with the adoption of continuous integration and continuous delivery.  There is no longer the opportunity to run a large testing phase at the end of the delivery cycle, as each service and application can have its own development cadence, which can be between a few day to a few weeks.

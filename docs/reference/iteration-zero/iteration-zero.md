@@ -1,5 +1,7 @@
 # Iteration Zero
 
+<!--- cSpell:ignore tfvars -->
+
 Iteration Zero is the name of the process of installing and setting up the toolkit.  
 
 The toolkit uses [infrastructure as code](../../adopting/best-practices/infrastructure-as-code.md){: target=_blank} using [Terraform](https://www.terraform.io){: target=_blank} as the primary means of coordinating and performing the many component installs needed by the toolkit.

@@ -1,5 +1,7 @@
 # Introduction to IBM Cloud Shell
 
+<!--- cSpell:ignore invokecloudshell -->
+
 IBM Cloud Shell is a free service that gives you complete control of your cloud resources, applications, and
 infrastructure, from any web browser. It's instantly accessible from your IBM Cloud account - no other installation
 is needed.
@@ -49,7 +51,7 @@ The following tools are included in the shell installer:
 
 2. If successful, you should see something like the following:
 
-    ```
+    ```text
     Downloading scripts: https://github.com/cloud-native-toolkit/cloud-shell-commands/releases/download/0.3.5/assets.tar.gz
     ** Installing argocd cli
     ** Installing tkn cli

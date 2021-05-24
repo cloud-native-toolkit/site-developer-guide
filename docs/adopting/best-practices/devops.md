@@ -1,5 +1,7 @@
 # Dev-Ops Concepts
 
+<!--- cSpell:ignore Multicloud -->
+
 This short video introduces the concepts of DevOps with Red Hat OpenShift:
 
 Click the image below to launch the video
@@ -66,7 +68,7 @@ registry and artifact repository(ies).
 
 ## Tools to support Continuous Delivery
 
-The practice of (CD) can be accomplished in different ways and with different tools. It is possible and certainly valid to use the same tool for both CI and CD (e.g. Tekton or Jenkins) with caution you enforce a clear separation between the two processes. Typically, that would result in two distinct pipelines to respond to changes that happen within the two different Git repos - source repo and gitops repo.
+The practice of (CD) can be accomplished in different ways and with different tools. It is possible and certainly valid to use the same tool for both CI and CD (e.g. Tekton or Jenkins) with caution you enforce a clear separation between the two processes. Typically, that would result in two distinct pipelines to respond to changes that happen within the two different Git repositories - source repo and gitops repo.
 
 Another class of tools is available that are particularly suited for Continuous Delivery and GitOps. The following is by no means an exhaustive list but it does provide some of the common tools used for CD in a cloud-native environment:
 

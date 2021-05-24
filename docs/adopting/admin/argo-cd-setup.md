@@ -1,5 +1,7 @@
 # ArgoCD Setup
 
+<!--- cSpell:ignore setupartifactory artifactoryurlsetup -->
+
 Complete the steps for setting up the ArgoCD tool to support integration with
  Artifactory as a Helm repository
 
@@ -45,15 +47,13 @@ The Helm repository is in Artifactory. ArgoCD will need the URL to that reposito
 4. Press the `Connect repo using https` button at the top of the page
 
     ![ArgoCD - New Repository](images/argocd-repository-new.png "ArgoCD new repository")
-    
-5. In the New Repository dialog, select `helm` for the repository type, provide a name to identify the 
-repository, and enter the Artifactory deploy url for the repository url. Press `Connect` to create the 
-repository.
+
+5. In the New Repository dialog, select `helm` for the repository type, provide a name to identify the repository, and enter the Artifactory deploy url for the repository url. Press `Connect` to create the repository.
+
     ![ArgoCD - New helm repository](images/argocd-repository-helm.png "ArgoCD helm repository")
 
 6. The repository should now appear and the list and can be used for application deployments
 
 ## Conclusion
 
-ArgoCD now has the configuration in the environment that it needs to access the helm chart repository 
-in Artifactory.
+ArgoCD now has the configuration in the environment that it needs to access the helm chart repository in Artifactory.

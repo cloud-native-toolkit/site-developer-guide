@@ -1,5 +1,7 @@
 # IBM Cloud Native Toolkit Workshop
 
+<!--- cSpell:ignore appmod -->
+
 The Workshop is design to provide a quick way to try the methodology leveraging the tools that the Toolkit integrates.
 
 ## Agenda

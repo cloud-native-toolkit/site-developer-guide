@@ -1,5 +1,7 @@
 # Cluster Configuration
 
+<!--- cSpell:ignore jsonpath APIKEY APIURL ENCRPT pactbroker -->
+
 Within the created Kubernetes or OpenShift cluster there are a number secrets and config maps that are either provided by the IBM Cloud public environment and utilized by the Terraform scripts or are created during the Terraform provisioning process.
 
 Many of these secrets and config maps are also used by the pipeline scripts, so you may need to update them as you change passwords.

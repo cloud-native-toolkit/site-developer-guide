@@ -1,5 +1,7 @@
 # Updating the Developer Guide
 
+<!--- cSpell:ignore linkchecker linkcheckerrc mkdocs mkdoc -->
+
 The developer guide is created using [MkDocs](http://mkdocs.org){: target="_blank" .external } with the [Materials theme](https://squidfunk.github.io/mkdocs-material/){: target="_blank" .external } theme.
 
 MkDocs takes Markdown documents and turns them into a static website, that can be accessed from a filesystem or served from a web server.
@@ -14,10 +16,10 @@ The sections are as follows:
 
 1. **Overview** - This is high level information about the Cloud-Native Toolkit.  What it is and why does it exist.
 2. **Install** - This is a section designed to help the first time user get up and running with minimal knowledge.  More advanced install options are provided in a later section
-3. **Learning** - This section is designed to teach the fundamentals of Cloud-Native development with the toolkit.  Using a default installation of the Toolkit to work through Continuous Integration and Continuous Delivery.  This section is more about Cloud-Native development and how the Toolkit provides functionality to support Cloud-Natove development rather than a deep dive on specific tools that are part of the toolkit.
+3. **Learning** - This section is designed to teach the fundamentals of Cloud-Native development with the toolkit.  Using a default installation of the Toolkit to work through Continuous Integration and Continuous Delivery.  This section is more about Cloud-Native development and how the Toolkit provides functionality to support Cloud-Native development rather than a deep dive on specific tools that are part of the toolkit.
 4. **Adopting** - This section is designed to move from the initial learning phase to adopting the Toolkit as part of development activities.  It covers more advanced installation options, customization options, best practices and how the Toolkit can be applied to certain use cases
 5. **Reference** - The reference section is the technical documentation for the resources delivered by the Toolkit.
-6. **Resources** - The resources section provides links to content outside the toolkit that someone learning the toolkit may find usefu
+6. **Resources** - The resources section provides links to content outside the toolkit that someone learning the toolkit may find useful
 7. **Contributing** - This section provides how someone can become a contributor to the Cloud-Native Toolkit project, which includes the core Toolkit, adding additional starter kits or pipeline tasks, updating or adding to the documentation.  
 
 ## Creating content
@@ -37,7 +39,7 @@ The following markdown syntax is used within the documentation
 
 | Syntax | Result
 |--------|-----------
-|`# Title` | a level 1 heading containing.  You can create up to 6 levels of headings by adding additiona; `#` characters, so `###` is a level 3 heading
+|`# Title` | a level 1 heading containing.  You can create up to 6 levels of headings by adding additional `#` characters, so `###` is a level 3 heading
 |`**text**` | will display the word ```text``` in **bold**
 |`*text*` | will display the word ```text``` in *italic*
 
@@ -74,7 +76,7 @@ Images are embedded in a page using the standard Markdown syntax `![description]
 
 #### External Links
 
-External links can also use attribute lists to control behaviours, such as open in new tab or add a css class attribute to the generated HTML, such as **external** in the example below:
+External links can also use attribute lists to control behaviors, such as open in new tab or add a css class attribute to the generated HTML, such as **external** in the example below:
 
 ```md
 [MkDocs](http://mkdocs.org){: target="_blank" .external }
@@ -246,8 +248,8 @@ To work on documentation and be able to view the rendered web site you need to c
     You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
 
     - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
-    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Everytime a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
-    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the lincheckerrc file.
+    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Every time a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
+    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the linkcheckerrc file.
 
 === "Tooling within a Docker container"
 

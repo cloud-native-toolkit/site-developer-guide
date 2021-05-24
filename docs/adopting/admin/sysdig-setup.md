@@ -1,5 +1,7 @@
 # Sysdig Setup
 
+<!--- cSpell:ignore containerd -->
+
 Complete the steps for setting up the Sysdig tool
 
 ## Overview
@@ -11,6 +13,7 @@ Sysdig is the environment's monitoring tool](./tools/sysdig). Before you can use
 Finish setting up the new Sysdig instance. If this is your first time opening the Sysdig dashboard, Sysdig will open a platform dialog and an Onboarding wizard.
 
 Select the platform
+
 - On the Welcome to Sysdig Monitor panel click **Next**
 - Choose **Kubernetes | GKE | OpenShift** as the installation method
 - The agent is already installed in the cluster, so click **Go to next step!** to access the dashboard

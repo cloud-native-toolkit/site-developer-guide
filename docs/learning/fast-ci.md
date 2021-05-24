@@ -1,5 +1,10 @@
 # Continuous Integration - fast start
 
+<!--- 
+    cSpell:ignore deployapp stockbffnode openshiftconsole tektonpipeline userid iccr podsiks viewapp
+    cSpell:ignore crwopenlink crwopenapp yourprojectName
+-->
+
 ## Overview
 
 The environment supports end-to-end development and deployment of an application. The instructions below will show you how to do it.
@@ -50,7 +55,7 @@ oc sync ${DEV_NAMESPACE}
 
 ### 3. Open the Developer Dashboard
 
-The [Developer Dashboard](../reference/dashboard.md) makes it easy for you to navigate to the tools, including a section that allows you to select a set of preconfigured [Starter Kits](../reference/starter-kit/starter-kit.md) that make seeding your development project very easy.
+The [Developer Dashboard](../reference/dashboard.md) makes it easy for you to navigate to the tools, including a section that allows you to select a set of pre-configured [Starter Kits](../reference/starter-kit/starter-kit.md) that make seeding your development project very easy.
 
 Before starting, open a browser and make sure you are logged into [Github](https://github.com). There are two options for how to access the dashboard:
 

@@ -1,5 +1,7 @@
 # Building an operator
 
+<!--- cSpell:ignore openshiftconsole tektonpipeline -->
+
 Set up DevOps pipelines to build an operator and operator catalog
 
 The Cloud-Native Toolkit provides Tekton pipelines to automate the process to build and deploy operator-based applications. The operator pipeline supports Ansible, Go, and Helm-based operators that have been built using the Operator SDK.  The Cloud-Native Toolkit also provides a companion Tekton pipeline to build a custom Operator Lifecycle Manager catalog that simplifies deployment of the operators to a cluster.

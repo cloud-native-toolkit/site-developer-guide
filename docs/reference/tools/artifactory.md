@@ -34,7 +34,7 @@ The environment will eventually be extended to store a number of artifact types 
 - **Docker images**: The [Developer Tools Image Registry](ibm-cloud-container-registry.md){: target=_blank}
 - **Helm charts**: A Helm repository in Artifactory
 
-The [templates](../starter-kit/starter-kit.md){: target=_blank} have also been configured to store their Helm charts in Artificatory.
+The [templates](../starter-kit/starter-kit.md){: target=_blank} have also been configured to store their Helm charts in Artifactory.
 
 Artifactory is part of the environment's complete CI/CD solution:
 

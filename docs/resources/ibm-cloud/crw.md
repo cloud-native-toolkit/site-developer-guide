@@ -6,18 +6,19 @@ Add the cloud hosted development integrated development environment, CodeReady W
 
 CodeReady Workspaces can be easily added to your development experience using the Red Hat Operator Hub. See [Chapter 3. Installing CodeReady Workspaces from Operator Hub](https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/1.1/html/administration_guide/installing-codeready-workspaces-from-operator-hub){: target=_blank}.
 
-CodeReady Workspaces is a developer workspace server and cloud IDE. Workspaces are defined as project code files and all of their dependencies necessary to edit, build, run, and debug them. Each workspace has its own private IDE hosted within it. The IDE is accessible through a browser. The browser downloads the IDE as a single-page web application. CodeReady Workspaces will enable a 100% developer experience to be delivered from a user's browser. This is perfect for running enablement learning from constrained developer laptops, or for SREs to make quick change to a microservice.
+CodeReady Workspaces is a developer workspace server and cloud IDE. Workspaces are defined as project code files and all of their dependencies necessary to edit, build, run, and debug them. Each workspace has its own private IDE hosted within it. The IDE is accessible through a browser. The browser downloads the IDE as a single-page web application. CodeReady Workspaces will enable a 100% developer experience to be delivered from a user's browser. This is perfect for running enablement learning from constrained developer laptops, or for site reliability engineers (SREs) to make quick change to a microservice.
 
-### CodeReady Workspaces Intallation Pre-requisite
+### CodeReady Workspaces Installation Pre-requisite
 
 Do this first:
+
 - Provision the OpenShift Cluster
 - Ensure the logged in user has the Administrator privileges
 - Ensure you have created a new Project to manage the "codeready workspace operator & cluster"
 
 Setting up the CRW Operator & Cluster:
 
-- Navigate to Operator Hub and search of the Red Hat Cloudready workspace. Click on the operator and select the appropriate workspace to install the CRW operator.
+- Navigate to Operator Hub and search of the Red Hat CodeReady workspace. Click on the operator and select the appropriate workspace to install the CRW operator.
 - Navigate to the installed operator to view the CRW operator.
 - Now click the link visible as part of the operator to create/view the CheCluster part of the workspace
 - Create the CheCluster button, to navigate to the YAML Configuration page (displays all the parameters).
@@ -65,7 +66,7 @@ Setting up the CRW Operator & Cluster:
 
 - Once Cluster is created navigate to the overview tab of the CheCluster in the CRW operator. You will be able to see the below :
     - URL of the CodeReady Workspaces URL
-    - URL of the Red Hat SSO Admin Console URL 
+    - URL of the Red Hat SSO Admin Console URL
     - oAuth SSO Enabled.
     - This should be enabled by default, if not please slide the button to enable and confirm
     - TLS Would be disabled. Please slide the button to enable https connectivity to the CRW workspace and confirm

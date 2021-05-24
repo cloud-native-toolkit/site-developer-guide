@@ -1,5 +1,7 @@
 # Tools used by the Toolkit
 
+<!--- cSpell:ignore qube -->
+
 This section provides details of the set of 3rd party tools used in a default install of the Toolkit.
 
 | Tool | Description

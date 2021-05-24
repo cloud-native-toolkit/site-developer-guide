@@ -1,4 +1,6 @@
-#Governance
+# Governance
+
+<!--- cSpell:ignore Kanban Zenhub -->
 
 ## Roles and responsibilities
 
@@ -73,7 +75,7 @@ The way that project teams communicate internally and externally is left to each
 - Each project should have a dedicated Slack channel (IBM internal). Decisions from Slack discussions should be captured in GitHub issues.
 - Project teams should actively seek out discussion and input from stakeholders who are not members of the team.
 
-## Governance
+## Project Governance
 
 ### Planning
 

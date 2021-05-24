@@ -1,5 +1,7 @@
 # Prepare an IBM Cloud account
 
+<!--- cSpell:ignore Paks cntk -->
+
 IBM CloudPrepare the  account for an installation of Cloud-Native Toolkit environment
 
 **Note:** If you already have a cluster then you can jump to [install the toolkit](toolkit-install.md). If you will be provisioning a cluster outside of IBM Cloud then you can jump to [provision the cluster](provision-cluster.md).

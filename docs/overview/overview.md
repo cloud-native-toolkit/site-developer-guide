@@ -1,5 +1,7 @@
 # What is the Cloud-Native Toolkit?
 
+<!--- cSpell:ignore qube cntk -->
+
 Cloud-Native Toolkit is an open-source collection of assets that provide an environment for developing
 cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. It embodies IBM Garage Method principles and practices for consistently developed applications, incorporating best practices that increase developer velocity for efficient delivery of business value.
 
@@ -25,7 +27,7 @@ help build production-ready applications.
 
 The Cloud-Native Toolkit encapsulates many of the available best practices for cloud-native development including
 DevOps and "Build to Manage" practices. They have been provided through the Toolkit in this way so that
-developers and SREs can benefit from these practices without requiring any additional effort and so that they can be applied
+developers and site reliability engineers (SREs) can benefit from these practices without requiring any additional effort and so that they can be applied
 consistently from project to project.
 
 ### 3. Quickly ramp up development teams on Red Hat OpenShift and Kubernetes
@@ -64,7 +66,7 @@ The Cloud-Native Toolkit Developer Environment includes several features that su
 for consistent and rapid development of cloud-native applications:
 
 - **Cluster**: A Red Hat OpenShift or Kubernetes cluster that both hosts the tools and itself is a deployment target for application builds
-- **SDLC**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
+- **Software Development Life Cycle (SDLC)**: Deployment target environments that support the application development lifecycle: *dev*, *test*, and *staging*
 - **Backend services**: Cloud services commonly required by cloud-native applications for monitoring, security, and persistence
 - **CI/CD**: A prebuilt, ready-to-run continuous delivery pipeline incorporating best-of-breed open source software tools
 - **Starter Kits**: Prebuilt code templates for common application components and tasks incorporating best practices that developers can add to their codebase as needed

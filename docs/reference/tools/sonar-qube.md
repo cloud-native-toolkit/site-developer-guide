@@ -1,11 +1,13 @@
 # SonarQube
 
+<!--- cSpell:ignore bwoolf hotspot SonarQube's -->
+
 Use SonarQube to analyze your code's quality
 
 SonarQube performs static code analysis to evaluate code quality, using analysis rules that focus on three areas:
 
 - **Code Reliability**: Detect bugs that will impact end-user functionality
-- **Application Security**: Detect vulnerabilities and hotspots that can be exploited to compromise the program
+- **Application Security**: Detect vulnerabilities and hot spots that can be exploited to compromise the program
 - **Technical Debt**: Keep you codebase maintainable to increase developer velocity
 
 SonarQube [plugs into the application lifecycle management (ALM)](https://docs.sonarqube.org/latest/architecture/architecture-integration/#header-2) process to make continuous inspection part of continuous integration. Adding code analysis to ALM provides regular, timely feedback on the quality of the code being produced. The goal is to detect problems as soon as possible so that they can be resolved before they can impact production end users.
@@ -47,7 +49,7 @@ Examine SonarQube's analysis report for your app.
 - In the Projects list, click on the project name (such as `bwoolf1.sonar-java`) to open your project
     The project overview shows more detail about how many issues were found in the app
     - Reliability: 2 bugs for a C rating
-    - Security: 1 security hotspot but an A rating
+    - Security: 1 security hot spot but an A rating
     - Maintainability: 17 code smells, 2 hrs of technical debt but an A rating
     - Coverage: 7 unit tests
     - Duplications: 0 duplicated blocks
@@ -96,15 +98,15 @@ Use the SonarQube dashboard to explore the issues that it found in your project.
 
 ### Examine the other issues
 
-Besides the bugs, SonarQube also found issues that are hostspots and code smells.
+Besides the bugs, SonarQube also found issues that are host spots and code smells.
 
 - In the SonarQube dashboard, go back to the Issues page
 
-- Click on the "1" above Security hotspots
+- Click on the "1" above Security hot spots
 
     The issue warns to "Make sure that command line arguments are used safely here."
 
-    ![Sonar Hotspot](images/sonar-hotspot.png)
+    ![Sonar Hot spot](images/sonar-hotspot.png)
 
     SonarQube considers any class that has a `public static void main(String[] args)` method to be a potential vulnerability.
     As the rule explains, "Command line arguments can be dangerous just like any other user input. They should never be used without being first validated and sanitized." This method passes them through unchecked, which is risky.
