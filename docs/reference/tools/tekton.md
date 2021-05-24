@@ -1,5 +1,7 @@
 # Tekton
 
+<!--- cSpell:ignore openshiftconsole -->
+
 Use Tekton to automate your continuous integration process
 
 ## Overview
@@ -24,7 +26,7 @@ Tekton provides open-source components to help you standardize your CI/CD toolin
 
 The IBM Cloud is standardizing on using Tekton in both IBM Cloud DevOps service and IBM Cloud Pak for Applications. OpenShift 4.2 will also natively support it.
 
-This guide will focus on using Tekton when the Development tools have been installed in Redhat OpenShift, IBM Kubernetes Managed services and **Red Hat Code Ready Containers** to give you choice for you Continuous Integration cloud native development toolset.
+This guide will focus on using Tekton when the Development tools have been installed in Redhat OpenShift, IBM Kubernetes Managed services and **Red Hat Code Ready Containers** to give you choice for you Continuous Integration cloud native development tool set.
 
 !!!Note
     This guide will help you set up the [templates](../starter-kit/starter-kit.md){: target="_blank"} with  **Tekton** and requires that you have installed Tekton with **Red Hat Code Ready Containers** or have installed open source Tekton into the The IBM Kubernetes Cluster.
@@ -125,7 +127,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
 
 ### Register the App with Tekton
 
-With Tetkon enabled and your default `Tasks` and `Pipelines` installed into
+With Tekton enabled and your default `Tasks` and `Pipelines` installed into
  the `dev` namespace. You can now configure your applications to be built, packaged, tested and deployed to your OpenShift or Kubernetes development cluster.
 
 - Connect to the pipeline. (See the [IGC CLI](../../reference/cli.md){: target="_blank"} for details about how the `pipeline` command works.)
@@ -140,13 +142,13 @@ To validate your pipeline have been correctly configured, and has triggered a `P
 
 === "OpenShift 4.x"
     - Review you **Pipeline** in the OpenShift 4.x Console
-        ![Pipelinerun](images/pipeline.png)
+        ![Pipeline run](images/pipeline.png)
     - Review your **Tasks**
         ![Tasks](images/tasks.png)
     - Review your **Steps**
         ![Steps](images/steps.png)
 
-=== "Opensource Tekton Dashboard"
+=== "Open source Tekton Dashboard"
     If you are running Tekton with IBM Cloud Pak for Applications or Knative with Kubernetes managed service your dashboard view will look similar to below.
 
     - Review your **Pipeline**

@@ -1,5 +1,7 @@
 # Deploy an Application using CI Pipelines with Tekton
 
+<!--- cSpell:ignore userx -->
+
 Click on image below to launch video:
 
 [!["Workshop: CI Pipelines with Tekton"](http://img.youtube.com/vi/V-BFLaPdoPo/0.jpg)](https://youtu.be/V-BFLaPdoPo "Workshop: CI Pipelines with Tekton"){: target=_blank}

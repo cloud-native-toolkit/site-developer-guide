@@ -61,7 +61,7 @@ For the automation you will learn as part of the Continuous Integration process 
 
 A Personal Access Token is used in place of a user password to authenticate with GitHub.
 
-The Personal Access Token only needs to be generated once because it is associated with a GitHub user or organization and can be used to access any of the user's/organization's repos.
+The Personal Access Token only needs to be generated once because it is associated with a GitHub user or organization and can be used to access any of the user's/organization's repositories.
 
 - Navigate to [Developer Settings](https://github.com/settings/tokens){: target=_blank} and generate a new token; name it something like "CI pipeline"
 - Select `public_repo` scope to enable git clone

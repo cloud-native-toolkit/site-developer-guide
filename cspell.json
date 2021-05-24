@@ -4,6 +4,16 @@
     "version": "0.1",
     // language - current active spelling language
     "language": "en_US",
+    "languageSettings": [
+        {
+            // use with Markdown files
+            "languageId": "markdown",
+            // Exclude code.
+            "ignoreRegExpList": [
+                "/^\\s*```[\\s\\S]*?^\\s*```/gm"
+            ]
+        }
+    ],
     // words - list of words to be always considered correct
     "words": [
         "Kubernetes",
@@ -17,7 +27,54 @@
         "argocd",
         "microservice",
         "gitops",
-        "gogs"
+        "gogs",
+        "DTECLOUD",
+        "kubeadmin",
+        "runtimes",
+        "projectx",
+        "SonarQube",
+        "Websphere",
+        "microservice",
+        "microservices",
+        "bootcamp",
+        "codeready",
+        "SREs",
+        "Postgres",
+        "Keycloak",
+        "Trivy",
+        "Sysdig",
+        "SonaType",
+        "InteliJ",
+        "Drawio",
+        "CLI",
+        "CLIs",
+        "Bitnami",
+        "SDLC",
+        "Knative",
+        "Tekton",
+        "OpenShift",
+        "Skaffold",
+        "servlet",
+        "javax",
+        "javadoc",
+        "javadocs",
+        "jenkinsfile",
+        "Cloudant",
+        "Artifactory",
+        "Kustomize",
+        "Dockerhub",
+        "Dockerfiles",
+        "prereqs",
+        "Quarkus",
+        "unstaged",
+        "Buildah",
+        "GitLab",
+        "namespace",
+        "LogDNA",
+        "Hadolint",
+        "aquasec",
+        "datacenter",
+        "Grafana"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.

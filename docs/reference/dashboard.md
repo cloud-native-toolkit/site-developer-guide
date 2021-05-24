@@ -1,5 +1,7 @@
 # Developer Dashboard
 
+<!--- cSpell:ignore userid -->
+
 Explore the resources at your fingertips provided by the Cloud-Native Toolkit Developer Dashboard
 
 The Developer Dashboard is one of the tools running in your developer environment. It is designed to help you navigate
@@ -14,14 +16,15 @@ With the release of Red Hat OpenShift 4.x**, it is now even easier for developer
 ![Developer Dashboard](images/developer-dashboard.png)
 
 Here are some recent improvements:
+
 - More tools can be added to the dashboard using a simple `igc tool-config` command
 - Prefix (shown above as "IBM") and Title (shown above as "Cloud Native Toolkit") can be customized to you own names
-- The IBM Cloud link can be overidden to support links to other cloud vendors when OpenShift is running on Azure, AWS, Google Cloud, or VMWare
+- The IBM Cloud link can be overridden to support links to other cloud vendors when OpenShift is running on Azure, AWS, Google Cloud, or VMWare
 - The tools view is split into more columns to enable more reuse of the screen
 - The Cluster information is now available when you click on "Developer Dashboard" title
 - The Toolkit CLI now installs an alias into the `oc` and `kubectl` so it is now possible to open the dashboard quickly using `oc dashboard` and `kubectl dashboard`
 
-### Tools configured with OpenShift console
+## Tools configured with OpenShift console
 
 When the administrator configures your developer environment, they can customize a set of short cut links to common
 tools you often use as a developer.
@@ -30,7 +33,7 @@ tools you often use as a developer.
 
 You can see how these tools are configured by reading the [tools configuration guide](../adopting/customize/config-dashboard/dashboard.md)
 
-### Opening the Dashboard
+## Opening the Dashboard
 
 You can open the Dashboard from a terminal.
 
@@ -41,89 +44,75 @@ You can open the Dashboard from a terminal.
     - Follow the instructions to log in from the command line
 3. Use the [Toolkit CLI (*igc*)](../reference/cli.md#dashboard) to open the Dashboard in your environment
 
-=== "OpenShift"
+    === "OpenShift"
 
-    ```shell
-    oc dashboards
-    ```
-=== "Kubernetes"
+        ```shell
+        oc dashboards
+        ```
+    === "Kubernetes"
 
-    ```shell
-    kubectl dashboard
-    ```
-=== "Toolkit CLI"
+        ```shell
+        kubectl dashboard
+        ```
+    === "Toolkit CLI"
 
-    ```shell
-    igc dashboard
-    ```
-    </Tab>
-    </Tabs>
+        ```shell
+        igc dashboard
+        ```
 
     The command should print the url to the dashboard then open the default browser to the url.
 
-### Opening the Kubernetes/OpenShift console
+## Opening the Kubernetes/OpenShift console
 
 - Use the [Toolkit CLI](../reference/cli.md) `console` command to open the IKS or OpenShift console:
 
-    <Tabs>
-    <Tab label="OpenShift">
+    === "OpenShift"
 
-    ```shell
-    oc console
-    ```
+        ```shell
+        oc console
+        ```
 
-    </Tab>
-    <Tab label="Kubernetes">
+    === "Kubernetes"
 
-    ```shell
-    kubectl console
-    ```
+        ```shell
+        kubectl console
+        ```
 
-    </Tab>
-    <Tab label="Toolkit CLI">
+    === "Toolkit CLI"
 
-    ```shell
-    igc console
-    ```
-
-    </Tab>
-    </Tabs>
+        ```shell
+        igc console
+        ```
 
     This command will determine the type of cluster (IKS or OpenShift), get the url for the console, and launch
     the url in the default browser. If the default browser is not available then the url will be printed to the
     screen.
 
-### Access the URLs to endpoints in the cluster
+## Access the URLs to endpoints in the cluster
 
 - Use the [Toolkit CLI](../reference/cli.md) `endpoints` command to list the endpoints for a given namespace/project:
 
-    <Tabs>
-    <Tab label="OpenShift">
+    === "OpenShift"
 
-    ```shell
-    oc endpoints -n tools
-    ```
+        ```shell
+        oc endpoints -n tools
+        ```
 
-    </Tab>
-    <Tab label="Kubernetes">
+    === "Kubernetes"
 
-    ```shell
-    kubectl endpoints -n tools
-    ```
+        ```shell
+        kubectl endpoints -n tools
+        ```
 
-    </Tab>
-    <Tab label="Toolkit CLI">
+    === "Toolkit CLI"
 
-    ```shell
-    igc endpoints -n tools
-    ```
-
-    </Tab>
-    </Tabs>
+        ```shell
+        igc endpoints -n tools
+        ```
 
     This will return the route and ingress URLs for the `tools` namespace where the DevOps tools have been installed in the cluster:
 
-    ```shell
+    ```text
     ? Endpoints in the 'tools' namespace. Select an endpoint to launch the default browser or 'Exit'.
 
      1) Exit
@@ -138,35 +127,29 @@ You can open the Dashboard from a terminal.
 
     You can then select the URL and launch it in the default browser.
 
-### Credentials
+## Credentials
 
 In the future, the tools in the Dashboard will be linked using a single sign-on (SSO) service. In the meantime, the CLI includes a command to list the tools' logins.
 
 - Use the [Toolkit CLI](../reference/cli.md) `credentials` command to list the endpoints and credentials for the tools
 
-    <Tabs>
-    <Tab label="OpenShift">
+    === "OpenShift"
 
-    ```shell
-    oc credentials
-    ```
+        ```shell
+        oc credentials
+        ```
 
-    </Tab>
-    <Tab label="Kubernetes">
+    === "Kubernetes"
 
-    ```shell
-    kubectl credentials
-    ```
+        ```shell
+        kubectl credentials
+        ```
 
-    </Tab>
-    <Tab label="Toolkit CLI">
+    === "Toolkit CLI"
 
-    ```shell
-    igc credentials
-    ```
-
-    </Tab>
-    </Tabs>
+        ```shell
+        igc credentials
+        ```
 
     The command lists the `userid` and `password` for each tool installed. You can use these credentials to log into
     each of the installed tools.

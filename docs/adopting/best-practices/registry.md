@@ -1,5 +1,7 @@
 # Container Registry strategy
 
+<!--- cSpell:ignore Skopeo -->
+
 By default an OpenShift cluster will use its internal registry.  This is fine when working within cluster.  Some additional permissions may be needed to allow images to be accessible across projects/namespaces.
 
 An Image Registry is a repository of versioned container images. It is perhaps a subset of the larger [Artifact Management](../../reference/tools/artifactory.md) topic but has special considerations.

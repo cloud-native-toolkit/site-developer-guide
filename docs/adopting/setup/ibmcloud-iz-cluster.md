@@ -1,5 +1,7 @@
 # Provision an IBM Cloud cluster using Iteration Zero scripts
 
+<!--- cSpell:ignore tfvars igcli filesystem's cntk -->
+
 !!!Information
     This installation method will provision the cluster if it doesn't already exist
 

@@ -1,5 +1,7 @@
 # Installing to toolkit to an existing cluster
 
+<!--- cSpell:ignore tfvars cntk igcli datacenter -->
+
 The fast-start install used in the [learning setup](../../setup/fast-start.md){: target=_blank} is one option if you want a standard install.
 
 If you want to customize the Toolkit installation, then use the full Iteration Zero scripts.
@@ -158,7 +160,7 @@ Steps to install the Cloud-Native Toolkit for running Openshift or Kubernetes cl
     ./launch.sh
     ```
 
-    This will download the Cloud Garage Tools Docker image that contains all the necessary tools to execute Terraform scripts and exec shell into the running container. When the container starts it mounts the filesystem's `./terraform/` directory as `/home/devops/src/` and loads the values from the `credentials.properties` file as environment variables.
+    This will download the Cloud Garage Tools Docker image that contains all the necessary tools to execute Terraform scripts and exec shell into the running container. When the container starts it mounts the file system's `./terraform/` directory as `/home/devops/src/` and loads the values from the `credentials.properties` file as environment variables.
 
 3. Apply the Terraform by running the provided `runTerraform.sh` script
 

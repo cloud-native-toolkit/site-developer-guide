@@ -1,5 +1,7 @@
 # Artifactory Setup
 
+<!--- cSpell:ignore environments's jfrog userid resetpassword selectrepotype createcomplete securitysettings Artifactory's jfrogapikey viewapikey settingskeys  -->
+
 Complete the steps for setting up the Artifactory tool
 
 !!!Note
@@ -118,7 +120,7 @@ Below, in the **Authentication Settings** section, is the **Encrypted Password**
 
 ### Update the secret - Kubernetes and OpenShift 3
 
-To update the secret in Kuberentes or Openshift 3, navigate to the `secret` called `artifactory-access`
+To update the secret in Kubernetes or Openshift 3, navigate to the `secret` called `artifactory-access`
 in the `tools` namespace and update the following values. You will need encode these value in base64 key before
 editing the secret.
 

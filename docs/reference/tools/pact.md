@@ -1,5 +1,6 @@
 # PACT
 
+<!--- cSpell:ignore pactbroker -->
 Use Pact to test your code's API
 
 In IBM Garage Method, one of the Develop practices is [contract-driven testing](https://www.ibm.com/garage/method/practices/code/contract-driven-testing){: target=_blank}. [Pact](https://docs.pact.io/){: target=_blank} automates contract testing and enables it to be added to a continuous integration pipeline. The environment's CI pipeline ([Jenkins](jenkins.md){: target=_blank}, [Tekton](tekton.md){: target=_blank}, etc.) includes a Pact stage. Simply by building your app using the CI pipeline, your code's contract gets tested, just open the Pact UI to browse the results.

@@ -1,5 +1,7 @@
 # Cloud Native Toolkit - Command Line Interface
 
+<!--- cSpell:ignore myapp gituser gitpat gitsecret buildconfig prereq -->
+
 ## Invoking the CLI
 
 When the CLI is installed, it adds an executable named `igc` to the PATH. Running `igc --help` will list
@@ -81,11 +83,11 @@ activation content and links to Starter Kits to start a project quickly.
 
 This command requires that the login context for the cluster has already been established.
 
-**Command flags**
+#### Command flags
 
 - `-n`: the namespace where the dashboard has been deployed; the default is `tools`
 
-**Usage**
+#### Usage
 
 === "CLI"
     The command is used in the following way:
@@ -110,7 +112,7 @@ This command requires that the login context for the cluster has already been es
   open "https://$HOST"
   ```
 
-**Related commands**
+#### Related commands
 
 - [credentials](#credentials): shows information about the same tools shown in the dashboard from the
 command-line
@@ -124,7 +126,7 @@ configured, then the URL to the console will be printed out.
 
 This command requires that the login context for the cluster has already been established.
 
-**Usage**
+#### Usage
 
 === "CLI"
     The command is used in the following way:
@@ -149,7 +151,7 @@ This command requires that the login context for the cluster has already been es
     open "https://${REGION}.containers.cloud.ibm.com/kubeproxy/clusters/${CLUSTER_ID}/service/#/overview?namespace=default"
     ```
 
-**Related commands**
+#### Related commands
 
 - [credentials](#credentials): shows information about the same tools shown in the dashboard from the
 command-line
@@ -161,7 +163,7 @@ available to the dashboard and `credentials` command
 Opens the Git repo in the default browser for the current working directory. If a default browser has not been
 configured, then the URL to the repo will be printed out.
 
-**Usage**
+#### Usage
 
 === "CLI"
     The command is used in the following way:
@@ -183,7 +185,7 @@ configured, then the URL to the repo will be printed out.
     alias gh="open https://github.$(git config remote.origin.url | cut -f2 -d. | tr ':' /)"
     ```
 
-**Related commands**
+#### Related commands
 
 - [credentials](#credentials): shows information about the same tools shown in the dashboard from the
 command-line
@@ -206,11 +208,11 @@ number of different ways within the environment:
 
 This command requires that the login context for the cluster has already been established.
 
-**Command flags**
+#### Command flags
 
 - `-n`: the namespace where the tools have been deployed; the default is `tools`
 
-**Usage**
+#### Usage
 
 === "CLI"
     The command is used in the following way:
@@ -249,7 +251,7 @@ This command requires that the login context for the cluster has already been es
       jq '[.items[] | select(.metadata.name != "ibmcloud-apikey").data | with_entries(.value |= @base64d)]'
     ```
 
-**Related commands**
+#### Related commands
 
 - [dashboard](#dashboard): displays the url of the Developer Dashboard and launches the default browser
 - [tool-config](#tool-config): allows configuration for additional tools to be added to the cluster, making them
@@ -264,12 +266,12 @@ Selecting `Exit` will print the full list of endpoints and exit.
 
 This command requires that the login context for the cluster has already been established.
 
-**Command flags**
+#### Command flags
 
 - `-n`: the namespace from which the endpoints will be read; the value will be read from the current context if not
 provided
 
-**Usage**
+#### Usage
 
 === "CLI"
     The command is used in the following way:
@@ -329,7 +331,7 @@ Options:
       --verbose            flag to produce more verbose logging        [boolean]
 ```
 
-**Usage**
+#### Usage
 
 === "CLI"
     Create a `dev` namespace for development
@@ -404,10 +406,10 @@ Options:
       --verbose            flag to produce more verbose logging        [boolean]
 ```
 
-**Usage**
+#### Usage
 
 === "CLI"
-    Copy the pull secret from `default` namespace into `myapp-test` namepsace and add to serviceAccount `default`
+    Copy the pull secret from `default` namespace into `myapp-test` namespace and add to serviceAccount `default`
 
     ```shell
     igc pull-secret myapp-test -t default -z default
@@ -477,7 +479,8 @@ You can optionally provide the branch name with the url using a hash (`#`):
 oc pipeline "https://github.com/my-org/my-repo#my-branch"
 ```
 
-**Note:** When registering a remote git repo, if the branch is not provided then the default branch will be used.
+!!!Note
+    When registering a remote git repo, if the branch is not provided then the default branch will be used.
 
 #### Pipeline type
 
@@ -895,14 +898,14 @@ require that the terminal's current directory is the repository directory for yo
 The command will add files to the local repo. You should commit these new files and push them to the server repo.
 Then run `igc pipeline` to connect your repo to a pipeline in the environment.
 
-**Command flags**
+#### Command flags
 
 - `--repo`: the set of pipelines to choose from; the default is `https://github.com/ibm-garage-cloud/garage-pipelines`
 - `-p`: the name of the pipeline that should be installed; if not provided then you will be prompted
 - `-b`: the branch from which the pipeline should be installed; the default is `stable`
 - `r`: the version number of the pipeline that should be installed; the default is `latest`
 
-**Usage**
+#### Usage
 
 === "CLI"
     1. Before running the command, make sure you have a clean repository with no unstaged changes. Either commit any
@@ -962,7 +965,7 @@ is named `{git org}.{git repo}`. The config map and secret will be created in th
 unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
 replaced/updated it won't be updated unless the `--replace` argument is passed.
 
-**Command flags**
+#### Command flags
 
 - `[positional]`: overwrites the name of the config map
 - `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
@@ -972,7 +975,7 @@ replaced/updated it won't be updated unless the `--replace` argument is passed.
 - `--values`: an optional yaml file that contains additional attributes to add to the secret
 - `--replace`: flag indicating that the secret should be replaced/updated if it already exists
 
-**Usage**
+#### Usage
 
 ==="CLI"
     The following gives an example of using the `git-secret` command to set up the config map and secret in the `dev` namespace
@@ -1018,7 +1021,7 @@ is named `gitops-repo`. The config map and secret will be created in the current
 unless a value is passed with the `-n` flag. If the `git-credentials` secret already exists then it won't be
 replaced/updated unless the `--replace` argument is passed.
 
-**Command flags**
+#### Command flags
 
 - `-n`: the namespace where the secret and config map should be created. Defaults to the currently selected project/namespace
 - `-d`: the directory where the cloned repository is located. Defaults to the current working directory
@@ -1027,7 +1030,7 @@ replaced/updated unless the `--replace` argument is passed.
 - `--values`: an optional yaml file that contains additional attributes to add to the secret
 - `--replace`: flag indicating that the secret should be replaced/updated if it already exists
 
-**Usage**
+#### Usage
 
 === "CLI"
     The following gives an example of using the `gitops` command to set up the config map and secret in the `dev` namespace
@@ -1070,7 +1073,7 @@ replaced/updated unless the `--replace` argument is passed.
 Configures a new tool in the environment. After deploying the tool, use this command to add the tool to the list of
 credentials so that it will be displayed in the dashboard.
 
-**Command flags**
+#### Command flags
 
 - The name for the tool
 - `-n`: the tools namespace; the default is `tools`
@@ -1078,7 +1081,7 @@ credentials so that it will be displayed in the dashboard.
 - `--username`: (optional) the user name for logging into to tool
 - `--password`: (optional) the password for logging into to tool
 
-**Usage**
+#### Usage
 
 === "CLI"
     The following gives an example of using the `tool-config` command to set up a tool named `my-tool` with its
@@ -1110,7 +1113,7 @@ the vlan.
 
 This command requires that the terminal is already logged in to the cloud region. It does NOT need to be logged in to a cluster.
 
-**Usage**
+#### Usage
 
 === "CLI"
     List a pair of public/private VLANs for a new environment to use

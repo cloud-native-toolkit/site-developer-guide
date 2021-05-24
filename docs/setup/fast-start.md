@@ -88,7 +88,7 @@ Select the option you want for your cluster, then follow the instructions.
     7.  When the OpenShift Cluster has been deployed, use the button on the IBM Cloud web console to launch the **OpenShift web console**
     8. If you don't already have the OpenShift command line interface (CLI) installed on your workstation, you should install it now.  The installation image can be downloaded from the OpenShift web console.  Select the help icon (question mark) next to your user name at the top of the web console.  Select Command Line Tools from the menu, then download and install the appropriate version of the oc CLI for your workstation.
     9.  Open a command terminal window on your workstation (where the ibmcloud and oc command line tooling has been installed)
-    10. Login to the IBM Cloud with command `ibmcloud login` if you belong to a company account that has single signon enabled, then the command is `ibmcloud login --sso`.  If your IBM Cloud account has access to multiple accounts and you get an option to choose the account during the login process, ensure you select the account where the OpenShift cluster was deployed.
+    10. Login to the IBM Cloud with command `ibmcloud login` if you belong to a company account that has single sign on enabled, then the command is `ibmcloud login --sso`.  If your IBM Cloud account has access to multiple accounts and you get an option to choose the account during the login process, ensure you select the account where the OpenShift cluster was deployed.
     11. If you don't see the Resource Group in the account summary presented after logging in.  Use command `ibmcloud target -g Default` to target the correct Resource Group (this is the resource group used when deploying the cluster.  The default value is **Default**)
     12. Click the dropdown next to your username at the top of the OpenShift web console and select **Copy Login Command**.  Select Display Token and copy the oc login command from the web console and paste it into the terminal on your workstation.  Run the command to login to the cluster on the command line
     13. Move to the next step to install the toolkit
@@ -127,7 +127,7 @@ Select the option you want for your cluster, then follow the instructions.
 
     1. Navigate to the [IBM Open Labs - Red Hat OpenShift on IBM Cloud](https://developer.ibm.com/openlabs/openshift){: target="_blank" .external }
     2. Select the **Bring Your Own Application - Launch Lab** button
-    3. Sign-in to the IBM Cloud or signup if you don't already have an IBM account
+    3. Sign-in to the IBM Cloud or sign up if you don't already have an IBM account
     4. When the Lab has been launched, forward the instructions in the left panel to show the 2nd page, **Quick Links and Common Commands**.  Here you can see the command line commands to log into your IBM cloud account and also the OpenShift cluster.
     
         1. Log into the IBM cloud using the command prompt on the left side of the lab browser screen.  Use the `ibmcloud login` command.  Enter your email then password when prompted then select account **DTECLOUD**.  Press enter to skip selecting a region and choose 'N' if prompted to update the ibmcloud utility.
@@ -158,8 +158,9 @@ Select the option you want for your cluster, then follow the instructions.
             EOF
             . ./.shellrc
             ```
-        
+
         3. install the Toolkit CLI
+        
             ```shell
             sudo PATH=/usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin /usr/local/lib/nodejs/node-v14.16.1-linux-x64/bin/npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
             ```

@@ -1,5 +1,7 @@
 # Argo CD (OpenShift GitOps)
 
+<!--- cSpell:ignore ksonnet jsonnet grpc -->
+
 Use GitOps to continuously deliver application changes
 
 [Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank} is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
@@ -478,7 +480,7 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
         - `{APPLICATION NAME}` is the name of the application
         - `{PROJECT NAME}` is the name of the project (the one created in the previous step or `default`)
         - `{TARGET NAMESPACE}` is the namespace where the application should be deployed
-        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluter where Argo CD has been deployed
+        - `{TARGET CLUSTER}` is the server api url for the cluster where the application should be deployed. Use `https://kubernetes.default.svc` for the same cluster where Argo CD has been deployed
         - `{APPLICATION PATH}` is the path to the folder where the secret template was created
         - `{REPO URL}` is the url to the git repository
         - `{REPO BRANCH}` is the branch in the git repository that contains the application configuration

@@ -1,4 +1,6 @@
-#Secret management
+# Secret management
+
+<!--- cSpell:ignore Hashicorp -->
 
 Deploying an application into containers involves both the application logic and the associated configuration. The application logic is packaged into a container image so that it can be deployed but in order to make the container image portable across different environments, the application configuration should be managed separately and applied to the application container image at deployment time.
 
@@ -11,8 +13,7 @@ A common issue when doing GitOps is how to handle sensitive information that sho
 1. Inject the values from another source into kubernetes Secret(s) at deployment time
 2. Inject the values from another source in the pod at startup time via an InitContainer
 
-The "other source" in this case would be a key management system that centralizes the storage and management of sensitive 
-information. There are a number of key management systems available to manage the secret values:
+The "other source" in this case would be a key management system that centralizes the storage and management of sensitive information. There are a number of key management systems available to manage the secret values:
 
 - [Key Protect](../../reference/tools/key-protect.md)
 - Hyper Protect

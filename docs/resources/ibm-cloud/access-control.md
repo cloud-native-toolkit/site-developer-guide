@@ -44,7 +44,7 @@ The most fundamental component type is a resource. To organize an account that w
 - Create a good set of resource groups to organize the resources
 - Create a good set of access groups to assign access to the resources
 
-The documentation explains some stratagies:
+The documentation explains some strategies:
 
 - [Best practices for setting up your account](https://cloud.ibm.com/docs/account?topic=account-account_setup){: target=_blank}
 - [What is a resource?](https://cloud.ibm.com/docs/resources?topic=resources-resource){: target=_blank}
@@ -82,7 +82,7 @@ This diagram illustrates one perspective for how to view IBM Cloud: It's just a 
 
 ![Cloud resources](images/cloud-resources.png)
 
-This model is correct but not sufficient. IBM Cloud is a multitenant environment, so different tenants own and use different resources. IBM Cloud needs to keep straight which resources are owned and used by which tenants.
+This model is correct but not sufficient. IBM Cloud is a multi-tenant environment, so different tenants own and use different resources. IBM Cloud needs to keep straight which resources are owned and used by which tenants.
 
 ### Resources in IBM Cloud accounts
 
@@ -105,7 +105,7 @@ This diagram illustrates how resource groups can be used to organize resources b
 
 ![Cloud resource groups](images/cloud-groups-resources.png)
 
-Each resource group contains the resources for an environment, whether that environment is single tenant for a single development team or multitenant for the teams that share an environment. A basic environment typically consists of a single Kubernetes or OpenShift cluster and the service instances bound to that cluster. This is everything needed to host an application, whether it's a monolith or a set of microservices, or a set of applications being developed by the same team.
+Each resource group contains the resources for an environment, whether that environment is single tenant for a single development team or multi-tenant for the teams that share an environment. A basic environment typically consists of a single Kubernetes or OpenShift cluster and the service instances bound to that cluster. This is everything needed to host an application, whether it's a monolith or a set of microservices, or a set of applications being developed by the same team.
 
 To plan the resource groups that you'll need, plan the development teams and the environments that they'll need, plus other environments you may need for production, testing, demonstrations, etc. Today, you may only know some of those needs. Create a new resource group for each environment you know about today, ensuring to give each one a unique name. Then as you create resources for an environment, put them in the environment's resource group. In the future, as you discover the need for other environments, create more resource groups for those and create each environment's resources in its corresponding resource group.
 
@@ -129,7 +129,6 @@ Access groups are more flexible than resource groups. Whereas a resource can onl
 
 Notice that access groups and resource groups are orthogonal, which is to say that they vary independently and are not directly related to each other. Access groups and resource groups are related, but there is no direct connection. (We'll see the indirect relationship below.) Often there are multiple access groups per resource group. The set of users in an access group has nothing to do with the set of resources in a resource group. Group members can be added to and removed from each independently.
 
-
 ### Policies connect access groups to resources
 
 A policy associates an access group with a resource group. Each policy is a collection of roles and each role is a collection of permissions. A policy determines the permissions that users in an access group have to perform on the resources in a resource group.
@@ -143,7 +142,7 @@ A policy does not necessarily provide access to all of the resources in a resour
 The example in the diagram shows three policies for three very common resource types:
 
 - **Kubernetes**: Clusters, either [Kubernetes](https://cloud.ibm.com/docs/containers?topic=containers-overview){: target=_blank} or [OpenShift](https://cloud.ibm.com/docs/openshift?topic=openshift-overview){: target=_blank}. (The IAM roles for OpenShift clusters are the same as for Kubernetes clusters, i.e. both cluster types are the same resource type called `Kubernetes Service`.)
-- **Registry**: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/Registry?topic=registry-registry_overview){: target=_blank}, a global multitenant singleton built into IBM Cloud that is its own resource type with its own set of roles.
+- **Registry**: The [IBM Cloud Container Registry](https://cloud.ibm.com/docs/Registry?topic=registry-registry_overview){: target=_blank}, a global multi-tenant singleton built into IBM Cloud that is its own resource type with its own set of roles.
 - **Services**: Service instances created from the [IBM Cloud catalog](https://cloud.ibm.com/docs/overview?topic=overview-whatis-platform#catalog){: target=_blank} (that are IAM enabled), including services which may be added to or removed from the catalog in the future.
 
 The diagram shows each policy with Administrator and Manager roles for their respective resource type. Administrator grants permissions to use a service including creating and deleting service instances, whereas Manager grants permission to manipulate a service instance (in ways that are service-specific).

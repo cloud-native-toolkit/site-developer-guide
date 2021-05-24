@@ -1,5 +1,7 @@
 # Setup Workshop Environment
 
+<!--- cSpell:ignore CSPLAB -->
+
 Provides the steps to install the Cloud-Native Toolkit and setting up the  Cloud-Native Toolkit Workshop hands on labs.
 
 Click on image below to launch video:
