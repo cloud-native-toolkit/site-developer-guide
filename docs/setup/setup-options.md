@@ -3,7 +3,7 @@
 !!!note
     If you are a developer attending a training event, where the training environment is provided, you should skip this section and move onto the Cloud-Native Toolkit fast [start content](../learning/fast-start.md)
 
-    If you want to host a workshop for a number of developers, then you may want to use the [workshop](../resources/workshop/workshop.md.
+    If you want to host a workshop for a number of developers, then you may want to use the [workshop](../resources/workshop/workshop.md).
 
 There is no single way to setup an enterprise development infrastructure for cloud native application development.  There are [many different tools available](https://www.cncf.io/projects/){: target="_blank" .external } to help create Cloud Native applications.  You need to find the set of tools and processes that allow the IT organization to work efficiently to create and manage production-ready applications and services.  This can be a time consuming processes, to evaluate available tools and determine how to integrate them into a development environment.
 
