@@ -56,7 +56,7 @@ nav:
   - Overview: 
     - What is the Cloud Native Toolkit: overview/overview.md
     - What's New: overview/whats-new.md
-    - Prerequisets: overview/prerequisites.md 
+    - Prerequisites: overview/prerequisites.md 
   - Install: 
     - Options for installing up Toolkit: setup/setup-options.md
     - Fast Start install: setup/fast-start.md
