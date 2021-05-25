@@ -6,13 +6,15 @@
   "directories": {
     "doc": "docs"
   },
-  "devDependencies": {},
   "scripts": {
-    "predev": "./dev/cleanup.sh devguide-dev",
+    "predev": "./dev/clean.sh devguide-dev",
     "dev": "./dev/run.sh devguide-dev 8000",
-    "postdev": "./dev/print-env.sh 8000",
-    "dev:stop": "./dev/cleanup.sh devguide-dev",
-    "build": "./dev/build.sh",
+    "postdev": "./dev/logs.sh devguide-dev",
+    "dev:stop": "./dev/clean.sh devguide-dev",
+    "dev:spell": "cspell docs/**/*.md",
+    "dev:links": "linkchecker -f linkcheckerrc --check-extern public",
+    "build": "./build.sh",
+    "dev:build": "./dev/build.sh devguide-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/issues"
   },
-  "homepage": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide#readme"
+  "homepage": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide#readme",
+  "devDependencies": {
+    "cspell": "^5.4.1"
+  }
 }

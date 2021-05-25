@@ -5,30 +5,14 @@ on:
     branches: [ main ]
 
 jobs:
-  verify:
+  publish:
 
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: generate site
+        uses: ./.github/actions/
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install git+https://github.com/linkchecker/linkchecker.git
-          npm ci
-
-      - name: Build
-        run: |
-          mkdocs build
