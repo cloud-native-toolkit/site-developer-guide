@@ -10,9 +10,9 @@ RUN pip --no-cache-dir install git+https://github.com/linkchecker/linkchecker@v1
 # NodeJS Dependencies
 RUN npm ci
 
-RUN npm build
+RUN npm run build
 
 FROM quay.io/bitnami/nginx
 
 EXPOSE 8080 8443
-COPY --from=builder /public /app
+COPY --from=builder /site/public /app
