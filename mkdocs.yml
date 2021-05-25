@@ -125,6 +125,7 @@ nav:
       - OpenShift Pipelines/Tekton: reference/tools/tekton.md
       - IBM Container Registry: reference/tools/ibm-cloud-container-registry.md
       - IBM Key Protect: reference/tools/key-protect.md
+      - Container Image Security Enforcement: reference/tools/container-image-security-enforcement.md
     - Pipeline Task Reference:
       - Pipelines: reference/tasks/pipelines.md
       - placeholder: reference/tasks/placeholder.md
