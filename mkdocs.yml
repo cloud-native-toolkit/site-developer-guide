@@ -10,10 +10,12 @@ site_dir: public
 edit_uri: edit/main/docs
 theme:
     name: material
+    logo: images/cloudnativetoolkit.png
+    favicon: images/cloudnativetoolkit.png
     palette:
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: black
+      accent: blue
     font: 
       text: IBM Plex Sans
       code: IBM Plex Mono
