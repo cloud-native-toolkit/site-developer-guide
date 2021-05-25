@@ -37,6 +37,8 @@
       path: /workshop/inventory
     - title: App Modernization
       path: /workshop/appmod
+    - title: Artificial Intelligence
+      path: /workshop/ai
     - title: DevOps with Operator Framework
       path: /workshop/operators
     - title: Cloud Pak for Integration
