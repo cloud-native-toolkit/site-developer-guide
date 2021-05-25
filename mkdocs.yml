@@ -107,6 +107,7 @@ nav:
       - User cases: adopting/use-cases/applying.md
       - Add a new use case: adopting/use-cases/add-use-case.md
       - Build an Operator: adopting/use-cases/operator/operator.md
+      - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
   - Reference:
     - Reference: reference/reference.md 
     - Command Line Tool: reference/cli.md
