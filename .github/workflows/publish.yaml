@@ -6,27 +6,25 @@ on:
 
 jobs:
   publish:
+
     runs-on: ubuntu-latest
 
     env:
       NODE_VERSION: 12.x
+      TITLE: Cloud-Native Toolkit
+      ANALYTICS_ID: ""
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
+      - name: generate site
+        uses: ./.github/actions/
+      - name: Set CNAME
+        run: sudo chmod 777 ./public/CNAME && echo "cloudnativetoolkit.dev" > ./public/CNAME
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.TOKEN }}
           publish_dir: ./public
-          cname: cloudnativetoolkit.dev
 
   release:
     needs:
