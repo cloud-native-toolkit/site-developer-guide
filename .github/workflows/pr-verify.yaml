@@ -5,30 +5,24 @@ on:
     branches: [ main ]
 
 jobs:
-  verify:
+  publish:
 
     runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: 12.x
+      TITLE: Cloud-Native Toolkit
+      ANALYTICS_ID: ""
+
     steps:
       - uses: actions/checkout@v2
+      - name: generate site
+        uses: ./.github/actions/
+      - name: Set CNAME
+        run: sudo chmod 777 ./public/CNAME && echo "cloudnativetoolkit.dev" > ./public/CNAME
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          fetch-depth: 0
+          personal_token: ${{ secrets.TOKEN }}
+          publish_dir: ./public
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install git+https://github.com/linkchecker/linkchecker.git
-          npm ci
-
-      - name: Build
-        run: |
-          mkdocs build

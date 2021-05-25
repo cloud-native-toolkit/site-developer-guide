@@ -1,6 +1,7 @@
-pygments==2.8.1
-pymdown-extensions==8.1.1
-mkdocs==1.1.2
-mkdocs-material==7.0.6
+# Do not use with Docker builds, only for local dev with mkdocs CLI
+mkdocs-material==7.1
 mkdocs-minify-plugin==0.4.0
-mkdocs-redirects==1.0.1
+mkdocs-redirects==1.0.3
+git+https://github.com/linkchecker/linkchecker@v10.0.1#egg=linkchecker
+
+
