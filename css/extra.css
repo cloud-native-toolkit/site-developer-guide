@@ -1,0 +1,55 @@
+div.col-md-9 h1:first-of-type {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 300;
+}
+
+div.col-md-9 h1:first-of-type .headerlink {
+    display: none;
+}
+
+code.no-highlight {
+    color: black;
+}
+
+
+/* Definition List styles */
+
+dd {
+    padding-left: 20px;
+}
+
+
+/* Center images*/
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+.md-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.md-footer__link {
+    padding-top: .8rem;
+}
+
+.md-content, .md-sidebar__scrollwrap {
+    padding-bottom: 6rem;
+}
+
+.md-header__inner {
+    padding: .3rem .2rem;
+}
+
+span.md-ellipsis {
+    font-weight: bold;
+}
+
+.homepage {
+    font-size: 1.2rem;
+}
