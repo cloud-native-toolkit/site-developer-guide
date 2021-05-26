@@ -12,7 +12,7 @@ The following is required before proceeding to the next section.
 
 - Provision an OpenShift cluster.
 - Install the `oc` and `git` cli.
-- Install the [Cloud Native Toolkit CLI](http://localhost:8000/learning/dev-setup.html#install-the-cloud-native-toolkit-command-line-interface-cli).
+- Install the [Cloud Native Toolkit CLI](../../../learning/dev-setup.md#install-the-cloud-native-toolkit-command-line-interface-cli).
 
 ## Installation
 
