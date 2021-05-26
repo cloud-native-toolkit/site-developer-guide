@@ -74,7 +74,10 @@
         "Hadolint",
         "aquasec",
         "datacenter",
-        "Grafana"
+        "Grafana",
+        "userdemo",
+        "projectdemo",
+        "ROKS"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.

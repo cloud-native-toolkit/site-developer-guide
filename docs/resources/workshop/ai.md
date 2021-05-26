@@ -1,10 +1,6 @@
-# Deploy an Application using CI Pipelines with Tekton
+# Deploy an Artificial Intelligence Microservice
 
-<!--- cSpell:ignore userx -->
-
-Click on image below to launch video:
-
-[!["Workshop: CI Pipelines with Tekton"](http://img.youtube.com/vi/V-BFLaPdoPo/0.jpg)](https://youtu.be/V-BFLaPdoPo "Workshop: CI Pipelines with Tekton"){: target=_blank}
+<!--- cSpell:ignore mobilenet rcnn resnet -->
 
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)
@@ -35,7 +31,6 @@ Click on image below to launch video:
     ```
 
 1. Create a project/namespace using your project as prefix, and `-dev` and suffix
-
     ```bash
     oc sync $TOOLKIT_PROJECT-dev
     ```
@@ -44,15 +39,16 @@ Click on image below to launch video:
     - Open Developer Dashboard from the OpenShift Console
         ![Developer Dashboard](images/developer-dashboard.jpg){.center}
     - Select Starter Kits
-        ![Starter Kits](images/starter-kits.jpg){.center}
-    - Select One in our case **Go Gin Microservice**
+        ![Starter Kits](images/starter-kits-ai.jpg){.center}
+    - Select One in our case **Artificial Intelligence Microservice**
     - Click Fork
     - Login into GIT Sever using the provided username and password (ie `userdemo` and `password`)
     - Click **Fork Repository**
 
-1. Setup environment variable `GIT_URL` for the git url using the value from previous step or as following
+1. Setup environment variable `GIT_URL` for the git url using the value from previous step or as following.
+        **Note:** We are including username/password in git url for simplicity of this lab. You would **NOT** want to do this in your development environment.
     ```bash
-    GIT_REPO=go-gin
+    GIT_REPO=ai-model-object-detector
     GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
 
@@ -66,12 +62,14 @@ Click on image below to launch video:
 
     ```
 
-1. Create a pipeline for the application
+1. Create a Tekton pipeline for the application
     ```bash
     oc pipeline --tekton
     ```
-    - Use down/up arrow and select `ibm-golang`
-    - Hit Enter to enable image scanning
+    - Use down/up arrow and select `ibm-general`
+    - Enter **n** and hit Enter to disable image scanning
+    - Hit Enter to enable Dockerfile linting
+    - Hit Enter to select default health endpoint `/`
     - Open the url to see the pipeline running in the OpenShift Console
 
 1. Verify that Pipeline Run completed successfully
@@ -92,17 +90,20 @@ Click on image below to launch video:
 1. The **gitops** step of the pipeline triggers Argo CD to deploy the app to QA. Select **Developer** perspective, select project `$TOOLKIT_PROJECT-qa` and then select **Topology** from the Console and verify the application running
         ![Last pipeline run](images/deploy-qa.jpg){.center}
 
-1. Open the application route url and try out the application using the swagger UI
+1. Open the application route url and try out the application using the swagger UI or append `/app` to the URL to load Web UI for the Application. You can download the this sample [picture](https://raw.githubusercontent.com/IBM/MAX-Object-Detector/master/samples/baby-bear.jpg) to test the app
+        ![open url](images/open-url.jpg){.center}
+        ![ai app](images/ai-app-baby-bear.jpg){.center}
 
-1. Make a change to the application in the git repository and see the pipeline running again from the Console.
 
+1. Make a change to the application in the git repository and see the pipeline running again from the Console. Lets change the Machine Learning being used from `ssd_mobilenet_v1` to `faster_rcnn_resnet101`
     ```bash
     git config --local user.email "${TOOLKIT_USERNAME}@example.com"
     git config --local user.name "${TOOLKIT_USERNAME}"
-    echo "A change to trigger a new PipelineRun $(date)" >> README.md
+    sed -i 's/ssd_mobilenet_v1/faster_rcnn_resnet101/' Dockerfile
     git add .
-    git commit -m "update readme"
+    git commit -m "update model"
     git push -u origin master
+
     ```
 
 1. Verify that change in Git Server and Git WebHook
@@ -119,4 +120,4 @@ Click on image below to launch video:
     - Select toolkit/gitops git repository
         ![gitops](images/gitops.jpg){.center}
 
-1. Congratulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](cd.md)
+1. Congratulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](./cd)

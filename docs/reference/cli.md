@@ -4,7 +4,7 @@
 
 ## Invoking the CLI
 
-When the CLI is installed, it adds an executable named `igc` to the PATH. Running `igc --help` will list
+When the [CLI is installed](../learning/dev-setup.html#install-the-cloud-native-toolkit-command-line-interface-cli), it adds an executable named `igc` to the PATH. Running `igc --help` will list
 the available commands. The output text will be similar to the following:
 
 ```text

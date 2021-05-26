@@ -2,9 +2,15 @@
 
 <!--- cSpell:ignore pactbroker swaggereditor  -->
 
-<!--- 
+<!---
   Use Heading 2 style to introduce a new release, then jump to heading 4 for components - this keeps the Table of contents displayed on the page more navigable)
 --->
+
+## May 25, 2021
+
+- The Workshop got updated with a new [Artificial Intelligence](https://cloudnativetoolkit.dev/workshop/ai)
+- New experimental support to deploy via GitOps the [Cloud Native Toolkit](https://cloudnativetoolkit.dev/adopting/use-cases/gitops/gitops-toolkit.html) and [IBM Cloud Pak App Connect](https://cloudnativetoolkit.dev/adopting/use-cases/gitops/gitops-ace.html)
+
 
 ## Jan 28, 2021
 

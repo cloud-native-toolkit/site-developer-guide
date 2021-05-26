@@ -23,73 +23,16 @@ We have painstakingly documented all of the logos and icons used for 3rd party t
 documenting their use within the Developer Guide and the broader Toolkit. The [Logo Usage page](./docs/logos) documents
 the approved logos and the requirements for their use.
 
-## Contributing
+## Contributing to Docs
 
-To update and manage the Developer Guide follow these steps.
-
-### Clone the repository
-
-```shell
-git clone
-```
-
-### Install dependencies
-
-```shell
-npm install
-```
-
-This will install all the dependencies necessary to run the environment in development mode
-and to build and publish the content.
-
-Most notably, this project depends on the following:
-(documented in `package.json`):
-
-```shell
-npm install -g gatsby
-```
-
-### Write content
-
-The content of the Developer Guide is authored through a hybrid of Markdown and React. The content
-itself is primarily provided using Markdown. React components are sprinkled into the Markdown to
-provide for a richer and more interactive set of components in the published guide.
-
-To render the content within your local development environment, run the following:
-
-```shell
-npm run build
-npm run dev
-```
-
-View your locally rendered content:
-
-```shell
-http://localhost:8000/
-```
+To update and manage the Developer Guide follow these steps here https://cloudnativetoolkit.dev/contribute/documentation.html#setting-up-a-documentation-environment
 
 ### Publish Content
 
 This repository has been configured to build and publish the changes automatically via travis-ci. There are two builds currently configured:
 
-- `dev` branch is automatically published to the `gh-pages` branch in [https://github.com/cloud-native-toolkit/ibm-garage-developer-guide-staging](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide-staging) and is visible as a staging site here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-staging/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-staging/)
-- `master` branch is automatically published to the `gh-pages` branch in this repository which is visible here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide/)
-
-The status of the travis-ci build can be seen here - [https://travis-ci.org/github/cloud-native-toolkit/ibm-garage-developer-guide](https://travis-ci.org/github/cloud-native-toolkit/ibm-garage-developer-guide){: target=_blank}
+- `main` branch is automatically published to the `gh-pages` branch in this repository which is visible here - https://cloudnativetoolkit.dev
 
 **Note:** There is a time delay between when deploy process completes and when the
 content is available on the published site.
 
-### Gatsby and Carbon
-
-Get started using with the Gatsby Carbon theme which includes all configuration you might need to build a
-beautiful site inspired by the [Carbon Design System](https://www.carbondesignsystem.com).
-
-## Resources
-
-- [Getting Started](https://gatsby-theme-carbon.now.sh/getting-started)
-- [Guides](https://gatsby-theme-carbon.now.sh/guides/configuration)
-- [Components](https://gatsby-theme-carbon.now.sh/components/markdown)
-- [Demo](https://gatsby-theme-carbon.now.sh/demo)
-- [Gallery](https://gatsby-theme-carbon.now.sh/gallery)
-- [Contributions](https://gatsby-theme-carbon.now.sh/contributions)
