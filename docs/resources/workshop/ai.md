@@ -120,4 +120,4 @@
     - Select toolkit/gitops git repository
         ![gitops](images/gitops.jpg){.center}
 
-1. Congratulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](./cd)
+1. Congratulations you finished this lab, continue with lab [Promote an Application using CD with GitOps and ArgoCD](cd.md)

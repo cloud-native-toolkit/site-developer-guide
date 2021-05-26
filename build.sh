@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
 
-cspell docs/**/**/*.md
+set -e
+
+cspell "docs/**/*.md"
 mkdocs build
+linkchecker -f linkcheckerrc public
