@@ -1,24 +1,29 @@
 # Install App Connect on an existing cluster using GitOps
 
+<!--- cSpell:ignore gitid kubeseal cntk -->
+
 _This is a work in progress, come back for updates._
 
 Steps to install App Connect in an existing cluster using ArgoCD.
 
 ## Pre-requisites
+
 The following is required before proceeding to the next section.
 
 - Provision an OpenShift cluster.
 - IBM Cloud Pak Entitlement Key
 
-
 ## Installation
+
 1. Fork the [multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops) repository and clone your fork.
-    ```bash
+
+    ```shell
     git clone git@github.com:{gitid}/multi-tenancy-gitops.git
     ```
 
 1. Install the Red Hat OpenShift GitOps operator.
-  ```bash
+
+  ```shell
   cd multi-tenancy-gitops
 
   oc apply -f 2-services/operators/openshift-gitops/
@@ -27,14 +32,16 @@ The following is required before proceeding to the next section.
 1. Update your repository to reference your forked repository.  Search and replace `cloud-native-toolkit` GithUb Org references with your {gitid}.
 
 1. Create the bootstrap ArgoCD application.
-    ```bash
+
+    ```shell
     oc apply -f bootstrap.yaml -n openshift-gitops
     ```
 
 1. Generate an encrypted Secret containing the IBM Entitlement Key using Sealed Secret Operator.
     - Install [kubeseal](https://github.com/bitnami-labs/sealed-secrets/blob/main/README.md) CLI.
     - Encrypt IBM Entitlement Key Secret.
-    ```bash
+
+    ```shell
     NAMESPACE=tools
     IBM_ENTITLEMENT_KEY=<Entitlement Key>
 
@@ -51,12 +58,14 @@ The following is required before proceeding to the next section.
     ```
 
 1. Apply the yaml manually or add to your gitops git repo to be deploy via ArgoCD.
-    ```bash
+
+    ```shell
     oc apply -f enc-ibm-entitled-key-secret.yaml
     ```
 
 1. Verify the infrastructure and cluster wide resources under the `3-infra` folder are created successfully.
-    ```bash
+
+    ```text
     3-infra/
     ├── argocd-apps
     │   ├── consolelink.yaml
@@ -94,10 +103,12 @@ The following is required before proceeding to the next section.
             ├── namespace.yaml
             └── operatorgroup.yaml
     ```
+
     ![ArgoCD deployments of 3-infra](images/argocd-cntk-3-infra.png){.center}
 
 1. Verify the operators and instances of custom resource definitions under the `2-services` folder are created successfully.
-    ```bash
+
+    ```text
     2-services/
     ├── active
     │   ├── instances
@@ -181,4 +192,5 @@ The following is required before proceeding to the next section.
                 ├── Chart.yaml
                 └── values.yaml
     ```
+
     ![ArgoCD deployments of 2-services](images/argocd-ace-2-services.png)
