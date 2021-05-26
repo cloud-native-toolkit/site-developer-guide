@@ -2,6 +2,48 @@
 
 <!--- cSpell:ignore linkchecker linkcheckerrc mkdocs mkdoc -->
 
+
+## Setting up a documentation environment
+
+To work on documentation and be able to view the rendered web site you need to create an environment, which comprises of:
+
+=== "Tooling within a Docker container"
+
+    You can use a Docker container and run MkDocs from the container, so no local installation is required:
+
+    - You need to have [Docker](https://www.docker.com) installed and running on your system
+    - There are helper configurations installed if you have npm from [Node.JS](https://nodejs.org) installed.
+    - Build the development docker container image, this is only need it once if the dependencies have not changed. Run `npm run dev:build`
+    - To start developing run command `npm run dev` in the root directory of the git repo (where **package.json** and **mkdocs.yaml** are located)
+    - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
+    - To stop developing run command `npm dev:stop` in another terminal window, which will terminate the docker container
+    - View the scripts section of **package.json** in the root folder of the git repo for additional options available
+    - To build the static HTML file and check all links and spelling run command `npm run build`
+    - To check links in the built site (`npm run build` must be run first), use the linkchecker, with command `npm run dev:links`.  This command should be run in the root folder of the project, containing the **linkcheckerrc** file.
+    - To check spelling `npm run dev:spell` should be run in the root folder of the project, containing the **cspell.json** file.
+
+=== "Local mkdocs and python tooling installation"
+
+    You can install MkDocs and associated plugins on your development system and run the tools locally:
+
+    - Install [Python 3](https://www.python.org) on your system
+    - Clone or Fork the documentation repository
+    - cd into the documentation directory
+    - Install the required python packages `pip install -r requirements.txt'
+    - Install the spell checker using command `npm ci`
+
+    !!!note
+        sudo command may be needed to install globally, depending on your system configuration
+
+    You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
+
+    - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
+    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Every time a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
+    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `npm run dev:links`.  This command should be run in the root folder of the project, containing the **linkcheckerrc** file.
+    - To check spelling `npm run dev:spell` should be run in the root folder of the project, containing the **cspell.json** file.
+
+
+
 The developer guide is created using [MkDocs](http://mkdocs.org){: target="_blank" .external } with the [Materials theme](https://squidfunk.github.io/mkdocs-material/){: target="_blank" .external } theme.
 
 MkDocs takes Markdown documents and turns them into a static website, that can be accessed from a filesystem or served from a web server.
@@ -20,7 +62,7 @@ The sections are as follows:
 4. **Adopting** - This section is designed to move from the initial learning phase to adopting the Toolkit as part of development activities.  It covers more advanced installation options, customization options, best practices and how the Toolkit can be applied to certain use cases
 5. **Reference** - The reference section is the technical documentation for the resources delivered by the Toolkit.
 6. **Resources** - The resources section provides links to content outside the toolkit that someone learning the toolkit may find useful
-7. **Contributing** - This section provides how someone can become a contributor to the Cloud-Native Toolkit project, which includes the core Toolkit, adding additional starter kits or pipeline tasks, updating or adding to the documentation.  
+7. **Contributing** - This section provides how someone can become a contributor to the Cloud-Native Toolkit project, which includes the core Toolkit, adding additional starter kits or pipeline tasks, updating or adding to the documentation.
 
 ## Creating content
 
@@ -47,7 +89,7 @@ HTML can be embedded in Markdown, but in the documentation it is preferred to st
 
 ### Links within MkDocs generated content
 
-MkDocs will warn of any internal broken links, so it is important that links within the documentation are recognized as internal links.  
+MkDocs will warn of any internal broken links, so it is important that links within the documentation are recognized as internal links.
 
 - a link starting with a protocol name, such as http or https, is an external link
 - a link starting with `/` is an external link.  This is because MkDocs generated content can be embedded into another web application, so links can point outside of the MkDocs generated site but hosted on the same website
@@ -108,7 +150,7 @@ where:
 
 ### Tabs
 
-Content can be organized into a set of horizontal tabs.  
+Content can be organized into a set of horizontal tabs.
 
 ```md
 === "Tab 1"
@@ -156,7 +198,7 @@ produces a collapsible box:
 
     You can add a `+` character to force the box to be initially open `???+`
 
-You can override the title of the box by providing a title after the Admonition type.  
+You can override the title of the box by providing a title after the Admonition type.
 
 !!!Example
     You can also nest different components as required
@@ -263,39 +305,3 @@ here the words *linkchecker*, *linkcheckerrc*, *mkdocs* and *mkdoc* are specifie
 
 The cSpell configuration file **cspell.json** contains a list of words that should always be considered valid when spell checking.  The list of words applies to all files being checked.
 
-## Setting up a documentation environment
-
-To work on documentation and be able to view the rendered web site you need to create an environment, which comprises of:
-
-=== "Local tooling installation"
-
-    You can install MkDocs and associated plugins on your development system and run the tools locally:
-
-    - Install [Python 3](https://www.python.org) on your system
-    - Clone or Fork the documentation repository
-    - cd into the documentation directory
-    - Install the required python packages `pip install -r requirements.txt'
-    - Install the linkchecker using command `pip install git+https://github.com/linkchecker/linkchecker.git`
-    - Install the spell checker using command `npm install -g cspell`
-
-    !!!note
-        sudo command may be needed to install globally, depending on your system configuration
-
-    You now have all the tools installed to be able to create the static HTML site from the markdown documents.  The [documentation for MkDocs](https://www.mkdocs.org) provides full instructions for using MkDocs, but the important commands are:
-
-    - `mkdocs build` will build the static site.  This must be run in the root directory of the repo, where mkdocs.yml is located
-    - `mkdocs serve` will build the static site and launch a test server on `http://localhost:8000`.  Every time a document is modified the website will automatically be updated and any browser open will be refreshed to the latest.
-    - To check links in the built site (`mkdocs build` must be run first), use the linkchecker, with command `linkchecker -f linkcheckerrc --check-extern public`.  This command should be run in the root folder of the project, containing the **linkcheckerrc** file.
-    - To check spelling ```cspell docs/**/*.md``` should be run in the root folder of the project, containing the **cspell.json** file.
-
-=== "Tooling within a Docker container"
-
-    You can use a Docker container and run MkDocs from the container, so no local installation is required:
-
-    - You need to have [Docker](https://www.docker.com) installed and running on your system
-    - There are helper configurations installed if you have npm from [Node.JS](https://nodejs.org) installed.
-    - To start developing run command `npm run dev` in the root directory of the git repo (where **package.json** and **mkdocs.yaml** are located)
-    - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
-    - To stop developing run command `npm dev:stop`, which will terminate the docker container
-    - View the scripts section of **package.json** in the root folder of the git repo for additional options available
-    - To build the static HTML file and check all links and spelling run command `npm run build`
