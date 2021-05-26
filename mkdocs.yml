@@ -20,7 +20,14 @@ theme:
       text: IBM Plex Sans
       code: IBM Plex Mono
     language: en
-    custom_dir: custom-theme/
+    custom_dir: overrides
+    features:
+      - navigation.tabs
+      - navigation.instant
+      - navigation.tracking
+      - navigation.tabs.sticky
+      - navigation.expand
+      - navigation.top
 use_directory_urls: false
 plugins:
   - search:

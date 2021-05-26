@@ -80,11 +80,11 @@ Click on image below to launch video:
     - It might take a couple minutes for the application to show up
     - Select the application `master-staging-${TOOLKIT_PROJECT}-app` (ie master-staging-project01-app)
     - Click **Refresh**
-        ![Argo CD App staging](../images/argo-app-staging.jpg)
+        ![Argo CD App staging](images/argo-app-staging.jpg)
 
 1. Verify Application is running in the **STAGING** namespace corresponding to your username `${TOOLKIT_PROJECT}`
     - Select **Developer** perspective, select project `${TOOLKIT_PROJECT}-staging` and then select **Topology** from the Console and see the application running
-        ![Deploy Staging](../images/deploy-staging.jpg)
+        ![Deploy Staging](images/deploy-staging.jpg)
 
 1. Propose a change for the Application in **STAGING**
     - Update the replica count and create a new git branch in remote repo
