@@ -120,8 +120,8 @@ Click on image below to launch video:
 
 1. Review that application scales out
     - Review in ArgoCD UI, notice there are now two pods, it takes about 4 minutes to sync, you can click **Refresh**
-        ![Argo Stagaing 2 pods](images/argo-app-staging2.jpg)
+        ![Argo Staging 2 pods](images/argo-app-staging2.jpg)
     - Review in OpenShift Console, click the Deployment circle details shows 2 Pods.
-        ![Openshift Stagaing 2 pods](images/deploy-staging2.jpg)
+        ![Openshift Staging 2 pods](images/deploy-staging2.jpg)
 
 1. Congratulations you finished this activity, continue with the lab [Deploy a 3 tier Microservice using React, Node.js, and Java](inventory.md)
