@@ -34,7 +34,13 @@ plugins:
         'learn': 'learning/fast-start.md'
         'learning': 'learning/fast-start.md'
         'workshop': 'resources/workshop/workshop.md'
-        'resource/workshop': 'resources/workshop/workshop.md'
+        'resources/workshop': 'resources/workshop/workshop.md'
+        'workshop/setup': 'resources/workshop/setup.md'
+        'workshop/terminal': 'resources/workshop/terminal.md'
+        'workshop/ci': 'resources/workshop/ci.md'
+        'workshop/inventory': 'resources/workshop/cd.md'
+        'workshop/appmod': 'resources/workshop/appmod.md'
+        'workshop/ai': 'resources/workshop/ai.md'
 markdown_extensions:
   - attr_list
   - admonition
@@ -63,11 +69,13 @@ nav:
   - Learning the Toolkit:
     - Try it:
       - Overview: resources/workshop/workshop.md
-      - Setup: resources/workshop/setup.md
+      - Setup Cluster: resources/workshop/setup.md
+      - Setup Terminal: resources/workshop/terminal.md
       - Continuous integration: resources/workshop/ci.md
       - Continuous delivery: resources/workshop/cd.md
       - 3-tier application: resources/workshop/inventory.md
       - Application modernization: resources/workshop/appmod.md
+      - Artificial Intelligence: resources/workshop/ai.md
     - Basics:
       - Learning Overview: learning/fast-start.md
       - Developer setup: learning/dev-setup.md
@@ -115,6 +123,9 @@ nav:
       - Add a new use case: adopting/use-cases/add-use-case.md
       - Build an Operator: adopting/use-cases/operator/operator.md
       - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
+      - GitOps:
+        - Toolkit Install: adopting/use-cases/gitops/gitops-toolkit.md
+        - App Connect Install: adopting/use-cases/gitops/gitops-ace.md
   - Reference:
     - Reference: reference/reference.md
     - Command Line Tool: reference/cli.md

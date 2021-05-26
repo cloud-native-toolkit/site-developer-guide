@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-cspell docs/**/*.md
+cspell docs/**/**/*.md
 mkdocs build

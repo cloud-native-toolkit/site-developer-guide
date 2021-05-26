@@ -15,7 +15,7 @@ This guide assumes that you have some basic knowledge of Kubernetes, Docker, and
 
 ## Cluster Command Line Tools
 
-You will be using the command line for some of the tasks you will learn about as you work through the learning material.  
+You will be using the command line for some of the tasks you will learn about as you work through the learning material.
 
 If you are using the Open Labs environment, then you can skip installing command line tools locally as the Open Labs environment provides a web-based command line.
 
@@ -66,9 +66,9 @@ The Personal Access Token only needs to be generated once because it is associat
 - Navigate to [Developer Settings](https://github.com/settings/tokens){: target=_blank} and generate a new token; name it something like "CI pipeline"
 - Select `public_repo` scope to enable git clone
 - Select `write:repo_hook` scope so the pipeline can create a web hook
-  
+
     ![Pipeline OAuth scopes](./images/pipeline-scopes.png)
-  
+
 - The GitHub UI will never again let you see this token, so be sure to save the token in your password manager or somewhere safe that you can access later on
 
 ### IBM Cloud account
@@ -93,7 +93,7 @@ The Cloud-Native Toolkit CLI needs to be installed in all development environmen
 To install the Cloud-Native Toolkit CLI run the following command:
 
 ```shell
-curl -sL shell.cloudnativetoolkit.dev | shell -
+curl -sL shell.cloudnativetoolkit.dev | sh -
 source ~/.bashrc || source ~/.zshrc
 ```
 

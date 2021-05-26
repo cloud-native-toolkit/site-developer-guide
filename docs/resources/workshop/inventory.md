@@ -14,25 +14,24 @@ Click on image below to launch video:
     - OpenShift Console URL (OCP_CONSOLE_URL)
     - The username and password for OpenShift and Git Server (default values are user1, user2, etc.. for users and `password` for password).
 
-1. Set `TOOLKIT_USERNAME` environment variable replace `user1` with assigned usernames
-
-    ```shell
-    TOOLKIT_USERNAME=user1
-
+1. Set `TOOLKIT_USERNAME` environment variable.
+   If you are participation in a workshop replace `userdemo` with your assigned username (ex. `user01`).
+    ```bash
+    TOOLKIT_USERNAME=userdemo
     ```
 
-1. **(Skip if using KubeAdmin or IBM Cloud)** Login into OpenShift using `oc`
-    - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token, if using a cluster that was configured with the workshop scripts outside IBM Cloud then use `user1` or respective assigned username, and the password is `password`
-
-    ```shell
+1. **(Skip if using KubeAdmin or IBM Cloud)** Login to OpenShift using `oc`
+    - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token by using the **Copy Login Command**
+        ![Login](../images/login.jpg)
+    - If using a cluster that was configured with the workshop scripts outside IBM Cloud then use respective assigned username (ex. `user01`), and the password is `password`
+    ```bash
     oc login $OCP_URL -u $TOOLKIT_USERNAME -p password
     ```
 
-1. Set `TOOLKIT_PROJECT` environment variable replace `project1` or `projectx` based on user id assigned
-
-    ```shell
-    TOOLKIT_PROJECT=project1
-
+1. Set `TOOLKIT_PROJECT` environment variable
+   If you are participation in a workshop replace `projectdemo` based on your assigned username (ex. `project01`).
+    ```bash
+    TOOLKIT_PROJECT=projectdemo
     ```
 
 1. Create a project/namespace using your project prefix, and `-dev` and suffix
