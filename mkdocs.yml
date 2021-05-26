@@ -41,6 +41,8 @@ plugins:
         'workshop/inventory': 'resources/workshop/cd.md'
         'workshop/appmod': 'resources/workshop/appmod.md'
         'workshop/ai': 'resources/workshop/ai.md'
+        'learning/gitops-int/gitops-with-cloud-native-toolkit': 'adopting/use-cases/gitops/gitops-toolkit.md'
+        'learning/gitops-int/gitops-with-app-connect': 'adopting/use-cases/gitops/gitops-ace.md'
 markdown_extensions:
   - attr_list
   - admonition
