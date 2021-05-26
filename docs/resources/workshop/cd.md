@@ -17,7 +17,7 @@ Click on image below to launch video:
 
 1. **(Skip if using KubeAdmin or IBM Cloud)** Login to OpenShift using `oc`
     - If using IBM Cloud cluster then login with your IBM account email and IAM API Key or Token by using the **Copy Login Command**
-        ![Login](../images/login.jpg)
+        ![Login](images/login.jpg)
     - If using a cluster that was configured with the workshop scripts outside IBM Cloud then use respective assigned username (ex. `user01`), and the password is `password`
     ```bash
     oc login $OCP_URL -u $TOOLKIT_USERNAME -p password
