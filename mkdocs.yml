@@ -43,6 +43,13 @@ plugins:
         'workshop/ai': 'resources/workshop/ai.md'
         'learning/gitops-int/gitops-with-cloud-native-toolkit': 'adopting/use-cases/gitops/gitops-toolkit.md'
         'learning/gitops-int/gitops-with-app-connect': 'adopting/use-cases/gitops/gitops-ace.md'
+        'tools/argocd': 'learning/fast-cd.md'
+        'getting-started/dev-env-setup': 'learning/dev-setup.md'
+        'getting-started-day-1/deploy-app': 'learning/fast-ci.md'
+        'learning/ace-pipeline': 'adopting/use-cases/ace-pipeline/ace-pipeline.md'
+        'whats-new': 'overview/whats-new.md'
+        'overview': 'overview/overview.md'
+        'getting-started/cli': 'reference/cli.md'
 markdown_extensions:
   - attr_list
   - admonition
