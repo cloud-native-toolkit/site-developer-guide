@@ -120,3 +120,8 @@ width: 8rem;
 .md-main__inner {
     margin-top: 0px;
 }
+
+/* top banner home page */
+[data-md-color-primary=black] .md-header {
+    background-color: #161616;
+}
