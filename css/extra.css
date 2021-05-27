@@ -76,7 +76,7 @@ span.md-ellipsis {
 }
 
 .md-footer-meta__inner {
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .md-footer-column {
@@ -94,7 +94,7 @@ span.md-ellipsis {
     /* Then we define how is distributed the remaining space */
     justify-content: space-around;
 
-    padding: 5px 25px;
+    padding: 5px 5px;
 }
 
 .md-footer-text {
