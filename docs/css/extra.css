@@ -3,7 +3,6 @@
   --md-default-bg-color: #f4f4f4;
 }
 :root > * {
-    --md-code-bg-color: #efefef;
     --md-accent-fg-color: #030303;
 }
 .md-nav {
@@ -100,4 +99,24 @@ span.md-ellipsis {
 .md-footer-text {
     font-size: .7rem;
     padding: 2px 0;
+}
+
+/* top git source icon */
+.md-header__source {
+    width: 2rem;
+  }
+
+/* search box */
+.md-search__inner {
+width: 8rem;
+}
+
+/* center colum white */
+.md-content {
+    background-color: #fff;
+}
+
+/* adjust center column */
+.md-main__inner {
+    margin-top: 0px;
 }

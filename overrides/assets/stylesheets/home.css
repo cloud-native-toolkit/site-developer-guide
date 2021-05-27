@@ -85,5 +85,17 @@
   --md-primary-bg-color--light: #fff; /* Search bar text */
   --md-default-fg-color: #fff; /* Search result box section header */
   --md-default-fg-color--light: #eee; /* Search box result text */
-  
+
+}
+
+/* top banner home page */
+[data-md-color-primary=black] .md-header {
+  background-color: #161616;
+  border-bottom: 1px solid #393939;
+}
+
+
+article.md-content__inner.md-typeset {
+  background-color: #161616;
+  border-left: 1px solid #393939;
 }
