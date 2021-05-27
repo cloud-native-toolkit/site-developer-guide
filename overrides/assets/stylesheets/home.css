@@ -93,8 +93,10 @@
   max-width: initial;
 }
 
-body {
+section {
   color: #fff;
+}
+body {
   background: var(--md-primary-fg-color);
   background: #5063d0;
   background: #0071c7;
