@@ -48,9 +48,9 @@ This will create a public and private key combination that can be used to sign a
 #### Saving the private key in a vault
 
 
-Once your key has been generated, the private key should be stored within a credentials vault, such as [Key Protect](/tools/secret-management-with-key-protect) or [IBM HyperProtect Crypto Services](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-overview).
+Once your key has been generated, the private key should be stored within a credentials vault, such as [Key Protect](../key-protect) or [IBM HyperProtect Crypto Services](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-overview).
 
-The private key should be placed in the vault as a base64 encoded string, which can be accessed by your [Tekton](/tools/tekton) pipeline during the image building task.
+The private key should be placed in the vault as a base64 encoded string, which can be accessed by your [Tekton](../tekton) pipeline during the image building task.
 
 To place the private key in a vault
 
@@ -83,7 +83,7 @@ Both [Key Protect](https://cloud.ibm.com/apidocs/key-protect) and [Hyper Protect
 
 #### Saving the public key
 
-The public key needs to be made available to the cluster for verifying container image signatures by either creating a secret within the cluster, or making the public key available through [Artifactory](/tools/artifactory/).
+The public key needs to be made available to the cluster for verifying container image signatures by either creating a secret within the cluster, or making the public key available through [Artifactory](../artifactory).
 
 Use the following commands to make the public key available for policy enforcement by creating a secret within the cluster:
 
