@@ -1,7 +1,7 @@
 {
-  "name": "ibm-garage-developer-guide",
+  "name": "developer-guide",
   "version": "1.0.0",
-  "description": "[![Publish](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml)",
+  "description": "[![Publish](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml)",
   "main": "index.js",
   "directories": {
     "doc": "docs"
@@ -19,15 +19,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibm-garage-cloud/ibm-garage-developer-guide.git"
+    "url": "git+https://github.com/ibm-garage-cloud/developer-guide.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide/issues"
+    "url": "https://github.com/cloud-native-toolkit/developer-guide/issues"
   },
-  "homepage": "https://github.com/ibm-garage-cloud/ibm-garage-developer-guide#readme",
+  "homepage": "https://github.com/cloud-native-toolkit/developer-guide#readme",
   "devDependencies": {
     "cspell": "^5.4.1"
   }
