@@ -47,10 +47,10 @@ We'll use some scripts in the steps below to help create access groups. Here, we
 
 Clone the Git repository with the scripts. (This repo also has the scripts for installing the environment.)
 
-- Clone the [ibm-garage-iteration-zero](https://github.com/ibm-garage-cloud/ibm-garage-iteration-zero){: target=_blank} Git repository to your local filesystem
+- Clone the [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero){: target=_blank} Git repository to your local filesystem
 
     ```shell
-    git clone git@github.com:ibm-garage-cloud/ibm-garage-iteration-zero.git
+    git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
     ```
 
 - Switch to the cloned directory
