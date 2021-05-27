@@ -70,7 +70,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
 
 === "Kubernetes"
     ### Install Tekton on IBM Kubernetes Managed Service
-    - Install Tekton via Knative add-on (can be found in the **Add On** tab in the Kubernetes managed service dashboard), it includesTekton support by default and the Webhook extension.
+    - Install Tekton from Open Source [Tekton Pipelines](https://github.com/tektoncd/pipeline)
     - Install [Tekton Dashboard](https://github.com/tektoncd/dashboard#install-dashboard){: target="_blank"} follow the instructions in the `README.md`
     - Add Ingress endpoint for the **Tekton Dashboard** add a host name that uses the IKS cluster subdomain
 
@@ -89,7 +89,7 @@ Tekton can be installed in both RedHat Openshift and IBM Kubernetes manage
                     serviceName: tekton-dashboard
                     servicePort: 9097
         ```
-    - Install [Tekton Webhook Extension](https://github.com/tektoncd/experimental/tree/master/webhooks-extension#install-webhook-extension){: target="_blank"}
+    - Install [Tekton Triggers](https://github.com/tektoncd/triggers){: target="_blank"}
 
 ### Setup Tekton
 
