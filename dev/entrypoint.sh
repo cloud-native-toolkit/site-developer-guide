@@ -1,3 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-mkdocs serve --config-file "./mkdocs.yml" --livereload -a 0.0.0.0:8000
+
+PORT=${1:-8000}
+
+mkdocs serve --dirtyreload -a "0.0.0.0:${PORT}"
+echo "Dev environment running with live reloading enabled. Open http://localhost:${PORT} to see the site"

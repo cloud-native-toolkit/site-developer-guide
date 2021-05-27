@@ -20,6 +20,7 @@ jobs:
         uses: ./.github/actions/
       - name: Set CNAME
         run: sudo chmod 777 ./public/CNAME && echo "cloudnativetoolkit.dev" > ./public/CNAME
+        
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

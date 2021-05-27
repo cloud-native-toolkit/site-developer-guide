@@ -1,14 +1,18 @@
-FROM python:slim-stretch as builder
+FROM squidfunk/mkdocs-material as builder
 
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/* \
-  && pip install --no-cache-dir pygments==2.8.1 pymdown-extensions==8.1.1 mkdocs==1.1.2 mkdocs-material==7.0.6 mkdocs-minify-plugin==0.4.0 mkdocs-redirects==1.0.3 mkdocs-with-pdf==0.8.3 \
-  && pip install git+https://github.com/linkchecker/linkchecker.git
+RUN apk add --no-cache --update nodejs npm
 
 WORKDIR /site
 COPY ./ /site/
 
-RUN mkdocs build -d /output -f ./mkdocs.yml
+# Python Dependencies
+RUN pip --no-cache-dir install git+https://github.com/linkchecker/linkchecker@v10.0.1#egg=linkchecker
+# NodeJS Dependencies
+RUN npm ci
+
+RUN npm run build
 
 FROM quay.io/bitnami/nginx
 
-COPY --from=builder /output /app
+EXPOSE 8080 8443
+COPY --from=builder /site/public /app
