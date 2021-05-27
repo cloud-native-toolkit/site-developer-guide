@@ -1,10 +1,10 @@
 # Cloud Native Toolkit - Developer Guide
 
-[![Publish](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish.yaml)
+[![Publish](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml)
 
-[![Publish Beta](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/actions/workflows/publish-beta.yaml)
+[![Publish Beta](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish-beta.yaml)
 
-![Release](https://img.shields.io/github/v/release/cloud-native-toolkit/ibm-garage-developer-guide)
+![Release](https://img.shields.io/github/v/release/cloud-native-toolkit/developer-guide)
 
 [![Docker Repository on Quay](https://quay.io/repository/ibmgaragecloud/toolkit-guide/status "Docker Repository on Quay")](https://quay.io/repository/ibmgaragecloud/toolkit-guide)
 
@@ -13,7 +13,7 @@ lifecycle of cloud native development with IBM Kubernetes Service or managed Red
 
 The rendered Developer Guide can be viewed here - [https://cloudnativetoolkit.dev](https://cloudnativetoolkit.dev)
 
-*Note*: The Beta version of the Developer Guide can be found here - [https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-beta/](https://cloud-native-toolkit.github.io/ibm-garage-developer-guide-beta/)
+*Note*: The Beta version of the Developer Guide can be found here - [https://beta.cloudnativetoolkit.dev](https://beta.cloudnativetoolkit.dev)
 
 It is primarily used to document features that are currently in Beta prior to releasing those features (and the associated documentation). The content for the Beta version of the Developer Guide is sourced from the `beta` branch.
 

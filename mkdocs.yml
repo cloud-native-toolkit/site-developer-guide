@@ -3,8 +3,8 @@ site_description: >-
   The Cloud-Native Toolkit is an open-source collection of assets that enable application development and support teams to deliver business value quickly using Red Hat OpenShift or Kubernetes
 site_url: https://cloudnativetoolkit.dev
 site_author: Cloud-Native Toolkit development team
-repo_name: cloud-native-toolkit/ibm-garage-developer-guide
-repo_url: https://github.com/cloud-native-toolkit/ibm-garage-developer-guide
+repo_name: cloud-native-toolkit/developer-guide
+repo_url: https://github.com/cloud-native-toolkit/developer-guide
 docs_dir: docs
 site_dir: public
 edit_uri: edit/main/docs
@@ -21,11 +21,11 @@ theme:
     language: en
     custom_dir: overrides
     features:
-      - navigation.tabs
+#      - navigation.tabs
       - navigation.instant
       - navigation.tracking
-      - navigation.tabs.sticky
-      - navigation.top
+#      - navigation.tabs.sticky
+#      - navigation.top
 use_directory_urls: false
 plugins:
   - search:
