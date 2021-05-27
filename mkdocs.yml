@@ -21,11 +21,11 @@ theme:
     language: en
     custom_dir: overrides
     features:
-      - navigation.tabs
+#      - navigation.tabs
       - navigation.instant
       - navigation.tracking
-      - navigation.tabs.sticky
-      - navigation.top
+#      - navigation.tabs.sticky
+#      - navigation.top
 use_directory_urls: false
 plugins:
   - search:
