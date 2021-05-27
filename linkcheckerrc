@@ -14,7 +14,26 @@ nofollow=
   public/learning.html$
   public/setup.html$
   public/workshop.html$
-  public/resource/workshop.html$
+  public/resources/workshop.html$
+  public/workshop/setup.html$
+  public/workshop/terminal.html$
+  public/workshop/ci.html$
+  public/workshop/inventory.html$
+  public/workshop/appmod.html$
+  public/workshop/ai.html$
+  public/learning/gitops-int/gitops-with-cloud-native-toolkit.html$
+  public/learning/gitops-int/gitops-with-app-connect.html$
+  public/tools/argocd.html$
+  public/getting-started/dev-env-setup.html$
+  public/getting-started-day-1/deploy-app.html$
+  public/learning/ace-pipeline.html$
+  public/whats-new.html$
+  public/overview.html$
+  public/getting-started/cli.html$
+
+
+
+
 
 [checking]
 robotstxt=0

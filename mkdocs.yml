@@ -15,12 +15,17 @@ theme:
     palette:
       scheme: default
       primary: black
-      accent: blue
     font:
       text: IBM Plex Sans
       code: IBM Plex Mono
     language: en
-    custom_dir: custom-theme/
+    custom_dir: overrides
+    features:
+      - navigation.tabs
+      - navigation.instant
+      - navigation.tracking
+      - navigation.tabs.sticky
+      - navigation.top
 use_directory_urls: false
 plugins:
   - search:
