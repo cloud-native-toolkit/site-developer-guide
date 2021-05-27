@@ -2,7 +2,7 @@
 checkextern=1
 ignore=
   ^https://cloudnativetoolkit.dev
-  ^https://github.com/cloud-native-toolkit/ibm-garage-developer-guide/edit
+  ^https://github.com/cloud-native-toolkit/developer-guide/edit
   xml.gz$
   ^https://ccp-ui.csplab.intranet.ibm.com
   ^https://ccp-ui.apps.labprod.ocp.csplab.local
