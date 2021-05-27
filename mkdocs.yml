@@ -26,7 +26,6 @@ theme:
       - navigation.instant
       - navigation.tracking
       - navigation.tabs.sticky
-      - navigation.expand
       - navigation.top
 use_directory_urls: false
 plugins:

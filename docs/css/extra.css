@@ -1,3 +1,14 @@
+:root {
+  --md-default-bg-color: #f4f4f4;
+}
+.md-nav {
+    font-size: .8rem;
+    line-height: 1.4;
+}
+.md-grid {
+    max-width: initial;
+}
+
 div.col-md-9 h1:first-of-type {
     text-align: center;
     font-size: 60px;
