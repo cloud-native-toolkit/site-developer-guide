@@ -25,7 +25,7 @@ Create an OpenShift Cluster for example:
     curl -sfL get.cloudnativetoolkit.dev | sh -
     ```
 
-## 3. Setup Workshop
+## 3. Setup IBM Cloud Native Toolkit Workshop
 
 - Install the foundation for the workshops
 
@@ -34,20 +34,62 @@ Create an OpenShift Cluster for example:
     ```
 
     !!!Note
-      The username and password for Git Admin is `toolkit` `toolkit`
+      - The username and password for Git Admin is `toolkit` `toolkit`
+      - Usernames `user01` through `user15` are configured with a password of `password`.
+      - Username `userdemo` is configured with the password `password`. You can use this username if using the workshop environment
+        for self study or giving a demo.  If you are preparing the environment for a workshop you can remove `userdemo`
+    b   y running the `uninstall-userdemo.sh` script which is part of the [workshop](https://github.com/cloud-native-toolkit/cloud-native-toolkit-workshop) scripts.
 
-!!!Todo
-    Should this be moved out of setup and into the student section of the workshop?
+## 4. (Optional) Customization of the IBM Cloud Native Toolkit Workshop
 
-## 4. (Optional) Auto configure Terminal Shell
+- You can customize the Workshop environment by cloning the [workshop](https://github.com/cloud-native-toolkit/cloud-native-toolkit-workshop) repo
 
-- You can use [IBM Cloud Shell](https://cloud.ibm.com/shell), the [OpenLabs Shell](https://developer.ibm.com/openlabs/openshift) or your local workstation. More details in [Toolkit Dev Setup](../../learning/dev-setup.md) and [Toolkit CLI](../../reference/cli.md).
-  Run the following command on Cloud, Linux or MacOS shell:
+- Some of the most common customizations are:
 
-    ```shell
-    curl -sL shell.cloudnativetoolkit.dev | bash -
-    source ~/.bashrc || source ~/.zshrc
+  - You can create more than 15 users by setting a `USER_COUNT` environment variable. For example to configure 30 users use the command
+      ```bash
+      export USER_COUNT=30
+      ```
 
-    ```
+  - You can create more than 15 projects by setting a `PROJECT_COUNT` environment variable. For example to configure 30 projects use the command
+      ```bash
+      export PROJECT_COUNT=30
+      ```
 
-    Be sure to follow the instructions provided to enable the changes in the current terminal session.
+- Once you have finished configuring your customizations, login to the cluster from the cli and run the `scripts/install.sh` script to perform the install.
+
+- You can also add additional users to the workshop clusters.
+    - Create a file with one user id per line.
+    **IMPORTANT: there needs to be newline after the last entry.**
+    For example a `users.txt` file with content.
+      ```bash
+      additionaluserID
+      anotheruserID
+      someuserID
+
+      ```
+
+    !!! note ""
+        For Openshift clusters on IBM Cloud (ROKS) the user ids are their IBM IDs (email address) all lowercase with an uppercase `IAM#` prefix added to the beginning.
+        ```bash
+        IAM#additionaluserid@email.com
+        IAM#anotheruserid@email.com
+        IAM#someuserid@email.com
+
+        ```
+
+      - Create a `ADDITIONAL_USERS_FILE` environment variable with the path and name of the file.
+        ```bash
+        export ADDITIONAL_USERS_FILE=users.txt
+        ```
+      - The additional users will be granted the `self-provisioner` role, meaning they can create new Openshift Projects.
+        If you wish to remove this permission set an environment
+      variable `ADDITIONAL_USERS_SELF_PROVISIONER` with a value of `N`
+        ```bash
+        export ADDITIONAL_USERS_SELF_PROVISIONER=N
+        ```
+
+  - Once you have finished configuring the additional users, login to the cluster from the cli and run the `scripts/13-ocp-additional-users.sh` script.
+
+
+

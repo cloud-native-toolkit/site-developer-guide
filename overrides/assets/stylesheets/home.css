@@ -1,0 +1,120 @@
+.md-container {
+  background-color: #161616;
+}
+.home-hero {
+  max-width: 100%;
+  height: 45vh;
+  max-height: 560px;
+  width: 100%;
+  background: #161616;
+  position: relative;
+}
+
+.home-hero-image {
+  height: 45vh;
+  background-image: url(images/catalyst.svg);
+  background-position: center;
+  background-size: cover;
+}
+
+.home-hero-text {
+  bottom: 0;
+  position: absolute;
+}
+
+.home-hero-text h1 {
+  color: #fff;
+  background: none;
+  bottom: 0;
+  font-size: 3.6em;
+  padding-left: 20px;
+  margin-bottom: 10px
+}
+
+.home-description {
+  max-width: 100%;
+  width: 100%;
+  background: #030303;
+}
+.home-purpose {
+  max-width: 100%;
+  width: 100%;
+  background: #061f80;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  font-size: 1.6em;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  height: 100%;
+  font-family: IBM Plex Sans VF,Helvetica Neue,Arial,sans-serif;
+}
+
+.md-main__inner {
+  margin: 0;
+  max-width: 100%;
+}
+
+.md-main__inner .md-content__inner,
+.md-sidebar--primary:not([hidden]) ~ .md-content > .md-content__inner {
+  margin: 0;
+  padding: 0;
+}
+
+.md-main__inner .md-content__inner:before {
+  display: none;
+}
+
+@media screen and (min-width: 60em) {
+  .md-sidebar--secondary {
+    display: none;
+  }
+}
+
+
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    display: none;
+  }
+}
+
+.md-typeset img,
+.md-typeset svg {
+  max-width: initial;
+}
+
+section {
+  color: #fff;
+}
+body {
+  background: var(--md-primary-fg-color);
+  background: #5063d0;
+  background: #0071c7;
+  background: var(--home-color);
+}
+
+
+
+@media only screen and (max-width: 800px) {
+  .component-flex {
+    flex-wrap: wrap;
+  }
+}
+
+
+
+
+

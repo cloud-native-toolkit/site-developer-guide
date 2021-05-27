@@ -1,3 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-docker run -ti --rm -v "${PWD}:/site" --entrypoint "/bin/sh" quay.io/cloudnativetoolkit/mkdocs -c "mkdocs build -f /site/mkdocs.yml && linkchecker -f /site/linkcheckerrc --check-extern /site/public"
+set -x
+
+IMAGE=${1:-devguide-dev}
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd -P)
+ROOT_DIR=$(cd "${SCRIPT_DIR}/.."; pwd -P)
+
+docker build -t ${IMAGE} -f ${SCRIPT_DIR}/Dockerfile ${ROOT_DIR}
