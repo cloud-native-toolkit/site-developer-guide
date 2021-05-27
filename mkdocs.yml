@@ -26,7 +26,7 @@ theme:
       - navigation.tracking
 #      - navigation.tabs.sticky
 #      - navigation.top
-use_directory_urls: false
+use_directory_urls: true
 plugins:
   - search:
       lang: en

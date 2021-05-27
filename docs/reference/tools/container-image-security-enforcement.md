@@ -48,14 +48,14 @@ This will create a public and private key combination that can be used to sign a
 #### Saving the private key in a vault
 
 
-Once your key has been generated, the private key should be stored within a credentials vault, such as [Key Protect](../tools/key-protect.html) or [IBM HyperProtect Crypto Services](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-overview).
+Once your key has been generated, the private key should be stored within a credentials vault, such as [Key Protect](key-protect.md) or [IBM HyperProtect Crypto Services](https://cloud.ibm.com/docs/hs-crypto?topic=hs-crypto-overview).
 
-The private key should be placed in the vault as a base64 encoded string, which can be accessed by your [Tekton](../tools/tekton.html) pipeline during the image building task.
+The private key should be placed in the vault as a base64 encoded string, which can be accessed by your [Tekton](tekton.md) pipeline during the image building task.
 
 To place the private key in a vault
 
 ```shell
-ENCODED_PRIVATE_KEY=$(gpg --export-secret-key <KEY_FINGERPRINT> | base64) 
+ENCODED_PRIVATE_KEY=$(gpg --export-secret-key <KEY_FINGERPRINT> | base64)
 
 curl -X POST https://<region>.kms.cloud.ibm.com/api/v2/keys \
     -H 'authorization: Bearer <IAM_token>' \
@@ -83,7 +83,7 @@ Both [Key Protect](https://cloud.ibm.com/apidocs/key-protect) and [Hyper Protect
 
 #### Saving the public key
 
-The public key needs to be made available to the cluster for verifying container image signatures by either creating a secret within the cluster, or making the public key available through [Artifactory](../tools/artifactory.html).
+The public key needs to be made available to the cluster for verifying container image signatures by either creating a secret within the cluster, or making the public key available through [Artifactory](artifactory.md).
 
 Use the following commands to make the public key available for policy enforcement by creating a secret within the cluster:
 
