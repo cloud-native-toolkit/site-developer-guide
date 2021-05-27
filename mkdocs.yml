@@ -15,7 +15,6 @@ theme:
     palette:
       scheme: default
       primary: black
-      accent: blue
     font:
       text: IBM Plex Sans
       code: IBM Plex Mono
