@@ -10,8 +10,6 @@ IaC is also an essential DevOps practice, indispensable to a competitively paced
 
 Sai Vennam takes a closer look at IaC in the following video, “What is Infrastructure as Code?”:
 
-Click on image below to launch video:
-
-[!["What is Infrastructure as a Code"](http://img.youtube.com/vi/zWw2wuiKd5o/0.jpg)](https://youtu.be/zWw2wuiKd5o "What is Infrastructure as a Code"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/zWw2wuiKd5o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Source: [https://www.ibm.com/cloud/learn/infrastructure-as-code](https://www.ibm.com/cloud/learn/infrastructure-as-code)
