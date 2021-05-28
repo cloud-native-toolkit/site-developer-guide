@@ -125,3 +125,8 @@ width: 8rem;
 [data-md-color-primary=black] .md-header {
     background-color: #161616;
 }
+
+/* tabs border */
+.md-typeset .tabbed-set>label {
+    border-bottom: .1rem solid #4051b5;
+}
