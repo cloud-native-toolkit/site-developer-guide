@@ -2,9 +2,7 @@
 
 <!--- cSpell:ignore userx -->
 
-Click on image below to launch video:
-
-[!["Workshop: CI Pipelines with Tekton"](http://img.youtube.com/vi/V-BFLaPdoPo/0.jpg)](https://youtu.be/V-BFLaPdoPo "Workshop: CI Pipelines with Tekton"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/V-BFLaPdoPo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)
