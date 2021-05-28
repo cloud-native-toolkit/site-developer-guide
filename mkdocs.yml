@@ -67,6 +67,7 @@ markdown_extensions:
   - pymdownx.details
 extra_css:
     - css/extra.css
+    - css/toolkit-code.css
 extra:
   generator: false
 copyright: Copyright © 2021 Cloud-Native Toolkit
