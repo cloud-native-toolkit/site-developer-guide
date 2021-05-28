@@ -4,9 +4,7 @@
 
 Provides the steps to install the Cloud-Native Toolkit and setting up the  Cloud-Native Toolkit Workshop hands on labs.
 
-Click on image below to launch video:
-
-[!["Workshop: Setup Environment"](http://img.youtube.com/vi/aFSt5cW9TlI/0.jpg)](https://youtu.be/aFSt5cW9TlI "Workshop: Setup Environment"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/aFSt5cW9TlI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## 1. Create OpenShift Cluster
 
