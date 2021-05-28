@@ -4,9 +4,7 @@
 
 This short video introduces the concepts of DevOps with Red Hat OpenShift:
 
-Click the image below to launch the video
-
-[!["DevOps concepts with Red Hat OpenShift`"](http://img.youtube.com/vi/GOPWObjFTsI/0.jpg)](https://youtu.be/GOPWObjFTsI "DevOps concepts with Red Hat OpenShift"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/GOPWObjFTsI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Continuous Delivery
 

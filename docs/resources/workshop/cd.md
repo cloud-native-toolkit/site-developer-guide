@@ -2,9 +2,7 @@
 
 Promote an Application using CD with GitOps and ArgoCD
 
-Click on image below to launch video:
-
-[!["Workshop: CD/GitOps with ArgoCD"](http://img.youtube.com/vi/Fr85xbcM_es/0.jpg)](https://youtu.be/Fr85xbcM_es "Workshop: CD/GitOps with ArgoCD"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/Fr85xbcM_es" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 1. Prerequisites
     - Complete lab [Deploy an Application using CI Pipelines with Tekton](ci.md).

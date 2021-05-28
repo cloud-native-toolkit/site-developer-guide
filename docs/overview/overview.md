@@ -5,7 +5,7 @@
 Cloud-Native Toolkit is an open-source collection of assets that provide an environment for developing
 cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. It embodies IBM Garage Method principles and practices for consistently developed applications, incorporating best practices that increase developer velocity for efficient delivery of business value.
 
-<iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/u3PTRqkd94k?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/u3PTRqkd94k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Cloud-Native Toolkit objectives
 
