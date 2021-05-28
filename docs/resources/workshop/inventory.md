@@ -2,9 +2,7 @@
 
 Deploy a 3 tier Microservice using React, Node.js, and Java
 
-Click on image below to launch video:
-
-[!["Workshop: Microservice Inventory App"](http://img.youtube.com/vi/gvuJi7qEZck/0.jpg)](https://youtu.be/gvuJi7qEZck "Workshop: Microservice Inventory App"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/gvuJi7qEZck" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)

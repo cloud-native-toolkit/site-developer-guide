@@ -4,9 +4,7 @@
 
 This short video introduces the concepts of DevOps with Red Hat OpenShift:
 
-Click the image below to launch the video
-
-[!["DevOps concepts with Red Hat OpenShift`"](http://img.youtube.com/vi/GOPWObjFTsI/0.jpg)](https://youtu.be/GOPWObjFTsI "DevOps concepts with Red Hat OpenShift"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/GOPWObjFTsI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Continuous Delivery
 
@@ -60,9 +58,9 @@ For the full end-to-end build and delivery process, both the CI and CD pipelines
     !!!Note
         It is also possible to trigger a process when a new image is available in the image registry or a new artifact is available to the artifact management system.
 
-        In this case, the CI process could be split into two parts: 
-        
-            1. create the container image and artifacts, and 
+        In this case, the CI process could be split into two parts:
+
+            1. create the container image and artifacts, and
             2. update the GitOps repo with the available artifacts.
 
 4. Changes to the GitOps repository trigger the CD pipeline to run

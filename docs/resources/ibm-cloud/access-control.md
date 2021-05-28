@@ -14,9 +14,7 @@ This video presentation describes the IAM concepts, shows a demonstration, and i
 - 26:00 -- Demonstration
 - 46:00 -- Q&A
 
-Click the image below to launch the video
-
-[!["IBM Cloud Resources Groups"](http://img.youtube.com/vi/eayMGvkLZmI/0.jpg)](https://youtu.be/eayMGvkLZmI "IBM Cloud Resources Groups"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/eayMGvkLZmI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 This article explains the concepts described in the video. You can access the presentation in the [Office Hours](https://ibm.box.com/v/Office-Hours) folder in Box. The scripts described in the [reference section](../../reference/iteration-zero/terraform.md){: target=_blank}.
 
@@ -202,6 +200,4 @@ This video presentation shows how to perform this process:
 - 13:16 -- Configure Account
 - 27:44 -- Demo the access groups
 
-Click the image below to launch the video
-
-[!["Configure an IBM Cloud account using IAM"](http://img.youtube.com/vi/EF-gN0WRhE8/0.jpg)](https://youtu.be/EF-gN0WRhE8 "Configure an IBM Cloud account using IAM"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/EF-gN0WRhE8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

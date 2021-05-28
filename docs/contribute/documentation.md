@@ -121,29 +121,18 @@ External links can also use attribute lists to control behaviors, such as open i
 [MkDocs](http://mkdocs.org){: target="_blank" .external }
 ```
 
+!!!info
+    You can use `{: target=_blank}` to create clickable images that launch to another site: `[![Image description](Image URL)](target URL "hover text"){: target=_blank}`
+
 #### YouTube videos
 
-It is not possible to embed a YouTube video and have it play in place using pure markdown.  You can use HTML to embed a video:
+It is possible to embed a YouTube video and have it play in place using pure markdown.  You can use HTML to embed a video:
 
 ```html
-<iframe width="560" height="315" src="https://www.youtube.com/embed/u3PTRqkd94k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/V-BFLaPdoPo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ```
 
-but you can use a link that will open the video in a new browser tab using pure markdown:
 
-```markdown
-[![alt-content](img URL)](video URL "video title"){: target="_blank"}
-```
-
-where:
-
-- alt-content is the content used if the image cannot be displayed by the browser
-- img URL is the URL for the thumbnail image for the video.  For YouTube this is usually `http://img.youtube.com/vi/<video ID>/0.jpg`
-- video URL is the URL used to launch the video in a new tab (this can be found by opening the video on YouTube and capturing the URL from the browser address bar - this also provides the video ID to be used in the image). It typically looks like `https://youtu.be/u3PTRqkd94k` or `https://www.youtube.com/watch?v=u3PTRqkd94k`
-- video title is a string that is displayed to the viewer when they hover over the video image
-
-!!!info
-    You can also use the same technique to create clickable images that launch to another site: `[![Image description](Image URL)](target URL "hover text"){: target=_blank}`
 
 ### Tabs
 
@@ -278,15 +267,15 @@ To use inline you simply enclose the text using a single back quote **\`** chara
 
 When you want to include a block of code you use a *fence*, which is 3 back quote character at the start and end of the block.  After the opening quotes you should also specify the content type contained in the block.
 
-**\`\`\` shell**  
-**oc get pods**  
-**\`\`\`**  
+**\`\`\` shell**
+**oc get pods**
+**\`\`\`**
 
 which will produce:
 
-``` shell  
-oc get pods  
-```  
+``` shell
+oc get pods
+```
 
 Notice that the block automatically gets the *copy to clipboard* link to allow easy copy and paste.
 

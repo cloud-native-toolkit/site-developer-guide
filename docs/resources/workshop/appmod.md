@@ -2,9 +2,7 @@
 
 <!--- cSpell:ignore wfish rbarcia appmod -->
 
-Click on image below to launch video:
-
-[!["Workshop: App Modernization"](http://img.youtube.com/vi/ss9joPm2M1U/0.jpg)](https://youtu.be/ss9joPm2M1U "Workshop: App Modernization"){: target=_blank}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/ss9joPm2M1U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 This section will cover:
 
