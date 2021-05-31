@@ -130,3 +130,8 @@ width: 8rem;
 .md-typeset .tabbed-set>label {
     border-bottom: .1rem solid #4051b5;
 }
+
+/* headings */
+.md-typeset h1, .md-typeset h2 {
+    font-weight: 500;
+}

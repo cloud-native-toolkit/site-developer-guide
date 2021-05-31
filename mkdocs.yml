@@ -39,22 +39,59 @@ plugins:
         'learn': 'learning/fast-start.md'
         'learning': 'learning/fast-start.md'
         'workshop': 'resources/workshop/workshop.md'
-        'resources/workshop': 'resources/workshop/workshop.md'
         'workshop/setup': 'resources/workshop/setup.md'
         'workshop/terminal': 'resources/workshop/terminal.md'
         'workshop/ci': 'resources/workshop/ci.md'
+        'workshop/cd': 'workshop/cd.md'
         'workshop/inventory': 'resources/workshop/cd.md'
         'workshop/appmod': 'resources/workshop/appmod.md'
         'workshop/ai': 'resources/workshop/ai.md'
-        'learning/gitops-int/gitops-with-cloud-native-toolkit': 'adopting/use-cases/gitops/gitops-toolkit.md'
-        'learning/gitops-int/gitops-with-app-connect': 'adopting/use-cases/gitops/gitops-ace.md'
-        'tools/argocd': 'learning/fast-cd.md'
+        'getting-started': 'learning/fast-start.md'
+        'getting-started/prereqs': 'learning/dev-setup.md'
+        'getting-started/cli': 'reference/cli.md'
+        'getting-started/icc': 'resources/ibm-cloud/icc.md'
         'getting-started/dev-env-setup': 'learning/dev-setup.md'
-        'getting-started-day-1/deploy-app': 'learning/fast-ci.md'
-        'learning/ace-pipeline': 'adopting/use-cases/ace-pipeline/ace-pipeline.md'
+        'getting-started/dev-ops': 'adopting/best-practices/devops.md'
         'whats-new': 'overview/whats-new.md'
         'overview': 'overview/overview.md'
-        'getting-started/cli': 'reference/cli.md'
+        'getting-started-day-0': 'resources/ibm-cloud/ibm-cloud-roles.md'
+        'getting-started-day-0/prepare-account': 'adopting/setup/ibmcloud-setup.md'
+        'getting-started-day-0/provision-cluster/ibm-cloud-vpc': 'adopting/setup/ibmcloud-tile-cluster.md'
+        'getting-started-day-0/install-toolkit/quick-install': 'setup/fast-start.md'
+        'getting-started-day-0/post-installation': 'adopting/admin/cluster-config.md'
+        'getting-started-day-1': 'learning/in-depth.md'
+        'getting-started-day-1/deploy-app': 'learning/fast-ci.md'
+        'getting-started-day-1/dashboard': 'reference/dashboard.md'
+        'getting-started-day-1/build-operator': 'adopting/use-cases/operator/operator.md'
+        'getting-started-day-2': 'learning/devops.md'
+        'tools': 'overview/overview.md'
+        'tools/tekton': 'reference/tools/tekton.md'
+        'tools/jenkins': 'reference/tools/jenkins.md'
+        'tools/ibm-cloud-container-registry': 'reference/tools/ibm-cloud-container-registry.md'
+        'tools/artifactory': 'tools/artifactory.md'
+        'tools/sonarqube': 'tools/sonar-qube.md'
+        'tools/contract-testing-with-pact': 'tools/pact.d'
+        'tools/logdna': 'adopting/customize/config-dashboard/dashboard.md'
+        'tools/sysdig': 'adopting/customize/config-dashboard/dashboard.md'
+        'tools/argocd': 'learning/fast-cd.md'
+        'tools/secret-management-with-key-protect': 'reference/tools/key-protect.md'
+        'admin/install-crw': 'adopting/setup/install-crc.md'
+        'admin/config-dashboard': 'adopting/customize/config-dashboard/dashboard.md'
+        'admin/artifactory-setup': 'adopting/admin/artifactory-setup.md'
+        'admin/sysdig-setup': 'adopting/admin/sysdig-setup.md'
+        'admin/terraform': 'reference/iteration-zero/iteration-zero.md'
+        'admin/cluster-configuration': 'adopting/admin/cluster-config.md'
+        'admin/destroying': 'reference/iteration-zero/iteration-zero.md'
+        'starterkits': 'reference/starter-kit/starter-kit.md'
+        'starterkits/gitrepos': 'reference/starter-kit/starter-kits.md'
+        'learning/foundational': 'https://cloudnative101.dev'
+        'learning/ace-pipeline': 'adopting/use-cases/ace-pipeline/ace-pipeline.md'
+        'learning/gitops-int/gitops-with-cloud-native-toolkit': 'learning/gitops-int/gitops-with-cloud-native-toolkit'
+        'toolkit-resources/resource-mgmt': 'adopting/use-cases/gitops/gitops-toolkit.md'
+        'learning/gitops-int/gitops-with-app-connect': 'adopting/use-cases/gitops/gitops-ace.md'
+        'contributing': 'contribute/contribute.md'
+
+
 markdown_extensions:
   - attr_list
   - admonition
@@ -138,9 +175,8 @@ nav:
       - Add a new use case: adopting/use-cases/add-use-case.md
       - Build an Operator: adopting/use-cases/operator/operator.md
       - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
-      - GitOps:
-        - Toolkit Install: adopting/use-cases/gitops/gitops-toolkit.md
-        - App Connect Install: adopting/use-cases/gitops/gitops-ace.md
+      - GitOps with Toolkit: adopting/use-cases/gitops/gitops-toolkit.md
+      - GitOps with App Connect: adopting/use-cases/gitops/gitops-ace.md
   - Reference:
     - Reference: reference/reference.md
     - Command Line Tool: reference/cli.md
