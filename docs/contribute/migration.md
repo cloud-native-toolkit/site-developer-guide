@@ -4,7 +4,7 @@ This page is a place holder to send users when a link is removed, either because
 
 To help the migration we need it to create redirects for some use cases:
 - For pages that remain then a redirect to the new location url
-- For pages that got removed a redirect to a page explaining what happened with the content. It could be the content got spread into other pages or the page was not revelant anymore.
+- For pages that got removed a redirect to a page explaining what happened with the content. It could be the content got spread into other pages or the page was not relevant anymore.
 
 
 ## Updates
@@ -13,10 +13,10 @@ To help the migration we need it to create redirects for some use cases:
 
 Previous version of the site is located [here](https://cloud-native-toolkit.github.io/dev-guide)
 
-- Redirect = accesing the old link will be redirect to the new location with the same content
-- Removed  = accesing thoe old link will be forwarded to this page
+- Redirect =  accessing the old link will be redirect to the new location with the same content
+- Removed  =  accessing the old link will be forwarded to this page
 
-| Status   | Prvevious Location                                                                                                                                    | Current Location  |
+| Status   | Previous Location                                                                                                                                    | Current Location  |
 | ------   | ----------------------------------------------------------------------------------------------------------------------------------------------------  | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Redirect | [Overview](https://cloud-native-toolkit.github.io/dev-guide/overview)                                                                                 | [Overview/What is the Cloud Native](https://cloudnativetoolkit.dev/overview/overview/)                                                                                                    |
 | Redirect | [What's New](https://cloud-native-toolkit.github.io/dev-guide/whats-new)                                                                              | [Overview/What's New](https://cloudnativetoolkit.dev/overview/whats-new/)                                                                                                                 |
@@ -78,7 +78,7 @@ Previous version of the site is located [here](https://cloud-native-toolkit.gith
 | Removed  | [Learning Journey/Cloud-Native Deployment](https://cloud-native-toolkit.github.io/dev-guide/learning/cloudnative-deployment)                          | --                                                                                                                                                                                        |
 | Removed  | [Learning Journey/OpenShift Learning](https://cloud-native-toolkit.github.io/dev-guide/learning/redhat-learning)                                      | --                                                                                                                                                                                        |
 | Removed  | [Learning Journey/Garage Method Development](https://cloud-native-toolkit.github.io/dev-guide/learning/garage-development)                            | --                                                                                                                                                                                        |
-| Redirect | [Learning Journey/App Connect Pipeline](https://cloud-native-toolkit.github.io/dev-guide/learning/ace-pipeline)                                       | [Adopting the Toolkit/Use Cases/App Connect RESR API workflow](https://cloudnativetoolkit.dev/adopting/use-cases/ace-pipeline/ace-pipeline/)                                              |
+| Redirect | [Learning Journey/App Connect Pipeline](https://cloud-native-toolkit.github.io/dev-guide/learning/ace-pipeline)                                       | [Adopting the Toolkit/Use Cases/App Connect REST API workflow](https://cloudnativetoolkit.dev/adopting/use-cases/ace-pipeline/ace-pipeline/)                                              |
 | Redirect | [Learning Journey/GitOps and Integration](https://cloud-native-toolkit.github.io/dev-guide/learning/gitops-int/gitops-with-cloud-native-toolkit)      | [Adopting the Toolkit/Use Cases/GitOps with Toolkit](https://cloud-native-toolkit.github.io/adopting/use-cases/gitops/gitops-toolkit)                               |
 | Removed  | [Resources/Videos](https://cloud-native-toolkit.github.io/dev-guide/toolkit-resources/videos)                                                         | [Adopting the Toolkit/Use Cases/GitOps with App Connect](https://cloudnativetoolkit.dev/adopting/use-cases/gitops/gitops-ace/)                                                            |
 | Removed  | [Resources/Office Hours](https://cloud-native-toolkit.github.io/dev-guide/toolkit-resources/office-hours)                                             | --                                                                                                                                                                                        |

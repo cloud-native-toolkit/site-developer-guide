@@ -84,7 +84,9 @@
         "toolkit's",
         "mynamespace",
         "autoplay",
-        "allowfullscreen"
+        "allowfullscreen",
+        "mgmt",
+        "Repos"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.
