@@ -154,7 +154,7 @@ More information about policies and enforcement can be found in the [Portieris P
 
 ## Tekton tasks
 
-A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy is available at https://github.com/IBM/ibm-garage-tekton-tasks/blob/image-signing/utilities/setup-image-signing-keys.sh
+A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy is available at [IBM/ibm-garage-tekton-tasks/setup-image-signing-keys.sh](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/utilities/setup-image-signing-keys.sh)
 
 The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
 
