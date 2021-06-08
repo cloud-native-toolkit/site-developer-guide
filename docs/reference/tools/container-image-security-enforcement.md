@@ -130,7 +130,7 @@ skopeo --sign-by <KEY_FINGERPRINT> copy ${IMAGE_FROM_CREDS} docker://${IMAGE_FRO
 
 !!!note
     The default configuration when signing an image using the `skopeo` or `buildah` commands is that signatures remain on the local file system. This includes when images are signed inside of pipelines on OpenShift clusters. If you are copying or pushing signed images into a container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server. 
-    
+
     This configuration is saved in `/etc/containers/registries.d/default.yaml`. To have your signatures pushed to registy along with your image you will need to modify this configuration, but the most straightforward solution is to remove it altogether using `rm /etc/containers/registries.d/default.yaml`.
 
 
@@ -159,8 +159,6 @@ spec:
 
 This policy also uses the `mutateImage:false` configuration so that the GitOps operations using ArgoCD do not enter an infinite loop due to mutated image paths.    
 More information about [policies and enforcement](https://github.com/IBM/portieris/blob/master/POLICIES.md) and [image mutation](https://github.com/IBM/portieris#image-mutation-option) can be found in the Portieris Policies documentation.
-
-More information about policies and enforcement can be found in the [Portieris Policies documentation](https://github.com/IBM/portieris/blob/master/POLICIES.md)
 
 
 ## Tekton tasks
