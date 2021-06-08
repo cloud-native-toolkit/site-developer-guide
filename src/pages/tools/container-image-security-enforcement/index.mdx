@@ -136,13 +136,18 @@ If the image is being signed at copy-time, it can be specified as a parameter to
 skopeo --sign-by <KEY_FINGERPRINT> copy ${IMAGE_FROM_CREDS} docker://${IMAGE_FROM} docker://${IMAGE_TO}
 ```
 
+<InlineNotification kind="warning">
+The default configuration when signing an image using the `skopeo` command is that signatures remain on the local file system. This includes when images are signed inside of pipelines on OpenShift clusters. If you are copying or pushing signed images into a container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server. 
+
+This configuration is saved in `/etc/containers/registries.d/default.yaml`. To have your signatures pushed to registy along with your image you will need to modify this configuration, but the most straightforward solution is to remove it altogether using `rm /etc/containers/registries.d/default.yaml`.
+</InlineNotification>
 
 
 ### Create image policies
 
-Finally, image policies need to be created to instruct Portieris which keys should be used to sign images from specific container registries.  These policies can be applied globally to the entire cluster using a `ClusterImagePolicy`, or to a specific namespace using an `ImagePolicy`.  In those policies, rules can be defined for enforcement for specific container registries/namespaces, or globally to all container registries used by the cluster.
+Finally, image policies need to be created to instruct Portieris which keys should be used to sign images from specific container registries.  These policies can be applied globally to the entire cluster using a `ClusterImagePolicy`, or to a specific namespace using an `ImagePolicy` resource.  In those policies, rules can be defined for enforcement for specific container registries/namespaces, or globally to all container registries used by the cluster.
 
-For example, the following `ClusterImagePolicy` enforces a policy that all images in the container registry `icr.io/mynamespace/*` must be signed by the public key that was earlier created and placed into the `image-signing-public-key` cluster secret.
+For example, the following `ClusterImagePolicy` enforces a policy that all images in the container registry `private.us.icr.io/mynamespace/*` must be signed by the public key that was earlier created and placed into the `image-signing-public-key` cluster secret.  This policy should be updated for your own registry namespace and images.
 
 ```
 apiVersion: portieris.cloud.ibm.com/v1
@@ -151,15 +156,17 @@ metadata:
   name: mynamespace-cluster-image-policy
 spec:
    repositories:
-    - name: "icr.io/mynamespace/*"
+    - name: "private.us.icr.io/mynamespace/*"
       policy:
+        mutateImage: false
         simple:
           requirements:
           - type: "signedBy"
             keySecret: image-signing-public-key
 ```
 
-More information about policies and enforcement can be found in the [Portieris Policies documentation](https://github.com/IBM/portieris/blob/master/POLICIES.md)
+This policy also uses the `mutateImage:false` configuration so that the GitOps operations using ArgoCD do not enter an infinite loop due to mutated image paths.    
+More information about [policies and enforcement](https://github.com/IBM/portieris/blob/master/POLICIES.md) and [image mutation](https://github.com/IBM/portieris#image-mutation-option) can be found in the Portieris Policies documentation.
 
 
 ## Tekton tasks
