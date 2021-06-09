@@ -129,9 +129,8 @@ skopeo --sign-by <KEY_FINGERPRINT> copy ${IMAGE_FROM_CREDS} docker://${IMAGE_FRO
 ```
 
 !!!note
-    The default configuration when signing an image using the `skopeo` or `buildah` commands is that signatures remain on the local file system. This includes when images are signed inside of pipelines on OpenShift clusters. If you are copying or pushing signed images into a container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server. 
+    On Linux® and macOS: The default configuration for the signing tools is to store the signatures locally. Storing signatures locally can lead to signature verification failure because the signature is not in the registry. To fix this problem, you can modify or delete the configuration file. On Linux®, the configuration is saved in /etc/containers/registries.d/default.yaml. On macOS, the configuration file is saved in /usr/local/etc/containers/registries.d/default.yaml.  If you sign images in your container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server and you need to modify the tools configuration. 
 
-    This configuration is saved in `/etc/containers/registries.d/default.yaml`. To have your signatures pushed to registy along with your image you will need to modify this configuration, but the most straightforward solution is to remove it altogether using `rm /etc/containers/registries.d/default.yaml`.
 
 
 
