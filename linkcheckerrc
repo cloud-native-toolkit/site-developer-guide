@@ -37,4 +37,4 @@ nofollow=
 
 [checking]
 robotstxt=0
-
+localwebroot=./
