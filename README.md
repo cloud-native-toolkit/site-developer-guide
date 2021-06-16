@@ -25,7 +25,7 @@ the approved logos and the requirements for their use.
 
 ## Contributing to Docs
 
-To update and manage the Developer Guide follow these steps here https://cloudnativetoolkit.dev/contribute/documentation.html#setting-up-a-documentation-environment
+To update and manage the Developer Guide, follow these steps in [Updating the Developer Guide](https://cloudnativetoolkit.dev/contribute/documentation/).
 
 ### Publish Content
 
