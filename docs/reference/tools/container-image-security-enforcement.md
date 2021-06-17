@@ -23,6 +23,7 @@ Portieris is a Kubernetes admission controller for the enforcement of image secu
 Portieris uses [RedHat Signatures](https://www.redhat.com/en/blog/container-image-signing) to sign container images.
 
 To take advantage of Portieris and policy enforcement, you need 3 things:
+
 1. A GnuPG key to sign container images, stored in a vault
 2. A process to sign container images using the key from the credentials vault
 3. An `ImagePolicy` or `ClusterImagePolicy` that can instruct Portieris to apply enforcement rules
@@ -33,7 +34,7 @@ The following steps are based on [signing images for trusted content](https://cl
 
 A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy (as described below) is available at https://github.com/IBM/ibm-garage-tekton-tasks/blob/image-signing/utilities/setup-image-signing-keys.sh
 
-The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
+The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 ### Create an Image Signing Key
 
@@ -164,12 +165,13 @@ More information about [policies and enforcement](https://github.com/IBM/portier
 
 A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy is available at [IBM/ibm-garage-tekton-tasks/setup-image-signing-keys.sh](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/utilities/setup-image-signing-keys.sh)
 
-The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
+The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 
 ## Additional Information
 
 Additional information on trusted content and policy enforcement can be found at:
+
 - [Signing images for trusted content](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_trustedcontent)
 - [Gnu Privacy Guard (GPG)](https://gnupg.org/)
 - [RedHat Signatures](https://www.redhat.com/en/blog/container-image-signing)
