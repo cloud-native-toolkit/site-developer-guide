@@ -34,7 +34,7 @@ The following steps are based on [signing images for trusted content](https://cl
 
 A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy (as described below) is available at https://github.com/IBM/ibm-garage-tekton-tasks/blob/image-signing/utilities/setup-image-signing-keys.sh
 
-The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
+The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 ### Create an Image Signing Key
 
