@@ -23,6 +23,7 @@ Portieris is a Kubernetes admission controller for the enforcement of image secu
 Portieris uses [RedHat Signatures](https://www.redhat.com/en/blog/container-image-signing) to sign container images.
 
 To take advantage of Portieris and policy enforcement, you need 3 things:
+
 1. A GnuPG key to sign container images, stored in a vault
 2. A process to sign container images using the key from the credentials vault
 3. An `ImagePolicy` or `ClusterImagePolicy` that can instruct Portieris to apply enforcement rules
@@ -33,7 +34,7 @@ The following steps are based on [signing images for trusted content](https://cl
 
 A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy (as described below) is available at https://github.com/IBM/ibm-garage-tekton-tasks/blob/image-signing/utilities/setup-image-signing-keys.sh
 
-The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
+The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 ### Create an Image Signing Key
 
@@ -128,11 +129,17 @@ If the image is being signed at copy-time, it can be specified as a parameter to
 skopeo --sign-by <KEY_FINGERPRINT> copy ${IMAGE_FROM_CREDS} docker://${IMAGE_FROM} docker://${IMAGE_TO}
 ```
 
+!!!note
+    On Linux® and macOS: The default configuration for the signing tools is to store the signatures locally. Storing signatures locally can lead to signature verification failure because the signature is not in the registry. To fix this problem, you can modify or delete the configuration file. On Linux®, the configuration is saved in /etc/containers/registries.d/default.yaml. On macOS, the configuration file is saved in /usr/local/etc/containers/registries.d/default.yaml.  If you sign images in your container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server and you need to modify the tools configuration. 
+
+
+
+
 ### Create image policies
 
-Finally, image policies need to be created to instruct Portieris which keys should be used to sign images from specific container registries.  These policies can be applied globally to the entire cluster using a `ClusterImagePolicy`, or to a specific namespace using an `ImagePolicy`.  In those policies, rules can be defined for enforcement for specific container registries/namespaces, or globally to all container registries used by the cluster.
+Finally, image policies need to be created to instruct Portieris which keys should be used to sign images from specific container registries.  These policies can be applied globally to the entire cluster using a `ClusterImagePolicy`, or to a specific namespace using an `ImagePolicy` resource.  In those policies, rules can be defined for enforcement for specific container registries/namespaces, or globally to all container registries used by the cluster.
 
-For example, the following `ClusterImagePolicy` enforces a policy that all images in the container registry `icr.io/mynamespace/*` must be signed by the public key that was earlier created and placed into the `image-signing-public-key` cluster secret.
+For example, the following `ClusterImagePolicy` enforces a policy that all images in the container registry `private.us.icr.io/mynamespace/*` must be signed by the public key that was earlier created and placed into the `image-signing-public-key` cluster secret.  This policy should be updated for your own registry namespace and images.
 
 ```yaml
 apiVersion: portieris.cloud.ibm.com/v1
@@ -141,27 +148,30 @@ metadata:
   name: mynamespace-cluster-image-policy
 spec:
    repositories:
-    - name: "icr.io/mynamespace/*"
+    - name: "private.us.icr.io/mynamespace/*"
       policy:
+        mutateImage: false
         simple:
           requirements:
           - type: "signedBy"
             keySecret: image-signing-public-key
 ```
 
-More information about policies and enforcement can be found in the [Portieris Policies documentation](https://github.com/IBM/portieris/blob/master/POLICIES.md)
+This policy also uses the `mutateImage:false` configuration so that the GitOps operations using ArgoCD do not enter an infinite loop due to mutated image paths.    
+More information about [policies and enforcement](https://github.com/IBM/portieris/blob/master/POLICIES.md) and [image mutation](https://github.com/IBM/portieris#image-mutation-option) can be found in the Portieris Policies documentation.
 
 
 ## Tekton tasks
 
 A script that demonstrates how to easily create a GPG key, publish it to a vault, setup cluster secrets, and setup a default ClusterImagePolicy is available at [IBM/ibm-garage-tekton-tasks/setup-image-signing-keys.sh](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/utilities/setup-image-signing-keys.sh)
 
-The [toolkit's 2-build-tag-push.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/2-build-tag-push.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the builder's push phase.
+The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 
 ## Additional Information
 
 Additional information on trusted content and policy enforcement can be found at:
+
 - [Signing images for trusted content](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_trustedcontent)
 - [Gnu Privacy Guard (GPG)](https://gnupg.org/)
 - [RedHat Signatures](https://www.redhat.com/en/blog/container-image-signing)
