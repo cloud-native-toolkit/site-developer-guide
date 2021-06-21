@@ -168,6 +168,12 @@ A script that demonstrates how to easily create a GPG key, publish it to a vault
 The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-tasks/blob/main/tasks/8-image-release.yaml) tekton task has also been updated to accept the output of this script and enforce signatures during the image release phase.
 
 
+## Impact to Kubernetes yaml or helm charts
+
+The Portieris image signing tools require an explicit specifcation which image pull secrets should be used to retrieve the signature/trust data.  You deployment must specify an `imagePullSecret` value, or else the trust/verification will fail.
+
+
+
 ## Additional Information
 
 Additional information on trusted content and policy enforcement can be found at:
