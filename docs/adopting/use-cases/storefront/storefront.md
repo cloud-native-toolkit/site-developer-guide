@@ -40,7 +40,7 @@ These are several components of this architecture.
 
 ### Deploy the Storefront using Cloud native toolkit
 
-Follow the below guide for instructions on how to deploy all the microservices of Storefront onto Openshift using Cloud native toolkit.
+Follow the below guide for instructions on how to deploy all the microservices of StoreFront onto Openshift using Cloud native toolkit.
 
 [Cloud native toolkit - StoreFront Quarkus version](https://cloudnativereference.dev/deployments/cntk-quarkus)
 
