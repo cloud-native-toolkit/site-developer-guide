@@ -20,7 +20,7 @@ Get started with deploying a simple retail application, Storefront using Cloud N
 
 The logical architecture for this reference implementation is shown in the picture below.
 
-![Architecture](./storefront.png)
+![Architecture](images/storefront.png)
 
 This application has a web interface that relies on separate BFF (Backend for Frontend) services to interact with the backend data.
 
@@ -36,12 +36,12 @@ These are several components of this architecture.
   - The [Customer service](https://cloudnativereference.dev/related-repositories/customer) stores and retrieves Customer data from a searchable JSON datasource using [CouchDB](http://couchdb.apache.org/).
   - The [Orders Service](https://cloudnativereference.dev/related-repositories/orders) uses an instance of [MariaDB](https://mariadb.org/) to store order information.
 
-### Deploy the storefront using cloud native toolkit
+### Deploy the Storefront using Cloud native toolkit
 
-Follow the below guide for instructions on how to deploy all the microservices of StoreFront onto Openshift using Cloud native toolkit.
+Follow the below guide for instructions on how to deploy all the microservices of Storefront onto Openshift using Cloud native toolkit.
 
 [Cloud native toolkit - StoreFront Quarkus version](https://cloudnativereference.dev/deployments/cntk-quarkus)
 
 To get an idea, here is a view of a completed and successful pipelinerun for all the microservices.
 
-![Pipeline run](./sf_pipelines.png)
+![Pipeline run](images/sf_pipelines.png)
