@@ -173,7 +173,6 @@ The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-ta
 The Portieris image signing tools require an explicit specification which image pull secrets should be used to retrieve the signature/trust data.  You deployment must specify an `imagePullSecret` value, or else the trust/verification will fail.
 
 
-
 ## Additional Information
 
 Additional information on trusted content and policy enforcement can be found at:
