@@ -31,9 +31,9 @@ These are several components of this architecture.
 - The BFFs invokes another layer of reusable Java Microservices. The reusable microservices are written in Java using [Quarkus](https://quarkus.io/) framework.
 - The Java Microservices are as follows:
   - The [Inventory Service](https://cloudnativereference.dev/related-repositories/inventory) uses an instance of [MySQL](https://www.mysql.com/) to store the inventory items.
-  - The [Catalog service](https://cloudnativereference.dev/related-repositories/catalog) retrieves items from a searchable JSON datasource using [ElasticSearch](https://www.elastic.co/).
+  - The [Catalog service](https://cloudnativereference.dev/related-repositories/catalog) retrieves items from a searchable JSON data source using [ElasticSearch](https://www.elastic.co/).
   - [Keycloak](https://cloudnativereference.dev/related-repositories/keycloak) delegates authentication and authorization.
-  - The [Customer service](https://cloudnativereference.dev/related-repositories/customer) stores and retrieves Customer data from a searchable JSON datasource using [CouchDB](http://couchdb.apache.org/).
+  - The [Customer service](https://cloudnativereference.dev/related-repositories/customer) stores and retrieves Customer data from a searchable JSON data source using [CouchDB](http://couchdb.apache.org/).
   - The [Orders Service](https://cloudnativereference.dev/related-repositories/orders) uses an instance of [MariaDB](https://mariadb.org/) to store order information.
 
 ### Deploy the Storefront using Cloud native toolkit
@@ -42,6 +42,6 @@ Follow the below guide for instructions on how to deploy all the microservices o
 
 [Cloud native toolkit - StoreFront Quarkus version](https://cloudnativereference.dev/deployments/cntk-quarkus)
 
-To get an idea, here is a view of a completed and successful pipelinerun for all the microservices.
+To get an idea, here is a view of a completed and successful pipeline runs for all the microservices.
 
 ![Pipeline run](images/sf_pipelines.png)
