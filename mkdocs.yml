@@ -177,6 +177,7 @@ nav:
       - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
       - GitOps with Toolkit: adopting/use-cases/gitops/gitops-toolkit.md
       - GitOps with App Connect: adopting/use-cases/gitops/gitops-ace.md
+      - Storefront - Cloud Native Exemplar: adopting/storefront/storefront.md
   - Reference:
     - Reference: reference/reference.md
     - Command Line Tool: reference/cli.md
