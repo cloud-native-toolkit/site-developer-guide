@@ -1,6 +1,6 @@
 # Storefront - Cloud Native Exemplar
 
-<!--- cSpell:ignore CICD cntk pipelinerun Omni Frontends -->
+<!--- cSpell:ignore CICD cntk pipelinerun Omni Frontends cloudnative -->
 
 Exemplar application for developers to understand the cloud native toolkit and use cases on Red Hat OpenShift.
 
