@@ -130,7 +130,7 @@ skopeo --sign-by <KEY_FINGERPRINT> copy ${IMAGE_FROM_CREDS} docker://${IMAGE_FRO
 ```
 
 !!!note
-    On Linux® and macOS: The default configuration for the signing tools is to store the signatures locally. Storing signatures locally can lead to signature verification failure because the signature is not in the registry. To fix this problem, you can modify or delete the configuration file. On Linux®, the configuration is saved in /etc/containers/registries.d/default.yaml. On macOS, the configuration file is saved in /usr/local/etc/containers/registries.d/default.yaml.  If you sign images in your container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server and you need to modify the tools configuration. 
+    On Linux® and macOS: The default configuration for the signing tools is to store the signatures locally. Storing signatures locally can lead to signature verification failure because the signature is not in the registry. To fix this problem, you can modify or delete the configuration file. On Linux®, the configuration is saved in /etc/containers/registries.d/default.yaml. On macOS, the configuration file is saved in /usr/local/etc/containers/registries.d/default.yaml.  If you sign images in your container registry, yet your deployments are failing with the message `policy denied the request: A signature was required, but no signature exists`, then the default configuration is likely saving your image signatures locally instead of pushing the signature to the registry API server and you need to modify the tools configuration.
 
 
 
@@ -170,7 +170,7 @@ The [toolkit's 8-image-release.yaml](https://github.com/IBM/ibm-garage-tekton-ta
 
 ## Impact to Kubernetes yaml or helm charts
 
-The Portieris image signing tools require an explicit specifcation which image pull secrets should be used to retrieve the signature/trust data.  You deployment must specify an `imagePullSecret` value, or else the trust/verification will fail.
+The Portieris image signing tools require an explicit specification which image pull secrets should be used to retrieve the signature/trust data.  You deployment must specify an `imagePullSecret` value, or else the trust/verification will fail.
 
 
 ## Additional Information
