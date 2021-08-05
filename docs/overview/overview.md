@@ -104,7 +104,7 @@ The diagram shows the components in the environment: the cluster, the deployment
     | InteliJ | IDE from [JetBrains](https://www.jetbrains.com/company/brand/) |
     | VSCode | Free IDE maintained by [Microsoft](https://code.visualstudio.com/) |
     | Jaeger | Open Source tool maintained by [Jaeger Community](https://www.jaegertracing.io/get-in-touch/) |
-    | ArgoCD | Open Source tool maintained by [ArgoCD Community](https://argoproj.github.io/projects/argo-cd/)|
+    | ArgoCD | Open Source tool maintained by [ArgoCD Community](https://argoproj.github.io/cd/)|
     | OpenShift and CodeReady | Workspaces are products from [Red Hat](https://developers.redhat.com/products/codeready-workspaces/overview) |
     | LogDNA | IBM Cloud service supplied by [LogDNA](https://logdna.com/)|
     | Sysdig | IBM Cloud service supplied by [Sysdig](https://sysdig.com/)|
