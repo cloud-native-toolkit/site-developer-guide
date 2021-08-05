@@ -204,7 +204,7 @@ The following is required before proceeding to the next section.
 
 1. The ArcoCD user id is `admin` and the password can be found in the `argocd-cluster-cluster` secret in the `openshift-gitops` project namespace. You can extract the secret with the command
     ```shell
-    oc extract secret/argocd-cluster-cluster --to=- -n openshift-gitopsoc extract secret/argocd-cluster-cluster --to=- -n openshift-gitops
+    oc extract secret/argocd-cluster-cluster --to=- -n openshift-gitops
     ```
 
 1. On the ArgoCD UI you can see the newly created bootstrap application.
