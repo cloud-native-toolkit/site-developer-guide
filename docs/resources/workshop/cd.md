@@ -28,7 +28,7 @@ Promote an Application using CD with GitOps and ArgoCD
     ```
 
 1. Verify Application is deployed in **QA**
-    - Get ArgoCD's `admin` password by running `oc extract secrets/openshift-gitops-cluster --keys=admin.password -n openshift-gitops --to=-`  
+    - Get ArgoCD's `admin` password by running `oc credentials`  
     - Select ArgoCD from the Console Link and login using `admin` and the password you just retrieved
     - Filter Applications by name `${TOOLKIT_PROJECT}-qa` (ie project01-qa)
     - Select the application `master-qa-${TOOLKIT_PROJECT}-app` (ie master-qa-project01-app)
@@ -74,7 +74,7 @@ Promote an Application using CD with GitOps and ArgoCD
     ```
 
 1. Verify Application is deployed in **STAGING**
-    - Get ArgoCD's `admin` password by running `oc extract secrets/openshift-gitops-cluster --keys=admin.password -n openshift-gitops --to=-`  
+    - Get ArgoCD's `admin` password by running `oc credentials`  
     - Select ArgoCD from the Console Link and login using `admin` and the password you just retrieved
     - Filter Applications by namespace `${TOOLKIT_PROJECT}-staging` (ie project01-staging)
     - It might take a couple minutes for the application to show up
