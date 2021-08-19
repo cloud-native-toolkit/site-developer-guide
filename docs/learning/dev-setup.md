@@ -93,8 +93,7 @@ The Cloud-Native Toolkit CLI needs to be installed in all development environmen
 To install the Cloud-Native Toolkit CLI run the following command:
 
 ```shell
-curl -sL shell.cloudnativetoolkit.dev | sh -
-source ~/.bashrc || source ~/.zshrc
+npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
 ```
 
 !!!Note
