@@ -87,7 +87,14 @@
         "allowfullscreen",
         "mgmt",
         "Repos",
-        "kustomization"
+        "kustomization", 
+        "Paks",
+        "Weaveworks", 
+        "CNCF", 
+        "clusterroles", 
+        "clusterrolebindings",
+        "machinesets",
+        "CICD"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.

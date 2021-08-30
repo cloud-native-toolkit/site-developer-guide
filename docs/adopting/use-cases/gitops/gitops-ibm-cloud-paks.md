@@ -12,7 +12,7 @@ Refer to the [https://github.com/cloud-native-toolkit/multi-tenancy-gitops](http
 ## GitOps Principles 
 With the ever growing adoption of GitOps, the [OpenGitOps](https://opengitops.dev/) project was started in 2021 to define a set of open-source standards and best practices.  These will help organizations adopt a standard and structured approach when implementing GitOps.  It is currently a [CNCF Sandbox project](https://www.cncf.io/sandbox-projects/).  
 
-The [GitOps Working Group](https://github.com/gitops-working-group/gitops-working-group) has released v0.1.0 of the [**GitOps Priniciples**](https://opengitops.dev/#principles):
+The [GitOps Working Group](https://github.com/gitops-working-group/gitops-working-group) has released v0.1.0 of the [**GitOps Principles**](https://opengitops.dev/#principles):
 
 1. **The principle of declarative desired state**: A system managed by GitOps must have its Desired State expressed declaratively as data in a format writable and readable by both humans and machines.
 2. **The principle of immutable desired state versions**: Desired State is stored in a way that supports versioning, immutability of versions, and retains a complete version history.
