@@ -86,9 +86,6 @@ plugins:
         'starterkits/gitrepos': 'reference/starter-kit/starter-kits.md'
         'learning/foundational': 'https://cloudnative101.dev'
         'learning/ace-pipeline': 'adopting/use-cases/ace-pipeline/ace-pipeline.md'
-        'learning/gitops-int/gitops-with-cloud-native-toolkit': 'learning/gitops-int/gitops-with-cloud-native-toolkit'
-        'toolkit-resources/resource-mgmt': 'adopting/use-cases/gitops/gitops-toolkit.md'
-        'learning/gitops-int/gitops-with-app-connect': 'adopting/use-cases/gitops/gitops-ace.md'
         'contributing': 'contribute/contribute.md'
 
 
@@ -175,8 +172,7 @@ nav:
       - Add a new use case: adopting/use-cases/add-use-case.md
       - Build an Operator: adopting/use-cases/operator/operator.md
       - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
-      - GitOps with Toolkit: adopting/use-cases/gitops/gitops-toolkit.md
-      - GitOps with App Connect: adopting/use-cases/gitops/gitops-ace.md
+      - GitOps with IBM Cloud Paks: adopting/use-cases/gitops/gitops-ibm-cloud-paks.md
       - GitOps with Serverless/Events: adopting/use-cases/gitops/gitops-serverless-events.md
       - Storefront - Cloud Native Exemplar: adopting/use-cases/storefront/storefront.md
   - Reference:
