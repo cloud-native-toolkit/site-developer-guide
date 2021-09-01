@@ -47,7 +47,7 @@ Argo CD uses a Git repo to express the desired state of the Kubernetes environme
 !!!Note
     There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) used in the following steps is optional and provides some application templates to help simplify some configuration activities.
 
-[!["GitOps with ArgoCD"](http://img.youtube.com/vi/plK2C-efwW8/0.jpg)](https://youtu.be/plK2C-efwW8 "GitOps with ArgoCD"){: target=_blank }
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/plK2C-efwW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 1. Create a new repo from the [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) `https://github.com/IBM/template-argocd-gitops/generate`.  
 

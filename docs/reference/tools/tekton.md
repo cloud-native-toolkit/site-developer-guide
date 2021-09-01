@@ -16,7 +16,7 @@ Tekton is a new emerging CI tool that has been built to support Kubernetes and O
 
 ### Tekton 101
 
-[![What is Tekton](http://img.youtube.com/vi/TWxKD9dLpmk/0.jpg)](https://youtu.be/TWxKD9dLpmk "What is Tekton"){: target="_blank"}
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/TWxKD9dLpmk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Tekton provides open-source components to help you standardize your CI/CD tooling and processes across vendors, languages, and deployment environments. Industry specifications around pipelines, releases, workflows, and other CI/CD components available with Tekton will work well with existing CI/CD tools such as Jenkins, Jenkins X, Skaffold, and Knative, among others.
 

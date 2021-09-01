@@ -6,7 +6,7 @@
 
 1. Prerequisites
     - The instructor should [Setup Workshop Environment](setup.md)
-    - The student should [Setup CLI and Terminal Shell](setup.md#4-optional-auto-configure-terminal-shell)
+    - The student should [Setup the CLI locally](../../learning/dev-setup.md#install-the-cloud-native-toolkit-command-line-interface-cli) or [Setup the Terminal Shell](terminal.md)
 
 1. Instructor will provide the following info:
     - OpenShift Console URL (OCP_CONSOLE_URL)

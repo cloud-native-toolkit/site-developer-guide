@@ -9,7 +9,7 @@
 
 The environment supports end-to-end development and deployment of an application. The instructions below will show you how to do it.
 
-[!["Deploying an App with Tekton and the IGC command line tool"](http://img.youtube.com/vi/czYQfvPTa7Y/0.jpg)](https://youtu.be/czYQfvPTa7Y "Deploying an App with Tekton and the IGC command line tool"){: target=_blank }
+<iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/czYQfvPTa7Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 You can create a new app using one of the [Starter Kits](../reference/starter-kit/starter-kit.md){: target=_blank }. These have been created to include all the key components, configuration, and frameworks to get you started on creating the code you need for your solutions. The approach for getting started is exactly the same for an environment based on **Kubernetes** or **Red Hat OpenShift**.
 
