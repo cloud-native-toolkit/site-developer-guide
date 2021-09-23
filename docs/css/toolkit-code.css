@@ -20,9 +20,19 @@ code>* {
   --md-code-hl-generic-color:        var(--md-default-fg-color--light);
   --md-code-hl-variable-color:       var(--md-default-fg-color--light);
 }
+
 .md-clipboard {
   color: white;
 }
+.md-clipboard:focus, .md-clipboard:hover {
+  color: rgb(207, 203, 203);
+}
+:hover>.md-clipboard {
+  color: rgb(207, 203, 203);
+}
+
 .highlight.no-copy .md-clipboard {
   display: none;
 }
+
+
