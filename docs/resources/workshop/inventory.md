@@ -157,7 +157,6 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     ls -l qa/${TOOLKIT_PROJECT}/inventory-management-svc-solution
     ls -l qa/${TOOLKIT_PROJECT}/inventory-management-ui-solution
     ```
-
 1. Promote the application to **QA** using git by creating a manifest yaml (ie Helm Chart) that leverage the Cloud Native Toolkit chart `argocd-config` to automate the creation of multiple ArgoCD Applications.
 
     ```shell
@@ -203,7 +202,12 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     git commit -m "Add inventory application to gitops for project ${TOOLKIT_PROJECT}"
     git push -u origin master
     ```
-
+1. If you got 404 error, run `git remote -v` make sure to see this url format (http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')) fetch 
+    - In case the url is not correct you can always edit it by running this command `git config -e` and edit the **remot origin url**.
+    - Make sure to add your `${TOOLKIT_USERNAME}:password` **Don't use the token if your using gogs**
+    - Delete the cloned repo and clone it again.
+    - Repeat step **21**
+    
 1. Register the Application in ArgoCD to deploy using GitOps
     - Select ArgoCD from the Console Link and login using OpenShift login
     - Click **NEW APP**
