@@ -50,7 +50,7 @@ Before getting started, the development namespace/project needs to be created an
 This step copies the common `secrets` and `configMaps` that contain the CI/CD configuration from the `tools` namespace into the development namespace/project. This enables the pipelines to reference the values easily for your project.
 
 ```shell
-oc sync ${DEV_NAMESPACE}
+oc sync ${DEV_NAMESPACE} --tekton
 ```
 
 ### 3. Open the Developer Dashboard
