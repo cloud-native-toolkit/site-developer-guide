@@ -4,7 +4,7 @@
 
 Use GitOps to continuously deliver application changes
 
-[Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank} is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
+[Argo CD](https://argo-cd.readthedocs.io/en/stable/){: target=_blank} is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
 
 Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state.
 
@@ -38,7 +38,7 @@ Argo CD uses a number of terms to refer to the components
 
 ### Set up the GitOps repo
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/){: target=_blank}. Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications){: target=_blank} that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/){: target=_blank}. Within that repository, each [*application*](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications){: target=_blank} that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 !!!Note
     There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD template](https://github.com/IBM/template-argocd-gitops){: target=_blank} used in the following steps is optional and provides some application templates to help simplify some configuration activities.
@@ -46,7 +46,7 @@ Argo CD uses a Git repo to express the desired state of the Kubernetes environme
 <iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/plK2C-efwW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-1. Create a new repo from the [Argo CD template](https://github.com/IBM/template-argocd-gitops){: target=_blank}.  
+1. Create a new repo from the [Argo CD template](https://github.com/IBM/template-argocd-gitops){: target=_blank}.
 
     Click **Use this template** - If you see a 404 error when you click on the link, you need to sign in to github.
 
