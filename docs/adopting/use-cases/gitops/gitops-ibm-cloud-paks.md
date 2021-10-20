@@ -2,15 +2,15 @@
 
 <!--- cSpell:ignore gitorg YAMLs -->
 
-The GitOps concept originated from [Weaveworks](https://www.weave.works/) back in 2017 and the goal was to automate the operations of a Kubernetes (K8s) system using a model external to the system as the source of truth ([History of GitOps](https://www.weave.works/blog/the-history-of-gitops)).   
+The GitOps concept originated from [Weaveworks](https://www.weave.works/) back in 2017 and the goal was to automate the operations of a Kubernetes (K8s) system using a model external to the system as the source of truth ([History of GitOps](https://www.weave.works/blog/the-history-of-gitops)).
 
-There are various GitOps workflows this is our opinionated point of view on how `GitOps` can be used to manage the infrastructure, services and application layers of K8s based systems.  It takes into account the various personas interacting with the system and accounts for separation of duties.  
+There are various GitOps workflows this is our opinionated point of view on how `GitOps` can be used to manage the infrastructure, services and application layers of K8s based systems.  It takes into account the various personas interacting with the system and accounts for separation of duties.
 
 Refer to the [https://github.com/cloud-native-toolkit/multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops) repository for instructions to try out the GitOps workflow.  It is focused around deploying [IBM Cloud Paks](https://www.ibm.com/cloud/paks) on the [Red Hat OpenShift](https://cloud.redhat.com/learn/what-is-openshift) platform.
 
 
-## GitOps Principles 
-With the ever growing adoption of GitOps, the [OpenGitOps](https://opengitops.dev/) project was started in 2021 to define a set of open-source standards and best practices.  These will help organizations adopt a standard and structured approach when implementing GitOps.  It is currently a [CNCF Sandbox project](https://www.cncf.io/sandbox-projects/).  
+## GitOps Principles
+With the ever growing adoption of GitOps, the [OpenGitOps](https://opengitops.dev/) project was started in 2021 to define a set of open-source standards and best practices.  These will help organizations adopt a standard and structured approach when implementing GitOps.  It is currently a [CNCF Sandbox project](https://www.cncf.io/sandbox-projects/).
 
 The [GitOps Working Group](https://github.com/gitops-working-group/gitops-working-group) has released v0.1.0 of the [**GitOps Principles**](https://opengitops.dev/#principles):
 
@@ -21,16 +21,16 @@ The [GitOps Working Group](https://github.com/gitops-working-group/gitops-workin
 
 
 ## GitOps Repository Structure
-There are a total of 4 Git repositories involved with the GitOps workflow.  
+There are a total of 4 Git repositories involved with the GitOps workflow.
 
-- [Main GitOps repository](#gitops) - Repository that the various [personas](#personas) will interact with to update the desired state of the OpenShift cluster. 
-- [Infrastructure repository](#infrastructure-layer) - Repository 
-- [Services repository](#services-layer) 
-- [Application repository](#application-layer) 
+- [Main GitOps repository](#gitops) - Repository that the various [personas](#personas) will interact with to update the desired state of the OpenShift cluster.
+- [Infrastructure repository](#infrastructure-layer) - Repository
+- [Services repository](#services-layer)
+- [Application repository](#application-layer)
 
 
 ### **GitOps**
-- Main GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops)): This repository contains all the ArgoCD Applications for  the `infrastructure`, `services` and `application` layers.  Each ArgoCD Application will reference a specific K8s resource (yaml resides in a separate git repository), contain the configuration of the K8s resource, and determine where it will be deployed into the cluster.  
+- Main GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops](https://github.com/cloud-native-toolkit/multi-tenancy-gitops)): This repository contains all the ArgoCD Applications for  the `infrastructure`, `services` and `application` layers.  Each ArgoCD Application will reference a specific K8s resource (yaml resides in a separate git repository), contain the configuration of the K8s resource, and determine where it will be deployed into the cluster.
 
 - Directory structure for `single-cluster` or `multi-cluster` profiles:
 
@@ -43,7 +43,7 @@ There are a total of 4 Git repositories involved with the GitOps workflow.
     └── kustomization.yaml
     ```
 
-The contents of the `kustomization.yaml` will determine which layer(s) will be deployed to the cluster.  This is based on whether the `resources` are commented out or not.  Each of the listed YAMLs contains an ArgoCD Application which in turn tracks all the K8s resources available to be deployed.  This follows the ArgoCD [app of apps pattern](https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/#app-of-apps-pattern). 
+The contents of the `kustomization.yaml` will determine which layer(s) will be deployed to the cluster.  This is based on whether the `resources` are commented out or not.  Each of the listed YAMLs contains an ArgoCD Application which in turn tracks all the K8s resources available to be deployed.  This follows the ArgoCD [app of apps pattern](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/#app-of-apps-pattern).
 
 ```yaml
 resources:
@@ -104,7 +104,7 @@ resources:
 
 
 ### **Services Layer**
-- Services GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops-services](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-services)): Contains the YAMLs for K8s resources which will be used by the `application` layer.  This could include `subscriptions` for Operators, YAMLs of custom resources provided, or Helm Charts for tools provided by a third party.  These resource would usually be managed by the Administrator(s) and/or a DevOps team supporting application developers.  
+- Services GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops-services](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-services)): Contains the YAMLs for K8s resources which will be used by the `application` layer.  This could include `subscriptions` for Operators, YAMLs of custom resources provided, or Helm Charts for tools provided by a third party.  These resource would usually be managed by the Administrator(s) and/or a DevOps team supporting application developers.
 
 ```bash
 2-services
@@ -211,8 +211,8 @@ resources:
 </details>
 
 
-### **Application Layer** 
-- Application GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps)): Contains the YAMLs for K8s resources required for Tekton pipelines and webhooks.  It can also contains the YAMLs to deploy microservice(s), web application(s), instance(S) of the ACE integration server or queue manager(s).  
+### **Application Layer**
+- Application GitOps repository ([https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps](https://github.com/cloud-native-toolkit/multi-tenancy-gitops-apps)): Contains the YAMLs for K8s resources required for Tekton pipelines and webhooks.  It can also contains the YAMLs to deploy microservice(s), web application(s), instance(S) of the ACE integration server or queue manager(s).
 
 ```bash
 3-apps
@@ -241,7 +241,7 @@ resources:
 
 
 
-## Personas 
+## Personas
 | Persona |  Responsibilities | Not responsible for | Required skills |
 |---|---|---|---|
 | OpenShift cluster administrator  | - Provision/install the cluster <br> - Configure compute, network, storage (i.e. compute infrastructure) <br> - Install gitOps and pipelines operator (ArgoCD and Tekton technologies) <br> - Creates required cluster-wide resources <br> - Install common pipelines and tasks used by product tenants <br> - | - Very little knowledge of products installed in the cluster, for example MQ or ACE <br> - Delegates cluster security admin to Cluster security administrator | - Strong skills in Kubernetes administration and Kubernetes operations <br> - Working knowledge of DevOps: practices, tools, implementation |
