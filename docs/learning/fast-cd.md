@@ -2,7 +2,7 @@
 
 <!--- cSpell:ignore grpc jsonnet ksonnet -->
 
-[Argo CD](https://argoproj.github.io/argo-cd/){: target=_blank } is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
+[Argo CD](https://argo-cd.readthedocs.io/en/stable/){: target=_blank } is a declarative, GitOps continuous delivery tool for Kubernetes. The deployment environment is a namespace in a container platform like Kubernetes or Red Hat OpenShift.
 
 Argo CD models a collection of applications as a project and uses a Git repository to store the application's desired state.
 
@@ -42,14 +42,14 @@ Argo CD uses a number of terms to refer to the components
 !!!Todo
     Is this better in the developer setup section?
 
-Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argoproj.github.io/argo-cd/user-guide/projects/). Within that repository, each [*application*](https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
+Argo CD uses a Git repo to express the desired state of the Kubernetes environment. The basic setup uses one repository to represent one [*project*](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/). Within that repository, each [*application*](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications) that makes up the project will be described in its own folder. The repository will also contain a branch for each destination (i.e. cluster and namespace) into which we want to deploy the applications.
 
 !!!Note
     There is nothing special about a git repository used for git-ops. All that is required at a minimum is a hosted git repository that is accessible from by the Argo CD instance.  The [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) used in the following steps is optional and provides some application templates to help simplify some configuration activities.
 
 <iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/plK2C-efwW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-1. Create a new repo from the [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) `https://github.com/IBM/template-argocd-gitops/generate`.  
+1. Create a new repo from the [Argo CD Starter Kit](https://github.com/IBM/template-argocd-gitops) `https://github.com/IBM/template-argocd-gitops/generate`.
 
     click **Use this template** - If you see a 404 error when you click on the link, you need to sign in to github.
 
@@ -429,8 +429,8 @@ Once the configuration has been added to the GitOps repository, Argo CD needs to
         - `destination namespace` - The namespace where the application should be deployed
         - `Plugin` - In the last section of the UI select `Plugin` from the dropdown
             ![Argo CD plugin](./images/argocd-plugin.png)
-        - `key-protect-secret` - Click in the name field and select `key-protect-secret` from the dropdown 
-        
+        - `key-protect-secret` - Click in the name field and select `key-protect-secret` from the dropdown
+
         ![Argo CD key protect secret](./images/argocd-key-protect-secret.png)
 
     1. Repeat that step for each secret application and environment
