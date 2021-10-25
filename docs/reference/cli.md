@@ -317,6 +317,8 @@ The command will setup the "development" namespace where DevOps pipelines can be
 
 The "development" namespace will have the `ConfigMaps` and `Secrets` copied over.
 
+The command can also add additional privileges to the tekton pipeline service account.  These privileges are needed to run the buildah task in OpenShift 4.7
+
 ```text
 Positionals:
   namespace  The namespace that will be created and/or prepared
@@ -328,6 +330,8 @@ Options:
                            config                    [string] [default: "tools"]
   -z, --serviceAccount     the service account that will be used within the
                            namespace               [string] [default: "default"]
+  -p, --tekton             flag indicating the tekton pipeline service account
+                           should be given privileged scc
       --verbose            flag to produce more verbose logging        [boolean]
 ```
 
@@ -337,14 +341,14 @@ Options:
     Create a `dev` namespace for development
 
     ```shell
-    igc sync myapp-dev
+    igc sync -p myapp-dev
     ```
 
 === "OpenShift"
     Create a `dev` namespace for development
 
     ```shell
-    oc sync myapp-dev
+    oc sync -p myapp-dev
     ```
 
 === "Kubernetes"
@@ -372,7 +376,12 @@ Options:
           kubectl get secret ${cm} --namespace ${TEMPLATE_NAMESPACE} --export -o yaml | \
             kubectl apply --namespace $NAMESPACE -f -
         done
+    ```
 
+    The **-p** or **--tekton** flag performs the same function as command:
+
+    ```shell
+      oc adm policy add-scc-to-user privileged -z pipeline
     ```
 
 ### pull-secret

@@ -50,8 +50,11 @@ Before getting started, the development namespace/project needs to be created an
 This step copies the common `secrets` and `configMaps` that contain the CI/CD configuration from the `tools` namespace into the development namespace/project. This enables the pipelines to reference the values easily for your project.
 
 ```shell
-oc sync ${DEV_NAMESPACE}
+oc sync -p ${DEV_NAMESPACE}
 ```
+
+!!!Info
+    The **-p** or **--tekton** flag adds additional privileges to the tekton pipeline service account.  The equivalent command is `oc adm policy add-scc-to-user privileged -z pipeline`.  In OpenShift 4.7, and later versions, this additional privilege is needed for the buildah task.
 
 ### 3. Open the Developer Dashboard
 
