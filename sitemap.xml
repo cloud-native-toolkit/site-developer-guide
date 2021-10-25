@@ -2,432 +2,432 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cloudnativetoolkit.dev/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/adopting/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/admin/argo-cd-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/admin/artifactory-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/admin/cluster-config/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/admin/sysdig-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/best-practices/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/devops/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/infrastructure-as-code/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/registry/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/secret-management/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/ibm-cloud-account/configure-account/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/ibm-cloud-account/ibm-cloud-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/ibm-cloud-account/monitoring-logs/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/best-practices/ibm-cloud-account/plan-installation/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/customize/customize/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/customize/config-dashboard/dashboard/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/air-gapped-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/configureEnvironment/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/ibmcloud-iz-cluster/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/ibmcloud-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/ibmcloud-tile-cluster/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/install-crc/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/installing/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/provision-cluster/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/setup/toolkit-install/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/add-use-case/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/applying/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/ace-pipeline/ace-pipeline/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/gitops/gitops-ibm-cloud-paks/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/gitops/gitops-serverless-events/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/operator/operator/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/adopting/use-cases/storefront/storefront/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/contribute/automation/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/contribute/contribute/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/contribute/documentation/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/contribute/governance/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/contribute/migration/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/analysis/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/dev-setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/devops/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/fast-cd/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/fast-ci/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/fast-start/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/in-depth/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/pipeline/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/learning/testing/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/overview/overview/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/overview/prerequisites/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/overview/whats-new/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/cli/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/dashboard/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/git/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/reference/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/iteration-zero/iteration-zero/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/iteration-zero/terraform/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/starter-kit/starter-kit/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/starter-kit/starter-kits/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tasks/pipelines/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tasks/placeholder/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/argocd/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/artifactory/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/container-image-security-enforcement/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/ibm-cloud-container-registry/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/jenkins/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/key-protect/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/pact/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/sonar-qube/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/tekton/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/reference/tools/tools/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/resources/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/ibm-cloud/access-control/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/ibm-cloud/cloud-shell/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/ibm-cloud/crw/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/ibm-cloud/ibm-cloud-roles/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/ibm-cloud/icc/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/ai/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/appmod/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/cd/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/ci/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/inventory/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/setup/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/terminal/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/resources/workshop/workshop/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/setup/fast-start/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cloudnativetoolkit.dev/setup/setup-options/</loc>
-         <lastmod>2021-10-20</lastmod>
+         <lastmod>2021-10-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
