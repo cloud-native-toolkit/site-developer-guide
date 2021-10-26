@@ -221,6 +221,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cloudnativetoolkit.dev/learning/image-sign/</loc>
+         <lastmod>2021-10-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cloudnativetoolkit.dev/learning/in-depth/</loc>
          <lastmod>2021-10-26</lastmod>
          <changefreq>daily</changefreq>
