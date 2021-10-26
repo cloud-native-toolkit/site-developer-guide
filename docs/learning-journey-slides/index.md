@@ -13,3 +13,9 @@
 - [Code Analysis](./01-code-analysis.html)
 - [Container Registry](./02-container-registry.html)
 - [Artifact Management](./03-artifact-management.html)
+
+## Day 3
+
+- [Inventory Backend](./01-inventory-backend.html)
+- [Inventory Backend-for-Frontend](./02-inventory-bff.html)
+- [Inventory UI](./03-inventory-ui.html)
