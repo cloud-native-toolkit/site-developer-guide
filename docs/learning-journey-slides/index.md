@@ -5,6 +5,6 @@
 - [What is Cloud Native?](./01-what-is-cloud-native.html)
 - [Cloud Native Applications](./02-cloud-native-applications.html)
 - [Containers](./03-containers-basics.html)
-- [OpenShift Overview](04-OpenShift-Overview.pptx)
-- [CI/CD](05-CI_CD.pptx)
+- [OpenShift Overview](04-openShift-overview.html)
+- [CI/CD](./05-ci_cd.html)
 
