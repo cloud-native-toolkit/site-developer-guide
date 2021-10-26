@@ -8,3 +8,4 @@ The next few pages allow you to explore some of the key concepts:
 - [**Testing**](testing.md) : having a good test strategy to find issues as soon as possible
 - [**Static Analysis**](analysis.md) : using static analysis tools can also help identify vulnerabilities and bugs
 - [**Pipeline**](pipeline.md) : The pipeline tool is what drives the automation of building and delivering applications
+- [**Image Signing**](image-sign.md) : Image signing with Container Image Security Enforcement enables you to enforce trusted workloads within your Kubernetes deployments.

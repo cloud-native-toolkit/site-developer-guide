@@ -136,6 +136,7 @@ nav:
       - Automated Testing: learning/testing.md
       - Static Analysis: learning/analysis.md
       - Pipeline: learning/pipeline.md
+      - Image Signing: learning/image-sign.md
   - Adopting the Toolkit:
     - Adopting the Toolkit: adopting/adopting.md
     - Best Practices:
