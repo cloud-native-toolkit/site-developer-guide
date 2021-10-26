@@ -8,3 +8,8 @@
 - [OpenShift Overview](./04-openshift-overview.html)
 - [CI/CD](./05-ci_cd.html)
 
+## Day 2
+
+- [Code Analysis](./01-code-analysis.html)
+- [Container Registry](./02-container-registry.html)
+- [Artifact Management](./03-artifact-management.html)
