@@ -51,7 +51,7 @@
 1. Setup environment variable `GIT_URL` for the git url using the value from previous step or as following
     ```bash
     GIT_REPO=go-gin
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=https://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
 
     ```

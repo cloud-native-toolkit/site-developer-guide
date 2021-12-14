@@ -49,7 +49,7 @@
         **Note:** We are including username/password in git url for simplicity of this lab. You would **NOT** want to do this in your development environment.
     ```bash
     GIT_REPO=ai-model-object-detector
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
 
     ```

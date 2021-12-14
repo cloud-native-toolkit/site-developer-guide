@@ -51,7 +51,7 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 
     ```shell
     GIT_REPO=inventory-management-svc-solution
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
     ```
 
@@ -75,7 +75,7 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 
     ```shell
     GIT_REPO=inventory-management-bff-solution
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
     ```
 
@@ -98,7 +98,7 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 
     ```shell
     GIT_REPO=inventory-management-ui-solution
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
     ```
 
@@ -114,7 +114,7 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
 1. Setup environment variable `GIT_OPS_URL` for the git url using the value from previous step or as following
 
     ```shell
-    GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/gitops
+    GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/toolkit/gitops
     echo GIT_OPS_URL=${GIT_OPS_URL}
     ```
 
@@ -210,7 +210,7 @@ Deploy a 3 tier Microservice using React, Node.js, and Java
     - Application Name: ${TOOLKIT_PROJECT}-inventory (ie project1-inventory)
     - ArgoCD Project: `default`
     - Sync Policy: `Automatic` (Check prune resources and self heal)
-    - Repository URL: `http://gogs.tools:3000/toolkit/gitops.git`
+    - Repository URL: `http://gitea.tools:3000/toolkit/gitops.git`
     - Revision: `HEAD`
     - Path: `qa/${TOOLKIT_PROJECT}` (ie qa/project1)
     - Cluster: `in-cluster`

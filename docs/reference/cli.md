@@ -458,7 +458,7 @@ Options:
 Connects a branch in a Git repo to a either a Jenkins or Tekton CI pipeline in the environment and triggers
 an initial build. A webhook is also created so that when a new commit is added to the branch, the pipeline is triggered
 to start the process to rebuild and redeploy the app using the new code. Currently, webhook creation is supported for
-repositories hosted on Gitlab, Github, Github Enterprise, Bitbucket, and Gogs.
+repositories hosted on Gitlab, Github, Github Enterprise, Bitbucket, Gitea and Gogs.
 
 This command can either be used to register a git repository that has previously been cloned to the local filesystem **OR**
 using the remote repo url.
