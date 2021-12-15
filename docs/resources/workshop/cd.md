@@ -40,7 +40,7 @@ Promote an Application using CD with GitOps and ArgoCD
 
 1. Setup environment variable `GIT_OPS_URL` for the git url using the value from previous step or as following
     ```bash
-    GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/gitops
+    GIT_OPS_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/toolkit/gitops
     echo GIT_OPS_URL=${GIT_OPS_URL}
 
     ```

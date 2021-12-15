@@ -20,8 +20,8 @@ This section will cover:
     oc new-project db2
     oc create -n db2 serviceaccount mysvcacct
     oc adm policy add-scc-to-user privileged system:serviceaccount:db2:mysvcacct
-    oc apply -n db2 -f "http://$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/appmod-liberty-toolkit/raw/master/db2/db2-dc.yaml"
-    oc apply -n db2 -f "http://$(oc get route -n tools gogs --template='{{.spec.host}}')/toolkit/appmod-liberty-toolkit/raw/master/db2/db2-service.yaml"
+    oc apply -n db2 -f "http://$(oc get route -n tools gitea --template='{{.spec.host}}')/toolkit/appmod-liberty-toolkit/raw/master/db2/db2-dc.yaml"
+    oc apply -n db2 -f "http://$(oc get route -n tools gitea --template='{{.spec.host}}')/toolkit/appmod-liberty-toolkit/raw/master/db2/db2-service.yaml"
     ```
 
 1. (Optional) Analyze the application using the following guide [Modernizing runtimes with Liberty](https://ibm-cloud-architecture.github.io/modernization-playbook/applications/liberty/liberty-analyze)
@@ -72,7 +72,7 @@ This section will cover:
 
     ```shell
     GIT_REPO=appmod-liberty-toolkit
-    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gogs --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
+    GIT_URL=http://${TOOLKIT_USERNAME}:password@$(oc get route -n tools gitea --template='{{.spec.host}}')/${TOOLKIT_USERNAME}/${GIT_REPO}
     echo GIT_URL=${GIT_URL}
     ```
 
@@ -115,7 +115,7 @@ This section will cover:
     - Application Name: ${TOOLKIT_PROJECT}-qa-websphere-liberty (ie project1-qa-websphere-liberty)
     - ArgoCD Project: `default`
     - Sync Policy: `Automatic` (Check prune resources and self heal)
-    - Repository URL: `http://gogs.tools:3000/toolkit/gitops.git`
+    - Repository URL: `http://gitea.tools:3000/toolkit/gitops.git`
     - Revision: `HEAD`
     - Path: `qa/${TOOLKIT_PROJECT}/appmod-liberty-toolkit` (ie project1/qa/project1/appmod-liberty-toolkit)
     - Cluster: `in-cluster`
