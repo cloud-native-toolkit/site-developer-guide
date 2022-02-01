@@ -97,6 +97,28 @@ npm i -g @ibmgaragecloud/cloud-native-toolkit-cli
 ```
 
 !!!Note
-    If you have access to multiple IBM Cloud accounts you may find the [IBM Cloud cluster fast-switching tool (icc)](../resources/ibm-cloud/icc.md){: target=_blank} of use.  The **icc** tool is installed as part of the Cloud-Native Toolkit CLI.
+    If you have access to multiple IBM Cloud accounts you may find the [IBM Cloud cluster fast-switching tool (icc)](../resources/ibm-cloud/icc.md){: target=_blank} of use.  See the [Shell Command section](#ibm-cloud-shell-command) below to install icc.
 
     If you are working on the IBM Cloud there is a browser based shell environment you can use.  Information about setting up and accessing the browser based shell to work with the Cloud-Native Toolkit can be found in the [resources section](../resources/ibm-cloud/cloud-shell.md){: target=_blank}
+
+## IBM Cloud Shell Command
+
+There is a useful [IBM Cloud Shell Command](https://github.com/cloud-native-toolkit/cloud-shell-commands){target=_blank} utility which can install a number of command line tools, including:
+
+- IBM Garage Cloud CLI (igc)
+- ArgoCD cli (argocd)
+- Tekton cli (tkn)
+- IBM Cloud fast switching (icc)
+- kube-ps1 prompt
+- OpenShift cli (oc)
+- Kubernetes cli (kubectl)
+- JSON cli (jq)
+- IBM Cloud cli (ibmcloud)
+
+To run the utility use command:
+
+```shell
+curl -sL shell.cloudnativetoolkit.dev | sh -
+```
+
+See the [git repository readme](https://github.com/cloud-native-toolkit/cloud-shell-commands/blob/main/README.md){target=_blank} for more details
