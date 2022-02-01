@@ -7,6 +7,7 @@ ignore=
   ^https://ccp-ui.csplab.intranet.ibm.com
   ^https://ccp-ui.apps.labprod.ocp.csplab.local
   ^https://github.com/IBM
+  ^https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/
   fonts.gstatic.com
 
 nofollow=
