@@ -6,6 +6,7 @@ ignore=
   xml.gz$
   ^https://ccp-ui.csplab.intranet.ibm.com
   ^https://ccp-ui.apps.labprod.ocp.csplab.local
+  ^https://github.com/IBM
   fonts.gstatic.com
 
 nofollow=
