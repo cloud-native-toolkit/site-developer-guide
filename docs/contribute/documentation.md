@@ -8,18 +8,41 @@ To work on documentation and be able to view the rendered web site you need to c
 
 === "Tooling within a Docker container"
 
-    You can use a Docker container and run MkDocs from the container, so no local installation is required:
+    You can use a Docker container and run MkDocs from the container, so no local installation is required.
+
+    **Prerequisites**
 
     - You need to have [Docker](https://www.docker.com) installed and running on your system
     - There are helper configurations installed if you have npm from [Node.JS](https://nodejs.org) installed.
-    - Build the development docker container image, this is only need it once if the dependencies have not changed. Run `npm run dev:build`
+
+    **Setup**
+
+    Build the development docker container image, this is only need it once if the dependencies have not changed.
+
+    - Run `npm run dev:build`
+
+    **Work with the development environment**
+
+    _Start_
+
     - To start developing run command `npm run dev` in the root directory of the git repo (where **package.json** and **mkdocs.yaml** are located)
     - Open a browser to `http://localhost:8000`, where you will see the documentation site.  This will live update as you save changes to the Markdown files in the docs folder
-    - To stop developing run command `npm dev:stop` in another terminal window, which will terminate the docker container
-    - View the scripts section of **package.json** in the root folder of the git repo for additional options available
-    - To build the static HTML file and check all links and spelling run command `npm run build`
+
+    _Stop_
+
+    - Run `npm dev:stop` in another terminal window, which will terminate the docker container
+
+    _Link checker_
+
     - To check links in the built site (`npm run build` must be run first), use the linkchecker, with command `npm run dev:links`.  This command should be run in the root folder of the project, containing the **linkcheckerrc** file.
+
+    _Spell checker_
+
     - To check spelling `npm run dev:spell` should be run in the root folder of the project, containing the **cspell.json** file.
+
+    _Build static site_
+
+    - To build the static HTML file and check all links and spelling run command `npm run build`
 
 === "Local mkdocs and python tooling installation"
 
