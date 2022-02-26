@@ -7,14 +7,26 @@
     "doc": "docs"
   },
   "scripts": {
-    "predev": "./dev/clean.sh devguide-dev",
-    "dev": "./dev/run.sh devguide-dev 8000",
-    "postdev": "./dev/logs.sh devguide-dev",
-    "dev:stop": "./dev/clean.sh devguide-dev",
+    "clean": "run-script-os",
+    "clean:darwin:linux": "dev/clean.sh devguide-dev",
+    "clean:win32": "dev\\clean.bat devguide-dev",
+    "predev": "npm run clean",
+    "dev": "run-script-os",
+    "dev:darwin:linux": "./dev/run.sh devguide-dev 8000",
+    "dev:win32": "dev\\run.bat devguide-dev 8000",
+    "postdev1": "npm run logs",
+    "logs": "run-script-os",
+    "logs:darwin:linux": "./dev/logs.sh devguide-dev",
+    "logs:win32": "dev\\logs.sh devguide-dev",
+    "dev:stop": "npm run clean",
     "dev:spell": "cspell docs/**/*.md",
     "dev:links": "linkchecker -f linkcheckerrc --check-extern public",
-    "build": "./build.sh",
-    "dev:build": "./dev/build.sh devguide-dev",
+    "build": "run-script-os",
+    "build:darwin:linux": "./build.sh",
+    "build:win32": "build.bat",
+    "dev:build": "run-script-os",
+    "dev:build:darwin:linux": "dev/build.sh devguide-dev",
+    "dev:build:win32": "dev\\build.bat devguide-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +41,7 @@
   },
   "homepage": "https://github.com/cloud-native-toolkit/developer-guide#readme",
   "devDependencies": {
-    "cspell": "^5.4.1"
+    "cspell": "^5.4.1",
+    "run-script-os": "^1.1.6"
   }
 }

@@ -10,7 +10,7 @@ SonarQube performs static code analysis to evaluate code quality, using analysis
 - **Application Security**: Detect vulnerabilities and hot spots that can be exploited to compromise the program
 - **Technical Debt**: Keep you codebase maintainable to increase developer velocity
 
-SonarQube [plugs into the application lifecycle management (ALM)](https://docs.sonarqube.org/latest/architecture/architecture-integration/#header-2) process to make continuous inspection part of continuous integration. Adding code analysis to ALM provides regular, timely feedback on the quality of the code being produced. The goal is to detect problems as soon as possible so that they can be resolved before they can impact production end users.
+SonarQube [plugs into the application lifecycle management (ALM)](https://docs.sonarqube.org/latest/#header-1) process to make continuous inspection part of continuous integration. Adding code analysis to ALM provides regular, timely feedback on the quality of the code being produced. The goal is to detect problems as soon as possible so that they can be resolved before they can impact production end users.
 
 The continuous integration (CI) server integrates SonarQube into the ALM.The SonarQube solution consists of several components: The central component is the SonarQube Server, which runs the SonarScanner, processes the resulting analysis reports, stores the reports in SonarQube Database, and displays the reports in the SonarQube UI. A CI server uses a stage/goal/task in its build automation to trigger the language-specific SonarScanner to scan the code being built. Developers can view the resulting analysis report in the SonarQube UI.
 

@@ -40,7 +40,7 @@ To install the IBM Cloud CLI follow the instructions in the [IBM Cloud documenta
 
 The oc command is available from all installations of RedHat OpenShift or CodeReady Containers.  Navigate and log into the web console for the cluster, then in the dropdown accessed by clicking the help icon (a question mark next to you username at the top of the web console) you will find a link to the install images for various operating systems.
 
-The install images are also available to download from [RedHat](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/){: target=_blank}.  Be sure to get the latest version of the oc command.
+The install images are also available to download from [RedHat](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/){: target=_blank}.  Be sure to get the latest version of the oc command.
 
 ## User accounts
 

@@ -1,6 +1,6 @@
 FROM squidfunk/mkdocs-material:7.1.8
 
-RUN apk add --no-cache --update nodejs npm
+RUN apk add --no-cache --update nodejs npm dos2unix
 
 WORKDIR /site
 COPY ./package*.json /site/
@@ -10,6 +10,6 @@ RUN pip --no-cache-dir install git+https://github.com/linkchecker/linkchecker@v1
 # NodeJS Dependencies
 RUN npm ci
 COPY dev/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
