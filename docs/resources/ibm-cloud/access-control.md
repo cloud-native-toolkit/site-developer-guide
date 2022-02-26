@@ -16,7 +16,7 @@ This video presentation describes the IAM concepts, shows a demonstration, and i
 
 <iframe width="100%" height="500" src="https://www.youtube-nocookie.com/embed/eayMGvkLZmI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-This article explains the concepts described in the video. You can access the presentation in the [Office Hours](https://ibm.box.com/v/Office-Hours) folder in Box. The scripts described in the [reference section](../../reference/iteration-zero/terraform.md){: target=_blank}.
+This article explains the concepts described in the video. You can access the presentation in [here](https://ibm.box.com/s/6xwef6po6yj1n2shmr7e8q7tdt6uddf5). The scripts described in the [reference section](../../reference/iteration-zero/terraform.md){: target=_blank}.
 
 ## Requirements for access control
 
