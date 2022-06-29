@@ -23,6 +23,24 @@ We have painstakingly documented all of the logos and icons used for 3rd party t
 documenting their use within the Developer Guide and the broader Toolkit. The [Logo Usage page](./docs/logos) documents
 the approved logos and the requirements for their use.
 
+## Developing
+
+A docker runtime is required to run the dev environment locally.
+
+1. Build the development docker container 
+
+    ```shell
+    npm run dev:build
+    ```
+   
+2. Start the development environment
+
+    ```shell
+    npm run dev
+    ```
+   
+3. Open a browser to the dev site - http://localhost:8000
+
 ## Contributing to Docs
 
 To update and manage the Developer Guide, follow these steps in [Updating the Developer Guide](https://cloudnativetoolkit.dev/contribute/documentation/).
