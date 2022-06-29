@@ -1,0 +1,217 @@
+site_name: Cloud Native Toolkit
+site_description: >-
+  The Cloud-Native Toolkit is an open-source collection of assets that enable application development and support teams to deliver business value quickly using Red Hat OpenShift or Kubernetes
+site_url: https://cloudnativetoolkit.dev
+site_author: Cloud-Native Toolkit development team
+repo_name: ""
+repo_url: https://github.com/cloud-native-toolkit/developer-guide
+docs_dir: docs
+site_dir: public
+edit_uri: edit/main/docs
+theme:
+    name: material
+    logo: images/cloudnativetoolkit.png
+    favicon: images/cloudnativetoolkit.png
+    palette:
+      scheme: default
+      primary: black
+    font:
+      text: IBM Plex Sans
+      code: IBM Plex Mono
+    language: en
+    custom_dir: overrides
+    features:
+#      - navigation.tabs
+      - navigation.instant
+      - navigation.tracking
+#      - navigation.tabs.sticky
+#      - navigation.top
+use_directory_urls: true
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+  - redirects:
+      redirect_maps:
+        'install': 'setup/setup-options.md'
+        'setup': 'learning/dev-setup.md'
+        'learn': 'learning/fast-start.md'
+        'learning': 'learning/fast-start.md'
+        'workshop': 'resources/workshop/workshop.md'
+        'workshop/setup': 'resources/workshop/setup.md'
+        'workshop/terminal': 'resources/workshop/terminal.md'
+        'workshop/ci': 'resources/workshop/ci.md'
+        'workshop/cd': 'workshop/cd.md'
+        'workshop/inventory': 'resources/workshop/cd.md'
+        'workshop/appmod': 'resources/workshop/appmod.md'
+        'workshop/ai': 'resources/workshop/ai.md'
+        'getting-started': 'learning/fast-start.md'
+        'getting-started/prereqs': 'learning/dev-setup.md'
+        'getting-started/cli': 'reference/cli.md'
+        'getting-started/icc': 'resources/ibm-cloud/icc.md'
+        'getting-started/dev-env-setup': 'learning/dev-setup.md'
+        'getting-started/dev-ops': 'adopting/best-practices/devops.md'
+        'whats-new': 'overview/whats-new.md'
+        'overview': 'overview/overview.md'
+        'getting-started-day-0': 'resources/ibm-cloud/ibm-cloud-roles.md'
+        'getting-started-day-0/prepare-account': 'adopting/setup/ibmcloud-setup.md'
+        'getting-started-day-0/provision-cluster/ibm-cloud-vpc': 'adopting/setup/ibmcloud-tile-cluster.md'
+        'getting-started-day-0/install-toolkit/quick-install': 'setup/fast-start.md'
+        'getting-started-day-0/post-installation': 'adopting/admin/cluster-config.md'
+        'getting-started-day-1': 'learning/in-depth.md'
+        'getting-started-day-1/deploy-app': 'learning/fast-ci.md'
+        'getting-started-day-1/dashboard': 'reference/dashboard.md'
+        'getting-started-day-1/build-operator': 'adopting/use-cases/operator/operator.md'
+        'getting-started-day-2': 'learning/devops.md'
+        'tools': 'overview/overview.md'
+        'tools/tekton': 'reference/tools/tekton.md'
+        'tools/jenkins': 'reference/tools/jenkins.md'
+        'tools/ibm-cloud-container-registry': 'reference/tools/ibm-cloud-container-registry.md'
+        'tools/artifactory': 'tools/artifactory.md'
+        'tools/sonarqube': 'tools/sonar-qube.md'
+        'tools/contract-testing-with-pact': 'tools/pact.d'
+        'tools/logdna': 'adopting/customize/config-dashboard/dashboard.md'
+        'tools/sysdig': 'adopting/customize/config-dashboard/dashboard.md'
+        'tools/argocd': 'learning/fast-cd.md'
+        'tools/secret-management-with-key-protect': 'reference/tools/key-protect.md'
+        'admin/install-crw': 'adopting/setup/install-crc.md'
+        'admin/config-dashboard': 'adopting/customize/config-dashboard/dashboard.md'
+        'admin/artifactory-setup': 'adopting/admin/artifactory-setup.md'
+        'admin/sysdig-setup': 'adopting/admin/sysdig-setup.md'
+        'admin/terraform': 'reference/iteration-zero/iteration-zero.md'
+        'admin/cluster-configuration': 'adopting/admin/cluster-config.md'
+        'admin/destroying': 'reference/iteration-zero/iteration-zero.md'
+        'starterkits': 'reference/starter-kit/starter-kit.md'
+        'starterkits/gitrepos': 'reference/starter-kit/starter-kits.md'
+        'learning/foundational': 'https://cloudnative101.dev'
+        'learning/ace-pipeline': 'adopting/use-cases/ace-pipeline/ace-pipeline.md'
+        'contributing': 'contribute/contribute.md'
+
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.details
+extra_css:
+    - css/extra.css
+    - css/toolkit-code.css
+extra:
+  generator: false
+copyright: Copyright © 2021 Cloud-Native Toolkit
+google_analytics: ['UA-153689700-1', 'cloudnativetoolkit.dev']
+nav:
+  - Home: index.md
+  - Overview:
+    - What is the Cloud Native Toolkit: overview/overview.md
+    - What's New: overview/whats-new.md
+    - Prerequisites: overview/prerequisites.md
+  - Install:
+    - Options for installing up Toolkit: setup/setup-options.md
+    - Fast Start install: setup/fast-start.md
+  - Learning the Toolkit:
+    - Try it:
+      - Overview: resources/workshop/workshop.md
+      - Setup Cluster: resources/workshop/setup.md
+      - Setup Terminal: resources/workshop/terminal.md
+      - Continuous integration: resources/workshop/ci.md
+      - Continuous delivery: resources/workshop/cd.md
+      - 3-tier application: resources/workshop/inventory.md
+      - Application modernization: resources/workshop/appmod.md
+      - Artificial Intelligence: resources/workshop/ai.md
+    - Basics:
+      - Learning Overview: learning/fast-start.md
+      - Developer setup: learning/dev-setup.md
+      - Continuous Integration: learning/fast-ci.md
+      - Continuous Delivery: learning/fast-cd.md
+    - In Depth:
+      - Cloud-Native Development with the Toolkit: learning/in-depth.md
+      - DevOps: learning/devops.md
+      - Automated Testing: learning/testing.md
+      - Static Analysis: learning/analysis.md
+      - Pipeline: learning/pipeline.md
+      - Image Signing: learning/image-sign.md
+  - Adopting the Toolkit:
+    - Adopting the Toolkit: adopting/adopting.md
+    - Best Practices:
+      - Best Practices: adopting/best-practices/best-practices.md
+      - IBM Cloud setup:
+        - IBM Cloud setup: adopting/best-practices/ibm-cloud-account/ibm-cloud-setup.md
+        - Installation planning: adopting/best-practices/ibm-cloud-account/plan-installation.md
+        - Access control: adopting/best-practices/ibm-cloud-account/configure-account.md
+        - Monitoring and Logs: adopting/best-practices/ibm-cloud-account/monitoring-logs.md
+      - Container Registry: adopting/best-practices/registry.md
+      - Infrastructure as Code: adopting/best-practices/infrastructure-as-code.md
+      - DevOps: adopting/best-practices/devops.md
+      - Secret management: adopting/best-practices/secret-management.md
+    - Advanced setup options:
+      - Installation options: adopting/setup/installing.md
+      - Configuring IBM Cloud based setup: adopting/setup/ibmcloud-setup.md
+      - Install IBM Cloud cluster from catalog: adopting/setup/ibmcloud-tile-cluster.md
+      - Install IBM Cloud cluster Iteration Zero: adopting/setup/ibmcloud-iz-cluster.md
+      - Install cluster elsewhere: adopting/setup/provision-cluster.md
+      - Install CodeReady Containers: adopting/setup/install-crc.md
+      - Air-gapped setup: adopting/setup/air-gapped-setup.md
+      - Install toolkit to existing cluster: adopting/setup/toolkit-install.md
+      - Post Install steps: adopting/setup/configureEnvironment.md
+    - Customizing the Toolkit:
+      - Customization overview: adopting/customize/customize.md
+      - Customizing the dashboard: adopting/customize/config-dashboard/dashboard.md
+    - Toolkit administration:
+      - Artifactory setup: adopting/admin/artifactory-setup.md
+      - Argo CD setup: adopting/admin/argo-cd-setup.md
+      - Sysdig setup: adopting/admin/sysdig-setup.md
+      - cluster configuration: adopting/admin/cluster-config.md
+    - Use Cases:
+      - User cases: adopting/use-cases/applying.md
+      - Add a new use case: adopting/use-cases/add-use-case.md
+      - Build an Operator: adopting/use-cases/operator/operator.md
+      - App Connect REST API workflow: adopting/use-cases/ace-pipeline/ace-pipeline.md
+      - GitOps with IBM Cloud Paks: adopting/use-cases/gitops/gitops-ibm-cloud-paks.md
+      - GitOps with Serverless/Events: adopting/use-cases/gitops/gitops-serverless-events.md
+      - Storefront - Cloud Native Exemplar: adopting/use-cases/storefront/storefront.md
+  - Reference:
+    - Reference: reference/reference.md
+    - Command Line Tool: reference/cli.md
+    - Developer Dashboard: reference/dashboard.md
+    - Git repositories: reference/git.md
+    - Starter Kits:
+      - Starter Kit overview: reference/starter-kit/starter-kit.md
+      - Available Starter Kits: reference/starter-kit/starter-kits.md
+    - Toolkit Components:
+      - Toolkit components: reference/tools/tools.md
+      - ArgoCD: reference/tools/argocd.md
+      - Artifactory: reference/tools/artifactory.md
+      - Jenkins: reference/tools/jenkins.md
+      - PACT: reference/tools/pact.md
+      - SonarQube: reference/tools/sonar-qube.md
+      - OpenShift Pipelines/Tekton: reference/tools/tekton.md
+      - IBM Container Registry: reference/tools/ibm-cloud-container-registry.md
+      - IBM Key Protect: reference/tools/key-protect.md
+      - Container Image Security Enforcement: reference/tools/container-image-security-enforcement.md
+    - Pipeline Task Reference:
+      - Pipelines: reference/tasks/pipelines.md
+      - placeholder: reference/tasks/placeholder.md
+    - Iteration Zero:
+      - Iteration Zero: reference/iteration-zero/iteration-zero.md
+      - Terraform modules: reference/iteration-zero/terraform.md
+  - Resources:
+      - Additional resources: resources/resources.md
+      - IBM Cloud:
+        - IBM Cloud roles: resources/ibm-cloud/ibm-cloud-roles.md
+        - Access control: resources/ibm-cloud/access-control.md
+        - ICC tool: resources/ibm-cloud/icc.md
+        - Cloud shell: resources/ibm-cloud/cloud-shell.md
+        - CodeReady Workspaces: resources/ibm-cloud/crw.md
+  - Contributing:
+    - Governance: contribute/governance.md
+    - Contribute: contribute/contribute.md
+    - Documentation: contribute/documentation.md
+    - Build Automation: contribute/automation.md
+    - Site Migration: contribute/migration.md

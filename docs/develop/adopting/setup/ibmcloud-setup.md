@@ -1,0 +1,294 @@
+# Prepare an IBM Cloud account
+
+<!--- cSpell:ignore Paks cntk -->
+
+IBM CloudPrepare the  account for an installation of Cloud-Native Toolkit environment
+
+**Note:** If you already have a cluster then you can jump to [install the toolkit](toolkit-install.md). If you will be provisioning a cluster outside of IBM Cloud then you can jump to [provision the cluster](provision-cluster.md).
+
+## 1. Set up account managers access group
+
+The **account owner** creates this access group for account managers and adds the functional ID for managing API keys. See [IBM Cloud account management](../../resources/ibm-cloud/ibm-cloud-roles.md) for the overview of the roles involved. An account only needs one of these `account manager` access groups, which will be used to support all environments in the account.
+
+In a new account, the account owner is the only user. Even after inviting other users, the account owner is initially the only user with the account management permissions needed to grant those permissions to other users. Therefore, it is the account owner who must create the access group for account managers.
+
+!!!Note
+    The video in [Resource Access Management > Configuration Process](../../resources/ibm-cloud/access-control.md#configuration-process) shows how to perform the steps in this process.
+
+### A. Prepare to run scripts
+
+We'll use some scripts in the steps below to help create access groups. Before using them, the scripts need to be downloaded and the environment needs to be prepared before running them.
+
+#### i. Clone the Iteration Zero git repository
+
+The [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero) repository contains a number of scripts that support the administrative tasks. It also has contains the Terraform scripts for installing the Cloud-Native Toolkit environment.)
+
+```shell
+git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
+cd ibm-garage-iteration-zero
+```
+
+#### ii. Log in to IBM Cloud using the IBM Cloud CLI
+
+```shell
+ibmcloud login -a cloud.ibm.com -r <region>
+```
+
+### B. Create the access group for account managers
+
+The account owner must create an access group to grant the necessary permissions for managing the account. A script has been provided to automate the configuration of the policies.
+
+!!!Note
+    IBM Cloud has multiple [account management services](https://cloud.ibm.com/docs/account?topic=account-cloudaccess), in addition to IAM: Billing, License and entitlement, Support center, etc. An easy way to grant access to these individually is to create an access group for administering each: `ACCT-MGR-BILLING-ADMIN`, `ACCT-MGR-LICENSE-ADMIN`, `ACCT-MGR-SUPPORT-ADMIN`. The group created below only has IAM capabilities, so we suggest `ACCT-MGR-IAM-ADMIN` for its name.
+
+To create the access group for the account managers:
+
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) and name it something like `ACCT-MGR-IAM-ADMIN` or name it after your account (use all capital letters)
+2. Run `./terraform/scripts/acp-mgr.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
+
+    ```shell
+    ./terraform/scripts/acp-mgr.sh ACCT-MGR-IAM-ADMIN
+    ```
+
+3. Add the users to the access group
+
+The `./terraform/scripts/acp-mgr.sh` script adds policies that allow the user to:
+
+- Create resource groups
+- Invite users to the account
+- Create access groups and manage access group membership
+- Create clusters across all resources groups in the account
+- Create service instances across all resource groups in the account
+- Manage the IBM Cloud Container Registry (used as the environment's image registry)
+
+## 2. Configure the account
+
+The account must provide a few resources that will be needed to install and use the Cloud-Native Toolkit environment:
+
+- Upgrade the image registry
+- Create a resource group
+- Create a pair of access groups for the admin and users
+
+### A. Prepare to run scripts
+
+We'll use some scripts in the steps below to help create access groups. Before using them, the scripts need to be downloaded and the environment needs to be prepared before running them.
+
+#### i. Clone the Iteration Zero git repository
+
+The [ibm-garage-iteration-zero](https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero) repository contains a number of scripts that support the administrative tasks. It also has contains the Terraform scripts for installing the Cloud-Native Toolkit environment.)
+
+```shell
+git clone git@github.com:cloud-native-toolkit/ibm-garage-iteration-zero.git
+cd ibm-garage-iteration-zero
+```
+
+#### ii. Log in to IBM Cloud using the IBM Cloud CLI
+
+```shell
+ibmcloud login -a cloud.ibm.com -r <region>
+```
+
+### B. Upgrade the image registry
+
+Upgrade the service plan for the [image registry](../../adopting/best-practices/registry.md) so that is has unlimited capacity for images.
+
+```shell
+ibmcloud cr plan-upgrade standard
+```
+
+!!!Note
+    The steps below need to be repeated for each new environment:
+
+    - Each environment needs its own resource group and pair of access groups for administrators and users.
+    - Each environment will need its own cluster, whether it's created by an account manager or an environment administrator.
+
+### C. Create the resource group
+
+[Create or provide a resource group](https://cloud.ibm.com/account/resource-groups). The resource group should be given a name that clearly identifies the purpose and usage of the collection of resources, such as the development team, the project, the environment, and/or the application(s) implemented. For example, we give our resource groups names like `mooc-team-one`, `garage-dev-tools`, `cntk-showcase`, etc.
+
+!!!Warning
+    The resource group name should be 24 characters or fewer, and should conform to [Kubernetes resource naming conventions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names) - the name should be all lowercase letters, digits, and the separators should be dashes. (Unless otherwise specified, the installation scripts will name the cluster `<resource-group>-cluster`and a cluster name is limited to 32 characters.)
+
+### D. Create an IBM Cloud API Key
+
+An API Key is used to authenticate to the IBM Cloud APIs. It is specific to a user within a particular account, meaning you need a different API key for each account you will be accessing.
+
+**Note:** If you will be using classic
+infrastructure and/or multiple `account mangers` follow these instructions instead to create a [functional ID](../best-practices/ibm-cloud-account/plan-installation.md#functional-id-for-infrastructure-permissions){: target=_blank} for the account.
+
+[Create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey) and download each key to a file. Be sure to include a descriptive name of the APIKey.
+
+### E. Attach the IBM Cloud API Key to the resource group
+
+To create resources in the resource group, the account will need API keys for the container service to [create resources in the classic infrastructure](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra). The API key is needed for each region and resource group. Use the API key from the previous step for these steps:
+
+1. Log into the IBM Cloud CLI [using the functional ID key](https://cloud.ibm.com/docs/account?topic=account-federated_id) created by the account owner
+
+    ```shell
+    ibmcloud login --apikey @key_file_name
+    ```
+
+2. Reset the API key for a given region for the container service: [Setting up the API key to enable access to the infrastructure portfolio](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key)
+
+    ```shell
+    ibmcloud ks api-key reset --region <region>
+    ```
+
+3. The [list of existing API keys](https://cloud.ibm.com/iam/apikeys) shows the new key named `containers-kubernetes-key`; the description specifies the resource group and region
+
+### F. Create access groups for the resource group
+
+For each resource group, create an access group for `environment administrators` and `environment users`. The access group can be configured manually or with a script provided in the `ibm-cloud-iteration-zero` repository.
+
+#### i. Create the access group for environment administrators
+
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) named something like `<resource_group>-ADMIN` (use all capital letters)
+2. Run the script `./terraform/scripts/acp-admin.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
+
+    ```shell
+    ./terraform/scripts/acp-admin.sh {ACCESS_GROUP} {resource group}
+    ```
+
+3. Add the environment administrator(s) to the group
+
+The script adds policies that allow the user to add resources to the resource group:
+
+- Permission to create clusters
+- Permission to manage the IBM Cloud Container Registry (used as the environment's [image registry](../../adopting/best-practices/registry.md))
+- Permission to create service instances
+
+#### ii. Create the access group for environment users
+
+1. Create a new [access group](https://cloud.ibm.com/docs/account?topic=account-groups) named something like `<resource_group>-USER` (use all capital letters)
+2. Run the script `./terraform/scripts/acp-user.sh` from the `ibm-garage-iteration-zero` repository to add the necessary policies to the access group
+
+    ```shell
+    ./terraform/scripts/acp-user.sh {ACCESS_GROUP} {resource group}
+    ```
+
+3. Add the users to the group
+
+The script adds policies that allow the user to use resources to the resource group:
+
+- Access to the resource group
+- Access to the cluster
+- Access to the image registry
+- Access to each of the services in the resource group
+
+## 3. Create the Private Catalog
+
+### A. Create the catalog
+
+1. Log in to the IBM Cloud Console
+2. Click **Manage->Catalogs** from the top menu
+3. Click on **Create Catalog**
+4. In the `Create a catalog` dialog, provide the following values:
+   - **name:** the name of the catalog, for example `Team Catalog`
+   - **description:** (optional) a brief description of the purpose of the catalog
+   - **products:** select **Start with no products**
+   - **resource group:** click **Update** to change the default resource group for the catalog
+5. Click **Create** to complete the catalog creation
+
+### B. Register the Cloud-Native Toolkit tiles in the catalog
+
+!!!Note
+    The following instructions depend on the [`jq`](https://stedolan.github.io/jq/){: target=_blank} command, which is installed as part of the [Cloud-Native Toolkit CLI](../../learning/dev-setup.md#install-the-cloud-native-toolkit-command-line-interface-cli){: target=_blank}
+
+1. Download `create-catalog-offering.sh` from the [latest Iteration Zero release]("https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases/latest"){: target="_blank"} and make the file executable
+
+    ```shell
+    LATEST_RELEASE=$(curl -sL https://api.github.com/repos/cloud-native-toolkit/ibm-garage-iteration-zero/releases/latest | jq -r '.tag_name')
+    curl -OL "https://github.com/cloud-native-toolkit/ibm-garage-iteration-zero/releases/download/${LATEST_RELEASE}/create-catalog-offering.sh"
+    chmod +x create-catalog-offering.sh
+    ```
+
+2. Run the `create-catalog-offering.sh` scripts passing in the API Key and the name of the catalog that you created in the previous step
+
+    ```shell
+    ./create-catalog-offering.sh {API_KEY} "Team Catalog"
+    ```
+
+## 4. (Optional) Set up Classic Infrastructure
+
+Virtual Private Cloud infrastructure is recommended for use with clusters as it easier to manage with IAM and provides a superior environment. However, there are some situations where classic infrastructure is still required, particularly when using Cloud Paks due to some current storage limitations with the VPC infrastructure. When classic infrastructure will be used then the following additional configuration is required.
+
+For a more in depth look at the differences between Classic and Virtual Private Cloud infrastructure, please refer the the [IBM Cloud documentation](https://cloud.ibm.com/docs/cloud-infrastructure?topic=cloud-infrastructure-compare-infrastructure){: target=_blank}
+
+### A. Create a functional ID for Classic Infrastructure permissions
+
+Account managers need the permissions to create and manage IaaS resources required by a environment.  Permissions for classic infrastructure (formerly known as SoftLayer) cannot be added to an access group, only to a user. Rather than add these permissions to each account manager, create a [functional ID](https://cloud.ibm.com/docs/iam?topic=iam-manapikey#ibm-cloud-api-keys) and grant it the infrastructure permissions.
+
+The functional ID will [own the API keys](https://cloud.ibm.com/docs/containers?topic=containers-users#api_key_most_cases) that the Kubernetes service needs to create clusters. As account managers are added to and removed from the account, the functional ID will always remain and always have the necessary infrastructure permissions.
+
+#### i. Set up the functional ID in the account
+
+1. Create the email account for the functional ID, sign it up for an IBM Cloud account, and [invite the functional ID](https://cloud.ibm.com/docs/iam?topic=iam-iamuserinv) to this account.
+2. Run the script `./terraform/scripts/acp-iaas.sh` from the `ibm-garage-iteration-zero` repository to grant the necessary permissions to the functional ID user.
+
+    ```shell
+    ./terraform/scripts/acp-iaas.sh {functional-id}
+    ```
+
+The script adds the [classic infrastructure permissions](https://cloud.ibm.com/docs/containers?topic=containers-access_reference#infra) needed to create and manage clusters:
+
+- Create VLANs
+- Create Kubernetes Service clusters (e.g. create virtual servers, storage, and networking)
+- Manage Kubernetes Service clusters (e.g. add nodes)
+
+The script also adds the IAM permissions to:
+
+- Run the command to reset the API key that the Kubernetes service will use
+
+By granting these infrastructure permissions to the functional ID and using it to create API keys, the account managers and environment administrators can create Kubernetes and OpenShift clusters without needing infrastructure permissions.
+
+#### ii. Create API keys for the functional ID
+
+Each account manager will need to use an API Key owned by functional ID's to have the necessary permissions to provision the classic infrastructure for the cluster. For security reasons, each account manager needs their own API key for the functional ID's account.
+
+1. Log into IBM Cloud as the functional ID (not as the account owner) and switch to the appropriate account.
+2. For each account manager, [create an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey) and download each key to a file. Be sure to include the account manager's name in the name/description of the APIKey.
+3. Give each account manager their API key file for the functional ID
+
+Users should not share these API key files with each other. When a user is no longer an account manager, remove them from the access group and delete their API key.
+
+### B. Public and private VLANs
+
+Create or provide a pair of public and private VLANs for the selected region and zone. These VLANs will implement the public and private networks in the Kubernetes or OpenShift cluster. Use following to find the available [IBM Cloud locations](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#ov_intro_reg "Locations for resource deployment") and the available [data centers](https://cloud.ibm.com/docs/overview?topic=overview-zero-downtime#data_center) in each region, such as *dal10* or *lon02*
+
+!!!Note
+    If your account already has a pair of VLANs for your desired region and zone, you can use those.
+
+#### Create and manage vlans
+
+Visit the [VLANs](https://cloud.ibm.com/classic/network/vlans) page to list and manage the VLANs. Select `Order VLAN` to create a new public or private VLAN for use with the cluster.
+
+#### List the available vlans
+
+Use the [IGC CLI](../../reference/cli.md)'s `igc vlan` command to select two existing VLANs and generate the properties to use for the installation scripts
+
+```shell
+igc vlan
+```
+
+These links help explain how to find the VLANs an account has, create more, and how a cluster uses them to implement its network:
+
+- [Getting started with VLANs](https://cloud.ibm.com/docs/infrastructure/vlans)
+- [Understanding network basics of classic clusters](https://cloud.ibm.com/docs/containers?topic=containers-plan_clusters#plan_basics)
+- [Overview of classic networking in IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-subnets#basics)
+- List and create VLANs: [Resources > Classic Infrastructure > IP Management > VLANs](https://cloud.ibm.com/classic/network/vlans)
+
+## Next steps
+
+With these steps completed, the account manager will have configured the account so that the environment administrator can install the environment. As you move into the next step of installing into the environment that has just been prepared, be sure to record the following information:
+
+- IBM Cloud API key
+- Resource group name
+- Region
+- Data center (classic infrastructure only)
+- Private VLAN id (classic infrastructure only)
+- Public VLAN id (classic infrastructure only)
+
+Please now select which installation method to use:
+
+- [Catalog tile](ibmcloud-tile-cluster.md)
+- [Iteration Zero scripts](ibmcloud-iz-cluster.md)

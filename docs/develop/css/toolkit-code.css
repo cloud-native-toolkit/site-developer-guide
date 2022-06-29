@@ -1,0 +1,38 @@
+.md-typeset pre>code {
+  --md-hue: 232;
+  --md-code-fg-color: #f5f5f5;
+  --md-code-bg-color: #030303;
+
+
+}
+code>* {
+  --md-default-fg-color--light: hsl(66, 41%, 69%);
+  --md-code-hl-number-color:         hsla(6, 74%, 63%, 1);
+  --md-code-hl-special-color:        hsla(340, 83%, 66%, 1);
+  --md-code-hl-function-color:       hsla(291, 57%, 65%, 1);
+  --md-code-hl-constant-color:       hsla(250, 62%, 70%, 1);
+  --md-code-hl-keyword-color:        hsla(219, 66%, 64%, 1);
+  --md-code-hl-string-color:         hsla(150, 58%, 44%, 1);
+  --md-code-hl-name-color:           var(--md-code-fg-color);
+  --md-code-hl-operator-color:       var(--md-default-fg-color--light);
+  --md-code-hl-punctuation-color:    var(--md-default-fg-color--light);
+  --md-code-hl-comment-color:        var(--md-default-fg-color--light);
+  --md-code-hl-generic-color:        var(--md-default-fg-color--light);
+  --md-code-hl-variable-color:       var(--md-default-fg-color--light);
+}
+
+.md-clipboard {
+  color: white;
+}
+.md-clipboard:focus, .md-clipboard:hover {
+  color: rgb(207, 203, 203);
+}
+:hover>.md-clipboard {
+  color: rgb(207, 203, 203);
+}
+
+.highlight.no-copy .md-clipboard {
+  display: none;
+}
+
+
