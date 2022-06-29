@@ -1,0 +1,69 @@
+
+{% extends "main.html" %}
+
+<link rel="stylesheet" href="{{ 'assets/stylesheets/home.css' | url }}" />
+
+<!-- Tabs -->
+{% block tabs %}{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<link rel="stylesheet" href="{{ 'assets/stylesheets/home.css' | url }}" />
+  <!-- Hero for landing page -->
+  <section class="mdx-container">
+    <div class="md-grid md-typeset">
+      <div class="mdx-hero">
+
+        <section>
+          <div class=home-hero>
+            <div class=home-hero-text>
+              <h1>Cloud Native Toolkit</h1>
+            </div>
+            <div class=home-hero-image>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class=home-description>
+            <div class='row'>
+              <div class='column'>
+                Cloud-Native Toolkit
+              </div>
+              <div class='column'>
+                The Cloud-Native Toolkit is an open-source collection of assets
+                that enable application development and support teams to deliver business value
+                quickly using Red Hat OpenShift or IBM Cloud-managed Kubernetes.
+                This guide provides information to help Developers, Administrators,
+                and Site Reliability Engineers use the Toolkit to support delivering business
+                applications through the entire Software Development Life Cycle (SDLC).
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class=home-purpose>
+            <div class='row'>
+              <div class='column'>
+                Fit to purpose
+              </div>
+              <div class='column'>
+                The Cloud-Native Toolkit environment has been built to support the principles
+                of a robust SDLC while being flexible enough to fit into a wide range of
+                development settings and toolchains. The Cloud-Native Toolkit supports different
+                tool selections, from open source versions of tools like Artifactory and SonarQube to
+                enterprise-class software like IBM Cloud Pak for Applications and IBM Multicloud Manager.
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+<!-- Application footer -->
+{% block footer %}
+{{ super() }}
+{% endblock %}
+

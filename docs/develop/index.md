@@ -1,4 +1,4 @@
 ---
-template: home.html
+template: develop.html
 title: Cloud Native Toolkit
 ---
