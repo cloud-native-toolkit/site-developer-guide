@@ -176,6 +176,7 @@ nav:
       - GitOps with IBM Cloud Paks: adopting/use-cases/gitops/gitops-ibm-cloud-paks.md
       - GitOps with Serverless/Events: adopting/use-cases/gitops/gitops-serverless-events.md
       - Storefront - Cloud Native Exemplar: adopting/use-cases/storefront/storefront.md
+      - Build multiarchitecture images: adopting/use-cases/multiarch-build/multiarch-build.md
   - Reference:
     - Reference: reference/reference.md
     - Command Line Tool: reference/cli.md
