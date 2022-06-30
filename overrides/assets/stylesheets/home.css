@@ -67,7 +67,7 @@ a.cta:hover:before {
 .container {
   background: #09f;
   width: 100%;
-  min-height: 1000px;
+  min-height: 650px;
   position: relative;
 }
 .container .one-half {
