@@ -10,13 +10,14 @@ The resulting images can be deployed to any OpenShift cluster running on x86, IB
 This is a setup to build images using the Cloud Native Toolkit, Tekton pipelines and ArgoCD, following a DevSecOps approach. The workflow we are trying to achieve is the following :
 ![DevSecOps Workflow](./images/multiarch-build-workflow.png)
 
+## Build a multiarchitecture microservice
 ### Prerequisites
 
-| Task                                                           | Instructions                                                        |
-| -------------------------------------------------------------- | ------------------------------------------------------------------- |
-| An x86 OpenShift **development cluster**                       | You will need admin access to this cluster for the setup            |
-| x86, IBM Z and IBM Power OpenShift **workload clusters**       | You will need admin access to this cluster for the setup            |
-| Install the Cloud Native Toolkit on the **develoment cluster** | [Install the Cloud Native Toolkit](../../../setup/setup-options.md) |
+| Task                                                            | Instructions                                                        |
+| --------------------------------------------------------------- | ------------------------------------------------------------------- |
+| An x86 OpenShift **development cluster**                        | You will need admin access to this cluster for the setup            |
+| x86, IBM Z and IBM Power OpenShift **workload clusters**        | You will need admin access to this cluster for the setup            |
+| Install the Cloud Native Toolkit on the **development cluster** | [Install the Cloud Native Toolkit](../../../setup/setup-options.md) |
 
 ### Setup the clusters
 
@@ -49,7 +50,8 @@ Using the `ìgc pipeline` command, we can run the Tekton pipelines. The services
 
 ![igc pipeline](./images/igc-pipeline.png)
 
-Note that the git credentials are only used to create webhooks for the pipelines, wrong git credentials won't affect the execution of the pipelines.
+!!! note
+    The git credentials are only used to create webhooks for the pipelines, wrong git credentials will not prevent the pipeline to run.
 
 We can check afterwards the pipeline execution on the dev cluster :
 
@@ -57,10 +59,10 @@ We can check afterwards the pipeline execution on the dev cluster :
 
 ### Pipeline execution
 
-The multiarch pipeline showcased here is an extension of the CI pipelines found [here](/learning/pipeline). They mostly the same tasks, with some additional ones to perform multiarchitecture builds.
+The multiarch pipeline showcased here is an extension of the CI pipelines found [here](/learning/pipeline/). They mostly the same tasks, with some additional ones to perform multiarchitecture builds.
 
 - `simver` : This step uses the same logic as the `tag-release`step that uses the `ibm-tag-release` Tekton task, with the difference that we don't release the new tag on the code repository.
-- `build-x86`, `build-power` and `build-z` : These steps build remotely the images for the x86, IBM Power and IBM Z architectures. The dev cluster connects to workload clusters and triggers a 1-step build pipeline.
+- `build-x86`, `build-power` and `build-z` : These steps build remotely the images for the x86, IBM Power and IBM Z architectures. The dev cluster connects to workload clusters and triggers a 1-step build pipeline that pushes the image afterwards to the image registry.
   ![build-x86](./images/remote-build-x.png)
   ![build-power](./images/remote-build-p.png)
   ![build-z](./images/remote-build-z.png)
@@ -69,30 +71,22 @@ The multiarch pipeline showcased here is an extension of the CI pipelines found 
 
 After the execution of these steps, we should have this result depending on the image registry used :
 
-- On quay :
+- On [Quay](https://quay.io) :
   ![quay-images](./images/quay-images.png)
 
-- On Dockerhub :  
+- On [Dockerhub](https://hub.docker.com) :  
   ![dockerhub-images](./images/dockerhub-images.png)
 
----
+Your image registry contains now a multiarchitecture image of your service. You can deploy this image to any workload clusters traditionally or using ArgoCD following the [GitOps methodology](/adopting/best-practices/devops/#what-is-gitops).
 
-- This OmniChannel application contains an [AngularJS](https://angularjs.org/) based web application.
-- The Web app invokes its own backend Microservice to fetch data, we call this component BFFs following the [Backend for Frontends](http://samnewman.io/patterns/architectural/bff/) pattern. The Web BFF is implemented using the Node.js Express Framework.
-- The BFFs invokes another layer of reusable Java Microservices. The reusable microservices are written in Java using [Quarkus](https://quarkus.io/) framework.
-- The Java Microservices are as follows:
-  - The [Inventory Service](https://cloudnativereference.dev/related-repositories/inventory) uses an instance of [MySQL](https://www.mysql.com/) to store the inventory items.
-  - The [Catalog service](https://cloudnativereference.dev/related-repositories/catalog) retrieves items from a searchable JSON data source using [ElasticSearch](https://www.elastic.co/).
-  - [Keycloak](https://cloudnativereference.dev/related-repositories/keycloak) delegates authentication and authorization.
-  - The [Customer service](https://cloudnativereference.dev/related-repositories/customer) stores and retrieves Customer data from a searchable JSON data source using [CouchDB](http://couchdb.apache.org/).
-  - The [Orders Service](https://cloudnativereference.dev/related-repositories/orders) uses an instance of [MariaDB](https://mariadb.org/) to store order information.
+## Deploy a hybrid multi-cloud application
 
-### Deploy the Storefront using Cloud native toolkit
+So far this tutorial showed how to build one service into a multiarchitecture image that can run on x86, IBM Power and IBM Z using OpenShift. But we can actually deploy multiple services using multiple cluster and have them communicate with each other in a hybrid multi-cloud environment. This is done using Red Hat Advanced Cluster Management with the [Submariner](https://submariner.io) add-on.  
+If you wish to have a more complete showcase, [this Terraform script](https://github.com/ibm-ecosystem-lab/multiarch-build-demo-setup) uses this same multiarchitecture build pattern to build a fully functionning application that runs accross multiple OpenShift environments, following a DevSecOps approach using the toolkit and a GitOps deployment and placement strategy with ArgoCD.
 
-Follow the below guide for instructions on how to deploy all the microservices of StoreFront onto Openshift using Cloud native toolkit.
+!!! warning
+    This script will not cover the setup of RHACM and Submariner, these should be available before running the automation.
 
-[Cloud native toolkit - StoreFront Quarkus version](https://cloudnativereference.dev/deployments/cntk-quarkus)
+The resulting application will follow this architecture :
 
-To get an idea, here is a view of a completed and successful pipeline runs for all the microservices.
-
-![Pipeline run](images/sf_pipelines.png)
+![hybrid-multicloud-showcase](./images/hybrid-multicloud-showcase.png)
