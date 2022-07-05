@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "starter-kit.fullname" . }}
+  annotations:
+  {{- if and .Values.vcsInfo.repoUrl .Values.vcsInfo.branch }}
+    app.openshift.io/vcs-ref: {{ .Values.vcsInfo.branch }}
+    app.openshift.io/vcs-uri: {{ trimSuffix ".git" .Values.vcsInfo.repoUrl }}
+    {{- if not .Values.service.enabled }}
+    skupper.io/proxy: "tcp"
+    skupper.io/port: {{ .Values.image.port | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.connectsTo }}
+    app.openshift.io/connects-to: {{ printf "'[%s]'" (include "helm-toolkit.utils.joinListWithCommaAndDoubleQuotes" .Values.connectsTo)  }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "starter-kit.name" . }}
+    app: {{ include "starter-kit.name" . }}
+    version: {{ .Values.image.tag | quote }}
+    helm.sh/chart: {{ include "starter-kit.chart" . }}
+    app.kubernetes.io/instance: {{ include "starter-kit.fullname" . }}
+    {{- if .Values.partOf }}
+    app.kubernetes.io/part-of: {{ .Values.partOf }}
+    {{- end}}
+    {{- if .Values.runtime }}
+    app.openshift.io/runtime: {{ .Values.runtime }}
+    {{- end}}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "starter-kit.name" . }}
+      app: {{ include "starter-kit.name" . }}
+      app.kubernetes.io/instance: {{ include "starter-kit.name" . }}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: {{ .Values.serviceMesh.sidecar | default "false" | quote }}
+      labels:
+        app.kubernetes.io/name: {{ include "starter-kit.name" . }}
+        app: {{ include "starter-kit.name" . }}
+        version: {{ .Values.image.tag | quote }}
+        app.kubernetes.io/instance: {{ include "starter-kit.name" . }}
+    spec:
+      {{- if .Values.image.secretName }}
+      imagePullSecrets:
+        - name: {{ .Values.image.secretName }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: http
+          readinessProbe:
+            tcpSocket:
+              port: http
+          env:
+            - name: IMAGE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: LOG_LEVEL
+              value: {{ .Values.logLevel | quote }}
+            - name: PORT
+              value: {{ .Values.image.port | quote }}
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.productcatalogservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.productcatalogservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.productcatalogservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.productcatalogservice.port }}"
+              {{- end }}
+            - name: CURRENCY_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.currencyservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.currencyservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.currencyservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.currencyservice.port }}"
+              {{- end }}
+            - name: CART_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.cartservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.cartservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.cartservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.cartservice.port }}"
+              {{- end }}
+            - name: RECOMMENDATION_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.recommendationservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.recommendationservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.recommendationservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.recommendationservice.port }}"
+              {{- end }}
+            - name: SHIPPING_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.shippingservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.shippingservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.shippingservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.shippingservice.port }}"
+              {{- end }}
+            - name: CHECKOUT_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.checkoutservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.checkoutservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.checkoutservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.checkoutservice.port }}"
+              {{- end }}
+            - name: AD_SERVICE_ADDR
+              {{- if .Values.submariner.enabled }}
+              value: "{{ .Values.image.adservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.clusterset.local:{{ .Values.image.adservice.port }}"
+              {{- else }}
+              value: "{{ .Values.image.adservice.svcName }}.{{ .Values.namespaceToDeploy }}.svc.cluster.local:{{ .Values.image.adservice.port }}"
+              {{- end }}
+            - name: DISABLE_TRACING
+              value: "1"
+            - name: DISABLE_PROFILER
+              value: "1"
+            - name: DISABLE_DEBUGGER
+              value: "1"
+          envFrom:
+            - configMapRef:
+                name: {{ default "jaeger-config" .Values.jaegerConfigName }}
+                optional: true
+            - secretRef:
+                name: {{ default "jaeger-access" .Values.jaegerSecretName }}
+                optional: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
