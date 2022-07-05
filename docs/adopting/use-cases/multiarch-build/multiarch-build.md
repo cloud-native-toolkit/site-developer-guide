@@ -1,6 +1,6 @@
 # Build multiarchitecture images
 
-<!--- cSpell:ignore CICD cntk pipelinerun Omni Frontends cloudnative multiarchitecture multiarch tfvars sivmer -->
+<!--- cSpell:ignore CICD cntk pipelinerun Omni Frontends cloudnative multiarchitecture multiarch tfvars simver RHACM multicloud -->
 
 Build multiarchitecture images using the Cloud Native Toolkit, Tekton pipelines and ArgoCD.
 The resulting images can be deployed to any OpenShift cluster running on x86, IBM Z (s390x) or IBM Power (ppc64le).
@@ -85,7 +85,7 @@ Your image registry contains now a multiarchitecture image of your service. You 
 ## Deploy a hybrid multi-cloud application
 
 So far this tutorial showed how to build one service into a multiarchitecture image that can run on x86, IBM Power and IBM Z using OpenShift. But we can actually deploy multiple services using multiple cluster and have them communicate with each other in a hybrid multi-cloud environment. This is done using Red Hat Advanced Cluster Management with the [Submariner](https://submariner.io) add-on.  
-If you wish to have a more in-depth showcase, [this Terraform script](https://github.com/ibm-ecosystem-lab/multiarch-build-demo-setup) uses this same multiarchitecture build pattern to deploy a fully functionning marketplace application that runs accross multiple OpenShift clusters, following a DevSecOps approach using the toolkit and a GitOps deployment and placement strategy with ArgoCD.
+If you wish to have a more in-depth showcase, [this Terraform script](https://github.com/ibm-ecosystem-lab/multiarch-build-demo-setup) uses this same multiarchitecture build pattern to deploy a fully functioning marketplace application that runs across multiple OpenShift clusters, following a DevSecOps approach using the toolkit and a GitOps deployment and placement strategy with ArgoCD.
 
 !!! warning
     This script will not cover the setup of RHACM and Submariner, these should be available before running the automation.
