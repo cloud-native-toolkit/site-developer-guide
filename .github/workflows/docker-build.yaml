@@ -16,7 +16,7 @@ jobs:
       - name: Set up tags
         id: setup
         run: |
-          TAG_BASE="quay.io/ibmgaragecloud/toolkit-guide"
+          TAG_BASE="quay.io/cloudnativetoolkit/dev-guide"
 
           BRANCH=${GITHUB_REF#refs/heads/}
           TAG="${{ github.event.release.tag_name }}"
