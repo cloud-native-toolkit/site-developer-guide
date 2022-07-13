@@ -67,8 +67,9 @@ a.cta:hover:before {
 .container {
   background: #09f;
   width: 100%;
-  min-height: 650px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .container .one-half {
   position: absolute;
@@ -78,26 +79,27 @@ a.cta:hover:before {
 }
 .container .one-half.left {
   left: 0;
-  background: url("http://andrewerrico.com/jura-panorama.jpg") center center no-repeat;
+  background: url("./images/datacenter.jpeg") center center no-repeat;
   background-size: cover;
 }
+
 .container .one-half.left:before {
   content: "";
   width: 100%;
   height: 100%;
-  background: rgba(255, 0, 120, 0.5);
+  background: rgba(27, 181, 104, 0.5);
   position: absolute;
 }
 .container .one-half.right {
   right: 0;
-  background: url("https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b") center center no-repeat;
+  background: url("./images/code.jpeg") center center no-repeat;
   background-size: cover;
 }
 .container .one-half.right:before {
   content: "";
   width: 100%;
   height: 100%;
-  background: rgba(25, 120, 220, 0.5);
+  background: rgba(27, 140, 181, 0.5);
   position: absolute;
 }
 .container .one-half.left, .container .one-half.right {

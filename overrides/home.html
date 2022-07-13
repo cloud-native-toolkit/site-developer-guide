@@ -6,6 +6,31 @@
 <!-- Content -->
 {% block content %}
 
+
+
+<link rel="stylesheet" href="{{ 'assets/stylesheets/home.css' | url }}" />
+
+<div class="container">
+  <div class="one-half left">
+    <h1>Cloud-Native Operations</h1>
+    <p>Understand how to deploy multi-cloud reference architectures into AWS,Azure, IBM Cloud and VMWare </p>
+    <div class="buttons">
+      <a href="#" class="cta">See It</a>
+      <a href="#" class="cta">Learn It</a>
+      <a href="#" class="cta">Do It</a>
+    </div>
+  </div>
+  <div class="one-half right">
+    <h1>Cloud-Native Development</h1>
+    <p>Understand how to develop microservices into Hybrid platforms using modern SDLC tools including Tekton, ArgoCD , SonarQube and Artifactory </p>
+    <div class="buttons">
+      <a href="#" class="cta">See It</a>
+      <a href="#" class="cta">Learn It</a>
+      <a href="#" class="cta">Do It</a>
+    </div>
+  </div>
+</div>
+
 <script>
 
   $l = $('.left')
@@ -24,22 +49,6 @@
   });
 
 </script>
-
-<link rel="stylesheet" href="{{ 'assets/stylesheets/home.css' | url }}" />
-
-<div class="container">
-  <div class="one-half left">
-    <h1>Cloud-Native Operator</h1>
-    <a href="#" class="cta">Learn It</a>
-    <a href="#" class="cta">Do It</a>
-
-  </div>
-  <div class="one-half right">
-    <h1>Cloud-Native Developer</h1>
-    <a href="#" class="cta">Learn It</a>
-    <a href="#" class="cta">Do It</a>
-  </div>
-</div>
 
 
 {% endblock %}
