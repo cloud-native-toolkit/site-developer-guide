@@ -17,7 +17,7 @@ The Toolkit can be installed using a number of different approaches, but they al
 
 ## Documentation
 
-The source for this site can be found in the [developer guide repository](https://github.com/cloud-native-toolkit/ibm-garage-developer-guide){: target=_blank}
+The source for this site can be found in the [developer guide repository](https://github.com/cloud-native-toolkit/site-developer-guide){: target=_blank}
 
 ## Command Line Interface
 

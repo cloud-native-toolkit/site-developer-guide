@@ -1,10 +1,10 @@
 # Cloud Native Toolkit - Developer Guide
 
-[![Publish](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml)
+[![Publish](https://github.com/cloud-native-toolkit/site-developer-guide/actions/workflows/publish.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish.yaml)
 
-[![Publish Beta](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish-beta.yaml)
+[![Publish Beta](https://github.com/cloud-native-toolkit/site-developer-guide/actions/workflows/publish-beta.yaml/badge.svg)](https://github.com/cloud-native-toolkit/developer-guide/actions/workflows/publish-beta.yaml)
 
-![Release](https://img.shields.io/github/v/release/cloud-native-toolkit/developer-guide)
+![Release](https://img.shields.io/github/v/release/cloud-native-toolkit/site-developer-guide)
 
 [![Docker Repository on Quay](https://quay.io/repository/ibmgaragecloud/toolkit-guide/status "Docker Repository on Quay")](https://quay.io/repository/ibmgaragecloud/toolkit-guide)
 
