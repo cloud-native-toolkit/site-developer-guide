@@ -101,7 +101,7 @@ The diagram shows the components in the environment: the cluster, the deployment
     | SonarQube | Open Source project maintained by [SonarSource](https://www.sonarsource.com/logos/) |
     | Nexus Repository | Open Source project maintained by [SonaType](https://www.sonatype.com/nexus-repository-oss) |
     | Trivy | Open Source project maintained by [Aqua](https://www.aquasec.com/brand/) |
-    | InteliJ | IDE from [JetBrains](https://www.jetbrains.com/company/brand/) |
+    | IntelliJ | IDE from [JetBrains](https://www.jetbrains.com/company/brand/) |
     | VSCode | Free IDE maintained by [Microsoft](https://code.visualstudio.com/) |
     | Jaeger | Open Source tool maintained by [Jaeger Community](https://www.jaegertracing.io/get-in-touch/) |
     | ArgoCD | Open Source tool maintained by [ArgoCD Community](https://argoproj.github.io/cd/)|
