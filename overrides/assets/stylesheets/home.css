@@ -8,14 +8,17 @@
 
 .home-hero-image {
   height: 45vh;
-  background-image: url(images/catalyst.svg);
+  background-image: url(images/code3.png);
   background-position: center;
   background-size: cover;
 }
 
 .home-hero-text {
-  bottom: 0;
+  bottom: 20px;
+  right: 50px;
   position: absolute;
+  background-color:rgba(0, 0, 0, 0.3);
+  padding: 10px 10px 20px 10px;
 }
 
 .home-hero-text h1 {
@@ -70,6 +73,10 @@
   padding: 0;
 }
 
+.md-content__inner {
+  margin-left: 0 !important;
+}
+
 .md-typeset img,
 .md-typeset svg {
   max-width: initial;
@@ -98,4 +105,20 @@
 article.md-content__inner.md-typeset {
   background-color: #161616;
   border-left: 1px solid #393939;
+}
+
+.md-content {
+  padding-bottom: 0;
+}
+
+.card {
+  padding: 10px 10px;
+}
+
+.card div {
+  font-size: large;
+}
+
+.md-nav__link--active {
+  color: white !important;
 }
