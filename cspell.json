@@ -44,7 +44,7 @@
         "Trivy",
         "Sysdig",
         "SonaType",
-        "InteliJ",
+        "IntelliJ",
         "Drawio",
         "CLI",
         "CLIs",
@@ -94,7 +94,14 @@
         "clusterroles", 
         "clusterrolebindings",
         "machinesets",
-        "CICD"
+        "CICD",
+        "jmeter",
+        "Gitpod",
+        "Hoverfly",
+        "Istio",
+        "Twistlock",
+        "intellij",
+        "Intelli"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.
